@@ -1,0 +1,17 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#ffffff">
+
+    <ListView
+        android:divider="@color/colorPrimary"
+        android:dividerHeight="1dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        tools:listitem="@layout/grid_list3_layout"
+        android:id="@+id/listViewType3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="fill" />
+</RelativeLayout>

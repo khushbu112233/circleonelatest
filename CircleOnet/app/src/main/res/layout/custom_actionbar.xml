@@ -22,4 +22,13 @@
         android:id="@+id/mytext"
         android:textSize="18sp" />
 
+    <ImageView
+        android:id="@+id/drawer"
+        android:backgroundTint="@color/white"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/ic_drawer"
+        android:layout_centerVertical="true"
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
+
 </RelativeLayout>

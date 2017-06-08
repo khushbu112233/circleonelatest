@@ -1,7 +1,5 @@
 package com.amplearch.circleonet;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -11,13 +9,14 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-public class OneFragment extends Fragment{
+public class List1Fragment extends Fragment{
 
-    private ArrayList<Integer> image = new ArrayList<>();
+    private ArrayList<Integer> imageFront = new ArrayList<>();
+    private ArrayList<Integer> imageBack = new ArrayList<>();
     private ViewPager viewPager;
     private MyPager myPager ;
 
-    public OneFragment() {
+    public List1Fragment() {
         // Required empty public constructor
     }
 
@@ -31,7 +30,7 @@ public class OneFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View view = inflater.inflate(R.layout.fragment_one, container, false);
+        View view = inflater.inflate(R.layout.fragment_list1, container, false);
 
         viewPager = (ViewPager)view.findViewById(R.id.viewPager);
         viewPager.setClipChildren(false);
@@ -39,16 +38,31 @@ public class OneFragment extends Fragment{
         viewPager.setOffscreenPageLimit(3);
         viewPager.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
 
-        image.add(R.drawable.e_bike1);
+        imageFront.add(R.drawable.card1_front);
 
 
-        image.add(R.drawable.e_bike2);
+        imageFront.add(R.drawable.card2_front);
 
 
-        image.add(R.drawable.e_bike3);
+        imageFront.add(R.drawable.card3_front);
+
+        imageFront.add(R.drawable.card4_front);
+        imageFront.add(R.drawable.card5_front);
 
 
-        myPager = new MyPager(getContext(), image, image);
+        imageBack.add(R.drawable.card1_back);
+
+
+        imageBack.add(R.drawable.card2_back);
+
+
+        imageBack.add(R.drawable.card3_back);
+
+        imageBack.add(R.drawable.card4_back);
+        imageBack.add(R.drawable.card5_back);
+
+
+        myPager = new MyPager(getContext(), imageFront, imageBack);
         viewPager.setAdapter(myPager);
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener()

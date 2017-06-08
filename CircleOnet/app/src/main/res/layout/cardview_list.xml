@@ -6,21 +6,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
         <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:weightSum="2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@android:color/white">
 
             <ImageView
+                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="190dp"
                 android:scaleType="centerCrop"
                 android:id="@+id/ivImages"/>
 
             <ImageView
-                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:layout_marginTop="25dp"
                 android:layout_width="match_parent"
                 android:layout_height="190dp"
                 android:scaleType="centerCrop"

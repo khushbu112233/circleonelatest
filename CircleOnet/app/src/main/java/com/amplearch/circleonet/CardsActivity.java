@@ -1,41 +1,89 @@
 package com.amplearch.circleonet;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.bumptech.glide.RequestManager;
 
 public class CardsActivity extends AppCompatActivity {
 
-    ViewPager mViewPager;
+    CustomViewPager mViewPager;
     TabLayout tabLayout;
+    ImageView imgDrawer;
+    private int actionBarHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cards);
-
-        ActionBar actionBar = getSupportActionBar();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        final ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.custom_actionbar);
 
         SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = (CustomViewPager) findViewById(R.id.container);
+        imgDrawer = (ImageView) findViewById(R.id.drawer);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setPagingEnabled(false);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(android.R.color.white));
         setupTabIcons();
+
+        imgDrawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //Toast.makeText(getApplicationContext(), "Hello", Toast.LENGTH_LONG).show();
+
+                TypedValue tv = new TypedValue();
+                if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
+                    actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
+                }
+
+                showDialog(CardsActivity.this, 0, actionBarHeight);
+            }
+        });
     }
+
+    public void showDialog(Context context, int x, int y){
+        // x -->  X-Cordinate
+        // y -->  Y-Cordinate
+        Dialog dialog  = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setContentView(R.layout.listview_with_text_image);
+        dialog.setCanceledOnTouchOutside(true);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.x = x;
+        lp.y = y;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.TOP | Gravity.LEFT;
+        dialog.show();
+        dialog.getWindow().setAttributes(lp);
+
+    }
+
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
@@ -46,18 +94,18 @@ public class CardsActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                return new OneFragment();
+                return new List1Fragment();
             } else if (position == 1) {
-                return new TwoFragment();
+                return new List2Fragment();
             }
             else if (position == 2) {
-                return new ThreeFragment();
+                return new List3Fragment();
             }
             else if (position == 3) {
-                return new ThreeFragment();
+                return new List4Fragment();
             }
             else {
-                return new OneFragment();
+                return new List1Fragment();
             }
         }
 
