@@ -67,7 +67,7 @@ public class CardsActivity extends AppCompatActivity {
     public void showDialog(Context context, int x, int y){
         // x -->  X-Cordinate
         // y -->  Y-Cordinate
-        Dialog dialog  = new Dialog(context);
+        Dialog dialog  = new Dialog(context, R.style.PauseDialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.setContentView(R.layout.listview_with_text_image);
@@ -83,7 +83,6 @@ public class CardsActivity extends AppCompatActivity {
         dialog.getWindow().setAttributes(lp);
 
     }
-
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
