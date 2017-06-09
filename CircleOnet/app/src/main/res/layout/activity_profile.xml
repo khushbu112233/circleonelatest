@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.amplearch.circleonet.Profile">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <FrameLayout
+        android:background="@color/colorAccent"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <ImageView
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/democard"/>
+
+        <ImageView
+            android:alpha="0.4"
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            
+            <ImageView
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:id="@+id/txtprofile"
+                android:textSize="18dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profile"
+                android:textColor="@color/white"/>
+
+            <ImageView
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="22dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_dehaze_black_24dp"/>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/txtprofile"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    app:civ_border_width="0dp"
+                    app:civ_border_color="@color/colorPrimary"
+                    android:src="@drawable/profile3"
+                    android:id="@+id/imageList4"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    />
+
+                <TextView
+                    android:textSize="19dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAlignment="center"
+                    android:text="Westley Wan"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:textSize="19dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAlignment="center"
+                    android:text="Unico Creative pte ltd"
+                    android:textColor="@color/white"/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/icon1"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"/>
+
+            <ImageView
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_edit_black_24dp"/>
+
+        </RelativeLayout>
+
+    </FrameLayout>
+
+        <ScrollView
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="20dp"
+            android:layout_above="@+id/view1"
+            android:layout_below="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <LinearLayout
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:backgroundTint="@color/colorAccent"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:id="@+id/drawer1"
+                        android:background="@drawable/icon1"
+                        android:layout_marginLeft="10dp"
+                        android:contentDescription="Home!"
+                        android:layout_marginTop="0dp" />
+
+                    <TextView
+                        android:id="@+id/textDrawer1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="Wisley Wan"
+                        android:textColor="#979799"
+                        android:textSize="13dp" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:backgroundTint="@color/colorAccent"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:id="@+id/drawer2"
+                        android:background="@drawable/icon1"
+                        android:layout_marginLeft="10dp"
+                        android:contentDescription="Home!"
+                        android:layout_marginTop="0dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="UNICO Creative ple ltd"
+                        android:id="@+id/textDrawer2"
+                        android:textColor="#979799"
+                        android:textSize="13dp"
+                        android:layout_marginLeft="20dp"
+                        />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="15dp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:backgroundTint="@color/colorAccent"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:id="@+id/drawer3"
+                        android:background="@drawable/icon1"
+                        android:layout_marginLeft="10dp"
+                        android:contentDescription="Home!"
+                        android:layout_marginTop="0dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Branding &amp; Marketing / it"
+                        android:id="@+id/textDrawer3"
+                        android:textSize="16dp"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/colorAccent" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="15dp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:backgroundTint="@color/colorAccent"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:id="@+id/drawer4"
+                        android:background="@drawable/icon1"
+                        android:layout_marginLeft="10dp"
+                        android:contentDescription="Home!"
+                        android:layout_marginTop="0dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Business Development Director"
+                        android:id="@+id/textDrawer4"
+                        android:textSize="16dp"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/colorAccent" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="15dp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:backgroundTint="@color/colorAccent"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:id="@+id/drawer5"
+                        android:background="@drawable/icon1"
+                        android:layout_marginLeft="10dp"
+                        android:contentDescription="Home!"
+                        android:layout_marginTop="0dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Association"
+                        android:id="@+id/textDrawer5"
+                        android:textSize="16dp"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/colorAccent" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="15dp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:backgroundTint="@color/colorAccent"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:id="@+id/drawer6"
+                        android:background="@drawable/icon1"
+                        android:layout_marginLeft="10dp"
+                        android:contentDescription="Home!"
+                        android:layout_marginTop="0dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="246 Macphenon Road #03-04, Singapore"
+                        android:id="@+id/textDrawer6"
+                        android:textSize="16dp"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/colorAccent" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="15dp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:backgroundTint="@color/colorAccent"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:id="@+id/drawer7"
+                        android:background="@drawable/icon1"
+                        android:layout_marginLeft="10dp"
+                        android:contentDescription="Home!"
+                        android:layout_marginTop="0dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="www.unicocreative.com"
+                        android:id="@+id/textDrawer7"
+                        android:textSize="16dp"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/colorAccent" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="15dp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:backgroundTint="@color/colorAccent"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:id="@+id/drawer8"
+                        android:background="@drawable/icon1"
+                        android:layout_marginLeft="10dp"
+                        android:contentDescription="Home!"
+                        android:layout_marginTop="0dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Wisley.wan@unico-creative.com"
+                        android:id="@+id/textDrawer8"
+                        android:textSize="16dp"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/colorAccent" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
