@@ -28,7 +28,7 @@
         android:layout_alignParentRight="true"
         android:background="@drawable/ic_drawer"
         android:layout_centerVertical="true"
-        android:layout_width="30dp"
-        android:layout_height="30dp" />
+        android:layout_width="20dp"
+        android:layout_height="20dp" />
 
 </RelativeLayout>

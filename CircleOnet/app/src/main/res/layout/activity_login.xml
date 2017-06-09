@@ -7,10 +7,111 @@
     tools:context="com.amplearch.circleonet.LoginActivity">
 
     <ImageView
+        android:id="@+id/imgLogin"
         android:src="@drawable/login_logo"
         android:layout_marginTop="60dp"
         android:layout_centerHorizontal="true"
         android:layout_width="150dp"
         android:layout_height="75dp" />
-    
+
+    <LinearLayout
+        android:id="@+id/lnrLogin"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="80dp"
+        android:layout_below="@+id/imgLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/edit_back"
+            android:hint="Username"
+            android:textColorHint="@color/white"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <EditText
+            android:drawableRight="@drawable/question"
+            android:paddingRight="20dp"
+            android:layout_marginTop="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/edit_back"
+            android:hint="Password"
+            android:textColorHint="@color/white"
+            android:paddingLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:textSize="16dp"
+            android:textAllCaps="false"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:text="Login"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/viewLogin"
+        android:layout_marginTop="25dp"
+        android:layout_below="@+id/lnrLogin"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorAccent"></View>
+
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_below="@+id/viewLogin"
+        android:textSize="16dp"
+        android:textAllCaps="false"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:text="Register"
+        android:layout_marginTop="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/btnRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_marginRight="20dp"
+            android:src="@drawable/icon_fb"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+
+        <ImageView
+            android:layout_marginRight="20dp"
+            android:src="@drawable/icon_linkedin"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+
+        <ImageView
+            android:layout_marginRight="20dp"
+            android:src="@drawable/icon_twitter"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+
+        <ImageView
+            android:src="@drawable/icon_google"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+
+    </LinearLayout>
+
 </RelativeLayout>
