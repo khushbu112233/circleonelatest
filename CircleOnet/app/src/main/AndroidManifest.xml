@@ -9,8 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CardsActivity">
-        </activity>
+        <activity android:name=".CardsActivity"></activity>
         <activity android:name=".EventsActivity" />
         <activity
             android:name=".EventsDetailActivity"
@@ -18,9 +17,14 @@
         <activity android:name=".EventDetail" />
         <activity android:name=".Connect" />
         <activity android:name=".SortAndFilterOption" />
-        <activity android:name=".EventsSelectOption"></activity>
-        <activity android:name=".Profile"></activity>
-        <activity android:name=".LoginActivity"
+        <activity android:name=".EventsSelectOption" />
+        <activity android:name=".Profile" />
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/NoActionbar">
+
+        </activity>
+        <activity android:name=".CardDetail"
             android:theme="@style/NoActionbar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

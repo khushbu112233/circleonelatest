@@ -1,0 +1,497 @@
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/NoActionbar"
+        android:fitsSystemWindows="true">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:background="@color/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary">
+
+
+            <FrameLayout
+                app:layout_collapseMode="parallax"
+                android:background="@color/colorAccent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/democard"/>
+
+                <ImageView
+                    android:alpha="0.4"
+                    android:scaleType="fitXY"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorAccent"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true" />
+
+
+                    <ImageView
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="22dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_dehaze_black_24dp"/>
+
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@+id/txtprofile"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            app:civ_border_width="2dp"
+                            app:civ_border_color="@color/colorPrimary"
+                            android:src="@drawable/profile3"
+                            android:id="@+id/imageList4"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            />
+
+                        <TextView
+                            android:textSize="19dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textAlignment="center"
+                            android:text="Westley Wan"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"/>
+
+                        <TextView
+                            android:textSize="19dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textAlignment="center"
+                            android:text="Unico Creative pte ltd"
+                            android:textColor="@color/white"/>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </FrameLayout>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+        <LinearLayout
+
+            android:gravity="center"
+            android:background="@color/white"
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="40dip"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_marginLeft="25dp"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_call"/>
+            <ImageView
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_sms"/>
+            <ImageView
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_mail"/>
+            <ImageView
+                android:layout_marginRight="25dp"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_profile_send"/>
+
+        </LinearLayout>
+
+<View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/colorPrimary"></View>
+
+        <LinearLayout
+            android:gravity="center"
+            android:background="@color/white"
+            android:id="@+id/tabs1"
+            android:layout_width="match_parent"
+            android:layout_height="40dip"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_marginLeft="25dp"
+                android:layout_weight="1"
+                android:padding="6dp"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:src="@drawable/icon_fb"/>
+            <ImageView
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:src="@drawable/icon_linkedin_gray"/>
+            <ImageView
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:src="@drawable/icon_twitter"/>
+            <ImageView
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:src="@drawable/icon_google"/>
+            <ImageView
+                android:layout_marginRight="25dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:src="@drawable/icon_utube_gray"/>
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimary"></View>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/frame_container">
+
+            <RelativeLayout
+                android:gravity="center"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"
+                    android:text="Contact Info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+
+                <ImageView
+                    android:id="@+id/img2"
+                    android:src="@drawable/ic_tag1"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignTop="@+id/txt1"
+                    android:layout_toLeftOf="@+id/txt1"
+                    android:layout_toStartOf="@+id/txt1" />
+
+                <TextView
+                    android:id="@+id/txt1"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@+id/img1"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="15sp"
+                    android:text="Group Tag 1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:id="@+id/img1"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_edit"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_marginRight="20dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_web"/>
+
+                <TextView
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="#6b6c6e"
+                    android:textSize="13sp"
+                    android:text="www.tcmong.com.sg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_marginRight="20dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_mail_gray"/>
+
+                <TextView
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="#6b6c6e"
+                    android:textSize="13sp"
+                    android:text="tcmong@tcmong.com.sg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_marginRight="20dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_phone"/>
+
+                <TextView
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="#6b6c6e"
+                    android:textSize="13sp"
+                    android:text="+65 6842 6186      +65 6842 6288"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_marginRight="20dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_phone2"/>
+
+                <TextView
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="#6b6c6e"
+                    android:textSize="13sp"
+                    android:text="+65 6842 6288"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_marginRight="20dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_mob"/>
+
+                <TextView
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="#6b6c6e"
+                    android:textSize="13sp"
+                    android:text="+65 8842 6688"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_marginRight="20dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_location"/>
+
+                <TextView
+                    android:textColor="#6b6c6e"
+                    android:textSize="13sp"
+                    android:text="246 Macpherson Road.Betime Building #03-04.Singapore 348578"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+<ImageView
+    android:scaleType="fitXY"
+    android:src="@drawable/ic_map"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginTop="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_marginBottom="10dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimary"></View>
+
+            <RelativeLayout
+                android:gravity="center"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txtTime"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13sp"
+                    android:text="Onet Time:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:layout_marginLeft="15dp"
+                    android:id="@+id/txtDate"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_toRightOf="@id/txtTime"
+                    android:textColor="#6b6c6e"
+                    android:textSize="13sp"
+                    android:text="04/04/2017   10:25am"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+
+                <ImageView
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_nfc"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimary"></View>
+
+            <TextView
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="13sp"
+                android:text="Remark"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:textColor="#6b6c6e"
+                android:textSize="13sp"
+                android:text="vnfjvnf fbvdfnkvnf fdgfg fdgfdg dfg fg dfgfdg fgdfgfd drgdfgfd dfgdfg gdfg dfgdfg dfgfdg dfgfdg dfgfdg dfgfd fdgfdg dfgfdgfgfd dfgfdgfd dfgfdgf gdfgfdg dfgfdg dfgfdg dfgfdg dfgfd fdgfdkdfvncjkvn nvcklxnv klvncklxv klcvncklxv klcvncklxv klvnxcklv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+</android.support.design.widget.CoordinatorLayout>
