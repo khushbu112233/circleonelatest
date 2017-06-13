@@ -1,6 +1,7 @@
 package com.amplearch.circleonet;
 
 
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import java.util.ArrayList;
@@ -36,6 +38,14 @@ public class List2Fragment extends Fragment {
         gridView = (GridView) view.findViewById(R.id.gridView);
         gridAdapter = new GridViewAdapter(getContext(), R.layout.grid_list2_layout, getData());
         gridView.setAdapter(gridAdapter);
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getContext(), CardDetail.class);
+                getContext().startActivity(intent);
+            }
+        });
 
         return view;
     }

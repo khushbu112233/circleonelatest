@@ -1,12 +1,14 @@
 package com.amplearch.circleonet;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -62,6 +64,14 @@ public class List4Fragment extends Fragment {
         listView = (ListView) view.findViewById(R.id.listViewType4);
         gridAdapter = new List4Adapter(getContext(), R.layout.grid_list4_layout, image, desc, name, designation);
         listView.setAdapter(gridAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getContext(), CardDetail.class);
+                getContext().startActivity(intent);
+            }
+        });
 
         return view;
     }

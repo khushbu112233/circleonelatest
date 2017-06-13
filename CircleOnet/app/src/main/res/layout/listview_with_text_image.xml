@@ -35,9 +35,8 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:id="@+id/drawer1"
-            android:src="@drawable/icon1"
+            android:src="@drawable/ic_acc"
             android:layout_marginLeft="10dp"
-            android:contentDescription="Home!"
             android:layout_marginTop="0dp" />
 
         <TextView
