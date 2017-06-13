@@ -1,33 +1,29 @@
 package com.amplearch.circleonet;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
 /**
- * Created by ample-arch on 6/7/2017.
+ * Created by admin on 06/13/2017.
  */
 
-public class MyPager extends PagerAdapter
+public class CardSwipe extends PagerAdapter
 {
     Context context ;
-    ArrayList<Integer> image, image1 ;
+    ArrayList<Integer> image;
 
-    public MyPager(Context applicationContext, ArrayList<Integer> image, ArrayList<Integer> image1)
+    public CardSwipe(Context applicationContext, ArrayList<Integer> image)
     {
         this.context = applicationContext ;
         this.image = image;
-        this.image1 = image1;
     }
 
     @Override
@@ -50,29 +46,17 @@ public class MyPager extends PagerAdapter
     @Override
     public Object instantiateItem(ViewGroup container, int position)
     {
-        View view = LayoutInflater.from(context).inflate(R.layout.cardview_list, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.card_swipe, null);
         try
         {
 
 
             ImageView imageView = (ImageView)view.findViewById(R.id.ivImages);
-            ImageView imageView1 = (ImageView)view.findViewById(R.id.ivImages1);
 
 //            imageView.setImageResource(image.get(position));
 
             Glide.with(context).load(image.get(position)).into(imageView);
-            Glide.with(context).load(image1.get(position)).into(imageView1);
 //            Glide.with(context).load(image[position]).into(imageCover);
-
-            view.setOnClickListener(new View.OnClickListener(){
-                public void onClick(View v){
-                    //this will log the page number that was click
-                    //Log.i("TAG", "This page was clicked: " + pos);
-
-                    Intent intent = new Intent(context, CardDetail.class);
-                    context.startActivity(intent);
-                }
-            });
 
             container.addView(view);
 

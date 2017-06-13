@@ -51,7 +51,7 @@ public class CardsActivity extends AppCompatActivity {
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(android.R.color.white));
         setupTabIcons();
 
-        LinearLayout tabStrip = ((LinearLayout)tabLayout.getChildAt(0));
+      /*  LinearLayout tabStrip = ((LinearLayout)tabLayout.getChildAt(0));
         for(int i = 0; i < tabStrip.getChildCount(); i++) {
             if (i == 2 || i == 3) {
                 tabStrip.getChildAt(i).setOnTouchListener(new View.OnTouchListener() {
@@ -61,9 +61,9 @@ public class CardsActivity extends AppCompatActivity {
                     }
                 });
             }
-        }
+        }*/
 
-       /* imgDrawer.setOnClickListener(new View.OnClickListener() {
+        imgDrawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -76,7 +76,7 @@ public class CardsActivity extends AppCompatActivity {
 
                 showDialog(CardsActivity.this, 0, actionBarHeight);
             }
-        });*/
+        });
     }
 
     public void showDialog(Context context, int x, int y){
