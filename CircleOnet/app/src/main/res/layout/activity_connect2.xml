@@ -69,7 +69,7 @@
                     android:layout_height="wrap_content"
                     android:text="Eduardo Saverin"
                     android:textColor="@android:color/white"
-                    android:textSize="20dp"
+                    android:textSize="18dp"
                     android:textStyle="bold"
                     android:layout_below="@+id/ivProfileImage"
                     android:layout_centerHorizontal="true"
@@ -80,7 +80,7 @@
                     android:layout_height="wrap_content"
                     android:text="The co-founder of FB"
                     android:textColor="@android:color/white"
-                    android:textSize="16dp"
+                    android:textSize="18dp"
                     android:textStyle="normal"
                     android:layout_below="@+id/tvPersonName"
                     android:layout_centerHorizontal="true"
@@ -183,7 +183,7 @@
             <TextView
                 android:id="@+id/breakLine1"
                 android:layout_below="@+id/llSocial"
-                android:layout_width="160dp"
+                android:layout_width="155dp"
                 android:layout_height="1dp"
                 android:background="#38c0c7"
                 android:layout_marginTop="0dp" />
@@ -191,7 +191,7 @@
             <TextView
                 android:id="@+id/breakLine5"
                 android:layout_below="@+id/llSocial"
-                android:layout_width="160dp"
+                android:layout_width="155dp"
                 android:layout_height="1dp"
                 android:background="#38c0c7"
                 android:layout_alignParentEnd="true"
