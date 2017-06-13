@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CardsActivity"></activity>
+        <activity android:name=".CardsActivity" />
         <activity android:name=".EventsActivity" />
         <activity
             android:name=".EventsDetailActivity"
@@ -21,10 +21,9 @@
         <activity android:name=".Profile" />
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/NoActionbar">
-
-        </activity>
-        <activity android:name=".CardDetail"
+            android:theme="@style/NoActionbar" />
+        <activity
+            android:name=".CardDetail"
             android:theme="@style/NoActionbar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,6 +31,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ConnectActivity"
+            android:theme="@style/NoActionbar" />
+        <activity
+            android:name=".Connect3Activity"
+            android:theme="@style/NoActionbar" />
+        <activity
+            android:name=".Connect4Activity"
+            android:theme="@style/NoActionbar" />
+        <activity android:name=".Connect5Activity" android:theme="@style/NoActionbar"/>
     </application>
 
 </manifest>
