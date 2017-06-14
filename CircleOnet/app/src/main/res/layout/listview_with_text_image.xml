@@ -25,6 +25,7 @@
         </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/lnrMyAcc"
         android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,8 +33,8 @@
         android:gravity="center_vertical">
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:id="@+id/drawer1"
             android:src="@drawable/ic_acc"
             android:layout_marginLeft="10dp"
@@ -44,7 +45,7 @@
             android:layout_height="wrap_content"
             android:text="My account"
             android:id="@+id/textDrawer1"
-            android:textSize="16dp"
+            android:textSize="17dp"
             android:layout_marginLeft="20dp"
             android:textColor="@android:color/white" />
 
@@ -53,18 +54,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/drawer2"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="0dp"
             android:contentDescription="Home!"
-            android:src="@drawable/icon1" />
+            android:src="@drawable/ic_manage_cards" />
 
         <TextView
             android:id="@+id/textDrawer2"
@@ -73,24 +74,23 @@
             android:layout_marginLeft="20dp"
             android:text="Manage my cards"
             android:textColor="@android:color/white"
-            android:textSize="16dp" />
+            android:textSize="17dp" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:id="@+id/drawer3"
-            android:src="@drawable/icon1"
+            android:src="@drawable/ic_new_card"
             android:layout_marginLeft="10dp"
-            android:contentDescription="Home!"
             android:layout_marginTop="0dp" />
 
         <TextView
@@ -98,7 +98,7 @@
             android:layout_height="wrap_content"
             android:text="Request a new card         "
             android:id="@+id/textDrawer3"
-            android:textSize="16dp"
+            android:textSize="17dp"
             android:layout_marginLeft="20dp"
             android:textColor="@android:color/white" />
 
@@ -107,18 +107,18 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/drawer4"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="0dp"
                 android:contentDescription="Home!"
-                android:src="@drawable/icon1" />
+                android:src="@drawable/ic_noti" />
 
             <TextView
                 android:id="@+id/textDrawer4"
@@ -127,22 +127,22 @@
                 android:layout_marginLeft="20dp"
                 android:text="Notifications"
                 android:textColor="@android:color/white"
-                android:textSize="16dp" />
+                android:textSize="17dp" />
 
         </LinearLayout>
 
         <LinearLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:id="@+id/drawer5"
-            android:src="@drawable/icon1"
+            android:src="@drawable/ic_group"
             android:layout_marginLeft="10dp"
             android:contentDescription="Home!"
             android:layout_marginTop="0dp" />
@@ -154,22 +154,22 @@
             android:layout_marginLeft="20dp"
             android:text="Groups"
             android:textColor="@android:color/white"
-            android:textSize="16dp" />
+            android:textSize="17dp" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:id="@+id/drawer6"
-            android:src="@drawable/icon1"
+            android:src="@drawable/ic_subscribe"
             android:layout_marginLeft="10dp"
             android:contentDescription="Home!"
             android:layout_marginTop="0dp" />
@@ -181,22 +181,22 @@
             android:layout_marginLeft="20dp"
             android:text="Subscription"
             android:textColor="@android:color/white"
-            android:textSize="16dp" />
+            android:textSize="17dp" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:id="@+id/drawer7"
-            android:src="@drawable/icon1"
+            android:src="@drawable/ic_history"
             android:layout_marginLeft="10dp"
             android:contentDescription="Home!"
             android:layout_marginTop="0dp" />
@@ -206,51 +206,51 @@
             android:layout_height="wrap_content"
             android:text="History"
             android:id="@+id/textDrawer7"
-            android:textSize="16dp"
+            android:textSize="17dp"
             android:layout_marginLeft="20dp"
             android:textColor="@android:color/white" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
             android:id="@+id/drawer8"
-            android:src="@drawable/icon1"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="0dp"
             android:contentDescription="Home!"
-            android:layout_marginTop="0dp" />
+            android:src="@drawable/ic_lang" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Language"
             android:id="@+id/textDrawer8"
-            android:textSize="16dp"
+            android:textSize="17dp"
             android:layout_marginLeft="20dp"
             android:textColor="@android:color/white" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:id="@+id/drawer9"
-            android:src="@drawable/icon1"
+            android:src="@drawable/ic_security"
             android:layout_marginLeft="10dp"
             android:contentDescription="Home!"
             android:layout_marginTop="0dp" />
@@ -260,24 +260,24 @@
             android:layout_height="wrap_content"
             android:text="Security"
             android:id="@+id/textDrawer9"
-            android:textSize="16dp"
+            android:textSize="17dp"
             android:layout_marginLeft="20dp"
             android:textColor="@android:color/white" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:id="@+id/drawer10"
-            android:src="@drawable/icon1"
+            android:src="@drawable/ic_contact"
             android:layout_marginLeft="10dp"
             android:contentDescription="Home!"
             android:layout_marginTop="0dp" />
@@ -287,24 +287,24 @@
             android:layout_height="wrap_content"
             android:text="Contact us"
             android:id="@+id/textDrawer10"
-            android:textSize="16dp"
+            android:textSize="17dp"
             android:layout_marginLeft="20dp"
             android:textColor="@android:color/white" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:id="@+id/drawer11"
-            android:src="@drawable/icon1"
+            android:src="@drawable/ic_help"
             android:layout_marginLeft="10dp"
             android:contentDescription="Home!"
             android:layout_marginTop="0dp" />
@@ -314,7 +314,7 @@
             android:layout_height="wrap_content"
             android:text="Help"
             android:id="@+id/textDrawer11"
-            android:textSize="16dp"
+            android:textSize="17dp"
             android:layout_marginLeft="20dp"
             android:textColor="@android:color/white" />
 

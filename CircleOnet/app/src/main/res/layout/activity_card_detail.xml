@@ -46,7 +46,7 @@
                 <FrameLayout
                     android:background="@color/colorAccent"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="220dp">
 
                     <ImageView
                         android:scaleType="fitXY"
@@ -246,7 +246,7 @@
                     android:textSize="15sp"
                     android:text="Contact Info"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent" />
+                    android:layout_height="wrap_content" />
 
                 <ImageView
                     android:layout_marginRight="5dp"
@@ -267,10 +267,9 @@
                     android:textSize="13sp"
                     android:text="Group Tag 1"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent" />
+                    android:layout_height="wrap_content" />
 
                 <ImageView
-                    android:layout_centerVertical="true"
                     android:id="@+id/img1"
                     android:layout_alignParentRight="true"
                     android:src="@drawable/ic_edit"

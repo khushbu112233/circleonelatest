@@ -7,6 +7,7 @@
     tools:context="com.amplearch.circleonet.EventsActivity">
 
     <RelativeLayout
+        android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
         android:id="@+id/lnrSearch"
         android:layout_below="@+id/appbar"
@@ -30,13 +31,14 @@
             android:textColor="@android:color/black" />
 
         <ImageView
+            android:layout_marginRight="10dp"
             android:layout_centerVertical="true"
             android:backgroundTint="@color/colorAccent"
-            android:background="@android:drawable/ic_search_category_default"
+            android:src="@drawable/search"
             android:id="@+id/imgSearch"
             android:layout_alignParentRight="true"
-            android:layout_width="30dp"
-            android:layout_height="30dp" />
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
     </RelativeLayout>
 
     <View
@@ -70,7 +72,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:id="@+id/drawer1"
-                    android:background="@drawable/icon1"
+                    android:src="@drawable/ic_search_name"
                     android:layout_marginLeft="10dp"
                     android:contentDescription="Home!"
                     android:layout_marginTop="0dp" />
@@ -99,7 +101,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:id="@+id/drawer2"
-                    android:background="@drawable/icon1"
+                    android:src="@drawable/ic_group_blue1"
                     android:layout_marginLeft="10dp"
                     android:contentDescription="Home!"
                     android:layout_marginTop="0dp" />
@@ -128,7 +130,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:id="@+id/drawer3"
-                    android:background="@drawable/icon1"
+                    android:src="@drawable/ic_ceo"
                     android:layout_marginLeft="10dp"
                     android:contentDescription="Home!"
                     android:layout_marginTop="0dp" />
@@ -157,7 +159,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:id="@+id/drawer4"
-                    android:background="@drawable/icon1"
+                    android:src="@drawable/ic_branding"
                     android:layout_marginLeft="10dp"
                     android:contentDescription="Home!"
                     android:layout_marginTop="0dp" />
@@ -186,7 +188,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:id="@+id/drawer5"
-                    android:background="@drawable/icon1"
+                    android:src="@drawable/ic_association"
                     android:layout_marginLeft="10dp"
                     android:contentDescription="Home!"
                     android:layout_marginTop="0dp" />
@@ -223,7 +225,8 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:padding="8dp"
+            android:layout_marginLeft="20dp"
+            android:padding="12dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:layout_width="50dp"
@@ -231,26 +234,25 @@
             android:src="@drawable/ic_icon1"/>
 
         <ImageView
-            android:padding="8dp"
+            android:padding="12dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/ic_icon2"/>
         <ImageView
-            android:padding="8dp"
+            android:padding="12dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/ic_icon3"/>
         <ImageView
-            android:padding="8dp"
+            android:layout_marginRight="20dp"
+            android:padding="13dp"
             android:layout_weight="1"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/ic_icon4"/>
-
     </LinearLayout>
-
 </RelativeLayout>

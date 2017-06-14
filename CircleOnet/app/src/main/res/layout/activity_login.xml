@@ -34,6 +34,8 @@
         android:orientation="vertical">
 
         <EditText
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:textColor="@color/white"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
@@ -46,6 +48,8 @@
             android:layout_height="match_parent" />
 
         <EditText
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:textColor="@color/white"
             android:drawableRight="@drawable/question"
             android:paddingRight="20dp"
@@ -97,7 +101,7 @@
         android:layout_marginBottom="10dp"
         android:layout_alignParentBottom="true"
         android:gravity="center_horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -105,25 +109,25 @@
         <ImageView
             android:layout_marginRight="20dp"
             android:src="@drawable/icon_fb"
-            android:layout_width="30dp"
-            android:layout_height="30dp" />
+            android:layout_width="28dp"
+            android:layout_height="28dp" />
 
         <ImageView
             android:layout_marginRight="20dp"
             android:src="@drawable/icon_linkedin"
-            android:layout_width="30dp"
-            android:layout_height="30dp" />
+            android:layout_width="28dp"
+            android:layout_height="28dp" />
 
         <ImageView
             android:layout_marginRight="20dp"
             android:src="@drawable/icon_twitter"
-            android:layout_width="30dp"
-            android:layout_height="30dp" />
+            android:layout_width="28dp"
+            android:layout_height="28dp" />
 
         <ImageView
             android:src="@drawable/icon_google"
-            android:layout_width="30dp"
-            android:layout_height="30dp" />
+            android:layout_width="28dp"
+            android:layout_height="28dp" />
 
     </LinearLayout>
     </LinearLayout>

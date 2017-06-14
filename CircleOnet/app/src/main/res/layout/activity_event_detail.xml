@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -56,11 +56,13 @@
     </FrameLayout>
 
     <ScrollView
+        android:layout_above="@+id/lnrBottomTab"
+        android:layout_below="@+id/android_custom_gridview_layout"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -155,5 +157,56 @@ Monday - April 3, 2017 - 9:30am - 5:00pm"/>
         </LinearLayout>
 
     </ScrollView>
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:id="@+id/lnrBottomTab"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <View
+            android:layout_above="@+id/lnrBottomTab"
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimary"></View>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-</LinearLayout>
+            <ImageView
+                android:layout_marginLeft="20dp"
+                android:padding="12dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_icon1"/>
+
+            <ImageView
+                android:padding="12dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_icon2"/>
+            <ImageView
+                android:padding="12dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_icon3"/>
+            <ImageView
+                android:layout_marginRight="20dp"
+                android:padding="13dp"
+                android:layout_weight="1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_icon4"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

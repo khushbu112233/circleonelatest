@@ -88,7 +88,8 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:padding="10dp"
+            android:layout_marginLeft="20dp"
+            android:padding="12dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:layout_width="50dp"
@@ -96,25 +97,25 @@
             android:src="@drawable/ic_icon1"/>
 
         <ImageView
-            android:padding="11dp"
+            android:padding="12dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/ic_icon2"/>
         <ImageView
-            android:padding="10dp"
+            android:padding="12dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/ic_icon3"/>
         <ImageView
-            android:padding="12dp"
+            android:layout_marginRight="20dp"
+            android:padding="13dp"
             android:layout_weight="1"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/ic_icon4"/>
-
     </LinearLayout>
 </RelativeLayout>
