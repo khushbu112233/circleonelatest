@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.amplearch.circleonet">
 
+    <uses-permission android:name="android.permission.NFC" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,32 +14,33 @@
         <activity android:name=".Activity.CardsActivity" />
         <activity android:name=".Activity.EventsActivity" />
         <activity android:name=".Activity.EventDetail" />
-        <activity android:name=".Activity.Connect"></activity>
-        <activity android:name=".Activity.SortAndFilterOption"></activity>
-        <activity android:name=".Activity.EventsSelectOption"></activity>
+        <activity android:name=".Activity.Connect" />
+        <activity android:name=".Activity.SortAndFilterOption" />
+        <activity android:name=".Activity.EventsSelectOption" />
         <activity
             android:name=".Activity.Profile"
             android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.LoginActivity"
-            android:theme="@style/NoActionbar">
-        </activity>
+            android:theme="@style/NoActionbar"></activity>
         <activity
             android:name=".Activity.CardDetail"
-            android:theme="@style/NoActionbar"></activity>
+            android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.ConnectActivity"
-            android:theme="@style/NoActionbar"></activity>
+            android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.Connect3Activity"
-            android:theme="@style/NoActionbar"></activity>
+            android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.Connect4Activity"
-            android:theme="@style/NoActionbar"></activity>
+            android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.Connect5Activity"
-            android:theme="@style/NoActionbar"></activity>
+            android:theme="@style/NoActionbar" />
         <activity android:name=".Activity.CustomDate">
+        </activity>
+        <activity android:name=".Activity.NFCDemo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

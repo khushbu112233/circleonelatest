@@ -45,11 +45,12 @@ public final class R {
     }
     public static final class drawable {
         public static final int button_next_month_selector = 0x7f020000;
-        public static final int button_previous_month_selector = 0x7f020001;
-        public static final int ic_arrow_up_blue = 0x7f020002;
-        public static final int ic_arrow_up_blue_soft = 0x7f020003;
-        public static final int ic_arrow_up_gray = 0x7f020004;
-        public static final int ic_arrow_up_gray_soft = 0x7f020005;
+        public static final int ic_arrow_up_blue = 0x7f020001;
+        public static final int ic_arrow_up_blue_soft = 0x7f020002;
+        public static final int ic_arrow_up_gray = 0x7f020003;
+        public static final int ic_arrow_up_gray_soft = 0x7f020004;
+        public static final int ic_next = 0x7f020005;
+        public static final int ic_previous = 0x7f020006;
     }
     public static final class id {
         public static final int dateTitle = 0x7f070004;

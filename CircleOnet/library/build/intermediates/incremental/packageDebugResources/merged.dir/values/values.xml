@@ -15,7 +15,7 @@
     <dimen name="dayOfWeekTextSize">16sp</dimen>
     <dimen name="day_of_month_background_size">32dp</dimen>
     <dimen name="minDayCellHeight">40dp</dimen>
-    <dimen name="padding">8dp</dimen>
+    <dimen name="padding">10dp</dimen>
     <dimen name="underline_height">2dp</dimen>
     <dimen name="underline_weight">6dp</dimen>
     <dimen name="weekTitlePaddingBottom">8dp</dimen>

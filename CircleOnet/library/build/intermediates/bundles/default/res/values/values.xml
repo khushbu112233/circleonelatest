@@ -22,7 +22,7 @@
     <dimen name="weekTitlePaddingTop">8dp</dimen>
     <style name="AppBaseTheme" parent="android:Theme.Light"/>
     <style name="AppTheme" parent="AppBaseTheme">
-        
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
     <style name="CalendarView"/>
     <style name="CalendarView.DayOfTheMonth">

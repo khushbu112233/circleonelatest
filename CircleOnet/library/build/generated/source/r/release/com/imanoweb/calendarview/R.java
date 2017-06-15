@@ -166,6 +166,8 @@ containing a value of this type.
  API 14 theme customizations can go here. 
          */
         public static int AppBaseTheme=0x7f040000;
+        /**  All customizations that are NOT specific to a particular API-level can go here. 
+         */
         public static int AppTheme=0x7f040001;
         public static int CalendarView=0x7f040002;
         public static int CalendarView_DayOfTheMonth=0x7f040003;
