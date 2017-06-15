@@ -12,40 +12,38 @@
         <activity android:name=".Activity.CardsActivity" />
         <activity android:name=".Activity.EventsActivity" />
         <activity android:name=".Activity.EventDetail" />
-        <activity android:name=".Activity.Connect" >
-        </activity>
-        <activity android:name=".Activity.SortAndFilterOption" >
-            </activity>
-        <activity android:name=".Activity.EventsSelectOption" >
-            </activity>
-        <activity android:name=".Activity.Profile"
-            android:theme="@style/NoActionbar"/>
+        <activity android:name=".Activity.Connect"></activity>
+        <activity android:name=".Activity.SortAndFilterOption"></activity>
+        <activity android:name=".Activity.EventsSelectOption"></activity>
+        <activity
+            android:name=".Activity.Profile"
+            android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.LoginActivity"
             android:theme="@style/NoActionbar">
+        </activity>
+        <activity
+            android:name=".Activity.CardDetail"
+            android:theme="@style/NoActionbar"></activity>
+        <activity
+            android:name=".Activity.ConnectActivity"
+            android:theme="@style/NoActionbar"></activity>
+        <activity
+            android:name=".Activity.Connect3Activity"
+            android:theme="@style/NoActionbar"></activity>
+        <activity
+            android:name=".Activity.Connect4Activity"
+            android:theme="@style/NoActionbar"></activity>
+        <activity
+            android:name=".Activity.Connect5Activity"
+            android:theme="@style/NoActionbar"></activity>
+        <activity android:name=".Activity.CustomDate">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Activity.CardDetail"
-            android:theme="@style/NoActionbar">
-        </activity>
-        <activity
-            android:name=".Activity.ConnectActivity"
-            android:theme="@style/NoActionbar" >
-            </activity>
-        <activity
-            android:name=".Activity.Connect3Activity"
-            android:theme="@style/NoActionbar" >
-            </activity>
-        <activity
-            android:name=".Activity.Connect4Activity"
-            android:theme="@style/NoActionbar" >
-            </activity>
-        <activity android:name=".Activity.Connect5Activity" android:theme="@style/NoActionbar">
-            </activity>
     </application>
+
 </manifest>

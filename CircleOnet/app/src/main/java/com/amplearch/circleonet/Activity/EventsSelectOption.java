@@ -22,6 +22,6 @@ public class EventsSelectOption extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.custom_actionbar);
 
         actionText = (TextView) findViewById(R.id.mytext);
-        actionText.setText("Sort and Filter");
+        actionText.setText("Events");
     }
 }
