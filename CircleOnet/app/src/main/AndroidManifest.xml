@@ -3,6 +3,7 @@
     package="com.amplearch.circleonet">
 
     <uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -22,7 +23,7 @@
             android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.LoginActivity"
-            android:theme="@style/NoActionbar"></activity>
+            android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.CardDetail"
             android:theme="@style/NoActionbar" />
@@ -38,9 +39,10 @@
         <activity
             android:name=".Activity.Connect5Activity"
             android:theme="@style/NoActionbar" />
-        <activity android:name=".Activity.CustomDate">
-        </activity>
+        <activity android:name=".Activity.CustomDate"></activity>
         <activity android:name=".Activity.NFCDemo">
+        </activity>
+        <activity android:name=".Activity.VolleyDemo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
