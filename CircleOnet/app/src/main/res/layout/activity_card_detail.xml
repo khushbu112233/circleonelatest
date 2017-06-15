@@ -23,7 +23,7 @@
 
         </android.support.design.widget.AppBarLayout>
 
-    <com.amplearch.circleonet.StickyScrollView
+    <com.amplearch.circleonet.Utils.StickyScrollView
         android:layout_marginBottom="65dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -499,7 +499,7 @@
 
         </LinearLayout>
 
-    </com.amplearch.circleonet.StickyScrollView>
+    </com.amplearch.circleonet.Utils.StickyScrollView>
 
 
     <LinearLayout

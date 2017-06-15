@@ -6,6 +6,7 @@
     android:background="@color/colorPrimary">
 
     <ImageView
+        android:id="@+id/imgLogo"
         android:layout_alignParentLeft="true"
         android:background="@drawable/temp_logo"
         android:layout_centerVertical="true"

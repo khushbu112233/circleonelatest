@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.amplearch.circleonet.List1Fragment">
+    tools:context="com.amplearch.circleonet.Fragments.List1Fragment">
 
     <!-- TODO: Update blank fragment layout -->
     <android.support.v4.view.ViewPager

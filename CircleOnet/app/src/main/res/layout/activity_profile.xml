@@ -123,7 +123,7 @@
     </FrameLayout>
 
 
-    <com.amplearch.circleonet.StickyScrollView
+    <com.amplearch.circleonet.Utils.StickyScrollView
         android:layout_above="@+id/lnrBottomTab"
         android:layout_below="@+id/frame1"
         android:layout_width="match_parent"
@@ -508,7 +508,7 @@
                 android:layout_height="match_parent" />
         </LinearLayout>
 
-    </com.amplearch.circleonet.StickyScrollView>
+    </com.amplearch.circleonet.Utils.StickyScrollView>
 
 
     <LinearLayout
