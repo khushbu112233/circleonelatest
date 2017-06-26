@@ -62,7 +62,7 @@ public class CardsActivity extends AppCompatActivity {
         List<NFCModel> allTags = db.getAllNFC();
         for (NFCModel tag : allTags) {
             Log.d("StoreLocation Name", tag.getCard_front().toString());
-            Toast.makeText(getApplicationContext(), tag.getName() + " " + tag.getCard_front().toString() + " " + tag.getActive(), Toast.LENGTH_LONG).show();
+           // Toast.makeText(getApplicationContext(), tag.getName() + " " + tag.getCard_front().toString() + " " + tag.getActive(), Toast.LENGTH_LONG).show();
 
         }
 

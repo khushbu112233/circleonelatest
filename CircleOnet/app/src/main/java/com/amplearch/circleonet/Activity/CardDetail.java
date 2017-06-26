@@ -1,5 +1,6 @@
 package com.amplearch.circleonet.Activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -13,12 +14,21 @@ import com.amplearch.circleonet.R;
 
 import java.util.ArrayList;
 
-public class CardDetail extends AppCompatActivity {
+import be.appfoundry.nfclibrary.activities.NfcActivity;
+import be.appfoundry.nfclibrary.utilities.interfaces.NfcReadUtility;
+import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
+
+public class CardDetail extends NfcActivity {
 
     ViewPager mViewPager;
     private ArrayList<Integer> image = new ArrayList<>();
     private CardSwipe myPager ;
     private ImageView imgCards, imgConnect, imgEvents, imgProfile, imgBack;
+    private static final String TAG = NFCDemo.class.getName();
+
+    NfcReadUtility mNfcReadUtility = new NfcReadUtilityImpl();
+    ProgressDialog mProgressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
