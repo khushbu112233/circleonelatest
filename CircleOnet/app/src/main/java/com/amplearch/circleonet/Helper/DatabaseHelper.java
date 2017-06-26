@@ -387,44 +387,50 @@ public class DatabaseHelper extends SQLiteOpenHelper
 	/*
 	 * get single todo
 	 */
-	public NFCModel getNFCDatabyID(long todo_id) {
-		SQLiteDatabase db = this.getReadableDatabase();
+    public List<NFCModel> getNFCbyTag(String tag) {
+        List<NFCModel> tags = new ArrayList<NFCModel>();
+        String selectQuery = "SELECT  * FROM " + TABLE_NFC + " WHERE " + KEY_NFC_TAG + "='" + tag + "'";
 
-		String selectQuery = "SELECT  * FROM " + TABLE_NFC + " WHERE " + KEY_ID + " = " + todo_id;
+        Log.e(LOG, selectQuery);
 
-		Log.e(LOG, selectQuery);
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
 
-		Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                NFCModel td = new NFCModel();
+                td.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+                td.setName((c.getString(c.getColumnIndex(KEY_NAME))));
+                td.setCompany(c.getString(c.getColumnIndex(KEY_COMPANY)));
+                td.setDesignation(c.getString(c.getColumnIndex(KEY_DESIGNATION)));
+                td.setMob_no(c.getString(c.getColumnIndex(KEY_MOB)));
+                td.setWork_no(c.getString(c.getColumnIndex(KEY_WORK)));
+                td.setPh_no(c.getString(c.getColumnIndex(KEY_PH)));
+                td.setEmail(c.getString(c.getColumnIndex(KEY_EMAIL)));
+                td.setWebsite(c.getString(c.getColumnIndex(KEY_WEBSITE)));
+                td.setAddress(c.getString(c.getColumnIndex(KEY_ADDRESS)));
+                td.setLat(c.getString(c.getColumnIndex(KEY_LAT)));
+                td.setLng(c.getString(c.getColumnIndex(KEY_LNG)));
+                td.setRemark(c.getString(c.getColumnIndex(KEY_REMARK)));
+                td.setFb_id(c.getString(c.getColumnIndex(KEY_FACEBOOK_ID)));
+                td.setLinkedin_id(c.getString(c.getColumnIndex(KEY_LINKEDIN_ID)));
+                td.setGoogle_id(c.getString(c.getColumnIndex(KEY_GOOGLE_ID)));
+                td.setTwitter_id(c.getString(c.getColumnIndex(KEY_TWITTER_ID)));
+                td.setYoutube_id(c.getString(c.getColumnIndex(KEY_YOUTUBE_ID)));
+                td.setCard_front(c.getBlob(c.getColumnIndex(KEY_CARD_FRONT)));
+                td.setCard_back(c.getBlob(c.getColumnIndex(KEY_CARD_BACK)));
+                td.setActive(c.getString(c.getColumnIndex(KEY_ACTIVE)));
+                td.setNfc_tag(c.getString(c.getColumnIndex(KEY_NFC_TAG)));
+                td.setUser_image(c.getBlob(c.getColumnIndex(KEY_USER_IMG)));
 
-		if (c != null)
-			c.moveToFirst();
+                // adding to todo list
+                tags.add(td);
+            } while (c.moveToNext());
+        }
 
-		NFCModel td = new NFCModel();
-		td.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-		td.setName((c.getString(c.getColumnIndex(KEY_NAME))));
-		td.setCompany(c.getString(c.getColumnIndex(KEY_COMPANY)));
-        td.setDesignation(c.getString(c.getColumnIndex(KEY_DESIGNATION)));
-        td.setMob_no(c.getString(c.getColumnIndex(KEY_MOB)));
-        td.setWork_no(c.getString(c.getColumnIndex(KEY_WORK)));
-        td.setPh_no(c.getString(c.getColumnIndex(KEY_PH)));
-        td.setEmail(c.getString(c.getColumnIndex(KEY_EMAIL)));
-        td.setWebsite(c.getString(c.getColumnIndex(KEY_WEBSITE)));
-        td.setAddress(c.getString(c.getColumnIndex(KEY_ADDRESS)));
-        td.setLat(c.getString(c.getColumnIndex(KEY_LAT)));
-        td.setLng(c.getString(c.getColumnIndex(KEY_LNG)));
-        td.setRemark(c.getString(c.getColumnIndex(KEY_REMARK)));
-        td.setFb_id(c.getString(c.getColumnIndex(KEY_FACEBOOK_ID)));
-        td.setLinkedin_id(c.getString(c.getColumnIndex(KEY_LINKEDIN_ID)));
-        td.setGoogle_id(c.getString(c.getColumnIndex(KEY_GOOGLE_ID)));
-        td.setTwitter_id(c.getString(c.getColumnIndex(KEY_TWITTER_ID)));
-        td.setYoutube_id(c.getString(c.getColumnIndex(KEY_YOUTUBE_ID)));
-        td.setCard_front(c.getBlob(c.getColumnIndex(KEY_CARD_FRONT)));
-        td.setCard_back(c.getBlob(c.getColumnIndex(KEY_CARD_BACK)));
-        td.setActive(c.getString(c.getColumnIndex(KEY_ACTIVE)));
-        td.setNfc_tag(c.getString(c.getColumnIndex(KEY_NFC_TAG)));
-
-		return td;
-	}
+        return tags;
+    }
 
     public List<NFCModel> getActiveNFC() {
         List<NFCModel> tags = new ArrayList<NFCModel>();
