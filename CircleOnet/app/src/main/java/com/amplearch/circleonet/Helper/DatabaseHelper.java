@@ -6,10 +6,16 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.amplearch.circleonet.Model.NFCModel;
+import com.amplearch.circleonet.R;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,6 +25,8 @@ import java.util.Locale;
 
 public class DatabaseHelper extends SQLiteOpenHelper
 {
+
+    Context context;
 	// Logcat tag
 	private static final String LOG = "DatabaseHelper";
 	// Database Version
@@ -48,6 +56,9 @@ public class DatabaseHelper extends SQLiteOpenHelper
     private static final String KEY_YOUTUBE_ID = "youtube_id";
     private static final String KEY_CARD_FRONT = "card_front";
 	private static final String KEY_CARD_BACK = "card_back";
+    private static final String KEY_ACTIVE = "active";
+    private static final String KEY_NFC_TAG = "nfc_tag";
+    private static final String KEY_USER_IMG = "user_image";
 
 	private static final String CREATE_TABLE_NFC = "CREATE TABLE "
 			+ TABLE_NFC
@@ -71,11 +82,15 @@ public class DatabaseHelper extends SQLiteOpenHelper
             + KEY_TWITTER_ID + " TEXT,"
             + KEY_YOUTUBE_ID + " TEXT,"
             + KEY_CARD_FRONT + " BLOB,"
-            + KEY_CARD_BACK + " BLOB"
+            + KEY_CARD_BACK + " BLOB,"
+            + KEY_ACTIVE + " TEXT,"
+            + KEY_NFC_TAG + " TEXT,"
+            + KEY_USER_IMG + " BLOB"
 			+ ")";
 
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
 	}
 
     public boolean deleteNFCbyID(String id)
@@ -117,7 +132,74 @@ public class DatabaseHelper extends SQLiteOpenHelper
 		// creating required tables
 		db.execSQL(CREATE_TABLE_NFC);
 
-		ContentValues values = new ContentValues();
+        ByteArrayOutputStream baosf1 = new ByteArrayOutputStream();
+        ByteArrayOutputStream baosb1 = new ByteArrayOutputStream();
+        ByteArrayOutputStream baosf2 = new ByteArrayOutputStream();
+        ByteArrayOutputStream baosb2 = new ByteArrayOutputStream();
+        ByteArrayOutputStream baosf3 = new ByteArrayOutputStream();
+        ByteArrayOutputStream baosb3 = new ByteArrayOutputStream();
+        ByteArrayOutputStream baosf4 = new ByteArrayOutputStream();
+        ByteArrayOutputStream baosb4 = new ByteArrayOutputStream();
+
+        Bitmap bitmapf1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.card1f);
+        Bitmap bitmapb1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.card1b);
+
+        Bitmap bitmapf2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.card2f);
+        Bitmap bitmapb2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.card2f);
+
+        Bitmap bitmapf3 = BitmapFactory.decodeResource(context.getResources(), R.drawable.card1_front);
+        Bitmap bitmapb3 = BitmapFactory.decodeResource(context.getResources(), R.drawable.card1_back);
+
+        Bitmap bitmapf4 = BitmapFactory.decodeResource(context.getResources(), R.drawable.card2_front);
+        Bitmap bitmapb4 = BitmapFactory.decodeResource(context.getResources(), R.drawable.card2_back);
+
+        bitmapf1.compress(Bitmap.CompressFormat.JPEG, 100, baosf1);
+        bitmapb1.compress(Bitmap.CompressFormat.JPEG, 100, baosb1);
+
+        bitmapf2.compress(Bitmap.CompressFormat.JPEG, 100, baosf2);
+        bitmapb2.compress(Bitmap.CompressFormat.JPEG, 100, baosb2);
+
+        bitmapf3.compress(Bitmap.CompressFormat.JPEG, 100, baosf3);
+        bitmapb3.compress(Bitmap.CompressFormat.JPEG, 100, baosb3);
+
+        bitmapf4.compress(Bitmap.CompressFormat.JPEG, 100, baosf4);
+        bitmapb4.compress(Bitmap.CompressFormat.JPEG, 100, baosb4);
+
+        byte[] imageBytesf1 = baosf1.toByteArray();
+        byte[] imageBytesb1 = baosb1.toByteArray();
+
+        byte[] imageBytesf2 = baosf2.toByteArray();
+        byte[] imageBytesb2 = baosb2.toByteArray();
+
+        byte[] imageBytesf3 = baosf3.toByteArray();
+        byte[] imageBytesb3 = baosb3.toByteArray();
+
+        byte[] imageBytesf4 = baosf4.toByteArray();
+        byte[] imageBytesb4 = baosb4.toByteArray();
+       // String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+
+        ByteArrayOutputStream user1 = new ByteArrayOutputStream();
+        ByteArrayOutputStream user2 = new ByteArrayOutputStream();
+        ByteArrayOutputStream user3 = new ByteArrayOutputStream();
+        ByteArrayOutputStream user4 = new ByteArrayOutputStream();
+
+        Bitmap bitmapu1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.profile2);
+        Bitmap bitmapu2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.profile1);
+        Bitmap bitmapu3 = BitmapFactory.decodeResource(context.getResources(), R.drawable.profile3);
+        Bitmap bitmapu4 = BitmapFactory.decodeResource(context.getResources(), R.drawable.profile4);
+
+        bitmapu1.compress(Bitmap.CompressFormat.JPEG, 100, user1);
+        bitmapu2.compress(Bitmap.CompressFormat.JPEG, 100, user2);
+        bitmapu3.compress(Bitmap.CompressFormat.JPEG, 100, user3);
+        bitmapu4.compress(Bitmap.CompressFormat.JPEG, 100, user4);
+
+        byte[] imageBytesu1 = user1.toByteArray();
+        byte[] imageBytesu2 = user2.toByteArray();
+        byte[] imageBytesu3 = user3.toByteArray();
+        byte[] imageBytesu4 = user4.toByteArray();
+
+
+        ContentValues values = new ContentValues();
         values.put(KEY_NAME, "Kajol");
         values.put(KEY_COMPANY, "Google");
         values.put(KEY_DESIGNATION, "Android Developer");
@@ -135,80 +217,84 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_GOOGLE_ID, "www.google.com");
         values.put(KEY_TWITTER_ID, "www.twitter.com");
         values.put(KEY_YOUTUBE_ID, "www.twitter.com");
-        values.put(KEY_CARD_FRONT, favourites.getCard_front());
-        values.put(KEY_CARD_BACK, favourites.getCard_back());
+        values.put(KEY_CARD_FRONT, imageBytesf1);
+        values.put(KEY_CARD_BACK, imageBytesb1);
+        values.put(KEY_ACTIVE, "true");
+        values.put(KEY_NFC_TAG, "046C78E1ED2580");
+        values.put(KEY_USER_IMG, imageBytesu1);
 		db.insert(TABLE_NFC, null, values);
 
-		/*insertFavValues.put("product_id", "6");
-		insertFavValues.put("user_id", "22");
-		db.insert(TABLE_FAVOURITES, null, insertFavValues);
+        values.put(KEY_NAME, "Sameer");
+        values.put(KEY_COMPANY, "Apple");
+        values.put(KEY_DESIGNATION, "IOS Developer");
+        values.put(KEY_MOB, "9874561230");
+        values.put(KEY_WORK, "0791234567");
+        values.put(KEY_PH, "0792456789");
+        values.put(KEY_EMAIL, "sameer.ample@gmail.com");
+        values.put(KEY_WEBSITE, "www.iphone.com");
+        values.put(KEY_ADDRESS, "1600 Amphitheatre Parkway, Mountain View, CA");
+        values.put(KEY_LAT, "37.4224082");
+        values.put(KEY_LNG, "-122.0856086");
+        values.put(KEY_REMARK, "Nothing");
+        values.put(KEY_FACEBOOK_ID, "www.facebook.com");
+        values.put(KEY_LINKEDIN_ID, "www.linkedin.com");
+        values.put(KEY_GOOGLE_ID, "www.google.com");
+        values.put(KEY_TWITTER_ID, "www.twitter.com");
+        values.put(KEY_YOUTUBE_ID, "www.twitter.com");
+        values.put(KEY_CARD_FRONT, imageBytesf2);
+        values.put(KEY_CARD_BACK, imageBytesb2);
+        values.put(KEY_ACTIVE, "true");
+        values.put(KEY_NFC_TAG, "0438FB22D84981");
+        values.put(KEY_USER_IMG, imageBytesu2);
+        db.insert(TABLE_NFC, null, values);
 
-		insertFavValues.put("product_id", "7");
-		insertFavValues.put("user_id", "55");
-		db.insert(TABLE_FAVOURITES, null, insertFavValues);
+        values.put(KEY_NAME, "Jay");
+        values.put(KEY_COMPANY, "Facebook");
+        values.put(KEY_DESIGNATION, "Android Developer");
+        values.put(KEY_MOB, "9874561230");
+        values.put(KEY_WORK, "0791234567");
+        values.put(KEY_PH, "0792456789");
+        values.put(KEY_EMAIL, "jay.ample@gmail.com");
+        values.put(KEY_WEBSITE, "www.facebook.com");
+        values.put(KEY_ADDRESS, "1600 Amphitheatre Parkway, Mountain View, CA");
+        values.put(KEY_LAT, "37.4224082");
+        values.put(KEY_LNG, "-122.0856086");
+        values.put(KEY_REMARK, "Nothing");
+        values.put(KEY_FACEBOOK_ID, "www.facebook.com");
+        values.put(KEY_LINKEDIN_ID, "www.linkedin.com");
+        values.put(KEY_GOOGLE_ID, "www.google.com");
+        values.put(KEY_TWITTER_ID, "www.twitter.com");
+        values.put(KEY_YOUTUBE_ID, "www.twitter.com");
+        values.put(KEY_CARD_FRONT, imageBytesf3);
+        values.put(KEY_CARD_BACK, imageBytesb3);
+        values.put(KEY_ACTIVE, "false");
+        values.put(KEY_NFC_TAG, "0476B692744080");
+        values.put(KEY_USER_IMG, imageBytesu3);
+        db.insert(TABLE_NFC, null, values);
 
-		insertFavValues.put("product_id", "10");
-		insertFavValues.put("user_id", "45");
-		db.insert(TABLE_FAVOURITES, null, insertFavValues);
-
-		ContentValues insertVoucherValues = new ContentValues();
-		insertVoucherValues.put("product_id", "7");
-		insertVoucherValues.put("store_name", "Life Style");
-		insertVoucherValues.put("lat", "23.057506");
-		insertVoucherValues.put("lng", "72.543392");
-		insertVoucherValues.put("offer_title", "50% Off");
-		insertVoucherValues.put("offer_desc", "Mega Sale. 50% Off on Summer Collection. ");
-		insertVoucherValues.put("start_date", "05/04/2017");
-		insertVoucherValues.put("end_date", "05/05/2017");
-		insertVoucherValues.put("message", "Mega Sale 50% Off on Life Style Clothing");
-		insertVoucherValues.put("uuid", "e71c1a56-58e5-7b1f-abbe-9bf13e06f36a");
-		insertVoucherValues.put("major", "0");
-		insertVoucherValues.put("minor", "0");
-		db.insert(TABLE_VOUCHER, null, insertVoucherValues);*/
-
-		/*insertVoucherValues.put("product_id", "5");
-		insertVoucherValues.put("store_name", "Levie");
-		insertVoucherValues.put("lat", "23.057506");
-		insertVoucherValues.put("lng", "72.543392");
-		insertVoucherValues.put("offer_title", "50% Off");
-		insertVoucherValues.put("offer_desc", "75% Off on HandBags ");
-		insertVoucherValues.put("start_date", "05/04/2017");
-		insertVoucherValues.put("end_date", "05/05/2017");
-		insertVoucherValues.put("message", "Offer For limited peroid");
-		insertVoucherValues.put("uuid", "f18aa677-3b40-48c5-a937-9e2c9e9f8");
-		insertVoucherValues.put("major", "0");
-		insertVoucherValues.put("minor", "0");
-		db.insert(TABLE_VOUCHER, null, insertVoucherValues);*/
-
-
-		/*ContentValues insertValues = new ContentValues();
-		insertValues.put("store_name", "Ghatlodia Police Station");
-		insertValues.put("lat", "23.057506");
-		insertValues.put("lng", "72.543392");
-		insertValues.put("offer_title", "Cashbak");
-		insertValues.put("offer_desc", "70% Cashback, Hurry up. Offer till 6th April, 2017 only. Men's wear discount 50%, Women's Wear discount 75%.");
-		insertValues.put("start_date", "08/03/2017");
-		insertValues.put("end_date", "06/04/2017");
-		db.insert(TABLE_STORELOCATION, null, insertValues);
-
-		insertValues.put("store_name", "Vikram Appts");
-		insertValues.put("lat", "23.012102");
-		insertValues.put("lng", "72.522634");
-		insertValues.put("offer_title", "Redeem Code");
-		insertValues.put("offer_desc", "Hurry up. Offer till 6th April, 2017 only. Men's wear discount 50%, Women's Wear discount 75%");
-		insertValues.put("start_date", "08/02/2015");
-		insertValues.put("end_date", "14/02/2016");
-		db.insert(TABLE_STORELOCATION, null, insertValues);
-
-		insertValues.put("store_name", "Titanium City Center");
-		insertValues.put("lat", "23.012102");
-		insertValues.put("lng", "72.522634");
-		insertValues.put("offer_title", "Whole Sale");
-		insertValues.put("offer_desc", "70% Cashback");
-		insertValues.put("start_date", "08/02/2015");
-		insertValues.put("end_date", "14/02/2016");
-		db.insert(TABLE_STORELOCATION, null, insertValues);*/
-		//db.execSQL(CREATE_TABLE_TODO_TAG);
+        values.put(KEY_NAME, "Jacob");
+        values.put(KEY_COMPANY, "Enclara");
+        values.put(KEY_DESIGNATION, "Java Developer");
+        values.put(KEY_MOB, "9874561230");
+        values.put(KEY_WORK, "0791234567");
+        values.put(KEY_PH, "0792456789");
+        values.put(KEY_EMAIL, "jacob.enclara@gmail.com");
+        values.put(KEY_WEBSITE, "www.enclara.com");
+        values.put(KEY_ADDRESS, "1600 Amphitheatre Parkway, Mountain View, CA");
+        values.put(KEY_LAT, "37.4224082");
+        values.put(KEY_LNG, "-122.0856086");
+        values.put(KEY_REMARK, "Nothing");
+        values.put(KEY_FACEBOOK_ID, "www.facebook.com");
+        values.put(KEY_LINKEDIN_ID, "www.linkedin.com");
+        values.put(KEY_GOOGLE_ID, "www.google.com");
+        values.put(KEY_TWITTER_ID, "www.twitter.com");
+        values.put(KEY_YOUTUBE_ID, "www.twitter.com");
+        values.put(KEY_CARD_FRONT, imageBytesf4);
+        values.put(KEY_CARD_BACK, imageBytesb4);
+        values.put(KEY_ACTIVE, "true");
+        values.put(KEY_NFC_TAG, "04787192744080");
+        values.put(KEY_USER_IMG, imageBytesu4);
+        db.insert(TABLE_NFC, null, values);
 	}
 
 	@Override
@@ -244,6 +330,9 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_YOUTUBE_ID, favourites.getYoutube_id());
         values.put(KEY_CARD_FRONT, favourites.getCard_front());
         values.put(KEY_CARD_BACK, favourites.getCard_back());
+        values.put(KEY_ACTIVE, favourites.getActive());
+        values.put(KEY_NFC_TAG, favourites.getNfc_tag());
+        values.put(KEY_USER_IMG, favourites.getUser_image());
 
         // insert row
 		long todo_id = db.insert(TABLE_NFC, null, values);
@@ -331,31 +420,100 @@ public class DatabaseHelper extends SQLiteOpenHelper
         td.setYoutube_id(c.getString(c.getColumnIndex(KEY_YOUTUBE_ID)));
         td.setCard_front(c.getBlob(c.getColumnIndex(KEY_CARD_FRONT)));
         td.setCard_back(c.getBlob(c.getColumnIndex(KEY_CARD_BACK)));
+        td.setActive(c.getString(c.getColumnIndex(KEY_ACTIVE)));
+        td.setNfc_tag(c.getString(c.getColumnIndex(KEY_NFC_TAG)));
 
 		return td;
 	}
 
-	public String[] getAllNFC() {
-		List<String> todos = new ArrayList<String>();
-		String selectQuery = "SELECT  * FROM " + TABLE_NFC;
+    public List<NFCModel> getActiveNFC() {
+        List<NFCModel> tags = new ArrayList<NFCModel>();
+        String selectQuery = "SELECT  * FROM " + TABLE_NFC + " WHERE " + KEY_ACTIVE + "='true'";
 
-		Log.e(LOG, selectQuery);
+        Log.e(LOG, selectQuery);
 
-		SQLiteDatabase db = this.getReadableDatabase();
-		Cursor c = db.rawQuery(selectQuery, null);
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
 
-		// looping through all rows and adding to list
-		if (c.moveToFirst()) {
-			do {
-				// adding to todo list
-				todos.add((c.getString(c.getColumnIndex(KEY_ID))));
-			} while (c.moveToNext());
-		}
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                NFCModel td = new NFCModel();
+                td.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+                td.setName((c.getString(c.getColumnIndex(KEY_NAME))));
+                td.setCompany(c.getString(c.getColumnIndex(KEY_COMPANY)));
+                td.setDesignation(c.getString(c.getColumnIndex(KEY_DESIGNATION)));
+                td.setMob_no(c.getString(c.getColumnIndex(KEY_MOB)));
+                td.setWork_no(c.getString(c.getColumnIndex(KEY_WORK)));
+                td.setPh_no(c.getString(c.getColumnIndex(KEY_PH)));
+                td.setEmail(c.getString(c.getColumnIndex(KEY_EMAIL)));
+                td.setWebsite(c.getString(c.getColumnIndex(KEY_WEBSITE)));
+                td.setAddress(c.getString(c.getColumnIndex(KEY_ADDRESS)));
+                td.setLat(c.getString(c.getColumnIndex(KEY_LAT)));
+                td.setLng(c.getString(c.getColumnIndex(KEY_LNG)));
+                td.setRemark(c.getString(c.getColumnIndex(KEY_REMARK)));
+                td.setFb_id(c.getString(c.getColumnIndex(KEY_FACEBOOK_ID)));
+                td.setLinkedin_id(c.getString(c.getColumnIndex(KEY_LINKEDIN_ID)));
+                td.setGoogle_id(c.getString(c.getColumnIndex(KEY_GOOGLE_ID)));
+                td.setTwitter_id(c.getString(c.getColumnIndex(KEY_TWITTER_ID)));
+                td.setYoutube_id(c.getString(c.getColumnIndex(KEY_YOUTUBE_ID)));
+                td.setCard_front(c.getBlob(c.getColumnIndex(KEY_CARD_FRONT)));
+                td.setCard_back(c.getBlob(c.getColumnIndex(KEY_CARD_BACK)));
+                td.setActive(c.getString(c.getColumnIndex(KEY_ACTIVE)));
+                td.setNfc_tag(c.getString(c.getColumnIndex(KEY_NFC_TAG)));
+                td.setUser_image(c.getBlob(c.getColumnIndex(KEY_USER_IMG)));
 
-		String[] FavId = new String[todos.size()];
-		FavId = todos.toArray(FavId);//now strings is the resulting array
+                // adding to todo list
+                tags.add(td);
+            } while (c.moveToNext());
+        }
 
-		return FavId;
+        return tags;
+    }
+
+
+    public List<NFCModel> getAllNFC() {
+        List<NFCModel> tags = new ArrayList<NFCModel>();
+        String selectQuery = "SELECT  * FROM " + TABLE_NFC;
+
+        Log.e(LOG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                NFCModel td = new NFCModel();
+                td.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+                td.setName((c.getString(c.getColumnIndex(KEY_NAME))));
+                td.setCompany(c.getString(c.getColumnIndex(KEY_COMPANY)));
+                td.setDesignation(c.getString(c.getColumnIndex(KEY_DESIGNATION)));
+                td.setMob_no(c.getString(c.getColumnIndex(KEY_MOB)));
+                td.setWork_no(c.getString(c.getColumnIndex(KEY_WORK)));
+                td.setPh_no(c.getString(c.getColumnIndex(KEY_PH)));
+                td.setEmail(c.getString(c.getColumnIndex(KEY_EMAIL)));
+                td.setWebsite(c.getString(c.getColumnIndex(KEY_WEBSITE)));
+                td.setAddress(c.getString(c.getColumnIndex(KEY_ADDRESS)));
+                td.setLat(c.getString(c.getColumnIndex(KEY_LAT)));
+                td.setLng(c.getString(c.getColumnIndex(KEY_LNG)));
+                td.setRemark(c.getString(c.getColumnIndex(KEY_REMARK)));
+                td.setFb_id(c.getString(c.getColumnIndex(KEY_FACEBOOK_ID)));
+                td.setLinkedin_id(c.getString(c.getColumnIndex(KEY_LINKEDIN_ID)));
+                td.setGoogle_id(c.getString(c.getColumnIndex(KEY_GOOGLE_ID)));
+                td.setTwitter_id(c.getString(c.getColumnIndex(KEY_TWITTER_ID)));
+                td.setYoutube_id(c.getString(c.getColumnIndex(KEY_YOUTUBE_ID)));
+                td.setCard_front(c.getBlob(c.getColumnIndex(KEY_CARD_FRONT)));
+                td.setCard_back(c.getBlob(c.getColumnIndex(KEY_CARD_BACK)));
+                td.setActive(c.getString(c.getColumnIndex(KEY_ACTIVE)));
+                td.setNfc_tag(c.getString(c.getColumnIndex(KEY_NFC_TAG)));
+                td.setUser_image(c.getBlob(c.getColumnIndex(KEY_USER_IMG)));
+
+                // adding to tags list
+                tags.add(td);
+            } while (c.moveToNext());
+        }
+        return tags;
 	}
 
 	public int getNFCCount() {
@@ -397,6 +555,9 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_YOUTUBE_ID, favourites.getYoutube_id());
         values.put(KEY_CARD_FRONT, favourites.getCard_front());
         values.put(KEY_CARD_BACK, favourites.getCard_back());
+        values.put(KEY_ACTIVE, favourites.getActive());
+        values.put(KEY_NFC_TAG, favourites.getNfc_tag());
+        values.put(KEY_USER_IMG, favourites.getUser_image());
 
 		// updating row
 		return db.update(TABLE_NFC, values, KEY_ID + " = ?",

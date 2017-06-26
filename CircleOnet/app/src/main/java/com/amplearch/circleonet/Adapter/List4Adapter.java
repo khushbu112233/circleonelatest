@@ -2,6 +2,8 @@ package com.amplearch.circleonet.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +25,11 @@ public class List4Adapter extends ArrayAdapter {
     private Context context;
     private int layoutResourceId;
     private ArrayList<String> data = new ArrayList();
-    private ArrayList<Integer> image = new ArrayList();
+    private ArrayList<byte[]> image = new ArrayList();
     private ArrayList<String> name = new ArrayList();
     private ArrayList<String> designation = new ArrayList();
 
-    public List4Adapter(Context context, int layoutResourceId, ArrayList<Integer> image, ArrayList<String> data, ArrayList<String> name, ArrayList<String> designation) {
+    public List4Adapter(Context context, int layoutResourceId, ArrayList<byte[]> image, ArrayList<String> data, ArrayList<String> name, ArrayList<String> designation) {
         super(context, layoutResourceId, data);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
@@ -64,7 +66,10 @@ public class List4Adapter extends ArrayAdapter {
         }catch (Exception e){
 
         }
-        holder.image.setImageResource(image.get(position));
+        Bitmap bmp = BitmapFactory.decodeByteArray(image.get(position), 0, image.get(position).length);
+        // ImageView image = (ImageView) findViewById(R.id.imageView1);
+
+        holder.image.setImageBitmap(bmp);
         return row;
     }
 

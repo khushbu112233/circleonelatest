@@ -2,7 +2,10 @@ package com.amplearch.circleonet.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.view.PagerAdapter;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,8 @@ import com.amplearch.circleonet.Activity.CardDetail;
 import com.amplearch.circleonet.R;
 import com.bumptech.glide.Glide;
 
+import java.io.ByteArrayOutputStream;
+import java.sql.Blob;
 import java.util.ArrayList;
 
 /**
@@ -23,9 +28,9 @@ import java.util.ArrayList;
 public class MyPager extends PagerAdapter
 {
     Context context ;
-    ArrayList<Integer> image, image1 ;
+    ArrayList<byte[]> image, image1 ;
 
-    public MyPager(Context applicationContext, ArrayList<Integer> image, ArrayList<Integer> image1)
+    public MyPager(Context applicationContext, ArrayList<byte[]> image, ArrayList<byte[]> image1)
     {
         this.context = applicationContext ;
         this.image = image;
@@ -56,14 +61,23 @@ public class MyPager extends PagerAdapter
         try
         {
 
-
             ImageView imageView = (ImageView)view.findViewById(R.id.ivImages);
             ImageView imageView1 = (ImageView)view.findViewById(R.id.ivImages1);
 
-//            imageView.setImageResource(image.get(position));
+            Bitmap bmp = BitmapFactory.decodeByteArray(image.get(position), 0, image.get(position).length);
+           // ImageView image = (ImageView) findViewById(R.id.imageView1);
 
-            Glide.with(context).load(image.get(position)).into(imageView);
-            Glide.with(context).load(image1.get(position)).into(imageView1);
+            imageView.setImageBitmap(bmp);
+
+
+          //  byte[] imgbytes = Base64.decode(image.get(position), Base64.DEFAULT);
+          //  Bitmap bitmap = BitmapFactory.decodeByteArray(image.get(position), 0, image.get(position).length);
+            Bitmap bitmap1 = BitmapFactory.decodeByteArray(image1.get(position), 0, image1.get(position).length);
+
+          //  imageView.setImageBitmap(bitmap);
+            imageView1.setImageBitmap(bitmap1);
+           // Glide.with(context).load(image.get(position)).into(imageView);
+          //  Glide.with(context).load(image1.get(position)).into(imageView1);
 //            Glide.with(context).load(image[position]).into(imageCover);
 
             view.setOnClickListener(new View.OnClickListener(){

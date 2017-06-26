@@ -26,11 +26,14 @@ public class NFCModel {
     String youtube_id;
     byte[] card_front;
     byte[] card_back;
+    String active;
+    String nfc_tag;
+    byte[] user_image;
 
     public NFCModel() {
     }
 
-    public NFCModel(String name, String company, String designation, String mob_no, String work_no, String ph_no, String email, String website, String address, String lat, String lng, String remark, String fb_id, String linkedin_id, String google_id, String twitter_id, String youtube_id, byte[] card_front, byte[] card_back) {
+    public NFCModel(String name, String company, String designation, String mob_no, String work_no, String ph_no, String email, String website, String address, String lat, String lng, String remark, String fb_id, String linkedin_id, String google_id, String twitter_id, String youtube_id, byte[] card_front, byte[] card_back, String active, String nfc_tag, byte[] user_image) {
         this.name = name;
         this.company = company;
         this.designation = designation;
@@ -50,6 +53,9 @@ public class NFCModel {
         this.youtube_id = youtube_id;
         this.card_front = card_front;
         this.card_back = card_back;
+        this.active = active;
+        this.nfc_tag = nfc_tag;
+        this.user_image = user_image;
     }
 
     public int getId() {
@@ -210,5 +216,29 @@ public class NFCModel {
 
     public void setCard_back(byte[] card_back) {
         this.card_back = card_back;
+    }
+
+    public String getActive() {
+        return active;
+    }
+
+    public void setActive(String active) {
+        this.active = active;
+    }
+
+    public String getNfc_tag() {
+        return nfc_tag;
+    }
+
+    public void setNfc_tag(String nfc_tag) {
+        this.nfc_tag = nfc_tag;
+    }
+
+    public byte[] getUser_image() {
+        return user_image;
+    }
+
+    public void setUser_image(byte[] user_image) {
+        this.user_image = user_image;
     }
 }

@@ -12,9 +12,12 @@ import android.widget.ListView;
 
 import com.amplearch.circleonet.Activity.CardDetail;
 import com.amplearch.circleonet.Adapter.List3Adapter;
+import com.amplearch.circleonet.Helper.DatabaseHelper;
+import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -24,6 +27,11 @@ public class List3Fragment extends Fragment {
 
     private ListView listView;
     private List3Adapter gridAdapter;
+    ArrayList<byte[]> imgf;
+    ArrayList<String> name;
+    ArrayList<String> desc;
+    ArrayList<String> designation;
+    DatabaseHelper db ;
 
     public List3Fragment() {
         // Required empty public constructor
@@ -35,48 +43,22 @@ public class List3Fragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list3, container, false);
 
-        ArrayList<Integer> image = new ArrayList<Integer>();
-        image.add(R.drawable.card1f);
-        image.add(R.drawable.card2f);
-        image.add(R.drawable.card3f);
-        image.add(R.drawable.card4f);
-        image.add(R.drawable.card5f);
-        image.add(R.drawable.card6f);
-        image.add(R.drawable.card7f);
-        image.add(R.drawable.card8f);
+        db = new DatabaseHelper(getContext());
+        imgf = new ArrayList<byte[]>();
+        name = new ArrayList<>();
+        desc = new ArrayList<>();
+        designation = new ArrayList<>();
 
-        ArrayList<String> name = new ArrayList<>();
-        name.add("Physician Yong");
-        name.add("Justin Yuan fel");
-        name.add("Physician Yong");
-        name.add("Justin Yuan fel");
-        name.add("Physician Yong");
-        name.add("Physician Yong");
-        name.add("Justin Yuan fel");
-        name.add("Physician Yong");
-
-        ArrayList<String> desc = new ArrayList<>();
-        desc.add("TCMOng Medicare pvt ltd\nTCMOng@tcmong.com.sg\nwww.tcmong.com.sg\n+65 68426188");
-        desc.add("TCMOng Medicare pvt ltd\nTCMOng@tcmong.com.sg\nwww.tcmong.com.sg\n+65 68426188");
-        desc.add("TCMOng Medicare pvt ltd\nTCMOng@tcmong.com.sg\nwww.tcmong.com.sg\n+65 68426188");
-        desc.add("TCMOng Medicare pvt ltd\nTCMOng@tcmong.com.sg\nwww.tcmong.com.sg\n+65 68426188");
-        desc.add("TCMOng Medicare pvt ltd\nTCMOng@tcmong.com.sg\nwww.tcmong.com.sg\n+65 68426188");
-        desc.add("TCMOng Medicare pvt ltd\nTCMOng@tcmong.com.sg\nwww.tcmong.com.sg\n+65 68426188");
-        desc.add("TCMOng Medicare pvt ltd\nTCMOng@tcmong.com.sg\nwww.tcmong.com.sg\n+65 68426188");
-        desc.add("TCMOng Medicare pvt ltd\nTCMOng@tcmong.com.sg\nwww.tcmong.com.sg\n+65 68426188");
-
-        ArrayList<String> designation = new ArrayList<>();
-        designation.add("");
-        designation.add("General Manager");
-        designation.add("");
-        designation.add("");
-        designation.add("General Manager");
-        designation.add("");
-        designation.add("General Manager");
-        designation.add("");
+        List<NFCModel> allTags = db.getActiveNFC();
+        for (NFCModel tag : allTags) {
+            imgf.add(tag.getCard_front());
+            name.add(tag.getName());
+            desc.add(tag.getCompany() + "\n" + tag.getEmail() + "\n" + tag.getWebsite() + "\n" + tag.getMob_no());
+            designation.add(tag.getDesignation());
+        }
 
         listView = (ListView) view.findViewById(R.id.listViewType3);
-        gridAdapter = new List3Adapter(getContext(), R.layout.grid_list3_layout, image, desc, name, designation);
+        gridAdapter = new List3Adapter(getContext(), R.layout.grid_list3_layout, imgf, desc, name, designation);
         listView.setAdapter(gridAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

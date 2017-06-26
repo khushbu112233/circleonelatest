@@ -3,6 +3,7 @@ package com.amplearch.circleonet.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -20,17 +22,22 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amplearch.circleonet.Fragments.CardsFragment;
 import com.amplearch.circleonet.Fragments.ConnectFragment;
 import com.amplearch.circleonet.Fragments.EventsFragment;
 import com.amplearch.circleonet.Fragments.ProfileFragment;
+import com.amplearch.circleonet.Helper.DatabaseHelper;
+import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.Utils.CustomViewPager;
 import com.amplearch.circleonet.Fragments.List1Fragment;
 import com.amplearch.circleonet.Fragments.List2Fragment;
 import com.amplearch.circleonet.Fragments.List3Fragment;
 import com.amplearch.circleonet.Fragments.List4Fragment;
 import com.amplearch.circleonet.R;
+
+import java.util.List;
 
 public class CardsActivity extends AppCompatActivity {
 
@@ -40,6 +47,7 @@ public class CardsActivity extends AppCompatActivity {
     private int actionBarHeight;
     TextView textView;
     int position = 0;
+    DatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +58,17 @@ public class CardsActivity extends AppCompatActivity {
         if(extras != null) {
             position = extras.getInt("viewpager_position");
         }
+        db = new DatabaseHelper(getApplicationContext());
+        List<NFCModel> allTags = db.getAllNFC();
+        for (NFCModel tag : allTags) {
+            Log.d("StoreLocation Name", tag.getCard_front().toString());
+            Toast.makeText(getApplicationContext(), tag.getName() + " " + tag.getCard_front().toString() + " " + tag.getActive(), Toast.LENGTH_LONG).show();
+
+        }
+
+        db.getAllNFC();
+        //SQLiteDatabase sqLiteDatabase = db.getReadableDatabase();
+       //- db.onCreate(sqLiteDatabase);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         final ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
