@@ -8,6 +8,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,7 +19,12 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.amplearch.circleonet.Fragments.CardsFragment;
+import com.amplearch.circleonet.Fragments.ConnectFragment;
+import com.amplearch.circleonet.Fragments.EventsFragment;
+import com.amplearch.circleonet.Fragments.ProfileFragment;
 import com.amplearch.circleonet.Utils.CustomViewPager;
 import com.amplearch.circleonet.Fragments.List1Fragment;
 import com.amplearch.circleonet.Fragments.List2Fragment;
@@ -32,18 +38,27 @@ public class CardsActivity extends AppCompatActivity {
     TabLayout tabLayout;
     ImageView imgDrawer, imgLogo;
     private int actionBarHeight;
+    TextView textView;
+    int position = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cards);
+
+        Bundle extras = getIntent().getExtras();
+        if(extras != null) {
+            position = extras.getInt("viewpager_position");
+        }
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         final ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.custom_actionbar);
+        textView = (TextView) findViewById(R.id.mytext);
 
         SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
+       // textView.setText("Cards 256");
         // Set up the ViewPager with the sections adapter.
         mViewPager = (CustomViewPager) findViewById(R.id.container);
         imgDrawer = (ImageView) findViewById(R.id.drawer);
@@ -54,18 +69,54 @@ public class CardsActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(android.R.color.white));
         setupTabIcons();
+        if (position == 0) {
+            getSupportActionBar().show();
+            setActionBarTitle("Cards 256");
+            setActionBarRightImage(R.drawable.ic_drawer);
+        } else if (position == 1) {
+            getSupportActionBar().show();
+            setActionBarTitle("Connect");
+            setActionBarRightImage(R.drawable.ic_dehaze_black_24dp);
+        } else if (position == 2) {
+            getSupportActionBar().show();
+            setActionBarTitle("Events");
+            setActionBarRightImage(R.drawable.ic_drawer);
+        } else if (position == 3) {
+            getSupportActionBar().hide();
+        }
+        mViewPager.setCurrentItem(position);
 
-      /*  LinearLayout tabStrip = ((LinearLayout)tabLayout.getChildAt(0));
-        for(int i = 0; i < tabStrip.getChildCount(); i++) {
-            if (i == 2 || i == 3) {
-                tabStrip.getChildAt(i).setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        return true;
-                    }
-                });
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
             }
-        }*/
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 0) {
+                    getSupportActionBar().show();
+                    setActionBarTitle("Cards 256");
+                    setActionBarRightImage(R.drawable.ic_drawer);
+                } else if (position == 1) {
+                    getSupportActionBar().show();
+                    setActionBarTitle("Connect");
+                    setActionBarRightImage(R.drawable.ic_dehaze_black_24dp);
+                } else if (position == 2) {
+                    getSupportActionBar().show();
+                    setActionBarTitle("Events");
+                    setActionBarRightImage(R.drawable.ic_drawer);
+                } else if (position == 3) {
+                    getSupportActionBar().hide();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         imgLogo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,11 +136,19 @@ public class CardsActivity extends AppCompatActivity {
         imgDrawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SortAndFilterOption.class);
-                startActivity(intent);
+                int pos = mViewPager.getCurrentItem();
+                if (pos == 0) {
+                    Intent intent = new Intent(getApplicationContext(), SortAndFilterOption.class);
+                    startActivity(intent);
+                }
+                else if (pos == 2) {
+                    Intent intent = new Intent(getApplicationContext(), EventsSelectOption.class);
+                    startActivity(intent);
+                }
             }
         });
     }
+
 
     public void showDialog(Context context, int x, int y){
         // x -->  X-Cordinate
@@ -101,7 +160,7 @@ public class CardsActivity extends AppCompatActivity {
         dialog.setCanceledOnTouchOutside(true);
 
         LinearLayout lnrMyAcc = (LinearLayout) dialog.findViewById(R.id.lnrMyAcc);
-        /*lnrMyAcc.setOnClickListener(new View.OnClickListener() {
+       /* lnrMyAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Profile.class);
@@ -121,6 +180,15 @@ public class CardsActivity extends AppCompatActivity {
 
     }
 
+    public void setActionBarTitle(String title){
+        textView.setText(title);
+    }
+
+    public void setActionBarRightImage(int image){
+        imgDrawer.setImageResource(image);
+    }
+
+
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -130,17 +198,27 @@ public class CardsActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                return new List1Fragment();
+               // getSupportActionBar().show();
+               // setActionBarTitle("Connect");
+                return new CardsFragment();
             } else if (position == 1) {
-                return new List2Fragment();
+              //  getSupportActionBar().show();
+               // setActionBarTitle("Cards");
+                return new ConnectFragment();
             }
             else if (position == 2) {
-                return new List3Fragment();
+               // getSupportActionBar().show();
+                //setActionBarTitle("Connect");
+                return new EventsFragment();
             }
             else if (position == 3) {
-                return new List4Fragment();
+              //  getSupportActionBar().show();
+              //  setActionBarTitle("Events");
+                return new ProfileFragment();
             }
             else {
+              //  getSupportActionBar().show();
+              //  setActionBarTitle("Cards");
                 return new List1Fragment();
             }
         }
@@ -164,10 +242,10 @@ public class CardsActivity extends AppCompatActivity {
 
     private void setupTabIcons() {
         int[] tabIcons = {
-                R.drawable.icon3,
-                R.drawable.icon1,
-                R.drawable.icon2,
-                R.drawable.icon4
+                R.drawable.ic_icon1,
+                R.drawable.ic_icon2,
+                R.drawable.ic_icon3,
+                R.drawable.ic_icon4
                // R.drawable.ic_tab_contacts
         };
 

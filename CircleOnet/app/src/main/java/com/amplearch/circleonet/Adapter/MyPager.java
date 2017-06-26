@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.amplearch.circleonet.Activity.CardDetail;
 import com.amplearch.circleonet.R;
 import com.bumptech.glide.Glide;
 
@@ -65,7 +66,7 @@ public class MyPager extends PagerAdapter
             Glide.with(context).load(image1.get(position)).into(imageView1);
 //            Glide.with(context).load(image[position]).into(imageCover);
 
-            /*view.setOnClickListener(new View.OnClickListener(){
+            view.setOnClickListener(new View.OnClickListener(){
                 public void onClick(View v){
                     //this will log the page number that was click
                     //Log.i("TAG", "This page was clicked: " + pos);
@@ -73,7 +74,7 @@ public class MyPager extends PagerAdapter
                     Intent intent = new Intent(context, CardDetail.class);
                     context.startActivity(intent);
                 }
-            });*/
+            });
 
             container.addView(view);
 

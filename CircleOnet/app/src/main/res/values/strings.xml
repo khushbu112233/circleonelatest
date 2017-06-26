@@ -9,11 +9,14 @@
     <string name="drawer_close">Close</string>
 
     <string-array name="image_ids">
-        <item>@drawable/card1_front</item>
-        <item>@drawable/card2_front</item>
-        <item>@drawable/card3_front</item>
-        <item>@drawable/card4_front</item>
-        <item>@drawable/card5_front</item>
+        <item>@drawable/card1f</item>
+        <item>@drawable/card2f</item>
+        <item>@drawable/card3f</item>
+        <item>@drawable/card4f</item>
+        <item>@drawable/card5f</item>
+        <item>@drawable/card6f</item>
+        <item>@drawable/card7f</item>
+        <item>@drawable/card8f</item>
     </string-array>
 
     <string name="hello_world">Hello world!</string>

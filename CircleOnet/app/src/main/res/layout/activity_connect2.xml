@@ -27,6 +27,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginTop="5dp">
             <ImageView
+                android:id="@+id/imgBack"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
@@ -467,6 +468,7 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:id="@+id/imgCards"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="20dp"
@@ -476,6 +478,7 @@
                 android:src="@drawable/ic_icon1" />
 
             <ImageView
+                android:id="@+id/imgConnect"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginRight="10dp"
@@ -484,6 +487,7 @@
                 android:src="@drawable/ic_icon2" />
 
             <ImageView
+                android:id="@+id/imgEvents"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginRight="10dp"
@@ -492,6 +496,7 @@
                 android:src="@drawable/ic_icon3" />
 
             <ImageView
+                android:id="@+id/imgProfile"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginRight="20dp"

@@ -42,25 +42,25 @@ public class List1Fragment extends Fragment{
         viewPager.setOffscreenPageLimit(3);
         viewPager.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
 
+        imageFront.add(R.drawable.card1f);
+
+
+        imageFront.add(R.drawable.card2f);
+
+
         imageFront.add(R.drawable.card1_front);
-
-
-        imageFront.add(R.drawable.card2_front);
-
-
-        imageFront.add(R.drawable.card3_front);
 
         imageFront.add(R.drawable.card4_front);
         imageFront.add(R.drawable.card5_front);
 
 
+        imageBack.add(R.drawable.card1b);
+
+
+        imageBack.add(R.drawable.card2f);
+
+
         imageBack.add(R.drawable.card1_back);
-
-
-        imageBack.add(R.drawable.card2_back);
-
-
-        imageBack.add(R.drawable.card3_back);
 
         imageBack.add(R.drawable.card4_back);
         imageBack.add(R.drawable.card5_back);

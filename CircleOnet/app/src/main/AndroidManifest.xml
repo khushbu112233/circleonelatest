@@ -23,7 +23,13 @@
             android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.LoginActivity"
-            android:theme="@style/NoActionbar" />
+            android:theme="@style/NoActionbar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Activity.CardDetail"
             android:theme="@style/NoActionbar" />
@@ -39,16 +45,10 @@
         <activity
             android:name=".Activity.Connect5Activity"
             android:theme="@style/NoActionbar" />
-        <activity android:name=".Activity.CustomDate"></activity>
-        <activity android:name=".Activity.NFCDemo">
-        </activity>
-        <activity android:name=".Activity.VolleyDemo">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".Activity.CustomDate" />
+        <activity android:name=".Activity.NFCDemo"></activity>
+        <activity android:name=".Activity.VolleyDemo"></activity>
+        <activity android:name=".Activity.MainActivity"></activity>
     </application>
 
 </manifest>

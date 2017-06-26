@@ -1,0 +1,522 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
+
+    <FrameLayout
+        android:id="@+id/frame1"
+        android:tag="sticky"
+        app:layout_scrollFlags="scroll|snap"
+        android:background="@color/colorAccent"
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
+
+        <ImageView
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/democard"/>
+
+        <ImageView
+            android:alpha="0.4"
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:id="@+id/txtprofile"
+                android:textSize="18dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profile"
+                android:textColor="@color/white"/>
+
+            <ImageView
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="22dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_dehaze_black_24dp"/>
+
+            <LinearLayout
+                android:layout_marginTop="25dp"
+                android:layout_below="@+id/txtprofile"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    app:civ_border_width="0dp"
+                    app:civ_border_color="@color/colorPrimary"
+                    android:src="@drawable/profile3"
+                    android:id="@+id/imageList4"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    />
+
+                <TextView
+                    android:textSize="19dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAlignment="center"
+                    android:text="Westley Wan"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:textSize="19dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAlignment="center"
+                    android:text="Unico Creative pte ltd"
+                    android:textColor="@color/white"/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_profile_white"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"/>
+
+            <ImageView
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_edit_white"/>
+
+        </RelativeLayout>
+
+    </FrameLayout>
+
+
+    <com.amplearch.circleonet.Utils.StickyScrollView
+        android:layout_above="@+id/lnrBottomTab"
+        android:layout_below="@+id/frame1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/frame_container">
+
+            <LinearLayout
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_marginRight="20dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_acc_blue"/>
+
+                <TextView
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="#6b6c6e"
+                    android:textSize="13sp"
+                    android:text="Wasley Wan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_marginRight="20dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_group_blue"/>
+
+                <TextView
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="#6b6c6e"
+                    android:textSize="13sp"
+                    android:text="UNICO Creative ple ltd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_marginRight="20dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_branding"/>
+
+                <TextView
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="#6b6c6e"
+                    android:textSize="13sp"
+                    android:text="Branding &amp; Marketing / IT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_marginRight="20dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_ceo"/>
+
+                <TextView
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="#6b6c6e"
+                    android:textSize="13sp"
+                    android:text="Business Development Director"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_marginRight="20dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_association"/>
+
+                <TextView
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="#6b6c6e"
+                    android:textSize="13sp"
+                    android:text="Association"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_marginRight="20dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_location_blue"/>
+
+                <TextView
+                    android:textColor="#6b6c6e"
+                    android:textSize="13sp"
+                    android:text="246 Macpherson Road.Betime Building #03-04.Singapore 348578"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_marginRight="20dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_web_blue"/>
+
+                <TextView
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="#6b6c6e"
+                    android:textSize="13sp"
+                    android:text="www.tcmong.com.sg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_marginRight="20dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_mail_blue"/>
+
+                <TextView
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="#6b6c6e"
+                    android:textSize="13sp"
+                    android:text="tcmong@tcmong.com.sg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_marginRight="20dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_mob_blue"/>
+
+                <TextView
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="#6b6c6e"
+                    android:textSize="13sp"
+                    android:text="+65 8842 6688"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_marginRight="20dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_phone_blue"/>
+
+                <TextView
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="#6b6c6e"
+                    android:textSize="13sp"
+                    android:text="+65 6842 6186"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:tag="sticky"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:gravity="center"
+                    android:background="@color/white"
+                    android:id="@+id/tabs1"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:orientation="horizontal">
+
+
+                    <ImageView
+                        android:layout_marginLeft="30dp"
+                        android:layout_weight="1"
+                        android:padding="6dp"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:src="@drawable/icon_fb"/>
+                    <ImageView
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:src="@drawable/icon_linkedin_gray"/>
+                    <ImageView
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:src="@drawable/icon_twitter"/>
+                    <ImageView
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:src="@drawable/icon_google"/>
+                    <ImageView
+                        android:layout_marginRight="30dp"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:src="@drawable/icon_utube_gray"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorPrimary"></View>
+            </LinearLayout>
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="13sp"
+                android:text="Personal Profile"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:textColor="@android:color/black"
+                android:textSize="13sp"
+                android:text="vnfjvnf fbvdfnkvnf fdgfg fdgfdg dfg fg dfgfdg fgdfgfd drgdfgfd dfgdfg gdfg dfgdfg dfgfdg dfgfdg dfgfdg dfgfd fdgfdg dfgfdgfgfd dfgfdgfd dfgfdgf gdfgfdg dfgfdg dfgfdg dfgfdg dfgfd fdgfdkdfvncjkvn nvcklxnv klvncklxv klcvncklxv klcvncklxv klvnxcklv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="13sp"
+                android:text="Company Profile"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:textColor="@android:color/black"
+                android:textSize="13sp"
+                android:text="vnfjvnf fbvdfnkvnf fdgfg fdgfdg dfg fg dfgfdg fgdfgfd drgdfgfd dfgdfg gdfg dfgdfg dfgfdg dfgfdg dfgfdg dfgfd fdgfdg dfgfdgfgfd dfgfdgfd dfgfdgf gdfgfdg dfgfdg dfgfdg dfgfdg dfgfd fdgfdkdfvncjkvn nvcklxnv klvncklxv klcvncklxv klcvncklxv klvnxcklv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="13sp"
+                android:text="Testimonial (choose from your contact)"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:textColor="@android:color/black"
+                android:textSize="13sp"
+                android:text="vnfjvnf fbvdfnkvnf fdgfg fdgfdg dfg fg dfgfdg fgdfgfd drgdfgfd dfgdfg gdfg dfgdfg dfgfdg dfgfdg dfgfdg dfgfd fdgfdg dfgfdgfgfd dfgfdgfd dfgfdgf gdfgfdg dfgfdg dfgfdg dfgfdg dfgfd fdgfdkdfvncjkvn nvcklxnv klvncklxv klcvncklxv klcvncklxv klvnxcklv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="13sp"
+                android:text="Preferred Event Industries"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+    </com.amplearch.circleonet.Utils.StickyScrollView>
+
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:id="@+id/lnrBottomTab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    </LinearLayout>
+</RelativeLayout>
