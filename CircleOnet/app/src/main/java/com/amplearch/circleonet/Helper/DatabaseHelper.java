@@ -198,7 +198,6 @@ public class DatabaseHelper extends SQLiteOpenHelper
         byte[] imageBytesu3 = user3.toByteArray();
         byte[] imageBytesu4 = user4.toByteArray();
 
-
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, "Kajol");
         values.put(KEY_COMPANY, "Google");
@@ -537,37 +536,15 @@ public class DatabaseHelper extends SQLiteOpenHelper
 	/*
 	 * Updating a todo
 	 */
-	public int updateFavourites(NFCModel favourites) {
+	public int DeactiveCards(int id) {
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
-        values.put(KEY_ID, favourites.getId());
-        values.put(KEY_NAME, favourites.getName());
-        values.put(KEY_COMPANY, favourites.getCompany());
-        values.put(KEY_DESIGNATION, favourites.getDesignation());
-        values.put(KEY_MOB, favourites.getMob_no());
-        values.put(KEY_WORK, favourites.getWork_no());
-        values.put(KEY_PH, favourites.getPh_no());
-        values.put(KEY_EMAIL, favourites.getEmail());
-        values.put(KEY_WEBSITE, favourites.getWebsite());
-        values.put(KEY_ADDRESS, favourites.getAddress());
-        values.put(KEY_LAT, favourites.getLat());
-        values.put(KEY_LNG, favourites.getLng());
-        values.put(KEY_REMARK, favourites.getRemark());
-        values.put(KEY_FACEBOOK_ID, favourites.getFb_id());
-        values.put(KEY_LINKEDIN_ID, favourites.getLinkedin_id());
-        values.put(KEY_GOOGLE_ID, favourites.getGoogle_id());
-        values.put(KEY_TWITTER_ID, favourites.getTwitter_id());
-        values.put(KEY_YOUTUBE_ID, favourites.getYoutube_id());
-        values.put(KEY_CARD_FRONT, favourites.getCard_front());
-        values.put(KEY_CARD_BACK, favourites.getCard_back());
-        values.put(KEY_ACTIVE, favourites.getActive());
-        values.put(KEY_NFC_TAG, favourites.getNfc_tag());
-        values.put(KEY_USER_IMG, favourites.getUser_image());
-
+        values.put(KEY_ID, id);
+        values.put(KEY_ACTIVE, "false");
 		// updating row
 		return db.update(TABLE_NFC, values, KEY_ID + " = ?",
-				new String[] { String.valueOf(favourites.getId()) });
+				new String[] { String.valueOf(id) });
 	}
 
 

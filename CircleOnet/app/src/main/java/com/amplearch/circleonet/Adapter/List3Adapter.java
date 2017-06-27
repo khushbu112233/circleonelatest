@@ -11,8 +11,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.amplearch.circleonet.Helper.DatabaseHelper;
 import com.amplearch.circleonet.R;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+import com.daimajia.swipe.SimpleSwipeListener;
+import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.adapters.BaseSwipeAdapter;
 
 import java.util.ArrayList;
 
@@ -20,41 +27,73 @@ import java.util.ArrayList;
  * Created by admin on 06/08/2017.
  */
 
-public class List3Adapter extends ArrayAdapter {
+public class List3Adapter extends BaseSwipeAdapter {
     private Context context;
     private int layoutResourceId;
     private ArrayList<String> data = new ArrayList();
+    private ArrayList<Integer> id = new ArrayList();
     private ArrayList<byte[]> image = new ArrayList();
     private ArrayList<String> name = new ArrayList();
     private ArrayList<String> designation = new ArrayList();
+    DatabaseHelper db;
 
-    public List3Adapter(Context context, int layoutResourceId, ArrayList<byte[]> image, ArrayList<String> data, ArrayList<String> name, ArrayList<String> designation) {
-        super(context, layoutResourceId, data);
+    public List3Adapter(Context context, int layoutResourceId, ArrayList<byte[]> image, ArrayList<String> data, ArrayList<String> name, ArrayList<String> designation, ArrayList<Integer> id) {
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.image = image;
         this.data = data;
         this.name = name;
         this.designation = designation;
+        this.id = id;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public int getSwipeLayoutResourceId(int position) {
+        return R.id.swipe;
+    }
+
+    @Override
+    public View generateView(final int position, ViewGroup parent) {
+        View v = LayoutInflater.from(context).inflate(R.layout.grid_list3_layout, null);
+        SwipeLayout swipeLayout = (SwipeLayout)v.findViewById(getSwipeLayoutResourceId(position));
+        swipeLayout.addSwipeListener(new SimpleSwipeListener() {
+            @Override
+            public void onOpen(SwipeLayout layout) {
+                YoYo.with(Techniques.Tada).duration(500).delay(100).playOn(layout.findViewById(R.id.trash));
+            }
+        });
+
+        db = new DatabaseHelper(context);
+
+        swipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {
+            @Override
+            public void onDoubleClick(SwipeLayout layout, boolean surface) {
+              //  Toast.makeText(context, "DoubleClick", Toast.LENGTH_SHORT).show();
+            }
+        });
+        v.findViewById(R.id.delete).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "click delete", Toast.LENGTH_SHORT).show();
+                db.DeactiveCards(id.get(position));
+                notifyDataSetChanged();
+            }
+        });
+        return v;
+    }
+
+    @Override
+    public void fillValues(int position, View convertView) {
         View row = convertView;
         ViewHolder holder = null;
 
-        if (row == null) {
-            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-            row = inflater.inflate(layoutResourceId, parent, false);
+
             holder = new ViewHolder();
             holder.imageDesc = (TextView) row.findViewById(R.id.textList3);
             holder.imageName = (TextView) row.findViewById(R.id.textNameList3);
             holder.imageDesignation = (TextView) row.findViewById(R.id.textDescList3);
             holder.image = (ImageView) row.findViewById(R.id.imageList3);
             row.setTag(holder);
-        } else {
-            holder = (ViewHolder) row.getTag();
-        }
 
         holder.imageDesc.setText(data.get(position));
         holder.imageName.setText(name.get(position));
@@ -69,8 +108,21 @@ public class List3Adapter extends ArrayAdapter {
         // ImageView image = (ImageView) findViewById(R.id.imageView1);
 
         holder.image.setImageBitmap(bmp);
+    }
 
-        return row;
+    @Override
+    public int getCount() {
+        return data.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return null;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     static class ViewHolder {
