@@ -21,7 +21,7 @@ public class CardsFragment extends Fragment {
 
 
     CustomViewPager mViewPager;
-    TabLayout tabLayout;
+    public static TabLayout tabLayout;
     public CardsFragment() {
         // Required empty public constructor
     }
