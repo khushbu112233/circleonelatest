@@ -8,11 +8,14 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.amplearch.circleonet.Activity.CardDetail;
@@ -36,7 +39,10 @@ public class List2Fragment extends Fragment {
     private GridViewAdapter gridAdapter;
     ArrayList<byte[]> imgf;
     DatabaseHelper db ;
-
+    float x1,x2;
+    float y1, y2;
+    RelativeLayout lnrSearch;
+    View line;
     public List2Fragment() {
         // Required empty public constructor
     }
@@ -58,6 +64,19 @@ public class List2Fragment extends Fragment {
         gridView = (GridView) view.findViewById(R.id.gridView);
         gridAdapter = new GridViewAdapter(getContext(), R.layout.grid_list2_layout, getData());
         gridView.setAdapter(gridAdapter);
+        lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
+        line = view.findViewById(R.id.view);
+        lnrSearch.setVisibility(View.GONE);
+        line.setVisibility(View.GONE);
+        CardsFragment.tabLayout.setVisibility(View.GONE);
+        gridView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                return gestureDetector.onTouchEvent(event);
+
+            }
+        });
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -88,5 +107,47 @@ public class List2Fragment extends Fragment {
         }
         return imageItems;
     }
+
+    GestureDetector.SimpleOnGestureListener simpleOnGestureListener
+            = new GestureDetector.SimpleOnGestureListener(){
+
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+                               float velocityY) {
+            String swipe = "";
+            float sensitvity = 50;
+
+            // TODO Auto-generated method stub
+            if((e1.getX() - e2.getX()) > sensitvity){
+                swipe += "Swipe Left\n";
+            }else if((e2.getX() - e1.getX()) > sensitvity){
+                swipe += "Swipe Right\n";
+            }else{
+                swipe += "\n";
+            }
+
+            if((e1.getY() - e2.getY()) > sensitvity){
+                swipe += "Swipe Up\n";
+                lnrSearch.setVisibility(View.GONE);
+                line.setVisibility(View.GONE);
+                CardsFragment.tabLayout.setVisibility(View.GONE);
+            }else if((e2.getY() - e1.getY()) > sensitvity){
+                swipe += "Swipe Down\n";
+                lnrSearch.setVisibility(View.VISIBLE);
+                line.setVisibility(View.VISIBLE);
+                CardsFragment.tabLayout.setVisibility(View.VISIBLE);
+            }else{
+                swipe += "\n";
+            }
+
+            //  Toast.makeText(getContext(), swipe, Toast.LENGTH_LONG).show();
+
+            return super.onFling(e1, e2, velocityX, velocityY);
+        }
+    };
+
+    GestureDetector gestureDetector
+            = new GestureDetector(simpleOnGestureListener);
 
 }
