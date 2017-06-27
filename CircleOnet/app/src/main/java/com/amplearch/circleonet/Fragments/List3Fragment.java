@@ -134,7 +134,7 @@ public class List3Fragment extends Fragment
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(), "OnItemLongClickListener", Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(getContext(), "OnItemLongClickListener", Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
@@ -258,6 +258,7 @@ public class List3Fragment extends Fragment
         for(NFCModel reTag : allTags)
         {
             NFCModel nfcModelTag = new NFCModel();
+            nfcModelTag.setId(reTag.getId());
             nfcModelTag.setName(reTag.getName());
             nfcModelTag.setCompany(reTag.getCompany());
             nfcModelTag.setEmail(reTag.getEmail());

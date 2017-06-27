@@ -9,10 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amplearch.circleonet.Activity.CardsActivity;
 import com.amplearch.circleonet.Helper.DatabaseHelper;
 import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.R;
@@ -38,6 +40,7 @@ public class List3Adapter extends BaseSwipeAdapter
     private ArrayList<byte[]> image = new ArrayList();
     private ArrayList<String> name = new ArrayList();
     private ArrayList<String> designation = new ArrayList();
+    Button delete;
 
     DatabaseHelper db;
     //newly added
@@ -78,7 +81,8 @@ public class List3Adapter extends BaseSwipeAdapter
     {
         View v = LayoutInflater.from(context).inflate(R.layout.grid_list3_layout, null);
 
-        SwipeLayout swipeLayout = (SwipeLayout)v.findViewById(getSwipeLayoutResourceId(position));
+        delete = (Button) v.findViewById(R.id.delete);
+        final SwipeLayout swipeLayout = (SwipeLayout)v.findViewById(getSwipeLayoutResourceId(position));
         swipeLayout.addSwipeListener(new SimpleSwipeListener() {
             @Override
             public void onOpen(SwipeLayout layout) {
@@ -98,13 +102,20 @@ public class List3Adapter extends BaseSwipeAdapter
         v.findViewById(R.id.delete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "click delete", Toast.LENGTH_SHORT).show();
-                db.DeactiveCards(id.get(position));
+                db.DeactiveCards(nfcModelList.get(position).getId());
+                Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_SHORT).show();
+                swipeLayout.close();
+                nfcModelList.remove(position);
                 notifyDataSetChanged();
             }
         });
 
         return v;
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
     }
 
     @Override

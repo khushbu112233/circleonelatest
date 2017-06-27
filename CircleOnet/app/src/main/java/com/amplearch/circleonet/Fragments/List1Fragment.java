@@ -180,31 +180,37 @@ public class List1Fragment extends Fragment{
             float sensitvity = 50;
 
             // TODO Auto-generated method stub
-            if((e1.getX() - e2.getX()) > sensitvity){
-                swipe += "Swipe Left\n";
-            }else if((e2.getX() - e1.getX()) > sensitvity){
-                swipe += "Swipe Right\n";
-            }else{
-                swipe += "\n";
+            try {
+                // TODO Auto-generated method stub
+                if ((e1.getX() - e2.getX()) > sensitvity) {
+                    swipe += "Swipe Left\n";
+                } else if ((e2.getX() - e1.getX()) > sensitvity) {
+                    swipe += "Swipe Right\n";
+                } else {
+                    swipe += "\n";
+                }
+
+                if ((e1.getY() - e2.getY()) > sensitvity) {
+                    swipe += "Swipe Up\n";
+                    lnrSearch.setVisibility(View.GONE);
+                    line.setVisibility(View.GONE);
+                    CardsFragment.tabLayout.setVisibility(View.GONE);
+                } else if ((e2.getY() - e1.getY()) > sensitvity) {
+                    swipe += "Swipe Down\n";
+                    lnrSearch.setVisibility(View.VISIBLE);
+                    line.setVisibility(View.VISIBLE);
+                    CardsFragment.tabLayout.setVisibility(View.VISIBLE);
+                } else {
+                    swipe += "\n";
+                }
+
+                //  Toast.makeText(getContext(), swipe, Toast.LENGTH_LONG).show();
+
+                return super.onFling(e1, e2, velocityX, velocityY);
             }
-
-            if((e1.getY() - e2.getY()) > sensitvity){
-                swipe += "Swipe Up\n";
-                lnrSearch.setVisibility(View.GONE);
-                line.setVisibility(View.GONE);
-                CardsFragment.tabLayout.setVisibility(View.GONE);
-            }else if((e2.getY() - e1.getY()) > sensitvity){
-                swipe += "Swipe Down\n";
-                lnrSearch.setVisibility(View.VISIBLE);
-                line.setVisibility(View.VISIBLE);
-                CardsFragment.tabLayout.setVisibility(View.VISIBLE);
-            }else{
-                swipe += "\n";
+            catch (Exception e ){
+                return true;
             }
-
-          //  Toast.makeText(getContext(), swipe, Toast.LENGTH_LONG).show();
-
-            return super.onFling(e1, e2, velocityX, velocityY);
         }
     };
 
