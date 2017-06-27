@@ -1,4 +1,5 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
@@ -38,13 +39,14 @@
             android:layout_width="20dp"
             android:layout_height="20dp" />
     </RelativeLayout>
+
     <View
         android:layout_marginTop="3dp"
         android:id="@+id/view"
         android:layout_below="@+id/lnrSearch"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/colorPrimary"></View>
+        android:background="@color/colorPrimary"/>
 
     <ListView
         android:divider="@color/colorPrimary"

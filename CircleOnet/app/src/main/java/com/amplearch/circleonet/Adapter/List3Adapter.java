@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amplearch.circleonet.Helper.DatabaseHelper;
+import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.R;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -22,12 +23,14 @@ import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Created by admin on 06/08/2017.
  */
 
-public class List3Adapter extends BaseSwipeAdapter {
+public class List3Adapter extends BaseSwipeAdapter
+{
     private Context context;
     private int layoutResourceId;
     private ArrayList<String> data = new ArrayList();
@@ -35,9 +38,16 @@ public class List3Adapter extends BaseSwipeAdapter {
     private ArrayList<byte[]> image = new ArrayList();
     private ArrayList<String> name = new ArrayList();
     private ArrayList<String> designation = new ArrayList();
-    DatabaseHelper db;
 
-    public List3Adapter(Context context, int layoutResourceId, ArrayList<byte[]> image, ArrayList<String> data, ArrayList<String> name, ArrayList<String> designation, ArrayList<Integer> id) {
+    DatabaseHelper db;
+    //newly added
+    ArrayList<NFCModel> nfcModelList = new ArrayList<>();
+    ArrayList<NFCModel> nfcModelListFilter = new ArrayList<>();
+
+
+    public List3Adapter(Context context, int layoutResourceId, ArrayList<byte[]> image,
+                        ArrayList<String> data, ArrayList<String> name, ArrayList<String> designation, ArrayList<Integer> id)
+    {
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.image = image;
@@ -47,14 +57,27 @@ public class List3Adapter extends BaseSwipeAdapter {
         this.id = id;
     }
 
+    public List3Adapter(Context context, int grid_list3_layout, ArrayList<NFCModel> nfcModel)
+    {
+        this.context = context ;
+        this.layoutResourceId = grid_list3_layout ;
+        this.nfcModelList = nfcModel ;
+
+//        this.nfcModelListFilter = new ArrayList<NFCModel>();
+        this.nfcModelListFilter.addAll(nfcModelList);
+
+    }
+
     @Override
     public int getSwipeLayoutResourceId(int position) {
         return R.id.swipe;
     }
 
     @Override
-    public View generateView(final int position, ViewGroup parent) {
+    public View generateView(final int position, ViewGroup parent)
+    {
         View v = LayoutInflater.from(context).inflate(R.layout.grid_list3_layout, null);
+
         SwipeLayout swipeLayout = (SwipeLayout)v.findViewById(getSwipeLayoutResourceId(position));
         swipeLayout.addSwipeListener(new SimpleSwipeListener() {
             @Override
@@ -71,6 +94,7 @@ public class List3Adapter extends BaseSwipeAdapter {
               //  Toast.makeText(context, "DoubleClick", Toast.LENGTH_SHORT).show();
             }
         });
+
         v.findViewById(R.id.delete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,11 +103,13 @@ public class List3Adapter extends BaseSwipeAdapter {
                 notifyDataSetChanged();
             }
         });
+
         return v;
     }
 
     @Override
-    public void fillValues(int position, View convertView) {
+    public void fillValues(int position, View convertView)
+    {
         View row = convertView;
         ViewHolder holder = null;
 
@@ -95,7 +121,7 @@ public class List3Adapter extends BaseSwipeAdapter {
             holder.image = (ImageView) row.findViewById(R.id.imageList3);
             row.setTag(holder);
 
-        holder.imageDesc.setText(data.get(position));
+        /*holder.imageDesc.setText(data.get(position));
         holder.imageName.setText(name.get(position));
         try {
             if (!designation.get(position).equalsIgnoreCase("")) {
@@ -106,13 +132,36 @@ public class List3Adapter extends BaseSwipeAdapter {
         }
         Bitmap bmp = BitmapFactory.decodeByteArray(image.get(position), 0, image.get(position).length);
         // ImageView image = (ImageView) findViewById(R.id.imageView1);
-
         holder.image.setImageBitmap(bmp);
+*/
+        String name = nfcModelList.get(position).getName();
+        String company = nfcModelList.get(position).getCompany();
+        String email = nfcModelList.get(position).getEmail();
+        String website = nfcModelList.get(position).getWebsite();
+        String mobile = nfcModelList.get(position).getMob_no();
+        String designation = nfcModelList.get(position).getDesignation();
+
+        holder.imageName.setText(name);
+        holder.imageDesc.setText(company+"\n"+email+"\n"+mobile+"\n"+website);
+
+        try
+        {
+            if (!designation.equalsIgnoreCase(""))
+            {
+                holder.imageDesignation.setText(designation);
+            }
+        }
+        catch (Exception e){  }
+
+        Bitmap bmp = BitmapFactory.decodeByteArray(nfcModelList.get(position).getCard_front(), 0, nfcModelList.get(position).getCard_front().length);
+        // ImageView image = (ImageView) findViewById(R.id.imageView1);
+        holder.image.setImageBitmap(bmp);
+
     }
 
     @Override
     public int getCount() {
-        return data.size();
+        return nfcModelList.size();
     }
 
     @Override
@@ -131,4 +180,27 @@ public class List3Adapter extends BaseSwipeAdapter {
         TextView imageDesignation;
         ImageView image;
     }
+
+    public void Filter(String charText)
+    {
+        charText = charText.toLowerCase(Locale.getDefault());
+        nfcModelList.clear();
+
+        if(charText.length() == 0)
+        {
+            nfcModelList.addAll(nfcModelListFilter);
+        }
+        else
+        {
+            for(NFCModel md : nfcModelListFilter)
+            {
+                if(md.getName().toLowerCase(Locale.getDefault()).contains(charText))
+                {
+                    nfcModelList.add(md);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
+
 }

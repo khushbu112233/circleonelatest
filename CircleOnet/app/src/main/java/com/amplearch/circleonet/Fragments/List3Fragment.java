@@ -4,6 +4,8 @@ package com.amplearch.circleonet.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -26,12 +29,14 @@ import com.daimajia.swipe.util.Attributes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class List3Fragment extends Fragment {
+public class List3Fragment extends Fragment
+{
 
     private ListView listView;
     private List3Adapter gridAdapter;
@@ -44,13 +49,19 @@ public class List3Fragment extends Fragment {
     RelativeLayout lnrSearch;
     View line;
 
+    List<NFCModel> allTags ;
+    //new asign value
+    AutoCompleteTextView searchText ;
+    ArrayList<NFCModel> nfcModel ;
+
+
     public List3Fragment() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list3, container, false);
 
@@ -61,13 +72,19 @@ public class List3Fragment extends Fragment {
         desc = new ArrayList<>();
         designation = new ArrayList<>();
 
+        listView = (ListView) view.findViewById(R.id.listViewType3);
+        searchText = (AutoCompleteTextView)view.findViewById(R.id.searchView);
+        nfcModel = new ArrayList<>();
+        allTags = db.getActiveNFC();
+
+
         lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
         line = view.findViewById(R.id.view);
         lnrSearch.setVisibility(View.GONE);
         line.setVisibility(View.GONE);
         CardsFragment.tabLayout.setVisibility(View.GONE);
 
-        List<NFCModel> allTags = db.getActiveNFC();
+        /*allTags = db.getActiveNFC();
         for (NFCModel tag : allTags) {
             id.add(tag.getId());
             imgf.add(tag.getCard_front());
@@ -75,10 +92,11 @@ public class List3Fragment extends Fragment {
             desc.add(tag.getCompany() + "\n" + tag.getEmail() + "\n" + tag.getWebsite() + "\n" + tag.getMob_no());
             designation.add(tag.getDesignation());
         }
-
-        listView = (ListView) view.findViewById(R.id.listViewType3);
         gridAdapter = new List3Adapter(getContext(), R.layout.grid_list3_layout, imgf, desc, name, designation, id);
-        listView.setAdapter(gridAdapter);
+        listView.setAdapter(gridAdapter);*/
+
+
+
         listView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -95,12 +113,6 @@ public class List3Fragment extends Fragment {
             }
         });
 
-
-
-
-
-
-        gridAdapter.setMode(Attributes.Mode.Single);
        /* listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -114,6 +126,11 @@ public class List3Fragment extends Fragment {
                 return false;
             }
         });*/
+
+        //retrive data
+        GetData();
+
+
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -144,6 +161,35 @@ public class List3Fragment extends Fragment {
                 Log.e("ListView", "onNothingSelected:");
             }
         });
+
+        searchText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
+                if(searchText.getText().toString().length() == 0)
+                {
+                    nfcModel.clear();
+                    GetData();
+                }
+                else
+                {
+                    String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
+                    gridAdapter.Filter(text);
+                }
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
 
 
         return view;
@@ -196,5 +242,38 @@ public class List3Fragment extends Fragment {
     GestureDetector gestureDetector
             = new GestureDetector(simpleOnGestureListener);
 
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        nfcModel.clear();
+        GetData();
+    }
+
+    private void GetData()
+    {
+        //newly added
+        for(NFCModel reTag : allTags)
+        {
+            NFCModel nfcModelTag = new NFCModel();
+            nfcModelTag.setName(reTag.getName());
+            nfcModelTag.setCompany(reTag.getCompany());
+            nfcModelTag.setEmail(reTag.getEmail());
+            nfcModelTag.setWebsite(reTag.getWebsite());
+            nfcModelTag.setMob_no(reTag.getMob_no());
+            nfcModelTag.setDesignation(reTag.getDesignation());
+            nfcModelTag.setCard_front(reTag.getCard_front());
+
+            nfcModel.add(nfcModelTag);
+        }
+        gridAdapter = new List3Adapter(getContext(), R.layout.grid_list3_layout, nfcModel);
+        listView.setAdapter(gridAdapter);
+        gridAdapter.notifyDataSetChanged();
+
+        gridAdapter.setMode(Attributes.Mode.Single);
+
+    }
 
 }
