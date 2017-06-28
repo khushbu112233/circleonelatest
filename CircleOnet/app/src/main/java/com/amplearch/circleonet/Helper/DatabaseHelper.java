@@ -205,7 +205,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_MOB, "9874561230");
         values.put(KEY_WORK, "0791234567");
         values.put(KEY_PH, "0792456789");
-        values.put(KEY_EMAIL, "kajal.patadia@ample-arch.com");
+        values.put(KEY_EMAIL, "kajal.patadia@google.com");
         values.put(KEY_WEBSITE, "www.google.com");
         values.put(KEY_ADDRESS, "1600 Amphitheatre Parkway, Mountain View, CA");
         values.put(KEY_LAT, "37.4224082");
@@ -247,13 +247,13 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_USER_IMG, imageBytesu2);
         db.insert(TABLE_NFC, null, values);
 
-        values.put(KEY_NAME, "Jay");
+        values.put(KEY_NAME, "Justin Yaun Fel");
         values.put(KEY_COMPANY, "Facebook");
-        values.put(KEY_DESIGNATION, "Android Developer");
+        values.put(KEY_DESIGNATION, "General Manager");
         values.put(KEY_MOB, "9874561230");
         values.put(KEY_WORK, "0791234567");
         values.put(KEY_PH, "0792456789");
-        values.put(KEY_EMAIL, "jay.ample@gmail.com");
+        values.put(KEY_EMAIL, "justin@facebook.com");
         values.put(KEY_WEBSITE, "www.facebook.com");
         values.put(KEY_ADDRESS, "1600 Amphitheatre Parkway, Mountain View, CA");
         values.put(KEY_LAT, "37.4224082");
@@ -271,14 +271,14 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_USER_IMG, imageBytesu3);
         db.insert(TABLE_NFC, null, values);
 
-        values.put(KEY_NAME, "Jacob");
-        values.put(KEY_COMPANY, "Enclara");
-        values.put(KEY_DESIGNATION, "Java Developer");
+        values.put(KEY_NAME, "Physician Ong");
+        values.put(KEY_COMPANY, "TCMOng Medicare pte ltd");
+        values.put(KEY_DESIGNATION, "");
         values.put(KEY_MOB, "9874561230");
         values.put(KEY_WORK, "0791234567");
         values.put(KEY_PH, "0792456789");
-        values.put(KEY_EMAIL, "jacob.enclara@gmail.com");
-        values.put(KEY_WEBSITE, "www.enclara.com");
+        values.put(KEY_EMAIL, "TCMOng@tcmong.com.sg");
+        values.put(KEY_WEBSITE, "www.tcmong.com.sg");
         values.put(KEY_ADDRESS, "1600 Amphitheatre Parkway, Mountain View, CA");
         values.put(KEY_LAT, "37.4224082");
         values.put(KEY_LNG, "-122.0856086");

@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -101,6 +102,7 @@ public class CardsActivity extends NfcActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(android.R.color.white));
+       // createTabIcons();
         setupTabIcons();
         if (position == 0) {
             getSupportActionBar().show();
@@ -121,7 +123,7 @@ public class CardsActivity extends NfcActivity {
         if (nested_position != 0) {
             CardsFragment.mViewPager.setCurrentItem(nested_position);
         }
-
+        mViewPager.setOffscreenPageLimit(3);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -132,6 +134,7 @@ public class CardsActivity extends NfcActivity {
             @Override
             public void onPageSelected(int position) {
                 if (position == 0) {
+                    CardsFragment.mViewPager.setCurrentItem(nested_position);
                     getSupportActionBar().show();
                     setActionBarTitle("Cards 256");
                     setActionBarRightImage(R.drawable.ic_drawer);
@@ -184,7 +187,24 @@ public class CardsActivity extends NfcActivity {
             }
         });
     }
+   /* private void createTabIcons() {
 
+        TextView tabOne = (TextView) LayoutInflater.from(this).inflate(R.layout.tab_view, null);
+        tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.tab1, 0, 0);
+        tabLayout.getTabAt(0).setCustomView(tabOne);
+
+        TextView tabTwo = (TextView) LayoutInflater.from(this).inflate(R.layout.tab_view, null);
+        tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.tab2, 0, 0);
+        tabLayout.getTabAt(1).setCustomView(tabTwo);
+
+        TextView tabThree = (TextView) LayoutInflater.from(this).inflate(R.layout.tab_view, null);
+        tabThree.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.tab3, 0, 0);
+        tabLayout.getTabAt(2).setCustomView(tabThree);
+
+        TextView tabThree1 = (TextView) LayoutInflater.from(this).inflate(R.layout.tab_view, null);
+        tabThree1.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.tab4, 0, 0);
+        tabLayout.getTabAt(3).setCustomView(tabThree1);
+    }*/
 
     public void showDialog(Context context, int x, int y){
         // x -->  X-Cordinate
@@ -278,13 +298,19 @@ public class CardsActivity extends NfcActivity {
 
     private void setupTabIcons() {
         int[] tabIcons = {
-                R.drawable.ic_icon1,
-                R.drawable.ic_icon2,
-                R.drawable.ic_icon3,
-                R.drawable.ic_icon4
+                R.drawable.tab1,
+                R.drawable.tab2,
+                R.drawable.tab3,
+                R.drawable.tab4
                // R.drawable.ic_tab_contacts
         };
 
+        /*View view = getLayoutInflater().inflate(R.layout.tab_view, null);
+        for (int i = 0; i < 3; i++) {
+            view.findViewById(R.id.icon).setBackgroundResource(tabIcons[i]);
+            tabLayout.addTab(tabLayout.newTab().setCustomView(view));
+        }
+*/
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
         tabLayout.getTabAt(2).setIcon(tabIcons[2]);
