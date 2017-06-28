@@ -12,14 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 import com.amplearch.circleonet.Gesture.SwipeGestureDetector;
 import com.amplearch.circleonet.Helper.DatabaseHelper;
 import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.Utils.CarouselEffectTransformer;
 import com.amplearch.circleonet.Adapter.MyPager;
 import com.amplearch.circleonet.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,14 +65,6 @@ public class List1Fragment extends Fragment{
         viewPager.setOffscreenPageLimit(3);
         viewPager.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
 
-
-     /*   gestureDetector = new GestureDetector(getContext(), new SwipeGestureDetector());
-        gestureListener = new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return gestureDetector.onTouchEvent(event);
-            }
-        };*/
         viewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -84,63 +74,13 @@ public class List1Fragment extends Fragment{
             }
         });
 
-       /* view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                int action = MotionEventCompat.getActionMasked(event);
-
-                switch(action) {
-                    case (MotionEvent.ACTION_DOWN) :
-                        Toast.makeText(getContext(), "Down", Toast.LENGTH_LONG).show();
-                        Log.d(DEBUG_TAG,"Action was DOWN");
-                        lnrSearch.setVisibility(View.VISIBLE);
-                        line.setVisibility(View.VISIBLE);
-                        return true;
-                    case (MotionEvent.ACTION_UP) :
-                        Toast.makeText(getContext(), "up", Toast.LENGTH_LONG).show();
-                        Log.d(DEBUG_TAG,"Action was UP");
-                        lnrSearch.setVisibility(View.GONE);
-                        line.setVisibility(View.GONE);
-                        return true;
-                }
-
-                return false;
-            }
-        });
-*/
-       /* imageFront.add(R.drawable.card1f);
-
-
-        imageFront.add(R.drawable.card2f);
-
-
-        imageFront.add(R.drawable.card1_front);
-
-        imageFront.add(R.drawable.card4_front);
-        imageFront.add(R.drawable.card5_front);
-
-
-        imageBack.add(R.drawable.card1b);
-
-
-        imageBack.add(R.drawable.card2f);
-
-
-        imageBack.add(R.drawable.card1_back);
-
-        imageBack.add(R.drawable.card4_back);
-        imageBack.add(R.drawable.card5_back);
-*/
-       imgf = new ArrayList<byte[]>();
+        imgf = new ArrayList<byte[]>();
         imgb = new ArrayList<byte[]>();
         List<NFCModel> allTags = db.getActiveNFC();
         for (NFCModel tag : allTags) {
             imgf.add(tag.getCard_front());
             imgb.add(tag.getCard_back());
         }
-
-
 
         myPager = new MyPager(getContext(), imgf, imgb);
         viewPager.setAdapter(myPager);
@@ -217,4 +157,3 @@ public class List1Fragment extends Fragment{
     GestureDetector gestureDetector
             = new GestureDetector(simpleOnGestureListener);
 }
-

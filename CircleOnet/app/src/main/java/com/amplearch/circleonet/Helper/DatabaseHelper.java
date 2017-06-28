@@ -99,14 +99,14 @@ public class DatabaseHelper extends SQLiteOpenHelper
         return db.delete(TABLE_NFC, KEY_ID + "=" + id, null) > 0;
     }
 
-	/*public boolean verification(String id) throws SQLException
+	public boolean verification(String id) throws SQLException
 	{
 		int count = -1;
 		Cursor c = null;
 		try {
-			String query = "SELECT COUNT(*) FROM " + TABLE_FAVOURITES + " WHERE " + KEY_PRODUCTID + " = ?";
+			String query = "SELECT COUNT(*) FROM " + TABLE_NFC + " WHERE " + KEY_NFC_TAG + " = ? AND " + KEY_ACTIVE +" = ?";
 			SQLiteDatabase db = this.getWritableDatabase();
-			c = db.rawQuery(query, new String[] {product_id});
+			c = db.rawQuery(query, new String[] {id, "true"});
 			if (c.moveToFirst())
 			{
 				count = c.getInt(0);
@@ -118,7 +118,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 				c.close();
 			}
 		}
-	}*/
+	}
 
 	public void deleteNFC(){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -536,6 +536,44 @@ public class DatabaseHelper extends SQLiteOpenHelper
 	/*
 	 * Updating a todo
 	 */
+
+    public boolean tagVerification(String id) throws SQLException
+    {
+        int count = -1;
+        Cursor c = null;
+        try {
+            String query = "SELECT COUNT(*) FROM " + TABLE_NFC + " WHERE " + KEY_NFC_TAG + " = ?";
+            SQLiteDatabase db = this.getWritableDatabase();
+            c = db.rawQuery(query, new String[] {id});
+            if (c.moveToFirst())
+            {
+                count = c.getInt(0);
+            }
+            return count > 0;
+        }
+        finally {
+            if (c != null) {
+                c.close();
+            }
+        }
+    }
+
+    public int makeCardActive(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Boolean aBoolean = tagVerification(id);
+        if (aBoolean == true) {
+            ContentValues values = new ContentValues();
+            values.put(KEY_NFC_TAG, id);
+            values.put(KEY_ACTIVE, "true");
+            return db.update(TABLE_NFC, values, KEY_NFC_TAG + " = ?",
+                    new String[] { String.valueOf(id) });
+        }else {
+            return 11;
+        }
+        // updating row
+    }
+
+
 	public int DeactiveCards(int id) {
 		SQLiteDatabase db = this.getWritableDatabase();
 

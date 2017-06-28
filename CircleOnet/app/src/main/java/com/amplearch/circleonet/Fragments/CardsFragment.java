@@ -20,13 +20,11 @@ import com.amplearch.circleonet.Utils.CustomViewPager;
 public class CardsFragment extends Fragment {
 
 
-    CustomViewPager mViewPager;
+    public static CustomViewPager mViewPager;
     public static TabLayout tabLayout;
     public CardsFragment() {
         // Required empty public constructor
     }
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +47,7 @@ public class CardsFragment extends Fragment {
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(android.R.color.white));
         setupTabIcons();
+        mViewPager.setCurrentItem(CardsActivity.nested_position);
         return view;
     }
 

@@ -98,7 +98,6 @@ public class GridViewAdapter extends BaseSwipeAdapter {
         return v;
     }
 
-
     @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();

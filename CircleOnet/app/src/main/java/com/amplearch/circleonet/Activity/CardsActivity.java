@@ -4,11 +4,16 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -24,12 +29,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amplearch.circleonet.Adapter.CardSwipe;
 import com.amplearch.circleonet.Fragments.CardsFragment;
 import com.amplearch.circleonet.Fragments.ConnectFragment;
 import com.amplearch.circleonet.Fragments.EventsFragment;
 import com.amplearch.circleonet.Fragments.ProfileFragment;
 import com.amplearch.circleonet.Helper.DatabaseHelper;
 import com.amplearch.circleonet.Model.NFCModel;
+import com.amplearch.circleonet.Utils.CarouselEffectTransformer;
 import com.amplearch.circleonet.Utils.CustomViewPager;
 import com.amplearch.circleonet.Fragments.List1Fragment;
 import com.amplearch.circleonet.Fragments.List2Fragment;
@@ -37,17 +44,23 @@ import com.amplearch.circleonet.Fragments.List3Fragment;
 import com.amplearch.circleonet.Fragments.List4Fragment;
 import com.amplearch.circleonet.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class CardsActivity extends AppCompatActivity {
+import be.appfoundry.nfclibrary.activities.NfcActivity;
+import be.appfoundry.nfclibrary.utilities.interfaces.NfcReadUtility;
+import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
+
+public class CardsActivity extends NfcActivity {
 
     CustomViewPager mViewPager;
     TabLayout tabLayout;
     ImageView imgDrawer, imgLogo;
     private int actionBarHeight;
     TextView textView;
-    int position = 0;
+    public static int position = 0, nested_position = 0;
     DatabaseHelper db;
+    NfcReadUtility mNfcReadUtility = new NfcReadUtilityImpl();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +70,7 @@ public class CardsActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
             position = extras.getInt("viewpager_position");
+            nested_position = extras.getInt("nested_viewpager_position");
         }
         db = new DatabaseHelper(getApplicationContext());
         List<NFCModel> allTags = db.getAllNFC();
@@ -104,6 +118,9 @@ public class CardsActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
         mViewPager.setCurrentItem(position);
+        if (nested_position != 0) {
+            CardsFragment.mViewPager.setCurrentItem(nested_position);
+        }
 
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -304,4 +321,145 @@ public class CardsActivity extends AppCompatActivity {
             return null;
         }
     }*/
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (getNfcAdapter() != null) {
+            getNfcAdapter().disableForegroundDispatch(this);
+        }
+    }
+
+    private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
+    public static String bytesToHex(byte[] bytes) {
+        char[] hexChars = new char[bytes.length * 2];
+        for ( int j = 0; j < bytes.length; j++ ) {
+            int v = bytes[j] & 0xFF;
+            hexChars[j * 2] = hexArray[v >>> 4];
+            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+        }
+        return new String(hexChars);
+    }
+
+    /**
+     * Launched when in foreground dispatch mode
+     *
+     * @param paramIntent
+     *         containing found data
+     */
+    @Override
+    public void onNewIntent(final Intent paramIntent) {
+        super.onNewIntent(paramIntent);
+
+
+        Tag tag = paramIntent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+        if(tag == null){
+            Toast.makeText(getApplicationContext(), "tag == null", Toast.LENGTH_LONG).show();
+            //textViewInfo.setText("tag == null");
+        }else {
+            String tagInfo = tag.toString() + "\n";
+            String id = "";
+            tagInfo += "\nTag Id: \n";
+            byte[] tagId = tag.getId();
+            tagInfo += "length = " + tagId.length + "\n";
+            for (int i = 0; i < tagId.length; i++) {
+                tagInfo += Integer.toHexString(tagId[i] & 0xFF) + " ";
+                // id += Integer.toHexString(tagId[i] & 0xFF) + " ";
+            }
+            id = bytesToHex(tagId);
+            Boolean aBoolean = db.verification(id);
+            if (aBoolean == true)
+            {
+                Toast.makeText(getApplicationContext(), "already exists in database", Toast.LENGTH_LONG).show();
+            }else {
+
+                int i = db.makeCardActive(id);
+                if (i == 1){
+                    Toast.makeText(getApplicationContext(), "added", Toast.LENGTH_LONG).show();
+                }
+              //  Toast.makeText(getApplicationContext(), String.valueOf(i), Toast.LENGTH_LONG).show();
+               // notifyAll();
+
+                if (mViewPager.getCurrentItem() == 0){
+                    Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+
+                    // you pass the position you want the viewpager to show in the extra,
+                    // please don't forget to define and initialize the position variable
+                    // properly
+                    go.putExtra("viewpager_position", 0);
+                    go.putExtra("nested_viewpager_position", CardsFragment.mViewPager.getCurrentItem());
+
+                    startActivity(go);
+                    finish();
+                    //Toast.makeText(getApplicationContext(), String.valueOf(CardsFragment.mViewPager.getCurrentItem()), Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+                    startActivity(go);
+                    finish();
+                }
+            }
+
+               /* try {
+
+                    if (allTags != null){
+                        Bitmap bmp = BitmapFactory.decodeByteArray(allTags.getCard_front(), 0, allTags.getCard_front().length);
+                        imgCard.setImageBitmap(bmp);
+
+                        Bitmap bmp1 = BitmapFactory.decodeByteArray(allTags.getUser_image(), 0, allTags.getUser_image().length);
+                        imgProfileCard.setImageBitmap(bmp1);
+                    }
+
+                }catch (Exception e){
+
+                }*/
+
+
+           /* List<NFCModel> modelList = db.getNFCbyTag(id);
+            image = new ArrayList<>();
+            try {
+
+                if (modelList != null){
+
+                    for (NFCModel tag1 : modelList) {
+                        // Toast.makeText(getApplicationContext(), tag1.getName(), Toast.LENGTH_LONG).show();
+
+                        Bitmap bmp = BitmapFactory.decodeByteArray(tag1.getCard_front(), 0, tag1.getCard_front().length);
+                        imgCard.setImageBitmap(bmp);
+
+                        Bitmap bmp1 = BitmapFactory.decodeByteArray(tag1.getUser_image(), 0, tag1.getUser_image().length);
+                        imgProfileCard.setImageBitmap(bmp1);
+                        txtName.setText(tag1.getName());
+                        txtCompany.setText(tag1.getCompany());
+                        txtWebsite.setText(tag1.getWebsite());
+                        txtEmail.setText(tag1.getEmail());
+                        txtPH.setText(tag1.getPh_no());
+                        txtWork.setText(tag1.getWork_no());
+                        txtMob.setText(tag1.getMob_no());
+                        txtAddress.setText(tag1.getAddress());
+                        txtRemark.setText(tag1.getRemark());
+                        image.add(tag1.getCard_front());
+                        image.add(tag1.getCard_back());
+                        myPager = new CardSwipe(getApplicationContext(), image);
+                        mViewPager.setClipChildren(false);
+                        mViewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+                        mViewPager.setOffscreenPageLimit(3);
+                        mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
+
+
+                        mViewPager.setAdapter(myPager);
+                    }
+                }
+
+            }catch (Exception e){
+
+            }*/
+
+         //   Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
+            // callData(id);
+            for (String data : mNfcReadUtility.readFromTagWithMap(paramIntent).values()) {
+              //  Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 }
