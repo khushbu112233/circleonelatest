@@ -92,7 +92,12 @@ public class ConnectListFragment extends Fragment {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after)
             {
-                if(searchText.getText().toString().length() == 0)
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+                if(s.length() <= 0)
                 {
                     nfcModel.clear();
                     GetData();
@@ -102,12 +107,6 @@ public class ConnectListFragment extends Fragment {
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
                     gridAdapter.Filter(text);
                 }
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
-
             }
 
             @Override

@@ -42,7 +42,7 @@ public class CardDetail extends NfcActivity {
     DatabaseHelper db ;
     TextView txtName, txtCompany, txtWebsite, txtEmail, txtPH, txtWork, txtMob, txtAddress, txtRemark;
     CircleImageView imgProfileCard;
-
+    String tag_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +67,49 @@ public class CardDetail extends NfcActivity {
         txtMob = (TextView) findViewById(R.id.txtMob);
         txtAddress = (TextView) findViewById(R.id.txtAddress);
         txtRemark = (TextView) findViewById(R.id.txtRemark);
+
+        Intent intent = getIntent();
+        tag_id = intent.getStringExtra("tag_id");
+        List<NFCModel> modelList = db.getNFCbyTag(tag_id);
+        image = new ArrayList<>();
+        try {
+
+            if (modelList != null){
+
+                for (NFCModel tag1 : modelList) {
+                    // Toast.makeText(getApplicationContext(), tag1.getName(), Toast.LENGTH_LONG).show();
+
+                    Bitmap bmp = BitmapFactory.decodeByteArray(tag1.getCard_front(), 0, tag1.getCard_front().length);
+                    imgCard.setImageBitmap(bmp);
+
+                    Bitmap bmp1 = BitmapFactory.decodeByteArray(tag1.getUser_image(), 0, tag1.getUser_image().length);
+                    imgProfileCard.setImageBitmap(bmp1);
+                    txtName.setText(tag1.getName());
+                    txtCompany.setText(tag1.getCompany());
+                    txtWebsite.setText(tag1.getWebsite());
+                    txtEmail.setText(tag1.getEmail());
+                    txtPH.setText(tag1.getPh_no());
+                    txtWork.setText(tag1.getWork_no());
+                    txtMob.setText(tag1.getMob_no());
+                    txtAddress.setText(tag1.getAddress());
+                    txtRemark.setText(tag1.getRemark());
+                    image.add(tag1.getCard_front());
+                    image.add(tag1.getCard_back());
+                    myPager = new CardSwipe(getApplicationContext(), image);
+                    mViewPager.setClipChildren(false);
+                    mViewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+                    mViewPager.setOffscreenPageLimit(3);
+                    mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
+
+
+                    mViewPager.setAdapter(myPager);
+                }
+            }
+
+        }catch (Exception e){
+
+        }
+
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -209,50 +252,49 @@ public class CardDetail extends NfcActivity {
                 }*/
 
 
-                List<NFCModel> modelList = db.getNFCbyTag(id);
-                image = new ArrayList<>();
-                try {
-
-                    if (modelList != null){
-
-                        for (NFCModel tag1 : modelList) {
-                           // Toast.makeText(getApplicationContext(), tag1.getName(), Toast.LENGTH_LONG).show();
-
-                            Bitmap bmp = BitmapFactory.decodeByteArray(tag1.getCard_front(), 0, tag1.getCard_front().length);
-                            imgCard.setImageBitmap(bmp);
-
-                            Bitmap bmp1 = BitmapFactory.decodeByteArray(tag1.getUser_image(), 0, tag1.getUser_image().length);
-                            imgProfileCard.setImageBitmap(bmp1);
-                            txtName.setText(tag1.getName());
-                            txtCompany.setText(tag1.getCompany());
-                            txtWebsite.setText(tag1.getWebsite());
-                            txtEmail.setText(tag1.getEmail());
-                            txtPH.setText(tag1.getPh_no());
-                            txtWork.setText(tag1.getWork_no());
-                            txtMob.setText(tag1.getMob_no());
-                            txtAddress.setText(tag1.getAddress());
-                            txtRemark.setText(tag1.getRemark());
-                            image.add(tag1.getCard_front());
-                            image.add(tag1.getCard_back());
-                            myPager = new CardSwipe(getApplicationContext(), image);
-                            mViewPager.setClipChildren(false);
-                            mViewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
-                            mViewPager.setOffscreenPageLimit(3);
-                            mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
-
-
-                            mViewPager.setAdapter(myPager);
-                        }
-                    }
-
-                }catch (Exception e){
-
-                }
-
-                Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
                // callData(id);
                 for (String data : mNfcReadUtility.readFromTagWithMap(paramIntent).values()) {
                     Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
+                    List<NFCModel> modelList = db.getNFCbyTag(data);
+                    image = new ArrayList<>();
+                    try {
+
+                        if (modelList != null){
+
+                            for (NFCModel tag1 : modelList) {
+                                // Toast.makeText(getApplicationContext(), tag1.getName(), Toast.LENGTH_LONG).show();
+
+                                Bitmap bmp = BitmapFactory.decodeByteArray(tag1.getCard_front(), 0, tag1.getCard_front().length);
+                                imgCard.setImageBitmap(bmp);
+
+                                Bitmap bmp1 = BitmapFactory.decodeByteArray(tag1.getUser_image(), 0, tag1.getUser_image().length);
+                                imgProfileCard.setImageBitmap(bmp1);
+                                txtName.setText(tag1.getName());
+                                txtCompany.setText(tag1.getCompany());
+                                txtWebsite.setText(tag1.getWebsite());
+                                txtEmail.setText(tag1.getEmail());
+                                txtPH.setText(tag1.getPh_no());
+                                txtWork.setText(tag1.getWork_no());
+                                txtMob.setText(tag1.getMob_no());
+                                txtAddress.setText(tag1.getAddress());
+                                txtRemark.setText(tag1.getRemark());
+                                image.add(tag1.getCard_front());
+                                image.add(tag1.getCard_back());
+                                myPager = new CardSwipe(getApplicationContext(), image);
+                                mViewPager.setClipChildren(false);
+                                mViewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+                                mViewPager.setOffscreenPageLimit(3);
+                                mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
+
+
+                                mViewPager.setAdapter(myPager);
+                            }
+                        }
+
+                    }catch (Exception e){
+
+                    }
                 }
         }
     }

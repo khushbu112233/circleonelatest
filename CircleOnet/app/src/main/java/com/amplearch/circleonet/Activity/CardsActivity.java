@@ -45,8 +45,15 @@ import com.amplearch.circleonet.Fragments.List3Fragment;
 import com.amplearch.circleonet.Fragments.List4Fragment;
 import com.amplearch.circleonet.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import be.appfoundry.nfclibrary.activities.NfcActivity;
 import be.appfoundry.nfclibrary.utilities.interfaces.NfcReadUtility;
@@ -54,7 +61,7 @@ import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
 
 public class CardsActivity extends NfcActivity {
 
-    CustomViewPager mViewPager;
+    public static CustomViewPager mViewPager;
     TabLayout tabLayout;
     ImageView imgDrawer, imgLogo;
     private int actionBarHeight;
@@ -62,12 +69,17 @@ public class CardsActivity extends NfcActivity {
     public static int position = 0, nested_position = 0;
     DatabaseHelper db;
     NfcReadUtility mNfcReadUtility = new NfcReadUtilityImpl();
+    private Date location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cards);
+        /*SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy  hh:mm:ss a");
+        String date1 = format.format(Date.parse(stringDate));
 
+        Toast.makeText(getApplicationContext(), "Time: " + date1, Toast.LENGTH_LONG).show();
+*/
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
             position = extras.getInt("viewpager_position");
@@ -393,7 +405,7 @@ public class CardsActivity extends NfcActivity {
                 // id += Integer.toHexString(tagId[i] & 0xFF) + " ";
             }
             id = bytesToHex(tagId);
-            Boolean aBoolean = db.verification(id);
+            /*Boolean aBoolean = db.verification(id);
             if (aBoolean == true)
             {
                 Toast.makeText(getApplicationContext(), "already exists in database", Toast.LENGTH_LONG).show();
@@ -424,7 +436,7 @@ public class CardsActivity extends NfcActivity {
                     startActivity(go);
                     finish();
                 }
-            }
+            }*/
 
                /* try {
 
@@ -484,6 +496,83 @@ public class CardsActivity extends NfcActivity {
          //   Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
             // callData(id);
             for (String data : mNfcReadUtility.readFromTagWithMap(paramIntent).values()) {
+                Boolean aBoolean = db.verification(data);
+                if (aBoolean == true)
+                {
+                    Toast.makeText(getApplicationContext(), "Already Activated", Toast.LENGTH_LONG).show();
+                }else {
+                    Date date = new Date();
+                    String stringDate = DateFormat.getDateTimeInstance().format(date);
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String date1 = format.format(Date.parse(stringDate));
+
+                    int i = db.makeCardActive(data, date1);
+                    if (i == 1){
+                        Toast.makeText(getApplicationContext(), "Contact Added", Toast.LENGTH_LONG).show();
+                        try {
+                            List2Fragment.gridAdapter.notifyDataSetChanged();
+                            List2Fragment.allTags = db.getActiveNFC();
+                            List2Fragment.nfcModel.clear();
+                            //  nfcModelList.clear();
+                            List2Fragment.GetData(getApplicationContext());
+                        } catch (Exception e){
+
+                        }
+
+                        try {
+                            List3Fragment.gridAdapter.notifyDataSetChanged();
+                            List3Fragment.allTags = db.getActiveNFC();
+                            List3Fragment.nfcModel.clear();
+                            //  nfcModelList.clear();
+                            List3Fragment.GetData(getApplicationContext());
+                        } catch (Exception e){
+
+                        }
+                        try {
+                            List4Fragment.gridAdapter.notifyDataSetChanged();
+                            List4Fragment.allTags = db.getActiveNFC();
+                            List4Fragment.nfcModel.clear();
+                            //  nfcModelList.clear();
+                            List4Fragment.GetData(getApplicationContext());
+                        } catch (Exception e){
+
+                        }
+
+                        try {
+                            List1Fragment.myPager.notifyDataSetChanged();
+                            List1Fragment.allTags = db.getActiveNFC();
+                            List1Fragment.nfcModel.clear();
+                            //  nfcModelList.clear();
+                            List1Fragment.GetData(getApplicationContext());
+                        } catch (Exception e){
+
+                        }
+                    }
+                    else if (i == 11){
+                        Toast.makeText(getApplicationContext(), "Data Does not exists in Database..", Toast.LENGTH_LONG).show();
+                    }
+                    //  Toast.makeText(getApplicationContext(), String.valueOf(i), Toast.LENGTH_LONG).show();
+                    // notifyAll();
+
+                    /*if (mViewPager.getCurrentItem() == 0){
+                        Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+
+                        // you pass the position you want the viewpager to show in the extra,
+                        // please don't forget to define and initialize the position variable
+                        // properly
+                        go.putExtra("viewpager_position", 0);
+                        go.putExtra("nested_viewpager_position", CardsFragment.mViewPager.getCurrentItem());
+
+                        startActivity(go);
+                        finish();
+                        //Toast.makeText(getApplicationContext(), String.valueOf(CardsFragment.mViewPager.getCurrentItem()), Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+                        startActivity(go);
+                        finish();
+                    }*/
+                }
               //  Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
             }
         }

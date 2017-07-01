@@ -8,9 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Base64;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.R;
@@ -18,7 +16,6 @@ import com.amplearch.circleonet.R;
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -59,6 +56,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
     private static final String KEY_ACTIVE = "active";
     private static final String KEY_NFC_TAG = "nfc_tag";
     private static final String KEY_USER_IMG = "user_image";
+    private static final String KEY_DATE = "date";
 
 	private static final String CREATE_TABLE_NFC = "CREATE TABLE "
 			+ TABLE_NFC
@@ -85,7 +83,8 @@ public class DatabaseHelper extends SQLiteOpenHelper
             + KEY_CARD_BACK + " BLOB,"
             + KEY_ACTIVE + " TEXT,"
             + KEY_NFC_TAG + " TEXT,"
-            + KEY_USER_IMG + " BLOB"
+            + KEY_USER_IMG + " BLOB,"
+            + KEY_DATE + " TEXT"
 			+ ")";
 
 	public DatabaseHelper(Context context) {
@@ -147,11 +146,11 @@ public class DatabaseHelper extends SQLiteOpenHelper
         Bitmap bitmapf2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.card2f);
         Bitmap bitmapb2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.card2f);
 
-        Bitmap bitmapf3 = BitmapFactory.decodeResource(context.getResources(), R.drawable.card1_front);
-        Bitmap bitmapb3 = BitmapFactory.decodeResource(context.getResources(), R.drawable.card1_back);
+        Bitmap bitmapf3 = BitmapFactory.decodeResource(context.getResources(), R.drawable.card3_1);
+        Bitmap bitmapb3 = BitmapFactory.decodeResource(context.getResources(), R.drawable.card3_1);
 
-        Bitmap bitmapf4 = BitmapFactory.decodeResource(context.getResources(), R.drawable.card2_front);
-        Bitmap bitmapb4 = BitmapFactory.decodeResource(context.getResources(), R.drawable.card2_back);
+        Bitmap bitmapf4 = BitmapFactory.decodeResource(context.getResources(), R.drawable.card4);
+        Bitmap bitmapb4 = BitmapFactory.decodeResource(context.getResources(), R.drawable.card4);
 
         bitmapf1.compress(Bitmap.CompressFormat.JPEG, 100, baosf1);
         bitmapb1.compress(Bitmap.CompressFormat.JPEG, 100, baosb1);
@@ -199,41 +198,17 @@ public class DatabaseHelper extends SQLiteOpenHelper
         byte[] imageBytesu4 = user4.toByteArray();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, "Kajol");
-        values.put(KEY_COMPANY, "Google");
-        values.put(KEY_DESIGNATION, "Android Developer");
-        values.put(KEY_MOB, "9874561230");
-        values.put(KEY_WORK, "0791234567");
-        values.put(KEY_PH, "0792456789");
-        values.put(KEY_EMAIL, "kajal.patadia@google.com");
-        values.put(KEY_WEBSITE, "www.google.com");
-        values.put(KEY_ADDRESS, "1600 Amphitheatre Parkway, Mountain View, CA");
-        values.put(KEY_LAT, "37.4224082");
-        values.put(KEY_LNG, "-122.0856086");
-        values.put(KEY_REMARK, "Nothing");
-        values.put(KEY_FACEBOOK_ID, "www.facebook.com");
-        values.put(KEY_LINKEDIN_ID, "www.linkedin.com");
-        values.put(KEY_GOOGLE_ID, "www.google.com");
-        values.put(KEY_TWITTER_ID, "www.twitter.com");
-        values.put(KEY_YOUTUBE_ID, "www.twitter.com");
-        values.put(KEY_CARD_FRONT, imageBytesf1);
-        values.put(KEY_CARD_BACK, imageBytesb1);
-        values.put(KEY_ACTIVE, "true");
-        values.put(KEY_NFC_TAG, "046C78E1ED2580");
-        values.put(KEY_USER_IMG, imageBytesu1);
-		db.insert(TABLE_NFC, null, values);
-
-        values.put(KEY_NAME, "Sameer");
-        values.put(KEY_COMPANY, "Apple");
-        values.put(KEY_DESIGNATION, "IOS Developer");
-        values.put(KEY_MOB, "9874561230");
-        values.put(KEY_WORK, "0791234567");
-        values.put(KEY_PH, "0792456789");
-        values.put(KEY_EMAIL, "sameer.ample@gmail.com");
-        values.put(KEY_WEBSITE, "www.iphone.com");
-        values.put(KEY_ADDRESS, "1600 Amphitheatre Parkway, Mountain View, CA");
-        values.put(KEY_LAT, "37.4224082");
-        values.put(KEY_LNG, "-122.0856086");
+        values.put(KEY_NAME, "Jonathan Por");
+        values.put(KEY_COMPANY, "PIF Capital Pte Ltd");
+        values.put(KEY_DESIGNATION, "Chairman");
+        values.put(KEY_MOB, "+65 9005 0101");
+        values.put(KEY_WORK, "+65 9005 0102");
+        values.put(KEY_PH, "+65 6443 1113");
+        values.put(KEY_EMAIL, "jonathan@pifcapital.com");
+        values.put(KEY_WEBSITE, "www.pif.com.sg");
+        values.put(KEY_ADDRESS, "53 Mohamed Sultan Road Level 3 Singapore 238993");
+        values.put(KEY_LAT, "23.012102");
+        values.put(KEY_LNG, "72.522634");
         values.put(KEY_REMARK, "Nothing");
         values.put(KEY_FACEBOOK_ID, "www.facebook.com");
         values.put(KEY_LINKEDIN_ID, "www.linkedin.com");
@@ -243,19 +218,45 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_CARD_FRONT, imageBytesf2);
         values.put(KEY_CARD_BACK, imageBytesb2);
         values.put(KEY_ACTIVE, "true");
-        values.put(KEY_NFC_TAG, "0438FB22D84981");
+        values.put(KEY_NFC_TAG, "en000000001");
         values.put(KEY_USER_IMG, imageBytesu2);
+        values.put(KEY_DATE, "2017-07-01 10:42:38");
         db.insert(TABLE_NFC, null, values);
 
-        values.put(KEY_NAME, "Justin Yaun Fel");
-        values.put(KEY_COMPANY, "Facebook");
+        values.put(KEY_NAME, "Kiki Tai");
+        values.put(KEY_COMPANY, "AtMedia");
+        values.put(KEY_DESIGNATION, "Creative Director");
+        values.put(KEY_MOB, "+65 9738 5801");
+        values.put(KEY_WORK, "+65 9738 5802");
+        values.put(KEY_PH, "+65 9738 5803");
+        values.put(KEY_EMAIL, "kiki@atmedia.com.sg");
+        values.put(KEY_WEBSITE, "www.atmedia.com.sg");
+        values.put(KEY_ADDRESS, "10 Anson Road #26-04 International Plaza, Singapore 079903");
+        values.put(KEY_LAT, "37.4224082");
+        values.put(KEY_LNG, "-122.0856086");
+        values.put(KEY_REMARK, "Nothing");
+        values.put(KEY_FACEBOOK_ID, "www.facebook.com");
+        values.put(KEY_LINKEDIN_ID, "www.linkedin.com");
+        values.put(KEY_GOOGLE_ID, "www.google.com");
+        values.put(KEY_TWITTER_ID, "www.twitter.com");
+        values.put(KEY_YOUTUBE_ID, "www.twitter.com");
+        values.put(KEY_CARD_FRONT, imageBytesf4);
+        values.put(KEY_CARD_BACK, imageBytesb4);
+        values.put(KEY_ACTIVE, "true");
+        values.put(KEY_NFC_TAG, "en000000004");
+        values.put(KEY_USER_IMG, imageBytesu1);
+        values.put(KEY_DATE, "2017-06-30 12:42:38");
+		db.insert(TABLE_NFC, null, values);
+
+        values.put(KEY_NAME, "Justin Yuan Fei");
+        values.put(KEY_COMPANY, "ESIN");
         values.put(KEY_DESIGNATION, "General Manager");
-        values.put(KEY_MOB, "9874561230");
-        values.put(KEY_WORK, "0791234567");
-        values.put(KEY_PH, "0792456789");
-        values.put(KEY_EMAIL, "justin@facebook.com");
-        values.put(KEY_WEBSITE, "www.facebook.com");
-        values.put(KEY_ADDRESS, "1600 Amphitheatre Parkway, Mountain View, CA");
+        values.put(KEY_MOB, "+65 9102 0862");
+        values.put(KEY_WORK, "+65 6822 3908");
+        values.put(KEY_PH, "+65 6822 3908");
+        values.put(KEY_EMAIL, "yuanfei@esin.com.sg");
+        values.put(KEY_WEBSITE, "www.esin.com.sg");
+        values.put(KEY_ADDRESS, "A:60 Paya Lebar Road, #09-06 Paya Lebar Square, Singapore 409051");
         values.put(KEY_LAT, "37.4224082");
         values.put(KEY_LNG, "-122.0856086");
         values.put(KEY_REMARK, "Nothing");
@@ -267,8 +268,9 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_CARD_FRONT, imageBytesf3);
         values.put(KEY_CARD_BACK, imageBytesb3);
         values.put(KEY_ACTIVE, "false");
-        values.put(KEY_NFC_TAG, "0476B692744080");
+        values.put(KEY_NFC_TAG, "en000000002");
         values.put(KEY_USER_IMG, imageBytesu3);
+        values.put(KEY_DATE, "2017-06-01 12:42:38");
         db.insert(TABLE_NFC, null, values);
 
         values.put(KEY_NAME, "Physician Ong");
@@ -288,11 +290,12 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_GOOGLE_ID, "www.google.com");
         values.put(KEY_TWITTER_ID, "www.twitter.com");
         values.put(KEY_YOUTUBE_ID, "www.twitter.com");
-        values.put(KEY_CARD_FRONT, imageBytesf4);
-        values.put(KEY_CARD_BACK, imageBytesb4);
+        values.put(KEY_CARD_FRONT, imageBytesf1);
+        values.put(KEY_CARD_BACK, imageBytesb1);
         values.put(KEY_ACTIVE, "true");
-        values.put(KEY_NFC_TAG, "04787192744080");
+        values.put(KEY_NFC_TAG, "en000000003");
         values.put(KEY_USER_IMG, imageBytesu4);
+        values.put(KEY_DATE, "2017-07-01 12:42:38");
         db.insert(TABLE_NFC, null, values);
 	}
 
@@ -332,6 +335,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_ACTIVE, favourites.getActive());
         values.put(KEY_NFC_TAG, favourites.getNfc_tag());
         values.put(KEY_USER_IMG, favourites.getUser_image());
+        values.put(KEY_DATE, favourites.getDate());
 
         // insert row
 		long todo_id = db.insert(TABLE_NFC, null, values);
@@ -422,6 +426,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
                 td.setActive(c.getString(c.getColumnIndex(KEY_ACTIVE)));
                 td.setNfc_tag(c.getString(c.getColumnIndex(KEY_NFC_TAG)));
                 td.setUser_image(c.getBlob(c.getColumnIndex(KEY_USER_IMG)));
+                td.setDate(c.getString(c.getColumnIndex(KEY_DATE)));
 
                 // adding to todo list
                 tags.add(td);
@@ -433,7 +438,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
     public List<NFCModel> getActiveNFC() {
         List<NFCModel> tags = new ArrayList<NFCModel>();
-        String selectQuery = "SELECT  * FROM " + TABLE_NFC + " WHERE " + KEY_ACTIVE + "='true'";
+        String selectQuery = "SELECT  * FROM " + TABLE_NFC + " WHERE " + KEY_ACTIVE + "='true' ORDER BY datetime(\"date\") DESC";
 
         Log.e(LOG, selectQuery);
 
@@ -467,7 +472,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
                 td.setActive(c.getString(c.getColumnIndex(KEY_ACTIVE)));
                 td.setNfc_tag(c.getString(c.getColumnIndex(KEY_NFC_TAG)));
                 td.setUser_image(c.getBlob(c.getColumnIndex(KEY_USER_IMG)));
-
+                td.setDate(c.getString(c.getColumnIndex(KEY_DATE)));
                 // adding to todo list
                 tags.add(td);
             } while (c.moveToNext());
@@ -513,7 +518,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
                 td.setActive(c.getString(c.getColumnIndex(KEY_ACTIVE)));
                 td.setNfc_tag(c.getString(c.getColumnIndex(KEY_NFC_TAG)));
                 td.setUser_image(c.getBlob(c.getColumnIndex(KEY_USER_IMG)));
-
+                td.setDate(c.getString(c.getColumnIndex(KEY_DATE)));
                 // adding to tags list
                 tags.add(td);
             } while (c.moveToNext());
@@ -558,13 +563,14 @@ public class DatabaseHelper extends SQLiteOpenHelper
         }
     }
 
-    public int makeCardActive(String id) {
+    public int makeCardActive(String id, String date) {
         SQLiteDatabase db = this.getWritableDatabase();
         Boolean aBoolean = tagVerification(id);
         if (aBoolean == true) {
             ContentValues values = new ContentValues();
             values.put(KEY_NFC_TAG, id);
             values.put(KEY_ACTIVE, "true");
+            values.put(KEY_DATE, date);
             return db.update(TABLE_NFC, values, KEY_NFC_TAG + " = ?",
                     new String[] { String.valueOf(id) });
         }else {

@@ -1,6 +1,7 @@
 package com.amplearch.circleonet.Fragments;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -38,8 +39,8 @@ import java.util.Locale;
 public class List3Fragment extends Fragment
 {
 
-    private ListView listView;
-    private List3Adapter gridAdapter;
+    private static ListView listView;
+    public static List3Adapter gridAdapter;
     ArrayList<byte[]> imgf;
     ArrayList<String> name;
     ArrayList<Integer> id;
@@ -49,10 +50,10 @@ public class List3Fragment extends Fragment
     RelativeLayout lnrSearch;
     View line;
 
-    List<NFCModel> allTags ;
+    public static List<NFCModel> allTags ;
     //new asign value
     AutoCompleteTextView searchText ;
-    ArrayList<NFCModel> nfcModel ;
+    public static ArrayList<NFCModel> nfcModel ;
 
 
     public List3Fragment() {
@@ -80,9 +81,9 @@ public class List3Fragment extends Fragment
 
         lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
         line = view.findViewById(R.id.view);
-        lnrSearch.setVisibility(View.GONE);
+        /*lnrSearch.setVisibility(View.GONE);
         line.setVisibility(View.GONE);
-        CardsFragment.tabLayout.setVisibility(View.GONE);
+        CardsFragment.tabLayout.setVisibility(View.GONE);*/
 
         /*allTags = db.getActiveNFC();
         for (NFCModel tag : allTags) {
@@ -97,18 +98,19 @@ public class List3Fragment extends Fragment
 
 
 
-        listView.setOnTouchListener(new View.OnTouchListener() {
+        /*listView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
                 return gestureDetector.onTouchEvent(event);
 
             }
-        });
+        });*/
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getContext(), CardDetail.class);
+                intent.putExtra("tag_id", nfcModel.get(position).getNfc_tag());
                 getContext().startActivity(intent);
             }
         });
@@ -128,7 +130,7 @@ public class List3Fragment extends Fragment
         });*/
 
         //retrive data
-        GetData();
+        GetData(getContext());
 
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -166,22 +168,21 @@ public class List3Fragment extends Fragment
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after)
             {
-                if(searchText.getText().toString().length() == 0)
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+                if(s.length() <= 0)
                 {
                     nfcModel.clear();
-                    GetData();
+                    GetData(getContext());
                 }
                 else
                 {
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
                     gridAdapter.Filter(text);
                 }
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
-
             }
 
             @Override
@@ -217,14 +218,14 @@ public class List3Fragment extends Fragment
 
                 if ((e1.getY() - e2.getY()) > sensitvity) {
                     swipe += "Swipe Up\n";
-                    lnrSearch.setVisibility(View.GONE);
+                    /*lnrSearch.setVisibility(View.GONE);
                     line.setVisibility(View.GONE);
-                    CardsFragment.tabLayout.setVisibility(View.GONE);
+                    CardsFragment.tabLayout.setVisibility(View.GONE);*/
                 } else if ((e2.getY() - e1.getY()) > sensitvity) {
                     swipe += "Swipe Down\n";
-                    lnrSearch.setVisibility(View.VISIBLE);
+                   /* lnrSearch.setVisibility(View.VISIBLE);
                     line.setVisibility(View.VISIBLE);
-                    CardsFragment.tabLayout.setVisibility(View.VISIBLE);
+                    CardsFragment.tabLayout.setVisibility(View.VISIBLE);*/
                 } else {
                     swipe += "\n";
                 }
@@ -249,10 +250,10 @@ public class List3Fragment extends Fragment
         super.onResume();
 
         nfcModel.clear();
-        GetData();
+        GetData(getContext());
     }
 
-    private void GetData()
+    public static void GetData(Context context)
     {
         //newly added
         for(NFCModel reTag : allTags)
@@ -266,10 +267,11 @@ public class List3Fragment extends Fragment
             nfcModelTag.setMob_no(reTag.getMob_no());
             nfcModelTag.setDesignation(reTag.getDesignation());
             nfcModelTag.setCard_front(reTag.getCard_front());
+            nfcModelTag.setNfc_tag(reTag.getNfc_tag());
 
             nfcModel.add(nfcModelTag);
         }
-        gridAdapter = new List3Adapter(getContext(), R.layout.grid_list3_layout, nfcModel);
+        gridAdapter = new List3Adapter(context, R.layout.grid_list3_layout, nfcModel);
         listView.setAdapter(gridAdapter);
         gridAdapter.notifyDataSetChanged();
 

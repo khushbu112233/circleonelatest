@@ -1,41 +1,58 @@
 package com.amplearch.circleonet.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewPager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import com.amplearch.circleonet.Adapter.GridViewAdapter;
 import com.amplearch.circleonet.Gesture.SwipeGestureDetector;
 import com.amplearch.circleonet.Helper.DatabaseHelper;
 import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.Utils.CarouselEffectTransformer;
 import com.amplearch.circleonet.Adapter.MyPager;
 import com.amplearch.circleonet.R;
+import com.daimajia.swipe.util.Attributes;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 public class List1Fragment extends Fragment{
 
    // private ArrayList<Integer> imageFront = new ArrayList<>();
    // private ArrayList<Integer> imageBack = new ArrayList<>();
-    private ViewPager viewPager;
-    private MyPager myPager ;
+    public static ViewPager viewPager;
+    public static MyPager myPager ;
     DatabaseHelper db ;
 
-    ArrayList<byte[]> imgf;
+    /*ArrayList<byte[]> imgf;
     ArrayList<byte[]> imgb;
+    ArrayList<String> tag_id;*/
     RelativeLayout lnrSearch;
     View line;
     private String DEBUG_TAG = "gesture";
   //  private GestureDetector gestureDetector;
   //  private View.OnTouchListener gestureListener;
+
+    public static List<NFCModel> allTags ;
+    //new asign value
+    AutoCompleteTextView searchText ;
+    public static ArrayList<NFCModel> nfcModel ;
 
     public List1Fragment() {
         // Required empty public constructor
@@ -57,33 +74,64 @@ public class List1Fragment extends Fragment{
         viewPager = (ViewPager)view.findViewById(R.id.viewPager);
         lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
         line = view.findViewById(R.id.view);
-        lnrSearch.setVisibility(View.GONE);
+
+        searchText = (AutoCompleteTextView)view.findViewById(R.id.searchView);
+        nfcModel = new ArrayList<>();
+        allTags = db.getActiveNFC();
+
+       /* lnrSearch.setVisibility(View.GONE);
         line.setVisibility(View.GONE);
-        CardsFragment.tabLayout.setVisibility(View.GONE);
+        CardsFragment.tabLayout.setVisibility(View.GONE);*/
         viewPager.setClipChildren(false);
         viewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
         viewPager.setOffscreenPageLimit(3);
         viewPager.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
 
-        viewPager.setOnTouchListener(new View.OnTouchListener() {
+
+        /*viewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
                 return gestureDetector.onTouchEvent(event);
 
             }
-        });
+        });*/
 
-        imgf = new ArrayList<byte[]>();
+       /* imgf = new ArrayList<byte[]>();
         imgb = new ArrayList<byte[]>();
-        List<NFCModel> allTags = db.getActiveNFC();
-        for (NFCModel tag : allTags) {
-            imgf.add(tag.getCard_front());
-            imgb.add(tag.getCard_back());
-        }
+        tag_id = new ArrayList<String>();*/
 
-        myPager = new MyPager(getContext(), imgf, imgb);
-        viewPager.setAdapter(myPager);
+        GetData(getContext());
+        //myPager = new MyPager(getContext(), imgf, imgb, tag_id);
+        //viewPager.setAdapter(myPager);
+
+        searchText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+                if(s.length() <= 0)
+                {
+                    nfcModel.clear();
+                    allTags = db.getActiveNFC();
+                    GetData(getContext());
+                }
+                else
+                {
+                    String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
+                    myPager.Filter(text);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener()
         {
@@ -156,4 +204,51 @@ public class List1Fragment extends Fragment{
 
     GestureDetector gestureDetector
             = new GestureDetector(simpleOnGestureListener);
+
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        nfcModel.clear();
+        GetData(getContext());
+    }
+
+    public static void GetData(Context context)
+    {
+        //newly added
+        for(NFCModel reTag : allTags)
+        {
+            NFCModel nfcModelTag = new NFCModel();
+            nfcModelTag.setId(reTag.getId());
+            nfcModelTag.setName(reTag.getName());
+            nfcModelTag.setCompany(reTag.getCompany());
+            nfcModelTag.setEmail(reTag.getEmail());
+            nfcModelTag.setWebsite(reTag.getWebsite());
+            nfcModelTag.setMob_no(reTag.getMob_no());
+            nfcModelTag.setDesignation(reTag.getDesignation());
+            nfcModelTag.setCard_front(reTag.getCard_front());
+            nfcModelTag.setCard_back(reTag.getCard_back());
+            nfcModelTag.setNfc_tag(reTag.getNfc_tag());
+
+            nfcModel.add(nfcModelTag);
+        }
+
+        Collections.sort(nfcModel, new Comparator<NFCModel>() {
+            public int compare(NFCModel o1, NFCModel o2) {
+                if (o1.getDate() == null || o2.getDate() == null)
+                    return 0;
+                return o1.getDate().compareTo(o2.getDate());
+            }
+        });
+
+        myPager = new MyPager(context, R.layout.cardview_list, nfcModel);
+        viewPager.setAdapter(myPager);
+        myPager.notifyDataSetChanged();
+
+        //gridAdapter.setMode(Attributes.Mode.Single);
+
+    }
+
 }

@@ -29,11 +29,12 @@ public class NFCModel {
     String active;
     String nfc_tag;
     byte[] user_image;
+    String date;
 
     public NFCModel() {
     }
 
-    public NFCModel(String name, String company, String designation, String mob_no, String work_no, String ph_no, String email, String website, String address, String lat, String lng, String remark, String fb_id, String linkedin_id, String google_id, String twitter_id, String youtube_id, byte[] card_front, byte[] card_back, String active, String nfc_tag, byte[] user_image) {
+    public NFCModel(String name, String company, String designation, String mob_no, String work_no, String ph_no, String email, String website, String address, String lat, String lng, String remark, String fb_id, String linkedin_id, String google_id, String twitter_id, String youtube_id, byte[] card_front, byte[] card_back, String active, String nfc_tag, byte[] user_image, String date) {
         this.name = name;
         this.company = company;
         this.designation = designation;
@@ -56,6 +57,7 @@ public class NFCModel {
         this.active = active;
         this.nfc_tag = nfc_tag;
         this.user_image = user_image;
+        this.date = date;
     }
 
     public int getId() {
@@ -240,5 +242,13 @@ public class NFCModel {
 
     public void setUser_image(byte[] user_image) {
         this.user_image = user_image;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

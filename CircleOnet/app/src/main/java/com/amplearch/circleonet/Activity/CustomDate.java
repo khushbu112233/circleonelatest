@@ -21,6 +21,7 @@ import com.amplearch.circleonet.R;
 import com.stacktips.view.CalendarListener;
 import com.stacktips.view.CustomCalendarView;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -29,9 +30,11 @@ import java.util.Locale;
 public class CustomDate extends AppCompatActivity {
 
     CustomCalendarView calendarView;
-    private TextView actionText;
+    private TextView actionText, dateSelect;
     private ImageView imgDrawer, imgCards, imgConnect, imgEvents, imgProfile, imgLogo;
     private int actionBarHeight;
+    Date date1, date2;
+    int i =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +45,6 @@ public class CustomDate extends AppCompatActivity {
         final ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.custom_actionbar);
-
         actionText = (TextView) findViewById(R.id.mytext);
         imgDrawer = (ImageView) findViewById(R.id.drawer);
         imgCards = (ImageView) findViewById(R.id.imgCards);
@@ -50,6 +52,7 @@ public class CustomDate extends AppCompatActivity {
         imgEvents = (ImageView) findViewById(R.id.imgEvents);
         imgProfile = (ImageView) findViewById(R.id.imgProfile);
         imgLogo = (ImageView) findViewById(R.id.imgLogo);
+        dateSelect = (TextView) findViewById(R.id.dateSelect);
         actionText.setText("Events");
 
         calendarView = (CustomCalendarView) findViewById(R.id.calendar_view);
@@ -70,8 +73,29 @@ public class CustomDate extends AppCompatActivity {
         calendarView.setCalendarListener(new CalendarListener() {
             @Override
             public void onDateSelected(Date date) {
+                i++;
                 SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                 Toast.makeText(CustomDate.this, df.format(date), Toast.LENGTH_SHORT).show();
+                if ( i % 2 == 0 ){
+                    date2 = date;
+                }
+                else {
+                    date1 = date;
+                }
+
+                try {
+                    if (date1 != null && date2 != null){
+                        long diff = date2.getDay() - date1.getDay(); //result in millis
+
+
+// Print what date is today!
+                        dateSelect.setText("Selected Dates are = " + df.format(date2) + " and " + df.format(date1) + "\nSelected Days = " + String.valueOf(diff));
+                       // Toast.makeText(getApplicationContext(), String.valueOf(diff), Toast.LENGTH_LONG).show();
+                    }
+                } catch (Exception e){
+
+                }
+
             }
 
             @Override

@@ -10,7 +10,7 @@ import com.amplearch.circleonet.R;
 
 public class Connect3Activity extends AppCompatActivity {
 
-    private ImageView imgBack, imgCards, imgConnect, imgEvents, imgProfile;
+    private ImageView imgBack, imgCards, imgConnect, imgEvents, imgProfile, imgConnecting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +22,20 @@ public class Connect3Activity extends AppCompatActivity {
         imgConnect = (ImageView) findViewById(R.id.imgConnect);
         imgEvents = (ImageView) findViewById(R.id.imgEvents);
         imgProfile = (ImageView) findViewById(R.id.imgProfile);
+        imgConnecting = (ImageView) findViewById(R.id.imgConnecting);
+
+        imgConnecting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent go = new Intent(getApplicationContext(),Connect4Activity.class);
+
+                // you pass the position you want the viewpager to show in the extra,
+                // please don't forget to define and initialize the position variable
+                // properly
+                startActivity(go);
+                finish();
+            }
+        });
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override

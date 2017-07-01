@@ -1,6 +1,7 @@
 package com.amplearch.circleonet.Fragments;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -32,6 +33,8 @@ import com.daimajia.swipe.util.Attributes;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -41,8 +44,8 @@ import java.util.Locale;
  */
 public class List2Fragment extends Fragment {
 
-    private GridView gridView;
-    private GridViewAdapter gridAdapter;
+    private static GridView gridView;
+    public static GridViewAdapter gridAdapter;
     ArrayList<byte[]> imgf;
     DatabaseHelper db ;
     float x1,x2;
@@ -50,14 +53,13 @@ public class List2Fragment extends Fragment {
     RelativeLayout lnrSearch;
     View line;
 
-    List<NFCModel> allTags ;
+    public static List<NFCModel> allTags ;
     //new asign value
     AutoCompleteTextView searchText ;
-    ArrayList<NFCModel> nfcModel ;
+    public static ArrayList<NFCModel> nfcModel ;
     public List2Fragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,25 +83,30 @@ public class List2Fragment extends Fragment {
        // gridView.setAdapter(gridAdapter);
         lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
         line = view.findViewById(R.id.view);
-        lnrSearch.setVisibility(View.GONE);
+        /*lnrSearch.setVisibility(View.GONE);
         line.setVisibility(View.GONE);
-        CardsFragment.tabLayout.setVisibility(View.GONE);
+        CardsFragment.tabLayout.setVisibility(View.GONE);*/
 
-        GetData();
+        GetData(getContext());
 
-        gridView.setOnTouchListener(new View.OnTouchListener() {
+       /* gridView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
-                return gestureDetector.onTouchEvent(event);
-
+                if (gestureDetector.onTouchEvent(event)) {
+                    // single tap
+                    return true;
+                } else {
+                    return gestureDetector.onTouchEvent(event);
+                }
             }
-        });
+        });*/
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getContext(), CardDetail.class);
+                intent.putExtra("tag_id", nfcModel.get(position).getNfc_tag());
                 getContext().startActivity(intent);
             }
         });
@@ -108,22 +115,21 @@ public class List2Fragment extends Fragment {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after)
             {
-                if(searchText.getText().toString().length() == 0)
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+                if(s.length() <= 0)
                 {
                     nfcModel.clear();
-                    GetData();
+                    GetData(getContext());
                 }
                 else
                 {
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
                     gridAdapter.Filter(text);
                 }
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
-
             }
 
             @Override
@@ -209,10 +215,10 @@ public class List2Fragment extends Fragment {
         super.onResume();
 
         nfcModel.clear();
-        GetData();
+        GetData(getContext());
     }
 
-    private void GetData()
+    public static void GetData(Context context)
     {
         //newly added
         for(NFCModel reTag : allTags)
@@ -226,10 +232,20 @@ public class List2Fragment extends Fragment {
             nfcModelTag.setMob_no(reTag.getMob_no());
             nfcModelTag.setDesignation(reTag.getDesignation());
             nfcModelTag.setCard_front(reTag.getCard_front());
+            nfcModelTag.setNfc_tag(reTag.getNfc_tag());
 
             nfcModel.add(nfcModelTag);
         }
-        gridAdapter = new GridViewAdapter(getContext(), R.layout.grid_list2_layout, nfcModel);
+
+        Collections.sort(nfcModel, new Comparator<NFCModel>() {
+            public int compare(NFCModel o1, NFCModel o2) {
+                if (o1.getDate() == null || o2.getDate() == null)
+                    return 0;
+                return o1.getDate().compareTo(o2.getDate());
+            }
+        });
+
+        gridAdapter = new GridViewAdapter(context, R.layout.grid_list2_layout, nfcModel);
         gridView.setAdapter(gridAdapter);
         gridAdapter.notifyDataSetChanged();
 

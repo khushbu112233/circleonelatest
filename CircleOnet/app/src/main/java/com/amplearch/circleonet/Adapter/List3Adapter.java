@@ -15,6 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amplearch.circleonet.Activity.CardsActivity;
+import com.amplearch.circleonet.Fragments.CardsFragment;
+import com.amplearch.circleonet.Fragments.List1Fragment;
+import com.amplearch.circleonet.Fragments.List2Fragment;
+import com.amplearch.circleonet.Fragments.List3Fragment;
+import com.amplearch.circleonet.Fragments.List4Fragment;
 import com.amplearch.circleonet.Helper.DatabaseHelper;
 import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.R;
@@ -105,8 +110,67 @@ public class List3Adapter extends BaseSwipeAdapter
                 db.DeactiveCards(nfcModelList.get(position).getId());
                 Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_SHORT).show();
                 swipeLayout.close();
-                nfcModelList.remove(position);
-                notifyDataSetChanged();
+                //nfcModelList.remove(position);
+
+                try {
+                    List2Fragment.gridAdapter.notifyDataSetChanged();
+                    List2Fragment.allTags = db.getActiveNFC();
+                    List2Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List2Fragment.GetData(context);
+                } catch (Exception e){
+
+                }
+
+                try {
+                    List3Fragment.gridAdapter.notifyDataSetChanged();
+                    List3Fragment.allTags = db.getActiveNFC();
+                    List3Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List3Fragment.GetData(context);
+                } catch (Exception e){
+
+                }
+                try {
+                    List4Fragment.gridAdapter.notifyDataSetChanged();
+                    List4Fragment.allTags = db.getActiveNFC();
+                    List4Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List4Fragment.GetData(context);
+                } catch (Exception e){
+
+                }
+
+                try {
+                    List1Fragment.myPager.notifyDataSetChanged();
+                    List1Fragment.allTags = db.getActiveNFC();
+                    List1Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List1Fragment.GetData(context);
+                } catch (Exception e){
+
+                }
+
+                /*notifyDataSetChanged();
+
+                if (CardsActivity.mViewPager.getCurrentItem() == 0){
+                    Intent go = new Intent(context,CardsActivity.class);
+
+                    // you pass the position you want the viewpager to show in the extra,
+                    // please don't forget to define and initialize the position variable
+                    // properly
+                    go.putExtra("viewpager_position", 0);
+                    go.putExtra("nested_viewpager_position", CardsFragment.mViewPager.getCurrentItem());
+
+                    context.startActivity(go);
+                    ((Activity)context).finish();
+                    //Toast.makeText(getApplicationContext(), String.valueOf(CardsFragment.mViewPager.getCurrentItem()), Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Intent go = new Intent(context,CardsActivity.class);
+                    context.startActivity(go);
+                    ((Activity)context).finish();
+                }*/
             }
         });
 

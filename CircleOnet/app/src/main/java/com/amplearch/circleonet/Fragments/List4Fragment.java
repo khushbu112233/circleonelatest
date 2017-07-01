@@ -1,5 +1,6 @@
 package com.amplearch.circleonet.Fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -30,8 +31,8 @@ import java.util.Locale;
 
 public class List4Fragment extends Fragment {
 
-    private ListView listView;
-    private List4Adapter gridAdapter;
+    public static ListView listView;
+    public static List4Adapter gridAdapter;
     ArrayList<byte[]> imgf;
     ArrayList<String> name;
     ArrayList<String> desc;
@@ -40,10 +41,10 @@ public class List4Fragment extends Fragment {
     RelativeLayout lnrSearch;
     View line;
 
-    List<NFCModel> allTags ;
+    public static List<NFCModel> allTags ;
     //new asign value
     AutoCompleteTextView searchText ;
-    ArrayList<NFCModel> nfcModel ;
+    public static ArrayList<NFCModel> nfcModel ;
 
     public List4Fragment() {
         // Required empty public constructor
@@ -68,10 +69,10 @@ public class List4Fragment extends Fragment {
 
         lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
         line = view.findViewById(R.id.view);
-        lnrSearch.setVisibility(View.GONE);
+        /*lnrSearch.setVisibility(View.GONE);
         line.setVisibility(View.GONE);
         CardsFragment.tabLayout.setVisibility(View.GONE);
-
+*/
         listView = (ListView) view.findViewById(R.id.listViewType4);
         allTags = db.getActiveNFC();
 
@@ -90,23 +91,24 @@ public class List4Fragment extends Fragment {
         listView = (ListView) view.findViewById(R.id.listViewType4);
         gridAdapter = new List4Adapter(getContext(), R.layout.grid_list4_layout, imgf, desc, name, designation);
         listView.setAdapter(gridAdapter);*/
-        listView.setOnTouchListener(new View.OnTouchListener() {
+        /*listView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
                 return gestureDetector.onTouchEvent(event);
 
             }
-        });
+        });*/
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getContext(), CardDetail.class);
+                intent.putExtra("tag_id", nfcModel.get(position).getNfc_tag());
                 getContext().startActivity(intent);
             }
         });
 
-        GetData();
+        GetData(getContext());
 
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -144,10 +146,16 @@ public class List4Fragment extends Fragment {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after)
             {
-                if(searchText.getText().toString().length() == 0)
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+                if(s.length() <= 0)
                 {
                     nfcModel.clear();
-                    GetData();
+                    GetData(getContext());
                 }
                 else
                 {
@@ -157,17 +165,10 @@ public class List4Fragment extends Fragment {
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
-
-            }
-
-            @Override
             public void afterTextChanged(Editable s) {
 
             }
         });
-
 
         return view;
     }
@@ -178,7 +179,7 @@ public class List4Fragment extends Fragment {
         super.onResume();
 
         nfcModel.clear();
-        GetData();
+        GetData(getContext());
     }
 
     GestureDetector.SimpleOnGestureListener simpleOnGestureListener
@@ -203,14 +204,14 @@ public class List4Fragment extends Fragment {
 
                 if ((e1.getY() - e2.getY()) > sensitvity) {
                     swipe += "Swipe Up\n";
-                    lnrSearch.setVisibility(View.GONE);
+                    /*lnrSearch.setVisibility(View.GONE);
                     line.setVisibility(View.GONE);
-                    CardsFragment.tabLayout.setVisibility(View.GONE);
+                    CardsFragment.tabLayout.setVisibility(View.GONE);*/
                 } else if ((e2.getY() - e1.getY()) > sensitvity) {
                     swipe += "Swipe Down\n";
-                    lnrSearch.setVisibility(View.VISIBLE);
+                    /*lnrSearch.setVisibility(View.VISIBLE);
                     line.setVisibility(View.VISIBLE);
-                    CardsFragment.tabLayout.setVisibility(View.VISIBLE);
+                    CardsFragment.tabLayout.setVisibility(View.VISIBLE);*/
                 } else {
                     swipe += "\n";
                 }
@@ -228,7 +229,7 @@ public class List4Fragment extends Fragment {
     GestureDetector gestureDetector
             = new GestureDetector(simpleOnGestureListener);
 
-    private void GetData()
+    public static void GetData(Context context)
     {
         for(NFCModel reTag : allTags)
         {
@@ -241,10 +242,11 @@ public class List4Fragment extends Fragment {
             nfcModelTag.setMob_no(reTag.getMob_no());
             nfcModelTag.setDesignation(reTag.getDesignation());
             nfcModelTag.setUser_image(reTag.getUser_image());
+            nfcModelTag.setNfc_tag(reTag.getNfc_tag());
 
             nfcModel.add(nfcModelTag);
         }
-        gridAdapter = new List4Adapter(getContext(), R.layout.grid_list4_layout, nfcModel);
+        gridAdapter = new List4Adapter(context, R.layout.grid_list4_layout, nfcModel);
         listView.setAdapter(gridAdapter);
         gridAdapter.notifyDataSetChanged();
     }

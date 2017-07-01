@@ -52,6 +52,7 @@
             </RelativeLayout>
 
             <ImageView
+                android:id="@+id/imgConnecting"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:src="@drawable/ic_connecting"
@@ -84,35 +85,33 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
-                        android:padding="12dp"
+                        android:padding="17dp"
                         android:src="@drawable/ic_icon1" />
 
                     <ImageView
                         android:id="@+id/imgConnect"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:padding="17dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
-                        android:padding="12dp"
-                        android:src="@drawable/ic_icon2" />
-
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_icon2"/>
                     <ImageView
                         android:id="@+id/imgEvents"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:padding="17dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
-                        android:padding="12dp"
-                        android:src="@drawable/ic_icon3" />
-
-                    <ImageView
-                        android:id="@+id/imgProfile"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:src="@drawable/ic_icon3"/>
+                    <ImageView
+                        android:id="@+id/imgProfile"
                         android:layout_marginRight="20dp"
+                        android:padding="17dp"
                         android:layout_weight="1"
-                        android:padding="13dp"
-                        android:src="@drawable/ic_icon4" />
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_icon4"/>
                 </LinearLayout>
             </LinearLayout>
 
