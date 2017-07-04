@@ -29,7 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class List4Fragment extends Fragment {
+public class List4Fragment extends Fragment
+{
 
     public static ListView listView;
     public static List4Adapter gridAdapter;
@@ -57,8 +58,8 @@ public class List4Fragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         View view = inflater.inflate(R.layout.fragment_list4, container, false);
 
         db = new DatabaseHelper(getContext());

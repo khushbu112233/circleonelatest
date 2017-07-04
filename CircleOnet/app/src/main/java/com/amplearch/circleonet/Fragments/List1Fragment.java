@@ -32,8 +32,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
-public class List1Fragment extends Fragment{
-
+public class List1Fragment extends Fragment
+{
    // private ArrayList<Integer> imageFront = new ArrayList<>();
    // private ArrayList<Integer> imageBack = new ArrayList<>();
     public static ViewPager viewPager;
@@ -54,7 +54,8 @@ public class List1Fragment extends Fragment{
     AutoCompleteTextView searchText ;
     public static ArrayList<NFCModel> nfcModel ;
 
-    public List1Fragment() {
+    public List1Fragment()
+    {
         // Required empty public constructor
     }
 
@@ -84,9 +85,8 @@ public class List1Fragment extends Fragment{
         CardsFragment.tabLayout.setVisibility(View.GONE);*/
         viewPager.setClipChildren(false);
         viewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
-        viewPager.setOffscreenPageLimit(3);
+        viewPager.setOffscreenPageLimit(5);
         viewPager.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
-
 
         /*viewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -202,9 +202,7 @@ public class List1Fragment extends Fragment{
         }
     };
 
-    GestureDetector gestureDetector
-            = new GestureDetector(simpleOnGestureListener);
-
+    GestureDetector gestureDetector = new GestureDetector(simpleOnGestureListener);
 
     @Override
     public void onResume()

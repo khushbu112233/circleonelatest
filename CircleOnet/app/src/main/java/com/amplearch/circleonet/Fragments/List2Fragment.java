@@ -42,7 +42,8 @@ import java.util.Locale;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class List2Fragment extends Fragment {
+public class List2Fragment extends Fragment
+{
 
     private static GridView gridView;
     public static GridViewAdapter gridAdapter;
@@ -57,13 +58,14 @@ public class List2Fragment extends Fragment {
     //new asign value
     AutoCompleteTextView searchText ;
     public static ArrayList<NFCModel> nfcModel ;
+
     public List2Fragment() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list2, container, false);
         /*db = new DatabaseHelper(getContext());
@@ -111,7 +113,8 @@ public class List2Fragment extends Fragment {
             }
         });
 
-        searchText.addTextChangedListener(new TextWatcher() {
+        searchText.addTextChangedListener(new TextWatcher()
+        {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after)
             {
@@ -141,13 +144,13 @@ public class List2Fragment extends Fragment {
         return view;
     }
 
-    private ArrayList<ImageItem> getData() {
+    private ArrayList<ImageItem> getData()
+    {
         final ArrayList<ImageItem> imageItems = new ArrayList<>();
-        for (int i = 0; i < imgf.size(); i++) {
-
+        for (int i = 0; i < imgf.size(); i++)
+        {
             Bitmap bmp = BitmapFactory.decodeByteArray(imgf.get(i), 0, imgf.get(i).length);
             // ImageView image = (ImageView) findViewById(R.id.imageView1);
-
           //  imageView.setImageBitmap(bmp);
 
             /*Bitmap bitmap = BitmapFactory.decodeResource(getResources(), imgs.getResourceId(i, -1));
@@ -161,17 +164,17 @@ public class List2Fragment extends Fragment {
     }
 
     GestureDetector.SimpleOnGestureListener simpleOnGestureListener
-            = new GestureDetector.SimpleOnGestureListener(){
-
-
+            = new GestureDetector.SimpleOnGestureListener()
+    {
         @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-                               float velocityY) {
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY)
+        {
             String swipe = "";
             float sensitvity = 50;
 
             // TODO Auto-generated method stub
-            try {
+            try
+            {
                 // TODO Auto-generated method stub
                 if ((e1.getX() - e2.getX()) > sensitvity) {
                     swipe += "Swipe Left\n";
@@ -205,9 +208,7 @@ public class List2Fragment extends Fragment {
         }
     };
 
-    GestureDetector gestureDetector
-            = new GestureDetector(simpleOnGestureListener);
-
+    GestureDetector gestureDetector = new GestureDetector(simpleOnGestureListener);
 
     @Override
     public void onResume()
