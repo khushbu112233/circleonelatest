@@ -99,8 +99,8 @@
 
                 <ImageView
                     android:backgroundTint="@color/colorAccent"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:id="@+id/drawer2"
                     android:src="@drawable/ic_shared"
                     android:layout_marginLeft="10dp"
