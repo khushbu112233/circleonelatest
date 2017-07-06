@@ -51,6 +51,8 @@
     <ListView
         android:divider="@color/colorPrimary"
         android:dividerHeight="1dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
         android:layout_marginLeft="3dp"
         android:layout_marginRight="3dp"
         tools:listitem="@layout/grid_list3_layout"
