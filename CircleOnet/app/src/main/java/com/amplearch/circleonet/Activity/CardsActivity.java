@@ -324,10 +324,34 @@ public class CardsActivity extends NfcActivity {
             tabLayout.addTab(tabLayout.newTab().setCustomView(view));
         }
 */
-        tabLayout.getTabAt(0).setIcon(tabIcons[0]);
+       /* tabLayout.getTabAt(0).setIcon(tabIcons[0]);
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
         tabLayout.getTabAt(2).setIcon(tabIcons[2]);
-        tabLayout.getTabAt(3).setIcon(tabIcons[3]);
+        tabLayout.getTabAt(3).setIcon(tabIcons[3]);*/
+
+
+        View view1 = getLayoutInflater().inflate(R.layout.tab_view, null);
+        view1.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_icon1);
+       // tabLayout.addTab(tabLayout.newTab().setCustomView(view1));
+
+
+        View view2 = getLayoutInflater().inflate(R.layout.tab_view, null);
+        view2.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_icon2);
+        //tabLayout.addTab(tabLayout.newTab().setCustomView(view2));
+
+
+        View view3 = getLayoutInflater().inflate(R.layout.tab_view, null);
+        view3.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_icon3);
+       // tabLayout.addTab(tabLayout.newTab().setCustomView(view3));
+
+        View view4 = getLayoutInflater().inflate(R.layout.tab_view, null);
+        view4.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_icon4);
+       // tabLayout.addTab(tabLayout.newTab().setCustomView(view4));
+        tabLayout.getTabAt(0).setCustomView(view1);
+        tabLayout.getTabAt(1).setCustomView(view2);
+        tabLayout.getTabAt(2).setCustomView(view3);
+        tabLayout.getTabAt(3).setCustomView(view4);
+
     }
 
    /* class ViewPagerAdapter extends FragmentPagerAdapter {

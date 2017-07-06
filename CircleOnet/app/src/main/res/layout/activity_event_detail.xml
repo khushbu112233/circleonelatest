@@ -182,12 +182,12 @@ Monday - April 3, 2017 - 9:30am - 5:00pm"/>
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:padding="17dp"
+                android:padding="14dp"
                 android:src="@drawable/ic_icon1" />
 
             <ImageView
                 android:id="@+id/imgConnect"
-                android:padding="17dp"
+                android:padding="14dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:layout_width="50dp"
@@ -195,7 +195,7 @@ Monday - April 3, 2017 - 9:30am - 5:00pm"/>
                 android:src="@drawable/ic_icon2"/>
             <ImageView
                 android:id="@+id/imgEvents"
-                android:padding="17dp"
+                android:padding="14dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:layout_width="50dp"
@@ -204,7 +204,7 @@ Monday - April 3, 2017 - 9:30am - 5:00pm"/>
             <ImageView
                 android:id="@+id/imgProfile"
                 android:layout_marginRight="20dp"
-                android:padding="17dp"
+                android:padding="14dp"
                 android:layout_weight="1"
                 android:layout_width="50dp"
                 android:layout_height="50dp"

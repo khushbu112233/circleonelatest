@@ -276,6 +276,7 @@ public class MyPager extends PagerAdapter implements GestureDetector.OnGestureLi
             // textEvt2.setText(e.getX()+":"+ e.getY());
             //   Log.e(TAG, "onSingleTapUp");
 
+            final_position = List1Fragment.viewPager.getCurrentItem();
             Intent intent = new Intent(context, CardDetail.class);
             intent.putExtra("tag_id", nfcModelList.get(final_position).getNfc_tag());
             context.startActivity(intent);
@@ -293,7 +294,7 @@ public class MyPager extends PagerAdapter implements GestureDetector.OnGestureLi
 
         @Override
         public void onLongPress(MotionEvent e) {
-            Toast.makeText(context, "onLongPress", Toast.LENGTH_LONG).show();
+           // Toast.makeText(context, "onLongPress", Toast.LENGTH_LONG).show();
             // textEvt2.setText(e.getX()+":"+ e.getY());
             //  Log.e(TAG, "onLongPress");
         }
@@ -350,7 +351,7 @@ public class MyPager extends PagerAdapter implements GestureDetector.OnGestureLi
 
         @Override
         public boolean onDoubleTap(MotionEvent e) {
-            Toast.makeText(context, "onDoubleTap", Toast.LENGTH_LONG).show();
+          //  Toast.makeText(context, "onDoubleTap", Toast.LENGTH_LONG).show();
             //textEvt2.setText(e.getX()+":"+ e.getY());
             // Log.e(TAG, "onDoubleTap");
             return true;
@@ -358,7 +359,7 @@ public class MyPager extends PagerAdapter implements GestureDetector.OnGestureLi
 
         @Override
         public boolean onDoubleTapEvent(MotionEvent e) {
-            Toast.makeText(context, "onDoubleTapEvent", Toast.LENGTH_LONG).show();
+          //  Toast.makeText(context, "onDoubleTapEvent", Toast.LENGTH_LONG).show();
             // textEvt2.setText(e.getX() + ":" + e.getY());
             //  Log.e(TAG, "onDoubleTapEvent");
             return true;
