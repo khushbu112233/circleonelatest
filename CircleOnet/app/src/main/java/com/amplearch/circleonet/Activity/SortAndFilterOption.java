@@ -49,6 +49,7 @@ public class SortAndFilterOption extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
                 startActivity(intent);
                 finish();
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
             }
         });
 

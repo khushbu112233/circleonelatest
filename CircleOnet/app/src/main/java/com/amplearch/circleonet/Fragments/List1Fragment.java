@@ -1,5 +1,7 @@
 package com.amplearch.circleonet.Fragments;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,12 +14,14 @@ import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.amplearch.circleonet.Adapter.GridViewAdapter;
+import com.amplearch.circleonet.Gesture.OnSwipeTouchListener;
 import com.amplearch.circleonet.Gesture.SwipeGestureDetector;
 import com.amplearch.circleonet.Helper.DatabaseHelper;
 import com.amplearch.circleonet.Model.NFCModel;
@@ -39,12 +43,12 @@ public class List1Fragment extends Fragment{
     public static ViewPager viewPager;
     public static MyPager myPager ;
     DatabaseHelper db ;
-
+    private GestureDetector gestureDetector1;
     /*ArrayList<byte[]> imgf;
     ArrayList<byte[]> imgb;
     ArrayList<String> tag_id;*/
-    RelativeLayout lnrSearch;
-    View line;
+    public static RelativeLayout lnrSearch;
+    public static View line;
     private String DEBUG_TAG = "gesture";
   //  private GestureDetector gestureDetector;
   //  private View.OnTouchListener gestureListener;
@@ -53,6 +57,8 @@ public class List1Fragment extends Fragment{
     //new asign value
     AutoCompleteTextView searchText ;
     public static ArrayList<NFCModel> nfcModel ;
+    ViewConfiguration vc;
+    private int mTouchSlop;
 
     public List1Fragment() {
         // Required empty public constructor
@@ -70,6 +76,9 @@ public class List1Fragment extends Fragment{
 
         View view = inflater.inflate(R.layout.fragment_list1, container, false);
 
+        vc = ViewConfiguration.get(view.getContext());
+        mTouchSlop = vc.getScaledTouchSlop();
+
         db = new DatabaseHelper(getContext());
         viewPager = (ViewPager)view.findViewById(R.id.viewPager);
         lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
@@ -79,15 +88,32 @@ public class List1Fragment extends Fragment{
         nfcModel = new ArrayList<>();
         allTags = db.getActiveNFC();
 
-       /* lnrSearch.setVisibility(View.GONE);
+        lnrSearch.setVisibility(View.GONE);
         line.setVisibility(View.GONE);
-        CardsFragment.tabLayout.setVisibility(View.GONE);*/
+        CardsFragment.tabLayout.setVisibility(View.GONE);
         viewPager.setClipChildren(false);
         viewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
         viewPager.setOffscreenPageLimit(3);
         viewPager.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
 
+        /*view.setVisibility(View.VISIBLE);
+        view.setAlpha(0.0f);
 
+// Start the animation
+        view.animate()
+                .translationY(view.getHeight())
+                .alpha(1.0f);
+
+        view.animate()
+                .translationY(0)
+                .alpha(0.0f)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        view.setVisibility(View.GONE);
+                    }
+                });*/
         /*viewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

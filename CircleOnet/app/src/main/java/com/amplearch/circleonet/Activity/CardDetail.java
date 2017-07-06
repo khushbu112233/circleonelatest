@@ -92,7 +92,7 @@ public class CardDetail extends NfcActivity {
                     txtWork.setText(tag1.getWork_no());
                     txtMob.setText(tag1.getMob_no());
                     txtAddress.setText(tag1.getAddress());
-                    txtRemark.setText(tag1.getRemark());
+                    txtRemark.setText(tag1.getAddress());
                     image.add(tag1.getCard_front());
                     image.add(tag1.getCard_back());
                     myPager = new CardSwipe(getApplicationContext(), image);

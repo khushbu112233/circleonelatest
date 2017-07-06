@@ -191,6 +191,7 @@ public class CardsActivity extends NfcActivity {
                 if (pos == 0) {
                     Intent intent = new Intent(getApplicationContext(), SortAndFilterOption.class);
                     startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_down, R.anim.slide_out_down);
                 }
                 else if (pos == 2) {
                     Intent intent = new Intent(getApplicationContext(), EventsSelectOption.class);

@@ -41,6 +41,8 @@ public class List4Fragment extends Fragment {
     RelativeLayout lnrSearch;
     View line;
 
+    private GestureDetector gestureDetector1;
+
     public static List<NFCModel> allTags ;
     //new asign value
     AutoCompleteTextView searchText ;
@@ -66,6 +68,13 @@ public class List4Fragment extends Fragment {
         name = new ArrayList<>();
         desc = new ArrayList<>();
         designation = new ArrayList<>();
+
+        GestureDetector.OnGestureListener gestureListener = new MyOnGestureListener();
+        GestureDetector.OnDoubleTapListener doubleTapListener = new MyOnDoubleTapListener();
+
+        this.gestureDetector1= new GestureDetector(getContext(), gestureListener);
+
+        this.gestureDetector1.setOnDoubleTapListener(doubleTapListener);
 
         lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
         line = view.findViewById(R.id.view);
@@ -99,6 +108,13 @@ public class List4Fragment extends Fragment {
 
             }
         });*/
+
+        listView.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent me) {
+                return gestureDetector1.onTouchEvent(me);
+            }
+        });
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -181,6 +197,117 @@ public class List4Fragment extends Fragment {
         nfcModel.clear();
         GetData(getContext());
     }
+
+    class MyOnGestureListener implements GestureDetector.OnGestureListener  {
+
+        private static final int SWIPE_THRESHOLD = 100;
+        private static final int SWIPE_VELOCITY_THRESHOLD = 100;
+
+        @Override
+        public boolean onDown(MotionEvent e) {
+            //  Toast.makeText(getContext(), "onDown", Toast.LENGTH_LONG).show();
+            //textEvt2.setText(e.getX()+":"+ e.getY());
+            // Log.e(TAG, "onDown");
+            return true;
+        }
+
+        @Override
+        public void onShowPress(MotionEvent e) {
+            Toast.makeText(getContext(), "onShowPress", Toast.LENGTH_LONG).show();
+            //textEvt2.setText(e.getX()+":"+ e.getY());
+            // Log.e(TAG, "onShowPress");
+        }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            // Toast.makeText(getContext(), "onSingleTap", Toast.LENGTH_LONG).show();
+            // textEvt2.setText(e.getX()+":"+ e.getY());
+            //   Log.e(TAG, "onSingleTapUp");
+            return true;
+        }
+
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            // Toast.makeText(getContext(), "onScroll", Toast.LENGTH_LONG).show();
+            // textEvt2.setText(e1.getX()+":"+ e1.getY() +"  "+ e2.getX()+":"+ e2.getY());
+            //Log.e(TAG, "onScroll");
+            return true;
+        }
+
+        @Override
+        public void onLongPress(MotionEvent e) {
+            Toast.makeText(getContext(), "onLongPress", Toast.LENGTH_LONG).show();
+            // textEvt2.setText(e.getX()+":"+ e.getY());
+            //  Log.e(TAG, "onLongPress");
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            // Toast.makeText(getContext(), "onFling", Toast.LENGTH_LONG).show();
+            //textEvt2.setText(e1.getX() + ":" + e1.getY() + "  " + e2.getX() + ":" + e2.getY());
+            boolean result = false;
+            try {
+                float diffY = e2.getY() - e1.getY();
+                float diffX = e2.getX() - e1.getX();
+                if (Math.abs(diffX) > Math.abs(diffY)) {
+                    if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                        if (diffX > 0) {
+                            // onSwipeRight();
+                        } else {
+                            // onSwipeLeft();
+                        }
+                    }
+                } else {
+                    if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                        if (diffY > 0) {
+                            //Toast.makeText(getContext(), "Down", Toast.LENGTH_LONG).show();
+                            lnrSearch.setVisibility(View.VISIBLE);
+                            line.setVisibility(View.VISIBLE);
+                            CardsFragment.tabLayout.setVisibility(View.VISIBLE);
+                        } else {
+                            //  Toast.makeText(getContext(), "Up", Toast.LENGTH_LONG).show();
+                            lnrSearch.setVisibility(View.GONE);
+                            line.setVisibility(View.GONE);
+                            CardsFragment.tabLayout.setVisibility(View.GONE);
+                        }
+                    }
+                }
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+            return result;
+        }
+
+
+    }
+
+    class MyOnDoubleTapListener implements GestureDetector.OnDoubleTapListener {
+
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e) {
+            //  Toast.makeText(getContext(), "onSingleTapConfirmed", Toast.LENGTH_LONG).show();
+            //textEvt2.setText(e.getX()+":"+ e.getY());
+            //  Log.e(TAG, "onSingleTapConfirmed");
+            return true;
+        }
+
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+            Toast.makeText(getContext(), "onDoubleTap", Toast.LENGTH_LONG).show();
+            //textEvt2.setText(e.getX()+":"+ e.getY());
+            // Log.e(TAG, "onDoubleTap");
+            return true;
+        }
+
+        @Override
+        public boolean onDoubleTapEvent(MotionEvent e) {
+            Toast.makeText(getContext(), "onDoubleTapEvent", Toast.LENGTH_LONG).show();
+            // textEvt2.setText(e.getX() + ":" + e.getY());
+            //  Log.e(TAG, "onDoubleTapEvent");
+            return true;
+        }
+    }
+
 
     GestureDetector.SimpleOnGestureListener simpleOnGestureListener
             = new GestureDetector.SimpleOnGestureListener(){
