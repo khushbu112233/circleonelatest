@@ -128,7 +128,8 @@ public class GridViewAdapter extends BaseSwipeAdapter {
                 }
 
                 try {
-                List1Fragment.myPager.notifyDataSetChanged();
+                List1Fragment.mAdapter.notifyDataSetChanged();
+                    List1Fragment.mAdapter1.notifyDataSetChanged();
                 List1Fragment.allTags = db.getActiveNFC();
                 List1Fragment.nfcModel.clear();
                 //  nfcModelList.clear();

@@ -276,7 +276,7 @@ public class MyPager extends PagerAdapter implements GestureDetector.OnGestureLi
             // textEvt2.setText(e.getX()+":"+ e.getY());
             //   Log.e(TAG, "onSingleTapUp");
 
-            final_position = List1Fragment.viewPager.getCurrentItem();
+           // final_position = List1Fragment.viewPager.getCurrentItem();
             Intent intent = new Intent(context, CardDetail.class);
             intent.putExtra("tag_id", nfcModelList.get(final_position).getNfc_tag());
             context.startActivity(intent);
@@ -382,7 +382,7 @@ public class MyPager extends PagerAdapter implements GestureDetector.OnGestureLi
         {
             nfcModelList.addAll(nfcModelListFilter);
             try {
-                List1Fragment.myPager.notifyDataSetChanged();
+               // List1Fragment.myPager.notifyDataSetChanged();
                 List1Fragment.nfcModel.clear();
                 List1Fragment.allTags = db.getActiveNFC();
                 //  nfcModelList.clear();
@@ -400,7 +400,7 @@ public class MyPager extends PagerAdapter implements GestureDetector.OnGestureLi
                 {
                     nfcModelList.add(md);
                     try {
-                        List1Fragment.myPager.notifyDataSetChanged();
+                     //   List1Fragment.myPager.notifyDataSetChanged();
                         List1Fragment.nfcModel.clear();
                         List1Fragment.allTags.add(md);
                         //  nfcModelList.clear();

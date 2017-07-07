@@ -3,10 +3,12 @@ package com.amplearch.circleonet.Fragments;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -17,9 +19,15 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.amplearch.circleonet.Activity.CardDetail;
+import com.amplearch.circleonet.Activity.CardsActivity;
+import com.amplearch.circleonet.Adapter.GalleryAdapter;
+import com.amplearch.circleonet.Adapter.GalleryAdapter1;
 import com.amplearch.circleonet.Adapter.GridViewAdapter;
 import com.amplearch.circleonet.Gesture.OnSwipeTouchListener;
 import com.amplearch.circleonet.Gesture.SwipeGestureDetector;
@@ -28,6 +36,9 @@ import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.Utils.CarouselEffectTransformer;
 import com.amplearch.circleonet.Adapter.MyPager;
 import com.amplearch.circleonet.R;
+import com.azoft.carousellayoutmanager.CarouselLayoutManager;
+import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
+import com.azoft.carousellayoutmanager.CenterScrollListener;
 import com.daimajia.swipe.util.Attributes;
 
 import java.util.ArrayList;
@@ -40,10 +51,11 @@ public class List1Fragment extends Fragment
 {
    // private ArrayList<Integer> imageFront = new ArrayList<>();
    // private ArrayList<Integer> imageBack = new ArrayList<>();
-    public static ViewPager viewPager;
-    public static MyPager myPager ;
+  //  public static MyPager myPager ;
     DatabaseHelper db ;
     private GestureDetector gestureDetector1;
+    FrameLayout frameList1;
+    LinearLayout lnrList;
     /*ArrayList<byte[]> imgf;
     ArrayList<byte[]> imgb;
     ArrayList<String> tag_id;*/
@@ -60,13 +72,24 @@ public class List1Fragment extends Fragment
     ViewConfiguration vc;
     private int mTouchSlop;
 
+
+
+    private String TAG = CardsActivity.class.getSimpleName();
+    public static ArrayList<byte[]> images;
+    public static ArrayList<byte[]> images1;
+    public static GalleryAdapter mAdapter;
+    public static GalleryAdapter1 mAdapter1;
+    public static RecyclerView recyclerView1, recyclerView2;
+    public static CarouselLayoutManager manager1, manager2;
+    private int draggingView = -1;
+
     public List1Fragment()
     {
         // Required empty public constructor
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+        public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
@@ -78,10 +101,13 @@ public class List1Fragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_list1, container, false);
 
         vc = ViewConfiguration.get(view.getContext());
+        frameList1 = (FrameLayout) view.findViewById(R.id.frameList1);
         mTouchSlop = vc.getScaledTouchSlop();
-
+        recyclerView1 = (RecyclerView) view.findViewById(R.id.list_horizontal1);
+        recyclerView2 = (RecyclerView) view.findViewById(R.id.list_horizontal2);
+        lnrList = (LinearLayout) view.findViewById(R.id.lnrList);
         db = new DatabaseHelper(getContext());
-        viewPager = (ViewPager)view.findViewById(R.id.viewPager);
+        //viewPager = (ViewPager)view.findViewById(R.id.viewPager);
         lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
         line = view.findViewById(R.id.view);
 
@@ -92,11 +118,68 @@ public class List1Fragment extends Fragment
         lnrSearch.setVisibility(View.GONE);
         line.setVisibility(View.GONE);
         CardsFragment.tabLayout.setVisibility(View.GONE);
-        viewPager.setClipChildren(false);
-        viewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
-        viewPager.setOffscreenPageLimit(5);
-        viewPager.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
+      //  viewPager.setClipChildren(false);
+      //  viewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+       // viewPager.setOffscreenPageLimit(5);
+       // viewPager.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
 
+        GestureDetector.OnGestureListener gestureListener = new MyOnGestureListener();
+        GestureDetector.OnDoubleTapListener doubleTapListener = new MyOnDoubleTapListener();
+
+        this.gestureDetector1= new GestureDetector(getContext(), gestureListener);
+
+        this.gestureDetector1.setOnDoubleTapListener(doubleTapListener);
+
+
+        images = new ArrayList<>();
+        images1 = new ArrayList<>();
+        GetData(getContext());
+        recyclerView1.addOnScrollListener(scrollListener);
+        recyclerView2.addOnScrollListener(scrollListener);
+
+        lnrList.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent me) {
+                return gestureDetector1.onTouchEvent(me);
+            }
+        });
+
+        /*recyclerView1.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                return gestureDetector1.onTouchEvent(e);
+            }
+
+            @Override
+            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+
+        });*/
+
+
+        /*recyclerView2.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                return gestureDetector1.onTouchEvent(e);
+            }
+
+            @Override
+            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+
+        });
+*/
         /*view.setVisibility(View.VISIBLE);
         view.setAlpha(0.0f);
 
@@ -129,7 +212,6 @@ public class List1Fragment extends Fragment
         imgb = new ArrayList<byte[]>();
         tag_id = new ArrayList<String>();*/
 
-        GetData(getContext());
         //myPager = new MyPager(getContext(), imgf, imgb, tag_id);
         //viewPager.setAdapter(myPager);
 
@@ -151,7 +233,7 @@ public class List1Fragment extends Fragment
                 else
                 {
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
-                    myPager.Filter(text);
+                   // myPager.Filter(text);
                 }
             }
 
@@ -161,7 +243,7 @@ public class List1Fragment extends Fragment
             }
         });
 
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener()
+      /*  viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener()
         {
             private int index = 0;
 
@@ -180,10 +262,179 @@ public class List1Fragment extends Fragment
             public void onPageScrollStateChanged(int state) {
 
             }
-        });
+        });*/
 
         return view;
     }
+
+
+    public static void initRecyclerView1(final RecyclerView recyclerView, final CarouselLayoutManager layoutManager, GalleryAdapter mAdapter)
+    {
+        // enable zoom effect. this line can be customized
+        layoutManager.setPostLayoutListener(new CarouselZoomPostLayoutListener());
+        layoutManager.setMaxVisibleItems(3);
+        manager1 = layoutManager;
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.addOnScrollListener(new CenterScrollListener());
+
+    }
+
+    public static void initRecyclerView2(final RecyclerView recyclerView, final CarouselLayoutManager layoutManager, GalleryAdapter1 mAdapter)
+    {
+        // enable zoom effect. this line can be customized
+        layoutManager.setPostLayoutListener(new CarouselZoomPostLayoutListener());
+        layoutManager.setMaxVisibleItems(3);
+        manager2 = layoutManager;
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.addOnScrollListener(new CenterScrollListener());
+    }
+
+    class MyOnGestureListener implements GestureDetector.OnGestureListener  {
+
+        private static final int SWIPE_THRESHOLD = 100;
+        private static final int SWIPE_VELOCITY_THRESHOLD = 100;
+
+        @Override
+        public boolean onDown(MotionEvent e) {
+            //  Toast.makeText(getContext(), "onDown", Toast.LENGTH_LONG).show();
+            //textEvt2.setText(e.getX()+":"+ e.getY());
+            // Log.e(TAG, "onDown");
+            return true;
+        }
+
+        @Override
+        public void onShowPress(MotionEvent e) {
+            // Toast.makeText(context, "onShowPress", Toast.LENGTH_LONG).show();
+            //textEvt2.setText(e.getX()+":"+ e.getY());
+            // Log.e(TAG, "onShowPress");
+        }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            // Toast.makeText(getContext(), "onSingleTap", Toast.LENGTH_LONG).show();
+            // textEvt2.setText(e.getX()+":"+ e.getY());
+            //   Log.e(TAG, "onSingleTapUp");
+
+            // final_position = List1Fragment.viewPager.getCurrentItem();
+            Intent intent = new Intent(getContext(), CardDetail.class);
+            //intent.putExtra("tag_id", nfcModelList.get(final_position).getNfc_tag());
+            // context.startActivity(intent);
+
+            return true;
+        }
+
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            // Toast.makeText(getContext(), "onScroll", Toast.LENGTH_LONG).show();
+            // textEvt2.setText(e1.getX()+":"+ e1.getY() +"  "+ e2.getX()+":"+ e2.getY());
+            //Log.e(TAG, "onScroll");
+            return true;
+        }
+
+        @Override
+        public void onLongPress(MotionEvent e) {
+            // Toast.makeText(context, "onLongPress", Toast.LENGTH_LONG).show();
+            // textEvt2.setText(e.getX()+":"+ e.getY());
+            //  Log.e(TAG, "onLongPress");
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            // Toast.makeText(getContext(), "onFling", Toast.LENGTH_LONG).show();
+            //textEvt2.setText(e1.getX() + ":" + e1.getY() + "  " + e2.getX() + ":" + e2.getY());
+            boolean result = false;
+            try {
+                float diffY = e2.getY() - e1.getY();
+                float diffX = e2.getX() - e1.getX();
+                if (Math.abs(diffX) > Math.abs(diffY)) {
+                    if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                        if (diffX > 0) {
+                            // onSwipeRight();
+                        } else {
+                            // onSwipeLeft();
+                        }
+                    }
+                } else {
+                    if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                        if (diffY > 0) {
+                            //Toast.makeText(getContext(), "Down", Toast.LENGTH_LONG).show();
+                            List1Fragment.lnrSearch.setVisibility(View.VISIBLE);
+                            List1Fragment.line.setVisibility(View.VISIBLE);
+                            CardsFragment.tabLayout.setVisibility(View.VISIBLE);
+                        } else {
+                            //  Toast.makeText(getContext(), "Up", Toast.LENGTH_LONG).show();
+                            List1Fragment.lnrSearch.setVisibility(View.GONE);
+                            List1Fragment.line.setVisibility(View.GONE);
+                            CardsFragment.tabLayout.setVisibility(View.GONE);
+                        }
+                    }
+                }
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+            return result;
+        }
+
+
+    }
+
+    class MyOnDoubleTapListener implements GestureDetector.OnDoubleTapListener {
+
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e) {
+            //  Toast.makeText(getContext(), "onSingleTapConfirmed", Toast.LENGTH_LONG).show();
+            //textEvt2.setText(e.getX()+":"+ e.getY());
+            //  Log.e(TAG, "onSingleTapConfirmed");
+            return true;
+        }
+
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+            //  Toast.makeText(context, "onDoubleTap", Toast.LENGTH_LONG).show();
+            //textEvt2.setText(e.getX()+":"+ e.getY());
+            // Log.e(TAG, "onDoubleTap");
+            return true;
+        }
+
+        @Override
+        public boolean onDoubleTapEvent(MotionEvent e) {
+            //  Toast.makeText(context, "onDoubleTapEvent", Toast.LENGTH_LONG).show();
+            // textEvt2.setText(e.getX() + ":" + e.getY());
+            //  Log.e(TAG, "onDoubleTapEvent");
+            return true;
+        }
+    }
+
+    private RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
+        public int y=0;
+
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+            if (recyclerView1 == recyclerView && newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+                draggingView = 1;
+               // GalleryAdapter.position = Integer.parseInt(GalleryAdapter.imageView.getTag().toString());
+            } else if (recyclerView2 == recyclerView && newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+                draggingView = 2;
+            }
+
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+           // y=dy;
+            if (draggingView == 1 && recyclerView == recyclerView1) {
+                recyclerView2.scrollBy(dx, dy);
+            } else if (draggingView == 2 && recyclerView == recyclerView2) {
+                recyclerView1.scrollBy(dx, dy);
+            }
+        }
+    };
 
     GestureDetector.SimpleOnGestureListener simpleOnGestureListener
             = new GestureDetector.SimpleOnGestureListener(){
@@ -243,7 +494,10 @@ public class List1Fragment extends Fragment
 
     public static void GetData(Context context)
     {
+        images = new ArrayList<>();
+        images1 = new ArrayList<>();
         //newly added
+        nfcModel.clear();
         for(NFCModel reTag : allTags)
         {
             NFCModel nfcModelTag = new NFCModel();
@@ -257,7 +511,8 @@ public class List1Fragment extends Fragment
             nfcModelTag.setCard_front(reTag.getCard_front());
             nfcModelTag.setCard_back(reTag.getCard_back());
             nfcModelTag.setNfc_tag(reTag.getNfc_tag());
-
+            images.add(reTag.getCard_front());
+            images1.add(reTag.getCard_back());
             nfcModel.add(nfcModelTag);
         }
 
@@ -268,10 +523,17 @@ public class List1Fragment extends Fragment
                 return o1.getDate().compareTo(o2.getDate());
             }
         });
+        mAdapter = new GalleryAdapter(context, nfcModel);
+        mAdapter1 = new GalleryAdapter1(context, nfcModel);
+        mAdapter.notifyDataSetChanged();
+        mAdapter1.notifyDataSetChanged();
 
-        myPager = new MyPager(context, R.layout.cardview_list, nfcModel);
-        viewPager.setAdapter(myPager);
-        myPager.notifyDataSetChanged();
+        initRecyclerView1(recyclerView1,new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter ) ;
+        initRecyclerView2(recyclerView2,new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter1 ) ;
+
+       // myPager = new MyPager(context, R.layout.cardview_list, nfcModel);
+        //viewPager.setAdapter(myPager);
+      //  myPager.notifyDataSetChanged();
 
         //gridAdapter.setMode(Attributes.Mode.Single);
 

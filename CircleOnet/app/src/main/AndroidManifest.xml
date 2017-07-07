@@ -50,8 +50,6 @@
         <activity android:name=".Activity.NFCDemo" />
         <activity android:name=".Activity.VolleyDemo" />
         <activity android:name=".Activity.MainActivity" />
-        <activity android:name=".Carousel"></activity>
-        <activity android:name=".CustomTab"></activity>
     </application>
 
 </manifest>
