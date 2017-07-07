@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import com.amplearch.circleonet.Activity.CardDetail;
 import com.amplearch.circleonet.Fragments.CardsFragment;
 import com.amplearch.circleonet.Fragments.List1Fragment;
+import com.amplearch.circleonet.Helper.DatabaseHelper;
 import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.R;
 
@@ -36,7 +37,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
     private RecyclerView.ViewHolder holder;
     public static ImageView imageView ;
     public static int posi = 0;
-
+    DatabaseHelper db;
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
 
@@ -69,7 +70,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
     public GalleryAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.carousel_view, parent, false);
-
+        db = new DatabaseHelper(mContext);
         GestureDetector.OnGestureListener gestureListener = new MyOnGestureListener();
         GestureDetector.OnDoubleTapListener doubleTapListener = new MyOnDoubleTapListener();
 
@@ -254,17 +255,38 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
         if(charText.length() == 0)
         {
             nfcModelList.addAll(nfcModelListFilter);
+            try {
+                // List1Fragment.myPager.notifyDataSetChanged();
+                List1Fragment.nfcModel.clear();
+                List1Fragment.allTags = db.getActiveNFC();
+                //  nfcModelList.clear();
+                List1Fragment.GetData(mContext);
+            } catch (Exception e){
+
+            }
         }
         else
         {
+            List1Fragment.allTags.clear();
             for(NFCModel md : nfcModelListFilter)
             {
                 if(md.getName().toLowerCase(Locale.getDefault()).contains(charText))
                 {
                     nfcModelList.add(md);
+                    try {
+                        //   List1Fragment.myPager.notifyDataSetChanged();
+                        List1Fragment.nfcModel.clear();
+                        List1Fragment.allTags.add(md);
+                        //  nfcModelList.clear();
+                        List1Fragment.GetData(mContext);
+                    } catch (Exception e){
+
+                    }
                 }
             }
         }
+
+
         notifyDataSetChanged();
     }
 

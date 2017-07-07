@@ -234,7 +234,7 @@ public class List1Fragment extends Fragment
                 {
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
                     mAdapter.Filter(text);
-                    mAdapter1.Filter(text);
+                 //   mAdapter1.Filter(text);
                 }
             }
 
