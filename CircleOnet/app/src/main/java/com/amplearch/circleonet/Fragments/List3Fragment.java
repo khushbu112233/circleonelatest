@@ -274,7 +274,7 @@ public class List3Fragment extends Fragment
 
         @Override
         public void onShowPress(MotionEvent e) {
-            Toast.makeText(getContext(), "onShowPress", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getContext(), "onShowPress", Toast.LENGTH_LONG).show();
             //textEvt2.setText(e.getX()+":"+ e.getY());
            // Log.e(TAG, "onShowPress");
         }
@@ -297,7 +297,7 @@ public class List3Fragment extends Fragment
 
         @Override
         public void onLongPress(MotionEvent e) {
-            Toast.makeText(getContext(), "onLongPress", Toast.LENGTH_LONG).show();
+           // Toast.makeText(getContext(), "onLongPress", Toast.LENGTH_LONG).show();
             // textEvt2.setText(e.getX()+":"+ e.getY());
           //  Log.e(TAG, "onLongPress");
         }
@@ -354,7 +354,7 @@ public class List3Fragment extends Fragment
 
         @Override
         public boolean onDoubleTap(MotionEvent e) {
-            Toast.makeText(getContext(), "onDoubleTap", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getContext(), "onDoubleTap", Toast.LENGTH_LONG).show();
             //textEvt2.setText(e.getX()+":"+ e.getY());
            // Log.e(TAG, "onDoubleTap");
             return true;
@@ -362,7 +362,7 @@ public class List3Fragment extends Fragment
 
         @Override
         public boolean onDoubleTapEvent(MotionEvent e) {
-            Toast.makeText(getContext(), "onDoubleTapEvent", Toast.LENGTH_LONG).show();
+           // Toast.makeText(getContext(), "onDoubleTapEvent", Toast.LENGTH_LONG).show();
             // textEvt2.setText(e.getX() + ":" + e.getY());
           //  Log.e(TAG, "onDoubleTapEvent");
             return true;

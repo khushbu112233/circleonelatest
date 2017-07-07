@@ -39,7 +39,6 @@ import com.amplearch.circleonet.R;
 import com.azoft.carousellayoutmanager.CarouselLayoutManager;
 import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
 import com.azoft.carousellayoutmanager.CenterScrollListener;
-import com.daimajia.swipe.util.Attributes;
 
 import java.util.ArrayList;
 import java.util.Collections;
