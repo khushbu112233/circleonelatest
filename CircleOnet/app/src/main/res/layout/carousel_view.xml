@@ -5,20 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardElevation="5dp"
+        app:cardCornerRadius="3dp"
+        app:cardPreventCornerOverlap="false"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp">
-
+        android:background="@drawable/cards_shape">
             <ImageView
                 android:elevation="10dp"
                 android:id="@+id/image1"
+                android:paddingRight="1dp"
+                android:paddingLeft="1dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY" />
     </RelativeLayout>
+    </android.support.v7.widget.CardView>
 
 </RelativeLayout>
