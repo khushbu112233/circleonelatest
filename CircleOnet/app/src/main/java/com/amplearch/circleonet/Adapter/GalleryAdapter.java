@@ -19,6 +19,7 @@ import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.R;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Created by ample-arch on 7/6/2017.
@@ -245,6 +246,26 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             return true;
         }
     }
+    public void Filter(String charText)
+    {
+        charText = charText.toLowerCase(Locale.getDefault());
+        nfcModelList.clear();
 
+        if(charText.length() == 0)
+        {
+            nfcModelList.addAll(nfcModelListFilter);
+        }
+        else
+        {
+            for(NFCModel md : nfcModelListFilter)
+            {
+                if(md.getName().toLowerCase(Locale.getDefault()).contains(charText))
+                {
+                    nfcModelList.add(md);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
 
 }

@@ -20,6 +20,7 @@ import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.R;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Created by admin on 07/06/2017.
@@ -43,7 +44,6 @@ public class GalleryAdapter1 extends RecyclerView.Adapter<GalleryAdapter1.MyView
 
         }
     }
-
 
     public GalleryAdapter1(Context applicationContext, ArrayList<NFCModel> nfcModel)
     {
@@ -230,5 +230,25 @@ public class GalleryAdapter1 extends RecyclerView.Adapter<GalleryAdapter1.MyView
         }
     }
 
+    public void Filter(String charText)
+    {
+        charText = charText.toLowerCase(Locale.getDefault());
+        nfcModelList.clear();
 
+        if(charText.length() == 0)
+        {
+            nfcModelList.addAll(nfcModelListFilter);
+        }
+        else
+        {
+            for(NFCModel md : nfcModelListFilter)
+            {
+                if(md.getName().toLowerCase(Locale.getDefault()).contains(charText))
+                {
+                    nfcModelList.add(md);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
 }

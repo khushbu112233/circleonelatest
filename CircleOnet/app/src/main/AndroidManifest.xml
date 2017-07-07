@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.CardsActivity" />
+        <activity android:name=".Activity.CardsActivity"
+            android:windowSoftInputMode="stateVisible|adjustPan"/>
         <activity android:name=".Activity.EventsActivity" />
         <activity android:name=".Activity.EventDetail" />
         <activity android:name=".Activity.Connect" />

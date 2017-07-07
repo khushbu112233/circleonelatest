@@ -233,7 +233,8 @@ public class List1Fragment extends Fragment
                 else
                 {
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
-                   // myPager.Filter(text);
+                    mAdapter.Filter(text);
+                    mAdapter1.Filter(text);
                 }
             }
 
