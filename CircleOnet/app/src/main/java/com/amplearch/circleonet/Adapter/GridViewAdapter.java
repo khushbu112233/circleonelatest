@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amplearch.circleonet.Activity.CardDetail;
 import com.amplearch.circleonet.Activity.CardsActivity;
 import com.amplearch.circleonet.Fragments.CardsFragment;
 import com.amplearch.circleonet.Fragments.List1Fragment;
@@ -168,7 +169,7 @@ public class GridViewAdapter extends BaseSwipeAdapter {
     }
 
     @Override
-    public void fillValues(int position, View convertView)
+    public void fillValues(final int position, View convertView)
     {
         View row = convertView;
         ViewHolder holder = null;
@@ -184,6 +185,15 @@ public class GridViewAdapter extends BaseSwipeAdapter {
         Bitmap bmp = BitmapFactory.decodeByteArray(nfcModelList.get(position).getCard_front(), 0, nfcModelList.get(position).getCard_front().length);
         // ImageView image = (ImageView) findViewById(R.id.imageView1);
         holder.image.setImageBitmap(bmp);
+
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, CardDetail.class);
+                intent.putExtra("tag_id", nfcModelList.get(position).getNfc_tag());
+                context.startActivity(intent);
+            }
+        });
 
     }
 

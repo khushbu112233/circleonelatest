@@ -107,28 +107,14 @@ public class List2Fragment extends Fragment
                 return gestureDetector1.onTouchEvent(me);
             }
         });
-
-       /* gridView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if (gestureDetector.onTouchEvent(event)) {
-                    // single tap
-                    return true;
-                } else {
-                    return gestureDetector.onTouchEvent(event);
-                }
-            }
-        });*/
-
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getContext(), CardDetail.class);
                 intent.putExtra("tag_id", nfcModel.get(position).getNfc_tag());
                 getContext().startActivity(intent);
             }
-        });
+        });*/
 
         searchText.addTextChangedListener(new TextWatcher()
         {
