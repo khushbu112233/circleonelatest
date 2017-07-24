@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
+import android.os.AsyncTask;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -44,6 +45,8 @@ import com.amplearch.circleonet.Fragments.List2Fragment;
 import com.amplearch.circleonet.Fragments.List3Fragment;
 import com.amplearch.circleonet.Fragments.List4Fragment;
 import com.amplearch.circleonet.R;
+import com.amplearch.circleonet.ZoomOutPageTransformer;
+import com.eftimoff.viewpagertransformers.ZoomOutTranformer;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -70,6 +73,7 @@ public class CardsActivity extends NfcActivity {
     DatabaseHelper db;
     NfcReadUtility mNfcReadUtility = new NfcReadUtilityImpl();
     private Date location;
+    private int currentPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,59 +89,40 @@ public class CardsActivity extends NfcActivity {
             position = extras.getInt("viewpager_position");
             nested_position = extras.getInt("nested_viewpager_position");
         }
-        db = new DatabaseHelper(getApplicationContext());
-        List<NFCModel> allTags = db.getAllNFC();
-        for (NFCModel tag : allTags) {
-            Log.d("StoreLocation Name", tag.getCard_front().toString());
-           // Toast.makeText(getApplicationContext(), tag.getName() + " " + tag.getCard_front().toString() + " " + tag.getActive(), Toast.LENGTH_LONG).show();
 
-        }
 
-        db.getAllNFC();
-        //SQLiteDatabase sqLiteDatabase = db.getReadableDatabase();
-       //- db.onCreate(sqLiteDatabase);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        final ActionBar actionBar = getSupportActionBar();
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.custom_actionbar);
-        textView = (TextView) findViewById(R.id.mytext);
+        new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+       // mViewPager.setOverScrollMode(View.OVER_SCROLL_NEVER);
+       /* mViewPager.setPageTransformer(true, new ViewPager.PageTransformer() {
+            @Override
+            public void transformPage(View page, float position) {
 
-        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+            }
+        });*/
 
-       // textView.setText("Cards 256");
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (CustomViewPager) findViewById(R.id.container);
-        imgDrawer = (ImageView) findViewById(R.id.drawer);
-        imgLogo = (ImageView) findViewById(R.id.imgLogo);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-        mViewPager.setPagingEnabled(false);
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
-        tabLayout.setSelectedTabIndicatorColor(getResources().getColor(android.R.color.white));
-       // createTabIcons();
-        setupTabIcons();
-        if (position == 0) {
-            getSupportActionBar().show();
-            setActionBarTitle("Cards 256");
-            setActionBarRightImage(R.drawable.ic_drawer);
-        } else if (position == 1) {
-            getSupportActionBar().show();
-            setActionBarTitle("Connect");
-            setActionBarRightImage(R.drawable.ic_dehaze_black_24dp);
-        } else if (position == 2) {
-            getSupportActionBar().show();
-            setActionBarTitle("Events");
-            setActionBarRightImage(R.drawable.ic_drawer);
-        } else if (position == 3) {
-            getSupportActionBar().hide();
-        }
-        mViewPager.setCurrentItem(position);
-        if (nested_position != 0) {
-            CardsFragment.mViewPager.setCurrentItem(nested_position);
-        }
-        mViewPager.setOffscreenPageLimit(3);
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mViewPager.setCurrentItem(tab.getPosition(), false);
+                if (tab.getPosition() == 3){
+                    getSupportActionBar().hide();
+                }
+            }
 
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+               // createTabIcons();
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -200,6 +185,81 @@ public class CardsActivity extends NfcActivity {
             }
         });
     }
+
+
+    private class LoadDataForActivity extends AsyncTask<Void, Void, Void> {
+
+        String data1;
+        String data2;
+        Bitmap data3;
+
+        @Override
+        protected void onPreExecute() {
+            db = new DatabaseHelper(getApplicationContext());
+           /* List<NFCModel> allTags = db.getAllNFC();
+            for (NFCModel tag : allTags) {
+                Log.d("StoreLocation Name", tag.getCard_front().toString());
+                // Toast.makeText(getApplicationContext(), tag.getName() + " " + tag.getCard_front().toString() + " " + tag.getActive(), Toast.LENGTH_LONG).show();
+
+            }*/
+
+           // db.getAllNFC();
+            //SQLiteDatabase sqLiteDatabase = db.getReadableDatabase();
+            //- db.onCreate(sqLiteDatabase);
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+            final ActionBar actionBar = getSupportActionBar();
+            getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+            getSupportActionBar().setCustomView(R.layout.custom_actionbar);
+            textView = (TextView) findViewById(R.id.mytext);
+
+            SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+            // textView.setText("Cards 256");
+            // Set up the ViewPager with the sections adapter.
+            mViewPager = (CustomViewPager) findViewById(R.id.container);
+            mViewPager.setOffscreenPageLimit(4);
+            imgDrawer = (ImageView) findViewById(R.id.drawer);
+            imgLogo = (ImageView) findViewById(R.id.imgLogo);
+            mViewPager.setAdapter(mSectionsPagerAdapter);
+            mViewPager.setPagingEnabled(false);
+          //  mViewPager.setPageTransformer(false, new ZoomOutPageTransformer());
+            tabLayout = (TabLayout) findViewById(R.id.tabs);
+            tabLayout.setupWithViewPager(mViewPager);
+            tabLayout.setSelectedTabIndicatorColor(getResources().getColor(android.R.color.white));
+
+        }
+        @Override
+        protected Void doInBackground(Void... params) {
+            setupTabIcons();
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            if (position == 0) {
+                getSupportActionBar().show();
+                setActionBarTitle("Cards 256");
+                setActionBarRightImage(R.drawable.ic_drawer);
+            } else if (position == 1) {
+                getSupportActionBar().show();
+                setActionBarTitle("Connect");
+                setActionBarRightImage(R.drawable.ic_dehaze_black_24dp);
+            } else if (position == 2) {
+                getSupportActionBar().show();
+                setActionBarTitle("Events");
+                setActionBarRightImage(R.drawable.ic_drawer);
+            } else if (position == 3) {
+                getSupportActionBar().hide();
+            }
+            mViewPager.setCurrentItem(position, false);
+            if (nested_position != 0) {
+                CardsFragment.mViewPager.setCurrentItem(nested_position);
+            }
+        }
+
+    }
+
    /* private void createTabIcons() {
 
         TextView tabOne = (TextView) LayoutInflater.from(this).inflate(R.layout.tab_view, null);
@@ -281,7 +341,7 @@ public class CardsActivity extends NfcActivity {
                 return new EventsFragment();
             }
             else if (position == 3) {
-              //  getSupportActionBar().show();
+                getSupportActionBar().hide();
               //  setActionBarTitle("Events");
                 return new ProfileFragment();
             }
@@ -331,27 +391,34 @@ public class CardsActivity extends NfcActivity {
 
 
         View view1 = getLayoutInflater().inflate(R.layout.tab_view, null);
-        view1.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_icon1);
+       // view1.findViewById(R.id.icon).set(R.drawable.ic_icon1);
+        ImageView imageView = (ImageView) view1.findViewById(R.id.icon);
+        imageView.setImageResource(R.drawable.ic_icon1);
        // tabLayout.addTab(tabLayout.newTab().setCustomView(view1));
 
 
         View view2 = getLayoutInflater().inflate(R.layout.tab_view, null);
-        view2.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_icon2);
+        //view2.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_icon2);
+        ImageView imageView1 = (ImageView) view2.findViewById(R.id.icon);
+        imageView1.setImageResource(R.drawable.ic_icon2);
         //tabLayout.addTab(tabLayout.newTab().setCustomView(view2));
 
 
         View view3 = getLayoutInflater().inflate(R.layout.tab_view, null);
-        view3.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_icon3);
+       // view3.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_icon3);
+        ImageView imageView2 = (ImageView) view3.findViewById(R.id.icon);
+        imageView2.setImageResource(R.drawable.ic_icon3);
        // tabLayout.addTab(tabLayout.newTab().setCustomView(view3));
 
         View view4 = getLayoutInflater().inflate(R.layout.tab_view, null);
-        view4.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_icon4);
+      //  view4.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_icon4);
+        ImageView imageView3 = (ImageView) view4.findViewById(R.id.icon);
+        imageView3.setImageResource(R.drawable.ic_icon4);
        // tabLayout.addTab(tabLayout.newTab().setCustomView(view4));
         tabLayout.getTabAt(0).setCustomView(view1);
         tabLayout.getTabAt(1).setCustomView(view2);
         tabLayout.getTabAt(2).setCustomView(view3);
         tabLayout.getTabAt(3).setCustomView(view4);
-
     }
 
    /* class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -601,5 +668,16 @@ public class CardsActivity extends NfcActivity {
               //  Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        moveTaskToBack(true);
+        android.os.Process.killProcess(android.os.Process.myPid());
+        finish();
+
     }
 }

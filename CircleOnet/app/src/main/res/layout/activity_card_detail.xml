@@ -1,14 +1,29 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
+
+    <android.support.v4.view.ViewPager
+        android:clickable="true"
+        app:layout_scrollFlags="scroll|snap"
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="245dp" />
+
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical"
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
+        android:background="@android:color/transparent"
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,12 +31,15 @@
         app:expanded="false">
 
         <android.support.v4.view.ViewPager
+            android:alpha="0.0"
+            android:clickable="true"
             app:layout_scrollFlags="scroll|snap"
-            android:id="@+id/viewPager"
+            android:id="@+id/viewPager1"
             android:layout_width="match_parent"
-            android:layout_height="235dp" />
+            android:layout_height="245dp" />
 
         </android.support.design.widget.AppBarLayout>
+
 
 
     <LinearLayout
@@ -80,10 +98,10 @@
     </LinearLayout>
 
     <com.amplearch.circleonet.Utils.StickyScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="65dp"
-        android:background="#ffffff"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -100,6 +118,7 @@
                 app:layout_scrollFlags="snap">
 
                 <FrameLayout
+                    android:alpha="0.7"
                     android:layout_width="match_parent"
                     android:layout_height="245dp"
                     android:background="@color/colorAccent">
@@ -299,7 +318,14 @@
                     android:tag="sticky"></View>
             </android.support.design.widget.AppBarLayout>
 
+
+            <LinearLayout
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
             <RelativeLayout
+                android:background="@color/white"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="5dp"
@@ -384,6 +410,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -402,6 +429,7 @@
             </RelativeLayout>
 
             <LinearLayout
+                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -624,7 +652,7 @@
                     android:text="246 Macpherson Road.Betime Building #03-04.Singapore 348578"
                     android:textColor="#6b6c6e"
                     android:textSize="13sp" />
-
+            </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
@@ -640,3 +668,4 @@
   -->
 
 </android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>

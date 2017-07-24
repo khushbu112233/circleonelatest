@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import com.amplearch.circleonet.Helper.DatabaseHelper;
 import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.Utils.CarouselEffectTransformer;
 import com.amplearch.circleonet.R;
+import com.amplearch.circleonet.Utils.StickyScrollView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CardDetail extends NfcActivity {
 
-    ViewPager mViewPager;
+    ViewPager mViewPager, viewPager1;
     private ArrayList<byte[]> image;
     private CardSwipe myPager ;
     private ImageView imgCards, imgConnect, imgEvents, imgProfile, imgBack, imgCard;
@@ -43,6 +45,7 @@ public class CardDetail extends NfcActivity {
     TextView txtName, txtCompany, txtWebsite, txtEmail, txtPH, txtWork, txtMob, txtAddress, txtRemark;
     CircleImageView imgProfileCard;
     String tag_id;
+    StickyScrollView scroll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,7 @@ public class CardDetail extends NfcActivity {
         setContentView(R.layout.activity_card_detail);
 
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
+        viewPager1 = (ViewPager) findViewById(R.id.viewPager1);
         imgCards = (ImageView) findViewById(R.id.imgCards);
         imgConnect = (ImageView) findViewById(R.id.imgConnect);
         imgEvents = (ImageView) findViewById(R.id.imgEvents);
@@ -67,10 +71,11 @@ public class CardDetail extends NfcActivity {
         txtMob = (TextView) findViewById(R.id.txtMob);
         txtAddress = (TextView) findViewById(R.id.txtAddress);
         txtRemark = (TextView) findViewById(R.id.txtRemark);
+        scroll = (StickyScrollView) findViewById(R.id.scroll);
 
         Intent intent = getIntent();
         tag_id = intent.getStringExtra("tag_id");
-        List<NFCModel> modelList = db.getNFCbyTag(tag_id);
+        final List<NFCModel> modelList = db.getNFCbyTag(tag_id);
         image = new ArrayList<>();
         try {
 
@@ -99,10 +104,20 @@ public class CardDetail extends NfcActivity {
                     mViewPager.setClipChildren(false);
                     mViewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
                     mViewPager.setOffscreenPageLimit(3);
-                    mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
+                    //mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
 
 
                     mViewPager.setAdapter(myPager);
+
+
+                    viewPager1.setClipChildren(false);
+                    viewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+                    viewPager1.setOffscreenPageLimit(3);
+                   // viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
+
+
+                    viewPager1.setAdapter(myPager);
+
                 }
             }
 
@@ -110,6 +125,13 @@ public class CardDetail extends NfcActivity {
 
         }
 
+
+      /*  new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                scroll.scrollTo(0, mViewPager.getBottom());
+            }
+        });*/
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,6 +144,32 @@ public class CardDetail extends NfcActivity {
                 go.putExtra("viewpager_position", 0);
                 startActivity(go);
                 finish();
+            }
+        });
+
+        viewPager1.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            private int mScrollState = ViewPager.SCROLL_STATE_IDLE;
+
+            @Override
+            public void onPageScrolled(final int position, final float positionOffset, final int positionOffsetPixels) {
+                if (mScrollState == ViewPager.SCROLL_STATE_IDLE) {
+                    return;
+                }
+                mViewPager.scrollTo(viewPager1.getScrollX(), viewPager1.getScrollY());
+            }
+
+            @Override
+            public void onPageSelected(final int position) {
+               // mViewPager.setCurrentItem(position, true);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(final int state) {
+                mScrollState = state;
+                if (state == ViewPager.SCROLL_STATE_IDLE) {
+                    mViewPager.setCurrentItem(viewPager1.getCurrentItem(), false);
+                }
             }
         });
 
@@ -288,7 +336,15 @@ public class CardDetail extends NfcActivity {
                                 mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
 
 
-                                mViewPager.setAdapter(myPager);
+                                viewPager1.setAdapter(myPager);
+
+                                viewPager1.setClipChildren(false);
+                                viewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+                                viewPager1.setOffscreenPageLimit(3);
+                                viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
+
+
+                                viewPager1.setAdapter(myPager);
                             }
                         }
 

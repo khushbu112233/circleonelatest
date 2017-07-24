@@ -2,12 +2,17 @@ package com.amplearch.circleonet.Fragments;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,10 +23,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amplearch.circleonet.Activity.CardDetail;
@@ -36,6 +45,8 @@ import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.Utils.CarouselEffectTransformer;
 import com.amplearch.circleonet.Adapter.MyPager;
 import com.amplearch.circleonet.R;
+import com.amplearch.circleonet.Utils.CustomViewPager;
+import com.amplearch.circleonet.ZoomOutPageTransformer;
 import com.azoft.carousellayoutmanager.CarouselLayoutManager;
 import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
 import com.azoft.carousellayoutmanager.CenterScrollListener;
@@ -71,7 +82,7 @@ public class List1Fragment extends Fragment
     ViewConfiguration vc;
     private int mTouchSlop;
 
-
+    View view;
 
     private String TAG = CardsActivity.class.getSimpleName();
     public static ArrayList<byte[]> images;
@@ -97,10 +108,11 @@ public class List1Fragment extends Fragment
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View view = inflater.inflate(R.layout.fragment_list1, container, false);
+        view = inflater.inflate(R.layout.fragment_list1, container, false);
+      //  new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         vc = ViewConfiguration.get(view.getContext());
-        frameList1 = (FrameLayout) view.findViewById(R.id.frameList1);
+        // frameList1 = (FrameLayout) view.findViewById(R.id.frameList1);
         mTouchSlop = vc.getScaledTouchSlop();
         recyclerView1 = (RecyclerView) view.findViewById(R.id.list_horizontal1);
         recyclerView2 = (RecyclerView) view.findViewById(R.id.list_horizontal2);
@@ -109,32 +121,30 @@ public class List1Fragment extends Fragment
         //viewPager = (ViewPager)view.findViewById(R.id.viewPager);
         lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
         line = view.findViewById(R.id.view);
+        initRecyclerView1(recyclerView1,new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter ) ;
+        initRecyclerView2(recyclerView2,new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter1 ) ;
 
         searchText = (AutoCompleteTextView)view.findViewById(R.id.searchView);
-        nfcModel = new ArrayList<>();
-        allTags = db.getActiveNFC();
 
-        lnrSearch.setVisibility(View.GONE);
+        lnrSearch.setVisibility(View.INVISIBLE);
         line.setVisibility(View.GONE);
         CardsFragment.tabLayout.setVisibility(View.GONE);
+        GestureDetector.OnGestureListener gestureListener = new MyOnGestureListener();
+        GestureDetector.OnDoubleTapListener doubleTapListener = new MyOnDoubleTapListener();
+
+        gestureDetector1= new GestureDetector(getContext(), gestureListener);
+
+        gestureDetector1.setOnDoubleTapListener(doubleTapListener);
+        nfcModel = new ArrayList<>();
+        allTags = new ArrayList<>();
+        new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        recyclerView1.addOnScrollListener(scrollListener);
+        recyclerView2.addOnScrollListener(scrollListener);
       //  viewPager.setClipChildren(false);
       //  viewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
        // viewPager.setOffscreenPageLimit(5);
        // viewPager.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
 
-        GestureDetector.OnGestureListener gestureListener = new MyOnGestureListener();
-        GestureDetector.OnDoubleTapListener doubleTapListener = new MyOnDoubleTapListener();
-
-        this.gestureDetector1= new GestureDetector(getContext(), gestureListener);
-
-        this.gestureDetector1.setOnDoubleTapListener(doubleTapListener);
-
-
-        images = new ArrayList<>();
-        images1 = new ArrayList<>();
-        GetData(getContext());
-        recyclerView1.addOnScrollListener(scrollListener);
-        recyclerView2.addOnScrollListener(scrollListener);
 
         lnrList.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent me) {
@@ -267,6 +277,39 @@ public class List1Fragment extends Fragment
         return view;
     }
 
+    private class LoadDataForActivity extends AsyncTask<Void, Void, Void> {
+
+        ProgressDialog progressBar;
+        @Override
+        protected void onPreExecute() {
+
+            progressBar = new ProgressDialog(getContext());
+            progressBar.setMessage("Loading Data..");
+            progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressBar.setIndeterminate(true);
+            progressBar.setCancelable(false);
+            progressBar.show();
+        }
+        @Override
+        protected Void doInBackground(Void... params) {
+            db = new DatabaseHelper(getContext());
+            nfcModel = new ArrayList<>();
+            allTags = db.getActiveNFC();
+
+            images = new ArrayList<>();
+            images1 = new ArrayList<>();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            GetData(getContext());
+            progressBar.dismiss();
+        }
+
+    }
+
+
 
     public static void initRecyclerView1(final RecyclerView recyclerView, final CarouselLayoutManager layoutManager, GalleryAdapter mAdapter)
     {
@@ -280,6 +323,35 @@ public class List1Fragment extends Fragment
         recyclerView.addOnScrollListener(new CenterScrollListener());
 
     }
+
+
+   /* private class LoadDataForActivity extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+
+
+        }
+        @Override
+        protected Void doInBackground(Void... params) {
+
+
+            images = new ArrayList<>();
+            images1 = new ArrayList<>();
+            GetData(getContext());
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            recyclerView1.addOnScrollListener(scrollListener);
+            recyclerView2.addOnScrollListener(scrollListener);
+
+        }
+
+    }
+*/
 
     public static void initRecyclerView2(final RecyclerView recyclerView, final CarouselLayoutManager layoutManager, GalleryAdapter1 mAdapter)
     {
@@ -367,8 +439,8 @@ public class List1Fragment extends Fragment
                             CardsFragment.tabLayout.setVisibility(View.VISIBLE);
                         } else {
                             //  Toast.makeText(getContext(), "Up", Toast.LENGTH_LONG).show();
-                            List1Fragment.lnrSearch.setVisibility(View.GONE);
-                            List1Fragment.line.setVisibility(View.GONE);
+                            lnrSearch.setVisibility(View.INVISIBLE);
+                            line.setVisibility(View.GONE);
                             CardsFragment.tabLayout.setVisibility(View.GONE);
                         }
                     }
@@ -459,7 +531,7 @@ public class List1Fragment extends Fragment
 
                 if ((e1.getY() - e2.getY()) > sensitvity) {
                     swipe += "Swipe Up\n";
-                    lnrSearch.setVisibility(View.GONE);
+                    lnrSearch.setVisibility(View.INVISIBLE);
                     line.setVisibility(View.GONE);
                     CardsFragment.tabLayout.setVisibility(View.GONE);
                 } else if ((e2.getY() - e1.getY()) > sensitvity) {

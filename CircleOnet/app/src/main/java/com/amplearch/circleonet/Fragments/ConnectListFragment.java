@@ -2,23 +2,33 @@ package com.amplearch.circleonet.Fragments;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.amplearch.circleonet.Activity.CardDetail;
+import com.amplearch.circleonet.Activity.CardsActivity;
 import com.amplearch.circleonet.Activity.ConnectActivity;
 import com.amplearch.circleonet.Adapter.List4Adapter;
 import com.amplearch.circleonet.Helper.DatabaseHelper;
 import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.R;
+import com.amplearch.circleonet.Utils.CustomViewPager;
+import com.amplearch.circleonet.ZoomOutPageTransformer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,13 +63,6 @@ public class ConnectListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_connect_list, container, false);
 
-        db = new DatabaseHelper(getContext());
-        imgf = new ArrayList<byte[]>();
-        name = new ArrayList<>();
-        desc = new ArrayList<>();
-        designation = new ArrayList<>();
-
-
         /*List<NFCModel> allTags = db.getActiveNFC();
         for (NFCModel tag : allTags) {
             imgf.add(tag.getUser_image());
@@ -70,11 +73,11 @@ public class ConnectListFragment extends Fragment {
 */
         listView = (ListView) view.findViewById(R.id.listViewType4);
 
-        allTags = db.getActiveNFC();
+        allTags = new ArrayList<>();
 
         searchText = (AutoCompleteTextView)view.findViewById(R.id.searchView);
         nfcModel = new ArrayList<>();
-
+        new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
        // gridAdapter = new List4Adapter(getContext(), R.layout.grid_list4_layout, imgf, desc, name, designation);
         //listView.setAdapter(gridAdapter);
 
@@ -86,7 +89,7 @@ public class ConnectListFragment extends Fragment {
             }
         });
 
-        GetData();
+
 
         searchText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -130,6 +133,7 @@ public class ConnectListFragment extends Fragment {
 
     private void GetData()
     {
+        nfcModel.clear();
         for(NFCModel reTag : allTags)
         {
             NFCModel nfcModelTag = new NFCModel();
@@ -148,5 +152,37 @@ public class ConnectListFragment extends Fragment {
         listView.setAdapter(gridAdapter);
         gridAdapter.notifyDataSetChanged();
     }
+
+    private class LoadDataForActivity extends AsyncTask<Void, Void, Void> {
+
+        String data1;
+        String data2;
+        Bitmap data3;
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+        @Override
+        protected Void doInBackground(Void... params) {
+            db = new DatabaseHelper(getContext());
+            imgf = new ArrayList<byte[]>();
+            name = new ArrayList<>();
+            desc = new ArrayList<>();
+          //  allTags = new ArrayList<>();
+            designation = new ArrayList<>();
+
+            allTags = db.getActiveNFC();
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            GetData();
+        }
+
+    }
+
 
 }

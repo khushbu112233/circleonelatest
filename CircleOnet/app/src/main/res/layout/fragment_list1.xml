@@ -1,17 +1,13 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.amplearch.circleonet.Fragments.List1Fragment">
 
-    <LinearLayout
-        android:id="@+id/lnrList"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_marginTop="5dp"
         android:id="@+id/lnrSearch"
@@ -55,6 +51,9 @@
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
+        android:layout_below="@+id/view"
+        android:id="@+id/lnrList"
+        android:splitMotionEvents="false"
         android:layout_centerInParent="true"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
@@ -78,11 +77,5 @@
         android:layout_height="wrap_content"
         android:layout_margin="0dp" />
     </LinearLayout>
-    </LinearLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/frameList1"></FrameLayout>
-
-</FrameLayout>
+</RelativeLayout>
+</RelativeLayout>

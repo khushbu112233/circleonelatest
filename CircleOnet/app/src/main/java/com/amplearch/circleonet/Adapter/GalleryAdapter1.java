@@ -188,7 +188,7 @@ public class GalleryAdapter1 extends RecyclerView.Adapter<GalleryAdapter1.MyView
                             CardsFragment.tabLayout.setVisibility(View.VISIBLE);
                         } else {
                             //  Toast.makeText(getContext(), "Up", Toast.LENGTH_LONG).show();
-                            List1Fragment.lnrSearch.setVisibility(View.GONE);
+                            List1Fragment.lnrSearch.setVisibility(View.INVISIBLE);
                             List1Fragment.line.setVisibility(View.GONE);
                             CardsFragment.tabLayout.setVisibility(View.GONE);
                         }

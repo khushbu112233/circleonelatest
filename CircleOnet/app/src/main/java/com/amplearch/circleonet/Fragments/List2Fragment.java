@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -79,7 +80,6 @@ public class List2Fragment extends Fragment
         gridView = (GridView) view.findViewById(R.id.gridView);
         searchText = (AutoCompleteTextView)view.findViewById(R.id.searchView);
         nfcModel = new ArrayList<>();
-        allTags = db.getActiveNFC();
 
 
         GestureDetector.OnGestureListener gestureListener = new MyOnGestureListener();
@@ -97,9 +97,8 @@ public class List2Fragment extends Fragment
         /*lnrSearch.setVisibility(View.GONE);
         line.setVisibility(View.GONE);
         CardsFragment.tabLayout.setVisibility(View.GONE);*/
-
-        GetData(getContext());
-
+        allTags = new ArrayList<>();
+        new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         gridView.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent me) {
                 return gestureDetector1.onTouchEvent(me);
@@ -144,6 +143,34 @@ public class List2Fragment extends Fragment
 
         return view;
     }
+
+    private class LoadDataForActivity extends AsyncTask<Void, Void, Void> {
+
+        String data1;
+        String data2;
+        Bitmap data3;
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+        @Override
+        protected Void doInBackground(Void... params) {
+            db = new DatabaseHelper(getContext());
+            nfcModel = new ArrayList<>();
+            allTags = db.getActiveNFC();
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            GetData(getContext());
+        }
+
+    }
+
+
 
     private ArrayList<ImageItem> getData()
     {
@@ -337,6 +364,7 @@ public class List2Fragment extends Fragment
     public static void GetData(Context context)
     {
         //newly added
+        nfcModel.clear();
         for(NFCModel reTag : allTags)
         {
             NFCModel nfcModelTag = new NFCModel();

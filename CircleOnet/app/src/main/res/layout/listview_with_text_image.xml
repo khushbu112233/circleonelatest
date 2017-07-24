@@ -18,8 +18,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
-                android:background="@drawable/temp_logo"
-                android:layout_width="50dp"
+                android:tint="@color/white"
+                android:src="@drawable/login_logo"
+                android:layout_width="30dp"
                 android:layout_height="25dp" />
         </LinearLayout>
 

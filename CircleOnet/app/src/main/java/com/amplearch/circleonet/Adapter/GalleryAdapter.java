@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.amplearch.circleonet.Activity.CardDetail;
 import com.amplearch.circleonet.Fragments.CardsFragment;
@@ -206,7 +207,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
                             CardsFragment.tabLayout.setVisibility(View.VISIBLE);
                         } else {
                             //  Toast.makeText(getContext(), "Up", Toast.LENGTH_LONG).show();
-                            List1Fragment.lnrSearch.setVisibility(View.GONE);
+                            List1Fragment.lnrSearch.setVisibility(View.INVISIBLE);
                             List1Fragment.line.setVisibility(View.GONE);
                             CardsFragment.tabLayout.setVisibility(View.GONE);
                         }

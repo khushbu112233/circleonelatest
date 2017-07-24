@@ -32,5 +32,5 @@
     <string name="progressdialog_waiting_for_tag">Waiting for tag…</string>
     <string name="progressdialog_waiting_for_tag_message">Tap tag to write…</string>
     <string name="no_input">You should give me something to write</string>
-
+    <string name="facebook_app_id">1083886521715240</string>
 </resources>
