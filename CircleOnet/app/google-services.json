@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "884881974807",
+    "project_id": "circle-one-6d0db"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884881974807:android:fcbd7698394969ba",
+        "android_client_info": {
+          "package_name": "com.amplearch.circleonet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "884881974807-q4t5tg583qjn1d21ofddf8tagsm59s1f.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "884881974807-2rc0suekas4nq8ssq28mduo0n5bdb8ob.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amplearch.circleonet",
+            "certificate_hash": "14a291b2dc94b65697ed1914dc476f571940c4d7"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUj9ZM0UIdP7X6-CwGsPt2KGIJcIJY1eU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

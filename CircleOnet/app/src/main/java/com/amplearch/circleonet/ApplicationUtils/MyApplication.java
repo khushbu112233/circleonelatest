@@ -37,7 +37,7 @@ public class MyApplication extends Application {
         FacebookSdk.sdkInitialize(getApplicationContext());
         try
         {
-            PackageInfo info = getPackageManager().getPackageInfo("com.amplearch.beaconshop", PackageManager.GET_SIGNATURES);
+            PackageInfo info = getPackageManager().getPackageInfo("com.amplearch.circleonet", PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures)
             {
                 MessageDigest md = MessageDigest.getInstance("SHA");

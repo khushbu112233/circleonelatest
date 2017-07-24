@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:facebook="http://schemas.android.com/apk/res-auto"
     tools:context="com.amplearch.circleonet.Activity.LoginActivity">
 
     <ImageView
@@ -130,10 +131,22 @@
             android:layout_width="28dp"
             android:layout_height="28dp" />
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <com.google.android.gms.common.SignInButton
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/icon_google"
+                    android:id="@+id/btn_sign_in"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" />
         <ImageView
             android:src="@drawable/icon_google"
             android:layout_width="28dp"
             android:layout_height="28dp" />
+            </RelativeLayout>
     </LinearLayout>
+
+
     </LinearLayout>
     </RelativeLayout>
