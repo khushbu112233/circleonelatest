@@ -126,6 +126,7 @@
             android:layout_height="28dp" />
 
         <ImageView
+            android:id="@+id/btnLoginTwitter"
             android:layout_marginRight="25dp"
             android:src="@drawable/icon_twitter"
             android:layout_width="28dp"
@@ -147,6 +148,9 @@
             </RelativeLayout>
     </LinearLayout>
 
-
+       <!-- <com.twitter.sdk.android.core.identity.TwitterLoginButton
+            android:id="@+id/twitter_login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />-->
     </LinearLayout>
     </RelativeLayout>

@@ -182,9 +182,9 @@ public class GridViewAdapter extends BaseSwipeAdapter {
 
         String name = nfcModelList.get(position).getName();
        // holder.imageTitle.setText(name);
-        Bitmap bmp = BitmapFactory.decodeByteArray(nfcModelList.get(position).getCard_front(), 0, nfcModelList.get(position).getCard_front().length);
+       // Bitmap bmp = BitmapFactory.decodeByteArray(nfcModelList.get(position).getCard_front(), 0, nfcModelList.get(position).getCard_front().length);
         // ImageView image = (ImageView) findViewById(R.id.imageView1);
-        holder.image.setImageBitmap(bmp);
+        holder.image.setImageResource(nfcModelList.get(position).getCard_front());
 
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override

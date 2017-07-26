@@ -230,14 +230,14 @@ public class List3Adapter extends BaseSwipeAdapter
         }
         catch (Exception e){  }
 
-        Bitmap bmp = BitmapFactory.decodeByteArray(nfcModelList.get(position).getCard_front(), 0, nfcModelList.get(position).getCard_front().length);
+       /* Bitmap bmp = BitmapFactory.decodeByteArray(nfcModelList.get(position).getCard_front(), 0, nfcModelList.get(position).getCard_front().length);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.PNG, 100, out);
         Bitmap decoded = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
-
+*/
         // ImageView image = (ImageView) findViewById(R.id.imageView1);
-        holder.image.setImageBitmap(bmp);
+        holder.image.setImageResource(nfcModelList.get(position).getCard_front());
 
     }
 

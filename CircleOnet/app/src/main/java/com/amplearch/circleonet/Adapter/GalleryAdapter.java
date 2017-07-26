@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.EmbossMaskFilter;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -87,15 +88,20 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
 
         return new MyViewHolder(itemView);
     }
-
+    EmbossMaskFilter embossmaskfilter = new EmbossMaskFilter(
+            new float[]{ 0f, -1f, 0.5f },
+            0.7f,
+            12,
+            8.0f
+    );
     @Override
     public void onBindViewHolder(GalleryAdapter.MyViewHolder holder, final int position)
     {
         //Integer image = images.get(position);
-        Bitmap bmp = BitmapFactory.decodeByteArray(nfcModelList.get(position).getCard_front(), 0, nfcModelList.get(position).getCard_front().length);
+       // Bitmap bmp = BitmapFactory.decodeByteArray(nfcModelList.get(position).getCard_front(), 0, nfcModelList.get(position).getCard_front().length);
 
         this.holder = holder;
-        imageView.setImageBitmap(bmp);
+        imageView.setImageResource(nfcModelList.get(position).getCard_front());
         imageView.setTag(position);
         pos = holder.getAdapterPosition();
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +118,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 posi = position;
-                return gestureDetector1.onTouchEvent(event);
+                gestureDetector1.onTouchEvent(event);
+                return true;
             }
         });
 
@@ -186,7 +193,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             // Toast.makeText(getContext(), "onFling", Toast.LENGTH_LONG).show();
             //textEvt2.setText(e1.getX() + ":" + e1.getY() + "  " + e2.getX() + ":" + e2.getY());
-            boolean result = false;
+            boolean result = true;
             try {
                 float diffY = e2.getY() - e1.getY();
                 float diffX = e2.getX() - e1.getX();

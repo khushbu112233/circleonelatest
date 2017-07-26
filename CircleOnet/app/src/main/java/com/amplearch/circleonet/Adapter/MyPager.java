@@ -97,11 +97,11 @@ public class MyPager extends PagerAdapter implements GestureDetector.OnGestureLi
             gd = new GestureDetector(context, this);
             db = new DatabaseHelper(context);
             ImageView imageView = (ImageView)view.findViewById(R.id.ivImages);
-            ImageView imageView1 = (ImageView)view.findViewById(R.id.ivImages1);
+          //  ImageView imageView1 = (ImageView)view.findViewById(R.id.ivImages1);
             mDetector = new GestureDetectorCompat(context, new MyGestureListener());
             final_position = position;
             view.setTag("" + position);
-            Bitmap bmp = BitmapFactory.decodeByteArray(nfcModelList.get(position).getCard_front(), 0, nfcModelList.get(position).getCard_front().length);
+           // Bitmap bmp = BitmapFactory.decodeByteArray(nfcModelList.get(position).getCard_front(), 0, nfcModelList.get(position).getCard_front().length);
            // ImageView image = (ImageView) findViewById(R.id.imageView1);
 
 
@@ -112,15 +112,15 @@ public class MyPager extends PagerAdapter implements GestureDetector.OnGestureLi
 
             this.gestureDetector1.setOnDoubleTapListener(doubleTapListener);
 
-            imageView.setImageBitmap(bmp);
+            imageView.setImageResource(nfcModelList.get(position).getCard_front());
 
 
           //  byte[] imgbytes = Base64.decode(image.get(position), Base64.DEFAULT);
           //  Bitmap bitmap = BitmapFactory.decodeByteArray(image.get(position), 0, image.get(position).length);
-            Bitmap bitmap1 = BitmapFactory.decodeByteArray(nfcModelList.get(position).getCard_back(), 0, nfcModelList.get(position).getCard_back().length);
+          //  Bitmap bitmap1 = BitmapFactory.decodeByteArray(nfcModelList.get(position).getCard_back(), 0, nfcModelList.get(position).getCard_back().length);
 
           //  imageView.setImageBitmap(bitmap);
-            imageView1.setImageBitmap(bitmap1);
+           // imageView1.setImageBitmap(bitmap1);
            // Glide.with(context).load(image.get(position)).into(imageView);
           //  Glide.with(context).load(image1.get(position)).into(imageView1);
 //            Glide.with(context).load(image[position]).into(imageCover);

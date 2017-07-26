@@ -6,4 +6,5 @@
 
     <color name="blue">#00abea</color>
     <color name="white">#ffffff</color>
+    <color name="unselected">#8f9194</color>
 </resources>

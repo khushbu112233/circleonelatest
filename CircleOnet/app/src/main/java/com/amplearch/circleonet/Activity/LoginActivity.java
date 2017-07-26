@@ -39,6 +39,7 @@ import com.google.android.gms.common.api.Status;
 
 import org.json.JSONObject;
 
+
 public class LoginActivity extends AppCompatActivity implements
         View.OnClickListener,
         GoogleApiClient.OnConnectionFailedListener{
@@ -58,6 +59,25 @@ public class LoginActivity extends AppCompatActivity implements
 
     private SignInButton btnSignIn;
     private Button btnSignOut, btnRevokeAccess;
+    ImageView btnLoginTwitter;
+
+    static String TWITTER_CONSUMER_KEY = "977WDvxQIva9sFYj37jwSs3pO"; // place your cosumer key here
+    static String TWITTER_CONSUMER_SECRET = "jw1DynZBQA6f3CGT3WNg3FoVv3i6pI3FGmHhfbEoxEdP14cAdQ"; // place your consumer secret here
+
+    // Preference Constants
+    static String PREFERENCE_NAME = "twitter_oauth";
+    static final String PREF_KEY_OAUTH_TOKEN = "oauth_token";
+    static final String PREF_KEY_OAUTH_SECRET = "oauth_token_secret";
+    static final String PREF_KEY_TWITTER_LOGIN = "isTwitterLogedIn";
+
+    static final String TWITTER_CALLBACK_URL = "oauth://t4jsample";
+
+    // Twitter oauth urls
+    static final String URL_TWITTER_AUTH = "auth_url";
+    static final String URL_TWITTER_OAUTH_VERIFIER = "oauth_verifier";
+    static final String URL_TWITTER_OAUTH_TOKEN = "oauth_token";
+
+    ProgressDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +88,7 @@ public class LoginActivity extends AppCompatActivity implements
         btnSimpleLogin = (Button) findViewById(R.id.btnLogin);
         btnLogin = (ImageView) findViewById(R.id.fbLogin);
         loginButton= (LoginButton)findViewById(R.id.login_button);
+        btnLoginTwitter = (ImageView) findViewById(R.id.btnLoginTwitter);
       //  isConnected = checkConnection();
         btnSimpleLogin.setOnClickListener(new View.OnClickListener() {
             @Override

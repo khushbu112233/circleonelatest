@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context="com.amplearch.circleonet.Activity.SplashActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imgLogin"
+            android:src="@drawable/loginlogo"
+            android:layout_marginTop="60dp"
+            android:layout_width="190dp"
+            android:layout_height="100dp"
+            android:visibility="visible"
+            android:layout_centerHorizontal="true"/>
+
+        <ImageView
+            android:id="@+id/imgLogin1"
+            android:src="@drawable/loginlogo"
+            android:layout_width="190dp"
+            android:layout_marginTop="250dp"
+            android:layout_height="100dp"
+            android:visibility="visible"
+            android:layout_centerHorizontal="true"/>
+
+
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

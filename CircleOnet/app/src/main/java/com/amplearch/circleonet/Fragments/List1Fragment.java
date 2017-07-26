@@ -81,17 +81,19 @@ public class List1Fragment extends Fragment
     public static ArrayList<NFCModel> nfcModel ;
     ViewConfiguration vc;
     private int mTouchSlop;
+    FrameLayout frame;
 
     View view;
 
     private String TAG = CardsActivity.class.getSimpleName();
-    public static ArrayList<byte[]> images;
-    public static ArrayList<byte[]> images1;
+    public static ArrayList<Integer> images;
+    public static ArrayList<Integer> images1;
     public static GalleryAdapter mAdapter;
     public static GalleryAdapter1 mAdapter1;
     public static RecyclerView recyclerView1, recyclerView2;
     public static CarouselLayoutManager manager1, manager2;
     private int draggingView = -1;
+    RelativeLayout rlt;
 
     public List1Fragment()
     {
@@ -110,13 +112,14 @@ public class List1Fragment extends Fragment
 
         view = inflater.inflate(R.layout.fragment_list1, container, false);
       //  new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
+        rlt = (RelativeLayout) view.findViewById(R.id.rlt);
         vc = ViewConfiguration.get(view.getContext());
         // frameList1 = (FrameLayout) view.findViewById(R.id.frameList1);
         mTouchSlop = vc.getScaledTouchSlop();
         recyclerView1 = (RecyclerView) view.findViewById(R.id.list_horizontal1);
         recyclerView2 = (RecyclerView) view.findViewById(R.id.list_horizontal2);
         lnrList = (LinearLayout) view.findViewById(R.id.lnrList);
+        frame = (FrameLayout) view.findViewById(R.id.frame);
         db = new DatabaseHelper(getContext());
         //viewPager = (ViewPager)view.findViewById(R.id.viewPager);
         lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
@@ -146,12 +149,33 @@ public class List1Fragment extends Fragment
        // viewPager.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
 
 
-        lnrList.setOnTouchListener(new View.OnTouchListener() {
+        frame.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent me) {
-                return gestureDetector1.onTouchEvent(me);
+                gestureDetector1.onTouchEvent(me);
+                recyclerView1.requestFocus();
+                recyclerView1.dispatchTouchEvent(me); // don't cause scrolling
+                //recyclerView1.dispatchTouchEvent(me); // don't cause scrolling? Alternative solutoin?
+
+                recyclerView2.requestFocus();
+               // recyclerView2.dispatchTouchEvent(mBackupTouchDownEvent); // don't cause scrolling
+                //recyclerView2.dispatchTouchEvent(me);
+                return true;
             }
         });
 
+        /*frame.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                recyclerView1.addOnScrollListener(scrollListener);
+                recyclerView2.addOnScrollListener(scrollListener);
+            }
+        });*/
+       /* recyclerView1.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector1.onTouchEvent(event);
+            }
+        });*/
         /*recyclerView1.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
             public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
@@ -368,7 +392,7 @@ public class List1Fragment extends Fragment
     class MyOnGestureListener implements GestureDetector.OnGestureListener  {
 
         private static final int SWIPE_THRESHOLD = 100;
-        private static final int SWIPE_VELOCITY_THRESHOLD = 100;
+        private static final int SWIPE_VELOCITY_THRESHOLD = 1000;
 
         @Override
         public boolean onDown(MotionEvent e) {
@@ -418,7 +442,7 @@ public class List1Fragment extends Fragment
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             // Toast.makeText(getContext(), "onFling", Toast.LENGTH_LONG).show();
             //textEvt2.setText(e1.getX() + ":" + e1.getY() + "  " + e2.getX() + ":" + e2.getY());
-            boolean result = false;
+            boolean result = true;
             try {
                 float diffY = e2.getY() - e1.getY();
                 float diffX = e2.getX() - e1.getX();
@@ -429,6 +453,8 @@ public class List1Fragment extends Fragment
                         } else {
                             // onSwipeLeft();
                         }
+                       /* recyclerView1.addOnScrollListener(scrollListener);
+                        recyclerView2.addOnScrollListener(scrollListener);*/
                     }
                 } else {
                     if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
@@ -505,6 +531,37 @@ public class List1Fragment extends Fragment
             } else if (draggingView == 2 && recyclerView == recyclerView2) {
                 recyclerView1.scrollBy(dx, dy);
             }
+           /* if(dx>0)
+            {
+                Toast.makeText(getContext(), "Scrolled Right", Toast.LENGTH_LONG).show();
+                System.out.println("Scrolled Right");
+
+            }
+            else if(dx < 0)
+            {
+                Toast.makeText(getContext(), "Scrolled Left", Toast.LENGTH_LONG).show();
+                System.out.println("Scrolled Left");
+
+            }
+            else {
+                Toast.makeText(getContext(), "No Horizontal Scrolled", Toast.LENGTH_LONG).show();
+                System.out.println("No Horizontal Scrolled");
+            }
+
+            if(dy>0)
+            {
+                Toast.makeText(getContext(), "Scrolled Downwards", Toast.LENGTH_LONG).show();
+                System.out.println("Scrolled Downwards");
+            }
+            else if(dy < 0)
+            {
+                System.out.println("Scrolled Upwards");
+                Toast.makeText(getContext(), "Scrolled Upwards", Toast.LENGTH_LONG).show();
+            }
+            else {
+                Toast.makeText(getContext(), "No Vertical Scrolled", Toast.LENGTH_LONG).show();
+                System.out.println("No Vertical Scrolled");
+            }*/
         }
     };
 

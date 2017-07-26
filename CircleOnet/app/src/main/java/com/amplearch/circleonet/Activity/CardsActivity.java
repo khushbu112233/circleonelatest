@@ -74,6 +74,7 @@ public class CardsActivity extends NfcActivity {
     NfcReadUtility mNfcReadUtility = new NfcReadUtilityImpl();
     private Date location;
     private int currentPage;
+    int cardCount = 0 ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +85,7 @@ public class CardsActivity extends NfcActivity {
 
         Toast.makeText(getApplicationContext(), "Time: " + date1, Toast.LENGTH_LONG).show();
 */
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
             position = extras.getInt("viewpager_position");
@@ -107,11 +109,84 @@ public class CardsActivity extends NfcActivity {
                 if (tab.getPosition() == 3){
                     getSupportActionBar().hide();
                 }
+                int  i = tab.getPosition();
+                if ( i == 0 ){
+                    View view = tab.getCustomView();
+                    ImageView imageView = (ImageView) view.findViewById(R.id.icon);
+                    imageView.setImageResource(R.drawable.ic_icon1b);
+                    TextView textView = (TextView) view.findViewById(R.id.txtTab);
+                    textView.setText("Cards");
+                    textView.setTextColor(getResources().getColor(R.color.colorPrimary));
+                }
+                else if ( i == 1 ){
+                 //   View view1 = getLayoutInflater().inflate(R.layout.tab_view, null);
+                    // view1.findViewById(R.id.icon).set(R.drawable.ic_icon1);
+
+                    View view = tab.getCustomView();
+                    ImageView imageView = (ImageView) view.findViewById(R.id.icon);
+                    imageView.setImageResource(R.drawable.ic_icon2b);
+                    TextView textView = (TextView) view.findViewById(R.id.txtTab);
+                    textView.setText("Connect");
+                    textView.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+                }
+                else if ( i == 2 ){
+                    View view = tab.getCustomView();
+                    ImageView imageView = (ImageView) view.findViewById(R.id.icon);
+                    imageView.setImageResource(R.drawable.ic_icon3b);
+                    TextView textView = (TextView) view.findViewById(R.id.txtTab);
+                    textView.setText("Events");
+                    textView.setTextColor(getResources().getColor(R.color.colorPrimary));
+                }
+                else if ( i == 3 ){
+                    View view = tab.getCustomView();
+                    ImageView imageView = (ImageView) view.findViewById(R.id.icon);
+                    imageView.setImageResource(R.drawable.ic_icon4b);
+                    TextView textView = (TextView) view.findViewById(R.id.txtTab);
+                    textView.setText("Profile");
+                    textView.setTextColor(getResources().getColor(R.color.colorPrimary));
+                }
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
+                int  i = tab.getPosition();
+                if ( i == 0 ){
+                    View view = tab.getCustomView();
+                    ImageView imageView = (ImageView) view.findViewById(R.id.icon);
+                    imageView.setImageResource(R.drawable.ic_icon1);
+                    TextView textView = (TextView) view.findViewById(R.id.txtTab);
+                    textView.setText("Cards");
+                    textView.setTextColor(getResources().getColor(R.color.unselected));
+                }
+                else if ( i == 1 ){
+                    //   View view1 = getLayoutInflater().inflate(R.layout.tab_view, null);
+                    // view1.findViewById(R.id.icon).set(R.drawable.ic_icon1);
 
+                    View view = tab.getCustomView();
+                    ImageView imageView = (ImageView) view.findViewById(R.id.icon);
+                    imageView.setImageResource(R.drawable.ic_icon2);
+                    TextView textView = (TextView) view.findViewById(R.id.txtTab);
+                    textView.setText("Connect");
+                    textView.setTextColor(getResources().getColor(R.color.unselected));
+
+                }
+                else if ( i == 2 ){
+                    View view = tab.getCustomView();
+                    ImageView imageView = (ImageView) view.findViewById(R.id.icon);
+                    imageView.setImageResource(R.drawable.ic_icon3);
+                    TextView textView = (TextView) view.findViewById(R.id.txtTab);
+                    textView.setText("Events");
+                    textView.setTextColor(getResources().getColor(R.color.unselected));
+                }
+                else if ( i == 3 ){
+                    View view = tab.getCustomView();
+                    ImageView imageView = (ImageView) view.findViewById(R.id.icon);
+                    imageView.setImageResource(R.drawable.ic_icon4);
+                    TextView textView = (TextView) view.findViewById(R.id.txtTab);
+                    textView.setText("Profile");
+                    textView.setTextColor(getResources().getColor(R.color.unselected));
+                }
             }
 
             @Override
@@ -133,7 +208,7 @@ public class CardsActivity extends NfcActivity {
                 if (position == 0) {
                     CardsFragment.mViewPager.setCurrentItem(nested_position);
                     getSupportActionBar().show();
-                    setActionBarTitle("Cards 256");
+                    setActionBarTitle("Cards - "+cardCount);
                     setActionBarRightImage(R.drawable.ic_drawer);
                 } else if (position == 1) {
                     getSupportActionBar().show();
@@ -211,7 +286,7 @@ public class CardsActivity extends NfcActivity {
             getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             getSupportActionBar().setCustomView(R.layout.custom_actionbar);
             textView = (TextView) findViewById(R.id.mytext);
-
+            cardCount = db.getActiveNFCCount();
             SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
             // textView.setText("Cards 256");
@@ -239,7 +314,7 @@ public class CardsActivity extends NfcActivity {
         protected void onPostExecute(Void result) {
             if (position == 0) {
                 getSupportActionBar().show();
-                setActionBarTitle("Cards 256");
+                setActionBarTitle("Cards - "+cardCount);
                 setActionBarRightImage(R.drawable.ic_drawer);
             } else if (position == 1) {
                 getSupportActionBar().show();
@@ -341,7 +416,7 @@ public class CardsActivity extends NfcActivity {
                 return new EventsFragment();
             }
             else if (position == 3) {
-                getSupportActionBar().hide();
+              //  getSupportActionBar().hide();
               //  setActionBarTitle("Events");
                 return new ProfileFragment();
             }
@@ -393,7 +468,10 @@ public class CardsActivity extends NfcActivity {
         View view1 = getLayoutInflater().inflate(R.layout.tab_view, null);
        // view1.findViewById(R.id.icon).set(R.drawable.ic_icon1);
         ImageView imageView = (ImageView) view1.findViewById(R.id.icon);
-        imageView.setImageResource(R.drawable.ic_icon1);
+        imageView.setImageResource(R.drawable.ic_icon1b);
+        TextView textView = (TextView) view1.findViewById(R.id.txtTab);
+        textView.setText("Cards");
+        textView.setTextColor(getResources().getColor(R.color.colorPrimary));
        // tabLayout.addTab(tabLayout.newTab().setCustomView(view1));
 
 
@@ -401,6 +479,8 @@ public class CardsActivity extends NfcActivity {
         //view2.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_icon2);
         ImageView imageView1 = (ImageView) view2.findViewById(R.id.icon);
         imageView1.setImageResource(R.drawable.ic_icon2);
+        TextView textView1 = (TextView) view2.findViewById(R.id.txtTab);
+        textView1.setText("Connect");
         //tabLayout.addTab(tabLayout.newTab().setCustomView(view2));
 
 
@@ -408,12 +488,16 @@ public class CardsActivity extends NfcActivity {
        // view3.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_icon3);
         ImageView imageView2 = (ImageView) view3.findViewById(R.id.icon);
         imageView2.setImageResource(R.drawable.ic_icon3);
+        TextView textView2 = (TextView) view3.findViewById(R.id.txtTab);
+        textView2.setText("Events");
        // tabLayout.addTab(tabLayout.newTab().setCustomView(view3));
 
         View view4 = getLayoutInflater().inflate(R.layout.tab_view, null);
       //  view4.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_icon4);
         ImageView imageView3 = (ImageView) view4.findViewById(R.id.icon);
         imageView3.setImageResource(R.drawable.ic_icon4);
+        TextView textView3 = (TextView) view4.findViewById(R.id.txtTab);
+        textView3.setText("Profile");
        // tabLayout.addTab(tabLayout.newTab().setCustomView(view4));
         tabLayout.getTabAt(0).setCustomView(view1);
         tabLayout.getTabAt(1).setCustomView(view2);

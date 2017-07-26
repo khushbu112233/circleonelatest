@@ -24,17 +24,17 @@ public class NFCModel {
     String google_id;
     String twitter_id;
     String youtube_id;
-    byte[] card_front;
-    byte[] card_back;
+    int card_front;
+    int card_back;
     String active;
     String nfc_tag;
-    byte[] user_image;
+    int user_image;
     String date;
 
     public NFCModel() {
     }
 
-    public NFCModel(String name, String company, String designation, String mob_no, String work_no, String ph_no, String email, String website, String address, String lat, String lng, String remark, String fb_id, String linkedin_id, String google_id, String twitter_id, String youtube_id, byte[] card_front, byte[] card_back, String active, String nfc_tag, byte[] user_image, String date) {
+    public NFCModel(String name, String company, String designation, String mob_no, String work_no, String ph_no, String email, String website, String address, String lat, String lng, String remark, String fb_id, String linkedin_id, String google_id, String twitter_id, String youtube_id, int card_front, int card_back, String active, String nfc_tag, int user_image, String date) {
         this.name = name;
         this.company = company;
         this.designation = designation;
@@ -204,19 +204,19 @@ public class NFCModel {
         this.youtube_id = youtube_id;
     }
 
-    public byte[] getCard_front() {
+    public int getCard_front() {
         return card_front;
     }
 
-    public void setCard_front(byte[] card_front) {
+    public void setCard_front(int card_front) {
         this.card_front = card_front;
     }
 
-    public byte[] getCard_back() {
+    public int getCard_back() {
         return card_back;
     }
 
-    public void setCard_back(byte[] card_back) {
+    public void setCard_back(int card_back) {
         this.card_back = card_back;
     }
 
@@ -236,11 +236,11 @@ public class NFCModel {
         this.nfc_tag = nfc_tag;
     }
 
-    public byte[] getUser_image() {
+    public int getUser_image() {
         return user_image;
     }
 
-    public void setUser_image(byte[] user_image) {
+    public void setUser_image(int user_image) {
         this.user_image = user_image;
     }
 

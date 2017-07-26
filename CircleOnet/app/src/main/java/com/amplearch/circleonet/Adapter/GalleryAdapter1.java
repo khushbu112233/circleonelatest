@@ -78,9 +78,9 @@ public class GalleryAdapter1 extends RecyclerView.Adapter<GalleryAdapter1.MyView
     public void onBindViewHolder(MyViewHolder holder, final int position)
     {
         //Integer image = images.get(position);
-        Bitmap bmp = BitmapFactory.decodeByteArray(nfcModelList.get(position).getCard_back(), 0, nfcModelList.get(position).getCard_back().length);
+      //  Bitmap bmp = BitmapFactory.decodeByteArray(nfcModelList.get(position).getCard_back(), 0, nfcModelList.get(position).getCard_back().length);
 
-        imageView.setImageBitmap(bmp);
+        imageView.setImageResource(nfcModelList.get(position).getCard_back());
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override

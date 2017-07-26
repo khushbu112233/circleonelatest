@@ -1,13 +1,23 @@
 <LinearLayout android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
+    android:gravity="center"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ImageView
         android:id="@+id/icon"
         android:padding="12dp"
         android:layout_weight="1"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:src="@drawable/ic_icon2"/>
+
+    <TextView
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="-12dp"
+        android:textSize="12sp"
+        android:id="@+id/txtTab"
+        android:text="Hello"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </LinearLayout>

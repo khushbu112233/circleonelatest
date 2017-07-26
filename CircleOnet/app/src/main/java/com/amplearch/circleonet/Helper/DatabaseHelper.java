@@ -79,11 +79,11 @@ public class DatabaseHelper extends SQLiteOpenHelper
             + KEY_GOOGLE_ID + " TEXT,"
             + KEY_TWITTER_ID + " TEXT,"
             + KEY_YOUTUBE_ID + " TEXT,"
-            + KEY_CARD_FRONT + " BLOB,"
-            + KEY_CARD_BACK + " BLOB,"
+            + KEY_CARD_FRONT + " INTEGER,"
+            + KEY_CARD_BACK + " INTEGER,"
             + KEY_ACTIVE + " TEXT,"
             + KEY_NFC_TAG + " TEXT,"
-            + KEY_USER_IMG + " BLOB,"
+            + KEY_USER_IMG + " INTEGER,"
             + KEY_DATE + " TEXT"
 			+ ")";
 
@@ -131,7 +131,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 		// creating required tables
 		db.execSQL(CREATE_TABLE_NFC);
 
-        ByteArrayOutputStream baosf1 = new ByteArrayOutputStream();
+        /*ByteArrayOutputStream baosf1 = new ByteArrayOutputStream();
         ByteArrayOutputStream baosb1 = new ByteArrayOutputStream();
         ByteArrayOutputStream baosf2 = new ByteArrayOutputStream();
         ByteArrayOutputStream baosb2 = new ByteArrayOutputStream();
@@ -195,7 +195,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         byte[] imageBytesu1 = user1.toByteArray();
         byte[] imageBytesu2 = user2.toByteArray();
         byte[] imageBytesu3 = user3.toByteArray();
-        byte[] imageBytesu4 = user4.toByteArray();
+        byte[] imageBytesu4 = user4.toByteArray();*/
 
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, "Jonathan Por");
@@ -215,11 +215,11 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_GOOGLE_ID, "www.google.com");
         values.put(KEY_TWITTER_ID, "www.twitter.com");
         values.put(KEY_YOUTUBE_ID, "www.twitter.com");
-        values.put(KEY_CARD_FRONT, imageBytesf2);
-        values.put(KEY_CARD_BACK, imageBytesb2);
+        values.put(KEY_CARD_FRONT, R.drawable.card2f);
+        values.put(KEY_CARD_BACK, R.drawable.card2f);
         values.put(KEY_ACTIVE, "true");
         values.put(KEY_NFC_TAG, "en000000001");
-        values.put(KEY_USER_IMG, imageBytesu2);
+        values.put(KEY_USER_IMG, R.drawable.profile1);
         values.put(KEY_DATE, "2017-07-01 10:42:38");
         db.insert(TABLE_NFC, null, values);
 
@@ -240,11 +240,11 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_GOOGLE_ID, "www.google.com");
         values.put(KEY_TWITTER_ID, "www.twitter.com");
         values.put(KEY_YOUTUBE_ID, "www.twitter.com");
-        values.put(KEY_CARD_FRONT, imageBytesf4);
-        values.put(KEY_CARD_BACK, imageBytesb4);
+        values.put(KEY_CARD_FRONT, R.drawable.card4);
+        values.put(KEY_CARD_BACK, R.drawable.card4);
         values.put(KEY_ACTIVE, "true");
         values.put(KEY_NFC_TAG, "en000000004");
-        values.put(KEY_USER_IMG, imageBytesu1);
+        values.put(KEY_USER_IMG, R.drawable.profile2);
         values.put(KEY_DATE, "2017-06-30 12:42:38");
 		db.insert(TABLE_NFC, null, values);
 
@@ -265,11 +265,11 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_GOOGLE_ID, "www.google.com");
         values.put(KEY_TWITTER_ID, "www.twitter.com");
         values.put(KEY_YOUTUBE_ID, "www.twitter.com");
-        values.put(KEY_CARD_FRONT, imageBytesf3);
-        values.put(KEY_CARD_BACK, imageBytesb3);
+        values.put(KEY_CARD_FRONT, R.drawable.card3_1);
+        values.put(KEY_CARD_BACK, R.drawable.card3_1);
         values.put(KEY_ACTIVE, "false");
         values.put(KEY_NFC_TAG, "en000000002");
-        values.put(KEY_USER_IMG, imageBytesu3);
+        values.put(KEY_USER_IMG, R.drawable.profile3);
         values.put(KEY_DATE, "2017-06-01 12:42:38");
         db.insert(TABLE_NFC, null, values);
 
@@ -290,11 +290,11 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_GOOGLE_ID, "www.google.com");
         values.put(KEY_TWITTER_ID, "www.twitter.com");
         values.put(KEY_YOUTUBE_ID, "www.twitter.com");
-        values.put(KEY_CARD_FRONT, imageBytesf1);
-        values.put(KEY_CARD_BACK, imageBytesb1);
+        values.put(KEY_CARD_FRONT, R.drawable.card1f);
+        values.put(KEY_CARD_BACK, R.drawable.card1b);
         values.put(KEY_ACTIVE, "true");
         values.put(KEY_NFC_TAG, "en000000003");
-        values.put(KEY_USER_IMG, imageBytesu4);
+        values.put(KEY_USER_IMG, R.drawable.profile4);
         values.put(KEY_DATE, "2017-07-01 12:42:38");
         db.insert(TABLE_NFC, null, values);
 	}
@@ -421,11 +421,11 @@ public class DatabaseHelper extends SQLiteOpenHelper
                 td.setGoogle_id(c.getString(c.getColumnIndex(KEY_GOOGLE_ID)));
                 td.setTwitter_id(c.getString(c.getColumnIndex(KEY_TWITTER_ID)));
                 td.setYoutube_id(c.getString(c.getColumnIndex(KEY_YOUTUBE_ID)));
-                td.setCard_front(c.getBlob(c.getColumnIndex(KEY_CARD_FRONT)));
-                td.setCard_back(c.getBlob(c.getColumnIndex(KEY_CARD_BACK)));
+                td.setCard_front(c.getInt(c.getColumnIndex(KEY_CARD_FRONT)));
+                td.setCard_back(c.getInt(c.getColumnIndex(KEY_CARD_BACK)));
                 td.setActive(c.getString(c.getColumnIndex(KEY_ACTIVE)));
                 td.setNfc_tag(c.getString(c.getColumnIndex(KEY_NFC_TAG)));
-                td.setUser_image(c.getBlob(c.getColumnIndex(KEY_USER_IMG)));
+                td.setUser_image(c.getInt(c.getColumnIndex(KEY_USER_IMG)));
                 td.setDate(c.getString(c.getColumnIndex(KEY_DATE)));
 
                 // adding to todo list
@@ -467,11 +467,11 @@ public class DatabaseHelper extends SQLiteOpenHelper
                 td.setGoogle_id(c.getString(c.getColumnIndex(KEY_GOOGLE_ID)));
                 td.setTwitter_id(c.getString(c.getColumnIndex(KEY_TWITTER_ID)));
                 td.setYoutube_id(c.getString(c.getColumnIndex(KEY_YOUTUBE_ID)));
-                td.setCard_front(c.getBlob(c.getColumnIndex(KEY_CARD_FRONT)));
-                td.setCard_back(c.getBlob(c.getColumnIndex(KEY_CARD_BACK)));
+                td.setCard_front(c.getInt(c.getColumnIndex(KEY_CARD_FRONT)));
+                td.setCard_back(c.getInt(c.getColumnIndex(KEY_CARD_BACK)));
                 td.setActive(c.getString(c.getColumnIndex(KEY_ACTIVE)));
                 td.setNfc_tag(c.getString(c.getColumnIndex(KEY_NFC_TAG)));
-                td.setUser_image(c.getBlob(c.getColumnIndex(KEY_USER_IMG)));
+                td.setUser_image(c.getInt(c.getColumnIndex(KEY_USER_IMG)));
                 td.setDate(c.getString(c.getColumnIndex(KEY_DATE)));
                 // adding to todo list
                 tags.add(td);
@@ -513,11 +513,11 @@ public class DatabaseHelper extends SQLiteOpenHelper
                 td.setGoogle_id(c.getString(c.getColumnIndex(KEY_GOOGLE_ID)));
                 td.setTwitter_id(c.getString(c.getColumnIndex(KEY_TWITTER_ID)));
                 td.setYoutube_id(c.getString(c.getColumnIndex(KEY_YOUTUBE_ID)));
-                td.setCard_front(c.getBlob(c.getColumnIndex(KEY_CARD_FRONT)));
-                td.setCard_back(c.getBlob(c.getColumnIndex(KEY_CARD_BACK)));
+                td.setCard_front(c.getInt(c.getColumnIndex(KEY_CARD_FRONT)));
+                td.setCard_back(c.getInt(c.getColumnIndex(KEY_CARD_BACK)));
                 td.setActive(c.getString(c.getColumnIndex(KEY_ACTIVE)));
                 td.setNfc_tag(c.getString(c.getColumnIndex(KEY_NFC_TAG)));
-                td.setUser_image(c.getBlob(c.getColumnIndex(KEY_USER_IMG)));
+                td.setUser_image(c.getInt(c.getColumnIndex(KEY_USER_IMG)));
                 td.setDate(c.getString(c.getColumnIndex(KEY_DATE)));
                 // adding to tags list
                 tags.add(td);
@@ -526,8 +526,8 @@ public class DatabaseHelper extends SQLiteOpenHelper
         return tags;
 	}
 
-	public int getNFCCount() {
-		String countQuery = "SELECT  * FROM " + TABLE_NFC;
+	public int getActiveNFCCount() {
+		String countQuery = "SELECT  * FROM " + TABLE_NFC + " WHERE " + KEY_ACTIVE + "='true' ORDER BY datetime(\"date\") DESC";
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery(countQuery, null);
 

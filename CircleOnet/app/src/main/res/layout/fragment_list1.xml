@@ -6,6 +6,7 @@
     tools:context="com.amplearch.circleonet.Fragments.List1Fragment">
 
 <RelativeLayout
+    android:id="@+id/rlt"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <RelativeLayout
@@ -55,8 +56,8 @@
         android:id="@+id/lnrList"
         android:splitMotionEvents="false"
         android:layout_centerInParent="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -65,17 +66,23 @@
         android:id="@+id/list_horizontal1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="0dp"
         android:layout_marginBottom="5dp"/>
 
     <android.support.v7.widget.RecyclerView
-
         android:layout_weight="1"
         android:layout_below="@+id/list_horizontal1"
         android:id="@+id/list_horizontal2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="0dp" />
+        />
     </LinearLayout>
+
+    <FrameLayout
+        android:clickable="false"
+        android:layout_below="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/frame"></FrameLayout>
+
 </RelativeLayout>
 </RelativeLayout>

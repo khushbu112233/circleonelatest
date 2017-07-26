@@ -215,9 +215,9 @@ public class List4Adapter extends BaseSwipeAdapter {
         }
         catch (Exception e){  }
 
-        Bitmap bmp1 = BitmapFactory.decodeByteArray(nfcModelList.get(position).getUser_image(), 0, nfcModelList.get(position).getUser_image().length);
+       // Bitmap bmp1 = BitmapFactory.decodeByteArray(nfcModelList.get(position).getUser_image(), 0, nfcModelList.get(position).getUser_image().length);
         // ImageView image = (ImageView) findViewById(R.id.imageView1);
-        holder.image.setImageBitmap(bmp1);
+        holder.image.setImageResource(nfcModelList.get(position).getUser_image());
 
     }
 

@@ -34,7 +34,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class CardDetail extends NfcActivity {
 
     ViewPager mViewPager, viewPager1;
-    private ArrayList<byte[]> image;
+    private ArrayList<Integer> image;
     private CardSwipe myPager ;
     private ImageView imgCards, imgConnect, imgEvents, imgProfile, imgBack, imgCard;
     private static final String TAG = NFCDemo.class.getName();
@@ -84,11 +84,11 @@ public class CardDetail extends NfcActivity {
                 for (NFCModel tag1 : modelList) {
                     // Toast.makeText(getApplicationContext(), tag1.getName(), Toast.LENGTH_LONG).show();
 
-                    Bitmap bmp = BitmapFactory.decodeByteArray(tag1.getCard_front(), 0, tag1.getCard_front().length);
-                    imgCard.setImageBitmap(bmp);
+                    //Bitmap bmp = BitmapFactory.decodeByteArray(tag1.getCard_front(), 0, tag1.getCard_front().length);
+                    imgCard.setImageResource(tag1.getCard_front());
 
-                    Bitmap bmp1 = BitmapFactory.decodeByteArray(tag1.getUser_image(), 0, tag1.getUser_image().length);
-                    imgProfileCard.setImageBitmap(bmp1);
+                  //  Bitmap bmp1 = BitmapFactory.decodeByteArray(tag1.getUser_image(), 0, tag1.getUser_image().length);
+                    imgProfileCard.setImageResource(tag1.getUser_image());
                     txtName.setText(tag1.getName());
                     txtCompany.setText(tag1.getCompany());
                     txtWebsite.setText(tag1.getWebsite());
@@ -313,11 +313,11 @@ public class CardDetail extends NfcActivity {
                             for (NFCModel tag1 : modelList) {
                                 // Toast.makeText(getApplicationContext(), tag1.getName(), Toast.LENGTH_LONG).show();
 
-                                Bitmap bmp = BitmapFactory.decodeByteArray(tag1.getCard_front(), 0, tag1.getCard_front().length);
-                                imgCard.setImageBitmap(bmp);
+                               // Bitmap bmp = BitmapFactory.decodeByteArray(tag1.getCard_front(), 0, tag1.getCard_front().length);
+                                imgCard.setImageResource(tag1.getCard_front());
 
-                                Bitmap bmp1 = BitmapFactory.decodeByteArray(tag1.getUser_image(), 0, tag1.getUser_image().length);
-                                imgProfileCard.setImageBitmap(bmp1);
+                               // Bitmap bmp1 = BitmapFactory.decodeByteArray(tag1.getUser_image(), 0, tag1.getUser_image().length);
+                                imgProfileCard.setImageResource(tag1.getUser_image());
                                 txtName.setText(tag1.getName());
                                 txtCompany.setText(tag1.getCompany());
                                 txtWebsite.setText(tag1.getWebsite());
