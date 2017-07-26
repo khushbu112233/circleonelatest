@@ -656,7 +656,7 @@ public class List1Fragment extends Fragment
         mAdapter1 = new GalleryAdapter1(context, nfcModel);
         mAdapter.notifyDataSetChanged();
         mAdapter1.notifyDataSetChanged();
-
+        CardsActivity.setActionBarTitle("Cards - "+nfcModel.size());
         initRecyclerView1(recyclerView1,new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter ) ;
         initRecyclerView2(recyclerView2,new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter1 ) ;
 

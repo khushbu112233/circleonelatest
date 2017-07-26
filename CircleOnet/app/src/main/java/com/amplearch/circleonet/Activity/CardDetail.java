@@ -42,7 +42,7 @@ public class CardDetail extends NfcActivity {
     NfcReadUtility mNfcReadUtility = new NfcReadUtilityImpl();
     ProgressDialog mProgressDialog;
     DatabaseHelper db ;
-    TextView txtName, txtCompany, txtWebsite, txtEmail, txtPH, txtWork, txtMob, txtAddress, txtRemark;
+    TextView txtName, txtCompany, txtWebsite, txtEmail, txtPH, txtWork, txtMob, txtAddress, txtRemark, txtDesi;
     CircleImageView imgProfileCard;
     String tag_id;
     StickyScrollView scroll;
@@ -71,6 +71,7 @@ public class CardDetail extends NfcActivity {
         txtMob = (TextView) findViewById(R.id.txtMob);
         txtAddress = (TextView) findViewById(R.id.txtAddress);
         txtRemark = (TextView) findViewById(R.id.txtRemark);
+        txtDesi = (TextView) findViewById(R.id.txtDesi);
         scroll = (StickyScrollView) findViewById(R.id.scroll);
 
         Intent intent = getIntent();
@@ -98,6 +99,7 @@ public class CardDetail extends NfcActivity {
                     txtMob.setText(tag1.getMob_no());
                     txtAddress.setText(tag1.getAddress());
                     txtRemark.setText(tag1.getAddress());
+                    txtDesi.setText(tag1.getDesignation());
                     image.add(tag1.getCard_front());
                     image.add(tag1.getCard_back());
                     myPager = new CardSwipe(getApplicationContext(), image);
@@ -327,6 +329,7 @@ public class CardDetail extends NfcActivity {
                                 txtMob.setText(tag1.getMob_no());
                                 txtAddress.setText(tag1.getAddress());
                                 txtRemark.setText(tag1.getRemark());
+                                txtDesi.setText(tag1.getDesignation());
                                 image.add(tag1.getCard_front());
                                 image.add(tag1.getCard_back());
                                 myPager = new CardSwipe(getApplicationContext(), image);

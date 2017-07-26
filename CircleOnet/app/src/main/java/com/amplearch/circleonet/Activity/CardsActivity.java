@@ -68,7 +68,7 @@ public class CardsActivity extends NfcActivity {
     TabLayout tabLayout;
     ImageView imgDrawer, imgLogo;
     private int actionBarHeight;
-    TextView textView;
+    static TextView textView;
     public static int position = 0, nested_position = 0;
     DatabaseHelper db;
     NfcReadUtility mNfcReadUtility = new NfcReadUtilityImpl();
@@ -384,7 +384,7 @@ public class CardsActivity extends NfcActivity {
 
     }
 
-    public void setActionBarTitle(String title){
+    public static void setActionBarTitle(String title){
         textView.setText(title);
     }
 

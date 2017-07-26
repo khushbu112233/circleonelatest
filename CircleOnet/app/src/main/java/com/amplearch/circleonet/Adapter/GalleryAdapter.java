@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.amplearch.circleonet.Activity.CardDetail;
+import com.amplearch.circleonet.Activity.CardsActivity;
 import com.amplearch.circleonet.Fragments.CardsFragment;
 import com.amplearch.circleonet.Fragments.List1Fragment;
 import com.amplearch.circleonet.Helper.DatabaseHelper;
@@ -291,6 +292,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
 
                     }
                 }
+                CardsActivity.setActionBarTitle("Cards - "+nfcModelList.size());
             }
         }
 

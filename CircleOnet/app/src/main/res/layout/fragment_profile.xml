@@ -89,10 +89,17 @@
                     android:text="Westley Wan"
                     android:textStyle="bold"
                     android:textColor="@color/white"/>
-
                 <TextView
                     android:textSize="19dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAlignment="center"
+                    android:text="General Manager"
+                    android:textColor="@color/white"/>
+                <TextView
+                    android:textSize="19dp"
+                    android:layout_marginTop="0dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textAlignment="center"

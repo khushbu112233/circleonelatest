@@ -49,7 +49,7 @@ public class SplashActivity extends AppCompatActivity
                         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                         finish();
                     }
-                },2000);
+                },3000);
 
 //                Animation anim = AnimationUtils.loadAnimation(SplashActivity.this, R.anim.img_anim);
 //                imageView1.startAnimation(anim);

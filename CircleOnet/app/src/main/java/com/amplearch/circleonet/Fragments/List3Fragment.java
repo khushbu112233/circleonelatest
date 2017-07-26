@@ -21,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.amplearch.circleonet.Activity.CardDetail;
+import com.amplearch.circleonet.Activity.CardsActivity;
 import com.amplearch.circleonet.Adapter.List3Adapter;
 import com.amplearch.circleonet.Helper.DatabaseHelper;
 import com.amplearch.circleonet.Model.NFCModel;
@@ -401,7 +402,7 @@ public class List3Fragment extends Fragment
         gridAdapter = new List3Adapter(context, R.layout.grid_list3_layout, nfcModel);
         listView.setAdapter(gridAdapter);
         gridAdapter.notifyDataSetChanged();
-
+        CardsActivity.setActionBarTitle("Cards - "+nfcModel.size());
         gridAdapter.setMode(Attributes.Mode.Single);
 
     }

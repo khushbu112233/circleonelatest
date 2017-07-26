@@ -260,6 +260,7 @@ public class List4Adapter extends BaseSwipeAdapter {
                 {
                     nfcModelList.add(md);
                 }
+                CardsActivity.setActionBarTitle("Cards - "+nfcModelList.size());
             }
         }
         notifyDataSetChanged();

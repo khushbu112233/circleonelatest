@@ -236,12 +236,21 @@
                                 android:textColor="@color/white"
                                 android:textSize="19dp"
                                 android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/txtDesi"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="3dp"
+                                android:text="Unico Creative pte ltd"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:textSize="19dp" />
 
                             <TextView
                                 android:id="@+id/txtCompany"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_marginTop="8dp"
+                                android:layout_marginTop="3dp"
                                 android:text="Unico Creative pte ltd"
                                 android:textAlignment="center"
                                 android:textColor="@color/white"
