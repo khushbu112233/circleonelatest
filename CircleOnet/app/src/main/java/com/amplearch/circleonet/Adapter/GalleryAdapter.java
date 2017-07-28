@@ -35,7 +35,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
     private GestureDetector gestureDetector1;
     public static int pos = 0;
 
-    ArrayList<NFCModel> nfcModelList = new ArrayList<>();
+    public static ArrayList<NFCModel> nfcModelList = new ArrayList<>();
     ArrayList<NFCModel> nfcModelListFilter = new ArrayList<>();
     private RecyclerView.ViewHolder holder;
     public static ImageView imageView ;

@@ -81,7 +81,7 @@ public class List1Fragment extends Fragment
     public static ArrayList<NFCModel> nfcModel ;
     ViewConfiguration vc;
     private int mTouchSlop;
-    FrameLayout frame;
+    FrameLayout frame, frame1;
 
     View view;
 
@@ -120,6 +120,7 @@ public class List1Fragment extends Fragment
         recyclerView2 = (RecyclerView) view.findViewById(R.id.list_horizontal2);
         lnrList = (LinearLayout) view.findViewById(R.id.lnrList);
         frame = (FrameLayout) view.findViewById(R.id.frame);
+        frame1 = (FrameLayout) view.findViewById(R.id.frame1);
         db = new DatabaseHelper(getContext());
         //viewPager = (ViewPager)view.findViewById(R.id.viewPager);
         lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
@@ -156,12 +157,27 @@ public class List1Fragment extends Fragment
                 recyclerView1.dispatchTouchEvent(me); // don't cause scrolling
                 //recyclerView1.dispatchTouchEvent(me); // don't cause scrolling? Alternative solutoin?
 
-                recyclerView2.requestFocus();
+               // recyclerView2.requestFocus();
                // recyclerView2.dispatchTouchEvent(mBackupTouchDownEvent); // don't cause scrolling
                 //recyclerView2.dispatchTouchEvent(me);
                 return true;
             }
         });
+
+        frame1.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent me) {
+                gestureDetector1.onTouchEvent(me);
+                recyclerView2.requestFocus();
+                recyclerView2.dispatchTouchEvent(me); // don't cause scrolling
+                //recyclerView1.dispatchTouchEvent(me); // don't cause scrolling? Alternative solutoin?
+
+                //recyclerView2.requestFocus();
+                // recyclerView2.dispatchTouchEvent(mBackupTouchDownEvent); // don't cause scrolling
+                //recyclerView2.dispatchTouchEvent(me);
+                return true;
+            }
+        });
+
 
         /*frame.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
@@ -416,11 +432,10 @@ public class List1Fragment extends Fragment
             //   Log.e(TAG, "onSingleTapUp");
 
             // final_position = List1Fragment.viewPager.getCurrentItem();
-            Intent intent = new Intent(getContext(), CardDetail.class);
-            //intent.putExtra("tag_id", nfcModelList.get(final_position).getNfc_tag());
-            // context.startActivity(intent);
-
-            return true;
+           /* Intent intent = new Intent(getContext(), CardDetail.class);
+            intent.putExtra("tag_id", GalleryAdapter.nfcModelList.get(GalleryAdapter.posi).getNfc_tag());
+            getContext().startActivity(intent);
+*/            return true;
         }
 
         @Override

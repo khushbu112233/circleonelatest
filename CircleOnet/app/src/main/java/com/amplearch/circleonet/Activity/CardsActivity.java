@@ -219,7 +219,7 @@ public class CardsActivity extends NfcActivity {
                     setActionBarTitle("Events");
                     setActionBarRightImage(R.drawable.ic_drawer);
                 } else if (position == 3) {
-                    getSupportActionBar().hide();
+                    //getSupportActionBar().hide();
                 }
             }
 
@@ -312,6 +312,7 @@ public class CardsActivity extends NfcActivity {
 
         @Override
         protected void onPostExecute(Void result) {
+            getSupportActionBar().setShowHideAnimationEnabled(false);
             if (position == 0) {
                 getSupportActionBar().show();
                 setActionBarTitle("Cards - "+cardCount);
@@ -325,7 +326,7 @@ public class CardsActivity extends NfcActivity {
                 setActionBarTitle("Events");
                 setActionBarRightImage(R.drawable.ic_drawer);
             } else if (position == 3) {
-                getSupportActionBar().hide();
+               // getSupportActionBar().hide();
             }
             mViewPager.setCurrentItem(position, false);
             if (nested_position != 0) {

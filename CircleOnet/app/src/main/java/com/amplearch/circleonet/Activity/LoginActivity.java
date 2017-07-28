@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity implements
         View.OnClickListener,
         GoogleApiClient.OnConnectionFailedListener{
 
-    Button btnSimpleLogin;
+    Button btnSimpleLogin, btnRegister;
     //Boolean isConnected = false;
     private CallbackManager callbackManager;
     private LoginButton loginButton;
@@ -89,6 +89,15 @@ public class LoginActivity extends AppCompatActivity implements
         btnLogin = (ImageView) findViewById(R.id.fbLogin);
         loginButton= (LoginButton)findViewById(R.id.login_button);
         btnLoginTwitter = (ImageView) findViewById(R.id.btnLoginTwitter);
+        btnRegister = (Button) findViewById(R.id.btnRegister);
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
       //  isConnected = checkConnection();
         btnSimpleLogin.setOnClickListener(new View.OnClickListener() {
             @Override

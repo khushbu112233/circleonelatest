@@ -20,8 +20,8 @@
             android:layout_height="match_parent"
             app:sl_shadowRadius="8dp"
             app:sl_shadowColor="#AA000000"
-            app:sl_dx="2dp"
-            app:sl_dy="2dp"
+            app:sl_dx="0dp"
+            app:sl_dy="0dp"
             app:sl_cornerRadius="6dp">
             <ImageView
                 android:src="@drawable/card1"

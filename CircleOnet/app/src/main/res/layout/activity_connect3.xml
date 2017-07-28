@@ -51,12 +51,36 @@
                     android:layout_marginRight="20dp"/>
             </RelativeLayout>
 
-            <ImageView
-                android:id="@+id/imgConnecting"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/ic_connecting"
-                android:layout_centerInParent="true"/>
+            <RelativeLayout
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_centerInParent="true"
+                    android:id="@+id/imgConnecting"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:src="@drawable/round1"
+                    />
+
+                <ImageView
+                    android:layout_centerInParent="true"
+                    android:id="@+id/imgConnecting1"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:src="@drawable/round2"
+                    />
+
+                <ImageView
+                    android:layout_centerInParent="true"
+                    android:id="@+id/imgConnecting2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/round3"
+                    />
+
+            </RelativeLayout>
+
 
             <LinearLayout
                 android:layout_alignParentBottom="true"

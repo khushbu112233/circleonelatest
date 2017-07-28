@@ -12,7 +12,7 @@ import com.amplearch.circleonet.R;
 
 public class Connect3Activity extends AppCompatActivity {
 
-    private ImageView imgBack, imgCards, imgConnect, imgEvents, imgProfile, imgConnecting;
+    private ImageView imgBack, imgCards, imgConnect, imgEvents, imgProfile, imgConnecting, imgConnecting1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +25,7 @@ public class Connect3Activity extends AppCompatActivity {
         imgEvents = (ImageView) findViewById(R.id.imgEvents);
         imgProfile = (ImageView) findViewById(R.id.imgProfile);
         imgConnecting = (ImageView) findViewById(R.id.imgConnecting);
+        imgConnecting1 = (ImageView) findViewById(R.id.imgConnecting1);
 
         imgConnecting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +41,9 @@ public class Connect3Activity extends AppCompatActivity {
         });
         Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
         imgConnecting.startAnimation(anim);
+
+        Animation anim1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.clockwise);
+        imgConnecting1.startAnimation(anim1);
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

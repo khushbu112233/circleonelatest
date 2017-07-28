@@ -43,8 +43,7 @@
 
         <activity
             android:name=".Activity.LoginActivity"
-            android:theme="@style/NoActionbar">
-        </activity>
+            android:theme="@style/NoActionbar"></activity>
         <activity
             android:name=".Activity.CardDetail"
             android:theme="@style/NoActionbar" />
@@ -64,14 +63,16 @@
         <activity android:name=".Activity.NFCDemo" />
         <activity android:name=".Activity.VolleyDemo" />
         <activity android:name=".Activity.MainActivity" />
-        <activity android:name=".Activity.SplashActivity"
-            android:theme="@style/NoActionbar" >
+        <activity
+            android:name=".Activity.SplashActivity"
+            android:theme="@style/NoActionbar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activity.RegisterActivity"></activity>
     </application>
 
 </manifest>

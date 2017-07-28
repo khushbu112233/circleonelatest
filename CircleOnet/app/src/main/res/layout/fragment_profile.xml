@@ -9,6 +9,16 @@
     android:theme="@style/NoActionbar"
     android:fitsSystemWindows="true">
 
+    <android.support.design.widget.AppBarLayout
+        android:background="@android:color/transparent"
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/NoActionbar"
+        app:expanded="false">
+
+    </android.support.design.widget.AppBarLayout>
+
     <FrameLayout
         android:id="@+id/frame1"
         android:tag="sticky"
