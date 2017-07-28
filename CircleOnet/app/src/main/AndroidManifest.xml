@@ -7,7 +7,9 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-feature android:name="android.hardware.nfc" />
 
     <application
         android:name=".ApplicationUtils.MyApplication"
@@ -25,7 +27,15 @@
 
         <activity
             android:name=".Activity.CardsActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
+            android:configChanges="keyboardHidden|orientation|screenSize">
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="application/com.amplearch.circleonet" />
+            </intent-filter>
+        </activity>
         <activity android:name=".Activity.EventsActivity" />
         <activity android:name=".Activity.EventDetail" />
         <activity android:name=".Activity.Connect" />
@@ -47,7 +57,7 @@
 
         <activity
             android:name=".Activity.LoginActivity"
-            android:theme="@style/NoActionbar"></activity>
+            android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.CardDetail"
             android:theme="@style/NoActionbar" />
@@ -76,7 +86,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.RegisterActivity"
+        <activity
+            android:name=".Activity.RegisterActivity"
+            android:theme="@style/NoActionbar" />
+        <activity android:name=".Walkthrough.HelpActivity"
             android:theme="@style/NoActionbar"></activity>
     </application>
 

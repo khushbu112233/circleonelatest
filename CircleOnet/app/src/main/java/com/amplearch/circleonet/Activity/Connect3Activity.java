@@ -1,18 +1,21 @@
 package com.amplearch.circleonet.Activity;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.amplearch.circleonet.R;
 
 public class Connect3Activity extends AppCompatActivity {
 
     private ImageView imgBack, imgCards, imgConnect, imgEvents, imgProfile, imgConnecting, imgConnecting1;
+    TextView txtConnecting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,27 @@ public class Connect3Activity extends AppCompatActivity {
         imgProfile = (ImageView) findViewById(R.id.imgProfile);
         imgConnecting = (ImageView) findViewById(R.id.imgConnecting);
         imgConnecting1 = (ImageView) findViewById(R.id.imgConnecting1);
+        txtConnecting = (TextView) findViewById(R.id.txtConnecting);
+
+
+        Handler handler = new Handler();
+
+        for (int i = 100; i <= 60000; i=i+100) {
+            final int finalI = i;
+            handler.postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    if(finalI %500 == 0){
+                        txtConnecting.setText("Connecting.");
+                    }else if(finalI %400 == 0){
+                        txtConnecting.setText("Connecting..");
+                    }else if(finalI %300 == 0){
+                        txtConnecting.setText("Connecting...");
+                    }
+                }
+            }, i);
+        }
 
         imgConnecting.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -2,6 +2,7 @@ package com.amplearch.circleonet.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import com.amplearch.circleonet.ConnectivityReceiver;
 import com.amplearch.circleonet.Model.User;
 import com.amplearch.circleonet.R;
 import com.amplearch.circleonet.Utils.PrefUtils;
+import com.amplearch.circleonet.Walkthrough.HelpActivity;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -78,6 +80,7 @@ public class LoginActivity extends AppCompatActivity implements
     static final String URL_TWITTER_OAUTH_TOKEN = "oauth_token";
 
     ProgressDialog pDialog;
+    SharedPreferences prefs = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +93,7 @@ public class LoginActivity extends AppCompatActivity implements
         loginButton= (LoginButton)findViewById(R.id.login_button);
         btnLoginTwitter = (ImageView) findViewById(R.id.btnLoginTwitter);
         btnRegister = (Button) findViewById(R.id.btnRegister);
-
+        prefs = getSharedPreferences("com.amplearch.circleonet", MODE_PRIVATE);
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,15 +106,18 @@ public class LoginActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
 
-                new Handler().postDelayed(new Runnable(){
-                    @Override
-                    public void run() {
             /* Create an Intent that will start the Menu-Activity. */
-                        Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
-                        startActivity(intent);
-                    }
-                }, 100);
-
+                if (prefs.getBoolean("firstrun", true)) {
+                    // Do first run stuff here then set 'firstrun' as false
+                    // using the following line to edit/commit prefs
+                    Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                    startActivity(intent);
+                    prefs.edit().putBoolean("firstrun", false).commit();
+                }
+                else {
+                    Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
+                    startActivity(intent);
+                }
 
             }
         });
