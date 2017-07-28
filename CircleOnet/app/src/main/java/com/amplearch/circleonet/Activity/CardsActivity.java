@@ -305,6 +305,7 @@ public class CardsActivity extends NfcActivity {
             final ActionBar actionBar = getSupportActionBar();
             getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             getSupportActionBar().setCustomView(R.layout.custom_actionbar);
+            getSupportActionBar().setShowHideAnimationEnabled(false);
             textView = (TextView) findViewById(R.id.mytext);
             cardCount = db.getActiveNFCCount();
             SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
