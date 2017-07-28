@@ -105,7 +105,8 @@
             android:textColorHint="@color/colorPrimary"
             android:hint="* Email (Username)"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName|text"/>
 
         <LinearLayout
             android:layout_marginTop="3dp"
@@ -121,7 +122,8 @@
             android:textColorHint="@color/colorPrimary"
             android:hint="* First Name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName|text"/>
 
             <EditText
                 android:id="@+id/etLastName"
@@ -132,7 +134,8 @@
                 android:textColorHint="@color/colorPrimary"
                 android:hint="* Last Name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName|text"/>
         </LinearLayout>
 
         <EditText
@@ -144,7 +147,8 @@
             android:textColorHint="@color/colorPrimary"
             android:hint="* Password"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"/>
 
         <EditText
             android:id="@+id/etConfirmPass"
@@ -155,7 +159,8 @@
             android:textColorHint="@color/colorPrimary"
             android:hint="* Password again"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"/>
 
         <EditText
             android:id="@+id/etPhone"
@@ -166,7 +171,8 @@
             android:textColorHint="@color/colorPrimary"
             android:hint="* Phone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
 
         <EditText
             android:id="@+id/etEmail"
@@ -177,7 +183,8 @@
             android:textColorHint="@color/colorPrimary"
             android:hint="* Email"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"/>
 
         <EditText
             android:id="@+id/etDOB"

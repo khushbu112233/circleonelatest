@@ -1,6 +1,7 @@
 package com.amplearch.circleonet.Activity;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +20,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -57,15 +60,21 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.amplearch.circleonet.Utils.Validation.validate;
+
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, AsyncRequest.OnAsyncRequestComplete
 {
-    private EditText etUserName, etFirstName, etLastName, etPassword, etConfirmPass, etPhone, etEmail, etDOB, etAddress;
+    public static EditText etUserName, etFirstName, etLastName, etPassword, etConfirmPass, etPhone, etEmail, etDOB, etAddress;
     private LinearLayout lnrRegister;
     private ImageView ivMale, ivFemale, ivConnect ;
     private View line_view1, line_view2 ;
@@ -80,7 +89,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private String imagepath = null;
     private File file ;
 
-    private String company_name, first_name, last_name, phone_no, password, user_name, gender ;
+    private String company_name, first_name, last_name, phone_no, password, c_password, user_name, gender, email ;
+
+    private int mYear, mMonth, mDay, mHour, mMinute;
+    private Calendar calendar ;
+    private DatePickerDialog datePickerDialog ;
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -112,6 +126,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         ivConnect.setOnClickListener(this);
         lnrRegister.setOnClickListener(this);
         civProfilePic.setOnClickListener(this);
+        etDOB.setOnClickListener(this);
     }
 
     @Override
@@ -124,8 +139,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             ivConnect.startAnimation(slide1);
 
             //first things
-            line_view2.setBackgroundColor(getResources().getColor(R.color.unselected));
-            ivFemale.setImageResource(R.drawable.ic_female_gray);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run()
+                {
+                    line_view2.setBackgroundColor(getResources().getColor(R.color.unselected));
+                    ivFemale.setImageResource(R.drawable.ic_female_gray);
+                }
+            },1100);
             //second things
             line_view1.setBackgroundColor(getResources().getColor(R.color.colorAccent));
             ivMale.setImageResource(R.drawable.ic_male);
@@ -139,8 +160,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             ivConnect.startAnimation(slide);
 
             //first things
-            line_view1.setBackgroundColor(getResources().getColor(R.color.unselected));
-            ivMale.setImageResource(R.drawable.ic_male_gray);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run()
+                {
+                    line_view1.setBackgroundColor(getResources().getColor(R.color.unselected));
+                    ivMale.setImageResource(R.drawable.ic_male_gray);
+                }
+            },1100);
             //second things
             line_view2.setBackgroundColor(getResources().getColor(R.color.colorAccent));
             ivFemale.setImageResource(R.drawable.ic_female);
@@ -151,13 +178,23 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         if( v == lnrRegister)
         {
             company_name = "Ample Arch";
-            user_name = etEmail.getText().toString();
+            user_name = etUserName.getText().toString();
             first_name = etFirstName.getText().toString();
             last_name = etLastName.getText().toString();
             phone_no = etPhone.getText().toString();
             password = etPassword.getText().toString();
+            c_password = etConfirmPass.getText().toString();
+            email = etEmail.getText().toString();
 
-            new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/Registration");
+            if (!validate(user_name,first_name,last_name,password,c_password,phone_no,email))
+            {
+                Toast.makeText(getApplicationContext(), "Form Fill Invalid!", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(), "Ok..", Toast.LENGTH_SHORT).show();
+//                new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/Registration");
+            }
 
 //            connectWithHttpPost();
 
@@ -174,8 +211,101 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         {
             selectImage();
         }
+        if( v == etDOB)
+        {
+            calendar = Calendar.getInstance();
+            mYear = calendar.get(Calendar.YEAR);
+            mMonth = calendar.get(Calendar.MONTH);
+            mDay = calendar.get(Calendar.DAY_OF_MONTH);
 
+            datePickerDialog = new DatePickerDialog(RegisterActivity.this,
+                    new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
+                        {
+                                final String selectDate = dayOfMonth + "/" + (monthOfYear + 1)+ "/" + year;
+                                final String current_date = mDay+"/"+(mMonth+1)+"/"+mYear;
+
+                                try
+                                {
+                                    //for current date
+                                    final Date curr_Date =  simpleDateFormat.parse(current_date);
+                                    String date1 = simpleDateFormat.format(curr_Date);
+                                    //for set date
+                                    final Date set_Date =  simpleDateFormat.parse(selectDate);
+                                    String date2 = simpleDateFormat.format(set_Date);
+
+                                    if(!date_validation(date2,date1))
+                                    {
+                                        etDOB.setText("DD/MM/YYYY");
+                                        Toast.makeText(getApplicationContext(),"Please! Set Date before Current Date." ,Toast.LENGTH_LONG).show();
+                                    }
+                                    else
+                                    {
+                                        etDOB.setText(date2);
+//                            Toast.makeText(getApplicationContext(),"Birth Date :"+date2,Toast.LENGTH_LONG).show();
+//                            Toast.makeText(getApplicationContext(),"Current :"+date1+" Set :"+date2 ,Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                                catch (ParseException e)
+                                {
+                                    e.printStackTrace();
+                                }
+                        }
+                    }, mYear, mMonth, mDay);
+            datePickerDialog.show();
+        }
     }
+
+    public boolean date_validation(String d1,String d2)
+    {
+        boolean valid = true ;
+        try
+        {
+            // If you already have date objects then skip 1
+            // Create 2 dates starts
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date date1 = sdf.parse(d1);
+            Date date2 = sdf.parse(d2);
+
+            System.out.println("Date1"+sdf.format(date1));
+            System.out.println("Date2"+sdf.format(date2));
+
+//            Toast.makeText(getApplicationContext(), "S date: "+date1, Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), "C date: "+date2, Toast.LENGTH_LONG).show();
+
+            // Create 2 dates ends
+            // Date object is having 3 methods namely after,before and equals for comparing
+            // after() will return true if and only if date1 is after date 2
+            if(date1.after(date2)){
+                System.out.println("Date1 is after Date2");
+                valid = false ;
+//                Toast.makeText(getApplicationContext(), "Selected date is AFTER current date.", Toast.LENGTH_LONG).show();
+            }
+
+            // before() will return true if and only if date1 is before date2
+            if(date1.before(date2)){
+                System.out.println("Date1 is before Date2");
+                valid = true ;
+//                Toast.makeText(getApplicationContext(), "Selected date is BEFORE current Date.", Toast.LENGTH_LONG).show();
+            }
+
+            //equals() returns true if both the dates are equal
+            if(date1.equals(date2)){
+                System.out.println("Date1 is equal Date2");
+                valid = false ;
+//                Toast.makeText(getApplicationContext(), "Selected date is EQUAL current date.", Toast.LENGTH_LONG).show();
+            }
+
+            System.out.println();
+        }
+        catch(ParseException ex){
+            ex.printStackTrace();
+        }
+
+        return valid ;
+    }
+
 
     private void selectImage()
     {
@@ -307,7 +437,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             jsonObject.accumulate("LName", last_name );
             jsonObject.accumulate("Phone", phone_no);
             jsonObject.accumulate("Pwd", password);
-            jsonObject.accumulate("UserName", user_name);
+            jsonObject.accumulate("UserName", email);
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
