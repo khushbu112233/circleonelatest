@@ -121,11 +121,12 @@ public class CardsActivity extends NfcActivity {
 
             }
         });*/
-
+        getSupportActionBar().setShowHideAnimationEnabled(false);
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mViewPager.setCurrentItem(tab.getPosition(), false);
+                getSupportActionBar().setShowHideAnimationEnabled(false);
                 if (tab.getPosition() == 3){
                     getSupportActionBar().hide();
                 }
@@ -225,6 +226,7 @@ public class CardsActivity extends NfcActivity {
 
             @Override
             public void onPageSelected(int position) {
+                getSupportActionBar().setShowHideAnimationEnabled(false);
                 if (position == 0) {
                     CardsFragment.mViewPager.setCurrentItem(nested_position);
                     getSupportActionBar().show();
@@ -580,7 +582,7 @@ public class CardsActivity extends NfcActivity {
     @Override
     public void onResume() {
         super.onResume();
-
+        getSupportActionBar().setShowHideAnimationEnabled(false);
         if (!done) {
             NdefMessage[] msgs = null;
 
@@ -680,7 +682,7 @@ public class CardsActivity extends NfcActivity {
     public void onNewIntent(final Intent paramIntent) {
         super.onNewIntent(paramIntent);
 
-
+        getSupportActionBar().setShowHideAnimationEnabled(false);
         Tag tag = paramIntent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
         if(tag == null){
             Toast.makeText(getApplicationContext(), "tag == null", Toast.LENGTH_LONG).show();

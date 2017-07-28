@@ -38,6 +38,7 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
       //  getActivity().requestWindowFeature(Window.FEATURE_NO_TITLE);
       //  ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
         imgProfileShare = (ImageView) view.findViewById(R.id.imgProfileShare);
 
         imgProfileShare.setOnClickListener(new View.OnClickListener() {

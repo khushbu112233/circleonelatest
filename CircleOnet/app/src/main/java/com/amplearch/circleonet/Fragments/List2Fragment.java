@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -76,7 +77,7 @@ public class List2Fragment extends Fragment
         for (NFCModel tag : allTags) {
             imgf.add(tag.getCard_front());
         }*/
-
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
         db = new DatabaseHelper(getContext());
         gridView = (GridView) view.findViewById(R.id.gridView);
         searchText = (AutoCompleteTextView)view.findViewById(R.id.searchView);
