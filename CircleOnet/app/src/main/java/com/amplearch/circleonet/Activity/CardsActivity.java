@@ -1,15 +1,22 @@
 package com.amplearch.circleonet.Activity;
 
 import android.app.Dialog;
+import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
+import android.nfc.NfcManager;
 import android.nfc.Tag;
 import android.os.AsyncTask;
+import android.os.Parcelable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -75,6 +82,9 @@ public class CardsActivity extends NfcActivity {
     private Date location;
     private int currentPage;
     int cardCount = 0 ;
+    private NfcAdapter mNfcAdapter;
+    Tag tag;
+    boolean done = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +102,17 @@ public class CardsActivity extends NfcActivity {
             nested_position = extras.getInt("nested_viewpager_position");
         }
 
+        mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        NfcManager manager = (NfcManager) getSystemService(Context.NFC_SERVICE);
 
+        if (mNfcAdapter == null || mNfcAdapter.isEnabled()== false) {
+            // adapter exists and is enabled.
+            //txtMessage.setVisibility(View.VISIBLE);
+        }
+        else {
+           // txtMessage.setVisibility(View.GONE);
+            // handleIntent(getIntent());
+        }
         new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
        // mViewPager.setOverScrollMode(View.OVER_SCROLL_NEVER);
        /* mViewPager.setPageTransformer(true, new ViewPager.PageTransformer() {
@@ -554,6 +574,99 @@ public class CardsActivity extends NfcActivity {
             hexChars[j * 2 + 1] = hexArray[v & 0x0F];
         }
         return new String(hexChars);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (!done) {
+            NdefMessage[] msgs = null;
+
+            if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
+                Parcelable[] rawMsgs = getIntent().getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+                if (rawMsgs != null) {
+                    msgs = new NdefMessage[rawMsgs.length];
+                    for (int i = 0; i < rawMsgs.length; i++) {
+                        msgs[i] = (NdefMessage) rawMsgs[i];
+                    }
+
+                    byte[] payload = msgs[0].getRecords()[0].getPayload();
+
+                    String message = new String(payload);
+                /* 把tag的資訊放到textview裡面 */
+                    // mEtMessage.setText(new String(payload));
+                    done = true;
+                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                    message = message.substring(1, message.length());
+                    Boolean aBoolean = db.verification(message);
+                    if (aBoolean == true) {
+                        Toast.makeText(getApplicationContext(), "Already Activated", Toast.LENGTH_LONG).show();
+                    } else {
+                        Date date = new Date();
+                        String stringDate = DateFormat.getDateTimeInstance().format(date);
+                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        String date1 = format.format(Date.parse(stringDate));
+
+                        int i = db.makeCardActive(message, date1);
+                        if (i == 1) {
+                            Toast.makeText(getApplicationContext(), "Contact Added", Toast.LENGTH_LONG).show();
+                            try {
+                                List2Fragment.gridAdapter.notifyDataSetChanged();
+                                List2Fragment.allTags = db.getActiveNFC();
+                                List2Fragment.nfcModel.clear();
+                                //  nfcModelList.clear();
+                                List2Fragment.GetData(getApplicationContext());
+                            } catch (Exception e) {
+
+                            }
+
+                            try {
+                                List3Fragment.gridAdapter.notifyDataSetChanged();
+                                List3Fragment.allTags = db.getActiveNFC();
+                                List3Fragment.nfcModel.clear();
+                                //  nfcModelList.clear();
+                                List3Fragment.GetData(getApplicationContext());
+                            } catch (Exception e) {
+
+                            }
+                            try {
+                                List4Fragment.gridAdapter.notifyDataSetChanged();
+                                List4Fragment.allTags = db.getActiveNFC();
+                                List4Fragment.nfcModel.clear();
+                                //  nfcModelList.clear();
+                                List4Fragment.GetData(getApplicationContext());
+                            } catch (Exception e) {
+
+                            }
+
+                            try {
+                                //List1Fragment.myPager.notifyDataSetChanged();
+                                List1Fragment.allTags = db.getActiveNFC();
+                                List1Fragment.nfcModel.clear();
+                                //  nfcModelList.clear();
+                                List1Fragment.GetData(getApplicationContext());
+                            } catch (Exception e) {
+
+                            }
+                        } else if (i == 11) {
+                            Toast.makeText(getApplicationContext(), "Data Does not exists in Database..", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
+            }
+
+            IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
+            IntentFilter ndefDetected = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
+            IntentFilter techDetected = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
+            IntentFilter[] nfcIntentFilter = new IntentFilter[]{techDetected, tagDetected, ndefDetected};
+
+            PendingIntent pendingIntent = PendingIntent.getActivity(
+                    this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+            if (mNfcAdapter != null)
+                mNfcAdapter.enableForegroundDispatch(this, pendingIntent, nfcIntentFilter, null);
+
+        }
     }
 
     /**

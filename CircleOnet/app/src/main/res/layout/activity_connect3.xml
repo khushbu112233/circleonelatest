@@ -79,6 +79,17 @@
                     android:src="@drawable/round3"
                     />
 
+                <TextView
+                    android:id="@+id/txtConnecting"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="50dp"
+                    android:textSize="20dp"
+                    android:layout_below="@+id/imgConnecting"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Connecting."/>
+
             </RelativeLayout>
 
 
