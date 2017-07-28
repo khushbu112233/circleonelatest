@@ -43,7 +43,7 @@ public class ConnectFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_connect, container, false);
 
      //   SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity().getSupportFragmentManager());
-
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
         // Set up the ViewPager with the sections adapter.
         mViewPager = (CustomViewPager) view.findViewById(R.id.container2);
        // mViewPager.setAdapter(mSectionsPagerAdapter);

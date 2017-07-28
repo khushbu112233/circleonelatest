@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -71,6 +72,7 @@ public class ConnectListFragment extends Fragment {
             designation.add(tag.getDesignation());
         }
 */
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
         listView = (ListView) view.findViewById(R.id.listViewType4);
 
         allTags = new ArrayList<>();

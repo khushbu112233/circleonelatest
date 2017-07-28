@@ -40,7 +40,7 @@ public class CardsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cards, container, false);
         SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity().getSupportFragmentManager());
-
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
         // Set up the ViewPager with the sections adapter.
         mViewPager = (CustomViewPager) view.findViewById(R.id.container1);
         mViewPager.setAdapter(mSectionsPagerAdapter);
