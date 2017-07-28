@@ -187,10 +187,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         {
             @Override
             public void onClick(DialogInterface dialog, int item) {
-                boolean result = Utility.checkPermission(RegisterActivity.this);
+                boolean result = Utility.checkStoragePermission(RegisterActivity.this);
+                boolean result1 = Utility.checkCameraPermission(RegisterActivity.this);
                 if (items[item].equals("Take Photo")) {
                     userChoosenTask ="Take Photo";
-                    if(result)
+                    if(result1)
 //                        activeTakePhoto();
                         cameraIntent();
 
