@@ -3,6 +3,7 @@ package com.amplearch.circleonet.Activity;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,12 +19,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.DragEvent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.amplearch.circleonet.R;
@@ -76,12 +82,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 {
     public static EditText etUserName, etFirstName, etLastName, etPassword, etConfirmPass, etPhone, etEmail, etDOB, etAddress;
     private LinearLayout lnrRegister;
-    private ImageView ivMale, ivFemale, ivConnect ;
+    private ImageView ivConnect ;
     private View line_view1, line_view2 ;
-
+    private RelativeLayout rlGenderLayout ;
+    ImageView ivMaleRound, ivMaleImg, ivFemaleround, ivFemaleImg, imgBack;
     private String UrlRegister = "http://circle8.asia:8081/Onet.svc/Registration";
     private ArrayList<NameValuePair> params ;
-
+    RelativeLayout ivMale, ivFemale;
     private CircleImageView civProfilePic ;
     private String userChoosenTask ;
     CharSequence[] items ;
@@ -95,6 +102,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private Calendar calendar ;
     private DatePickerDialog datePickerDialog ;
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+    private int total , failure = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -113,13 +122,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         etDOB = (EditText) findViewById(R.id.etDOB);
         etAddress = (EditText) findViewById(R.id.etAddress);
 
-        ivMale = (ImageView)findViewById(R.id.ivMale);
-        ivFemale = (ImageView)findViewById(R.id.ivFemale);
+        ivMaleRound = (ImageView) findViewById(R.id.ivMaleRound);
+        ivMaleImg = (ImageView) findViewById(R.id.ivMaleImg);
+        ivFemaleround = (ImageView) findViewById(R.id.ivFemaleround);
+        ivFemaleImg = (ImageView) findViewById(R.id.ivFemaleImg);
+
+        ivMale = (RelativeLayout) findViewById(R.id.ivMale);
+        ivFemale = (RelativeLayout) findViewById(R.id.ivFemale);
         ivConnect = (ImageView)findViewById(R.id.iv_ConnectImg);
         line_view1 = (View)findViewById(R.id.vwDrag1);
         line_view2 = (View)findViewById(R.id.vwDrag2);
 
         civProfilePic =(CircleImageView)findViewById(R.id.imgProfileCard);
+        rlGenderLayout = (RelativeLayout)findViewById(R.id.rlGenderLayout);
 
         ivMale.setOnClickListener(this);
         ivFemale.setOnClickListener(this);
@@ -127,6 +142,60 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         lnrRegister.setOnClickListener(this);
         civProfilePic.setOnClickListener(this);
         etDOB.setOnClickListener(this);
+
+//        ivConnect.setOnDragListener(new View.OnDragListener()
+//        {
+//            @Override
+//            public boolean onDrag(View v, DragEvent event)
+//            {
+//                final int action = event.getAction();
+//                switch(action)
+//                {
+//                    case DragEvent.ACTION_DRAG_STARTED:
+//                        ivFemaleImg.setImageResource(R.drawable.ic_female_gray);
+//                        ivFemaleround.setImageResource(R.drawable.round_gray);
+//                        break;
+//
+//                    case DragEvent.ACTION_DRAG_EXITED:
+//                        break;
+//
+//                    case DragEvent.ACTION_DRAG_ENTERED:
+//                        break;
+//
+//                    case DragEvent.ACTION_DROP:
+//                    {
+//                        failure = failure+1;
+//                        return(true);
+//                    }
+//
+//                    case DragEvent.ACTION_DRAG_ENDED:
+//                    {
+//                        ivMaleImg.setImageResource(R.drawable.ic_male_gray);
+//                        ivMaleRound.setImageResource(R.drawable.round_gray);
+//                        total = total +1;
+//                        int suc = total - failure;
+//                        return(true);
+//                    }
+//
+//                    default:
+//                        break;
+//                }
+//                return true;
+//
+//            }
+//        });
+
+//        ivConnect.setOnTouchListener(new View.OnTouchListener() {
+//
+//            @Override
+//            public boolean onTouch(View v, MotionEvent arg1) {
+//                // TODO Auto-generated method stub
+//                ClipData data = ClipData.newPlainText("", "");
+//                View.DragShadowBuilder shadow = new View.DragShadowBuilder(ivConnect);
+//                v.startDrag(data, shadow, null, 0);
+//                return false;
+//            }
+//        });
     }
 
     @Override
@@ -144,13 +213,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 public void run()
                 {
                     line_view2.setBackgroundColor(getResources().getColor(R.color.unselected));
-                    ivFemale.setImageResource(R.drawable.ic_female_gray);
+                    ivFemaleImg.setImageResource(R.drawable.ic_female_gray);
+                    ivFemaleround.setImageResource(R.drawable.round_gray);
                 }
             },1100);
             //second things
             line_view1.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-            ivMale.setImageResource(R.drawable.ic_male);
-
+            ivMaleImg.setImageResource(R.drawable.ic_male);
+            ivMaleRound.setImageResource(R.drawable.round_blue);
             gender = "Male" ;
         }
         if( v == ivFemale)
@@ -165,13 +235,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 public void run()
                 {
                     line_view1.setBackgroundColor(getResources().getColor(R.color.unselected));
-                    ivMale.setImageResource(R.drawable.ic_male_gray);
+                    ivMaleImg.setImageResource(R.drawable.ic_male_gray);
+                    ivMaleRound.setImageResource(R.drawable.round_gray);
                 }
             },1100);
             //second things
             line_view2.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-            ivFemale.setImageResource(R.drawable.ic_female);
-
+            ivFemaleImg.setImageResource(R.drawable.ic_female);
+            ivFemaleround.setImageResource(R.drawable.round_blue);
             gender = "Female" ;
 
         }
@@ -250,11 +321,25 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                 catch (ParseException e)
                                 {
                                     e.printStackTrace();
-                                }
+                            }
                         }
-                    }, mYear, mMonth, mDay);
-            datePickerDialog.show();
+            }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+    }
+        if( v == ivConnect)
+        {
+//            Animation an = new RotateAnimation(30, 360);
+//
+//            // Set the animation's parameters
+//            an.setDuration(2000);               // duration in ms
+//            an.setRepeatCount(0);                // -1 = infinite repeated
+//            an.setRepeatMode(Animation.REVERSE); // reverses each repeat
+//            an.setFillAfter(true);               // keep rotation after animation
+//
+//            // Aply animation to image view
+//            ivConnect.setAnimation(an);
         }
+
     }
 
     public boolean date_validation(String d1,String d2)
