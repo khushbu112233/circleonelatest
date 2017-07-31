@@ -16,7 +16,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amplearch.circleonet.R;
@@ -32,13 +35,18 @@ import static android.Manifest.permission.GET_ACCOUNTS;
 import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-public class ConnectActivity extends AppCompatActivity {
-
+public class ConnectActivity extends AppCompatActivity
+{
     private ImageView imgBack, imgCards, imgConnect, imgEvents, imgProfile, imgConnecting;
     private static final int PERMISSION_REQUEST_CODE = 200;
 
+    private ImageView ivConnectImg, ivAddRound, ivConnectRound ;
+    private TextView tvAdd, tvConnect, tvConnectLine1, tvConnectLine2 ;
+    private RelativeLayout rlAdd, rlConnect ;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connect2);
 
@@ -47,7 +55,69 @@ public class ConnectActivity extends AppCompatActivity {
         imgConnect = (ImageView) findViewById(R.id.imgConnect);
         imgEvents = (ImageView) findViewById(R.id.imgEvents);
         imgProfile = (ImageView) findViewById(R.id.imgProfile);
-        imgConnecting = (ImageView) findViewById(R.id.fab);
+//        imgConnecting = (ImageView) findViewById(R.id.fab);
+
+        ivConnectImg = (ImageView)findViewById(R.id.iv_ConnectImg);
+        ivAddRound = (ImageView)findViewById(R.id.ivAddRound);
+        ivConnectRound = (ImageView)findViewById(R.id.ivConnectRound);
+
+        tvAdd = (TextView)findViewById(R.id.tvAdd);
+        tvConnect = (TextView)findViewById(R.id.tvConnect);
+        tvConnectLine1 = (TextView)findViewById(R.id.tvConnectLine1);
+        tvConnectLine2 = (TextView)findViewById(R.id.tvConnectLine2);
+
+        rlAdd = (RelativeLayout)findViewById(R.id.rlAdd);
+        rlConnect = (RelativeLayout)findViewById(R.id.rlConnect);
+
+        rlAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                TranslateAnimation slide1 = new TranslateAnimation(0, -170, 0,0 );
+                slide1.setDuration(1000);
+                ivConnectImg.startAnimation(slide1);
+
+                //first things
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run()
+                    {
+                        ivConnectRound.setImageResource(R.drawable.round_gray);
+                        tvConnect.setTextColor(getResources().getColor(R.color.unselected));
+                        tvConnectLine2.setTextColor(getResources().getColor(R.color.unselected));
+                    }
+                },1100);
+                // Second Things
+                ivAddRound.setImageResource(R.drawable.round_blue);
+                tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
+                tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
+            }
+        });
+
+        rlConnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                TranslateAnimation slide1 = new TranslateAnimation(0, 170, 0,0 );
+                slide1.setDuration(1000);
+                ivConnectImg.startAnimation(slide1);
+
+                //first things
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run()
+                    {
+                        ivAddRound.setImageResource(R.drawable.round_gray);
+                        tvAdd.setTextColor(getResources().getColor(R.color.unselected));
+                        tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
+                    }
+                },1100);
+                // Second Things
+                ivConnectRound.setImageResource(R.drawable.round_blue);
+                tvConnect.setTextColor(getResources().getColor(R.color.colorPrimary));
+                tvConnectLine2.setTextColor(getResources().getColor(R.color.colorPrimary));
+            }
+        });
 
         boolean result = Utility.checkStoragePermission(ConnectActivity.this);
         if (result) {
@@ -68,19 +138,19 @@ public class ConnectActivity extends AppCompatActivity {
             }
         });
 
-        imgConnecting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent go = new Intent(getApplicationContext(),Connect3Activity.class);
-
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-
-                startActivity(go);
-                finish();
-            }
-        });
+//        imgConnecting.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent go = new Intent(getApplicationContext(),Connect3Activity.class);
+//
+//                // you pass the position you want the viewpager to show in the extra,
+//                // please don't forget to define and initialize the position variable
+//                // properly
+//
+//                startActivity(go);
+//                finish();
+//            }
+//        });
 
         imgCards.setOnClickListener(new View.OnClickListener() {
             @Override

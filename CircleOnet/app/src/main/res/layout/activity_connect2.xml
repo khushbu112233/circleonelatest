@@ -148,6 +148,7 @@
                 android:background="#38c0c7"
                 android:layout_marginTop="5dp" />
 
+<!--
             <LinearLayout
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
@@ -183,58 +184,230 @@
                     android:layout_height="30dp"
                     android:src="@drawable/icon_utube_gray"/>
             </LinearLayout>
+-->
 
-            <ImageView
-                android:id="@+id/fab"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-                android:padding="0dp"
-                android:src="@drawable/ic_connect"
-                android:background="@android:color/white"
-                android:layout_below="@+id/breakLine"
-                android:layout_centerHorizontal="true"
-                android:layout_marginRight="0dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"/>
-
-            <TextView
-                android:layout_toLeftOf="@+id/fab"
-                android:id="@+id/breakLine1"
-                android:layout_below="@+id/llSocial"
+            <RelativeLayout
+                android:id="@+id/rlSocial"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#38c0c7"
-                android:layout_marginTop="0dp" />
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/breakLine">
 
-            <TextView
-                android:layout_toRightOf="@+id/fab"
-                android:id="@+id/breakLine5"
-                android:layout_below="@+id/llSocial"
-                android:layout_width="155dp"
-                android:layout_height="1dp"
-                android:background="#38c0c7"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="0dp" />
+                <RelativeLayout
+                    android:id="@+id/rlAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/tvConnectLine1">
+                    <ImageView
+                        android:id="@+id/ivAddRound"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/round_blue"
+                        android:layout_centerInParent="true" />
+                    <TextView
+                        android:id="@+id/tvAdd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add"
+                        android:textSize="10dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimary"
+                        android:layout_centerInParent="true" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tvConnectLine1"
+                    android:layout_width="wrap_content"
+                    android:layout_toLeftOf="@+id/iv_ConnectImg"
+                    android:layout_height="wrap_content"
+                    android:text=". . . . . ."
+                    android:textStyle="bold"
+                    android:textColor="@color/colorAccent"
+                    android:layout_centerVertical="true"/>
+
+                <ImageView
+                    android:id="@+id/iv_ConnectImg"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="0dp"
+                    android:src="@drawable/ic_connect"
+                    android:background="@android:color/white"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/tvConnectLine2"
+                    android:layout_width="wrap_content"
+                    android:layout_toRightOf="@+id/iv_ConnectImg"
+                    android:layout_height="wrap_content"
+                    android:text=". . . . . ."
+                    android:textStyle="bold"
+                    android:textColor="@color/colorAccent"
+                    android:layout_centerVertical="true"/>
+
+                <RelativeLayout
+                    android:id="@+id/rlConnect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tvConnectLine2">
+                    <ImageView
+                        android:id="@+id/ivConnectRound"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/round_blue"
+                        android:layout_centerInParent="true" />
+                    <TextView
+                        android:id="@+id/tvConnect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Connect"
+                        android:textSize="9dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimary"
+                        android:layout_centerInParent="true" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_toRightOf="@+id/rlConnect"
+                    android:layout_height="1dp"
+                    android:textStyle="bold"
+                    android:background="@color/colorAccent"
+                    android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_toLeftOf="@+id/rlAdd"
+                    android:layout_height="1dp"
+                    android:textStyle="bold"
+                    android:background="@color/colorAccent"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:background="@color/white"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                android:id="@+id/lnrTag"
+                android:layout_below="@+id/rlSocial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:id="@+id/img2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignTop="@+id/txt1"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/ic_tag1" />
+
+                <TextView
+                    android:layout_toRightOf="@+id/img2"
+                    android:id="@+id/txt1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="8dp"
+                    android:text="Group Tag 1"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:id="@+id/imgTag2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignTop="@+id/txt1"
+                    android:layout_marginRight="5dp"
+                    android:layout_toRightOf="@+id/txt1"
+                    android:src="@drawable/ic_tag2" />
+
+                <TextView
+                    android:id="@+id/txtTag2"
+                    android:layout_toRightOf="@+id/imgTag2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="8dp"
+                    android:text="Group Tag 2"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:id="@+id/imgTag3"
+                    android:layout_toRightOf="@+id/txtTag2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignTop="@+id/txt1"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/ic_tag3" />
+
+                <TextView
+                    android:layout_toLeftOf="@+id/img1"
+                    android:layout_toRightOf="@+id/imgTag3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="8dp"
+                    android:text="Group Tag 3"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/img1"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="right"
+                    android:src="@drawable/ic_edit" />
+
+            </RelativeLayout>
+
+            <!--<TextView-->
+                <!--android:id="@+id/breakLine1"-->
+                <!--android:layout_below="@+id/rlSocial"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:background="#38c0c7"-->
+                <!--android:layout_marginTop="0dp" />-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/breakLine5"-->
+                <!--android:layout_below="@+id/rlSocial"-->
+                <!--android:layout_width="155dp"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:background="#38c0c7"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_marginTop="0dp" />-->
 
 
+<!--
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_below="@+id/breakLine1"
+                android:layout_below="@+id/rlSocial"
                 android:layout_alignParentLeft="true"
                 android:gravity="center"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="10dp">
-
-<!--
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:src="@drawable/ic_18_1"
                     />
--->
-              <!--  <TextView
+               <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Group Tag"
@@ -245,21 +418,20 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/play"/>
--->
+                    android:src="@drawable/play"/
             </LinearLayout>
+-->
 
             <LinearLayout
                 android:id="@+id/llContact"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/breakLine1"
+                android:layout_below="@+id/lnrTag"
                 android:layout_marginTop="5dp"
                 android:orientation="vertical"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp">
                 <RelativeLayout
-                    android:gravity="center"
                     android:layout_marginRight="15dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
@@ -268,40 +440,40 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"
                         android:textColor="@android:color/black"
                         android:textSize="15sp"
                         android:text="Contact Info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-                    <ImageView
-                        android:layout_marginRight="5dp"
-                        android:id="@+id/img2"
-                        android:src="@drawable/ic_tag1"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_alignTop="@+id/txt1"
-                        android:layout_toLeftOf="@+id/txt1"
-                        android:layout_toStartOf="@+id/txt1" />
+                    <!--<ImageView-->
+                        <!--android:layout_marginRight="5dp"-->
+                        <!--android:id="@+id/img2"-->
+                        <!--android:src="@drawable/ic_tag1"-->
+                        <!--android:layout_width="20dp"-->
+                        <!--android:layout_height="20dp"-->
+                        <!--android:layout_alignTop="@+id/txt1"-->
+                        <!--android:layout_toLeftOf="@+id/txt1"-->
+                        <!--android:layout_toStartOf="@+id/txt1" />-->
 
-                    <TextView
-                        android:id="@+id/txt1"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="10dp"
-                        android:layout_toLeftOf="@+id/img1"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="13sp"
-                        android:text="Group Tag 1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                    <!--<TextView-->
+                        <!--android:id="@+id/txt1"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:layout_marginRight="10dp"-->
+                        <!--android:layout_toLeftOf="@+id/img1"-->
+                        <!--android:textColor="@color/colorPrimary"-->
+                        <!--android:textSize="13sp"-->
+                        <!--android:text="Group Tag 1"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content" />-->
 
-                    <ImageView
-                        android:id="@+id/img1"
-                        android:layout_alignParentRight="true"
-                        android:src="@drawable/ic_edit"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp" />
+                    <!--<ImageView-->
+                        <!--android:id="@+id/img1"-->
+                        <!--android:layout_alignParentRight="true"-->
+                        <!--android:src="@drawable/ic_edit"-->
+                        <!--android:layout_width="20dp"-->
+                        <!--android:layout_height="20dp" />-->
 
                 </RelativeLayout>
 
