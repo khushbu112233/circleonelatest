@@ -221,7 +221,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_CARD_FRONT, R.drawable.card_final1f);
         values.put(KEY_CARD_BACK, R.drawable.card_final1b);
         values.put(KEY_ACTIVE, "true");
-        values.put(KEY_NFC_TAG, "en000000001");
+        values.put(KEY_NFC_TAG, "en100000001");
         values.put(KEY_USER_IMG, R.drawable.profile_final1);
         values.put(KEY_DATE, "2017-07-15 10:42:38");
         db.insert(TABLE_NFC, null, values);
@@ -246,7 +246,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_CARD_FRONT, R.drawable.profile_final2f);
         values.put(KEY_CARD_BACK, R.drawable.profile_final2b);
         values.put(KEY_ACTIVE, "true");
-        values.put(KEY_NFC_TAG, "en000000002");
+        values.put(KEY_NFC_TAG, "en100000002");
         values.put(KEY_USER_IMG, R.drawable.final_profile2_7);
         values.put(KEY_DATE, "2017-07-14 12:42:38");
         db.insert(TABLE_NFC, null, values);
@@ -271,7 +271,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_CARD_FRONT, R.drawable.profile_final3f);
         values.put(KEY_CARD_BACK, R.drawable.profile_final3b);
         values.put(KEY_ACTIVE, "false");
-        values.put(KEY_NFC_TAG, "en000000003");
+        values.put(KEY_NFC_TAG, "en100000003");
         values.put(KEY_USER_IMG, R.drawable.final_profile3_9);
         values.put(KEY_DATE, "2017-07-13 12:42:38");
         db.insert(TABLE_NFC, null, values);
@@ -296,7 +296,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_CARD_FRONT, R.drawable.profile_final4f);
         values.put(KEY_CARD_BACK, R.drawable.profile_final4b);
         values.put(KEY_ACTIVE, "true");
-        values.put(KEY_NFC_TAG, "en000000004");
+        values.put(KEY_NFC_TAG, "en000000001");
         values.put(KEY_USER_IMG, R.drawable.final_profile4);
         values.put(KEY_DATE, "2017-07-12 12:42:38");
         db.insert(TABLE_NFC, null, values);
@@ -322,7 +322,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_CARD_FRONT, R.drawable.profile_final5f);
         values.put(KEY_CARD_BACK, R.drawable.profile_final4b);
         values.put(KEY_ACTIVE, "true");
-        values.put(KEY_NFC_TAG, "en000000005");
+        values.put(KEY_NFC_TAG, "en000000002");
         values.put(KEY_USER_IMG, R.drawable.final_profile5);
         values.put(KEY_DATE, "2017-07-11 12:42:38");
         db.insert(TABLE_NFC, null, values);
@@ -347,7 +347,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_CARD_FRONT, R.drawable.profile_final6f);
         values.put(KEY_CARD_BACK, R.drawable.profile_final4b);
         values.put(KEY_ACTIVE, "true");
-        values.put(KEY_NFC_TAG, "en000000006");
+        values.put(KEY_NFC_TAG, "en000000003");
         values.put(KEY_USER_IMG, R.drawable.final_profile6);
         values.put(KEY_DATE, "2017-07-10 12:42:38");
         db.insert(TABLE_NFC, null, values);
@@ -373,7 +373,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_CARD_FRONT, R.drawable.profile_final7f);
         values.put(KEY_CARD_BACK, R.drawable.profile_final4b);
         values.put(KEY_ACTIVE, "true");
-        values.put(KEY_NFC_TAG, "en000000007");
+        values.put(KEY_NFC_TAG, "en000000004");
         values.put(KEY_USER_IMG, R.drawable.final_profile2_7);
         values.put(KEY_DATE, "2017-07-09 12:42:38");
         db.insert(TABLE_NFC, null, values);
@@ -398,7 +398,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_CARD_FRONT, R.drawable.profile_final8f);
         values.put(KEY_CARD_BACK, R.drawable.profile_final4b);
         values.put(KEY_ACTIVE, "true");
-        values.put(KEY_NFC_TAG, "en000000008");
+        values.put(KEY_NFC_TAG, "en000000005");
         values.put(KEY_USER_IMG, R.drawable.final_profile1_8);
         values.put(KEY_DATE, "2017-07-08 12:42:38");
         db.insert(TABLE_NFC, null, values);
@@ -423,7 +423,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_CARD_FRONT, R.drawable.profile_final9f);
         values.put(KEY_CARD_BACK, R.drawable.profile_final4b);
         values.put(KEY_ACTIVE, "true");
-        values.put(KEY_NFC_TAG, "en000000009");
+        values.put(KEY_NFC_TAG, "en000000006");
         values.put(KEY_USER_IMG, R.drawable.final_profile3_9);
         values.put(KEY_DATE, "2017-07-07 12:42:38");
         db.insert(TABLE_NFC, null, values);
@@ -448,7 +448,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_CARD_FRONT, R.drawable.profile_final10f);
         values.put(KEY_CARD_BACK, R.drawable.profile_final4b);
         values.put(KEY_ACTIVE, "true");
-        values.put(KEY_NFC_TAG, "en0000000010");
+        values.put(KEY_NFC_TAG, "en000000007");
         values.put(KEY_USER_IMG, R.drawable.final_profile9);
         values.put(KEY_DATE, "2017-07-06 12:42:38");
         db.insert(TABLE_NFC, null, values);
@@ -473,7 +473,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_CARD_FRONT, R.drawable.profile_final11f);
         values.put(KEY_CARD_BACK, R.drawable.profile_final4b);
         values.put(KEY_ACTIVE, "true");
-        values.put(KEY_NFC_TAG, "en0000000011");
+        values.put(KEY_NFC_TAG, "en000000008");
         values.put(KEY_USER_IMG, R.drawable.final_profile10);
         values.put(KEY_DATE, "2017-07-05 12:42:38");
         db.insert(TABLE_NFC, null, values);
@@ -498,7 +498,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_CARD_FRONT, R.drawable.profile_final12f);
         values.put(KEY_CARD_BACK, R.drawable.profile_final4b);
         values.put(KEY_ACTIVE, "true");
-        values.put(KEY_NFC_TAG, "en0000000012");
+        values.put(KEY_NFC_TAG, "en000000009");
         values.put(KEY_USER_IMG, R.drawable.final_profile11);
         values.put(KEY_DATE, "2017-07-04 12:42:38");
         db.insert(TABLE_NFC, null, values);
@@ -523,7 +523,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_CARD_FRONT, R.drawable.profile_final13f);
         values.put(KEY_CARD_BACK, R.drawable.profile_final4b);
         values.put(KEY_ACTIVE, "true");
-        values.put(KEY_NFC_TAG, "en0000000013");
+        values.put(KEY_NFC_TAG, "en0000000010");
         values.put(KEY_USER_IMG, R.drawable.final_profile12);
         values.put(KEY_DATE, "2017-07-03 12:42:38");
         db.insert(TABLE_NFC, null, values);
@@ -548,7 +548,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_CARD_FRONT, R.drawable.profile_final14f);
         values.put(KEY_CARD_BACK, R.drawable.profile_final4b);
         values.put(KEY_ACTIVE, "true");
-        values.put(KEY_NFC_TAG, "en0000000014");
+        values.put(KEY_NFC_TAG, "en0000000011");
         values.put(KEY_USER_IMG, R.drawable.final_profile13);
         values.put(KEY_DATE, "2017-07-02 12:42:38");
         db.insert(TABLE_NFC, null, values);
@@ -573,7 +573,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_CARD_FRONT, R.drawable.profile_final15f);
         values.put(KEY_CARD_BACK, R.drawable.profile_final4b);
         values.put(KEY_ACTIVE, "true");
-        values.put(KEY_NFC_TAG, "en0000000015");
+        values.put(KEY_NFC_TAG, "en0000000012");
         values.put(KEY_USER_IMG, R.drawable.final_profile14);
         values.put(KEY_DATE, "2017-07-01 12:42:38");
         db.insert(TABLE_NFC, null, values);
