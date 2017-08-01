@@ -1,10 +1,13 @@
 package com.amplearch.circleonet.Fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
@@ -13,16 +16,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amplearch.circleonet.R;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment
+{
 
     ImageView imgProfileShare, imgProfileMenu;
+    TextView tvPersonName ;
+    public final static int QRcodeWidth = 500 ;
+    Bitmap bitmap ;
+    ProgressDialog progressDialog ;
+
+
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -35,13 +51,15 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
       //  getActivity().requestWindowFeature(Window.FEATURE_NO_TITLE);
       //  ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
+
+        tvPersonName = (TextView)view.findViewById(R.id.tvPersonName);
         imgProfileShare = (ImageView) view.findViewById(R.id.imgProfileShare);
         imgProfileMenu = (ImageView) view.findViewById(R.id.imgProfileMenu);
         imgProfileShare.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +92,81 @@ public class ProfileFragment extends Fragment {
                 popup.show();//showing popup men
         }
         });
+
+        tvPersonName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setMessage("Generating Qr Code...");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+
+                String barName = "Westley Wan";
+                try
+                {
+                    bitmap = TextToImageEncode(barName);
+                }
+                catch (WriterException e) {
+                    e.printStackTrace();
+                }
+
+                AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+//        alertDialog.setTitle("Cash Assets:");
+                LayoutInflater inflater = getActivity().getLayoutInflater();
+                final View dialogView = inflater.inflate(R.layout.person_qrcode, null);
+
+                TextView tvBarName = (TextView)dialogView.findViewById(R.id.tvBarName);
+                ImageView ivBarImage = (ImageView)dialogView.findViewById(R.id.ivBarImage);
+
+                tvBarName.setText(barName);
+                ivBarImage.setImageBitmap(bitmap);
+
+                alertDialog.setView(dialogView);
+                alertDialog.show();
+
+                progressDialog.dismiss();
+            }
+        });
         return view;
+    }
+
+    Bitmap TextToImageEncode(String Value) throws WriterException
+    {
+
+
+        BitMatrix bitMatrix;
+        try
+        {
+            bitMatrix = new MultiFormatWriter().encode(
+                    Value,
+                    BarcodeFormat.DATA_MATRIX.QR_CODE,
+                    QRcodeWidth, QRcodeWidth, null  );
+
+        } catch (IllegalArgumentException Illegalargumentexception) {
+
+            return null;
+        }
+        int bitMatrixWidth = bitMatrix.getWidth();
+
+        int bitMatrixHeight = bitMatrix.getHeight();
+
+        int[] pixels = new int[bitMatrixWidth * bitMatrixHeight];
+
+        for (int y = 0; y < bitMatrixHeight; y++) {
+            int offset = y * bitMatrixWidth;
+
+            for (int x = 0; x < bitMatrixWidth; x++) {
+
+                pixels[offset + x] = bitMatrix.get(x, y) ?
+                        getResources().getColor(R.color.QRCodeBlackColor):getResources().getColor(R.color.QRCodeWhiteColor);
+            }
+        }
+        Bitmap bitmap = Bitmap.createBitmap(bitMatrixWidth, bitMatrixHeight, Bitmap.Config.ARGB_4444);
+
+        bitmap.setPixels(pixels, 0, 500, 0, 0, bitMatrixWidth, bitMatrixHeight);
+
+        return bitmap;
     }
 
    /* @Override

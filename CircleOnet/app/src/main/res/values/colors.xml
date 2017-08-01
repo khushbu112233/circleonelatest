@@ -8,4 +8,7 @@
     <color name="white">#ffffff</color>
     <color name="unselected">#8f9194</color>
 
+    <color name="QRCodeWhiteColor">#ffffff</color>
+    <color name="QRCodeBlackColor">#000000</color>
+
 </resources>

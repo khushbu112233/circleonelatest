@@ -27,53 +27,53 @@ public class DatabaseHelper extends SQLiteOpenHelper
 {
 
     Context context;
-	// Logcat tag
-	private static final String LOG = "DatabaseHelper";
-	// Database Version
-	private static final int DATABASE_VERSION = 1;
-	// Database Name
-	private static final String DATABASE_NAME = "CircleOneDatabase";
-	// Table Names
-	private static final String TABLE_NFC = "nfc_data";
+    // Logcat tag
+    private static final String LOG = "DatabaseHelper";
+    // Database Version
+    private static final int DATABASE_VERSION = 1;
+    // Database Name
+    private static final String DATABASE_NAME = "CircleOneDatabase";
+    // Table Names
+    private static final String TABLE_NFC = "nfc_data";
 
-	private static final String KEY_ID = "id";
-	private static final String KEY_NAME = "name";
-	private static final String KEY_COMPANY = "company";
-	private static final String KEY_DESIGNATION = "designation";
-	private static final String KEY_MOB = "mob_no";
-	private static final String KEY_WORK = "work_no";
-	private static final String KEY_PH = "ph_no";
-	private static final String KEY_EMAIL = "email";
-	private static final String KEY_WEBSITE = "website";
-	private static final String KEY_ADDRESS = "address";
-	private static final String KEY_LAT = "lat";
-	private static final String KEY_LNG = "lng";
-	private static final String KEY_REMARK = "remark";
+    private static final String KEY_ID = "id";
+    private static final String KEY_NAME = "name";
+    private static final String KEY_COMPANY = "company";
+    private static final String KEY_DESIGNATION = "designation";
+    private static final String KEY_MOB = "mob_no";
+    private static final String KEY_WORK = "work_no";
+    private static final String KEY_PH = "ph_no";
+    private static final String KEY_EMAIL = "email";
+    private static final String KEY_WEBSITE = "website";
+    private static final String KEY_ADDRESS = "address";
+    private static final String KEY_LAT = "lat";
+    private static final String KEY_LNG = "lng";
+    private static final String KEY_REMARK = "remark";
     private static final String KEY_FACEBOOK_ID = "fb_id";
     private static final String KEY_LINKEDIN_ID = "linkedin_id";
     private static final String KEY_GOOGLE_ID = "google_id";
     private static final String KEY_TWITTER_ID = "twitter_id";
     private static final String KEY_YOUTUBE_ID = "youtube_id";
     private static final String KEY_CARD_FRONT = "card_front";
-	private static final String KEY_CARD_BACK = "card_back";
+    private static final String KEY_CARD_BACK = "card_back";
     private static final String KEY_ACTIVE = "active";
     private static final String KEY_NFC_TAG = "nfc_tag";
     private static final String KEY_USER_IMG = "user_image";
     private static final String KEY_DATE = "date";
 
-	private static final String CREATE_TABLE_NFC = "CREATE TABLE "
-			+ TABLE_NFC
-			+ "("
-			+ KEY_ID + " INTEGER PRIMARY KEY,"
+    private static final String CREATE_TABLE_NFC = "CREATE TABLE "
+            + TABLE_NFC
+            + "("
+            + KEY_ID + " INTEGER PRIMARY KEY,"
             + KEY_NAME + " TEXT,"
-			+ KEY_COMPANY + " TEXT,"
-			+ KEY_DESIGNATION + " TEXT,"
-			+ KEY_MOB + " TEXT,"
+            + KEY_COMPANY + " TEXT,"
+            + KEY_DESIGNATION + " TEXT,"
+            + KEY_MOB + " TEXT,"
             + KEY_WORK + " TEXT,"
-			+ KEY_PH + " TEXT,"
-			+ KEY_EMAIL + " TEXT,"
-			+ KEY_WEBSITE + " TEXT,"
-			+ KEY_ADDRESS + " TEXT,"
+            + KEY_PH + " TEXT,"
+            + KEY_EMAIL + " TEXT,"
+            + KEY_WEBSITE + " TEXT,"
+            + KEY_ADDRESS + " TEXT,"
             + KEY_LAT + " TEXT,"
             + KEY_LNG + " TEXT,"
             + KEY_REMARK + " TEXT,"
@@ -88,12 +88,12 @@ public class DatabaseHelper extends SQLiteOpenHelper
             + KEY_NFC_TAG + " TEXT,"
             + KEY_USER_IMG + " INTEGER,"
             + KEY_DATE + " TEXT"
-			+ ")";
+            + ")";
 
-	public DatabaseHelper(Context context) {
-		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    public DatabaseHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
-	}
+    }
 
     public boolean deleteNFCbyID(String id)
     {
@@ -101,38 +101,38 @@ public class DatabaseHelper extends SQLiteOpenHelper
         return db.delete(TABLE_NFC, KEY_ID + "=" + id, null) > 0;
     }
 
-	public boolean verification(String id) throws SQLException
-	{
-		int count = -1;
-		Cursor c = null;
-		try {
-			String query = "SELECT COUNT(*) FROM " + TABLE_NFC + " WHERE " + KEY_NFC_TAG + " = ? AND " + KEY_ACTIVE +" = ?";
-			SQLiteDatabase db = this.getWritableDatabase();
-			c = db.rawQuery(query, new String[] {id, "true"});
-			if (c.moveToFirst())
-			{
-				count = c.getInt(0);
-			}
-			return count > 0;
-		}
-		finally {
-			if (c != null) {
-				c.close();
-			}
-		}
-	}
+    public boolean verification(String id) throws SQLException
+    {
+        int count = -1;
+        Cursor c = null;
+        try {
+            String query = "SELECT COUNT(*) FROM " + TABLE_NFC + " WHERE " + KEY_NFC_TAG + " = ? AND " + KEY_ACTIVE +" = ?";
+            SQLiteDatabase db = this.getWritableDatabase();
+            c = db.rawQuery(query, new String[] {id, "true"});
+            if (c.moveToFirst())
+            {
+                count = c.getInt(0);
+            }
+            return count > 0;
+        }
+        finally {
+            if (c != null) {
+                c.close();
+            }
+        }
+    }
 
-	public void deleteNFC(){
+    public void deleteNFC(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NFC, null, null);
     }
 
-	@Override
-	public void onCreate(SQLiteDatabase db)
-	{
+    @Override
+    public void onCreate(SQLiteDatabase db)
+    {
 
-		// creating required tables
-		db.execSQL(CREATE_TABLE_NFC);
+        // creating required tables
+        db.execSQL(CREATE_TABLE_NFC);
 
         /*ByteArrayOutputStream baosf1 = new ByteArrayOutputStream();
         ByteArrayOutputStream baosb1 = new ByteArrayOutputStream();
@@ -201,14 +201,14 @@ public class DatabaseHelper extends SQLiteOpenHelper
         byte[] imageBytesu4 = user4.toByteArray();*/
 
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, "Jonathan Por");
-        values.put(KEY_COMPANY, "PIF Capital Pte Ltd");
-        values.put(KEY_DESIGNATION, "Chairman");
-        values.put(KEY_MOB, "+65 9005 0101");
-        values.put(KEY_WORK, "+65 9005 0102");
+        values.put(KEY_NAME, "Paul Lim");
+        values.put(KEY_COMPANY, "Secura Group Limited");
+        values.put(KEY_DESIGNATION, "Group CEO");
+        values.put(KEY_MOB, "+65 9111 6501");
+        values.put(KEY_WORK, "+65 6813 9500");
         values.put(KEY_PH, "+65 6443 1113");
-        values.put(KEY_EMAIL, "jonathan@pifcapital.com");
-        values.put(KEY_WEBSITE, "www.pif.com.sg");
+        values.put(KEY_EMAIL, "paul.lim@securagroup.sg");
+        values.put(KEY_WEBSITE, "www.securagroup.sg");
         values.put(KEY_ADDRESS, "53 Mohamed Sultan Road Level 3 Singapore 238993");
         values.put(KEY_LAT, "23.012102");
         values.put(KEY_LNG, "72.522634");
@@ -218,22 +218,22 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_GOOGLE_ID, "www.google.com");
         values.put(KEY_TWITTER_ID, "www.twitter.com");
         values.put(KEY_YOUTUBE_ID, "www.twitter.com");
-        values.put(KEY_CARD_FRONT, R.drawable.card2f);
-        values.put(KEY_CARD_BACK, R.drawable.card2f);
+        values.put(KEY_CARD_FRONT, R.drawable.card_final1f);
+        values.put(KEY_CARD_BACK, R.drawable.card_final1b);
         values.put(KEY_ACTIVE, "true");
         values.put(KEY_NFC_TAG, "en000000001");
-        values.put(KEY_USER_IMG, R.drawable.profile1);
-        values.put(KEY_DATE, "2017-07-01 10:42:38");
+        values.put(KEY_USER_IMG, R.drawable.profile_final1);
+        values.put(KEY_DATE, "2017-07-15 10:42:38");
         db.insert(TABLE_NFC, null, values);
 
-        values.put(KEY_NAME, "Kiki Tai");
-        values.put(KEY_COMPANY, "AtMedia");
-        values.put(KEY_DESIGNATION, "Creative Director");
+        values.put(KEY_NAME, "Timothy Ding");
+        values.put(KEY_COMPANY, "Kronicles pte ltd");
+        values.put(KEY_DESIGNATION, "MAnaging Director");
         values.put(KEY_MOB, "+65 9738 5801");
         values.put(KEY_WORK, "+65 9738 5802");
         values.put(KEY_PH, "+65 9738 5803");
-        values.put(KEY_EMAIL, "kiki@atmedia.com.sg");
-        values.put(KEY_WEBSITE, "www.atmedia.com.sg");
+        values.put(KEY_EMAIL, "timothy@kronicles.asia");
+        values.put(KEY_WEBSITE, "www.kronicles.asia");
         values.put(KEY_ADDRESS, "10 Anson Road #26-04 International Plaza, Singapore 079903");
         values.put(KEY_LAT, "37.4224082");
         values.put(KEY_LNG, "-122.0856086");
@@ -243,23 +243,23 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_GOOGLE_ID, "www.google.com");
         values.put(KEY_TWITTER_ID, "www.twitter.com");
         values.put(KEY_YOUTUBE_ID, "www.twitter.com");
-        values.put(KEY_CARD_FRONT, R.drawable.card4);
-        values.put(KEY_CARD_BACK, R.drawable.card4);
+        values.put(KEY_CARD_FRONT, R.drawable.profile_final2f);
+        values.put(KEY_CARD_BACK, R.drawable.profile_final2b);
         values.put(KEY_ACTIVE, "true");
-        values.put(KEY_NFC_TAG, "en000000004");
-        values.put(KEY_USER_IMG, R.drawable.profile2);
-        values.put(KEY_DATE, "2017-06-30 12:42:38");
-		db.insert(TABLE_NFC, null, values);
+        values.put(KEY_NFC_TAG, "en000000002");
+        values.put(KEY_USER_IMG, R.drawable.final_profile2_7);
+        values.put(KEY_DATE, "2017-07-14 12:42:38");
+        db.insert(TABLE_NFC, null, values);
 
-        values.put(KEY_NAME, "Justin Yuan Fei");
-        values.put(KEY_COMPANY, "ESIN");
-        values.put(KEY_DESIGNATION, "General Manager");
+        values.put(KEY_NAME, "Adrian Tay");
+        values.put(KEY_COMPANY, "Eventus Group pte ltd");
+        values.put(KEY_DESIGNATION, "Owner");
         values.put(KEY_MOB, "+65 9102 0862");
         values.put(KEY_WORK, "+65 6822 3908");
         values.put(KEY_PH, "+65 6822 3908");
-        values.put(KEY_EMAIL, "yuanfei@esin.com.sg");
-        values.put(KEY_WEBSITE, "www.esin.com.sg");
-        values.put(KEY_ADDRESS, "A:60 Paya Lebar Road, #09-06 Paya Lebar Square, Singapore 409051");
+        values.put(KEY_EMAIL, "eventusinvestment@gmail.com");
+        values.put(KEY_WEBSITE, "www.eventus.com.sg");
+        values.put(KEY_ADDRESS, "53 Amoy Street Singapore");
         values.put(KEY_LAT, "37.4224082");
         values.put(KEY_LNG, "-122.0856086");
         values.put(KEY_REMARK, "Nothing");
@@ -268,23 +268,23 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_GOOGLE_ID, "www.google.com");
         values.put(KEY_TWITTER_ID, "www.twitter.com");
         values.put(KEY_YOUTUBE_ID, "www.twitter.com");
-        values.put(KEY_CARD_FRONT, R.drawable.card3_1);
-        values.put(KEY_CARD_BACK, R.drawable.card3_1);
+        values.put(KEY_CARD_FRONT, R.drawable.profile_final3f);
+        values.put(KEY_CARD_BACK, R.drawable.profile_final3b);
         values.put(KEY_ACTIVE, "false");
-        values.put(KEY_NFC_TAG, "en000000002");
-        values.put(KEY_USER_IMG, R.drawable.profile3);
-        values.put(KEY_DATE, "2017-06-01 12:42:38");
+        values.put(KEY_NFC_TAG, "en000000003");
+        values.put(KEY_USER_IMG, R.drawable.final_profile3_9);
+        values.put(KEY_DATE, "2017-07-13 12:42:38");
         db.insert(TABLE_NFC, null, values);
 
-        values.put(KEY_NAME, "Physician Ong");
-        values.put(KEY_COMPANY, "TCMOng Medicare pte ltd");
-        values.put(KEY_DESIGNATION, "Chairman");
-        values.put(KEY_MOB, "9874561230");
-        values.put(KEY_WORK, "0791234567");
-        values.put(KEY_PH, "0792456789");
-        values.put(KEY_EMAIL, "TCMOng@tcmong.com.sg");
-        values.put(KEY_WEBSITE, "www.tcmong.com.sg");
-        values.put(KEY_ADDRESS, "1600 Amphitheatre Parkway, Mountain View, CA");
+        values.put(KEY_NAME, "Chris Liao");
+        values.put(KEY_COMPANY, "Circle 8 Infinite Possibilities");
+        values.put(KEY_DESIGNATION, "CEO");
+        values.put(KEY_MOB, "+65 6816 7888");
+        values.put(KEY_WORK, "+65 9821 9235");
+        values.put(KEY_PH, "+65 9821 9235");
+        values.put(KEY_EMAIL, "chris.liao@circle8.asia");
+        values.put(KEY_WEBSITE, "www.circleone.com");
+        values.put(KEY_ADDRESS, "65 Ubi Road | #03-90 Oxley Bizhub 1, Singapore");
         values.put(KEY_LAT, "37.4224082");
         values.put(KEY_LNG, "-122.0856086");
         values.put(KEY_REMARK, "Nothing");
@@ -293,31 +293,309 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_GOOGLE_ID, "www.google.com");
         values.put(KEY_TWITTER_ID, "www.twitter.com");
         values.put(KEY_YOUTUBE_ID, "www.twitter.com");
-        values.put(KEY_CARD_FRONT, R.drawable.card1f);
-        values.put(KEY_CARD_BACK, R.drawable.card1b);
+        values.put(KEY_CARD_FRONT, R.drawable.profile_final4f);
+        values.put(KEY_CARD_BACK, R.drawable.profile_final4b);
         values.put(KEY_ACTIVE, "true");
-        values.put(KEY_NFC_TAG, "en000000003");
-        values.put(KEY_USER_IMG, R.drawable.profile4);
+        values.put(KEY_NFC_TAG, "en000000004");
+        values.put(KEY_USER_IMG, R.drawable.final_profile4);
+        values.put(KEY_DATE, "2017-07-12 12:42:38");
+        db.insert(TABLE_NFC, null, values);
+
+
+        values.put(KEY_NAME, "Wasley Wan");
+        values.put(KEY_COMPANY, "Circle 8 Infinite Possibilities");
+        values.put(KEY_DESIGNATION, "COO");
+        values.put(KEY_MOB, "+65 6816 7888");
+        values.put(KEY_WORK, "+65 9821 9235");
+        values.put(KEY_PH, "+65 9821 9235");
+        values.put(KEY_EMAIL, "wastley.wan@circle8.asia");
+        values.put(KEY_WEBSITE, "www.circleone.com");
+        values.put(KEY_ADDRESS, "65 Ubi Road | #03-90 Oxley Bizhub 1, Singapore");
+        values.put(KEY_LAT, "37.4224082");
+        values.put(KEY_LNG, "-122.0856086");
+        values.put(KEY_REMARK, "Nothing");
+        values.put(KEY_FACEBOOK_ID, "www.facebook.com");
+        values.put(KEY_LINKEDIN_ID, "www.linkedin.com");
+        values.put(KEY_GOOGLE_ID, "www.google.com");
+        values.put(KEY_TWITTER_ID, "www.twitter.com");
+        values.put(KEY_YOUTUBE_ID, "www.twitter.com");
+        values.put(KEY_CARD_FRONT, R.drawable.profile_final5f);
+        values.put(KEY_CARD_BACK, R.drawable.profile_final4b);
+        values.put(KEY_ACTIVE, "true");
+        values.put(KEY_NFC_TAG, "en000000005");
+        values.put(KEY_USER_IMG, R.drawable.final_profile5);
+        values.put(KEY_DATE, "2017-07-11 12:42:38");
+        db.insert(TABLE_NFC, null, values);
+
+        values.put(KEY_NAME, "Raymond Lee");
+        values.put(KEY_COMPANY, "Circle 8 Infinite Possibilities");
+        values.put(KEY_DESIGNATION, "CCO");
+        values.put(KEY_MOB, "+65 6816 7888");
+        values.put(KEY_WORK, "+65 9821 9235");
+        values.put(KEY_PH, "+65 9821 9235");
+        values.put(KEY_EMAIL, "raymond.lee@circle8.asia");
+        values.put(KEY_WEBSITE, "www.circleone.com");
+        values.put(KEY_ADDRESS, "65 Ubi Road | #03-90 Oxley Bizhub 1, Singapore");
+        values.put(KEY_LAT, "37.4224082");
+        values.put(KEY_LNG, "-122.0856086");
+        values.put(KEY_REMARK, "Nothing");
+        values.put(KEY_FACEBOOK_ID, "www.facebook.com");
+        values.put(KEY_LINKEDIN_ID, "www.linkedin.com");
+        values.put(KEY_GOOGLE_ID, "www.google.com");
+        values.put(KEY_TWITTER_ID, "www.twitter.com");
+        values.put(KEY_YOUTUBE_ID, "www.twitter.com");
+        values.put(KEY_CARD_FRONT, R.drawable.profile_final6f);
+        values.put(KEY_CARD_BACK, R.drawable.profile_final4b);
+        values.put(KEY_ACTIVE, "true");
+        values.put(KEY_NFC_TAG, "en000000006");
+        values.put(KEY_USER_IMG, R.drawable.final_profile6);
+        values.put(KEY_DATE, "2017-07-10 12:42:38");
+        db.insert(TABLE_NFC, null, values);
+
+
+        values.put(KEY_NAME, "Timothy Ding");
+        values.put(KEY_COMPANY, "Circle 8 Infinite Possibilities");
+        values.put(KEY_DESIGNATION, "Co-founder");
+        values.put(KEY_MOB, "+65 6816 7888");
+        values.put(KEY_WORK, "+65 9821 9235");
+        values.put(KEY_PH, "+65 9821 9235");
+        values.put(KEY_EMAIL, "timothy.ding@circle8.asia");
+        values.put(KEY_WEBSITE, "www.circleone.com");
+        values.put(KEY_ADDRESS, "65 Ubi Road | #03-90 Oxley Bizhub 1, Singapore");
+        values.put(KEY_LAT, "37.4224082");
+        values.put(KEY_LNG, "-122.0856086");
+        values.put(KEY_REMARK, "Nothing");
+        values.put(KEY_FACEBOOK_ID, "www.facebook.com");
+        values.put(KEY_LINKEDIN_ID, "www.linkedin.com");
+        values.put(KEY_GOOGLE_ID, "www.google.com");
+        values.put(KEY_TWITTER_ID, "www.twitter.com");
+        values.put(KEY_YOUTUBE_ID, "www.twitter.com");
+        values.put(KEY_CARD_FRONT, R.drawable.profile_final7f);
+        values.put(KEY_CARD_BACK, R.drawable.profile_final4b);
+        values.put(KEY_ACTIVE, "true");
+        values.put(KEY_NFC_TAG, "en000000007");
+        values.put(KEY_USER_IMG, R.drawable.final_profile2_7);
+        values.put(KEY_DATE, "2017-07-09 12:42:38");
+        db.insert(TABLE_NFC, null, values);
+
+        values.put(KEY_NAME, "Paul Lim");
+        values.put(KEY_COMPANY, "Circle 8 Infinite Possibilities");
+        values.put(KEY_DESIGNATION, "Co-founder");
+        values.put(KEY_MOB, "+65 6816 7888");
+        values.put(KEY_WORK, "+65 9821 9235");
+        values.put(KEY_PH, "+65 9821 9235");
+        values.put(KEY_EMAIL, "paul.lim@circle8.asia");
+        values.put(KEY_WEBSITE, "www.circleone.com");
+        values.put(KEY_ADDRESS, "65 Ubi Road | #03-90 Oxley Bizhub 1, Singapore");
+        values.put(KEY_LAT, "37.4224082");
+        values.put(KEY_LNG, "-122.0856086");
+        values.put(KEY_REMARK, "Nothing");
+        values.put(KEY_FACEBOOK_ID, "www.facebook.com");
+        values.put(KEY_LINKEDIN_ID, "www.linkedin.com");
+        values.put(KEY_GOOGLE_ID, "www.google.com");
+        values.put(KEY_TWITTER_ID, "www.twitter.com");
+        values.put(KEY_YOUTUBE_ID, "www.twitter.com");
+        values.put(KEY_CARD_FRONT, R.drawable.profile_final8f);
+        values.put(KEY_CARD_BACK, R.drawable.profile_final4b);
+        values.put(KEY_ACTIVE, "true");
+        values.put(KEY_NFC_TAG, "en000000008");
+        values.put(KEY_USER_IMG, R.drawable.final_profile1_8);
+        values.put(KEY_DATE, "2017-07-08 12:42:38");
+        db.insert(TABLE_NFC, null, values);
+
+        values.put(KEY_NAME, "Alan Zeng");
+        values.put(KEY_COMPANY, "Circle 8 Infinite Possibilities");
+        values.put(KEY_DESIGNATION, "Director Administrator/HR");
+        values.put(KEY_MOB, "+65 6816 7888");
+        values.put(KEY_WORK, "+65 9821 9235");
+        values.put(KEY_PH, "+65 9821 9235");
+        values.put(KEY_EMAIL, "alan.zang@circle8.asia");
+        values.put(KEY_WEBSITE, "www.circleone.com");
+        values.put(KEY_ADDRESS, "65 Ubi Road | #03-90 Oxley Bizhub 1, Singapore");
+        values.put(KEY_LAT, "37.4224082");
+        values.put(KEY_LNG, "-122.0856086");
+        values.put(KEY_REMARK, "Nothing");
+        values.put(KEY_FACEBOOK_ID, "www.facebook.com");
+        values.put(KEY_LINKEDIN_ID, "www.linkedin.com");
+        values.put(KEY_GOOGLE_ID, "www.google.com");
+        values.put(KEY_TWITTER_ID, "www.twitter.com");
+        values.put(KEY_YOUTUBE_ID, "www.twitter.com");
+        values.put(KEY_CARD_FRONT, R.drawable.profile_final9f);
+        values.put(KEY_CARD_BACK, R.drawable.profile_final4b);
+        values.put(KEY_ACTIVE, "true");
+        values.put(KEY_NFC_TAG, "en000000009");
+        values.put(KEY_USER_IMG, R.drawable.final_profile3_9);
+        values.put(KEY_DATE, "2017-07-07 12:42:38");
+        db.insert(TABLE_NFC, null, values);
+
+        values.put(KEY_NAME, "Adrian Tay");
+        values.put(KEY_COMPANY, "Circle 8 Infinite Possibilities");
+        values.put(KEY_DESIGNATION, "Co-founder");
+        values.put(KEY_MOB, "+65 6816 7888");
+        values.put(KEY_WORK, "+65 9821 9235");
+        values.put(KEY_PH, "+65 9821 9235");
+        values.put(KEY_EMAIL, "adrian.tay@circle8.asia");
+        values.put(KEY_WEBSITE, "www.circleone.com");
+        values.put(KEY_ADDRESS, "65 Ubi Road | #03-90 Oxley Bizhub 1, Singapore");
+        values.put(KEY_LAT, "37.4224082");
+        values.put(KEY_LNG, "-122.0856086");
+        values.put(KEY_REMARK, "Nothing");
+        values.put(KEY_FACEBOOK_ID, "www.facebook.com");
+        values.put(KEY_LINKEDIN_ID, "www.linkedin.com");
+        values.put(KEY_GOOGLE_ID, "www.google.com");
+        values.put(KEY_TWITTER_ID, "www.twitter.com");
+        values.put(KEY_YOUTUBE_ID, "www.twitter.com");
+        values.put(KEY_CARD_FRONT, R.drawable.profile_final10f);
+        values.put(KEY_CARD_BACK, R.drawable.profile_final4b);
+        values.put(KEY_ACTIVE, "true");
+        values.put(KEY_NFC_TAG, "en0000000010");
+        values.put(KEY_USER_IMG, R.drawable.final_profile9);
+        values.put(KEY_DATE, "2017-07-06 12:42:38");
+        db.insert(TABLE_NFC, null, values);
+
+        values.put(KEY_NAME, "Darren Tan");
+        values.put(KEY_COMPANY, "Circle 8 Infinite Possibilities");
+        values.put(KEY_DESIGNATION, "Co-founder");
+        values.put(KEY_MOB, "+65 6816 7888");
+        values.put(KEY_WORK, "+65 9821 9235");
+        values.put(KEY_PH, "+65 9821 9235");
+        values.put(KEY_EMAIL, "darren.tan@circle8.asia");
+        values.put(KEY_WEBSITE, "www.circleone.com");
+        values.put(KEY_ADDRESS, "65 Ubi Road | #03-90 Oxley Bizhub 1, Singapore");
+        values.put(KEY_LAT, "37.4224082");
+        values.put(KEY_LNG, "-122.0856086");
+        values.put(KEY_REMARK, "Nothing");
+        values.put(KEY_FACEBOOK_ID, "www.facebook.com");
+        values.put(KEY_LINKEDIN_ID, "www.linkedin.com");
+        values.put(KEY_GOOGLE_ID, "www.google.com");
+        values.put(KEY_TWITTER_ID, "www.twitter.com");
+        values.put(KEY_YOUTUBE_ID, "www.twitter.com");
+        values.put(KEY_CARD_FRONT, R.drawable.profile_final11f);
+        values.put(KEY_CARD_BACK, R.drawable.profile_final4b);
+        values.put(KEY_ACTIVE, "true");
+        values.put(KEY_NFC_TAG, "en0000000011");
+        values.put(KEY_USER_IMG, R.drawable.final_profile10);
+        values.put(KEY_DATE, "2017-07-05 12:42:38");
+        db.insert(TABLE_NFC, null, values);
+
+        values.put(KEY_NAME, "Steve Hu");
+        values.put(KEY_COMPANY, "Circle 8 Infinite Possibilities");
+        values.put(KEY_DESIGNATION, "Marketing Director");
+        values.put(KEY_MOB, "+65 6816 7888");
+        values.put(KEY_WORK, "+65 9821 9235");
+        values.put(KEY_PH, "+65 9821 9235");
+        values.put(KEY_EMAIL, "steve.hu@circle8.asia");
+        values.put(KEY_WEBSITE, "www.circleone.com");
+        values.put(KEY_ADDRESS, "65 Ubi Road | #03-90 Oxley Bizhub 1, Singapore");
+        values.put(KEY_LAT, "37.4224082");
+        values.put(KEY_LNG, "-122.0856086");
+        values.put(KEY_REMARK, "Nothing");
+        values.put(KEY_FACEBOOK_ID, "www.facebook.com");
+        values.put(KEY_LINKEDIN_ID, "www.linkedin.com");
+        values.put(KEY_GOOGLE_ID, "www.google.com");
+        values.put(KEY_TWITTER_ID, "www.twitter.com");
+        values.put(KEY_YOUTUBE_ID, "www.twitter.com");
+        values.put(KEY_CARD_FRONT, R.drawable.profile_final12f);
+        values.put(KEY_CARD_BACK, R.drawable.profile_final4b);
+        values.put(KEY_ACTIVE, "true");
+        values.put(KEY_NFC_TAG, "en0000000012");
+        values.put(KEY_USER_IMG, R.drawable.final_profile11);
+        values.put(KEY_DATE, "2017-07-04 12:42:38");
+        db.insert(TABLE_NFC, null, values);
+
+        values.put(KEY_NAME, "Dominic Koh");
+        values.put(KEY_COMPANY, "Circle 8 Infinite Possibilities");
+        values.put(KEY_DESIGNATION, "Sales Director");
+        values.put(KEY_MOB, "+65 6816 7888");
+        values.put(KEY_WORK, "+65 9821 9235");
+        values.put(KEY_PH, "+65 9821 9235");
+        values.put(KEY_EMAIL, "dominic.koh@circle8.asia");
+        values.put(KEY_WEBSITE, "www.circleone.com");
+        values.put(KEY_ADDRESS, "65 Ubi Road | #03-90 Oxley Bizhub 1, Singapore");
+        values.put(KEY_LAT, "37.4224082");
+        values.put(KEY_LNG, "-122.0856086");
+        values.put(KEY_REMARK, "Nothing");
+        values.put(KEY_FACEBOOK_ID, "www.facebook.com");
+        values.put(KEY_LINKEDIN_ID, "www.linkedin.com");
+        values.put(KEY_GOOGLE_ID, "www.google.com");
+        values.put(KEY_TWITTER_ID, "www.twitter.com");
+        values.put(KEY_YOUTUBE_ID, "www.twitter.com");
+        values.put(KEY_CARD_FRONT, R.drawable.profile_final13f);
+        values.put(KEY_CARD_BACK, R.drawable.profile_final4b);
+        values.put(KEY_ACTIVE, "true");
+        values.put(KEY_NFC_TAG, "en0000000013");
+        values.put(KEY_USER_IMG, R.drawable.final_profile12);
+        values.put(KEY_DATE, "2017-07-03 12:42:38");
+        db.insert(TABLE_NFC, null, values);
+
+        values.put(KEY_NAME, "Randy Chua");
+        values.put(KEY_COMPANY, "Circle 8 Infinite Possibilities");
+        values.put(KEY_DESIGNATION, "Business Development Director");
+        values.put(KEY_MOB, "+65 6816 7888");
+        values.put(KEY_WORK, "+65 9821 9235");
+        values.put(KEY_PH, "+65 9821 9235");
+        values.put(KEY_EMAIL, "randy.chua@circle8.asia");
+        values.put(KEY_WEBSITE, "www.circleone.com");
+        values.put(KEY_ADDRESS, "65 Ubi Road | #03-90 Oxley Bizhub 1, Singapore");
+        values.put(KEY_LAT, "37.4224082");
+        values.put(KEY_LNG, "-122.0856086");
+        values.put(KEY_REMARK, "Nothing");
+        values.put(KEY_FACEBOOK_ID, "www.facebook.com");
+        values.put(KEY_LINKEDIN_ID, "www.linkedin.com");
+        values.put(KEY_GOOGLE_ID, "www.google.com");
+        values.put(KEY_TWITTER_ID, "www.twitter.com");
+        values.put(KEY_YOUTUBE_ID, "www.twitter.com");
+        values.put(KEY_CARD_FRONT, R.drawable.profile_final14f);
+        values.put(KEY_CARD_BACK, R.drawable.profile_final4b);
+        values.put(KEY_ACTIVE, "true");
+        values.put(KEY_NFC_TAG, "en0000000014");
+        values.put(KEY_USER_IMG, R.drawable.final_profile13);
+        values.put(KEY_DATE, "2017-07-02 12:42:38");
+        db.insert(TABLE_NFC, null, values);
+
+        values.put(KEY_NAME, "Shani Shah");
+        values.put(KEY_COMPANY, "Circle 8 Infinite Possibilities");
+        values.put(KEY_DESIGNATION, "CTO");
+        values.put(KEY_MOB, "+65 6816 7888");
+        values.put(KEY_WORK, "+65 9821 9235");
+        values.put(KEY_PH, "+65 9821 9235");
+        values.put(KEY_EMAIL, "shani.shah@circle8.asia");
+        values.put(KEY_WEBSITE, "www.circleone.com");
+        values.put(KEY_ADDRESS, "65 Ubi Road | #03-90 Oxley Bizhub 1, Singapore");
+        values.put(KEY_LAT, "37.4224082");
+        values.put(KEY_LNG, "-122.0856086");
+        values.put(KEY_REMARK, "Nothing");
+        values.put(KEY_FACEBOOK_ID, "www.facebook.com");
+        values.put(KEY_LINKEDIN_ID, "www.linkedin.com");
+        values.put(KEY_GOOGLE_ID, "www.google.com");
+        values.put(KEY_TWITTER_ID, "www.twitter.com");
+        values.put(KEY_YOUTUBE_ID, "www.twitter.com");
+        values.put(KEY_CARD_FRONT, R.drawable.profile_final15f);
+        values.put(KEY_CARD_BACK, R.drawable.profile_final4b);
+        values.put(KEY_ACTIVE, "true");
+        values.put(KEY_NFC_TAG, "en0000000015");
+        values.put(KEY_USER_IMG, R.drawable.final_profile14);
         values.put(KEY_DATE, "2017-07-01 12:42:38");
         db.insert(TABLE_NFC, null, values);
-	}
 
-	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		// on upgrade drop older tables
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NFC);
+    }
 
-		// create new tables
-		onCreate(db);
-	}
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        // on upgrade drop older tables
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NFC);
 
-	public long createNFC(NFCModel favourites, long[] tag_ids) {
-		SQLiteDatabase db = this.getWritableDatabase();
+        // create new tables
+        onCreate(db);
+    }
 
-		ContentValues values = new ContentValues();
-		values.put(KEY_ID, favourites.getId());
-		values.put(KEY_NAME, favourites.getName());
-		values.put(KEY_COMPANY, favourites.getCompany());
+    public long createNFC(NFCModel favourites, long[] tag_ids) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID, favourites.getId());
+        values.put(KEY_NAME, favourites.getName());
+        values.put(KEY_COMPANY, favourites.getCompany());
         values.put(KEY_DESIGNATION, favourites.getDesignation());
         values.put(KEY_MOB, favourites.getMob_no());
         values.put(KEY_WORK, favourites.getWork_no());
@@ -341,55 +619,55 @@ public class DatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_DATE, favourites.getDate());
 
         // insert row
-		long todo_id = db.insert(TABLE_NFC, null, values);
+        long todo_id = db.insert(TABLE_NFC, null, values);
 
 
-		return todo_id;
-	}
+        return todo_id;
+    }
 
-	/*public List<NFCModel> getNFCData()
-	{
-		List<NFCModel> todos = new ArrayList<NFCModel>();
+    /*public List<NFCModel> getNFCData()
+    {
+        List<NFCModel> todos = new ArrayList<NFCModel>();
 
-		SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
 
-		Cursor c = null ;
+        Cursor c = null ;
 
-		int value = 3 ;
+        int value = 3 ;
 
-		try{
-			String selectQuery = TABLE_NFC + " * " + KEY_ID + " IN " + value ;
+        try{
+            String selectQuery = TABLE_NFC + " * " + KEY_ID + " IN " + value ;
 
-			Log.d(LOG, selectQuery);
+            Log.d(LOG, selectQuery);
 
-			String Table = TABLE_FAVOURITES ;
-			String[] table_Columns = new String[] { " * " };
-			String[] args_Data = new String[] { "1,3,5,7" };
-			String selctioonArgs = Arrays.toString(args_Data);
+            String Table = TABLE_FAVOURITES ;
+            String[] table_Columns = new String[] { " * " };
+            String[] args_Data = new String[] { "1,3,5,7" };
+            String selctioonArgs = Arrays.toString(args_Data);
 
-			selctioonArgs = selctioonArgs.replace("[","(");
-			selctioonArgs = selctioonArgs.replace("]",")");
+            selctioonArgs = selctioonArgs.replace("[","(");
+            selctioonArgs = selctioonArgs.replace("]",")");
 
-			String whereClause = KEY_ID + " IN " + selctioonArgs ;
+            String whereClause = KEY_ID + " IN " + selctioonArgs ;
 
-			c = db.query(Table,table_Columns,whereClause,null,null,null,null);
-		}catch (Exception e){
-			e.printStackTrace();
-		}
-		if(c.moveToFirst())
-		{
-		do
-			{
-				Favourites fvt = new Favourites();
-				fvt.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-				fvt.setProduct_id((c.getString(c.getColumnIndex(KEY_PRODUCTID))));
-				fvt.setUser_id(c.getString(c.getColumnIndex(KEY_USERID)));
-				todos.add(fvt);
-			}
-			while (c.moveToNext());
-		}
-		return todos;
-	}*/
+            c = db.query(Table,table_Columns,whereClause,null,null,null,null);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        if(c.moveToFirst())
+        {
+        do
+            {
+                Favourites fvt = new Favourites();
+                fvt.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+                fvt.setProduct_id((c.getString(c.getColumnIndex(KEY_PRODUCTID))));
+                fvt.setUser_id(c.getString(c.getColumnIndex(KEY_USERID)));
+                todos.add(fvt);
+            }
+            while (c.moveToNext());
+        }
+        return todos;
+    }*/
 	/*
 	 * get single todo
 	 */
@@ -534,19 +812,19 @@ public class DatabaseHelper extends SQLiteOpenHelper
             } while (c.moveToNext());
         }
         return tags;
-	}
+    }
 
-	public int getActiveNFCCount() {
-		String countQuery = "SELECT  * FROM " + TABLE_NFC + " WHERE " + KEY_ACTIVE + "='true' ORDER BY datetime(\"date\") DESC";
-		SQLiteDatabase db = this.getReadableDatabase();
-		Cursor cursor = db.rawQuery(countQuery, null);
+    public int getActiveNFCCount() {
+        String countQuery = "SELECT  * FROM " + TABLE_NFC + " WHERE " + KEY_ACTIVE + "='true' ORDER BY datetime(\"date\") DESC";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
 
-		int count = cursor.getCount();
-		cursor.close();
+        int count = cursor.getCount();
+        cursor.close();
 
-		// return count
-		return count;
-	}
+        // return count
+        return count;
+    }
 
 	/*
 	 * Updating a todo
@@ -590,32 +868,32 @@ public class DatabaseHelper extends SQLiteOpenHelper
     }
 
 
-	public int DeactiveCards(int id) {
-		SQLiteDatabase db = this.getWritableDatabase();
+    public int DeactiveCards(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
 
-		ContentValues values = new ContentValues();
+        ContentValues values = new ContentValues();
         values.put(KEY_ID, id);
         values.put(KEY_ACTIVE, "false");
-		// updating row
-		return db.update(TABLE_NFC, values, KEY_ID + " = ?",
-				new String[] { String.valueOf(id) });
-	}
+        // updating row
+        return db.update(TABLE_NFC, values, KEY_ID + " = ?",
+                new String[] { String.valueOf(id) });
+    }
 
 
-	// closing database
-	public void closeDB() {
-		SQLiteDatabase db = this.getReadableDatabase();
-		if (db != null && db.isOpen())
-			db.close();
-	}
+    // closing database
+    public void closeDB() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        if (db != null && db.isOpen())
+            db.close();
+    }
 
-	/**
-	 * get datetime
-	 * */
-	private String getDateTime() {
-		SimpleDateFormat dateFormat = new SimpleDateFormat(
-				"yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-		Date date = new Date();
-		return dateFormat.format(date);
-	}
+    /**
+     * get datetime
+     * */
+    private String getDateTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
 }
