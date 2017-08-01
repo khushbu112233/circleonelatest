@@ -14,7 +14,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.amplearch.circleonet.R;
 import com.amplearch.circleonet.Utils.Utility;
@@ -24,25 +26,44 @@ import me.dm7.barcodescanner.core.IViewFinder;
 import me.dm7.barcodescanner.core.ViewFinderView;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-public class AddQRActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
-
-    private ZXingScannerView mScannerView;
-    String scanQr="",scanFormat="";
+public class AddQRActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler
+{
+    Button btnRescan ;
+    ZXingScannerView mScannerView ;
+    ViewGroup contentFrame ;
+    String scanQr="",scanFormat="" ;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_qr);
 
-        ViewGroup contentFrame = (ViewGroup) findViewById(R.id.content_frame);
-        mScannerView = new ZXingScannerView(this)
+        contentFrame = (ViewGroup) findViewById(R.id.content_frame);
+        btnRescan = (Button)findViewById(R.id.btnRescan);
+
+
+        mScannerView = new ZXingScannerView(this);
+        contentFrame.addView(mScannerView);
+        CameraScann();
+
+        btnRescan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                mScannerView.stopCamera();
+                CameraScann();
+            }
+        });
+
+      /*  mScannerView = new ZXingScannerView(this)
         {
             @Override
             protected IViewFinder createViewFinderView(Context context) {
                 return new CustomViewFinderView(context);
             }
-        };
-        contentFrame.addView(mScannerView);
+        };*/
+
        /* Boolean aBoolean = Utility.checkCameraPermission(AddQRActivity.this);
         if (aBoolean == true) {*/
 
@@ -50,6 +71,8 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
 //            mScannerView.startCamera();
 //      /*  }*/
     }
+
+
 
     @Override
     public void handleResult(Result rawResult)
@@ -82,8 +105,6 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
             @Override
             public void onClick(DialogInterface adialog, int which)
             {
-                mScannerView.stopCamera();
-                CameraScann();
                 adialog.cancel();
             }
         });
@@ -100,11 +121,20 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
 
 
     @Override
-    public void onResume() {
+    public void onResume()
+    {
         super.onResume();
         mScannerView.setResultHandler(this);
         mScannerView.startCamera();
+//        CameraScreen();
     }
+
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        mScannerView.setResultHandler(this);
+//        mScannerView.startCamera();
+//    }
 
 //    @Override
 //    public void onPause() {
@@ -129,7 +159,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
 
     private static class CustomViewFinderView extends ViewFinderView
     {
-        public static final String TRADE_MARK_TEXT = "";
+        public static final String TRADE_MARK_TEXT = "O Circle!";
         public static final int TRADE_MARK_TEXT_SIZE_SP = 40;
         public final Paint PAINT = new Paint();
 
