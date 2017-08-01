@@ -16,7 +16,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.amplearch.circleonet.Fragments.List1Fragment;
+import com.amplearch.circleonet.Fragments.List2Fragment;
+import com.amplearch.circleonet.Fragments.List3Fragment;
+import com.amplearch.circleonet.Fragments.List4Fragment;
+import com.amplearch.circleonet.Helper.DatabaseHelper;
 import com.amplearch.circleonet.R;
+
 
 public class SortAndFilterOption extends AppCompatActivity {
 
@@ -24,6 +30,9 @@ public class SortAndFilterOption extends AppCompatActivity {
     private ImageView imgCards, imgConnect, imgEvents, imgProfile;
     ImageView imgDrawer, imgLogo;
     private int actionBarHeight;
+    LinearLayout lnrSortRecent, lnrSortName, lnrSortCompany;
+    DatabaseHelper db;
+    public static int cardSort = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +43,7 @@ public class SortAndFilterOption extends AppCompatActivity {
         final ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.custom_actionbar);
-
+        db = new DatabaseHelper(getApplicationContext());
         actionText = (TextView) findViewById(R.id.mytext);
         imgCards = (ImageView) findViewById(R.id.imgCards);
         imgConnect = (ImageView) findViewById(R.id.imgConnect);
@@ -42,6 +51,160 @@ public class SortAndFilterOption extends AppCompatActivity {
         imgProfile = (ImageView) findViewById(R.id.imgProfile);
         imgLogo = (ImageView) findViewById(R.id.imgLogo);
         imgDrawer = (ImageView) findViewById(R.id.drawer);
+        lnrSortRecent = (LinearLayout) findViewById(R.id.lnrSortRecent);
+        lnrSortName = (LinearLayout) findViewById(R.id.lnrSortName);
+        lnrSortCompany = (LinearLayout) findViewById(R.id.lnrSortCompany);
+
+        lnrSortRecent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cardSort = 1;
+                try {
+                    List2Fragment.gridAdapter.notifyDataSetChanged();
+                    List2Fragment.allTags = db.getActiveNFC();
+                    List2Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List2Fragment.GetData(getApplicationContext());
+                } catch (Exception e) {
+
+                }
+
+                try {
+                    List3Fragment.gridAdapter.notifyDataSetChanged();
+                    List3Fragment.allTags = db.getActiveNFC();
+                    List3Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List3Fragment.GetData(getApplicationContext());
+                } catch (Exception e) {
+
+                }
+                try {
+                    List4Fragment.gridAdapter.notifyDataSetChanged();
+                    List4Fragment.allTags = db.getActiveNFC();
+                    List4Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List4Fragment.GetData(getApplicationContext());
+                } catch (Exception e) {
+
+                }
+
+                try {
+                    //List1Fragment.myPager.notifyDataSetChanged();
+                    List1Fragment.allTags = db.getActiveNFC();
+
+                    List1Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List1Fragment.GetData(getApplicationContext());
+                } catch (Exception e) {
+
+                }
+               /* Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
+                startActivity(intent);
+                finish();
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);*/
+            }
+        });
+
+        lnrSortName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                cardSort = 2;
+                try {
+                    List2Fragment.gridAdapter.notifyDataSetChanged();
+                    List2Fragment.allTags = db.getActiveNFC();
+                    List2Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List2Fragment.GetData(getApplicationContext());
+                } catch (Exception e) {
+
+                }
+
+                try {
+                    List3Fragment.gridAdapter.notifyDataSetChanged();
+                    List3Fragment.allTags = db.getActiveNFC();
+                    List3Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List3Fragment.GetData(getApplicationContext());
+                } catch (Exception e) {
+
+                }
+                try {
+                    List4Fragment.gridAdapter.notifyDataSetChanged();
+                    List4Fragment.allTags = db.getActiveNFC();
+                    List4Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List4Fragment.GetData(getApplicationContext());
+                } catch (Exception e) {
+
+                }
+
+                try {
+                    //List1Fragment.myPager.notifyDataSetChanged();
+                    List1Fragment.allTags = db.getActiveNFC();
+
+                    List1Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List1Fragment.GetData(getApplicationContext());
+                } catch (Exception e) {
+
+                }
+                /*Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
+                startActivity(intent);
+                finish();
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);*/
+            }
+        });
+
+        lnrSortCompany.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cardSort = 3;
+                try {
+                    List2Fragment.gridAdapter.notifyDataSetChanged();
+                    List2Fragment.allTags = db.getActiveNFC();
+                    List2Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List2Fragment.GetData(getApplicationContext());
+                } catch (Exception e) {
+
+                }
+
+                try {
+                    List3Fragment.gridAdapter.notifyDataSetChanged();
+                    List3Fragment.allTags = db.getActiveNFC();
+                    List3Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List3Fragment.GetData(getApplicationContext());
+                } catch (Exception e) {
+
+                }
+                try {
+                    List4Fragment.gridAdapter.notifyDataSetChanged();
+                    List4Fragment.allTags = db.getActiveNFC();
+                    List4Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List4Fragment.GetData(getApplicationContext());
+                } catch (Exception e) {
+
+                }
+
+                try {
+                    //List1Fragment.myPager.notifyDataSetChanged();
+                    List1Fragment.allTags = db.getActiveNFC();
+
+                    List1Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List1Fragment.GetData(getApplicationContext());
+                } catch (Exception e) {
+
+                }
+                /*Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
+                startActivity(intent);
+                finish();
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);*/
+            }
+        });
 
         imgDrawer.setOnClickListener(new View.OnClickListener() {
             @Override

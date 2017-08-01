@@ -20,6 +20,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import static com.amplearch.circleonet.Activity.SortAndFilterOption.cardSort;
+
+
 public class DatabaseHelper extends SQLiteOpenHelper
 {
 
@@ -275,7 +278,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
         values.put(KEY_NAME, "Physician Ong");
         values.put(KEY_COMPANY, "TCMOng Medicare pte ltd");
-        values.put(KEY_DESIGNATION, "");
+        values.put(KEY_DESIGNATION, "Chairman");
         values.put(KEY_MOB, "9874561230");
         values.put(KEY_WORK, "0791234567");
         values.put(KEY_PH, "0792456789");
@@ -438,7 +441,14 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
     public List<NFCModel> getActiveNFC() {
         List<NFCModel> tags = new ArrayList<NFCModel>();
-        String selectQuery = "SELECT  * FROM " + TABLE_NFC + " WHERE " + KEY_ACTIVE + "='true' ORDER BY datetime(\"date\") DESC";
+        String selectQuery = "";
+        if (cardSort == 1) {
+            selectQuery = "SELECT  * FROM " + TABLE_NFC + " WHERE " + KEY_ACTIVE + "='true' ORDER BY datetime(\"date\") DESC";
+        }else if (cardSort == 2){
+            selectQuery = "SELECT  * FROM " + TABLE_NFC + " WHERE " + KEY_ACTIVE + "='true' ORDER BY "+ KEY_NAME;
+        }else if (cardSort == 3){
+            selectQuery = "SELECT  * FROM " + TABLE_NFC + " WHERE " + KEY_ACTIVE + "='true' ORDER BY "+ KEY_COMPANY;
+        }
 
         Log.e(LOG, selectQuery);
 

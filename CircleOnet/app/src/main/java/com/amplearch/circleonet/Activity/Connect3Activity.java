@@ -16,7 +16,7 @@ public class Connect3Activity extends AppCompatActivity {
 
     private ImageView imgBack, imgCards, imgConnect, imgEvents, imgProfile, imgConnecting, imgConnecting1;
     TextView txtConnecting;
-
+    int x = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +32,7 @@ public class Connect3Activity extends AppCompatActivity {
         txtConnecting = (TextView) findViewById(R.id.txtConnecting);
 
 
-        Handler handler = new Handler();
+       /* Handler handler = new Handler();
 
         for (int i = 100; i <= 60000; i=i+100) {
             final int finalI = i;
@@ -49,7 +49,26 @@ public class Connect3Activity extends AppCompatActivity {
                     }
                 }
             }, i);
-        }
+        }*/
+
+
+        Handler h=new Handler();
+        h.postDelayed(new Runnable(){
+            public void run(){
+//change your text here
+                if (x == 0) {
+                    txtConnecting.setText("Connecting.");
+                    x += 1;
+                } else if (x == 1){
+                    txtConnecting.setText("Connecting..");
+                    x += 1;
+                }
+            else if (x == 2) {
+                    txtConnecting.setText("Connecting...");
+                    x = 0;
+                }
+            }
+        }, 100);
 
         imgConnecting.setOnClickListener(new View.OnClickListener() {
             @Override

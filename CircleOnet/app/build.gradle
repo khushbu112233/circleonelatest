@@ -37,6 +37,8 @@ dependencies {
     compile project(path: ':library')
     compile project(':nfclib')
     compile project(':carousel')
+    compile files('libs/httpmime-4.2.5.jar')
+
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
@@ -58,8 +60,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-auth:9.2.1'
     compile 'com.github.dmytrodanylyk.shadow-layout:library:1.0.3'
     compile 'com.github.apl-devs:appintro:v4.2.0'
-    compile files('libs/httpmime-4.2.5.jar')
-
+    compile 'me.dm7.barcodescanner:zxing:1.8.4'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

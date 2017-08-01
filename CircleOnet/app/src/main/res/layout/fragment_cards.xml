@@ -14,6 +14,11 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/white"></View>
+
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs1"
             app:tabMode="fixed"

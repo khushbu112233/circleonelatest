@@ -65,6 +65,7 @@
                 android:textColor="@color/white"/>
 
             <ImageView
+                android:id="@+id/imgProfileMenu"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"

@@ -113,14 +113,14 @@ public class List1Fragment extends Fragment
 
         view = inflater.inflate(R.layout.fragment_list1, container, false);
       //  new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        rlt = (RelativeLayout) view.findViewById(R.id.rlt);
+       // rlt = (RelativeLayout) view.findViewById(R.id.rlt);
         vc = ViewConfiguration.get(view.getContext());
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
         // frameList1 = (FrameLayout) view.findViewById(R.id.frameList1);
         mTouchSlop = vc.getScaledTouchSlop();
         recyclerView1 = (RecyclerView) view.findViewById(R.id.list_horizontal1);
         recyclerView2 = (RecyclerView) view.findViewById(R.id.list_horizontal2);
-        lnrList = (LinearLayout) view.findViewById(R.id.lnrList);
+        //lnrList = (LinearLayout) view.findViewById(R.id.lnrList);
         frame = (FrameLayout) view.findViewById(R.id.frame);
         frame1 = (FrameLayout) view.findViewById(R.id.frame1);
         db = new DatabaseHelper(getContext());
@@ -132,9 +132,9 @@ public class List1Fragment extends Fragment
 
         searchText = (AutoCompleteTextView)view.findViewById(R.id.searchView);
 
-        lnrSearch.setVisibility(View.INVISIBLE);
-        line.setVisibility(View.GONE);
-        CardsFragment.tabLayout.setVisibility(View.GONE);
+        lnrSearch.setVisibility(View.VISIBLE);
+        line.setVisibility(View.VISIBLE);
+        CardsFragment.tabLayout.setVisibility(View.VISIBLE);
         GestureDetector.OnGestureListener gestureListener = new MyOnGestureListener();
         GestureDetector.OnDoubleTapListener doubleTapListener = new MyOnDoubleTapListener();
 
@@ -482,9 +482,9 @@ public class List1Fragment extends Fragment
                             CardsFragment.tabLayout.setVisibility(View.VISIBLE);
                         } else {
                             //  Toast.makeText(getContext(), "Up", Toast.LENGTH_LONG).show();
-                            lnrSearch.setVisibility(View.INVISIBLE);
-                            line.setVisibility(View.GONE);
-                            CardsFragment.tabLayout.setVisibility(View.GONE);
+                            lnrSearch.setVisibility(View.VISIBLE);
+                            line.setVisibility(View.VISIBLE);
+                            CardsFragment.tabLayout.setVisibility(View.VISIBLE);
                         }
                     }
                 }

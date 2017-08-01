@@ -73,56 +73,89 @@ public class ConnectActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                TranslateAnimation slide1 = new TranslateAnimation(0, -170, 0,0 );
-                slide1.setDuration(1000);
-                ivConnectImg.startAnimation(slide1);
+                boolean result = Utility.checkContactPermission(ConnectActivity.this);
+                if (result) {
+                    Boolean aBoolean = contactExists(getApplicationContext(), "+91 9737032082");
 
-                //first things
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run()
-                    {
-                        ivConnectRound.setImageResource(R.drawable.round_gray);
-                        tvConnect.setTextColor(getResources().getColor(R.color.unselected));
-                        tvConnectLine2.setTextColor(getResources().getColor(R.color.unselected));
+                    if (aBoolean == true) {
+                        TranslateAnimation slide1 = new TranslateAnimation(0, -170, 0, 0);
+                        slide1.setDuration(1000);
+                        ivConnectImg.startAnimation(slide1);
+
+                        //first things
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                ivConnectRound.setImageResource(R.drawable.round_gray);
+                                tvConnect.setTextColor(getResources().getColor(R.color.unselected));
+                                tvConnectLine2.setTextColor(getResources().getColor(R.color.unselected));
+                            }
+                        }, 1100);
+                        // Second Things
+                        ivAddRound.setImageResource(R.drawable.round_blue);
+                        tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
                     }
-                },1100);
-                // Second Things
-                ivAddRound.setImageResource(R.drawable.round_blue);
-                tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
-                tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    else {
+
+                    }
+                }
             }
         });
-
+        boolean result = Utility.checkContactPermission(ConnectActivity.this);
+        if (result) {
+            contactExists(getApplicationContext(), "+91 9737032082");
+        }
         rlConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                TranslateAnimation slide1 = new TranslateAnimation(0, 170, 0,0 );
-                slide1.setDuration(1000);
-                ivConnectImg.startAnimation(slide1);
+                boolean result = Utility.checkContactPermission(ConnectActivity.this);
+                if (result) {
+                    Boolean aBoolean = contactExists(getApplicationContext(), "+91 9737032082");
 
-                //first things
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run()
-                    {
-                        ivAddRound.setImageResource(R.drawable.round_gray);
-                        tvAdd.setTextColor(getResources().getColor(R.color.unselected));
-                        tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
+                    if (aBoolean == true) {
+                        TranslateAnimation slide1 = new TranslateAnimation(0, 170, 0, 0);
+                        slide1.setDuration(1000);
+                        ivConnectImg.startAnimation(slide1);
+
+                        //first things
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                ivAddRound.setImageResource(R.drawable.round_gray);
+                                tvAdd.setTextColor(getResources().getColor(R.color.unselected));
+                                tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
+                            }
+                        }, 1100);
+                        // Second Things
+                        ivConnectRound.setImageResource(R.drawable.round_blue);
+                        tvConnect.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        tvConnectLine2.setTextColor(getResources().getColor(R.color.colorPrimary));
                     }
-                },1100);
-                // Second Things
-                ivConnectRound.setImageResource(R.drawable.round_blue);
-                tvConnect.setTextColor(getResources().getColor(R.color.colorPrimary));
-                tvConnectLine2.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    else {
+                        TranslateAnimation slide1 = new TranslateAnimation(0, 170, 0, 0);
+                        slide1.setDuration(1000);
+                        ivConnectImg.startAnimation(slide1);
+
+                        //first things
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                ivAddRound.setImageResource(R.drawable.round_gray);
+                                tvAdd.setTextColor(getResources().getColor(R.color.unselected));
+                                tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
+                            }
+                        }, 1100);
+                        // Second Things
+                        ivConnectRound.setImageResource(R.drawable.round_blue);
+                        tvConnect.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        tvConnectLine2.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    }
+                }
             }
         });
 
-        boolean result = Utility.checkStoragePermission(ConnectActivity.this);
-        if (result) {
-            contactExists(getApplicationContext(), "+91 9737032082");
-        }
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -223,14 +256,20 @@ public class ConnectActivity extends AppCompatActivity
         Cursor cur = context.getContentResolver().query(lookupUri,mPhoneNumberProjection, null, null, null);
         try {
             if (cur.moveToFirst()) {
-                Toast.makeText(getApplicationContext(), "Exists", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Contact Exists", Toast.LENGTH_LONG).show();
+                ivAddRound.setImageResource(R.drawable.round_blue);
+                tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
+                tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
                 return true;
             }
         } finally {
             if (cur != null)
                 cur.close();
         }
-        Toast.makeText(getApplicationContext(), "not Exists", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Contact doesn't Exists", Toast.LENGTH_LONG).show();
+        ivAddRound.setImageResource(R.drawable.round_gray);
+        tvAdd.setTextColor(getResources().getColor(R.color.unselected));
+        tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
         return false;
     }
 }

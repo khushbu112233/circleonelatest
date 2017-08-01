@@ -69,6 +69,7 @@ import be.appfoundry.nfclibrary.activities.NfcActivity;
 import be.appfoundry.nfclibrary.utilities.interfaces.NfcReadUtility;
 import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
 
+
 public class CardsActivity extends NfcActivity {
 
     public static CustomViewPager mViewPager;
@@ -387,15 +388,27 @@ public class CardsActivity extends NfcActivity {
         dialog.setContentView(R.layout.listview_with_text_image);
         dialog.setCanceledOnTouchOutside(true);
 
-        LinearLayout lnrMyAcc = (LinearLayout) dialog.findViewById(R.id.lnrMyAcc);
-       /* lnrMyAcc.setOnClickListener(new View.OnClickListener() {
+        LinearLayout lnrLogout = (LinearLayout) dialog.findViewById(R.id.lnrLogout);
+        LinearLayout lnrAddQR = (LinearLayout) dialog.findViewById(R.id.lnrAddQR);
+
+        lnrAddQR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Profile.class);
+                Intent intent = new Intent(getApplicationContext(), AddQRActivity.class);
                 startActivity(intent);
                 dialog.dismiss();
             }
-        });*/
+        });
+
+        lnrLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+                dialog.dismiss();
+                finish();
+            }
+        });
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());

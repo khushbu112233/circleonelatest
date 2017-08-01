@@ -215,9 +215,9 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
                             CardsFragment.tabLayout.setVisibility(View.VISIBLE);
                         } else {
                             //  Toast.makeText(getContext(), "Up", Toast.LENGTH_LONG).show();
-                            List1Fragment.lnrSearch.setVisibility(View.INVISIBLE);
-                            List1Fragment.line.setVisibility(View.GONE);
-                            CardsFragment.tabLayout.setVisibility(View.GONE);
+                            List1Fragment.lnrSearch.setVisibility(View.VISIBLE);
+                            List1Fragment.line.setVisibility(View.VISIBLE);
+                            CardsFragment.tabLayout.setVisibility(View.VISIBLE);
                         }
                     }
                 }
@@ -267,7 +267,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             try {
                 // List1Fragment.myPager.notifyDataSetChanged();
                 List1Fragment.nfcModel.clear();
-                List1Fragment.allTags = db.getActiveNFC();
+                    List1Fragment.allTags = db.getActiveNFC();
                 //  nfcModelList.clear();
                 List1Fragment.GetData(mContext);
             } catch (Exception e){
