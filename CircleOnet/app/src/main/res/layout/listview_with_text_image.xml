@@ -66,7 +66,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="0dp"
                 android:contentDescription="Home!"
-                android:src="@drawable/ic_manage_cards" />
+                android:src="@drawable/ic_qrscann" />
 
             <TextView
                 android:id="@+id/textDrawerQR"
@@ -360,7 +360,7 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:id="@+id/drawer12"
-                android:src="@drawable/ic_help"
+                android:src="@drawable/ic_logout"
                 android:layout_marginLeft="10dp"
                 android:contentDescription="Home!"
                 android:layout_marginTop="0dp" />
