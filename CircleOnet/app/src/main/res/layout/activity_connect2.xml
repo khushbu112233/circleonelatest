@@ -657,11 +657,11 @@
                     android:id="@+id/imgCards"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/ic_icon1b" />
+                    android:src="@drawable/ic_icon1" />
 
                 <TextView
                     android:layout_marginTop="-2dp"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/unselected"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Cards"/>
@@ -680,11 +680,11 @@
                     android:id="@+id/imgConnect"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/ic_icon2" />
+                    android:src="@drawable/ic_icon2b" />
 
                 <TextView
                     android:layout_marginTop="-2dp"
-                    android:textColor="@color/unselected"
+                    android:textColor="@color/colorPrimary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Connect"/>

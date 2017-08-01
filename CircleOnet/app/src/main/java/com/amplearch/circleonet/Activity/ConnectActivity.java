@@ -69,6 +69,20 @@ public class ConnectActivity extends AppCompatActivity
         rlAdd = (RelativeLayout)findViewById(R.id.rlAdd);
         rlConnect = (RelativeLayout)findViewById(R.id.rlConnect);
 
+        ivConnectImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent go = new Intent(getApplicationContext(),Connect3Activity.class);
+//
+//                // you pass the position you want the viewpager to show in the extra,
+//                // please don't forget to define and initialize the position variable
+//                // properly
+//
+                startActivity(go);
+                finish();
+            }
+        });
+
         rlAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)

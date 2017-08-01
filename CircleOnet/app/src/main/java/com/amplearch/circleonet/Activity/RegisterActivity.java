@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amplearch.circleonet.R;
@@ -81,6 +82,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     RelativeLayout ivMale, ivFemale;
     private View line_view1, line_view2 ;
     ImageView ivMaleRound, ivMaleImg, ivFemaleround, ivFemaleImg, imgBack;
+    TextView txtGender;
 
     private String UrlRegister = "http://circle8.asia:8081/Onet.svc/Registration";
     private ArrayList<NameValuePair> params ;
@@ -104,7 +106,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
+        txtGender = (TextView) findViewById(R.id.txtGender);
         lnrRegister = (LinearLayout) findViewById(R.id.lnrBottomReg);
         etUserName = (EditText) findViewById(R.id.etUserName);
         etFirstName = (EditText) findViewById(R.id.etFirstName);
@@ -163,6 +165,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             ivMaleImg.setImageResource(R.drawable.ic_male);
             ivMaleRound.setImageResource(R.drawable.round_blue);
             gender = "Male" ;
+            txtGender.setText("Gender: Male");
         }
         if( v == ivFemale)
         {
@@ -185,6 +188,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             ivFemaleImg.setImageResource(R.drawable.ic_female);
             ivFemaleround.setImageResource(R.drawable.round_blue);
             gender = "Female" ;
+            txtGender.setText("Gender: Female");
 
         }
         if( v == lnrRegister)

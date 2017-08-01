@@ -187,6 +187,7 @@
             android:inputType="textEmailAddress"/>
 
         <TextView
+            android:id="@+id/txtGender"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="3dp"
             android:textSize="15dp"
