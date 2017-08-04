@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amplearch.circleonet.Activity.EditProfileActivity;
 import com.amplearch.circleonet.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -33,7 +34,7 @@ import com.google.zxing.common.BitMatrix;
 public class ProfileFragment extends Fragment
 {
     private ProgressBar firstBar = null;
-    ImageView imgProfileShare, imgProfileMenu, imgQR;
+    ImageView imgProfileShare, imgProfileMenu, imgQR, ivEditProfile;
     TextView tvPersonName ;
     public final static int QRcodeWidth = 500 ;
     Bitmap bitmap ;
@@ -68,6 +69,8 @@ public class ProfileFragment extends Fragment
         tvPersonName = (TextView)view.findViewById(R.id.tvPersonName);
         imgProfileShare = (ImageView) view.findViewById(R.id.imgProfileShare);
         imgProfileMenu = (ImageView) view.findViewById(R.id.imgProfileMenu);
+        ivEditProfile = (ImageView)view.findViewById(R.id.ivEditProfile);
+
         imgProfileShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,9 +125,6 @@ public class ProfileFragment extends Fragment
                     e.printStackTrace();
                 }
 
-
-
-//
 //                progressDialog = new ProgressDialog(getActivity());
 //                progressDialog.setMessage("Generating Qr Code...");
 //                progressDialog.setCancelable(false);
@@ -151,6 +151,16 @@ public class ProfileFragment extends Fragment
 
             }
         });
+
+        ivEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+//                Toast.makeText(getContext(),"Edit Profile",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(), EditProfileActivity.class));
+            }
+        });
+
         return view;
     }
 
