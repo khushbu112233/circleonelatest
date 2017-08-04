@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,7 +14,7 @@
         android:layout_gravity="center"
         android:id="@+id/imgLogin"
         android:src="@drawable/loginlogo"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
         android:layout_width="190dp"
         android:layout_height="100dp" />
@@ -71,31 +72,42 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-
-
-    <View
-        android:id="@+id/viewLogin"
-        android:layout_marginTop="28dp"
-        android:layout_below="@+id/lnrLogin"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorAccent"></View>
-
-        <Button
-            android:id="@+id/btnRegister"
-            style="@style/Widget.AppCompat.Button.Colored"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/lnrBottom"
-            android:layout_below="@+id/viewLogin"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="28dp"
-            android:text="Register"
-            android:textAllCaps="false"
-            android:textSize="16dp" />
+            android:layout_marginTop="15dp">
 
-        <LinearLayout
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="55dp"
+                android:src="@drawable/ic_finger_print"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"/>
+
+            <View
+                android:id="@+id/viewLogin"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_centerVertical="true"
+                android:background="@color/colorAccent" />
+
+        </RelativeLayout>
+
+    <Button
+        android:id="@+id/btnRegister"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/lnrBottom"
+        android:layout_below="@+id/viewLogin"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="15dp"
+        android:text="Register"
+        android:textAllCaps="false"
+        android:textSize="16dp" />
+
+    <LinearLayout
         android:id="@+id/lnrBottom"
         android:layout_weight="1"
         android:gravity="center_horizontal"
