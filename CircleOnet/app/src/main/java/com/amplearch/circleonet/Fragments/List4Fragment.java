@@ -42,6 +42,7 @@ public class List4Fragment extends Fragment
     DatabaseHelper db ;
     RelativeLayout lnrSearch;
     View line;
+    public static String parent = "";
 
     private GestureDetector gestureDetector1;
 

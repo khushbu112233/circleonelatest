@@ -158,7 +158,7 @@ public class LoginActivity extends AppCompatActivity implements
         if(PrefUtils.getCurrentUser(LoginActivity.this) != null){
 
             Intent homeIntent = new Intent(LoginActivity.this, CardsActivity.class);
-
+            homeIntent.putExtra("viewpager_position", 0);
             startActivity(homeIntent);
 
             finish();

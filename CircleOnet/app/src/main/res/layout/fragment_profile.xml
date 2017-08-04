@@ -9,6 +9,15 @@
     android:theme="@style/NoActionbar"
     android:fitsSystemWindows="true">
 
+    <ProgressBar
+        android:layout_centerInParent="true"
+        android:id="@+id/firstBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        />
+
     <android.support.design.widget.AppBarLayout
         android:background="@android:color/transparent"
         android:id="@+id/appbar"
@@ -73,6 +82,7 @@
                 android:layout_height="30dp"
                 android:src="@drawable/ic_dehaze_black_24dp"/>
 
+
             <LinearLayout
                 android:layout_marginTop="25dp"
                 android:layout_below="@+id/txtprofile"
@@ -82,14 +92,26 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <RelativeLayout
+                    android:layout_width="70dp"
+                    android:layout_height="70dp">
                 <de.hdodenhof.circleimageview.CircleImageView
                     app:civ_border_width="0dp"
                     app:civ_border_color="@color/colorPrimary"
                     android:src="@drawable/profile3"
                     android:id="@+id/imageList4"
                     android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    />
+                    android:layout_height="70dp" />
+
+                    <ImageView
+                        android:id="@+id/imgQR"
+                        android:layout_marginBottom="5dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_width="13dp"
+                        android:layout_height="13dp"
+                        android:src="@drawable/ic_qrscann"/>
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/tvPersonName"

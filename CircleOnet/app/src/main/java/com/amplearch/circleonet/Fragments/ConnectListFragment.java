@@ -74,7 +74,7 @@ public class ConnectListFragment extends Fragment {
 */
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
         listView = (ListView) view.findViewById(R.id.listViewType4);
-
+        listView.setVisibility(View.GONE);
         allTags = new ArrayList<>();
 
         searchText = (AutoCompleteTextView)view.findViewById(R.id.searchView);
@@ -87,12 +87,10 @@ public class ConnectListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getContext(), ConnectActivity.class);
+                intent.putExtra("tag_id", nfcModel.get(position).getNfc_tag());
                 getContext().startActivity(intent);
             }
         });
-
-
-
         searchText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after)
@@ -104,11 +102,13 @@ public class ConnectListFragment extends Fragment {
             {
                 if(s.length() <= 0)
                 {
+                    listView.setVisibility(View.GONE);
                     nfcModel.clear();
                     GetData();
                 }
                 else
                 {
+                    listView.setVisibility(View.VISIBLE);
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
                     gridAdapter.Filter(text);
                 }
@@ -147,7 +147,7 @@ public class ConnectListFragment extends Fragment {
             nfcModelTag.setMob_no(reTag.getMob_no());
             nfcModelTag.setDesignation(reTag.getDesignation());
             nfcModelTag.setUser_image(reTag.getUser_image());
-
+            nfcModelTag.setNfc_tag(reTag.getNfc_tag());
             nfcModel.add(nfcModelTag);
         }
         gridAdapter = new List4Adapter(getContext(), R.layout.grid_list4_layout, nfcModel);
@@ -174,7 +174,7 @@ public class ConnectListFragment extends Fragment {
           //  allTags = new ArrayList<>();
             designation = new ArrayList<>();
 
-            allTags = db.getActiveNFC();
+            allTags = db.getAllNFC();
 
             return null;
         }

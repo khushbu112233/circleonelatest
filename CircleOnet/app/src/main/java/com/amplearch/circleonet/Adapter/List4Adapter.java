@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amplearch.circleonet.Activity.CardsActivity;
+import com.amplearch.circleonet.Activity.ConnectActivity;
 import com.amplearch.circleonet.Fragments.CardsFragment;
 import com.amplearch.circleonet.Fragments.List1Fragment;
 import com.amplearch.circleonet.Fragments.List2Fragment;
@@ -171,7 +172,7 @@ public class List4Adapter extends BaseSwipeAdapter {
     }
 
     @Override
-    public void fillValues(int position, View convertView)
+    public void fillValues(final int position, View convertView)
     {
         View row = convertView;
         ViewHolder holder = null;
@@ -215,6 +216,14 @@ public class List4Adapter extends BaseSwipeAdapter {
         }
         catch (Exception e){  }
 
+       /* row.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ConnectActivity.class);
+                intent.putExtra("tag_id", nfcModelList.get(position).getNfc_tag());
+                context.startActivity(intent);
+            }
+        });*/
        // Bitmap bmp1 = BitmapFactory.decodeByteArray(nfcModelList.get(position).getUser_image(), 0, nfcModelList.get(position).getUser_image().length);
         // ImageView image = (ImageView) findViewById(R.id.imageView1);
         holder.image.setImageResource(nfcModelList.get(position).getUser_image());

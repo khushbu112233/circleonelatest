@@ -12,7 +12,7 @@
     <FrameLayout
         android:id="@+id/flProfile"
         android:layout_width="match_parent"
-        android:layout_height="230dp">
+        android:layout_height="280dp">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -66,7 +66,9 @@
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:src="@drawable/profile1"
-                    android:layout_centerInParent="true"/>
+                    android:layout_marginTop="81dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true" />
                 <TextView
                     android:id="@+id/tvPersonName"
                     android:layout_width="wrap_content"
@@ -78,6 +80,19 @@
                     android:layout_below="@+id/ivProfileImage"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="5dp"/>
+
+                <TextView
+                    android:id="@+id/tvPersonDesignation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Eduardo Saverin"
+                    android:textColor="@android:color/white"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:layout_below="@+id/tvPersonName"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"/>
+
                 <TextView
                     android:id="@+id/tvCompanyName"
                     android:layout_width="wrap_content"
@@ -86,7 +101,7 @@
                     android:textColor="@android:color/white"
                     android:textSize="18dp"
                     android:textStyle="normal"
-                    android:layout_below="@+id/tvPersonName"
+                    android:layout_below="@+id/tvPersonDesignation"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="0dp"/>
@@ -479,6 +494,7 @@
                 </RelativeLayout>
 
                 <LinearLayout
+                    android:id="@+id/lnrWeb"
                     android:layout_marginRight="15dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="15dp"
@@ -493,6 +509,7 @@
                         android:src="@drawable/ic_web"/>
 
                     <TextView
+                        android:id="@+id/txtWeb"
                         android:textAlignment="center"
                         android:gravity="center"
                         android:textColor="#6b6c6e"
@@ -503,6 +520,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/lnrmail"
                     android:layout_marginRight="15dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="15dp"
@@ -517,7 +535,7 @@
                         android:src="@drawable/ic_mail_gray"/>
 
                     <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/txtMail"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"
@@ -528,6 +546,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/lnrnum"
                     android:layout_marginRight="15dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="15dp"
@@ -542,6 +561,7 @@
                         android:src="@drawable/ic_phone"/>
 
                     <TextView
+                        android:id="@+id/txtNum"
                         android:textAlignment="center"
                         android:gravity="center"
                         android:textColor="#6b6c6e"
@@ -552,6 +572,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/lnrmob"
                     android:layout_marginRight="15dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="15dp"
@@ -566,6 +587,7 @@
                         android:src="@drawable/ic_phone2"/>
 
                     <TextView
+                        android:id="@+id/txtMob"
                         android:textAlignment="center"
                         android:gravity="center"
                         android:textColor="#6b6c6e"

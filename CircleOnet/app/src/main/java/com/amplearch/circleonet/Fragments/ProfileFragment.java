@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -31,14 +32,14 @@ import com.google.zxing.common.BitMatrix;
  */
 public class ProfileFragment extends Fragment
 {
-
-    ImageView imgProfileShare, imgProfileMenu;
+    private ProgressBar firstBar = null;
+    ImageView imgProfileShare, imgProfileMenu, imgQR;
     TextView tvPersonName ;
     public final static int QRcodeWidth = 500 ;
     Bitmap bitmap ;
     ProgressDialog progressDialog ;
 
-
+    private int i = 0;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -59,6 +60,11 @@ public class ProfileFragment extends Fragment
       //  ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
 
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Generating Qr Code...");
+        progressDialog.setCancelable(false);
+        imgQR = (ImageView) view.findViewById(R.id.imgQR);
+        firstBar = (ProgressBar)view.findViewById(R.id.firstBar);
         tvPersonName = (TextView)view.findViewById(R.id.tvPersonName);
         imgProfileShare = (ImageView) view.findViewById(R.id.imgProfileShare);
         imgProfileMenu = (ImageView) view.findViewById(R.id.imgProfileMenu);
@@ -93,39 +99,56 @@ public class ProfileFragment extends Fragment
         }
         });
 
-        tvPersonName.setOnClickListener(new View.OnClickListener() {
+        imgQR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                progressDialog = new ProgressDialog(getActivity());
-                progressDialog.setMessage("Generating Qr Code...");
-                progressDialog.setCancelable(false);
-                progressDialog.show();
-
+                Toast.makeText(getContext(), "Generating QR Code.. Please Wait..", Toast.LENGTH_LONG).show();
                 String barName = "Westley Wan";
                 try
                 {
+                    AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                    LayoutInflater inflater = getActivity().getLayoutInflater();
+                    final View dialogView = inflater.inflate(R.layout.person_qrcode, null);
+                    TextView tvBarName = (TextView)dialogView.findViewById(R.id.tvBarName);
+                    ImageView ivBarImage = (ImageView)dialogView.findViewById(R.id.ivBarImage);
+                    tvBarName.setText(barName);
                     bitmap = TextToImageEncode(barName);
+                    ivBarImage.setImageBitmap(bitmap);
+                    alertDialog.setView(dialogView);
+                    alertDialog.show();
                 }
                 catch (WriterException e) {
                     e.printStackTrace();
                 }
 
-                AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-//        alertDialog.setTitle("Cash Assets:");
-                LayoutInflater inflater = getActivity().getLayoutInflater();
-                final View dialogView = inflater.inflate(R.layout.person_qrcode, null);
 
-                TextView tvBarName = (TextView)dialogView.findViewById(R.id.tvBarName);
-                ImageView ivBarImage = (ImageView)dialogView.findViewById(R.id.ivBarImage);
 
-                tvBarName.setText(barName);
-                ivBarImage.setImageBitmap(bitmap);
+//
+//                progressDialog = new ProgressDialog(getActivity());
+//                progressDialog.setMessage("Generating Qr Code...");
+//                progressDialog.setCancelable(false);
 
-                alertDialog.setView(dialogView);
-                alertDialog.show();
 
-                progressDialog.dismiss();
+
+               /* try
+                {
+                    AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                    LayoutInflater inflater = getActivity().getLayoutInflater();
+                    final View dialogView = inflater.inflate(R.layout.person_qrcode, null);
+                    TextView tvBarName = (TextView)dialogView.findViewById(R.id.tvBarName);
+                    ImageView ivBarImage = (ImageView)dialogView.findViewById(R.id.ivBarImage);
+                    tvBarName.setText(barName);
+                    bitmap = TextToImageEncode(barName);
+                    ivBarImage.setImageBitmap(bitmap);
+                    alertDialog.setView(dialogView);
+                    progressDialog.dismiss();
+                    alertDialog.show();
+                }
+                catch (WriterException e) {
+                    e.printStackTrace();
+                }*/
+
             }
         });
         return view;
@@ -133,8 +156,6 @@ public class ProfileFragment extends Fragment
 
     Bitmap TextToImageEncode(String Value) throws WriterException
     {
-
-
         BitMatrix bitMatrix;
         try
         {
