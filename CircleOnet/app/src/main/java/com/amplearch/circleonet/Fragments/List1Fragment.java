@@ -158,8 +158,8 @@ public class List1Fragment extends Fragment
         gestureDetector1.setOnDoubleTapListener(doubleTapListener);
         nfcModel = new ArrayList<>();
         allTags = new ArrayList<>();
-     //   new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+        new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+       // new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
 
         recyclerView1.addOnScrollListener(scrollListener);
         recyclerView2.addOnScrollListener(scrollListener);
@@ -441,6 +441,7 @@ public class List1Fragment extends Fragment
                 }else {
                     Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
                 }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
