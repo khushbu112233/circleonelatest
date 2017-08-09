@@ -3,7 +3,10 @@ package com.amplearch.circleonet.Activity;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -15,11 +18,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.amplearch.circleonet.R;
 import com.amplearch.circleonet.Utils.Utility;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.UUID;
 
 import static android.R.attr.path;
 
@@ -39,6 +48,7 @@ public class EditProfileActivity extends AppCompatActivity
     private static final int PICKFILE_RESULT_CODE = 1;
 
     private int REQUEST_CAMERA = 0, REQUEST_GALLERY = 1, REQUEST_DOCUMENT = 2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -64,9 +74,11 @@ public class EditProfileActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("file/*");
-                startActivityForResult(intent,PICKFILE_RESULT_CODE);
+               /* Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("file*//*");
+                startActivityForResult(intent,PICKFILE_RESULT_CODE);*/
+
+                selectFile();
             }
         });
     }
@@ -90,14 +102,15 @@ public class EditProfileActivity extends AppCompatActivity
             }
             else if(requestCode == REQUEST_CAMERA)
             {
-
+                onCaptureImageResult(data);
             }
             else if(requestCode == REQUEST_GALLERY)
             {
-
+                onSelectFromGalleryResult(data);
             }
             else if(requestCode == REQUEST_DOCUMENT)
             {
+                onSelectFromFiles(data);
 
             }
         }
@@ -137,7 +150,7 @@ public class EditProfileActivity extends AppCompatActivity
                     userChoosenTask = "Take Camera";
                     if(result)
                     {
-//                        cameraIntent();
+                        cameraIntent();
                     }
                 }
                 else if (items[item].equals("Choose from Media"))
@@ -145,7 +158,7 @@ public class EditProfileActivity extends AppCompatActivity
                     userChoosenTask = "Choose from Media";
                     if(result)
                     {
-//                        galleryIntent();
+                        galleryIntent();
                     }
                 }
                 else if (items[item].equals("Cancel"))
@@ -157,11 +170,12 @@ public class EditProfileActivity extends AppCompatActivity
                     userChoosenTask = "Take Documents";
                     if(result)
                     {
-//                        galleryIntent();
+                        documentIntent();
                     }
                 }
             }
         });
+        builder.show();
     }
 
     private void galleryIntent()
@@ -177,4 +191,82 @@ public class EditProfileActivity extends AppCompatActivity
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, REQUEST_CAMERA);
     }
+
+    private void documentIntent()
+    {
+        Intent intent = new Intent();
+        intent.setType("file//*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, REQUEST_DOCUMENT);
+    }
+
+    private void onSelectFromGalleryResult(Intent data)
+    {
+        Uri selectedImageUri = data.getData();
+        String imgPath = getPath(selectedImageUri);
+
+        File imgFile = new File(imgPath);
+        String imgName = imgFile.getName();
+
+        etAttachFile.setText(imgName);
+
+        Bitmap bm = null;
+        if (data != null)
+        {
+            try
+            {
+                bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+                Toast.makeText(getApplicationContext(),"Image too large.", Toast.LENGTH_LONG).show();
+            }
+        }
+//        ivProfileImg.setImageBitmap(bm);
+    }
+
+    public String getPath(Uri uri)
+    {
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
+
+    private void onCaptureImageResult(Intent data)
+    {
+        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+
+        File destination = new File(Environment.getExternalStorageDirectory(), System.currentTimeMillis() + ".jpg");
+        FileOutputStream fo;
+        try
+        {
+            destination.createNewFile();
+            fo = new FileOutputStream(destination);
+            fo.write(bytes.toByteArray());
+            fo.close();
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+//        ivProfileImg.setImageBitmap(thumbnail);
+    }
+
+    private void onSelectFromFiles(Intent data)
+    {
+        String FilePath = data.getData().getPath();
+        File file = new File(FilePath);
+        String fileName = file.getName();
+
+        etAttachFile.setText(fileName);
+    }
+
+
 }
