@@ -34,6 +34,10 @@
     <string name="progressdialog_waiting_for_tag_message">Tap tag to write…</string>
     <string name="no_input">You should give me something to write</string>
     <string name="facebook_app_id">1910928962566224</string>
+
     <string name="twitter_consumer_key">977WDvxQIva9sFYj37jwSs3pO</string>
     <string name="twitter_consumer_secret">jw1DynZBQA6f3CGT3WNg3FoVv3i6pI3FGmHhfbEoxEdP14cAdQ</string>
+    <string name="testimonial1">Ask your friends to write a Testimonial for you{100 words or less},</string>
+    <string name="testimonial2">Please choose from your <b><font color="#38c0c7">Circle 1 contacts</font></b> and send a request. </string>
+
 </resources>

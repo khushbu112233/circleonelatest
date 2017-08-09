@@ -14,7 +14,7 @@
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:layout_weight="1"
         android:src="@drawable/loginlogo" />
 
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="45dp"
             android:layout_marginRight="45dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:background="@drawable/edit_back"
             android:drawableRight="@drawable/question"
             android:hint="Password"
@@ -68,20 +68,31 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:text="Login"
             android:textAllCaps="false"
             android:textSize="16dp" />
 
-
-        <View
-            android:id="@+id/viewLogin"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
+        <RelativeLayout
+            android:layout_marginTop="15dp"
             android:layout_below="@+id/lnrLogin"
-            android:layout_marginTop="28dp"
-            android:background="@color/colorAccent"></View>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
+            <View
+                android:layout_centerInParent="true"
+                android:id="@+id/viewLogin"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorAccent"></View>
+
+            <ImageView
+                android:src="@drawable/ic_finger_print"
+                android:layout_centerInParent="true"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
+        </RelativeLayout>
         <Button
             android:id="@+id/btnRegister"
             style="@style/Widget.AppCompat.Button.Colored"
@@ -91,7 +102,7 @@
             android:layout_below="@+id/viewLogin"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="15dp"
             android:text="Register"
             android:textAllCaps="false"
             android:textSize="16dp" />
@@ -101,7 +112,7 @@
             android:id="@+id/lnrBottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
@@ -139,11 +150,11 @@
                     android:layout_width="28dp"
                     android:layout_height="28dp" />
 
-              <!--  <ImageView
-                    android:id="@+id/btnLoginTwitter"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:src="@drawable/icon_twitter" />-->
+                <!--  <ImageView
+                      android:id="@+id/btnLoginTwitter"
+                      android:layout_width="28dp"
+                      android:layout_height="28dp"
+                      android:src="@drawable/icon_twitter" />-->
             </RelativeLayout>
 
             <RelativeLayout
