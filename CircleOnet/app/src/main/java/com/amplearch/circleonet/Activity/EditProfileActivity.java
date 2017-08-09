@@ -1,10 +1,12 @@
 package com.amplearch.circleonet.Activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -47,7 +49,7 @@ public class EditProfileActivity extends AppCompatActivity
 
     private static final int PICKFILE_RESULT_CODE = 1;
 
-    private int REQUEST_CAMERA = 0, REQUEST_GALLERY = 1, REQUEST_DOCUMENT = 2;
+    private int REQUEST_CAMERA = 0, REQUEST_GALLERY = 1, REQUEST_DOCUMENT = 2, REQUEST_AUDIO = 3;
 
 
     @Override
@@ -111,7 +113,10 @@ public class EditProfileActivity extends AppCompatActivity
             else if(requestCode == REQUEST_DOCUMENT)
             {
                 onSelectFromFiles(data);
-
+            }
+            else if(requestCode == REQUEST_AUDIO)
+            {
+                onSelectFromAudio(data);
             }
         }
       /*  switch(requestCode)
@@ -135,7 +140,7 @@ public class EditProfileActivity extends AppCompatActivity
 
     private void selectFile()
     {
-        items = new CharSequence[]{"Take Documents","Take Camera", "Choose from Media", "Cancel"};
+        items = new CharSequence[]{"Take Document","Take Picture","Choose from Media","Take Audio","Cancel"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(EditProfileActivity.this);
         builder.setTitle("Attach File!");
@@ -145,9 +150,9 @@ public class EditProfileActivity extends AppCompatActivity
             public void onClick(DialogInterface dialog, int item) {
                 boolean result = Utility.checkPermission(EditProfileActivity.this);
 
-                if (items[item].equals("Take Camera"))
+                if (items[item].equals("Take Picture"))
                 {
-                    userChoosenTask = "Take Camera";
+                    userChoosenTask = "Take Picture";
                     if(result)
                     {
                         cameraIntent();
@@ -165,12 +170,20 @@ public class EditProfileActivity extends AppCompatActivity
                 {
                     dialog.dismiss();
                 }
-                else if (items[item].equals("Take Documents"))
+                else if (items[item].equals("Take Document"))
                 {
-                    userChoosenTask = "Take Documents";
+                    userChoosenTask = "Take Document";
                     if(result)
                     {
                         documentIntent();
+                    }
+                }
+                else if (items[item].equals("Take Audio"))
+                {
+                    userChoosenTask = "Take Audio";
+                    if(result)
+                    {
+                        audioIntent();
                     }
                 }
             }
@@ -198,6 +211,17 @@ public class EditProfileActivity extends AppCompatActivity
         intent.setType("file//*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, REQUEST_DOCUMENT);
+    }
+
+    private void audioIntent()
+    {
+        /*Intent intent_upload = new Intent();
+        intent_upload.setType("audio*//*");
+        intent_upload.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent_upload,REQUEST_AUDIO);*/
+
+        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, REQUEST_AUDIO);
     }
 
     private void onSelectFromGalleryResult(Intent data)
@@ -241,6 +265,14 @@ public class EditProfileActivity extends AppCompatActivity
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
 
+        // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
+        Uri imgUri = getImageUri(getApplicationContext(), thumbnail);
+        // CALL THIS METHOD TO GET THE ACTUAL PATH
+        File imgFile = new File(getRealPathFromURI(imgUri));
+        String imgName = imgFile.getName();
+
+        etAttachFile.setText(imgName);
+
         File destination = new File(Environment.getExternalStorageDirectory(), System.currentTimeMillis() + ".jpg");
         FileOutputStream fo;
         try
@@ -259,13 +291,47 @@ public class EditProfileActivity extends AppCompatActivity
 //        ivProfileImg.setImageBitmap(thumbnail);
     }
 
+    public Uri getImageUri(Context inContext, Bitmap inImage)
+    {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+    public String getRealPathFromURI(Uri uri)
+    {
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+        return cursor.getString(idx);
+    }
+
     private void onSelectFromFiles(Intent data)
     {
-        String FilePath = data.getData().getPath();
-        File file = new File(FilePath);
-        String fileName = file.getName();
+        String docsPath = data.getData().getPath();
+        File docsFile = new File(docsPath);
+        String docsName = docsFile.getName();
 
-        etAttachFile.setText(fileName);
+        etAttachFile.setText(docsName);
+    }
+
+    private void onSelectFromAudio(Intent data)
+    {
+        //the selected audio.
+//        Uri uri = data.getData();
+        String audioPath = data.getData().getPath();
+        File audioFile = new File(audioPath);
+        String audioName = audioFile.getName();
+        etAttachFile.setText(audioName);
+
+        Toast.makeText(getApplicationContext(),"Audio path: "+audioPath,Toast.LENGTH_LONG).show();
+
+        Uri uri = data.getData();
+//        mMediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
+
+
+
     }
 
 
