@@ -7,6 +7,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,9 +23,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amplearch.circleonet.Activity.CardsActivity;
+import com.amplearch.circleonet.ApplicationUtils.MyApplication;
 import com.amplearch.circleonet.ConnectivityReceiver;
+import com.amplearch.circleonet.Helper.CustomSharedPreference;
+import com.amplearch.circleonet.Helper.FingerPrintSession;
 import com.amplearch.circleonet.Helper.LoginSession;
 import com.amplearch.circleonet.Model.User;
+import com.amplearch.circleonet.Model.UserObject;
 import com.amplearch.circleonet.R;
 import com.amplearch.circleonet.Utils.PrefUtils;
 import com.amplearch.circleonet.Walkthrough.HelpActivity;
@@ -56,6 +61,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.TwitterAuthProvider;
+import com.google.gson.Gson;
 import com.linkedin.platform.APIHelper;
 import com.linkedin.platform.LISessionManager;
 import com.linkedin.platform.errors.LIApiError;
@@ -97,7 +103,7 @@ import static com.amplearch.circleonet.Utils.Validation.validateLogin;
 
 public class LoginActivity extends AppCompatActivity implements
         View.OnClickListener,
-        GoogleApiClient.OnConnectionFailedListener{
+        GoogleApiClient.OnConnectionFailedListener {
 
     Button btnSimpleLogin, btnRegister;
     //Boolean isConnected = false;
@@ -123,11 +129,12 @@ public class LoginActivity extends AppCompatActivity implements
     private TwitterLoginButton mLoginButton;
 
     LoginSession loginSession;
+    FingerPrintSession fingerPrintSession;
 
     private static final String TAG = LoginActivity.class.getSimpleName();
     public static final String PACKAGE = "com.amplearch.circleonet";
 
-    ImageView login_linkedin_btn;
+    ImageView login_linkedin_btn, imgFinger;
 
     private static final String host = "api.linkedin.com";
     private static final String topCardUrl = "https://" + host + "/v1/people/~:" +
@@ -141,17 +148,19 @@ public class LoginActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
-        TwitterAuthConfig authConfig =  new TwitterAuthConfig(
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(
                 getString(R.string.twitter_consumer_key),
                 getString(R.string.twitter_consumer_secret));
         Fabric.with(this, new Twitter(authConfig));
         loginSession = new LoginSession(getApplicationContext());
+        fingerPrintSession = new FingerPrintSession(getApplicationContext());
         setContentView(R.layout.activity_login);
         btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
         btnSimpleLogin = (Button) findViewById(R.id.btnLogin);
         btnLogin = (ImageView) findViewById(R.id.fbLogin);
-        loginButton= (LoginButton)findViewById(R.id.login_button);
-      //  btnLoginTwitter = (ImageView) findViewById(R.id.btnLoginTwitter);
+        loginButton = (LoginButton) findViewById(R.id.login_button);
+        imgFinger = (ImageView) findViewById(R.id.imgFinger);
+        //  btnLoginTwitter = (ImageView) findViewById(R.id.btnLoginTwitter);
         btnRegister = (Button) findViewById(R.id.btnRegister);
         etLoginPass = (EditText) findViewById(R.id.etLoginPass);
         etLoginUser = (EditText) findViewById(R.id.etLoginUser);
@@ -164,6 +173,22 @@ public class LoginActivity extends AppCompatActivity implements
                 startActivity(intent);
             }
         });
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            imgFinger.setVisibility(View.VISIBLE);
+        }
+        else {
+            imgFinger.setVisibility(View.GONE);
+        }
+
+        imgFinger.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), FingerPrintLogin.class);
+                startActivity(intent);
+            }
+        });
+
         generateHashkey();
         login_linkedin_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,7 +222,7 @@ public class LoginActivity extends AppCompatActivity implements
             }
         });
 
-      //  isConnected = checkConnection();
+        //  isConnected = checkConnection();
         btnSimpleLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -205,11 +230,9 @@ public class LoginActivity extends AppCompatActivity implements
                 userName = etLoginUser.getText().toString();
                 userPassword = etLoginPass.getText().toString();
 
-                if (!validateLogin(userName, userPassword))
-                {
+                if (!validateLogin(userName, userPassword)) {
                     Toast.makeText(getApplicationContext(), "Form Fill Invalid!", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/UserLogin");
                 }
             /* Create an Intent that will start the Menu-Activity. */
@@ -236,21 +259,21 @@ public class LoginActivity extends AppCompatActivity implements
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    progressDialog = new ProgressDialog(LoginActivity.this);
-                    progressDialog.setMessage("Loading...");
-                    progressDialog.show();
+                progressDialog = new ProgressDialog(LoginActivity.this);
+                progressDialog.setMessage("Loading...");
+                progressDialog.show();
 
-                    loginButton.performClick();
+                loginButton.performClick();
 
-                    loginButton.setPressed(true);
+                loginButton.setPressed(true);
 
-                    loginButton.invalidate();
+                loginButton.invalidate();
 
-                    loginButton.registerCallback(callbackManager, mCallBack);
+                loginButton.registerCallback(callbackManager, mCallBack);
 
-                    loginButton.setPressed(false);
+                loginButton.setPressed(false);
 
-                    loginButton.invalidate();
+                loginButton.invalidate();
             }
         });
 
@@ -264,12 +287,10 @@ public class LoginActivity extends AppCompatActivity implements
         }*/
     }
 
-    public  String POST(String url)
-    {
+    public String POST(String url) {
         InputStream inputStream = null;
         String result = "";
-        try
-        {
+        try {
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
 
@@ -279,8 +300,8 @@ public class LoginActivity extends AppCompatActivity implements
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("Password", userPassword );
-            jsonObject.accumulate("UserName", userName );
+            jsonObject.accumulate("Password", userPassword);
+            jsonObject.accumulate("UserName", userName);
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -307,7 +328,7 @@ public class LoginActivity extends AppCompatActivity implements
 
 
             // 10. convert inputstream to string
-            if(inputStream != null)
+            if (inputStream != null)
                 result = convertInputStreamToString(inputStream);
             else
                 result = "Did not work!";
@@ -321,18 +342,18 @@ public class LoginActivity extends AppCompatActivity implements
     }
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line = "";
         String result = "";
-        while((line = bufferedReader.readLine()) != null)
+        while ((line = bufferedReader.readLine()) != null)
             result += line;
 
         inputStream.close();
         return result;
 
     }
-    private class HttpAsyncTask extends AsyncTask<String, Void, String>
-    {
+
+    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
@@ -346,14 +367,13 @@ public class LoginActivity extends AppCompatActivity implements
         }
 
         @Override
-        protected String doInBackground(String... urls)
-        {
+        protected String doInBackground(String... urls) {
             return POST(urls[0]);
         }
+
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result)
-        {
+        protected void onPostExecute(String result) {
             dialog.dismiss();
             try {
                 if (result != null) {
@@ -362,26 +382,44 @@ public class LoginActivity extends AppCompatActivity implements
                     String UserID = jsonObject.getString("UserID").toString();
 
                     if (success.equals("1") && !UserID.equalsIgnoreCase("")) {
-                        Toast.makeText(getBaseContext(), "LoggedIn Successfully..", Toast.LENGTH_LONG).show();
-                        loginSession.createLoginSession("", userName, "", "");
-                        if (prefs.getBoolean("firstrun", true)) {
-                            // Do first run stuff here then set 'firstrun' as false
-                            // using the following line to edit/commit prefs
-                            Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
-                            startActivity(intent);
-                            prefs.edit().putBoolean("firstrun", false).commit();
-                        }
-                        else {
-                            Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
-                            intent.putExtra("viewpager_position", 0);
+                        //  Toast.makeText(getBaseContext(), "LoggedIn Successfully..", Toast.LENGTH_LONG).show();
+                        fingerPrintSession.createLoginSession(UserID, "", userName, "", "");
+
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                           // imgFinger.setVisibility(View.VISIBLE);
+                            Gson gson = ((MyApplication) getApplication()).getGsonObject();
+                            UserObject userData = new UserObject("", userName, userPassword, UserID, "", "", false);
+                            String userDataString = gson.toJson(userData);
+                            CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
+                            pref.setUserData(userDataString);
+
+                            Intent intent = new Intent(getApplicationContext(), FingerPrintLogin.class);
+                            //intent.putExtra("viewpager_position", 0);
                             startActivity(intent);
                             finish();
+                        }
+                        else {
+                           // imgFinger.setVisibility(View.GONE);
+                            loginSession.createLoginSession(UserID, "", userName, "", "");
+                            if (prefs.getBoolean("firstrun", true)) {
+                                // Do first run stuff here then set 'firstrun' as false
+                                // using the following line to edit/commit prefs
+                                Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                                startActivity(intent);
+                                prefs.edit().putBoolean("firstrun", false).commit();
+                            } else {
+                                Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                                userIntent.putExtra("viewpager_position", 0);
+                                startActivity(userIntent);
+                                finish();
+                            }
                         }
 
                     } else {
                         Toast.makeText(getBaseContext(), "Unable to Login..", Toast.LENGTH_LONG).show();
                     }
-                }else {
+                } else {
                     Toast.makeText(getBaseContext(), "Not able to Login..", Toast.LENGTH_LONG).show();
                 }
 
@@ -399,7 +437,7 @@ public class LoginActivity extends AppCompatActivity implements
         return  isConnected;
     }*/
 
-    public void login_linkedin(){
+    public void login_linkedin() {
         LISessionManager.getInstance(getApplicationContext()).init(this, buildScope(), new AuthListener() {
             @Override
             public void onAuthSuccess() {
@@ -473,7 +511,37 @@ public class LoginActivity extends AppCompatActivity implements
                 );
 
 
-                loginSession.createLoginSession(personName, email, personPhotoUrl, "");
+              //  loginSession.createLoginSession("", personName, email, personPhotoUrl, "");
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    // imgFinger.setVisibility(View.VISIBLE);
+                    Gson gson = ((MyApplication) getApplication()).getGsonObject();
+                    UserObject userData = new UserObject(personName, email, "", "", "", personPhotoUrl, false);
+                    String userDataString = gson.toJson(userData);
+                    CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
+                    pref.setUserData(userDataString);
+
+                    Intent intent = new Intent(getApplicationContext(), FingerPrintLogin.class);
+                    //intent.putExtra("viewpager_position", 0);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    // imgFinger.setVisibility(View.GONE);
+                    loginSession.createLoginSession("", personName, email, personPhotoUrl, "");
+                    if (prefs.getBoolean("firstrun", true)) {
+                        // Do first run stuff here then set 'firstrun' as false
+                        // using the following line to edit/commit prefs
+                        Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                        startActivity(intent);
+                        prefs.edit().putBoolean("firstrun", false).commit();
+                    } else {
+                        Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                        userIntent.putExtra("viewpager_position", 0);
+                        startActivity(userIntent);
+                        finish();
+                    }
+                }
 
                 // Toast.makeText(getApplicationContext(), "Name: " + personName + ", email: " + email, Toast.LENGTH_LONG).show();
 
@@ -498,32 +566,32 @@ public class LoginActivity extends AppCompatActivity implements
     protected void onResume() {
         super.onResume();
 
-        callbackManager=CallbackManager.Factory.create();
+        callbackManager = CallbackManager.Factory.create();
 
-        loginButton= (LoginButton)findViewById(R.id.login_button);
+        loginButton = (LoginButton) findViewById(R.id.login_button);
 
         loginButton.setReadPermissions("public_profile", "email");
 
-        btnLogin= (ImageView) findViewById(R.id.fbLogin);
+        btnLogin = (ImageView) findViewById(R.id.fbLogin);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                    progressDialog = new ProgressDialog(LoginActivity.this);
-                    progressDialog.setMessage("Loading...");
-                    progressDialog.show();
+                progressDialog = new ProgressDialog(LoginActivity.this);
+                progressDialog.setMessage("Loading...");
+                progressDialog.show();
 
-                    loginButton.performClick();
+                loginButton.performClick();
 
-                    loginButton.setPressed(true);
+                loginButton.setPressed(true);
 
-                    loginButton.invalidate();
+                loginButton.invalidate();
 
-                    loginButton.registerCallback(callbackManager, mCallBack);
+                loginButton.registerCallback(callbackManager, mCallBack);
 
-                    loginButton.setPressed(false);
+                loginButton.setPressed(false);
 
-                    loginButton.invalidate();
+                loginButton.invalidate();
 
             }
         });
@@ -547,19 +615,52 @@ public class LoginActivity extends AppCompatActivity implements
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            loginSession.createLoginSession(user.getDisplayName(), user.getEmail(), String.valueOf(user.getPhotoUrl()), "");
+                            /*loginSession.createLoginSession("", user.getDisplayName(), user.getEmail(), String.valueOf(user.getPhotoUrl()), "");
                             Intent homeIntent = new Intent(LoginActivity.this, CardsActivity.class);
                             homeIntent.putExtra("viewpager_position", 0);
                             startActivity(homeIntent);
 
                             finish();
+*/
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                // imgFinger.setVisibility(View.VISIBLE);
+                                Gson gson = ((MyApplication) getApplication()).getGsonObject();
+                                UserObject userData = new UserObject(user.getDisplayName(), user.getEmail(), "", "", "", String.valueOf(user.getPhotoUrl()), false);
+                                String userDataString = gson.toJson(userData);
+                                CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
+                                pref.setUserData(userDataString);
+
+                                Intent intent = new Intent(getApplicationContext(), FingerPrintLogin.class);
+                                //intent.putExtra("viewpager_position", 0);
+                                startActivity(intent);
+                                finish();
+                            }
+                            else {
+                                // imgFinger.setVisibility(View.GONE);
+                                loginSession.createLoginSession("", user.getDisplayName(), user.getEmail(), String.valueOf(user.getPhotoUrl()), "");
+                                if (prefs.getBoolean("firstrun", true)) {
+                                    // Do first run stuff here then set 'firstrun' as false
+                                    // using the following line to edit/commit prefs
+                                    Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                                    startActivity(intent);
+                                    prefs.edit().putBoolean("firstrun", false).commit();
+                                } else {
+                                    Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                                    userIntent.putExtra("viewpager_position", 0);
+                                    startActivity(userIntent);
+                                    finish();
+                                }
+                            }
+
+
                             //updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                           // updateUI(null);
+                            // updateUI(null);
                         }
 
                         // [START_EXCLUDE]
@@ -587,14 +688,14 @@ public class LoginActivity extends AppCompatActivity implements
             handleSignInResult(result);
         }
         LISessionManager.getInstance(getApplicationContext()).onActivityResult(this, requestCode, resultCode, data);
-        progress= new ProgressDialog(this);
-        progress.setMessage("LinkedIn Signin...");
+        progress = new ProgressDialog(this);
+        progress.setMessage("Logging in...");
         progress.setCanceledOnTouchOutside(false);
         progress.show();
         linkededinApiHelper();
     }
 
-    public void linkededinApiHelper(){
+    public void linkededinApiHelper() {
         APIHelper apiHelper = APIHelper.getInstance(getApplicationContext());
         apiHelper.getRequest(LoginActivity.this, topCardUrl, new ApiListener() {
             @Override
@@ -613,7 +714,7 @@ public class LoginActivity extends AppCompatActivity implements
             @Override
             public void onApiError(LIApiError error) {
                 // ((TextView) findViewById(R.id.error)).setText(error.toString());
-                Toast.makeText(getApplicationContext(), "Not able to Login to LinkedIn..", Toast.LENGTH_LONG).show();
+              //  Toast.makeText(getApplicationContext(), "Not able to Login to LinkedIn..", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -622,22 +723,43 @@ public class LoginActivity extends AppCompatActivity implements
        Set User Profile Information in Navigation Bar.
      */
 
-    public  void  setprofile(JSONObject response){
+    public void setprofile(JSONObject response) {
 
         try {
-           // Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
-            Log.d("response link ", response.toString());
-           // Toast.makeText(getApplicationContext(), response.get("emailAddress").toString(), Toast.LENGTH_LONG).show();
-          //  Toast.makeText(getApplicationContext(), response.get("formattedName").toString(), Toast.LENGTH_LONG).show();
-           // Toast.makeText(getApplicationContext(), response.get("publicProfileUrl").toString(), Toast.LENGTH_LONG).show();
+             Log.d("response link ", response.toString());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                // imgFinger.setVisibility(View.VISIBLE);
+                Gson gson = ((MyApplication) getApplication()).getGsonObject();
+                UserObject userData = new UserObject(response.get("formattedName").toString(), response.get("emailAddress").toString(), "", "", "", response.get("publicProfileUrl").toString(), false);
+                String userDataString = gson.toJson(userData);
+                CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
+                pref.setUserData(userDataString);
 
-            loginSession.createLoginSession(response.get("formattedName").toString(), response.get("emailAddress").toString(), response.get("publicProfileUrl").toString(), "");
+                Intent intent = new Intent(getApplicationContext(), FingerPrintLogin.class);
+                //intent.putExtra("viewpager_position", 0);
+                startActivity(intent);
+                finish();
+            }
+            else {
+                // imgFinger.setVisibility(View.GONE);
+                loginSession.createLoginSession("", response.get("formattedName").toString(), response.get("emailAddress").toString(), response.get("publicProfileUrl").toString(), "");
 
-            Intent intent = new Intent(LoginActivity.this,CardsActivity.class);
-            intent.putExtra("viewpager_position", 0);
-            startActivity(intent);
+                if (prefs.getBoolean("firstrun", true)) {
+                    // Do first run stuff here then set 'firstrun' as false
+                    // using the following line to edit/commit prefs
+                    Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                    startActivity(intent);
+                    prefs.edit().putBoolean("firstrun", false).commit();
+                } else {
+                    Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                    userIntent.putExtra("viewpager_position", 0);
+                    startActivity(userIntent);
+                    finish();
+                }
+            }
 
-        } catch (Exception e){
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -649,7 +771,7 @@ public class LoginActivity extends AppCompatActivity implements
 
     // This Method is used to generate "Android Package Name" hash key
 
-    public void generateHashkey(){
+    public void generateHashkey() {
         try {
             PackageInfo info = getPackageManager().getPackageInfo(
                     PACKAGE,
@@ -658,8 +780,8 @@ public class LoginActivity extends AppCompatActivity implements
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());
 
-               // ((TextView) findViewById(R.id.package_name)).setText(info.packageName);
-               Log.d("KeyHash " ,Base64.encodeToString(md.digest(), Base64.NO_WRAP));
+                // ((TextView) findViewById(R.id.package_name)).setText(info.packageName);
+                Log.d("KeyHash ", Base64.encodeToString(md.digest(), Base64.NO_WRAP));
             }
         } catch (PackageManager.NameNotFoundException e) {
             Log.d(TAG, e.getMessage(), e);
@@ -673,7 +795,7 @@ public class LoginActivity extends AppCompatActivity implements
         super.onStart();
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
-      //  updateUI(currentUser);
+        //  updateUI(currentUser);
 
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
         if (opr.isDone()) {
@@ -717,18 +839,18 @@ public class LoginActivity extends AppCompatActivity implements
         if (isSignedIn) {
             btnSignIn.setVisibility(View.GONE);
             //loginSession.createLoginSession(user.getDisplayName(), user.getEmail(), String.valueOf(user.getPhotoUrl()), "");
-            Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
+          /*  Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
             intent.putExtra("viewpager_position", 0);
             startActivity(intent);
-            finish();
-           // btnSignOut.setVisibility(View.VISIBLE);
-          //  btnRevokeAccess.setVisibility(View.VISIBLE);
-           // llProfileLayout.setVisibility(View.VISIBLE);
+            finish();*/
+            // btnSignOut.setVisibility(View.VISIBLE);
+            //  btnRevokeAccess.setVisibility(View.VISIBLE);
+            // llProfileLayout.setVisibility(View.VISIBLE);
         } else {
             btnSignIn.setVisibility(View.VISIBLE);
-          //  btnSignOut.setVisibility(View.GONE);
-          //  btnRevokeAccess.setVisibility(View.GONE);
-           // llProfileLayout.setVisibility(View.GONE);
+            //  btnSignOut.setVisibility(View.GONE);
+            //  btnRevokeAccess.setVisibility(View.GONE);
+            // llProfileLayout.setVisibility(View.GONE);
         }
     }
 
@@ -756,19 +878,55 @@ public class LoginActivity extends AppCompatActivity implements
                                 user.name = object.getString("name").toString();
                                 user.gender = object.getString("gender").toString();
                                 String personPhotoUrl = "https://graph.facebook.com/" + user.facebookID + "/picture?type=large";
-                                PrefUtils.setCurrentUser(user,LoginActivity.this);
-                                loginSession.createLoginSession(object.getString("name").toString(), object.getString("email").toString(), personPhotoUrl, object.getString("gender").toString());
-                                Intent intent=new Intent(LoginActivity.this,CardsActivity.class);
+                                PrefUtils.setCurrentUser(user, LoginActivity.this);
+                               /* loginSession.createLoginSession("", object.getString("name").toString(), object.getString("email").toString(), personPhotoUrl, object.getString("gender").toString());
+                                Intent intent = new Intent(LoginActivity.this, CardsActivity.class);
                                 intent.putExtra("viewpager_position", 0);
                                 startActivity(intent);
                                 finish();
+*/
+
+
+
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                    // imgFinger.setVisibility(View.VISIBLE);
+                                    Gson gson = ((MyApplication) getApplication()).getGsonObject();
+                                    UserObject userData = new UserObject(object.getString("name").toString(), object.getString("email").toString(), "", "", object.getString("gender").toString(), personPhotoUrl, false);
+                                    String userDataString = gson.toJson(userData);
+                                    CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
+                                    pref.setUserData(userDataString);
+
+                                    Intent intent = new Intent(getApplicationContext(), FingerPrintLogin.class);
+                                    //intent.putExtra("viewpager_position", 0);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                else {
+                                    // imgFinger.setVisibility(View.GONE);
+                                    loginSession.createLoginSession("", object.getString("name").toString(), object.getString("email").toString(), personPhotoUrl, object.getString("gender").toString());
+
+                                    if (prefs.getBoolean("firstrun", true)) {
+                                        // Do first run stuff here then set 'firstrun' as false
+                                        // using the following line to edit/commit prefs
+                                        Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                                        startActivity(intent);
+                                        prefs.edit().putBoolean("firstrun", false).commit();
+                                    } else {
+                                        Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                                        userIntent.putExtra("viewpager_position", 0);
+                                        startActivity(userIntent);
+                                        finish();
+                                    }
+                                }
+
+
                                 //new UploadFacebook("IMG_" + timestamp1).execute();
                                /* JSONObject object1 = object.getJSONObject("location");
                                 Toast.makeText(getApplicationContext(), object1.toString(), Toast.LENGTH_LONG).show();
 */
                                 //  session.createUserLoginSession(user.name, user.email, "", "", "");
 
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                             //  Toast.makeText(AccountActivity.this,"welcome "+user.name,Toast.LENGTH_LONG).show();
