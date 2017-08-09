@@ -10,7 +10,10 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.amplearch.circleonet.ConnectivityReceiver;
+import com.amplearch.circleonet.Helper.CustomSharedPreference;
 import com.facebook.FacebookSdk;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -20,6 +23,11 @@ public class MyApplication extends Application {
 
 
     private static MyApplication mInstance ;
+
+    private Gson gson;
+    private GsonBuilder builder;
+
+    private CustomSharedPreference shared;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -48,7 +56,9 @@ public class MyApplication extends Application {
         catch (PackageManager.NameNotFoundException e) { }
         catch ( NoSuchAlgorithmException e ) {  }
 
-
+        builder = new GsonBuilder();
+        gson = builder.create();
+        shared = new CustomSharedPreference(getApplicationContext());
         MyApplication app = this;//(BeaconScannerApp)this.getApplication();
     }
 
@@ -60,6 +70,13 @@ public class MyApplication extends Application {
     public void setConnectivityListener(ConnectivityReceiver.ConnectivityReceiverListener listener)
     {
         ConnectivityReceiver.connectivityReceiverListener = listener;
+    }
+    public CustomSharedPreference getShared(){
+        return shared;
+    }
+
+    public Gson getGsonObject(){
+        return gson;
     }
 
 }

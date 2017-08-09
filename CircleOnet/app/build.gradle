@@ -39,6 +39,13 @@ dependencies {
     compile project(':nfclib')
     compile project(':carousel')
     compile files('libs/httpmime-4.2.5.jar')
+    compile('com.twitter.sdk.android:twitter-core:1.6.6@aar') {
+        transitive = true
+    }
+    compile('com.twitter.sdk.android:twitter:1.13.1@aar') {
+        transitive = true
+    }
+    compile project(':linkedin-sdk')
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
@@ -59,13 +66,8 @@ dependencies {
     compile 'com.github.apl-devs:appintro:v4.2.0'
     compile 'me.dm7.barcodescanner:zxing:1.8.4'
     compile 'com.google.zxing:core:3.2.1'
-    compile('com.twitter.sdk.android:twitter-core:1.6.6@aar') {
-        transitive = true
-    }
-    compile('com.twitter.sdk.android:twitter:1.13.1@aar') {
-        transitive = true
-    }
-    compile project(':linkedin-sdk')
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.intuit.sdp:sdp-android:1.0.3'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

@@ -79,6 +79,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -132,6 +133,21 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                 .requestEmail()
                 .build();
         session = new LoginSession(getApplicationContext());
+
+
+        HashMap<String, String> user = session.getUserDetails();
+
+        // name
+        String name = user.get(LoginSession.KEY_NAME);
+
+        // email
+        String email = user.get(LoginSession.KEY_EMAIL);
+
+        String image = user.get(LoginSession.KEY_IMAGE);
+        String gender = user.get(LoginSession.KEY_GENDER);
+        Toast.makeText(getApplicationContext(), name + " " + email + " " + image + " " + gender, Toast.LENGTH_LONG).show();
+
+
         mGoogleApiClient = new GoogleApiClient.Builder(CardsActivity.this)
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)

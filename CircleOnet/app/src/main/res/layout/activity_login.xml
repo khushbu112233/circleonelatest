@@ -87,6 +87,7 @@
                 android:background="@color/colorAccent"></View>
 
             <ImageView
+                android:id="@+id/imgFinger"
                 android:src="@drawable/ic_finger_print"
                 android:layout_centerInParent="true"
                 android:layout_width="50dp"

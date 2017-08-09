@@ -9,10 +9,10 @@ import com.amplearch.circleonet.Activity.LoginActivity;
 import java.util.HashMap;
 
 /**
- * Created by admin on 07/20/2017.
+ * Created by admin on 08/09/2017.
  */
 
-public class LoginSession {
+public class FingerPrintSession {
     SharedPreferences pref;
 
     // Editor for Shared preferences
@@ -41,7 +41,7 @@ public class LoginSession {
     public static final String KEY_GENDER = "gender";
 
     // Constructor
-    public LoginSession(Context context){
+    public FingerPrintSession(Context context){
         this._context = context;
         pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = pref.edit();
