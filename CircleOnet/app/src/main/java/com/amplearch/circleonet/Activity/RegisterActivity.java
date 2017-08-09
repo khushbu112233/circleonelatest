@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -53,6 +54,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -61,7 +63,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -83,6 +89,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private View line_view1, line_view2 ;
     ImageView ivMaleRound, ivMaleImg, ivFemaleround, ivFemaleImg, imgBack;
     TextView txtGender;
+    String final_ImgBase64 = "";
 
     private String UrlRegister = "http://circle8.asia:8081/Onet.svc/Registration";
     private ArrayList<NameValuePair> params ;
@@ -94,12 +101,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private String imagepath = null;
     private File file ;
 
-    private String company_name, first_name, last_name, phone_no, password, c_password, user_name, gender, email ;
+    private String company_name, first_name, last_name, phone_no, password, c_password, user_name, gender = "", email ;
 
     private int mYear, mMonth, mDay, mHour, mMinute;
     private Calendar calendar ;
     private DatePickerDialog datePickerDialog ;
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    String image;
+    ProgressDialog pDialog;
+    String encodedImageData, register_img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -126,7 +136,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         line_view2 = (View)findViewById(R.id.vwDrag2);
         imgBack = (ImageView) findViewById(R.id.imgBack);
         imgBack.setOnClickListener(this);
-
+        pDialog = new ProgressDialog(this);
         civProfilePic =(CircleImageView)findViewById(R.id.imgProfileCard);
 
         ivMale.setOnClickListener(this);
@@ -206,22 +216,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             {
                 Toast.makeText(getApplicationContext(), "Form Fill Invalid!", Toast.LENGTH_SHORT).show();
             }
+            else if (gender.equals("")){
+                Toast.makeText(getApplicationContext(), "Select Gender", Toast.LENGTH_SHORT).show();
+            }
+            else if (final_ImgBase64.equals("")){
+                Toast.makeText(getApplicationContext(), "Upload Image", Toast.LENGTH_SHORT).show();
+            }
             else
             {
-                Toast.makeText(getApplicationContext(), "Ok..", Toast.LENGTH_SHORT).show();
-//                new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/Registration");
+                new HttpAsyncTaskPhotoUpload().execute("http://circle8.asia:8081/Onet.svc/ImgUpload");
             }
-
-//            connectWithHttpPost();
-
-//            connectWithHttpPost(company_name,user_name,first_name,last_name,phone_no,password);
-
-//            params = getParams();
-//            AsyncRequest getPosts = new AsyncRequest(RegisterActivity.this, "GET", params);
-//            getPosts.execute(UrlRegister);
-
-//            AsyncDataClass asyncRequestObject = new AsyncDataClass();
-//            asyncRequestObject.execute();
         }
         if( v == civProfilePic)
         {
@@ -383,6 +387,119 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    private void Upload() {
+
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                new UploadFile().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "http://circle8.asia:8081/Onet.svc/ImgUpload");
+            } else {
+                new UploadFile().execute("http://circle8.asia:8081/Onet.svc/ImgUpload");
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+
+        }
+    }
+
+    private class UploadFile extends AsyncTask<String, Void, Void> {
+
+
+        private String Content;
+        private String Error = null;
+        String data = "";
+        private BufferedReader reader;
+
+
+        protected void onPreExecute() {
+
+            pDialog.show();
+
+            try {
+
+                data += "&" + URLEncoder.encode("ImgBase64", "UTF-8") + "=" + "data:image/png;base64," + image;
+
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        protected Void doInBackground(String... urls) {
+
+            HttpURLConnection connection = null;
+            try {
+                URL url = new URL(urls[0]);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+
+                con.setRequestMethod("POST");
+                con.setUseCaches(false);
+                con.setDoInput(true);
+                con.setDoOutput(true);
+                con.setRequestProperty("Accept", "application/json");
+                con.setRequestProperty("Content-type", "application/json");
+                con.setRequestProperty("Content-Length", "" + data.getBytes().length);
+                con.setRequestProperty("Connection", "Keep-Alive");
+                con.setDoOutput(true);
+
+                OutputStream os = con.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+
+                //make request
+                writer.write(data);
+                writer.flush();
+                writer.close();
+                reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                Content = sb.toString();
+            } catch (Exception ex) {
+                Error = ex.getMessage();
+            }
+            return null;
+
+        }
+
+
+        protected void onPostExecute(Void unused) {
+            // NOTE: You can call UI Element here.
+
+            pDialog.dismiss();
+            try {
+
+                if (Content != null) {
+                    JSONObject jsonResponse = new JSONObject(Content);
+                    Toast.makeText(getApplicationContext(), Content, Toast.LENGTH_LONG).show();
+                    String status = jsonResponse.getString("status");
+                    if ("200".equals(status)) {
+
+                        Toast.makeText(getApplicationContext(), "File uploaded successfully", Toast.LENGTH_SHORT).show();
+
+                    } else {
+
+                        Toast.makeText(getApplicationContext(), "Something is wrong ! Please try again.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    public String BitMapToString(Bitmap bitmap){
+        ByteArrayOutputStream ByteStream=new  ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, ByteStream);
+        byte [] b=ByteStream.toByteArray();
+        String temp=Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
+    }
+
     private void onSelectFromGalleryResult(Intent data)
     {
         Uri selectedImageUri = data.getData();
@@ -391,47 +508,53 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         Bitmap bm = null;
         if (data != null)
         {
-            try
-            {
-                bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
-
-//                file = persistImage(bm,"profile_"+ UUID.randomUUID().toString());
-            }
-            catch (IOException e)
-            {
+            Uri targetUri = data.getData();
+            Bitmap bitmap;
+            try {
+                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
+                Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 500, 500, false);
+                image = ConvertBitmapToString(resizedBitmap);
+                final_ImgBase64 = BitMapToString(resizedBitmap);
+                Upload();
+                civProfilePic.setImageBitmap(resizedBitmap);
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
                 e.printStackTrace();
-                Toast.makeText(getApplicationContext(),"Image too large.", Toast.LENGTH_LONG).show();
             }
         }
-        civProfilePic.setImageBitmap(bm);
+
 //        BmToString(bm);
     }
-
-    private void onCaptureImageResult(Intent data)
+    public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality)
     {
+        ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
+        image.compress(compressFormat, quality, byteArrayOS);
+        return Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
+    }
+
+    public static String ConvertBitmapToString(Bitmap bitmap){
+        String encodedImage = "";
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        try {
+            encodedImage= URLEncoder.encode(Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        return encodedImage;
+    }
+
+
+    private void onCaptureImageResult(Intent data) {
         Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
 
-//        file = persistImage(thumbnail,"profile_"+UUID.randomUUID().toString());
-
-        File destination = new File(Environment.getExternalStorageDirectory(), System.currentTimeMillis() + ".jpg");
-        FileOutputStream fo;
-        try
-        {
-            destination.createNewFile();
-            fo = new FileOutputStream(destination);
-            fo.write(bytes.toByteArray());
-            fo.close();
-        }
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        civProfilePic.setImageBitmap(thumbnail);
-//        BmToString(thumbnail);
+                final_ImgBase64 = BitMapToString(thumbnail);
+                Upload();
+                civProfilePic.setImageBitmap(thumbnail);
     }
 
     public  String POST(String url)
@@ -449,11 +572,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("CompanyName", company_name );
-            jsonObject.accumulate("FName", first_name );
-            jsonObject.accumulate("LName", last_name );
+            jsonObject.accumulate("FirstName", first_name );
+            jsonObject.accumulate("Gender", gender );
+            jsonObject.accumulate("LastName", last_name );
+            jsonObject.accumulate("Password", password);
             jsonObject.accumulate("Phone", phone_no);
-            jsonObject.accumulate("Pwd", password);
+            jsonObject.accumulate("Photo_String", register_img);
             jsonObject.accumulate("UserName", email);
 
             // 4. convert JSONObject to JSON to String
@@ -494,6 +618,63 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         return result;
     }
 
+    public  String POST1(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("ImgBase64", final_ImgBase64 );
+            jsonObject.accumulate("classification", "userphoto" );
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+
     private class HttpAsyncTask extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -518,9 +699,98 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         protected void onPostExecute(String result)
         {
             dialog.dismiss();
-            Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
+            try {
+                if (result != null) {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String success = jsonObject.getString("success").toString();
+                    String message = jsonObject.getString("message").toString();
+
+                    if (success.equals("1") && message.equalsIgnoreCase("Successfully Registered.")) {
+                        Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+                    }
+                }
+                else {
+                    Toast.makeText(getBaseContext(), "Not able to Register..", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
         }
     }
+
+    public String getEncoded64ImageStringFromBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
+        byte[] byteFormat = stream.toByteArray();
+        // get the base 64 string
+        String imgString = Base64.encodeToString(byteFormat, Base64.NO_WRAP);
+        byte[] encodeValue = Base64.encode(imgString.getBytes(), Base64.DEFAULT);
+
+        Toast.makeText(getApplicationContext(), new String(encodeValue), Toast.LENGTH_LONG).show();
+        return new String(encodeValue);
+    }
+    private class HttpAsyncTaskPhotoUpload extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(RegisterActivity.this);
+            dialog.setMessage("Uploading...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            return POST1(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+            dialog.dismiss();
+           // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            try {
+                if (result != null) {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String ImgName = jsonObject.getString("ImgName").toString();
+                    String success = jsonObject.getString("success").toString();
+
+                    if (success.equals("1") && ImgName!=null) {
+                        /*Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(intent);
+                        finish();*/
+                        register_img = ImgName;
+                        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/Registration");
+
+                    } else {
+                        Toast.makeText(getBaseContext(), "Error While Uploading Image..", Toast.LENGTH_LONG).show();
+                    }
+                }
+                else {
+                    Toast.makeText(getBaseContext(), "Not able to Register..", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
+        }
+    }
+
+
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException{
         BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));

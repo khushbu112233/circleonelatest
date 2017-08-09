@@ -1,7 +1,9 @@
 {
   "project_info": {
     "project_number": "884881974807",
-    "project_id": "circle-one-6d0db"
+    "firebase_url": "https://circle-one-6d0db.firebaseio.com",
+    "project_id": "circle-one-6d0db",
+    "storage_bucket": "circle-one-6d0db.appspot.com"
   },
   "client": [
     {
@@ -12,6 +14,18 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "884881974807-q83ta9b42ltanq1n4ru38btd49f6ke1l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amplearch.circleonet",
+            "certificate_hash": "55b5063040d2d006eefce7e7d58a4efd417017f8"
+          }
+        },
+        {
+          "client_id": "884881974807-95v5dq216vla01haoa298qkgnob1jgu4.apps.googleusercontent.com",
+          "client_type": 3
+        },
         {
           "client_id": "884881974807-q4t5tg583qjn1d21ofddf8tagsm59s1f.apps.googleusercontent.com",
           "client_type": 3
@@ -35,11 +49,16 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "884881974807-95v5dq216vla01haoa298qkgnob1jgu4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }

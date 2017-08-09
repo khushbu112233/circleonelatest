@@ -17,6 +17,7 @@ import android.nfc.NfcManager;
 import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -44,6 +45,7 @@ import com.amplearch.circleonet.Fragments.ConnectFragment;
 import com.amplearch.circleonet.Fragments.EventsFragment;
 import com.amplearch.circleonet.Fragments.ProfileFragment;
 import com.amplearch.circleonet.Helper.DatabaseHelper;
+import com.amplearch.circleonet.Helper.LoginSession;
 import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.Utils.CarouselEffectTransformer;
 import com.amplearch.circleonet.Utils.CustomViewPager;
@@ -52,8 +54,23 @@ import com.amplearch.circleonet.Fragments.List2Fragment;
 import com.amplearch.circleonet.Fragments.List3Fragment;
 import com.amplearch.circleonet.Fragments.List4Fragment;
 import com.amplearch.circleonet.R;
-import com.amplearch.circleonet.ZoomOutPageTransformer;
-import com.eftimoff.viewpagertransformers.ZoomOutTranformer;
+import com.amplearch.circleonet.Utils.PrefUtils;
+import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.OptionalPendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.plus.Plus;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.linkedin.platform.LISessionManager;
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -68,9 +85,10 @@ import java.util.TimeZone;
 import be.appfoundry.nfclibrary.activities.NfcActivity;
 import be.appfoundry.nfclibrary.utilities.interfaces.NfcReadUtility;
 import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
+import io.fabric.sdk.android.Fabric;
 
 
-public class CardsActivity extends NfcActivity {
+public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConnectionFailedListener{
 
     public static CustomViewPager mViewPager;
     TabLayout tabLayout;
@@ -86,22 +104,39 @@ public class CardsActivity extends NfcActivity {
     private NfcAdapter mNfcAdapter;
     Tag tag;
     boolean done = false;
-
+    public static GoogleApiClient mGoogleApiClient;
+    LoginSession session;
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TwitterAuthConfig authConfig =  new TwitterAuthConfig(
+                getString(R.string.twitter_consumer_key),
+                getString(R.string.twitter_consumer_secret));
+        Fabric.with(this, new Twitter(authConfig));
+
         setContentView(R.layout.activity_cards);
         /*SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy  hh:mm:ss a");
         String date1 = format.format(Date.parse(stringDate));
 
         Toast.makeText(getApplicationContext(), "Time: " + date1, Toast.LENGTH_LONG).show();
 */
+        mAuth = FirebaseAuth.getInstance();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
             position = extras.getInt("viewpager_position");
             nested_position = extras.getInt("nested_viewpager_position");
         }
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        session = new LoginSession(getApplicationContext());
+        mGoogleApiClient = new GoogleApiClient.Builder(CardsActivity.this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .addApi(Plus.API, Plus.PlusOptions.builder().build())
+                .build();
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         NfcManager manager = (NfcManager) getSystemService(Context.NFC_SERVICE);
@@ -284,6 +319,58 @@ public class CardsActivity extends NfcActivity {
         });
     }
 
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
+        if (opr.isDone()) {
+            // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
+            // and the GoogleSignInResult will be available instantly.
+            // Log.d(TAG, "Got cached sign-in");
+            GoogleSignInResult result = opr.get();
+            handleSignInResult(result);
+        } else {
+            // If the user has not previously signed in on this device or the sign-in has expired,
+            // this asynchronous branch will attempt to sign in the user silently.  Cross-device
+            // single sign-on will occur in this branch.
+            //  showProgressDialog();
+            opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
+                @Override
+                public void onResult(GoogleSignInResult googleSignInResult) {
+                    //     hideProgressDialog();
+                    handleSignInResult(googleSignInResult);
+                }
+            });
+        }
+    }
+
+    public void handleSignInResult(GoogleSignInResult result) {
+        //   Log.d(TAG, "handleSignInResult:" + result.isSuccess());
+        if (result.isSuccess()) {
+            // Signed in successfully, show authenticated UI.
+            GoogleSignInAccount acct = result.getSignInAccount();
+
+            //  Log.e(TAG, "display name: " + acct.getDisplayName());
+
+            //  String personName = acct.getDisplayName();
+            //    String personPhotoUrl = acct.getPhotoUrl().toString();
+            // String email = acct.getEmail();
+
+            //  Log.e(TAG, "Name: " + personName + ", email: " + email + ", Image: " + personPhotoUrl);
+
+            //updateUI(true);
+        } else {
+            // Signed out, show unauthenticated UI.
+            //  updateUI(false);
+        }
+    }
+
+
 
     private class LoadDataForActivity extends AsyncTask<Void, Void, Void> {
 
@@ -403,10 +490,44 @@ public class CardsActivity extends NfcActivity {
         lnrLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                try {
+
+                    Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                            new ResultCallback<Status>() {
+                                @Override
+                                public void onResult(Status status) {
+                                    session.logoutUser();
+                                   // dialog.dismiss();
+                                }
+                            });
+                }
+                catch (Exception e){}
+
+
+                try {
+                    mAuth.signOut();
+                    Twitter.logOut();
+                    session.logoutUser();
+                }catch (Exception e){}
+
+                try {
+
+                    PrefUtils.clearCurrentUser(CardsActivity.this);
+                    // We can logout from facebook by calling following method
+                    LoginManager.getInstance().logOut();
+                    session.logoutUser();
+                }catch (Exception e){}
+
+                LISessionManager.getInstance(getApplicationContext()).clearSession();
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
                 dialog.dismiss();
                 finish();
+                /*Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+                dialog.dismiss();
+                finish();*/
             }
         });
 

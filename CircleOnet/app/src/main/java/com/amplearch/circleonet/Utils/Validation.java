@@ -1,5 +1,6 @@
 package com.amplearch.circleonet.Utils;
 
+import com.amplearch.circleonet.Activity.LoginActivity;
 import com.amplearch.circleonet.Activity.RegisterActivity;
 
 /**
@@ -80,6 +81,33 @@ public class Validation
         else {
             RegisterActivity.etConfirmPass.setError("Password does not match");
             valid = false;
+        }
+
+        return valid;
+    }
+
+    public static boolean validateLogin(String userName, String password)
+    {
+        boolean valid = true ;
+
+        if(userName.isEmpty())
+        {
+            LoginActivity.etLoginUser.setError("Enter UserName");
+            valid = false ;
+        }
+        else
+        {
+            LoginActivity.etLoginUser.setError(null);
+        }
+
+        if(password.isEmpty())
+        {
+            LoginActivity.etLoginPass.setError("Enter Password");
+            valid = false ;
+        }
+        else
+        {
+            LoginActivity.etLoginPass.setError(null);
         }
 
         return valid;
