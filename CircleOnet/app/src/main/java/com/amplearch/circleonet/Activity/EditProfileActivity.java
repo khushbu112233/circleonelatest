@@ -35,9 +35,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URI;
 import java.util.UUID;
 
 import static android.R.attr.path;
+import static junit.framework.Assert.assertEquals;
 
 public class EditProfileActivity extends AppCompatActivity
 {
@@ -85,7 +87,6 @@ public class EditProfileActivity extends AppCompatActivity
                /* Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("file*//*");
                 startActivityForResult(intent,PICKFILE_RESULT_CODE);*/
-
                 selectFile();
             }
         });
@@ -238,8 +239,16 @@ public class EditProfileActivity extends AppCompatActivity
         intent_upload.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent_upload,REQUEST_AUDIO);*/
 
+     /*   Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, REQUEST_AUDIO);  */
+
+     /* Intent intent = new Intent();
+        intent.setType("audio*//*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent,"Select Audio"), REQUEST_AUDIO); */
+
         Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, REQUEST_AUDIO);
+        startActivityForResult(Intent.createChooser(intent, "Audio"), REQUEST_AUDIO);
     }
 
     private void onSelectFromGalleryResult(Intent data)
@@ -347,10 +356,43 @@ public class EditProfileActivity extends AppCompatActivity
 
         Uri uri = data.getData();
 //        mMediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
+    }
 
+    private void createFile()
+    {
+        final File file = new File(Environment.getExternalStorageDirectory(), "read.me");
+        Uri uri = Uri.fromFile(file);
+        File auxFile = new File(uri.toString());
+        assertEquals(file.getAbsolutePath(), auxFile.getAbsolutePath());
 
+       /* new File(uri.getPath());
+//        or
+        new File(uri.toString());
+
+//        NOTE: url.toString() return a String in the format: "file:///mnt/sdcard/myPicture.jpg",
+// whereas url.getPath() returns a String in the format: "/mnt/sdcard/myPicture.jpg",  */
+
+       // and
+//        new File(new URI(androidURI.toString()));
 
     }
+
+   /* private void getFile()
+    {
+        File file = new File(getPath(uri));
+    }*/
+
+   /* public String getPath(Uri uri)
+    {
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+        if (cursor == null) return null;
+        int column_index =             cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String s=cursor.getString(column_index);
+        cursor.close();
+        return s;
+    }*/
 
 
 }
