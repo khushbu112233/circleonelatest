@@ -279,7 +279,7 @@ public class EditProfileActivity extends AppCompatActivity
 
     public String getPath(Uri uri)
     {
-        String[] projection = { MediaStore.Images.Media.DATA };
+        String[] projection = {MediaStore.Images.Media.DATA };
         Cursor cursor = managedQuery(uri, projection, null, null, null);
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
@@ -347,15 +347,22 @@ public class EditProfileActivity extends AppCompatActivity
     {
         //the selected audio.
 //        Uri uri = data.getData();
-        String audioPath = data.getData().getPath();
+       /* String audioPath = data.getData().getPath();
         File audioFile = new File(audioPath);
         String audioName = audioFile.getName();
         etAttachFile.setText(audioName);
 
-        Toast.makeText(getApplicationContext(),"Audio path: "+audioPath,Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),"Audio path: "+audioPath,Toast.LENGTH_LONG).show();*/
 
-        Uri uri = data.getData();
 //        mMediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
+
+        Uri selectedImageUri = data.getData();
+        String audioPath = getPath(selectedImageUri);
+
+        File audioFile = new File(audioPath);
+        String audioName = audioFile.getName();
+
+        etAttachFile.setText(audioName);
     }
 
     private void createFile()
