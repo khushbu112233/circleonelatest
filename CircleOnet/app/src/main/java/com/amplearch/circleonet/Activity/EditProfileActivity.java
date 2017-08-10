@@ -104,59 +104,6 @@ public class EditProfileActivity extends AppCompatActivity
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        // TODO Auto-generated method stub
-
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK)
-        {
-            if(resultCode == PICKFILE_RESULT_CODE)
-            {
-                String FilePath = data.getData().getPath();
-
-                File file = new File(FilePath);
-                String file_name = file.getName();
-
-                etAttachFile.setText(file_name);
-            }
-            else if(requestCode == REQUEST_CAMERA)
-            {
-                onCaptureImageResult(data);
-            }
-            else if(requestCode == REQUEST_GALLERY)
-            {
-                onSelectFromGalleryResult(data);
-            }
-            else if(requestCode == REQUEST_DOCUMENT)
-            {
-                onSelectFromFiles(data);
-            }
-            else if(requestCode == REQUEST_AUDIO)
-            {
-                onSelectFromAudio(data);
-            }
-        }
-      /*  switch(requestCode)
-        {
-            case PICKFILE_RESULT_CODE:
-                if(resultCode == RESULT_OK)
-                {
-                    String FilePath = data.getData().getPath();
-
-//                    etAttachFile.setText(FilePath);
-
-                    File file = new File(FilePath);
-                    String file_name = file.getName();
-
-                    etAttachFile.setText(file_name);
-
-                }
-                break;
-        }*/
-    }
-
     private void selectFile()
     {
         items = new CharSequence[]{"Take Document","Take Picture","Choose from Media","Take Audio","Cancel"};
@@ -251,6 +198,43 @@ public class EditProfileActivity extends AppCompatActivity
         startActivityForResult(Intent.createChooser(intent, "Audio"), REQUEST_AUDIO);
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        // TODO Auto-generated method stub
+
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK)
+        {
+            if(resultCode == PICKFILE_RESULT_CODE)
+            {
+                String FilePath = data.getData().getPath();
+
+                File file = new File(FilePath);
+                String file_name = file.getName();
+
+                etAttachFile.setText(file_name);
+            }
+            else if(requestCode == REQUEST_CAMERA)
+            {
+                onCaptureImageResult(data);
+            }
+            else if(requestCode == REQUEST_GALLERY)
+            {
+                onSelectFromGalleryResult(data);
+            }
+            else if(requestCode == REQUEST_DOCUMENT)
+            {
+                onSelectFromFiles(data);
+            }
+            else if(requestCode == REQUEST_AUDIO)
+            {
+                onSelectFromAudio(data);
+            }
+        }
+    }
+
     private void onSelectFromGalleryResult(Intent data)
     {
         Uri selectedImageUri = data.getData();
@@ -259,7 +243,10 @@ public class EditProfileActivity extends AppCompatActivity
         File imgFile = new File(imgPath);
         String imgName = imgFile.getName();
 
-        etAttachFile.setText(imgName);
+//        etAttachFile.setText(imgName);
+        //call method
+        size_calculate(imgPath);
+
 
         Bitmap bm = null;
         if (data != null)
@@ -296,9 +283,15 @@ public class EditProfileActivity extends AppCompatActivity
         Uri imgUri = getImageUri(getApplicationContext(), thumbnail);
         // CALL THIS METHOD TO GET THE ACTUAL PATH
         File imgFile = new File(getRealPathFromURI(imgUri));
+
+        String imgPath = getRealPathFromURI(imgUri);
+
         String imgName = imgFile.getName();
 
-        etAttachFile.setText(imgName);
+//        etAttachFile.setText(imgName);
+
+        //call method
+        size_calculate(imgPath);
 
         File destination = new File(Environment.getExternalStorageDirectory(), System.currentTimeMillis() + ".jpg");
         FileOutputStream fo;
@@ -340,7 +333,58 @@ public class EditProfileActivity extends AppCompatActivity
         File docsFile = new File(docsPath);
         String docsName = docsFile.getName();
 
-        etAttachFile.setText(docsName);
+        size_calculate(docsPath);
+
+        String totalSpace = String.valueOf(docsFile.getTotalSpace());
+        String freeSpace = String.valueOf(docsFile.getFreeSpace());
+        String usableSpace = String.valueOf(docsFile.getUsableSpace());
+
+        /*float fileSize = docsFile.length();
+              fileSize = fileSize / 1024 ;
+
+        String value = null ;
+
+        float final_fileSize = 0;
+        float mb_size = 0;
+
+        if(fileSize >= 1024)
+        {
+            value = (fileSize/1024)+"MB";
+
+            mb_size = fileSize/1024 ;
+        }
+        else
+        {
+            value = (fileSize)+"KB";
+
+            final_fileSize = fileSize ;
+        }
+
+        if(mb_size > 3.00)
+        {
+//            Toast.makeText(getApplicationContext(),"File is greater than 3MB"+mb_size,Toast.LENGTH_LONG).show();
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(EditProfileActivity.this);
+            alertDialogBuilder.setTitle("Warning!");
+            alertDialogBuilder.setMessage("Please select file less than 3MB.");
+            alertDialogBuilder.setCancelable(false)
+                    .setPositiveButton("Okay",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id)
+                                {
+                                    dialog.dismiss();
+                                }
+                            });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+        else
+        {
+            etAttachFile.setText(docsName);
+        }*/
+
+//        Toast.makeText(getApplicationContext(),"Space:- \nTotal: "+totalSpace+
+//                "\n Free: "+freeSpace+"\n Usable: "+usableSpace+"\n Size: "+value+"\n Final Size: "+final_fileSize,Toast.LENGTH_LONG).show();
+
     }
 
     private void onSelectFromAudio(Intent data)
@@ -362,8 +406,61 @@ public class EditProfileActivity extends AppCompatActivity
         File audioFile = new File(audioPath);
         String audioName = audioFile.getName();
 
-        etAttachFile.setText(audioName);
+//        etAttachFile.setText(audioName);
+
+        size_calculate(audioPath);
     }
+
+    public void size_calculate(String file_Path)
+    {
+        File n_file = new File(file_Path);
+        String fileName = n_file.getName();
+
+        float fileSize = n_file.length();
+        fileSize = fileSize / 1024 ;
+
+        String value = null ;
+
+        float final_fileSize = 0;
+        float mb_size = 0;
+
+        if(fileSize >= 1024)
+        {
+            value = (fileSize/1024)+"MB";
+            mb_size = fileSize/1024 ;
+        }
+        else
+        {
+            value = (fileSize)+"KB";
+            final_fileSize = fileSize ;
+        }
+
+        if(mb_size > 3.00)
+        {
+//            Toast.makeText(getApplicationContext(),"File is greater than 3MB"+mb_size,Toast.LENGTH_LONG).show();
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(EditProfileActivity.this);
+            alertDialogBuilder.setTitle("Warning!");
+            alertDialogBuilder.setMessage("Please select file less than 3MB.");
+            alertDialogBuilder.setCancelable(false)
+                    .setPositiveButton("Okay",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id)
+                                {
+                                    etAttachFile.setText("Attachment Name");
+                                    dialog.dismiss();
+                                    selectFile();
+                                }
+                            });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+        else
+        {
+            etAttachFile.setText(fileName);
+        }
+
+    }
+
 
     private void createFile()
     {
