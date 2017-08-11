@@ -102,15 +102,15 @@ public class CardDetail extends NfcActivity {
                     txtDesi.setText(tag1.getDesignation());
                     image.add(tag1.getCard_front());
                     image.add(tag1.getCard_back());
+
                     myPager = new CardSwipe(getApplicationContext(), image);
+
                     mViewPager.setClipChildren(false);
                     mViewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
                     mViewPager.setOffscreenPageLimit(3);
                     //mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
 
-
                     mViewPager.setAdapter(myPager);
-
 
                     viewPager1.setClipChildren(false);
                     viewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
