@@ -12,7 +12,10 @@ import com.amplearch.circleonet.R;
 public class Connect4Activity extends AppCompatActivity {
 
     private ImageView imgBack, imgCards, imgConnect, imgEvents, imgProfile, imgConnecting;
-    TextView txtAsk;
+    TextView txtAsk, txtLink;
+    String level = "0";
+    ImageView level1, level2, level3, level4, level5, level6, ivImage1;
+    int profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,13 +26,80 @@ public class Connect4Activity extends AppCompatActivity {
         imgConnect = (ImageView) findViewById(R.id.imgConnect);
         imgEvents = (ImageView) findViewById(R.id.imgEvents);
         imgProfile = (ImageView) findViewById(R.id.imgProfile);
+        txtLink = (TextView) findViewById(R.id.txtLink);
         txtAsk = (TextView) findViewById(R.id.txtAsk);
+        level1 = (ImageView) findViewById(R.id.imgLevel1);
+        level2 = (ImageView) findViewById(R.id.imgLevel2);
+        level3 = (ImageView) findViewById(R.id.imgLevel3);
+        level4 = (ImageView) findViewById(R.id.imgLevel4);
+        level5 = (ImageView) findViewById(R.id.imgLevel5);
+        level6 = (ImageView) findViewById(R.id.imgLevel6);
+        ivImage1 = (ImageView) findViewById(R.id.ivImage1);
 
+        Intent intent = getIntent();
+        level = intent.getStringExtra("level");
+        profile = intent.getIntExtra("profile", 0);
+        ivImage1.setImageResource(profile);
+        if (level.equals("1")){
+            txtLink.setText("You have a 1st level connection.");
+            level1.setVisibility(View.VISIBLE);
+            level2.setVisibility(View.GONE);
+            level3.setVisibility(View.GONE);
+            level4.setVisibility(View.GONE);
+            level5.setVisibility(View.GONE);
+            level6.setVisibility(View.GONE);
+        }
+        else if (level.equals("2")){
+            txtLink.setText("You have a 2nd level connection.");
+            level1.setVisibility(View.VISIBLE);
+            level2.setVisibility(View.VISIBLE);
+            level3.setVisibility(View.GONE);
+            level4.setVisibility(View.GONE);
+            level5.setVisibility(View.GONE);
+            level6.setVisibility(View.GONE);
+        }
+        else if (level.equals("3")){
+            txtLink.setText("You have a 3rd level connection.");
+            level1.setVisibility(View.VISIBLE);
+            level2.setVisibility(View.VISIBLE);
+            level3.setVisibility(View.VISIBLE);
+            level4.setVisibility(View.GONE);
+            level5.setVisibility(View.GONE);
+            level6.setVisibility(View.GONE);
+        }
+        else if (level.equals("4")){
+            txtLink.setText("You have a 4th level connection.");
+            level1.setVisibility(View.VISIBLE);
+            level2.setVisibility(View.VISIBLE);
+            level3.setVisibility(View.VISIBLE);
+            level4.setVisibility(View.VISIBLE);
+            level5.setVisibility(View.GONE);
+            level6.setVisibility(View.GONE);
+        }
+        else if (level.equals("5")){
+            txtLink.setText("You have a 5th level connection.");
+            level1.setVisibility(View.VISIBLE);
+            level2.setVisibility(View.VISIBLE);
+            level3.setVisibility(View.VISIBLE);
+            level4.setVisibility(View.VISIBLE);
+            level5.setVisibility(View.VISIBLE);
+            level6.setVisibility(View.GONE);
+        }
+        else if (level.equals("6")){
+            txtLink.setText("You have a 6th level connection.");
+            level1.setVisibility(View.VISIBLE);
+            level2.setVisibility(View.VISIBLE);
+            level3.setVisibility(View.VISIBLE);
+            level4.setVisibility(View.VISIBLE);
+            level5.setVisibility(View.VISIBLE);
+            level6.setVisibility(View.VISIBLE);
+        }
         txtAsk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent go = new Intent(getApplicationContext(),Connect5Activity.class);
-
+                go.putExtra("level", level);
+                go.putExtra("profile", profile);
                 // you pass the position you want the viewpager to show in the extra,
                 // please don't forget to define and initialize the position variable
                 // properly
@@ -42,7 +112,8 @@ public class Connect4Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent go = new Intent(getApplicationContext(),Connect3Activity.class);
-
+                go.putExtra("level", level);
+                go.putExtra("profile", profile);
                 // you pass the position you want the viewpager to show in the extra,
                 // please don't forget to define and initialize the position variable
                 // properly

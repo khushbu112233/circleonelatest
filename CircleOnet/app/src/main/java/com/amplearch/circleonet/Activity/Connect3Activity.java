@@ -9,6 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amplearch.circleonet.R;
 
@@ -16,7 +17,9 @@ public class Connect3Activity extends AppCompatActivity {
 
     private ImageView imgBack, imgCards, imgConnect, imgEvents, imgProfile, imgConnecting, imgConnecting1;
     TextView txtConnecting;
+    String level =  "0";
     int x = 0;
+    int profile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +34,10 @@ public class Connect3Activity extends AppCompatActivity {
         imgConnecting1 = (ImageView) findViewById(R.id.imgConnecting1);
         txtConnecting = (TextView) findViewById(R.id.txtConnecting);
 
-
+        Intent intent = getIntent();
+        level = intent.getStringExtra("level");
+        profile = intent.getIntExtra("profile", 0);
+       // Toast.makeText(getApplicationContext(), level, Toast.LENGTH_LONG).show();
        /* Handler handler = new Handler();
 
         for (int i = 100; i <= 60000; i=i+100) {
@@ -73,11 +79,13 @@ public class Connect3Activity extends AppCompatActivity {
         imgConnecting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent go = new Intent(getApplicationContext(),Connect4Activity.class);
 
+                Intent go = new Intent(getApplicationContext(),Connect4Activity.class);
                 // you pass the position you want the viewpager to show in the extra,
                 // please don't forget to define and initialize the position variable
                 // properly
+                go.putExtra("level", level);
+                go.putExtra("profile", profile);
                 startActivity(go);
                 finish();
             }
@@ -91,7 +99,8 @@ public class Connect3Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent go = new Intent(getApplicationContext(),ConnectActivity.class);
-
+                go.putExtra("level", level);
+                go.putExtra("profile", profile);
                 // you pass the position you want the viewpager to show in the extra,
                 // please don't forget to define and initialize the position variable
                 // properly

@@ -58,6 +58,8 @@ public class ConnectActivity extends AppCompatActivity
     DatabaseHelper db;
     TextView tvPersonName, tvPersonDesignation, tvCompanyName;
     LinearLayout lnrWeb, lnrmail, lnrnum, lnrmob;
+    int profile;
+    String level;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -99,6 +101,32 @@ public class ConnectActivity extends AppCompatActivity
 
         Intent intent = getIntent();
         tag_id = intent.getStringExtra("tag_id");
+
+        if (tag_id.equals("en100000001")){
+            level = "2";
+        }
+        else if (tag_id.equals("en100000002")){
+            level = "3";
+        }
+        else if (tag_id.equals("en100000003")){
+            level = "4";
+        }
+        else if (tag_id.equals("en100000004")){
+            level = "5";
+        }
+        else if (tag_id.equals("en100000005")){
+            level = "6";
+        }
+        else if (tag_id.equals("en100000006")){
+            level = "1";
+        }
+        else if (tag_id.equals("en100000007")){
+            level = "4";
+        }
+        else {
+            level = "6";
+        }
+
         final List<NFCModel> modelList = db.getNFCbyTag(tag_id);
         try {
 
@@ -112,6 +140,7 @@ public class ConnectActivity extends AppCompatActivity
 
                     //  Bitmap bmp1 = BitmapFactory.decodeByteArray(tag1.getUser_image(), 0, tag1.getUser_image().length);
                     ivProfileImage.setImageResource(tag1.getUser_image());
+                    profile = tag1.getUser_image();
                     tvPersonName.setText(tag1.getName());
                     tvCompanyName.setText(tag1.getCompany());
                     txtWeb.setText(tag1.getWebsite());
@@ -194,6 +223,8 @@ public class ConnectActivity extends AppCompatActivity
                                 tvAdd.setTextColor(getResources().getColor(R.color.unselected));
                                 tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
                                 Intent go = new Intent(getApplicationContext(),Connect3Activity.class);
+                                go.putExtra("level", level);
+                                go.putExtra("profile", profile);
                                 startActivity(go);
                                 finish();
                             }
@@ -217,6 +248,8 @@ public class ConnectActivity extends AppCompatActivity
                                 tvAdd.setTextColor(getResources().getColor(R.color.unselected));
                                 tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
                                 Intent go = new Intent(getApplicationContext(),Connect3Activity.class);
+                                go.putExtra("level", level);
+                                go.putExtra("profile", profile);
                                 startActivity(go);
                                 finish();
                             }
@@ -331,7 +364,7 @@ public class ConnectActivity extends AppCompatActivity
         Cursor cur = context.getContentResolver().query(lookupUri,mPhoneNumberProjection, null, null, null);
         try {
             if (cur.moveToFirst()) {
-                Toast.makeText(getApplicationContext(), "Contact Exists", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Contact Exists", Toast.LENGTH_LONG).show();
                 ivAddRound.setImageResource(R.drawable.round_blue);
                 tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
                 tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
@@ -341,7 +374,7 @@ public class ConnectActivity extends AppCompatActivity
             if (cur != null)
                 cur.close();
         }
-        Toast.makeText(getApplicationContext(), "Contact doesn't Exists", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), "Contact doesn't Exists", Toast.LENGTH_LONG).show();
         ivAddRound.setImageResource(R.drawable.round_gray);
         tvAdd.setTextColor(getResources().getColor(R.color.unselected));
         tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));

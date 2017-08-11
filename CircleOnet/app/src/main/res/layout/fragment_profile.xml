@@ -82,13 +82,13 @@
                 android:src="@drawable/ic_dehaze_black_24dp"/>
 
             <LinearLayout
-                android:layout_marginTop="25dp"
-                android:layout_below="@+id/txtprofile"
-                android:layout_centerInParent="true"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true">
 
                 <RelativeLayout
                     android:layout_width="70dp"
@@ -101,14 +101,6 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp" />
 
-                    <ImageView
-                        android:id="@+id/imgQR"
-                        android:layout_marginBottom="5dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_width="13dp"
-                        android:layout_height="13dp"
-                        android:src="@drawable/ic_qrscann"/>
                 </RelativeLayout>
 
                 <TextView
@@ -203,6 +195,13 @@
                     android:text="Wasley Wan"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent" />
+                <ImageView
+                    android:id="@+id/imgQR"
+                    android:layout_marginLeft="8dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/barcode_scanner"/>
+
             </LinearLayout>
 
             <LinearLayout

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.EmbossMaskFilter;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.amplearch.circleonet.Activity.CardDetail;
 import com.amplearch.circleonet.Activity.CardsActivity;
@@ -41,6 +43,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
     public static ImageView imageView ;
     public static int posi = 0;
     DatabaseHelper db;
+    RelativeLayout defaultCard;
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
 
@@ -48,6 +51,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
         {
             super(itemView);
             imageView = (ImageView)itemView.findViewById(R.id.image1);
+            defaultCard = (RelativeLayout) itemView.findViewById(R.id.rltDefaultCard);
 
         }
 
@@ -102,8 +106,17 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
        // Bitmap bmp = BitmapFactory.decodeByteArray(nfcModelList.get(position).getCard_front(), 0, nfcModelList.get(position).getCard_front().length);
 
         this.holder = holder;
-        imageView.setImageResource(nfcModelList.get(position).getCard_front());
-        imageView.setTag(position);
+        if (position == 4){
+            imageView.setTag(position);
+            imageView.setVisibility(View.GONE);
+            defaultCard.setVisibility(View.VISIBLE);
+        }else {
+            imageView.setTag(position);
+            imageView.setVisibility(View.VISIBLE);
+            defaultCard.setVisibility(View.GONE);
+            imageView.setImageResource(nfcModelList.get(position).getCard_front());
+        }
+
         pos = holder.getAdapterPosition();
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +136,16 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
                 return true;
             }
         });
+
+        defaultCard.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                posi = position;
+                gestureDetector1.onTouchEvent(event);
+                return true;
+            }
+        });
+
 
 //        Glide.with(mContext).load(images.get(position))
 //                .thumbnail(0.5f).crossFade()

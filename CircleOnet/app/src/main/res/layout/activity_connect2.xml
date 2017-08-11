@@ -111,8 +111,9 @@
     </FrameLayout>
 
     <ScrollView
+        android:layout_marginBottom="50dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/flProfile">
 
         <RelativeLayout
@@ -509,13 +510,14 @@
                         android:src="@drawable/ic_web"/>
 
                     <TextView
+                        android:background="#6b6c6e"
                         android:id="@+id/txtWeb"
                         android:textAlignment="center"
                         android:gravity="center"
                         android:textColor="#6b6c6e"
                         android:textSize="13sp"
                         android:text="www.tcmong.com.sg"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                 </LinearLayout>
 
@@ -535,8 +537,9 @@
                         android:src="@drawable/ic_mail_gray"/>
 
                     <TextView
+                        android:background="#6b6c6e"
                         android:id="@+id/txtMail"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:text="tcmong@tcmong.com.sg"
@@ -561,13 +564,14 @@
                         android:src="@drawable/ic_phone"/>
 
                     <TextView
+                        android:background="#6b6c6e"
                         android:id="@+id/txtNum"
                         android:textAlignment="center"
                         android:gravity="center"
                         android:textColor="#6b6c6e"
                         android:textSize="13sp"
                         android:text="+65 6842 6186      +65 6842 6288"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                 </LinearLayout>
 
@@ -587,13 +591,14 @@
                         android:src="@drawable/ic_phone2"/>
 
                     <TextView
+                        android:background="#6b6c6e"
                         android:id="@+id/txtMob"
                         android:textAlignment="center"
                         android:gravity="center"
                         android:textColor="#6b6c6e"
                         android:textSize="13sp"
                         android:text="+65 6842 6288"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                 </LinearLayout>
 
@@ -612,16 +617,18 @@
                         android:src="@drawable/ic_mob"/>
 
                     <TextView
+                        android:background="#6b6c6e"
                         android:textAlignment="center"
                         android:gravity="center"
                         android:textColor="#6b6c6e"
                         android:textSize="13sp"
                         android:text="+65 8842 6688"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_marginBottom="10dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="15dp"
@@ -636,10 +643,11 @@
                         android:src="@drawable/ic_location"/>
 
                     <TextView
+                        android:background="#6b6c6e"
                         android:textColor="#6b6c6e"
                         android:textSize="13sp"
                         android:text="246 Macpherson Road.Betime Building #03-04.Singapore 348578"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
             </LinearLayout>

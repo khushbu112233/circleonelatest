@@ -12,11 +12,15 @@ public class Connect5Activity extends AppCompatActivity {
 
     private ImageView imgBack, imgCards, imgConnect, imgEvents, imgProfile, imgConnecting;
 
+    String level = "0";
+    int profile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connect5);
-
+        Intent intent = getIntent();
+        level = intent.getStringExtra("level");
+        profile = intent.getIntExtra("profile", 0);
         imgBack = (ImageView) findViewById(R.id.imgBack);
         imgCards = (ImageView) findViewById(R.id.imgCards);
         imgConnect = (ImageView) findViewById(R.id.imgConnect);
@@ -27,7 +31,8 @@ public class Connect5Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent go = new Intent(getApplicationContext(),Connect4Activity.class);
-
+                go.putExtra("level", level);
+                go.putExtra("profile", profile);
                 // you pass the position you want the viewpager to show in the extra,
                 // please don't forget to define and initialize the position variable
                 // properly
