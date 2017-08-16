@@ -7,6 +7,8 @@
     android:nestedScrollingEnabled="false"
     tools:context="com.amplearch.circleonet.Fragments.List1Fragment">
 
+
+
     <RelativeLayout
         android:layout_marginTop="5dp"
         android:id="@+id/lnrSearch"
@@ -113,4 +115,14 @@
             android:layout_height="match_parent"
             android:id="@+id/frame1"></FrameLayout>
     </LinearLayout>
+
+    <TextView
+        android:visibility="visible"
+        android:id="@+id/txtNoCard1"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="You are not having any Friends.."/>
+
+
 </RelativeLayout>

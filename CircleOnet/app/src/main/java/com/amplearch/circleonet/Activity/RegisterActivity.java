@@ -147,62 +147,56 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
-    public void onClick(View v)
-    {
-        if ( v == imgBack ){
+    public void onClick(View v) {
+        if (v == imgBack) {
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
             finish();
         }
-        if( v == ivMale)
-        {
-            TranslateAnimation slide1 = new TranslateAnimation(0, -190, 0,0 );
+        if (v == ivMale) {
+            TranslateAnimation slide1 = new TranslateAnimation(0, -190, 0, 0);
             slide1.setDuration(1000);
             ivConnect.startAnimation(slide1);
 
             //first things
             new Handler().postDelayed(new Runnable() {
                 @Override
-                public void run()
-                {
+                public void run() {
                     line_view2.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
                     ivFemaleImg.setImageResource(R.drawable.ic_female_gray);
                     ivFemaleround.setImageResource(R.drawable.round_gray);
                 }
-            },1100);
+            }, 1100);
             //second things
             line_view1.setBackground(getResources().getDrawable(R.drawable.dotted));
             ivMaleImg.setImageResource(R.drawable.ic_male);
             ivMaleRound.setImageResource(R.drawable.round_blue);
-            gender = "Male" ;
+            gender = "Male";
             txtGender.setText("Gender: Male");
         }
-        if( v == ivFemale)
-        {
-            TranslateAnimation slide = new TranslateAnimation(0, 190, 0,0 );
+        if (v == ivFemale) {
+            TranslateAnimation slide = new TranslateAnimation(0, 190, 0, 0);
             slide.setDuration(1000);
             ivConnect.startAnimation(slide);
 
             //first things
             new Handler().postDelayed(new Runnable() {
                 @Override
-                public void run()
-                {
+                public void run() {
                     line_view1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
                     ivMaleImg.setImageResource(R.drawable.ic_male_gray);
                     ivMaleRound.setImageResource(R.drawable.round_gray);
                 }
-            },1100);
+            }, 1100);
             //second things
             line_view2.setBackground(getResources().getDrawable(R.drawable.dotted));
             ivFemaleImg.setImageResource(R.drawable.ic_female);
             ivFemaleround.setImageResource(R.drawable.round_blue);
-            gender = "Female" ;
+            gender = "Female";
             txtGender.setText("Gender: Female");
 
         }
-        if( v == lnrRegister)
-        {
+        if (v == lnrRegister) {
             company_name = "Ample Arch";
             user_name = etUserName.getText().toString();
             first_name = etFirstName.getText().toString();
@@ -212,70 +206,20 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             c_password = etConfirmPass.getText().toString();
             email = etEmail.getText().toString();
 
-            if (!validate(user_name,first_name,last_name,password,c_password,phone_no,email))
-            {
+            if (!validate(user_name, first_name, last_name, password, c_password, phone_no, email)) {
                 Toast.makeText(getApplicationContext(), "Form Fill Invalid!", Toast.LENGTH_SHORT).show();
-            }
-            else if (gender.equals("")){
+            } else if (gender.equals("")) {
                 Toast.makeText(getApplicationContext(), "Select Gender", Toast.LENGTH_SHORT).show();
-            }
-            else if (final_ImgBase64.equals("")){
+            } else if (final_ImgBase64.equals("")) {
                 Toast.makeText(getApplicationContext(), "Upload Image", Toast.LENGTH_SHORT).show();
-            }
-            else
-            {
+            } else {
                 new HttpAsyncTaskPhotoUpload().execute("http://circle8.asia:8081/Onet.svc/ImgUpload");
             }
         }
-        if( v == civProfilePic)
-        {
+        if (v == civProfilePic) {
             selectImage();
         }
-       /* if( v == etDOB)
-        {
-            calendar = Calendar.getInstance();
-            mYear = calendar.get(Calendar.YEAR);
-            mMonth = calendar.get(Calendar.MONTH);
-            mDay = calendar.get(Calendar.DAY_OF_MONTH);
-
-            datePickerDialog = new DatePickerDialog(RegisterActivity.this,
-                    new DatePickerDialog.OnDateSetListener() {
-                        @Override
-                        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
-                        {
-                                final String selectDate = dayOfMonth + "/" + (monthOfYear + 1)+ "/" + year;
-                                final String current_date = mDay+"/"+(mMonth+1)+"/"+mYear;
-
-                                try
-                                {
-                                    //for current date
-                                    final Date curr_Date =  simpleDateFormat.parse(current_date);
-                                    String date1 = simpleDateFormat.format(curr_Date);
-                                    //for set date
-                                    final Date set_Date =  simpleDateFormat.parse(selectDate);
-                                    String date2 = simpleDateFormat.format(set_Date);
-
-                                    if(!date_validation(date2,date1))
-                                    {
-                                        etDOB.setText("DD/MM/YYYY");
-                                        Toast.makeText(getApplicationContext(),"Please! Set Date before Current Date." ,Toast.LENGTH_LONG).show();
-                                    }
-                                    else
-                                    {
-                                        etDOB.setText(date2);
-//                            Toast.makeText(getApplicationContext(),"Birth Date :"+date2,Toast.LENGTH_LONG).show();
-//                            Toast.makeText(getApplicationContext(),"Current :"+date1+" Set :"+date2 ,Toast.LENGTH_LONG).show();
-                                    }
-                                }
-                                catch (ParseException e)
-                                {
-                                    e.printStackTrace();
-                                }
-                        }
-                    }, mYear, mMonth, mDay);
-            datePickerDialog.show();
-        }
-*/    }
+    }
 
     public boolean date_validation(String d1,String d2)
     {

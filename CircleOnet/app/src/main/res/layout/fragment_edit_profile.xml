@@ -151,6 +151,7 @@
                 android:layout_alignParentBottom="true"/>
 
             <ImageView
+                android:id="@+id/imgDone"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="15dp"
@@ -219,14 +220,16 @@
                     android:layout_height="20dp"
                     android:src="@drawable/ic_ceo"/>
 
-                <EditText
+                <AutoCompleteTextView
                     android:gravity="center_vertical"
                     android:textSize="13sp"
-                    android:text="title"
+                    android:hint="title"
                     android:paddingLeft="10dp"
                     android:paddingBottom="15dp"
+                    android:id="@+id/autoCompleteDesignation"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:ems="10" />
             </LinearLayout>
 
             <LinearLayout
@@ -244,14 +247,17 @@
                     android:layout_height="20dp"
                     android:src="@drawable/ic_group_blue"/>
 
-                <EditText
+                <AutoCompleteTextView
                     android:gravity="center_vertical"
                     android:textSize="13sp"
                     android:text="company name"
                     android:paddingLeft="10dp"
                     android:paddingBottom="15dp"
+                    android:id="@+id/autoCompleteCompany"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:ems="10" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -269,14 +275,16 @@
                     android:layout_height="20dp"
                     android:src="@drawable/ic_branding"/>
 
-                <EditText
+                <AutoCompleteTextView
                     android:gravity="center_vertical"
                     android:textSize="13sp"
-                    android:text="industry"
+                    android:hint="title"
                     android:paddingLeft="10dp"
                     android:paddingBottom="15dp"
+                    android:id="@+id/autoCompleteIndustry"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:ems="10" />
             </LinearLayout>
 
             <LinearLayout
@@ -717,7 +725,7 @@
                     android:text="association"
                     android:paddingLeft="10dp"
                     android:paddingBottom="15dp"
-                    android:layout_width="320dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
                 <ImageView
@@ -1169,7 +1177,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="1000dp"
                 android:numColumns="2"
-                android:background="@android:color/darker_gray"
                 android:layout_marginBottom="10dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginLeft="20dp"
