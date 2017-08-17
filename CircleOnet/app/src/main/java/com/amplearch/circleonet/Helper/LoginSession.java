@@ -39,6 +39,7 @@ public class LoginSession {
 
     public static final String KEY_IMAGE = "image";
     public static final String KEY_GENDER = "gender";
+    public static final String KEY_PROFILEID = "profile_id";
 
     // Constructor
     public LoginSession(Context context){
@@ -50,11 +51,12 @@ public class LoginSession {
     /**
      * Create login session
      * */
-    public void createLoginSession(String userid, String name, String email, String image, String gender){
+    public void createLoginSession(String profileid, String userid, String name, String email, String image, String gender){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
         // Storing name in pref
+        editor.putString(KEY_PROFILEID, profileid);
         editor.putString(KEY_USERID, userid);
         editor.putString(KEY_NAME, name);
 
@@ -104,6 +106,7 @@ public class LoginSession {
 
         user.put(KEY_IMAGE, pref.getString(KEY_IMAGE, null));
         user.put(KEY_GENDER, pref.getString(KEY_GENDER, null));
+        user.put(KEY_PROFILEID, pref.getString(KEY_PROFILEID, null));
 
         // return user
         return user;

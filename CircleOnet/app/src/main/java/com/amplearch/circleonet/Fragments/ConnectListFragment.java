@@ -129,7 +129,7 @@ public class ConnectListFragment extends Fragment {
                     listView.setVisibility(View.VISIBLE);
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
                     gridAdapter.Filter(text);
-                    new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/Connect");
+                    new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/SearchConnect");
 
                 }
             }
