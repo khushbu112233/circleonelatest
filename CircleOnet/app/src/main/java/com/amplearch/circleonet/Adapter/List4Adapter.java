@@ -137,7 +137,7 @@ public class List4Adapter extends BaseSwipeAdapter {
 
                 try {
                    // List1Fragment.myPager.notifyDataSetChanged();
-                    List1Fragment.allTags = db.getActiveNFC();
+                   // List1Fragment.allTags = db.getActiveNFC();
                     List1Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
                     List1Fragment.GetData(context);

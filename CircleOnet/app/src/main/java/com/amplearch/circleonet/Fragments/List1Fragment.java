@@ -45,6 +45,7 @@ import com.amplearch.circleonet.Adapter.GridViewAdapter;
 import com.amplearch.circleonet.Gesture.OnSwipeTouchListener;
 import com.amplearch.circleonet.Gesture.SwipeGestureDetector;
 import com.amplearch.circleonet.Helper.DatabaseHelper;
+import com.amplearch.circleonet.Model.FriendConnection;
 import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.Utils.CarouselEffectTransformer;
 import com.amplearch.circleonet.Adapter.MyPager;
@@ -77,9 +78,9 @@ import java.util.Locale;
 
 public class List1Fragment extends Fragment
 {
-   // private ArrayList<Integer> imageFront = new ArrayList<>();
-   // private ArrayList<Integer> imageBack = new ArrayList<>();
-  //  public static MyPager myPager ;
+    // private ArrayList<Integer> imageFront = new ArrayList<>();
+    // private ArrayList<Integer> imageBack = new ArrayList<>();
+    //  public static MyPager myPager ;
     DatabaseHelper db ;
     private GestureDetector gestureDetector1;
     FrameLayout frameList1;
@@ -90,13 +91,13 @@ public class List1Fragment extends Fragment
     public static RelativeLayout lnrSearch;
     public static View line;
     private String DEBUG_TAG = "gesture";
-  //  private GestureDetector gestureDetector;
-  //  private View.OnTouchListener gestureListener;
+    //  private GestureDetector gestureDetector;
+    //  private View.OnTouchListener gestureListener;
 
-    public static List<NFCModel> allTags ;
+    public static List<FriendConnection> allTags ;
     //new asign value
     AutoCompleteTextView searchText ;
-    public static ArrayList<NFCModel> nfcModel ;
+    public static ArrayList<FriendConnection> nfcModel ;
     ViewConfiguration vc;
     private int mTouchSlop;
     FrameLayout frame, frame1;
@@ -112,6 +113,7 @@ public class List1Fragment extends Fragment
     public static CarouselLayoutManager manager1, manager2;
     private int draggingView = -1;
     RelativeLayout rlt;
+    public static TextView txtNoCard1;
 
     public List1Fragment()
     {
@@ -119,7 +121,7 @@ public class List1Fragment extends Fragment
     }
 
     @Override
-        public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
@@ -135,6 +137,7 @@ public class List1Fragment extends Fragment
         mTouchSlop = vc.getScaledTouchSlop();
         recyclerView1 = (RecyclerView) view.findViewById(R.id.list_horizontal1);
         recyclerView2 = (RecyclerView) view.findViewById(R.id.list_horizontal2);
+        txtNoCard1 = (TextView) view.findViewById(R.id.txtNoCard1);
         lnrList = (LinearLayout) view.findViewById(R.id.lnrList);
         frame = (FrameLayout) view.findViewById(R.id.frame);
         frame1 = (FrameLayout) view.findViewById(R.id.frame1);
@@ -158,8 +161,8 @@ public class List1Fragment extends Fragment
         gestureDetector1.setOnDoubleTapListener(doubleTapListener);
         nfcModel = new ArrayList<>();
         allTags = new ArrayList<>();
-        new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-       // new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+        // new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
 
         recyclerView1.addOnScrollListener(scrollListener);
         recyclerView2.addOnScrollListener(scrollListener);
@@ -195,8 +198,8 @@ public class List1Fragment extends Fragment
                 recyclerView1.dispatchTouchEvent(me); // don't cause scrolling
                 //recyclerView1.dispatchTouchEvent(me); // don't cause scrolling? Alternative solutoin?
 
-               // recyclerView2.requestFocus();
-               // recyclerView2.dispatchTouchEvent(mBackupTouchDownEvent); // don't cause scrolling
+                // recyclerView2.requestFocus();
+                // recyclerView2.dispatchTouchEvent(mBackupTouchDownEvent); // don't cause scrolling
                 //recyclerView2.dispatchTouchEvent(me);
                 return true;
             }
@@ -314,14 +317,14 @@ public class List1Fragment extends Fragment
                 if(s.length() <= 0)
                 {
                     nfcModel.clear();
-                    allTags = db.getActiveNFC();
+                    // allTags = db.getActiveNFC();
                     GetData(getContext());
                 }
                 else
                 {
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
                     mAdapter.Filter(text);
-                 //   mAdapter1.Filter(text);
+                    //   mAdapter1.Filter(text);
                 }
             }
 
@@ -415,6 +418,9 @@ public class List1Fragment extends Fragment
             //dialog.setTitle("Saving Reminder");
             dialog.show();
             dialog.setCancelable(false);
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+
         }
 
         @Override
@@ -436,7 +442,26 @@ public class List1Fragment extends Fragment
                     for (int i = 0; i < jsonArray.length(); i++){
 
                         JSONObject object = jsonArray.getJSONObject(i);
-                        Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
+                        //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
+
+
+
+                        FriendConnection nfcModelTag = new FriendConnection();
+                        nfcModelTag.setName(object.getString("FirstName") + " " + object.getString("LastName"));
+                        nfcModelTag.setCompany(object.getString("CompanyName"));
+                        nfcModelTag.setEmail(object.getString("UserName"));
+                        nfcModelTag.setWebsite("");
+                        nfcModelTag.setMob_no(object.getString("Phone"));
+                        nfcModelTag.setDesignation(object.getString("Designation"));
+                        /*nfcModelTag.setCard_front(object.getString("Card_Front"));
+                        nfcModelTag.setCard_back(object.getString("Card_Back"));*/
+                        nfcModelTag.setCard_front("000000002.jpg");
+                        nfcModelTag.setCard_back("000000006.jpg");
+
+
+                        nfcModelTag.setNfc_tag("en000000001");
+                        allTags.add(nfcModelTag);
+                        GetData(getContext());
                     }
                 }else {
                     Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
@@ -465,7 +490,7 @@ public class List1Fragment extends Fragment
         protected Void doInBackground(Void... params) {
             db = new DatabaseHelper(getContext());
             nfcModel = new ArrayList<>();
-            allTags = db.getActiveNFC();
+            // allTags = db.getActiveNFC();
 
             images = new ArrayList<>();
             images1 = new ArrayList<>();
@@ -630,7 +655,7 @@ public class List1Fragment extends Fragment
             super.onScrollStateChanged(recyclerView, newState);
             if (recyclerView1 == recyclerView && newState == RecyclerView.SCROLL_STATE_DRAGGING) {
                 draggingView = 1;
-               // GalleryAdapter.position = Integer.parseInt(GalleryAdapter.imageView.getTag().toString());
+                // GalleryAdapter.position = Integer.parseInt(GalleryAdapter.imageView.getTag().toString());
             } else if (recyclerView2 == recyclerView && newState == RecyclerView.SCROLL_STATE_DRAGGING) {
                 draggingView = 2;
             }
@@ -640,43 +665,12 @@ public class List1Fragment extends Fragment
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
-           // y=dy;
+            // y=dy;
             if (draggingView == 1 && recyclerView == recyclerView1) {
                 recyclerView2.scrollBy(dx, dy);
             } else if (draggingView == 2 && recyclerView == recyclerView2) {
                 recyclerView1.scrollBy(dx, dy);
             }
-           /* if(dx>0)
-            {
-                Toast.makeText(getContext(), "Scrolled Right", Toast.LENGTH_LONG).show();
-                System.out.println("Scrolled Right");
-
-            }
-            else if(dx < 0)
-            {
-                Toast.makeText(getContext(), "Scrolled Left", Toast.LENGTH_LONG).show();
-                System.out.println("Scrolled Left");
-
-            }
-            else {
-                Toast.makeText(getContext(), "No Horizontal Scrolled", Toast.LENGTH_LONG).show();
-                System.out.println("No Horizontal Scrolled");
-            }
-
-            if(dy>0)
-            {
-                Toast.makeText(getContext(), "Scrolled Downwards", Toast.LENGTH_LONG).show();
-                System.out.println("Scrolled Downwards");
-            }
-            else if(dy < 0)
-            {
-                System.out.println("Scrolled Upwards");
-                Toast.makeText(getContext(), "Scrolled Upwards", Toast.LENGTH_LONG).show();
-            }
-            else {
-                Toast.makeText(getContext(), "No Vertical Scrolled", Toast.LENGTH_LONG).show();
-                System.out.println("No Vertical Scrolled");
-            }*/
         }
     };
 
@@ -727,14 +721,14 @@ public class List1Fragment extends Fragment
 
     GestureDetector gestureDetector = new GestureDetector(simpleOnGestureListener);
 
-    @Override
+   /* @Override
     public void onResume()
     {
         super.onResume();
 
         nfcModel.clear();
         GetData(getContext());
-    }
+    }*/
 
     public static void GetData(Context context)
     {
@@ -742,10 +736,10 @@ public class List1Fragment extends Fragment
         images1 = new ArrayList<>();
         //newly added
         nfcModel.clear();
-        for(NFCModel reTag : allTags)
+        for(FriendConnection reTag : allTags)
         {
-            NFCModel nfcModelTag = new NFCModel();
-            nfcModelTag.setId(reTag.getId());
+            FriendConnection nfcModelTag = new FriendConnection();
+            // nfcModelTag.setId(reTag.getId());
             nfcModelTag.setName(reTag.getName());
             nfcModelTag.setCompany(reTag.getCompany());
             nfcModelTag.setEmail(reTag.getEmail());
@@ -755,29 +749,26 @@ public class List1Fragment extends Fragment
             nfcModelTag.setCard_front(reTag.getCard_front());
             nfcModelTag.setCard_back(reTag.getCard_back());
             nfcModelTag.setNfc_tag(reTag.getNfc_tag());
-            images.add(reTag.getCard_front());
-            images1.add(reTag.getCard_back());
             nfcModel.add(nfcModelTag);
         }
 
-        Collections.sort(nfcModel, new Comparator<NFCModel>() {
-            public int compare(NFCModel o1, NFCModel o2) {
-                if (o1.getDate() == null || o2.getDate() == null)
-                    return 0;
-                return o1.getDate().compareTo(o2.getDate());
-            }
-        });
         mAdapter = new GalleryAdapter(context, nfcModel);
         mAdapter1 = new GalleryAdapter1(context, nfcModel);
         mAdapter.notifyDataSetChanged();
         mAdapter1.notifyDataSetChanged();
+        if (nfcModel.size() == 0){
+            txtNoCard1.setVisibility(View.VISIBLE);
+        }
+        else {
+            txtNoCard1.setVisibility(View.GONE);
+        }
         CardsActivity.setActionBarTitle("Cards - "+nfcModel.size());
         initRecyclerView1(recyclerView1,new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter ) ;
         initRecyclerView2(recyclerView2,new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter1 ) ;
 
-       // myPager = new MyPager(context, R.layout.cardview_list, nfcModel);
+        // myPager = new MyPager(context, R.layout.cardview_list, nfcModel);
         //viewPager.setAdapter(myPager);
-      //  myPager.notifyDataSetChanged();
+        //  myPager.notifyDataSetChanged();
 
         //gridAdapter.setMode(Attributes.Mode.Single);
 

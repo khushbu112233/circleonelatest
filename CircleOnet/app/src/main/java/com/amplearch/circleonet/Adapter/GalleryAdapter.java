@@ -21,8 +21,10 @@ import com.amplearch.circleonet.Activity.CardsActivity;
 import com.amplearch.circleonet.Fragments.CardsFragment;
 import com.amplearch.circleonet.Fragments.List1Fragment;
 import com.amplearch.circleonet.Helper.DatabaseHelper;
+import com.amplearch.circleonet.Model.FriendConnection;
 import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -37,8 +39,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
     private GestureDetector gestureDetector1;
     public static int pos = 0;
 
-    public static ArrayList<NFCModel> nfcModelList = new ArrayList<>();
-    ArrayList<NFCModel> nfcModelListFilter = new ArrayList<>();
+    public static ArrayList<FriendConnection> nfcModelList = new ArrayList<>();
+    ArrayList<FriendConnection> nfcModelListFilter = new ArrayList<>();
     private RecyclerView.ViewHolder holder;
     public static ImageView imageView ;
     public static int posi = 0;
@@ -66,7 +68,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
     }
 
 
-    public GalleryAdapter(Context applicationContext, ArrayList<NFCModel> nfcModel)
+    public GalleryAdapter(Context applicationContext, ArrayList<FriendConnection> nfcModel)
     {
         mContext = applicationContext ;
         this.nfcModelList = nfcModel ;
@@ -104,7 +106,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
     public void onBindViewHolder(GalleryAdapter.MyViewHolder holder, final int position)
     {
         //Integer image = images.get(position);
-       // Bitmap bmp = BitmapFactory.decodeByteArray(nfcModelList.get(position).getCard_front(), 0, nfcModelList.get(position).getCard_front().length);
+        // Bitmap bmp = BitmapFactory.decodeByteArray(nfcModelList.get(position).getCard_front(), 0, nfcModelList.get(position).getCard_front().length);
 
         this.holder = holder;
         if (position == 4)
@@ -118,7 +120,9 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             imageView.setTag(position);
             imageView.setVisibility(View.VISIBLE);
             defaultCard.setVisibility(View.GONE);
-            imageView.setImageResource(nfcModelList.get(position).getCard_front());
+            //imageView.setImageResource(nfcModelList.get(position).getCard_front());
+            Picasso.with(mContext).load("http://circle8.asia/App_ImgLib/Cards/"+nfcModelList.get(position).getCard_front()).into(imageView);
+
         }
 
         pos = holder.getAdapterPosition();
@@ -205,7 +209,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             // Toast.makeText(getContext(), "onScroll", Toast.LENGTH_LONG).show();
             // textEvt2.setText(e1.getX()+":"+ e1.getY() +"  "+ e2.getX()+":"+ e2.getY());
             //Log.e(TAG, "onScroll");
-           // position = Integer.parseInt(imageView.getTag().toString());
+            // position = Integer.parseInt(imageView.getTag().toString());
             return true;
         }
 
@@ -293,7 +297,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             try {
                 // List1Fragment.myPager.notifyDataSetChanged();
                 List1Fragment.nfcModel.clear();
-                    List1Fragment.allTags = db.getActiveNFC();
+                // List1Fragment.allTags = db.getActiveNFC();
                 //  nfcModelList.clear();
                 List1Fragment.GetData(mContext);
             } catch (Exception e){
@@ -303,7 +307,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
         else
         {
             List1Fragment.allTags.clear();
-            for(NFCModel md : nfcModelListFilter)
+            for(FriendConnection md : nfcModelListFilter)
             {
                 if(md.getName().toLowerCase(Locale.getDefault()).contains(charText))
                 {

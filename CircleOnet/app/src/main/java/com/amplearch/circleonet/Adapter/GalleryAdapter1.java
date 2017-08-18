@@ -16,8 +16,10 @@ import android.widget.ImageView;
 import com.amplearch.circleonet.Activity.CardDetail;
 import com.amplearch.circleonet.Fragments.CardsFragment;
 import com.amplearch.circleonet.Fragments.List1Fragment;
+import com.amplearch.circleonet.Model.FriendConnection;
 import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -31,8 +33,8 @@ public class GalleryAdapter1 extends RecyclerView.Adapter<GalleryAdapter1.MyView
     private Context mContext;
     private GestureDetector gestureDetector1;
 
-    ArrayList<NFCModel> nfcModelList = new ArrayList<>();
-    ArrayList<NFCModel> nfcModelListFilter = new ArrayList<>();
+    ArrayList<FriendConnection> nfcModelList = new ArrayList<>();
+    ArrayList<FriendConnection> nfcModelListFilter = new ArrayList<>();
     public static int posi = 0;
     public static ImageView imageView ;
     public class MyViewHolder extends RecyclerView.ViewHolder
@@ -45,7 +47,7 @@ public class GalleryAdapter1 extends RecyclerView.Adapter<GalleryAdapter1.MyView
         }
     }
 
-    public GalleryAdapter1(Context applicationContext, ArrayList<NFCModel> nfcModel)
+    public GalleryAdapter1(Context applicationContext, ArrayList<FriendConnection> nfcModel)
     {
         mContext = applicationContext ;
         this.nfcModelList = nfcModel ;
@@ -78,9 +80,10 @@ public class GalleryAdapter1 extends RecyclerView.Adapter<GalleryAdapter1.MyView
     public void onBindViewHolder(MyViewHolder holder, final int position)
     {
         //Integer image = images.get(position);
-      //  Bitmap bmp = BitmapFactory.decodeByteArray(nfcModelList.get(position).getCard_back(), 0, nfcModelList.get(position).getCard_back().length);
+        //  Bitmap bmp = BitmapFactory.decodeByteArray(nfcModelList.get(position).getCard_back(), 0, nfcModelList.get(position).getCard_back().length);
 
-        imageView.setImageResource(nfcModelList.get(position).getCard_back());
+        //  imageView.setImageResource(nfcModelList.get(position).getCard_back());
+        Picasso.with(mContext).load("http://circle8.asia/App_ImgLib/Cards/"+nfcModelList.get(position).getCard_back()).into(imageView);
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,7 +140,7 @@ public class GalleryAdapter1 extends RecyclerView.Adapter<GalleryAdapter1.MyView
             //   Log.e(TAG, "onSingleTapUp");
 
             // final_position = List1Fragment.viewPager.getCurrentItem();
-           // Intent intent = new Intent(mContext, CardDetail.class);
+            // Intent intent = new Intent(mContext, CardDetail.class);
             //intent.putExtra("tag_id", nfcModelList.get(final_position).getNfc_tag());
             // context.startActivity(intent);
 
@@ -241,7 +244,7 @@ public class GalleryAdapter1 extends RecyclerView.Adapter<GalleryAdapter1.MyView
         }
         else
         {
-            for(NFCModel md : nfcModelListFilter)
+            for(FriendConnection md : nfcModelListFilter)
             {
                 if(md.getName().toLowerCase(Locale.getDefault()).contains(charText))
                 {

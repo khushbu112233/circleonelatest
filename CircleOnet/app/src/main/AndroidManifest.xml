@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.amplearch.circleonet">
+
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -96,8 +97,9 @@
         <activity android:name=".Activity.AddQRActivity" />
         <activity
             android:name=".Activity.EditProfileActivity"
-            android:theme="@style/NoActionbar"></activity>
-        <activity android:name=".Activity.FingerPrintLogin"></activity>
+            android:theme="@style/NoActionbar" />
+        <activity android:name=".Activity.FingerPrintLogin" />
+        <activity android:name=".Activity.GroupTag"></activity>
     </application>
 
 </manifest>

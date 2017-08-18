@@ -85,6 +85,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -176,8 +177,7 @@ public class LoginActivity extends AppCompatActivity implements
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             imgFinger.setVisibility(View.VISIBLE);
-        }
-        else {
+        } else {
             imgFinger.setVisibility(View.GONE);
         }
 
@@ -379,41 +379,52 @@ public class LoginActivity extends AppCompatActivity implements
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
                     String success = jsonObject.getString("success").toString();
-                    String UserID = jsonObject.getString("UserID").toString();
-
-                    if (success.equals("1") && !UserID.equalsIgnoreCase("")) {
+                    String UserID = "", profileid = "", FirstName = "", LastName = "", UserPhoto = "";
+                    if (success.equals("1")) {
                         //  Toast.makeText(getBaseContext(), "LoggedIn Successfully..", Toast.LENGTH_LONG).show();
-                        fingerPrintSession.createLoginSession(UserID, "", userName, "", "");
+                        //   fingerPrintSession.createLoginSession(UserID, "", userName, "", "");
 
+                        JSONObject jsonArray = jsonObject.getJSONObject("profile");
+                        //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
+                        UserID = jsonArray.getString("userid");
+                        profileid = jsonArray.getString("profileid");
+                        FirstName = jsonArray.getString("FirstName");
+                        LastName = jsonArray.getString("LastName");
+                        UserPhoto = jsonArray.getString("UserPhoto");
+                        String Status = jsonArray.getString("Status");
 
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                           // imgFinger.setVisibility(View.VISIBLE);
-                            Gson gson = ((MyApplication) getApplication()).getGsonObject();
-                            UserObject userData = new UserObject("", userName, userPassword, UserID, "", "", false);
-                            String userDataString = gson.toJson(userData);
-                            CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
-                            pref.setUserData(userDataString);
+                        if (Status.equalsIgnoreCase("Verified")) {
 
-                            Intent intent = new Intent(getApplicationContext(), FingerPrintLogin.class);
-                            //intent.putExtra("viewpager_position", 0);
-                            startActivity(intent);
-                            finish();
-                        }
-                        else {
-                           // imgFinger.setVisibility(View.GONE);
-                            loginSession.createLoginSession(UserID, "", userName, "", "");
-                            if (prefs.getBoolean("firstrun", true)) {
-                                // Do first run stuff here then set 'firstrun' as false
-                                // using the following line to edit/commit prefs
-                                Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                // imgFinger.setVisibility(View.VISIBLE);
+                                Gson gson = ((MyApplication) getApplication()).getGsonObject();
+                                UserObject userData = new UserObject(profileid, FirstName + " " + LastName, userName, userPassword, UserID, "", UserPhoto, false);
+                                String userDataString = gson.toJson(userData);
+                                CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
+                                pref.setUserData(userDataString);
+
+                                Intent intent = new Intent(getApplicationContext(), FingerPrintLogin.class);
+                                //intent.putExtra("viewpager_position", 0);
                                 startActivity(intent);
-                                prefs.edit().putBoolean("firstrun", false).commit();
-                            } else {
-                                Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
-                                userIntent.putExtra("viewpager_position", 0);
-                                startActivity(userIntent);
                                 finish();
+                            } else {
+                                // imgFinger.setVisibility(View.GONE);
+                                loginSession.createLoginSession(profileid, UserID, "", userName, "", "");
+                                if (prefs.getBoolean("firstrun", true)) {
+                                    // Do first run stuff here then set 'firstrun' as false
+                                    // using the following line to edit/commit prefs
+                                    Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                                    startActivity(intent);
+                                    prefs.edit().putBoolean("firstrun", false).commit();
+                                } else {
+                                    Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                                    userIntent.putExtra("viewpager_position", 0);
+                                    startActivity(userIntent);
+                                    finish();
+                                }
                             }
+                        }else {
+                            Toast.makeText(getBaseContext(), "You should verify your Account First..", Toast.LENGTH_LONG).show();
                         }
 
                     } else {
@@ -424,7 +435,7 @@ public class LoginActivity extends AppCompatActivity implements
                 }
 
             } catch (JSONException e) {
-                e.printStackTrace();
+                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
             }
             //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
         }
@@ -511,12 +522,12 @@ public class LoginActivity extends AppCompatActivity implements
                 );
 
 
-              //  loginSession.createLoginSession("", personName, email, personPhotoUrl, "");
+                //  loginSession.createLoginSession("", personName, email, personPhotoUrl, "");
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     // imgFinger.setVisibility(View.VISIBLE);
                     Gson gson = ((MyApplication) getApplication()).getGsonObject();
-                    UserObject userData = new UserObject(personName, email, "", "", "", personPhotoUrl, false);
+                    UserObject userData = new UserObject("", personName, email, "", "", "", personPhotoUrl, false);
                     String userDataString = gson.toJson(userData);
                     CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
                     pref.setUserData(userDataString);
@@ -525,10 +536,9 @@ public class LoginActivity extends AppCompatActivity implements
                     //intent.putExtra("viewpager_position", 0);
                     startActivity(intent);
                     finish();
-                }
-                else {
+                } else {
                     // imgFinger.setVisibility(View.GONE);
-                    loginSession.createLoginSession("", personName, email, personPhotoUrl, "");
+                    loginSession.createLoginSession("", "", personName, email, personPhotoUrl, "");
                     if (prefs.getBoolean("firstrun", true)) {
                         // Do first run stuff here then set 'firstrun' as false
                         // using the following line to edit/commit prefs
@@ -626,7 +636,7 @@ public class LoginActivity extends AppCompatActivity implements
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                 // imgFinger.setVisibility(View.VISIBLE);
                                 Gson gson = ((MyApplication) getApplication()).getGsonObject();
-                                UserObject userData = new UserObject(user.getDisplayName(), user.getEmail(), "", "", "", String.valueOf(user.getPhotoUrl()), false);
+                                UserObject userData = new UserObject("", user.getDisplayName(), user.getEmail(), "", "", "", String.valueOf(user.getPhotoUrl()), false);
                                 String userDataString = gson.toJson(userData);
                                 CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
                                 pref.setUserData(userDataString);
@@ -635,10 +645,9 @@ public class LoginActivity extends AppCompatActivity implements
                                 //intent.putExtra("viewpager_position", 0);
                                 startActivity(intent);
                                 finish();
-                            }
-                            else {
+                            } else {
                                 // imgFinger.setVisibility(View.GONE);
-                                loginSession.createLoginSession("", user.getDisplayName(), user.getEmail(), String.valueOf(user.getPhotoUrl()), "");
+                                loginSession.createLoginSession("", "", user.getDisplayName(), user.getEmail(), String.valueOf(user.getPhotoUrl()), "");
                                 if (prefs.getBoolean("firstrun", true)) {
                                     // Do first run stuff here then set 'firstrun' as false
                                     // using the following line to edit/commit prefs
@@ -714,7 +723,7 @@ public class LoginActivity extends AppCompatActivity implements
             @Override
             public void onApiError(LIApiError error) {
                 // ((TextView) findViewById(R.id.error)).setText(error.toString());
-              //  Toast.makeText(getApplicationContext(), "Not able to Login to LinkedIn..", Toast.LENGTH_LONG).show();
+                //  Toast.makeText(getApplicationContext(), "Not able to Login to LinkedIn..", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -726,11 +735,11 @@ public class LoginActivity extends AppCompatActivity implements
     public void setprofile(JSONObject response) {
 
         try {
-             Log.d("response link ", response.toString());
+            Log.d("response link ", response.toString());
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 // imgFinger.setVisibility(View.VISIBLE);
                 Gson gson = ((MyApplication) getApplication()).getGsonObject();
-                UserObject userData = new UserObject(response.get("formattedName").toString(), response.get("emailAddress").toString(), "", "", "", response.get("publicProfileUrl").toString(), false);
+                UserObject userData = new UserObject("", response.get("formattedName").toString(), response.get("emailAddress").toString(), "", "", "", response.get("publicProfileUrl").toString(), false);
                 String userDataString = gson.toJson(userData);
                 CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
                 pref.setUserData(userDataString);
@@ -739,10 +748,9 @@ public class LoginActivity extends AppCompatActivity implements
                 //intent.putExtra("viewpager_position", 0);
                 startActivity(intent);
                 finish();
-            }
-            else {
+            } else {
                 // imgFinger.setVisibility(View.GONE);
-                loginSession.createLoginSession("", response.get("formattedName").toString(), response.get("emailAddress").toString(), response.get("publicProfileUrl").toString(), "");
+                loginSession.createLoginSession("", "", response.get("formattedName").toString(), response.get("emailAddress").toString(), response.get("publicProfileUrl").toString(), "");
 
                 if (prefs.getBoolean("firstrun", true)) {
                     // Do first run stuff here then set 'firstrun' as false
@@ -885,13 +893,10 @@ public class LoginActivity extends AppCompatActivity implements
                                 startActivity(intent);
                                 finish();
 */
-
-
-
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                     // imgFinger.setVisibility(View.VISIBLE);
                                     Gson gson = ((MyApplication) getApplication()).getGsonObject();
-                                    UserObject userData = new UserObject(object.getString("name").toString(), object.getString("email").toString(), "", "", object.getString("gender").toString(), personPhotoUrl, false);
+                                    UserObject userData = new UserObject("", object.getString("name").toString(), object.getString("email").toString(), "", "", object.getString("gender").toString(), personPhotoUrl, false);
                                     String userDataString = gson.toJson(userData);
                                     CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
                                     pref.setUserData(userDataString);
@@ -900,10 +905,9 @@ public class LoginActivity extends AppCompatActivity implements
                                     //intent.putExtra("viewpager_position", 0);
                                     startActivity(intent);
                                     finish();
-                                }
-                                else {
+                                } else {
                                     // imgFinger.setVisibility(View.GONE);
-                                    loginSession.createLoginSession("", object.getString("name").toString(), object.getString("email").toString(), personPhotoUrl, object.getString("gender").toString());
+                                    loginSession.createLoginSession("", "", object.getString("name").toString(), object.getString("email").toString(), personPhotoUrl, object.getString("gender").toString());
 
                                     if (prefs.getBoolean("firstrun", true)) {
                                         // Do first run stuff here then set 'firstrun' as false

@@ -384,7 +384,7 @@ public class MyPager extends PagerAdapter implements GestureDetector.OnGestureLi
             try {
                // List1Fragment.myPager.notifyDataSetChanged();
                 List1Fragment.nfcModel.clear();
-                List1Fragment.allTags = db.getActiveNFC();
+             //   List1Fragment.allTags = db.getActiveNFC();
                 //  nfcModelList.clear();
                 List1Fragment.GetData(context);
             } catch (Exception e){
@@ -402,7 +402,7 @@ public class MyPager extends PagerAdapter implements GestureDetector.OnGestureLi
                     try {
                      //   List1Fragment.myPager.notifyDataSetChanged();
                         List1Fragment.nfcModel.clear();
-                        List1Fragment.allTags.add(md);
+                    //    List1Fragment.allTags.add(md);
                         //  nfcModelList.clear();
                         List1Fragment.GetData(context);
                     } catch (Exception e){
