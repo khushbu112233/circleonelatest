@@ -44,6 +44,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
     public static int posi = 0;
     DatabaseHelper db;
     RelativeLayout defaultCard;
+
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
 
@@ -106,11 +107,14 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
        // Bitmap bmp = BitmapFactory.decodeByteArray(nfcModelList.get(position).getCard_front(), 0, nfcModelList.get(position).getCard_front().length);
 
         this.holder = holder;
-        if (position == 4){
+        if (position == 4)
+        {
             imageView.setTag(position);
             imageView.setVisibility(View.GONE);
             defaultCard.setVisibility(View.VISIBLE);
-        }else {
+        }
+        else
+        {
             imageView.setTag(position);
             imageView.setVisibility(View.VISIBLE);
             defaultCard.setVisibility(View.GONE);
@@ -126,7 +130,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
                 mContext.startActivity(intent);
             }
         });
-
 
         imageView.setOnTouchListener(new View.OnTouchListener() {
             @Override

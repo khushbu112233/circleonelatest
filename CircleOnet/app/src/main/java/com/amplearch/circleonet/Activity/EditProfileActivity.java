@@ -461,7 +461,6 @@ public class EditProfileActivity extends AppCompatActivity
 
     }
 
-
     private void createFile()
     {
         final File file = new File(Environment.getExternalStorageDirectory(), "read.me");

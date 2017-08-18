@@ -13,8 +13,8 @@ import android.widget.Toast;
 
 import com.amplearch.circleonet.R;
 
-public class Connect3Activity extends AppCompatActivity {
-
+public class Connect3Activity extends AppCompatActivity
+{
     private ImageView imgBack, imgCards, imgConnect, imgEvents, imgProfile, imgConnecting, imgConnecting1;
     TextView txtConnecting;
     String level =  "0";
@@ -58,7 +58,7 @@ public class Connect3Activity extends AppCompatActivity {
         }*/
 
 
-        Handler h=new Handler();
+        Handler h = new Handler();
         h.postDelayed(new Runnable(){
             public void run(){
 //change your text here
