@@ -45,6 +45,7 @@ import com.amplearch.circleonet.Adapter.GridViewAdapter;
 import com.amplearch.circleonet.Gesture.OnSwipeTouchListener;
 import com.amplearch.circleonet.Gesture.SwipeGestureDetector;
 import com.amplearch.circleonet.Helper.DatabaseHelper;
+import com.amplearch.circleonet.Helper.LoginSession;
 import com.amplearch.circleonet.Model.FriendConnection;
 import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.Utils.CarouselEffectTransformer;
@@ -73,6 +74,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -114,7 +116,8 @@ public class List1Fragment extends Fragment
     private int draggingView = -1;
     RelativeLayout rlt;
     public static TextView txtNoCard1;
-
+    LoginSession session;
+    String UserId = "";
     public List1Fragment()
     {
         // Required empty public constructor
@@ -141,6 +144,13 @@ public class List1Fragment extends Fragment
         lnrList = (LinearLayout) view.findViewById(R.id.lnrList);
         frame = (FrameLayout) view.findViewById(R.id.frame);
         frame1 = (FrameLayout) view.findViewById(R.id.frame1);
+        session = new LoginSession(getContext());
+
+
+        HashMap<String, String> user = session.getUserDetails();
+
+        // name
+        UserId = user.get(LoginSession.KEY_USERID);
         db = new DatabaseHelper(getContext());
         //viewPager = (ViewPager)view.findViewById(R.id.viewPager);
         lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
@@ -354,7 +364,7 @@ public class List1Fragment extends Fragment
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("numofrecords", "10" );
             jsonObject.accumulate("pageno", "1" );
-            jsonObject.accumulate("userid", "1" );
+            jsonObject.accumulate("userid", UserId );
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
