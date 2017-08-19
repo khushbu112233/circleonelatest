@@ -60,24 +60,21 @@
                     android:id="@+id/imgConnecting"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:src="@drawable/round1"
-                    />
+                    android:src="@drawable/round1" />
 
                 <ImageView
                     android:layout_centerInParent="true"
                     android:id="@+id/imgConnecting1"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/round2"
-                    />
+                    android:src="@drawable/round2" />
 
                 <ImageView
                     android:layout_centerInParent="true"
                     android:id="@+id/imgConnecting2"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
-                    android:src="@drawable/round3"
-                    />
+                    android:src="@drawable/round3" />
 
                 <TextView
                     android:id="@+id/txtConnecting"

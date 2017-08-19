@@ -89,8 +89,8 @@ import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
 import io.fabric.sdk.android.Fabric;
 
 
-public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConnectionFailedListener{
-
+public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConnectionFailedListener
+{
     public static CustomViewPager mViewPager;
     TabLayout tabLayout;
     ImageView imgDrawer, imgLogo;
@@ -108,11 +108,13 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
     public static GoogleApiClient mGoogleApiClient;
     LoginSession session;
     private FirebaseAuth mAuth;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        TwitterAuthConfig authConfig =  new TwitterAuthConfig(
-                getString(R.string.twitter_consumer_key),
+
+        TwitterAuthConfig authConfig =  new TwitterAuthConfig(getString(R.string.twitter_consumer_key),
                 getString(R.string.twitter_consumer_secret));
         Fabric.with(this, new Twitter(authConfig));
 
@@ -120,15 +122,17 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         /*SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy  hh:mm:ss a");
         String date1 = format.format(Date.parse(stringDate));
 
-        Toast.makeText(getApplicationContext(), "Time: " + date1, Toast.LENGTH_LONG).show();
-*/
+        Toast.makeText(getApplicationContext(), "Time: " + date1, Toast.LENGTH_LONG).show();   */
+
         mAuth = FirebaseAuth.getInstance();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         Bundle extras = getIntent().getExtras();
+
         if(extras != null) {
             position = extras.getInt("viewpager_position");
             nested_position = extras.getInt("nested_viewpager_position");
         }
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -137,12 +141,9 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
 
         HashMap<String, String> user = session.getUserDetails();
 
-        // name
-        String name = user.get(LoginSession.KEY_NAME);
 
-        // email
-        String email = user.get(LoginSession.KEY_EMAIL);
-
+        String name = user.get(LoginSession.KEY_NAME);      // name
+        String email = user.get(LoginSession.KEY_EMAIL);    // email
         String image = user.get(LoginSession.KEY_IMAGE);
         String gender = user.get(LoginSession.KEY_GENDER);
         Toast.makeText(getApplicationContext(), name + " " + email + " " + image + " " + gender, Toast.LENGTH_LONG).show();
@@ -269,8 +270,8 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         });
 
                // createTabIcons();
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener()
+        {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -388,14 +389,15 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
 
 
 
-    private class LoadDataForActivity extends AsyncTask<Void, Void, Void> {
-
+    private class LoadDataForActivity extends AsyncTask<Void, Void, Void>
+    {
         String data1;
         String data2;
         Bitmap data3;
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             db = new DatabaseHelper(getApplicationContext());
            /* List<NFCModel> allTags = db.getAllNFC();
             for (NFCModel tag : allTags) {

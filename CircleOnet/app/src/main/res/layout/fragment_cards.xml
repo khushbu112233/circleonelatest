@@ -17,7 +17,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/white"></View>
+            android:background="@color/white"/>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs1"
@@ -27,6 +27,7 @@
             android:layout_height="wrap_content" />
 
     </android.support.design.widget.AppBarLayout>
+
     <com.amplearch.circleonet.Utils.CustomViewPager
         android:layout_above="@+id/view1"
         android:layout_below="@+id/appbar1"
