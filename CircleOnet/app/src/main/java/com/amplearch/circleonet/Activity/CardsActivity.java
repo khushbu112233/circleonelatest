@@ -496,6 +496,16 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         LinearLayout lnrLogout = (LinearLayout) dialog.findViewById(R.id.lnrLogout);
         LinearLayout lnrAddQR = (LinearLayout) dialog.findViewById(R.id.lnrAddQR);
         LinearLayout lnrGroup = (LinearLayout) dialog.findViewById(R.id.lnrGroup);
+        LinearLayout lnrNotification = (LinearLayout) dialog.findViewById(R.id.lnrNotification);
+
+        lnrNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Notification.class);
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        });
 
         lnrGroup.setOnClickListener(new View.OnClickListener() {
             @Override
