@@ -12,6 +12,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.amplearch.circleonet.Activity.CardDetail;
 import com.amplearch.circleonet.Fragments.CardsFragment;
@@ -37,13 +39,22 @@ public class GalleryAdapter1 extends RecyclerView.Adapter<GalleryAdapter1.MyView
     ArrayList<FriendConnection> nfcModelListFilter = new ArrayList<>();
     public static int posi = 0;
     public static ImageView imageView ;
+    RelativeLayout defaultCard;
+
+    private static TextView tvPersonName, tvPersonProfile, tvPersonWebsite, tvPersonAddress, tvPersonContact;
+
     public class MyViewHolder extends RecyclerView.ViewHolder
     {
         public MyViewHolder(View itemView)
         {
             super(itemView);
             imageView = (ImageView)itemView.findViewById(R.id.image1);
-
+            defaultCard = (RelativeLayout) itemView.findViewById(R.id.rltDefaultCard);
+            tvPersonName = (TextView)itemView.findViewById(R.id.tvPersonName);
+            tvPersonProfile = (TextView)itemView.findViewById(R.id.tvPersonProfile);
+            tvPersonWebsite = (TextView)itemView.findViewById(R.id.tvPersonWebsite);
+            tvPersonAddress = (TextView)itemView.findViewById(R.id.tvPersonAddress);
+            tvPersonContact = (TextView)itemView.findViewById(R.id.tvPersonContact);
         }
     }
 
@@ -83,8 +94,35 @@ public class GalleryAdapter1 extends RecyclerView.Adapter<GalleryAdapter1.MyView
         //  Bitmap bmp = BitmapFactory.decodeByteArray(nfcModelList.get(position).getCard_back(), 0, nfcModelList.get(position).getCard_back().length);
 
         //  imageView.setImageResource(nfcModelList.get(position).getCard_back());
-        Picasso.with(mContext).load("http://circle8.asia/App_ImgLib/Cards/"+nfcModelList.get(position).getCard_back()).into(imageView);
+        if (nfcModelList.get(position).getCard_back().equals(""))
+        {
+            imageView.setTag(position);
+            imageView.setVisibility(View.GONE);
+            defaultCard.setVisibility(View.VISIBLE);
 
+            tvPersonName.setText(nfcModelList.get(position).getName());
+            tvPersonProfile.setText(nfcModelList.get(position).getDesignation());
+            tvPersonWebsite.setText(nfcModelList.get(position).getWebsite());
+            tvPersonAddress.setText(nfcModelList.get(position).getAddress());
+            tvPersonContact.setText(nfcModelList.get(position).getPh_no());
+        }
+        else
+        {
+            imageView.setTag(position);
+            imageView.setVisibility(View.VISIBLE);
+            defaultCard.setVisibility(View.GONE);
+            //imageView.setImageResource(nfcModelList.get(position).getCard_front());
+            Picasso.with(mContext).load("http://circle8.asia/App_ImgLib/Cards/"+nfcModelList.get(position).getCard_back()).into(imageView);
+
+        }
+        defaultCard.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                posi = position;
+                gestureDetector1.onTouchEvent(event);
+                return true;
+            }
+        });
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

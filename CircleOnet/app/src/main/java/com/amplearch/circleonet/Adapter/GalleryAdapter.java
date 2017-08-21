@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.amplearch.circleonet.Activity.CardDetail;
 import com.amplearch.circleonet.Activity.CardsActivity;
@@ -47,6 +48,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
     DatabaseHelper db;
     RelativeLayout defaultCard;
 
+    private static TextView tvPersonName, tvPersonProfile, tvPersonWebsite, tvPersonAddress, tvPersonContact;
+
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
 
@@ -55,18 +58,22 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             super(itemView);
             imageView = (ImageView)itemView.findViewById(R.id.image1);
             defaultCard = (RelativeLayout) itemView.findViewById(R.id.rltDefaultCard);
-
+            tvPersonName = (TextView)itemView.findViewById(R.id.tvPersonName);
+            tvPersonProfile = (TextView)itemView.findViewById(R.id.tvPersonProfile);
+            tvPersonWebsite = (TextView)itemView.findViewById(R.id.tvPersonWebsite);
+            tvPersonAddress = (TextView)itemView.findViewById(R.id.tvPersonAddress);
+            tvPersonContact = (TextView)itemView.findViewById(R.id.tvPersonContact);
         }
 
         @Override
-        public void onClick(View v) {
+        public void onClick(View v)
+        {
             int position = getAdapterPosition();
             Intent intent = new Intent(mContext, CardDetail.class);
             intent.putExtra("tag_id", nfcModelList.get(position).getNfc_tag());
             mContext.startActivity(intent);
         }
     }
-
 
     public GalleryAdapter(Context applicationContext, ArrayList<FriendConnection> nfcModel)
     {
@@ -109,11 +116,17 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
         // Bitmap bmp = BitmapFactory.decodeByteArray(nfcModelList.get(position).getCard_front(), 0, nfcModelList.get(position).getCard_front().length);
 
         this.holder = holder;
-        if (position == 4)
+        if (nfcModelList.get(position).getCard_front().equals(""))
         {
             imageView.setTag(position);
             imageView.setVisibility(View.GONE);
             defaultCard.setVisibility(View.VISIBLE);
+
+            tvPersonName.setText(nfcModelList.get(position).getName());
+            tvPersonProfile.setText(nfcModelList.get(position).getDesignation());
+            tvPersonWebsite.setText(nfcModelList.get(position).getWebsite());
+            tvPersonAddress.setText(nfcModelList.get(position).getAddress());
+            tvPersonContact.setText(nfcModelList.get(position).getPh_no());
         }
         else
         {
@@ -122,7 +135,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             defaultCard.setVisibility(View.GONE);
             //imageView.setImageResource(nfcModelList.get(position).getCard_front());
             Picasso.with(mContext).load("http://circle8.asia/App_ImgLib/Cards/"+nfcModelList.get(position).getCard_front()).into(imageView);
-
         }
 
         pos = holder.getAdapterPosition();
