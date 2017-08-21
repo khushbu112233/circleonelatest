@@ -30,6 +30,7 @@
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
                 android:src="@drawable/card1" />
+
             <RelativeLayout
                 android:visibility="visible"
                 android:id="@+id/rltDefaultCard"
@@ -43,6 +44,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <TextView
+                        android:id="@+id/tvPersonName"
                         android:layout_marginLeft="20dp"
                         android:layout_marginBottom="8dp"
                         android:textSize="15dp"
@@ -53,6 +55,7 @@
                         android:text="CHRIS LIAO"/>
 
                     <TextView
+                        android:id="@+id/tvPersonProfile"
                         android:layout_marginLeft="20dp"
                         android:layout_marginBottom="20dp"
                         android:textSize="13dp"
@@ -63,6 +66,7 @@
                         android:text="CEO"/>
 
                     <TextView
+                        android:id="@+id/tvPersonWebsite"
                         android:layout_marginLeft="20dp"
                         android:layout_marginBottom="5dp"
                         android:textSize="13dp"
@@ -72,6 +76,7 @@
                         android:text="www.circlesone.com  chris.liao@circle8.asia"/>
 
                     <TextView
+                        android:id="@+id/tvPersonAddress"
                         android:layout_marginLeft="20dp"
                         android:layout_marginBottom="5dp"
                         android:textSize="13dp"
@@ -81,6 +86,7 @@
                         android:text="65 Ubi Road | #03-90 Oxley Bizhub"/>
 
                     <TextView
+                        android:id="@+id/tvPersonContact"
                         android:layout_marginLeft="20dp"
                         android:layout_marginBottom="20dp"
                         android:textSize="13dp"
@@ -88,7 +94,6 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
                         android:text="+65 6816 7888   +65 9821 9235"/>
-
 
                 </LinearLayout>
             </RelativeLayout>

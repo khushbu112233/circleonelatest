@@ -146,7 +146,6 @@ public class List1Fragment extends Fragment
         frame1 = (FrameLayout) view.findViewById(R.id.frame1);
         session = new LoginSession(getContext());
 
-
         HashMap<String, String> user = session.getUserDetails();
 
         // name
@@ -171,6 +170,7 @@ public class List1Fragment extends Fragment
         gestureDetector1.setOnDoubleTapListener(doubleTapListener);
         nfcModel = new ArrayList<>();
         allTags = new ArrayList<>();
+
         // new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
 
@@ -347,7 +347,7 @@ public class List1Fragment extends Fragment
         return view;
     }
 
-    public  String POST(String url)
+    public String POST(String url)
     {
         InputStream inputStream = null;
         String result = "";
@@ -463,10 +463,8 @@ public class List1Fragment extends Fragment
                         nfcModelTag.setWebsite("");
                         nfcModelTag.setMob_no(object.getString("Phone"));
                         nfcModelTag.setDesignation(object.getString("Designation"));
-                        /*nfcModelTag.setCard_front(object.getString("Card_Front"));
-                        nfcModelTag.setCard_back(object.getString("Card_Back"));*/
-                        nfcModelTag.setCard_front("000000002.jpg");
-                        nfcModelTag.setCard_back("000000006.jpg");
+                        nfcModelTag.setCard_front(object.getString("Card_Front"));
+                        nfcModelTag.setCard_back(object.getString("Card_Back"));
 
 
                         nfcModelTag.setNfc_tag("en000000001");
