@@ -41,7 +41,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
     public static int pos = 0;
 
     public static ArrayList<FriendConnection> nfcModelList = new ArrayList<>();
-    ArrayList<FriendConnection> nfcModelListFilter = new ArrayList<>();
+    public static ArrayList<FriendConnection> nfcModelListFilter = new ArrayList<>();
     private RecyclerView.ViewHolder holder;
     public static ImageView imageView ;
     public static int posi = 0;
@@ -298,6 +298,56 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             return true;
         }
     }
+
+    public void Filter(String charText)
+    {
+        charText = charText.toLowerCase(Locale.getDefault());
+        nfcModelList.clear();
+//        List1Fragment.nfcModel.clear();
+
+        if(charText.length() == 0)
+        {
+            nfcModelList.addAll(nfcModelListFilter);
+            try
+            {
+                // List1Fragment.myPager.notifyDataSetChanged();
+                List1Fragment.nfcModel.clear();
+//                 List1Fragment.allTags = db.getActiveNFC();
+                nfcModelList.clear();
+                List1Fragment.GetData(mContext);
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
+        else
+        {
+//            List1Fragment.allTags.clear();
+            for(FriendConnection md : nfcModelListFilter)
+            {
+                if(md.getName().toLowerCase(Locale.getDefault()).contains(charText))
+                {
+                    nfcModelList.add(md);
+                    try
+                    {
+                        //   List1Fragment.myPager.notifyDataSetChanged();
+                        List1Fragment.nfcModel.clear();
+                        List1Fragment.allTags.add(md);
+                        nfcModelList.clear();
+                        List1Fragment.GetData(mContext);
+                    }
+                    catch (Exception e){
+
+                    }
+                }
+                CardsActivity.setActionBarTitle("Cards - "+nfcModelList.size());
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+/*
     public void Filter(String charText)
     {
         charText = charText.toLowerCase(Locale.getDefault());
@@ -306,40 +356,19 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
         if(charText.length() == 0)
         {
             nfcModelList.addAll(nfcModelListFilter);
-            try {
-                // List1Fragment.myPager.notifyDataSetChanged();
-                List1Fragment.nfcModel.clear();
-                // List1Fragment.allTags = db.getActiveNFC();
-                //  nfcModelList.clear();
-                List1Fragment.GetData(mContext);
-            } catch (Exception e){
-
-            }
         }
         else
         {
-            List1Fragment.allTags.clear();
             for(FriendConnection md : nfcModelListFilter)
             {
                 if(md.getName().toLowerCase(Locale.getDefault()).contains(charText))
                 {
                     nfcModelList.add(md);
-                    try {
-                        //   List1Fragment.myPager.notifyDataSetChanged();
-                        List1Fragment.nfcModel.clear();
-                        List1Fragment.allTags.add(md);
-                        //  nfcModelList.clear();
-                        List1Fragment.GetData(mContext);
-                    } catch (Exception e){
-
-                    }
                 }
-                CardsActivity.setActionBarTitle("Cards - "+nfcModelList.size());
             }
         }
-
-
         notifyDataSetChanged();
     }
+*/
 
 }

@@ -454,8 +454,6 @@ public class List1Fragment extends Fragment
                         JSONObject object = jsonArray.getJSONObject(i);
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
 
-
-
                         FriendConnection nfcModelTag = new FriendConnection();
                         nfcModelTag.setName(object.getString("FirstName") + " " + object.getString("LastName"));
                         nfcModelTag.setCompany(object.getString("CompanyName"));
@@ -465,7 +463,7 @@ public class List1Fragment extends Fragment
                         nfcModelTag.setDesignation(object.getString("Designation"));
                         nfcModelTag.setCard_front(object.getString("Card_Front"));
                         nfcModelTag.setCard_back(object.getString("Card_Back"));
-
+                        nfcModelTag.setUser_image(object.getString("UserPhoto"));
 
                         nfcModelTag.setNfc_tag("en000000001");
                         allTags.add(nfcModelTag);
@@ -497,7 +495,6 @@ public class List1Fragment extends Fragment
         @Override
         protected Void doInBackground(Void... params) {
             db = new DatabaseHelper(getContext());
-            nfcModel = new ArrayList<>();
             // allTags = db.getActiveNFC();
 
             images = new ArrayList<>();
