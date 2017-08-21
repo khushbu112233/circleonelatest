@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,19 +20,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amplearch.circleonet.Activity.EditProfileActivity;
+import com.amplearch.circleonet.Activity.Profile;
 import com.amplearch.circleonet.Helper.LoginSession;
 import com.amplearch.circleonet.Model.FriendConnection;
+import com.amplearch.circleonet.Model.ProfileModel;
 import com.amplearch.circleonet.Model.User;
 import com.amplearch.circleonet.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
+import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -48,6 +53,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,8 +71,14 @@ public class ProfileFragment extends Fragment
     ArrayList<String> profile_array;
     LoginSession session;
     String UserID = "";
+    public static ArrayList<ProfileModel> allTags ;
 
     private int i = 0;
+    TextView tvDesignation, tvCompany, tvName, tvCompanyName, tvDesi, tvAssociation, tvAddress, tvWebsite, tvMail,
+            tvMob, tvWork;
+    ProfileModel nfcModelTag;
+    CircleImageView imgProfile;
+    LinearLayout lnrMob, lnrWork;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -85,9 +99,25 @@ public class ProfileFragment extends Fragment
       //  ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
 
+        tvDesignation = (TextView)view.findViewById(R.id.tvDesignation);
+        tvCompany = (TextView)view.findViewById(R.id.tvCompany);
+        tvName = (TextView)view.findViewById(R.id.tvName);
+        tvCompanyName = (TextView)view.findViewById(R.id.tvCompanyName);
+        tvDesi = (TextView)view.findViewById(R.id.tvDesi);
+        tvAssociation = (TextView)view.findViewById(R.id.tvAssociation);
+        tvAddress = (TextView)view.findViewById(R.id.tvAddress);
+        tvWebsite = (TextView)view.findViewById(R.id.tvWebsite);
+        tvMail = (TextView)view.findViewById(R.id.tvMail);
+        tvMob = (TextView)view.findViewById(R.id.tvMob);
+        tvWork = (TextView)view.findViewById(R.id.tvWork);
+        imgProfile = (CircleImageView) view.findViewById(R.id.imgProfile);
+        lnrMob = (LinearLayout) view.findViewById(R.id.lnrMob);
+        lnrWork = (LinearLayout) view.findViewById(R.id.lnrWork);
+
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Generating Qr Code...");
         progressDialog.setCancelable(false);
+        allTags = new ArrayList<>();
         imgQR = (ImageView) view.findViewById(R.id.imgQR);
         firstBar = (ProgressBar)view.findViewById(R.id.firstBar);
         tvPersonName = (TextView)view.findViewById(R.id.tvPersonName);
@@ -98,6 +128,47 @@ public class ProfileFragment extends Fragment
         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetUserProfile");
         HashMap<String, String> user = session.getUserDetails();
         UserID = user.get(LoginSession.KEY_USERID);
+
+        lnrMob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:"+tvMob.getText().toString()));
+                startActivity(intent);
+            }
+        });
+
+        lnrWork.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:"+tvWork.getText().toString()));
+                startActivity(intent);
+            }
+        });
+
+        tvMail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tvMail.getText().toString().equals("")){
+
+                }
+                else {
+                    try
+                    {
+                        Intent intent = new Intent (Intent.ACTION_VIEW , Uri.parse("mailto:" + tvMail.getText().toString()));
+                        intent.putExtra(Intent.EXTRA_SUBJECT, "");
+                        intent.putExtra(Intent.EXTRA_TEXT, "");
+                        startActivity(intent);
+                    }
+                    catch(Exception e)
+                    {
+                        Toast.makeText(getContext(), "Sorry...You don't have any mail app", Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
         imgProfileShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,9 +208,22 @@ public class ProfileFragment extends Fragment
                         else {
                             for (int i = 0; i < profile_array.size(); i++) {
                                 if (item.getTitle().toString().equals(profile_array.get(i).toString())) {
-
                                     Toast.makeText(getContext(), profile_array.get(i).toString(), Toast.LENGTH_LONG).show();
+                                    tvPersonName.setText(allTags.get(i).getFirstName() + " "+ allTags.get(i).getLastName());
+                                    tvDesignation.setText(allTags.get(i).getDesignation());
+                                    tvCompany.setText(allTags.get(i).getCompanyName());
+                                    tvName.setText(allTags.get(i).getFirstName() + " "+ allTags.get(i).getLastName());
+                                    tvCompanyName.setText(allTags.get(i).getCompanyName());
+                                    tvDesi.setText(allTags.get(i).getDesignation());
+                                    tvMob.setText(allTags.get(i).getPhone());
 
+                                    if (allTags.get(i).getUserPhoto().equals(""))
+                                    {
+                                        imgProfile.setImageResource(R.drawable.usr);
+                                    }
+                                    else {
+                                        Picasso.with(getContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+allTags.get(i).getUserPhoto()).into(imgProfile);
+                                    }
                                 }
                             }
                         }
@@ -310,23 +394,38 @@ public class ProfileFragment extends Fragment
 
                         profile_array.add(object.getString("CompanyName"));
 
-                        FriendConnection nfcModelTag = new FriendConnection();
-                        nfcModelTag.setName(object.getString("FirstName") + " " + object.getString("LastName"));
-                        nfcModelTag.setCompany(object.getString("CompanyName"));
-                        nfcModelTag.setEmail(object.getString("UserName"));
-                        nfcModelTag.setWebsite("");
-                        nfcModelTag.setMob_no(object.getString("CompanyName"));
+                        nfcModelTag = new ProfileModel();
+                        nfcModelTag.setUserID(object.getString("UserID"));
+                        nfcModelTag.setFirstName(object.getString("FirstName"));
+                        nfcModelTag.setLastName(object.getString("LastName"));
+                        nfcModelTag.setUserName(object.getString("UserName"));
+                        nfcModelTag.setProfileID(object.getString("ProfileID"));
+                        nfcModelTag.setCard_Front(object.getString("Card_Front"));
+                        nfcModelTag.setCard_Back(object.getString("Card_Back"));
+                        nfcModelTag.setUserPhoto(object.getString("UserPhoto"));
                         nfcModelTag.setDesignation(object.getString("Designation"));
-                        nfcModelTag.setCard_front(object.getString("Card_Front"));
-                        nfcModelTag.setCard_back(object.getString("Card_Back"));
-                        nfcModelTag.setCard_front("000000002.jpg");
-                        nfcModelTag.setCard_back("000000006.jpg");
-
-
-                        nfcModelTag.setNfc_tag("en000000001");
-                      //  allTags.add(nfcModelTag);
+                        nfcModelTag.setCompanyName(object.getString("CompanyName"));
+                        nfcModelTag.setPhone(object.getString("Phone"));
+                        allTags.add(nfcModelTag);
                       //  GetData(getContext());
                     }
+
+                    tvPersonName.setText(allTags.get(0).getFirstName() + " "+ allTags.get(0).getLastName());
+                    tvDesignation.setText(allTags.get(0).getDesignation());
+                    tvCompany.setText(allTags.get(0).getCompanyName());
+                    tvName.setText(allTags.get(0).getFirstName() + " "+ allTags.get(0).getLastName());
+                    tvCompanyName.setText(allTags.get(0).getCompanyName());
+                    tvDesi.setText(allTags.get(0).getDesignation());
+                    tvMob.setText(allTags.get(0).getPhone());
+
+                    if (allTags.get(0).getUserPhoto().equals(""))
+                    {
+                        imgProfile.setImageResource(R.drawable.usr);
+                    }
+                    else {
+                        Picasso.with(getContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+allTags.get(0).getUserPhoto()).into(imgProfile);
+                    }
+
                 }else {
                     Toast.makeText(getContext(), "Not able to load Profiles..", Toast.LENGTH_LONG).show();
                 }
