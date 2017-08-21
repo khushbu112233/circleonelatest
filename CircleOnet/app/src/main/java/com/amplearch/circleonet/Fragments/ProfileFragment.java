@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -76,6 +78,7 @@ public class ProfileFragment extends Fragment
             tvMob, tvWork;
     ProfileModel nfcModelTag;
     CircleImageView imgProfile;
+    LinearLayout lnrMob, lnrWork;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -108,6 +111,8 @@ public class ProfileFragment extends Fragment
         tvMob = (TextView)view.findViewById(R.id.tvMob);
         tvWork = (TextView)view.findViewById(R.id.tvWork);
         imgProfile = (CircleImageView) view.findViewById(R.id.imgProfile);
+        lnrMob = (LinearLayout) view.findViewById(R.id.lnrMob);
+        lnrWork = (LinearLayout) view.findViewById(R.id.lnrWork);
 
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Generating Qr Code...");
@@ -123,6 +128,47 @@ public class ProfileFragment extends Fragment
         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetUserProfile");
         HashMap<String, String> user = session.getUserDetails();
         UserID = user.get(LoginSession.KEY_USERID);
+
+        lnrMob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:"+tvMob.getText().toString()));
+                startActivity(intent);
+            }
+        });
+
+        lnrWork.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:"+tvWork.getText().toString()));
+                startActivity(intent);
+            }
+        });
+
+        tvMail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tvMail.getText().toString().equals("")){
+
+                }
+                else {
+                    try
+                    {
+                        Intent intent = new Intent (Intent.ACTION_VIEW , Uri.parse("mailto:" + tvMail.getText().toString()));
+                        intent.putExtra(Intent.EXTRA_SUBJECT, "");
+                        intent.putExtra(Intent.EXTRA_TEXT, "");
+                        startActivity(intent);
+                    }
+                    catch(Exception e)
+                    {
+                        Toast.makeText(getContext(), "Sorry...You don't have any mail app", Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
         imgProfileShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
