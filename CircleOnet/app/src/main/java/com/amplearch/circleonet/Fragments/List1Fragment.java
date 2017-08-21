@@ -683,9 +683,8 @@ public class List1Fragment extends Fragment
     };
 
     GestureDetector.SimpleOnGestureListener simpleOnGestureListener
-            = new GestureDetector.SimpleOnGestureListener(){
-
-
+            = new GestureDetector.SimpleOnGestureListener()
+    {
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
                                float velocityY) {
@@ -764,6 +763,7 @@ public class List1Fragment extends Fragment
         mAdapter1 = new GalleryAdapter1(context, nfcModel);
         mAdapter.notifyDataSetChanged();
         mAdapter1.notifyDataSetChanged();
+
         if (nfcModel.size() == 0){
             txtNoCard1.setVisibility(View.VISIBLE);
         }

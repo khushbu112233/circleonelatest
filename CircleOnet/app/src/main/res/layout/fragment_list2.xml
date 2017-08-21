@@ -43,7 +43,7 @@
         android:layout_below="@+id/lnrSearch"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/colorPrimary"></View>
+        android:background="@color/colorPrimary"/>
 
     <GridView
         android:layout_marginLeft="5dp"
@@ -58,4 +58,5 @@
         android:columnWidth="200dp"
         android:gravity="center"
         android:numColumns="2" />
+
 </LinearLayout>
