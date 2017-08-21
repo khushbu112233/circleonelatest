@@ -24,6 +24,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amplearch.circleonet.Activity.EditProfileActivity;
+import com.amplearch.circleonet.Helper.LoginSession;
+import com.amplearch.circleonet.Model.FriendConnection;
+import com.amplearch.circleonet.Model.User;
 import com.amplearch.circleonet.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -35,12 +38,16 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,6 +60,9 @@ public class ProfileFragment extends Fragment
     public final static int QRcodeWidth = 500 ;
     Bitmap bitmap ;
     ProgressDialog progressDialog ;
+    ArrayList<String> profile_array;
+    LoginSession session;
+    String UserID = "";
 
     private int i = 0;
     public ProfileFragment() {
@@ -84,8 +94,10 @@ public class ProfileFragment extends Fragment
         imgProfileShare = (ImageView) view.findViewById(R.id.imgProfileShare);
         imgProfileMenu = (ImageView) view.findViewById(R.id.imgProfileMenu);
         ivEditProfile = (ImageView)view.findViewById(R.id.ivEditProfile);
+        session = new LoginSession(getContext());
         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetUserProfile");
-
+        HashMap<String, String> user = session.getUserDetails();
+        UserID = user.get(LoginSession.KEY_USERID);
         imgProfileShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,20 +110,38 @@ public class ProfileFragment extends Fragment
             }
         });
 
+        new HttpAsyncTaskProfiles().execute("http://circle8.asia:8081/Onet.svc/MyProfiles");
+
+
         imgProfileMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PopupMenu popup = new PopupMenu(getContext(), imgProfileMenu);
                 //Inflating the Popup using xml file
                 popup.getMenuInflater().inflate(R.menu.profile_popup_menu, popup.getMenu());
-
+                for (String s : profile_array) {
+                    popup.getMenu().add(s);
+                }
+                popup.getMenu().add("Add New Profile");
+                popup.getMenu().add("Close");
                 //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         //Toast.makeText(getContext(),"You Clicked : " + item.getTitle(),Toast.LENGTH_SHORT).show();
+
+
                         if (item.getTitle().toString().equals("Add New Profile")){
                             new HttpAsyncTaskAddProfile().execute("http://circle8.asia:8081/Onet.svc/AddProfile");
 
+                        }
+                        else {
+                            for (int i = 0; i < profile_array.size(); i++) {
+                                if (item.getTitle().toString().equals(profile_array.get(i).toString())) {
+
+                                    Toast.makeText(getContext(), profile_array.get(i).toString(), Toast.LENGTH_LONG).show();
+
+                                }
+                            }
                         }
                         return true;
                     }
@@ -181,6 +211,130 @@ public class ProfileFragment extends Fragment
         });
 
         return view;
+    }
+
+    public  String POST5(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("numofrecords", "10" );
+            jsonObject.accumulate("pageno", "1" );
+            jsonObject.accumulate("userid", UserID);
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    private class HttpAsyncTaskProfiles extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(getActivity());
+            dialog.setMessage("Fetching Profiles...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            return POST5(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+            dialog.dismiss();
+            try {
+                if (result != null) {
+                    JSONObject jsonObject = new JSONObject(result);
+                    JSONArray jsonArray = jsonObject.getJSONArray("Profiles");
+                    //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
+                    profile_array = new ArrayList<String>();
+                    for (int i = 0; i < jsonArray.length(); i++){
+
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
+
+                        profile_array.add(object.getString("CompanyName"));
+
+                        FriendConnection nfcModelTag = new FriendConnection();
+                        nfcModelTag.setName(object.getString("FirstName") + " " + object.getString("LastName"));
+                        nfcModelTag.setCompany(object.getString("CompanyName"));
+                        nfcModelTag.setEmail(object.getString("UserName"));
+                        nfcModelTag.setWebsite("");
+                        nfcModelTag.setMob_no(object.getString("CompanyName"));
+                        nfcModelTag.setDesignation(object.getString("Designation"));
+                        nfcModelTag.setCard_front(object.getString("Card_Front"));
+                        nfcModelTag.setCard_back(object.getString("Card_Back"));
+                        nfcModelTag.setCard_front("000000002.jpg");
+                        nfcModelTag.setCard_back("000000006.jpg");
+
+
+                        nfcModelTag.setNfc_tag("en000000001");
+                      //  allTags.add(nfcModelTag);
+                      //  GetData(getContext());
+                    }
+                }else {
+                    Toast.makeText(getContext(), "Not able to load Profiles..", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public  String POST4(String url)

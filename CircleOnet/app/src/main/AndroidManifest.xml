@@ -82,7 +82,11 @@
         <activity
             android:name=".Activity.SplashActivity"
             android:theme="@style/NoActionbar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".Activity.RegisterActivity"
@@ -98,11 +102,7 @@
         <activity android:name=".Activity.GroupTag" />
         <activity android:name=".Activity.Notification" />
         <activity android:name=".ExternalNFC.NFCExternal">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
