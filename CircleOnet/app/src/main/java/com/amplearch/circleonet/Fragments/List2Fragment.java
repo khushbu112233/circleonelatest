@@ -75,6 +75,7 @@ public class List2Fragment extends Fragment
     View line;
     private static final String TAG = "TestGesture";
     private GestureDetector gestureDetector1;
+
     public static List<NFCModel> allTags ;
     public static List<FriendConnection> allTaggs ;
 
@@ -194,7 +195,6 @@ public class List2Fragment extends Fragment
             db = new DatabaseHelper(getContext());
             nfcModel = new ArrayList<>();
             allTags = db.getActiveNFC();
-
             return null;
         }
 
@@ -355,7 +355,6 @@ public class List2Fragment extends Fragment
 
         inputStream.close();
         return result;
-
     }
 
     GestureDetector.SimpleOnGestureListener simpleOnGestureListener
@@ -517,6 +516,7 @@ public class List2Fragment extends Fragment
     GestureDetector gestureDetector = new GestureDetector(simpleOnGestureListener);
 
 
+/*
     @Override
     public void onResume()
     {
@@ -525,6 +525,7 @@ public class List2Fragment extends Fragment
         nfcModel.clear();
         GetData(getContext());
     }
+*/
 
 /*
     public static void GetData(Context context)
