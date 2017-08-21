@@ -311,6 +311,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/lnrMap"
                 android:layout_marginRight="15dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="15dp"
@@ -334,6 +335,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/lnrWebsite"
                 android:layout_marginRight="15dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="15dp"
