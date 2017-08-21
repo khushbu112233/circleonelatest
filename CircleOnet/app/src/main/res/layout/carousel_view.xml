@@ -30,6 +30,7 @@
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
                 android:src="@drawable/card1" />
+
             <RelativeLayout
                 android:visibility="gone"
                 android:id="@+id/rltDefaultCard"
