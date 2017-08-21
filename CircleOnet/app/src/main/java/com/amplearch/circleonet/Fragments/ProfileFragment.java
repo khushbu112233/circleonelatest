@@ -2,10 +2,12 @@ package com.amplearch.circleonet.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -78,7 +80,7 @@ public class ProfileFragment extends Fragment
             tvMob, tvWork;
     ProfileModel nfcModelTag;
     CircleImageView imgProfile;
-    LinearLayout lnrMob, lnrWork;
+    LinearLayout lnrMob, lnrWork, lnrWebsite, lnrMap;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -113,6 +115,8 @@ public class ProfileFragment extends Fragment
         imgProfile = (CircleImageView) view.findViewById(R.id.imgProfile);
         lnrMob = (LinearLayout) view.findViewById(R.id.lnrMob);
         lnrWork = (LinearLayout) view.findViewById(R.id.lnrWork);
+        lnrWebsite = (LinearLayout) view.findViewById(R.id.lnrWebsite);
+        lnrMap = (LinearLayout) view.findViewById(R.id.lnrMap);
 
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Generating Qr Code...");
@@ -129,21 +133,119 @@ public class ProfileFragment extends Fragment
         HashMap<String, String> user = session.getUserDetails();
         UserID = user.get(LoginSession.KEY_USERID);
 
+        lnrMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(getContext());
+
+                builder.setTitle("Google Map")
+                        .setMessage("Are you sure you want to redirect to Google Map ?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                                String map = "http://maps.google.co.in/maps?q=" + tvAddress.getText().toString();
+                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(map));
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_map)
+                        .show();
+            }
+        });
+
         lnrMob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:"+tvMob.getText().toString()));
-                startActivity(intent);
+
+                AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(getContext());
+
+                builder.setTitle("Call to "+ tvPersonName.getText().toString())
+                        .setMessage("Are you sure you want to make a Call ?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                                Intent intent = new Intent(Intent.ACTION_DIAL);
+                                intent.setData(Uri.parse("tel:"+tvMob.getText().toString()));
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_menu_call)
+                        .show();
+            }
+        });
+
+        lnrWebsite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(getContext());
+
+                builder.setTitle("Redirect to Web Browser")
+                        .setMessage("Are you sure you want to redirect to Web Browser ?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                                String url = tvWebsite.getText().toString();
+                                if (url!=null) {
+                                    if (!url.startsWith("http://") && !url.startsWith("https://"))
+                                        url = "http://" + url;
+                                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                                    startActivity(browserIntent);
+                                }
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_menu_set_as)
+                        .show();
             }
         });
 
         lnrWork.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:"+tvWork.getText().toString()));
-                startActivity(intent);
+                AlertDialog.Builder builder;
+
+                builder = new AlertDialog.Builder(getContext());
+
+                builder.setTitle("Call to "+ tvPersonName.getText().toString())
+                        .setMessage("Are you sure you want to make a Call ?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                                Intent intent = new Intent(Intent.ACTION_DIAL);
+                                intent.setData(Uri.parse("tel:"+tvWork.getText().toString()));
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_menu_call)
+                        .show();
             }
         });
 
@@ -154,28 +256,49 @@ public class ProfileFragment extends Fragment
 
                 }
                 else {
-                    try
-                    {
-                        Intent intent = new Intent (Intent.ACTION_VIEW , Uri.parse("mailto:" + tvMail.getText().toString()));
-                        intent.putExtra(Intent.EXTRA_SUBJECT, "");
-                        intent.putExtra(Intent.EXTRA_TEXT, "");
-                        startActivity(intent);
-                    }
-                    catch(Exception e)
-                    {
-                        Toast.makeText(getContext(), "Sorry...You don't have any mail app", Toast.LENGTH_SHORT).show();
-                        e.printStackTrace();
-                    }
+
+                    AlertDialog.Builder builder;
+
+                    builder = new AlertDialog.Builder(getContext());
+
+                    builder.setTitle("Mail to "+ tvPersonName.getText().toString())
+                            .setMessage("Are you sure you want to drop Mail ?")
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // continue with delete
+                                    try
+                                    {
+                                        Intent intent = new Intent (Intent.ACTION_VIEW , Uri.parse("mailto:" + tvMail.getText().toString()));
+                                        intent.putExtra(Intent.EXTRA_SUBJECT, "");
+                                        intent.putExtra(Intent.EXTRA_TEXT, "");
+                                        startActivity(intent);
+                                    }
+                                    catch(Exception e)
+                                    {
+                                        Toast.makeText(getContext(), "Sorry...You don't have any mail app", Toast.LENGTH_SHORT).show();
+                                        e.printStackTrace();
+                                    }
+                                }
+                            })
+                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // do nothing
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_dialog_email)
+                            .show();
+
                 }
             }
         });
         imgProfileShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String shareBody = "Hello, This is Westley Wan working as General Manager at Unico Creative.";
+                String shareBody = "Hello, This is " +tvPersonName.getText().toString()+ " working as " + tvDesignation.getText().toString() + " at "+ tvCompany.getText().toString()+".";
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Westley Wan Profile");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, tvPersonName.getText().toString());
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Share Profile Via"));
             }
