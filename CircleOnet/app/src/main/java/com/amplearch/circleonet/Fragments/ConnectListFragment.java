@@ -29,6 +29,7 @@ import com.amplearch.circleonet.Activity.CardsActivity;
 import com.amplearch.circleonet.Activity.ConnectActivity;
 import com.amplearch.circleonet.Adapter.List4Adapter;
 import com.amplearch.circleonet.Helper.DatabaseHelper;
+import com.amplearch.circleonet.Helper.LoginSession;
 import com.amplearch.circleonet.Model.FriendConnection;
 import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.R;
@@ -55,8 +56,8 @@ import java.util.Locale;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ConnectListFragment extends Fragment {
-
+public class ConnectListFragment extends Fragment
+{
     private ListView listView;
     private List4Adapter gridAdapter;
     ArrayList<byte[]> imgf;
@@ -66,9 +67,16 @@ public class ConnectListFragment extends Fragment {
     DatabaseHelper db ;
 
     List<NFCModel> allTags ;
+    public static List<FriendConnection> allTaggs ;
     //new asign value
     AutoCompleteTextView searchText ;
+
     ArrayList<NFCModel> nfcModel ;
+    public static ArrayList<FriendConnection> nfcModel1 ;
+
+    LoginSession session;
+    String UserId = "";
+
 
     public ConnectListFragment() {
         // Required empty public constructor
@@ -76,8 +84,8 @@ public class ConnectListFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_connect_list, container, false);
 
@@ -92,11 +100,16 @@ public class ConnectListFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
         listView = (ListView) view.findViewById(R.id.listViewType4);
         listView.setVisibility(View.GONE);
+
         allTags = new ArrayList<>();
+        allTaggs = new ArrayList<>();
 
         searchText = (AutoCompleteTextView)view.findViewById(R.id.searchView);
+
         nfcModel = new ArrayList<>();
-        new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        nfcModel1 = new ArrayList<>();
+
+//        new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
        // gridAdapter = new List4Adapter(getContext(), R.layout.grid_list4_layout, imgf, desc, name, designation);
         //listView.setAdapter(gridAdapter);
 
@@ -120,7 +133,7 @@ public class ConnectListFragment extends Fragment {
                 if(s.length() <= 0)
                 {
                     listView.setVisibility(View.GONE);
-                    nfcModel.clear();
+                    nfcModel1.clear();
                     GetData();
 
                 }
@@ -284,6 +297,7 @@ public class ConnectListFragment extends Fragment {
     }
 
 
+/*
     @Override
     public void onResume()
     {
@@ -292,11 +306,13 @@ public class ConnectListFragment extends Fragment {
         nfcModel.clear();
         GetData();
     }
+*/
 
     private void GetData()
     {
-        nfcModel.clear();
-        for(NFCModel reTag : allTags)
+//        nfcModel.clear();
+        nfcModel1.clear();
+        /*for(NFCModel reTag : allTags)
         {
             NFCModel nfcModelTag = new NFCModel();
             nfcModelTag.setId(reTag.getId());
@@ -309,8 +325,22 @@ public class ConnectListFragment extends Fragment {
             nfcModelTag.setUser_image(reTag.getUser_image());
             nfcModelTag.setNfc_tag(reTag.getNfc_tag());
             nfcModel.add(nfcModelTag);
+        }*/
+        for(FriendConnection reTag : allTaggs)
+        {
+            FriendConnection nfcModelTag = new FriendConnection();
+//            nfcModelTag.setId(reTag.getId());
+            nfcModelTag.setName(reTag.getName());
+            nfcModelTag.setCompany(reTag.getCompany());
+            nfcModelTag.setEmail(reTag.getEmail());
+            nfcModelTag.setWebsite(reTag.getWebsite());
+            nfcModelTag.setMob_no(reTag.getMob_no());
+            nfcModelTag.setDesignation(reTag.getDesignation());
+            nfcModelTag.setUser_image(reTag.getUser_image());
+            nfcModelTag.setNfc_tag(reTag.getNfc_tag());
+            nfcModel1.add(nfcModelTag);
         }
-        gridAdapter = new List4Adapter(getContext(), R.layout.grid_list4_layout, nfcModel);
+        gridAdapter = new List4Adapter(getContext(), R.layout.grid_list4_layout, nfcModel1);
         listView.setAdapter(gridAdapter);
         gridAdapter.notifyDataSetChanged();
     }
@@ -326,7 +356,8 @@ public class ConnectListFragment extends Fragment {
 
         }
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Void doInBackground(Void... params)
+        {
             db = new DatabaseHelper(getContext());
             imgf = new ArrayList<byte[]>();
             name = new ArrayList<>();

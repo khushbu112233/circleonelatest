@@ -81,6 +81,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
     <TextView
         android:textStyle="bold"
         android:textColor="@android:color/black"
@@ -93,16 +94,17 @@
         android:layout_height="wrap_content"
         android:textSize="12sp" />
 
-        <TextView
-            android:textColor="@android:color/black"
-            android:gravity="right"
-            android:text="Physician Yong"
-            android:layout_marginLeft="5dp"
-            android:visibility="visible"
-            android:id="@+id/textDescList3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="12sp" />
+    <TextView
+        android:textColor="@android:color/black"
+        android:gravity="right"
+        android:text="Physician Yong"
+        android:layout_marginLeft="5dp"
+        android:visibility="visible"
+        android:id="@+id/textDescList3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp" />
+
     </LinearLayout>
     </LinearLayout>
 </com.daimajia.swipe.SwipeLayout>

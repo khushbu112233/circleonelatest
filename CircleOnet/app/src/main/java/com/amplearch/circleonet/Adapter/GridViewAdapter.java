@@ -22,6 +22,7 @@ import com.amplearch.circleonet.Fragments.List2Fragment;
 import com.amplearch.circleonet.Fragments.List3Fragment;
 import com.amplearch.circleonet.Fragments.List4Fragment;
 import com.amplearch.circleonet.Helper.DatabaseHelper;
+import com.amplearch.circleonet.Model.FriendConnection;
 import com.amplearch.circleonet.Model.ImageItem;
 import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.R;
@@ -30,6 +31,7 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -38,7 +40,8 @@ import java.util.Locale;
  * Created by admin on 06/08/2017.
  */
 
-public class GridViewAdapter extends BaseSwipeAdapter {
+public class GridViewAdapter extends BaseSwipeAdapter
+{
     private Context context;
     private int layoutResourceId;
     private ArrayList data = new ArrayList();
@@ -48,21 +51,31 @@ public class GridViewAdapter extends BaseSwipeAdapter {
     ArrayList<NFCModel> nfcModelList = new ArrayList<>();
     ArrayList<NFCModel> nfcModelListFilter = new ArrayList<>();
 
+    ArrayList<FriendConnection> nfcModelList1 = new ArrayList<>();
+    ArrayList<FriendConnection> nfcModelListFilter1 = new ArrayList<>();
+
     /*public GridViewAdapter(Context context, int layoutResourceId, ArrayList data) {
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.data = data;
     }*/
 
-    public GridViewAdapter(Context context, int grid_list3_layout, ArrayList<NFCModel> nfcModel)
+//    public GridViewAdapter(Context context, int grid_list3_layout, ArrayList<NFCModel> nfcModel)
+//    {
+//        this.context = context ;
+//        this.layoutResourceId = grid_list3_layout ;
+//        this.nfcModelList = nfcModel ;
+////        this.nfcModelListFilter = new ArrayList<NFCModel>();
+//        this.nfcModelListFilter.addAll(nfcModelList);
+//    }
+
+    public GridViewAdapter(Context context, int grid_list3_layout, ArrayList<FriendConnection> nfcModel)
     {
         this.context = context ;
         this.layoutResourceId = grid_list3_layout ;
-        this.nfcModelList = nfcModel ;
-
+        this.nfcModelList1 = nfcModel ;
 //        this.nfcModelListFilter = new ArrayList<NFCModel>();
-        this.nfcModelListFilter.addAll(nfcModelList);
-
+        this.nfcModelListFilter1.addAll(nfcModelList1);
     }
 
     @Override
@@ -92,14 +105,18 @@ public class GridViewAdapter extends BaseSwipeAdapter {
             }
         });
 
-        v.findViewById(R.id.trash).setOnClickListener(new View.OnClickListener() {
+        v.findViewById(R.id.trash).setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 db.DeactiveCards(nfcModelList.get(position).getId());
                 Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_SHORT).show();
                 swipeLayout.close();
+
               //  nfcModelList.remove(position);
-                try {
+                try
+                {
                 List2Fragment.gridAdapter.notifyDataSetChanged();
                 List2Fragment.allTags = db.getActiveNFC();
                 List2Fragment.nfcModel.clear();
@@ -109,7 +126,8 @@ public class GridViewAdapter extends BaseSwipeAdapter {
 
                 }
 
-                try {
+                try
+                {
                 List3Fragment.gridAdapter.notifyDataSetChanged();
                 List3Fragment.allTags = db.getActiveNFC();
                 List3Fragment.nfcModel.clear();
@@ -118,7 +136,9 @@ public class GridViewAdapter extends BaseSwipeAdapter {
                 } catch (Exception e){
 
                 }
-                try {
+
+                try
+                {
                     List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.allTags = db.getActiveNFC();
                     List4Fragment.nfcModel.clear();
@@ -128,16 +148,18 @@ public class GridViewAdapter extends BaseSwipeAdapter {
 
                 }
 
-                try {
+                try
+                {
                 List1Fragment.mAdapter.notifyDataSetChanged();
-                    List1Fragment.mAdapter1.notifyDataSetChanged();
+                List1Fragment.mAdapter1.notifyDataSetChanged();
              //   List1Fragment.allTags = db.getActiveNFC();
                 List1Fragment.nfcModel.clear();
                 //  nfcModelList.clear();
                 List1Fragment.GetData(context);
-                } catch (Exception e){
-
                 }
+                catch (Exception e)
+                {                }
+
                 /*if (CardsActivity.mViewPager.getCurrentItem() == 0){
                     Intent go = new Intent(context,CardsActivity.class);
 
@@ -174,32 +196,40 @@ public class GridViewAdapter extends BaseSwipeAdapter {
         View row = convertView;
         ViewHolder holder = null;
 
-
         holder = new ViewHolder();
         holder.imageTitle = (TextView) row.findViewById(R.id.text);
         holder.image = (ImageView) row.findViewById(R.id.image);
         row.setTag(holder);
 
-        String name = nfcModelList.get(position).getName();
+        if (nfcModelList1.get(position).getCard_front().equals(""))
+        {
+            holder.image.setImageResource(R.drawable.default_card);
+        }
+        else
+        {
+            String name = nfcModelList1.get(position).getName();
+            Picasso.with(context).load("http://circle8.asia/App_ImgLib/Cards/"+nfcModelList1.get(position).getCard_front()).into(holder.image);
+        }
+
        // holder.imageTitle.setText(name);
        // Bitmap bmp = BitmapFactory.decodeByteArray(nfcModelList.get(position).getCard_front(), 0, nfcModelList.get(position).getCard_front().length);
         // ImageView image = (ImageView) findViewById(R.id.imageView1);
-        holder.image.setImageResource(nfcModelList.get(position).getCard_front());
+
+//        holder.image.setImageResource(nfcModelList.get(position).getCard_front());
 
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, CardDetail.class);
-                intent.putExtra("tag_id", nfcModelList.get(position).getNfc_tag());
+                intent.putExtra("tag_id", nfcModelList1.get(position).getNfc_tag());
                 context.startActivity(intent);
             }
         });
-
     }
 
     @Override
     public int getCount() {
-        return nfcModelList.size();
+        return nfcModelList1.size();
     }
 
     @Override
@@ -220,21 +250,21 @@ public class GridViewAdapter extends BaseSwipeAdapter {
     public void Filter(String charText)
     {
         charText = charText.toLowerCase(Locale.getDefault());
-        nfcModelList.clear();
+        nfcModelList1.clear();
 
         if(charText.length() == 0)
         {
-            nfcModelList.addAll(nfcModelListFilter);
+            nfcModelList1.addAll(nfcModelListFilter1);
         }
         else
         {
-            for(NFCModel md : nfcModelListFilter)
+            for(FriendConnection md : nfcModelListFilter1)
             {
                 if(md.getName().toLowerCase(Locale.getDefault()).contains(charText))
                 {
-                    nfcModelList.add(md);
+                    nfcModelList1.add(md);
                 }
-                CardsActivity.setActionBarTitle("Cards - "+nfcModelList.size());
+                CardsActivity.setActionBarTitle("Cards - "+nfcModelList1.size());
             }
         }
         notifyDataSetChanged();

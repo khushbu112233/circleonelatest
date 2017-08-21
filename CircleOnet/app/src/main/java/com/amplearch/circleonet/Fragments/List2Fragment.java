@@ -1,5 +1,6 @@
 package com.amplearch.circleonet.Fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -25,18 +26,37 @@ import android.widget.Toast;
 
 import com.amplearch.circleonet.Activity.CardDetail;
 import com.amplearch.circleonet.Activity.CardsActivity;
+import com.amplearch.circleonet.Adapter.GalleryAdapter;
+import com.amplearch.circleonet.Adapter.GalleryAdapter1;
 import com.amplearch.circleonet.Adapter.GridViewAdapter;
 import com.amplearch.circleonet.Adapter.List3Adapter;
 import com.amplearch.circleonet.Helper.DatabaseHelper;
+import com.amplearch.circleonet.Helper.LoginSession;
+import com.amplearch.circleonet.Model.FriendConnection;
 import com.amplearch.circleonet.Model.ImageItem;
 import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.R;
+import com.azoft.carousellayoutmanager.CarouselLayoutManager;
 import com.daimajia.swipe.util.Attributes;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -45,7 +65,6 @@ import java.util.Locale;
  */
 public class List2Fragment extends Fragment
 {
-
     private static GridView gridView;
     public static GridViewAdapter gridAdapter;
     ArrayList<byte[]> imgf;
@@ -56,10 +75,18 @@ public class List2Fragment extends Fragment
     View line;
     private static final String TAG = "TestGesture";
     private GestureDetector gestureDetector1;
+
     public static List<NFCModel> allTags ;
+    public static List<FriendConnection> allTaggs ;
+
+    public static ArrayList<FriendConnection> nfcModel ;
+
+    LoginSession session;
+    String UserId = "";
+
     //new asign value
     AutoCompleteTextView searchText ;
-    public static ArrayList<NFCModel> nfcModel ;
+//    public static ArrayList<NFCModel> nfcModel ;
 
     public List2Fragment() {
         // Required empty public constructor
@@ -81,16 +108,18 @@ public class List2Fragment extends Fragment
         db = new DatabaseHelper(getContext());
         gridView = (GridView) view.findViewById(R.id.gridView);
         searchText = (AutoCompleteTextView)view.findViewById(R.id.searchView);
+
         nfcModel = new ArrayList<>();
 
+        session = new LoginSession(getContext());
+        HashMap<String, String> user = session.getUserDetails();
+        UserId = user.get(LoginSession.KEY_USERID);
 
         GestureDetector.OnGestureListener gestureListener = new MyOnGestureListener();
         GestureDetector.OnDoubleTapListener doubleTapListener = new MyOnDoubleTapListener();
 
-        this.gestureDetector1= new GestureDetector(getContext(), gestureListener);
-
+        this.gestureDetector1 = new GestureDetector(getContext(), gestureListener);
         this.gestureDetector1.setOnDoubleTapListener(doubleTapListener);
-
 
        // gridAdapter = new GridViewAdapter(getContext(), R.layout.grid_list2_layout, getData());
        // gridView.setAdapter(gridAdapter);
@@ -100,12 +129,15 @@ public class List2Fragment extends Fragment
         line.setVisibility(View.GONE);
         CardsFragment.tabLayout.setVisibility(View.GONE);*/
         allTags = new ArrayList<>();
-        new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        allTaggs = new ArrayList<>();
+//        new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
         gridView.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent me) {
                 return gestureDetector1.onTouchEvent(me);
             }
         });
+
         /*gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -143,6 +175,8 @@ public class List2Fragment extends Fragment
             }
         });
 
+        new List2Fragment.HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+
         return view;
     }
 
@@ -161,7 +195,6 @@ public class List2Fragment extends Fragment
             db = new DatabaseHelper(getContext());
             nfcModel = new ArrayList<>();
             allTags = db.getActiveNFC();
-
             return null;
         }
 
@@ -171,8 +204,6 @@ public class List2Fragment extends Fragment
         }
 
     }
-
-
 
     private ArrayList<ImageItem> getData()
     {
@@ -191,6 +222,139 @@ public class List2Fragment extends Fragment
             imageItems.add(new ImageItem(bmp, "Image#" + i));
         }
         return imageItems;
+    }
+
+
+    private class HttpAsyncTask extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            dialog = new ProgressDialog(getActivity());
+            dialog.setMessage("Fetching Cards...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            return POST(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+            dialog.dismiss();
+            try {
+                if (result != null) {
+                    JSONObject jsonObject = new JSONObject(result);
+                    JSONArray jsonArray = jsonObject.getJSONArray("connection");
+                    //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
+
+                    for (int i = 0; i < jsonArray.length(); i++){
+
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
+
+                        FriendConnection nfcModelTag = new FriendConnection();
+                        nfcModelTag.setName(object.getString("FirstName") + " " + object.getString("LastName"));
+                        nfcModelTag.setCompany(object.getString("CompanyName"));
+                        nfcModelTag.setEmail(object.getString("UserName"));
+                        nfcModelTag.setWebsite("");
+                        nfcModelTag.setMob_no(object.getString("Phone"));
+                        nfcModelTag.setDesignation(object.getString("Designation"));
+                        nfcModelTag.setCard_front(object.getString("Card_Front"));
+                        nfcModelTag.setCard_back(object.getString("Card_Back"));
+
+                        nfcModelTag.setNfc_tag("en000000001");
+                        allTaggs.add(nfcModelTag);
+                        GetData(getContext());
+                    }
+                }
+                else
+                {
+                    Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                }
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public String POST(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("numofrecords", "10" );
+            jsonObject.accumulate("pageno", "1" );
+            jsonObject.accumulate("userid", UserId );
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+        while((line = bufferedReader.readLine()) != null)
+            result += line;
+
+        inputStream.close();
+        return result;
     }
 
     GestureDetector.SimpleOnGestureListener simpleOnGestureListener
@@ -317,12 +481,10 @@ public class List2Fragment extends Fragment
             }
             return result;
         }
-
-
     }
 
-    class MyOnDoubleTapListener implements GestureDetector.OnDoubleTapListener {
-
+    class MyOnDoubleTapListener implements GestureDetector.OnDoubleTapListener
+    {
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
           //  Toast.makeText(getContext(), "onSingleTapConfirmed", Toast.LENGTH_LONG).show();
@@ -354,6 +516,7 @@ public class List2Fragment extends Fragment
     GestureDetector gestureDetector = new GestureDetector(simpleOnGestureListener);
 
 
+/*
     @Override
     public void onResume()
     {
@@ -362,15 +525,41 @@ public class List2Fragment extends Fragment
         nfcModel.clear();
         GetData(getContext());
     }
+*/
+
+/*
+    public static void GetData(Context context)
+    {
+        //newly added
+        nfcModel.clear();
+        for(FriendConnection reTag : allTags)
+        {
+            FriendConnection nfcModelTag = new FriendConnection();
+            // nfcModelTag.setId(reTag.getId());
+            nfcModelTag.setName(reTag.getName());
+            nfcModelTag.setCompany(reTag.getCompany());
+            nfcModelTag.setEmail(reTag.getEmail());
+            nfcModelTag.setWebsite(reTag.getWebsite());
+            nfcModelTag.setMob_no(reTag.getMob_no());
+            nfcModelTag.setDesignation(reTag.getDesignation());
+            nfcModelTag.setCard_front(reTag.getCard_front());
+            nfcModelTag.setCard_back(reTag.getCard_back());
+            nfcModelTag.setNfc_tag(reTag.getNfc_tag());
+            nfcModel.add(nfcModelTag);
+        }
+
+    }
+*/
 
     public static void GetData(Context context)
     {
         //newly added
         nfcModel.clear();
-        for(NFCModel reTag : allTags)
+
+        for(FriendConnection reTag : allTaggs)
         {
-            NFCModel nfcModelTag = new NFCModel();
-            nfcModelTag.setId(reTag.getId());
+            FriendConnection nfcModelTag = new FriendConnection();
+//            nfcModelTag.setId(reTag.getId());
             nfcModelTag.setName(reTag.getName());
             nfcModelTag.setCompany(reTag.getCompany());
             nfcModelTag.setEmail(reTag.getEmail());
@@ -383,8 +572,28 @@ public class List2Fragment extends Fragment
             nfcModel.add(nfcModelTag);
         }
 
-        Collections.sort(nfcModel, new Comparator<NFCModel>() {
-            public int compare(NFCModel o1, NFCModel o2) {
+       /* Collections.sort(nfcModel, new Comparator<NFCModel>()
+        {
+            public int compare(NFCModel o1, NFCModel o2)
+            {
+                if (o1.getDate() == null || o2.getDate() == null)
+                    return 0;
+                return o1.getDate().compareTo(o2.getDate());
+            }
+        });*/
+
+        Collections.sort(nfcModel, new Comparator<FriendConnection>()
+        {
+            @Override
+            public int compare(FriendConnection o1, FriendConnection o2)
+            {
+                if (o1.getDate() == null || o2.getDate() == null)
+                    return 0;
+                return o1.getDate().compareTo(o2.getDate());
+            }
+
+            public int compare(NFCModel o1, NFCModel o2)
+            {
                 if (o1.getDate() == null || o2.getDate() == null)
                     return 0;
                 return o1.getDate().compareTo(o2.getDate());
@@ -396,6 +605,6 @@ public class List2Fragment extends Fragment
         gridAdapter.notifyDataSetChanged();
         CardsActivity.setActionBarTitle("Cards - "+nfcModel.size());
         gridAdapter.setMode(Attributes.Mode.Single);
-
     }
+
 }
