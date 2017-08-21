@@ -97,14 +97,15 @@ public class GalleryAdapter1 extends RecyclerView.Adapter<GalleryAdapter1.MyView
         if (nfcModelList.get(position).getCard_back().equals(""))
         {
             imageView.setTag(position);
-            imageView.setVisibility(View.GONE);
-            defaultCard.setVisibility(View.VISIBLE);
+            imageView.setVisibility(View.VISIBLE);
+            defaultCard.setVisibility(View.GONE);
 
-            tvPersonName.setText(nfcModelList.get(position).getName());
+          /*  tvPersonName.setText(nfcModelList.get(position).getName());
             tvPersonProfile.setText(nfcModelList.get(position).getDesignation());
             tvPersonWebsite.setText(nfcModelList.get(position).getWebsite());
             tvPersonAddress.setText(nfcModelList.get(position).getAddress());
-            tvPersonContact.setText(nfcModelList.get(position).getPh_no());
+            tvPersonContact.setText(nfcModelList.get(position).getPh_no());*/
+          imageView.setImageResource(R.drawable.profile_final4b);
         }
         else
         {

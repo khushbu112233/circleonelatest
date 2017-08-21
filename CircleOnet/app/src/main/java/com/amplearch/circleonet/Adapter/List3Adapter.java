@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,8 +41,7 @@ import java.util.Locale;
  * Created by admin on 06/08/2017.
  */
 
-public class List3Adapter extends BaseSwipeAdapter
-{
+public class List3Adapter extends BaseSwipeAdapter {
     private Context context;
     private int layoutResourceId;
     private ArrayList<String> data = new ArrayList();
@@ -61,8 +61,7 @@ public class List3Adapter extends BaseSwipeAdapter
 
 
     public List3Adapter(Context context, int layoutResourceId, ArrayList<byte[]> image,
-                        ArrayList<String> data, ArrayList<String> name, ArrayList<String> designation, ArrayList<Integer> id)
-    {
+                        ArrayList<String> data, ArrayList<String> name, ArrayList<String> designation, ArrayList<Integer> id) {
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.image = image;
@@ -81,11 +80,10 @@ public class List3Adapter extends BaseSwipeAdapter
         this.nfcModelListFilter.addAll(nfcModelList);
     }*/
 
-    public List3Adapter(Context context, int grid_list3_layout, ArrayList<FriendConnection> nfcModel)
-    {
-        this.context = context ;
-        this.layoutResourceId = grid_list3_layout ;
-        this.nfcModelList1 = nfcModel ;
+    public List3Adapter(Context context, int grid_list3_layout, ArrayList<FriendConnection> nfcModel) {
+        this.context = context;
+        this.layoutResourceId = grid_list3_layout;
+        this.nfcModelList1 = nfcModel;
 //        this.nfcModelListFilter = new ArrayList<NFCModel>();
         this.nfcModelListFilter1.addAll(nfcModelList1);
     }
@@ -97,12 +95,11 @@ public class List3Adapter extends BaseSwipeAdapter
     }
 
     @Override
-    public View generateView(final int position, ViewGroup parent)
-    {
+    public View generateView(final int position, ViewGroup parent) {
         View v = LayoutInflater.from(context).inflate(R.layout.grid_list3_layout, null);
 
         delete = (Button) v.findViewById(R.id.delete);
-        final SwipeLayout swipeLayout = (SwipeLayout)v.findViewById(getSwipeLayoutResourceId(position));
+        final SwipeLayout swipeLayout = (SwipeLayout) v.findViewById(getSwipeLayoutResourceId(position));
         swipeLayout.addSwipeListener(new SimpleSwipeListener() {
             @Override
             public void onOpen(SwipeLayout layout) {
@@ -115,59 +112,54 @@ public class List3Adapter extends BaseSwipeAdapter
         swipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {
             @Override
             public void onDoubleClick(SwipeLayout layout, boolean surface) {
-              //  Toast.makeText(context, "DoubleClick", Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(context, "DoubleClick", Toast.LENGTH_SHORT).show();
             }
         });
 
         v.findViewById(R.id.delete).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
 //                db.DeactiveCards(nfcModelList.get(position).getId());
                 Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_SHORT).show();
                 swipeLayout.close();
                 //nfcModelList.remove(position);
 
-                try
-                {
+                try {
                     List2Fragment.gridAdapter.notifyDataSetChanged();
                     List2Fragment.allTags = db.getActiveNFC();
                     List2Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
                     List2Fragment.GetData(context);
-                } catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
-                try
-                {
+                try {
                     List3Fragment.gridAdapter.notifyDataSetChanged();
                     List3Fragment.allTags = db.getActiveNFC();
                     List3Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
                     List3Fragment.GetData(context);
-                } catch (Exception e){
+                } catch (Exception e) {
 
                 }
-                try
-                {
+                try {
                     List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.allTags = db.getActiveNFC();
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
                     List4Fragment.GetData(context);
-                } catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
-                try
-                {
-                   // List1Fragment.myPager.notifyDataSetChanged();
-                 //   List1Fragment.allTags = db.getActiveNFC();
+                try {
+                    // List1Fragment.myPager.notifyDataSetChanged();
+                    //   List1Fragment.allTags = db.getActiveNFC();
                     List1Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
                     List1Fragment.GetData(context);
-                } catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -203,18 +195,23 @@ public class List3Adapter extends BaseSwipeAdapter
     }
 
     @Override
-    public void fillValues(int position, View convertView)
-    {
+    public void fillValues(int position, View convertView) {
         View row = convertView;
         ViewHolder holder = null;
 
 
-            holder = new ViewHolder();
-            holder.imageDesc = (TextView) row.findViewById(R.id.textList3);
-            holder.imageName = (TextView) row.findViewById(R.id.textNameList3);
-            holder.imageDesignation = (TextView) row.findViewById(R.id.textDescList3);
-            holder.image = (ImageView) row.findViewById(R.id.imageList3);
-            row.setTag(holder);
+        holder = new ViewHolder();
+        holder.imageDesc = (TextView) row.findViewById(R.id.textList3);
+        holder.imageName = (TextView) row.findViewById(R.id.textNameList3);
+        holder.imageDesignation = (TextView) row.findViewById(R.id.textDescList3);
+        holder.image = (ImageView) row.findViewById(R.id.imageList3);
+        holder.defaultCard = (RelativeLayout) row.findViewById(R.id.rltDefaultCard);
+        holder.tvPersonName = (TextView) row.findViewById(R.id.tvPersonName);
+        holder.tvPersonProfile = (TextView) row.findViewById(R.id.tvPersonProfile);
+        holder.tvPersonWebsite = (TextView) row.findViewById(R.id.tvPersonWebsite);
+        holder.tvPersonAddress = (TextView) row.findViewById(R.id.tvPersonAddress);
+        holder.tvPersonContact = (TextView) row.findViewById(R.id.tvPersonContact);
+        row.setTag(holder);
 
         /*holder.imageDesc.setText(data.get(position));
         holder.imageName.setText(name.get(position));
@@ -237,16 +234,14 @@ public class List3Adapter extends BaseSwipeAdapter
         String designation = nfcModelList1.get(position).getDesignation();
 
         holder.imageName.setText(name);
-        holder.imageDesc.setText(company+"\n"+email+"\n"+mobile+"\n"+website);
+        holder.imageDesc.setText(company + "\n" + email + "\n" + mobile + "\n" + website);
 
-        try
-        {
-            if (!designation.equalsIgnoreCase(""))
-            {
+        try {
+            if (!designation.equalsIgnoreCase("")) {
                 holder.imageDesignation.setText(designation);
             }
+        } catch (Exception e) {
         }
-        catch (Exception e){  }
 
        /* Bitmap bmp = BitmapFactory.decodeByteArray(nfcModelList.get(position).getCard_front(), 0, nfcModelList.get(position).getCard_front().length);
 
@@ -256,8 +251,43 @@ public class List3Adapter extends BaseSwipeAdapter
 */
         // ImageView image = (ImageView) findViewById(R.id.imageView1);
 //        holder.image.setImageResource(nfcModelList.get(position).getCard_front());
-        Picasso.with(context).load("http://circle8.asia/App_ImgLib/Cards/"+nfcModelList1.get(position).getCard_front()).into(holder.image);
 
+        if (nfcModelList1.get(position).getCard_front().equals(""))
+        {
+            holder.image.setVisibility(View.GONE);
+            holder.defaultCard.setVisibility(View.VISIBLE);
+            try {
+                if (nfcModelList1.get(position).getName().equals("")){
+                    holder.tvPersonName.setVisibility(View.GONE);
+                }
+                if (nfcModelList1.get(position).getDesignation().equals("")){
+                    holder.tvPersonProfile.setVisibility(View.GONE);
+                }
+                if (nfcModelList1.get(position).getWebsite().equals("")){
+                    holder.tvPersonWebsite.setVisibility(View.GONE);
+                }
+                if (nfcModelList1.get(position).getAddress().equals("")){
+                    holder.tvPersonAddress.setVisibility(View.GONE);
+                }
+                if (nfcModelList1.get(position).getPh_no().equals("")){
+                    holder.tvPersonContact.setVisibility(View.GONE);
+                }
+            }catch (Exception e){}
+            holder.tvPersonName.setText(nfcModelList1.get(position).getName());
+            holder.tvPersonProfile.setText(nfcModelList1.get(position).getDesignation());
+            holder.tvPersonWebsite.setText(nfcModelList1.get(position).getWebsite());
+            holder.tvPersonAddress.setText(nfcModelList1.get(position).getAddress());
+            holder.tvPersonContact.setText(nfcModelList1.get(position).getPh_no());
+        }
+        else
+        {
+            holder.image.setVisibility(View.VISIBLE);
+            holder.defaultCard.setVisibility(View.GONE);
+            //imageView.setImageResource(nfcModelList.get(position).getCard_front());
+            Picasso.with(context).load("http://circle8.asia/App_ImgLib/Cards/"+nfcModelList1.get(position).getCard_front()).into(holder.image);
+        }
+
+        //Picasso.with(context).load("http://circle8.asia/App_ImgLib/Cards/" + nfcModelList1.get(position).getCard_front()).into(holder.image);
 
     }
 
@@ -281,26 +311,22 @@ public class List3Adapter extends BaseSwipeAdapter
         TextView imageName;
         TextView imageDesignation;
         ImageView image;
+        RelativeLayout defaultCard;
+        TextView tvPersonName, tvPersonProfile, tvPersonWebsite, tvPersonAddress, tvPersonContact;
     }
 
-    public void Filter(String charText)
-    {
+    public void Filter(String charText) {
         charText = charText.toLowerCase(Locale.getDefault());
         nfcModelList1.clear();
 
-        if(charText.length() == 0)
-        {
+        if (charText.length() == 0) {
             nfcModelList1.addAll(nfcModelListFilter1);
-        }
-        else
-        {
-            for(FriendConnection md : nfcModelListFilter1)
-            {
-                if(md.getName().toLowerCase(Locale.getDefault()).contains(charText))
-                {
+        } else {
+            for (FriendConnection md : nfcModelListFilter1) {
+                if (md.getName().toLowerCase(Locale.getDefault()).contains(charText)) {
                     nfcModelList1.add(md);
                 }
-                CardsActivity.setActionBarTitle("Cards - "+nfcModelList1.size());
+                CardsActivity.setActionBarTitle("Cards - " + nfcModelList1.size());
             }
         }
         notifyDataSetChanged();

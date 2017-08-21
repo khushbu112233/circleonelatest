@@ -121,7 +121,23 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             imageView.setTag(position);
             imageView.setVisibility(View.GONE);
             defaultCard.setVisibility(View.VISIBLE);
-
+            try {
+                if (nfcModelList.get(position).getName().equals("")) {
+                    tvPersonName.setVisibility(View.GONE);
+                }
+                if (nfcModelList.get(position).getDesignation().equals("")) {
+                    tvPersonProfile.setVisibility(View.GONE);
+                }
+                if (nfcModelList.get(position).getWebsite().equals("")) {
+                    tvPersonWebsite.setVisibility(View.GONE);
+                }
+                if (nfcModelList.get(position).getAddress().equals("")) {
+                    tvPersonAddress.setVisibility(View.GONE);
+                }
+                if (nfcModelList.get(position).getPh_no().equals("")) {
+                    tvPersonContact.setVisibility(View.GONE);
+                }
+            }catch (Exception e){}
             tvPersonName.setText(nfcModelList.get(position).getName());
             tvPersonProfile.setText(nfcModelList.get(position).getDesignation());
             tvPersonWebsite.setText(nfcModelList.get(position).getWebsite());

@@ -175,7 +175,7 @@ public class List2Fragment extends Fragment
             }
         });
 
-        new List2Fragment.HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
 
         return view;
     }
