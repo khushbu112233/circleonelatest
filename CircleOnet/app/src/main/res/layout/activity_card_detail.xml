@@ -490,10 +490,10 @@
                     android:textColor="@android:color/black"
                     android:textSize="15sp" />
 
-
             </RelativeLayout>
 
             <LinearLayout
+                android:id="@+id/llWebsiteBox"
                 android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -520,6 +520,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llEmailBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -545,6 +546,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llTeleBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -570,19 +572,18 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llFaxBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="15dp"
                 android:orientation="horizontal">
-
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginRight="20dp"
                     android:src="@drawable/ic_phone2" />
-
                 <TextView
                     android:id="@+id/txtWork"
                     android:layout_width="wrap_content"
@@ -595,6 +596,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llMobileBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -643,6 +645,7 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/ivMap"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_marginBottom="10dp"

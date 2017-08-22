@@ -272,6 +272,7 @@ public class List2Fragment extends Fragment
                         nfcModelTag.setDesignation(object.getString("Designation"));
                         nfcModelTag.setCard_front(object.getString("Card_Front"));
                         nfcModelTag.setCard_back(object.getString("Card_Back"));
+                        nfcModelTag.setProfile_id(object.getString("ProfileId"));
 
                         nfcModelTag.setNfc_tag("en000000001");
                         allTaggs.add(nfcModelTag);
@@ -568,7 +569,7 @@ public class List2Fragment extends Fragment
             nfcModelTag.setDesignation(reTag.getDesignation());
             nfcModelTag.setCard_front(reTag.getCard_front());
             nfcModelTag.setNfc_tag(reTag.getNfc_tag());
-
+            nfcModelTag.setProfile_id(reTag.getProfile_id());
             nfcModel.add(nfcModelTag);
         }
 

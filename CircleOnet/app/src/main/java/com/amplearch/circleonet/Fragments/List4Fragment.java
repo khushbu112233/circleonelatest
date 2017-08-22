@@ -156,6 +156,7 @@ public class List4Fragment extends Fragment
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getContext(), CardDetail.class);
                 intent.putExtra("tag_id", nfcModel1.get(position).getNfc_tag());
+                intent.putExtra("profile_id", nfcModel1.get(position).getProfile_id());
                 getContext().startActivity(intent);
             }
         });
@@ -273,8 +274,9 @@ public class List4Fragment extends Fragment
                         nfcModelTag.setCard_front(object.getString("Card_Front"));
                         nfcModelTag.setCard_back(object.getString("Card_Back"));
                         nfcModelTag.setUser_image(object.getString("UserPhoto"));
-
+                        nfcModelTag.setProfile_id(object.getString("ProfileId"));
                         nfcModelTag.setNfc_tag("en000000001");
+
                         allTaggs.add(nfcModelTag);
                         GetData(getContext());
                     }
@@ -560,6 +562,7 @@ public class List4Fragment extends Fragment
             nfcModelTag.setDesignation(reTag.getDesignation());
             nfcModelTag.setUser_image(reTag.getUser_image());
             nfcModelTag.setNfc_tag(reTag.getNfc_tag());
+            nfcModelTag.setProfile_id(reTag.getProfile_id());
 
             nfcModel1.add(nfcModelTag);
         }

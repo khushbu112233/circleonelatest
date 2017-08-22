@@ -222,6 +222,7 @@ public class GridViewAdapter extends BaseSwipeAdapter
             public void onClick(View v) {
                 Intent intent = new Intent(context, CardDetail.class);
                 intent.putExtra("tag_id", nfcModelList1.get(position).getNfc_tag());
+                intent.putExtra("profile_id", nfcModelList1.get(position).getProfile_id());
                 context.startActivity(intent);
             }
         });
