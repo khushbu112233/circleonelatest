@@ -29,11 +29,20 @@ public class FriendConnection {
     String nfc_tag;
     String user_image;
     String date;
+    String profile_id ;
+
+    public String getProfile_id() {
+        return profile_id;
+    }
+
+    public void setProfile_id(String profile_id) {
+        this.profile_id = profile_id;
+    }
 
     public FriendConnection() {
     }
 
-    public FriendConnection(String name, String company, String designation, String mob_no, String work_no, String ph_no, String email, String website, String address, String lat, String lng, String remark, String fb_id, String linkedin_id, String google_id, String twitter_id, String youtube_id, String card_front, String card_back, String active, String nfc_tag, String user_image, String date) {
+    public FriendConnection(String name, String company, String designation, String mob_no, String work_no, String ph_no, String email, String website, String address, String lat, String lng, String remark, String fb_id, String linkedin_id, String google_id, String twitter_id, String youtube_id, String card_front, String card_back, String active, String nfc_tag, String user_image, String date, String profile_id) {
         this.name = name;
         this.company = company;
         this.designation = designation;
@@ -57,6 +66,7 @@ public class FriendConnection {
         this.nfc_tag = nfc_tag;
         this.user_image = user_image;
         this.date = date;
+        this.profile_id = profile_id ;
     }
 
     public String getName() {

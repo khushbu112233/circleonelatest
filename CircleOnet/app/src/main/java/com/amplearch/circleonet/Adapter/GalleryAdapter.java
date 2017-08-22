@@ -22,12 +22,14 @@ import com.amplearch.circleonet.Activity.CardsActivity;
 import com.amplearch.circleonet.Fragments.CardsFragment;
 import com.amplearch.circleonet.Fragments.List1Fragment;
 import com.amplearch.circleonet.Helper.DatabaseHelper;
+import com.amplearch.circleonet.Helper.LoginSession;
 import com.amplearch.circleonet.Model.FriendConnection;
 import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
 /**
@@ -41,7 +43,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
     public static int pos = 0;
 
     public static ArrayList<FriendConnection> nfcModelList = new ArrayList<>();
-    ArrayList<FriendConnection> nfcModelListFilter = new ArrayList<>();
+    public static ArrayList<FriendConnection> nfcModelListFilter = new ArrayList<>();
     private RecyclerView.ViewHolder holder;
     public static ImageView imageView ;
     public static int posi = 0;
@@ -70,7 +72,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
         {
             int position = getAdapterPosition();
             Intent intent = new Intent(mContext, CardDetail.class);
-            intent.putExtra("tag_id", nfcModelList.get(position).getNfc_tag());
+            intent.putExtra("profile_id", nfcModelList.get(position).getProfile_id());
             mContext.startActivity(intent);
         }
     }
@@ -158,7 +160,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, CardDetail.class);
-                intent.putExtra("tag_id", nfcModelList.get(position).getNfc_tag());
+                intent.putExtra("profile_id", nfcModelList.get(position).getProfile_id());
                 mContext.startActivity(intent);
             }
         });
@@ -227,7 +229,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             mContext.startActivity(intent);*/
 
             Intent intent = new Intent(mContext, CardDetail.class);
-            intent.putExtra("tag_id", nfcModelList.get(posi).getNfc_tag());
+            intent.putExtra("profile_id", nfcModelList.get(posi).getProfile_id());
             mContext.startActivity(intent);
             return true;
         }
@@ -314,10 +316,11 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             return true;
         }
     }
+
     public void Filter(String charText)
     {
         charText = charText.toLowerCase(Locale.getDefault());
-        nfcModelList.clear();
+       /* nfcModelList.clear();
 
         if(charText.length() == 0)
         {
@@ -353,9 +356,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
                 CardsActivity.setActionBarTitle("Cards - "+nfcModelList.size());
             }
         }
-
-
-        notifyDataSetChanged();
+        notifyDataSetChanged();*/
     }
 
 }

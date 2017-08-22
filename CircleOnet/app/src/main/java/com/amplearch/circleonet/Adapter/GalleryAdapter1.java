@@ -128,7 +128,7 @@ public class GalleryAdapter1 extends RecyclerView.Adapter<GalleryAdapter1.MyView
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, CardDetail.class);
-                intent.putExtra("tag_id", nfcModelList.get(position).getNfc_tag());
+                intent.putExtra("profile_id", nfcModelList.get(position).getProfile_id());
                 mContext.startActivity(intent);
             }
         });
@@ -184,7 +184,7 @@ public class GalleryAdapter1 extends RecyclerView.Adapter<GalleryAdapter1.MyView
             // context.startActivity(intent);
 
             Intent intent = new Intent(mContext, CardDetail.class);
-            intent.putExtra("tag_id", nfcModelList.get(posi).getNfc_tag());
+            intent.putExtra("profile_id", nfcModelList.get(posi).getProfile_id());
             mContext.startActivity(intent);
 
             return true;

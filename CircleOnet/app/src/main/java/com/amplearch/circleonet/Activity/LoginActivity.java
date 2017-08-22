@@ -167,6 +167,7 @@ public class LoginActivity extends AppCompatActivity implements
         etLoginUser = (EditText) findViewById(R.id.etLoginUser);
         login_linkedin_btn = (ImageView) findViewById(R.id.login_button_linkedin);
         prefs = getSharedPreferences("com.amplearch.circleonet", MODE_PRIVATE);
+
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -230,9 +231,12 @@ public class LoginActivity extends AppCompatActivity implements
                 userName = etLoginUser.getText().toString();
                 userPassword = etLoginPass.getText().toString();
 
-                if (!validateLogin(userName, userPassword)) {
+                if (!validateLogin(userName, userPassword))
+                {
                     Toast.makeText(getApplicationContext(), "Form Fill Invalid!", Toast.LENGTH_SHORT).show();
-                } else {
+                }
+                else
+                {
                     new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/UserLogin");
                 }
             /* Create an Intent that will start the Menu-Activity. */
@@ -256,6 +260,7 @@ public class LoginActivity extends AppCompatActivity implements
         // Customizing G+ button
         btnSignIn.setSize(SignInButton.SIZE_ICON_ONLY);
         btnSignIn.setScopes(gso.getScopeArray());
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -287,7 +292,8 @@ public class LoginActivity extends AppCompatActivity implements
         }*/
     }
 
-    public String POST(String url) {
+    public String POST(String url)
+    {
         InputStream inputStream = null;
         String result = "";
         try {
@@ -366,7 +372,8 @@ public class LoginActivity extends AppCompatActivity implements
 
     }
 
-    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
+    private class HttpAsyncTask extends AsyncTask<String, Void, String>
+    {
         ProgressDialog dialog;
 
         @Override
@@ -386,14 +393,18 @@ public class LoginActivity extends AppCompatActivity implements
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(String result)
+        {
             dialog.dismiss();
-            try {
-                if (result != null) {
+            try
+            {
+                if (result != null)
+                {
                     JSONObject jsonObject = new JSONObject(result);
                     String success = jsonObject.getString("success").toString();
                     String UserID = "", profileid = "", FirstName = "", LastName = "", UserPhoto = "";
-                    if (success.equals("1")) {
+                    if (success.equals("1"))
+                    {
                         //  Toast.makeText(getBaseContext(), "LoggedIn Successfully..", Toast.LENGTH_LONG).show();
                         //   fingerPrintSession.createLoginSession(UserID, "", userName, "", "");
 
@@ -406,9 +417,10 @@ public class LoginActivity extends AppCompatActivity implements
                         UserPhoto = jsonArray.getString("UserPhoto");
                         String Status = jsonArray.getString("Status");
 
-                        if (Status.equalsIgnoreCase("Verified")) {
-
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (Status.equalsIgnoreCase("Verified"))
+                        {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                            {
                                 // imgFinger.setVisibility(View.VISIBLE);
                                 Gson gson = ((MyApplication) getApplication()).getGsonObject();
                                 UserObject userData = new UserObject(profileid, FirstName + " " + LastName, userName, userPassword, UserID, "", UserPhoto, false);
@@ -420,7 +432,9 @@ public class LoginActivity extends AppCompatActivity implements
                                 //intent.putExtra("viewpager_position", 0);
                                 startActivity(intent);
                                 finish();
-                            } else {
+                            }
+                            else
+                            {
                                 // imgFinger.setVisibility(View.GONE);
                                 loginSession.createLoginSession(profileid, UserID, "", userName, "", "");
                                 if (prefs.getBoolean("firstrun", true)) {
@@ -429,7 +443,9 @@ public class LoginActivity extends AppCompatActivity implements
                                     Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
                                     startActivity(intent);
                                     prefs.edit().putBoolean("firstrun", false).commit();
-                                } else {
+                                }
+                                else
+                                {
                                     Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
                                     userIntent.putExtra("viewpager_position", 0);
                                     startActivity(userIntent);

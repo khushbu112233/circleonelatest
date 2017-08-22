@@ -191,8 +191,8 @@ public class ProfileFragment extends Fragment
 
         lnrWebsite.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
+            public void onClick(View v)
+            {
                 AlertDialog.Builder builder;
                 builder = new AlertDialog.Builder(getContext());
 
@@ -223,7 +223,8 @@ public class ProfileFragment extends Fragment
 
         lnrWork.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 AlertDialog.Builder builder;
 
                 builder = new AlertDialog.Builder(getContext());
@@ -252,15 +253,14 @@ public class ProfileFragment extends Fragment
         tvMail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (tvMail.getText().toString().equals("")){
+                if (tvMail.getText().toString().equals(""))
+                {
 
                 }
-                else {
-
+                else
+                {
                     AlertDialog.Builder builder;
-
                     builder = new AlertDialog.Builder(getContext());
-
                     builder.setTitle("Mail to "+ tvPersonName.getText().toString())
                             .setMessage("Are you sure you want to drop Mail ?")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -288,7 +288,6 @@ public class ProfileFragment extends Fragment
                             })
                             .setIcon(android.R.drawable.ic_dialog_email)
                             .show();
-
                 }
             }
         });
@@ -491,7 +490,6 @@ public class ProfileFragment extends Fragment
             dialog.setCancelable(false);
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
-
         }
 
         @Override
@@ -504,17 +502,20 @@ public class ProfileFragment extends Fragment
         protected void onPostExecute(String result)
         {
             dialog.dismiss();
-            try {
-                if (result != null) {
+            try
+            {
+
+                if (result != null)
+                {
                     JSONObject jsonObject = new JSONObject(result);
                     JSONArray jsonArray = jsonObject.getJSONArray("Profiles");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
                     profile_array = new ArrayList<String>();
-                    for (int i = 0; i < jsonArray.length(); i++){
 
+                    for (int i = 0; i < jsonArray.length(); i++)
+                    {
                         JSONObject object = jsonArray.getJSONObject(i);
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
-
                         profile_array.add(object.getString("CompanyName"));
 
                         nfcModelTag = new ProfileModel();
@@ -549,7 +550,9 @@ public class ProfileFragment extends Fragment
                         Picasso.with(getContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+allTags.get(0).getUserPhoto()).into(imgProfile);
                     }
 
-                }else {
+                }
+                else
+                {
                     Toast.makeText(getContext(), "Not able to load Profiles..", Toast.LENGTH_LONG).show();
                 }
 

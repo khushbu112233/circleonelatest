@@ -1,27 +1,49 @@
 package com.amplearch.circleonet.Activity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amplearch.circleonet.Adapter.CardSwipe;
+import com.amplearch.circleonet.Fragments.List1Fragment;
 import com.amplearch.circleonet.Helper.DatabaseHelper;
+import com.amplearch.circleonet.Model.FriendConnection;
 import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.Utils.CarouselEffectTransformer;
 import com.amplearch.circleonet.R;
 import com.amplearch.circleonet.Utils.StickyScrollView;
+import com.squareup.picasso.Picasso;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,24 +53,29 @@ import be.appfoundry.nfclibrary.utilities.interfaces.NfcReadUtility;
 import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CardDetail extends NfcActivity {
+public class CardDetail extends NfcActivity
+{
 
     ViewPager mViewPager, viewPager1;
-    private ArrayList<Integer> image;
+    private ArrayList<String> image = new ArrayList<>();;
     private CardSwipe myPager ;
-    private ImageView imgCards, imgConnect, imgEvents, imgProfile, imgBack, imgCard;
+    private ImageView imgCards, imgConnect, imgEvents, imgProfile, imgBack, imgCard, imgMap;
     private static final String TAG = NFCDemo.class.getName();
+    private LinearLayout llWebsiteBox, llEmailBox, llMobileBox, llTeleBox, llFaxBox ;
 
     NfcReadUtility mNfcReadUtility = new NfcReadUtilityImpl();
     ProgressDialog mProgressDialog;
     DatabaseHelper db ;
     TextView txtName, txtCompany, txtWebsite, txtEmail, txtPH, txtWork, txtMob, txtAddress, txtRemark, txtDesi;
     CircleImageView imgProfileCard;
-    String tag_id;
+    String user_id, profile_id;
     StickyScrollView scroll;
 
+    String recycle_image1, recycle_image2 ;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_detail);
 
@@ -60,6 +87,7 @@ public class CardDetail extends NfcActivity {
         imgProfile = (ImageView) findViewById(R.id.imgProfile);
         imgBack = (ImageView) findViewById(R.id.imgBack);
         imgCard = (ImageView) findViewById(R.id.imgCard);
+        imgMap = (ImageView)findViewById(R.id.ivMap);
         imgProfileCard = (CircleImageView) findViewById(R.id.imgProfileCard);
         db = new DatabaseHelper(getApplicationContext());
         txtName = (TextView) findViewById(R.id.txtName);
@@ -74,15 +102,165 @@ public class CardDetail extends NfcActivity {
         txtDesi = (TextView) findViewById(R.id.txtDesi);
         scroll = (StickyScrollView) findViewById(R.id.scroll);
 
+        llWebsiteBox = (LinearLayout)findViewById(R.id.llWebsiteBox);
+        llEmailBox = (LinearLayout)findViewById(R.id.llEmailBox);
+        llMobileBox = (LinearLayout)findViewById(R.id.llMobileBox);
+        llTeleBox = (LinearLayout)findViewById(R.id.llTeleBox);
+        llFaxBox = (LinearLayout)findViewById(R.id.llFaxBox);
+
         Intent intent = getIntent();
-        tag_id = intent.getStringExtra("tag_id");
-        final List<NFCModel> modelList = db.getNFCbyTag(tag_id);
-        image = new ArrayList<>();
-        try {
+        profile_id = intent.getStringExtra("profile_id");
+        new CardDetail.HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetUserProfile");
 
-            if (modelList != null){
+        llWebsiteBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(CardDetail.this);
 
-                for (NFCModel tag1 : modelList) {
+                builder.setTitle("Redirect to Web Browser")
+                        .setMessage("Are you sure you want to redirect to Web Browser ?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                                String url = txtWebsite.getText().toString();
+                                if (url!=null) {
+                                    if (!url.startsWith("http://") && !url.startsWith("https://"))
+                                        url = "http://" + url;
+                                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                                    startActivity(browserIntent);
+                                }
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_menu_set_as)
+                        .show();
+            }
+        });
+
+        llEmailBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                if (txtEmail.getText().toString().equals(""))
+                {
+
+                }
+                else
+                {
+                    AlertDialog.Builder builder;
+                    builder = new AlertDialog.Builder(CardDetail.this);
+                    builder.setTitle("Mail to "+ txtName.getText().toString())
+                            .setMessage("Are you sure you want to drop Mail ?")
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // continue with delete
+                                    try
+                                    {
+                                        Intent intent = new Intent (Intent.ACTION_VIEW , Uri.parse("mailto:" + txtEmail.getText().toString()));
+                                        intent.putExtra(Intent.EXTRA_SUBJECT, "");
+                                        intent.putExtra(Intent.EXTRA_TEXT, "");
+                                        startActivity(intent);
+                                    }
+                                    catch(Exception e)
+                                    {
+                                        Toast.makeText(getApplicationContext(), "Sorry...You don't have any mail app", Toast.LENGTH_SHORT).show();
+                                        e.printStackTrace();
+                                    }
+                                }
+                            })
+                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // do nothing
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_dialog_email)
+                            .show();
+                }
+            }
+        });
+
+        llMobileBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(CardDetail.this);
+
+                builder.setTitle("Call to "+ txtName.getText().toString())
+                        .setMessage("Are you sure you want to make a Call ?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                                Intent intent = new Intent(Intent.ACTION_DIAL);
+                                intent.setData(Uri.parse("tel:"+txtMob.getText().toString()));
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_menu_call)
+                        .show();
+            }
+        });
+
+        llTeleBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(CardDetail.this);
+
+                builder.setTitle("Call to "+ txtName.getText().toString())
+                        .setMessage("Are you sure you want to make a Call ?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                                Intent intent = new Intent(Intent.ACTION_DIAL);
+                                intent.setData(Uri.parse("tel:"+txtPH.getText().toString()));
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_menu_call)
+                        .show();
+            }
+        });
+
+        llFaxBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+
+            }
+        });
+
+
+//        Toast.makeText(getApplicationContext(),"Profile_id: "+profile_id,Toast.LENGTH_SHORT).show();
+//        final List<NFCModel> modelList = db.getNFCbyTag(tag_id);
+
+       /* try
+        {
+            if (modelList != null)
+            {
+                for (NFCModel tag1 : modelList)
+                {
                     // Toast.makeText(getApplicationContext(), tag1.getName(), Toast.LENGTH_LONG).show();
 
                     //Bitmap bmp = BitmapFactory.decodeByteArray(tag1.getCard_front(), 0, tag1.getCard_front().length);
@@ -125,7 +303,7 @@ public class CardDetail extends NfcActivity {
 
         }catch (Exception e){
 
-        }
+        }*/
 
 
       /*  new Handler().post(new Runnable() {
@@ -194,7 +372,6 @@ public class CardDetail extends NfcActivity {
             @Override
             public void onClick(View v) {
                 Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-
                 // you pass the position you want the viewpager to show in the extra,
                 // please don't forget to define and initialize the position variable
                 // properly
@@ -234,7 +411,253 @@ public class CardDetail extends NfcActivity {
                 finish();
             }
         });
+
+        imgMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(CardDetail.this);
+
+                builder.setTitle("Google Map")
+                        .setMessage("Are you sure you want to redirect to Google Map ?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                                String map = "http://maps.google.co.in/maps?q=" + txtAddress.getText().toString();
+                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(map));
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_map)
+                        .show();
+            }
+        });
     }
+
+    private class HttpAsyncTask extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(CardDetail.this);
+            dialog.setMessage("Fetching Cards...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            return POST(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+            dialog.dismiss();
+            try
+            {
+                if (result != null)
+                {
+                    JSONObject jsonObject = new JSONObject(result);
+                    //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
+
+                        jsonObject.getString("FirstName");
+                        jsonObject.getString("LastName");
+                        jsonObject.getString("OfficePhone");
+                        jsonObject.getString("PrimaryPhone");
+                        jsonObject.getString("Emailid");
+                        jsonObject.getString("IndustryName");
+                        jsonObject.getString("CompanyName");
+                        jsonObject.getString("CompanyProfile");
+                        jsonObject.getString("Designation");
+                        jsonObject.getString("Facebook");
+                        jsonObject.getString("Twitter");
+                        jsonObject.getString("Google");
+                        jsonObject.getString("Card_Front");
+                        jsonObject.getString("Card_Back");
+                        jsonObject.getString("UserPhoto");
+
+                        txtName.setText(jsonObject.getString("FirstName")+" "+jsonObject.getString("LastName"));
+                        txtDesi.setText(jsonObject.getString("Designation"));
+                        txtCompany.setText(jsonObject.getString("CompanyName"));
+                        txtEmail.setText(jsonObject.getString("Emailid"));
+                        txtMob.setText(jsonObject.getString("PrimaryPhone"));
+                        txtPH.setText(jsonObject.getString("OfficePhone"));
+
+                        try
+                        {
+                            if(jsonObject.getString("UserPhoto").equals(""))
+                            {
+                                imgProfileCard.setImageResource(R.drawable.usr);
+                            }
+                            else
+                            {
+                                Picasso.with(CardDetail.this).load("http://circle8.asia/App_ImgLib/UserProfile/"+ jsonObject.getString("UserPhoto")).into(imgProfileCard);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            imgProfileCard.setImageResource(R.drawable.usr);
+                        }
+
+                        try
+                        {
+                            if(jsonObject.getString("Card_Front").equals(""))
+                            {
+                               recycle_image1 ="http://circle8.asia/App_ImgLib/UserProfile/U20170811035609317.png";
+                            }
+                            else
+                            {
+                                recycle_image1 = "http://circle8.asia/App_ImgLib/Cards/"+jsonObject.getString("Card_Front");
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            recycle_image1 ="http://circle8.asia/App_ImgLib/UserProfile/U20170811035609317.png";
+                        }
+
+                    try
+                    {
+                        if(jsonObject.getString("Card_Back").equals(""))
+                        {
+                            recycle_image2 ="http://circle8.asia/App_ImgLib/UserProfile/U20170811035609317.png";
+                        }
+                        else
+                        {
+                            recycle_image2 = "http://circle8.asia/App_ImgLib/Cards/"+jsonObject.getString("Card_Back");
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        recycle_image2 ="http://circle8.asia/App_ImgLib/UserProfile/U20170811035609317.png";
+                    }
+
+                    image.add(recycle_image1);
+                    image.add(recycle_image2);
+                    myPager = new CardSwipe(getApplicationContext(), image);
+
+                    mViewPager.setClipChildren(false);
+                    mViewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+                    mViewPager.setOffscreenPageLimit(3);
+                    mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
+                    mViewPager.setAdapter(myPager);
+
+                    viewPager1.setClipChildren(false);
+                    viewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+                    viewPager1.setOffscreenPageLimit(3);
+                    viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
+                    viewPager1.setAdapter(myPager);
+
+
+                        /*FriendConnection nfcModelTag = new FriendConnection();
+                        nfcModelTag.setName(object.getString("FirstName") + " " + object.getString("LastName"));
+                        nfcModelTag.setCompany(object.getString("CompanyName"));
+                        nfcModelTag.setEmail(object.getString("UserName"));
+                        nfcModelTag.setWebsite("");
+                        nfcModelTag.setMob_no(object.getString("Phone"));
+                        nfcModelTag.setDesignation(object.getString("Designation"));
+                        nfcModelTag.setCard_front(object.getString("Card_Front"));
+                        nfcModelTag.setCard_back(object.getString("Card_Back"));
+                        nfcModelTag.setUser_image(object.getString("UserPhoto"));
+                        nfcModelTag.setProfile_id(object.getString("ProfileId"));
+
+                        nfcModelTag.setNfc_tag("en000000001");
+                        allTags.add(nfcModelTag);*/
+//                        GetData(getContext());
+
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                }
+
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public String POST(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("profileid", profile_id );
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException
+    {
+        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+        while((line = bufferedReader.readLine()) != null)
+            result += line;
+
+        inputStream.close();
+        return result;
+    }
+
 
     @Override
     public void onResume() {
@@ -268,7 +691,8 @@ public class CardDetail extends NfcActivity {
      *         containing found data
      */
     @Override
-    public void onNewIntent(final Intent paramIntent) {
+    public void onNewIntent(final Intent paramIntent)
+    {
         super.onNewIntent(paramIntent);
 
 
@@ -304,15 +728,17 @@ public class CardDetail extends NfcActivity {
 
               //  Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
                // callData(id);
-                for (String data : mNfcReadUtility.readFromTagWithMap(paramIntent).values()) {
+                for (String data : mNfcReadUtility.readFromTagWithMap(paramIntent).values())
+                {
                     Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
                     List<NFCModel> modelList = db.getNFCbyTag(data);
-                    image = new ArrayList<>();
+
                     try {
 
                         if (modelList != null){
 
-                            for (NFCModel tag1 : modelList) {
+                            for (NFCModel tag1 : modelList)
+                            {
                                 // Toast.makeText(getApplicationContext(), tag1.getName(), Toast.LENGTH_LONG).show();
 
                                // Bitmap bmp = BitmapFactory.decodeByteArray(tag1.getCard_front(), 0, tag1.getCard_front().length);
@@ -330,14 +756,14 @@ public class CardDetail extends NfcActivity {
                                 txtAddress.setText(tag1.getAddress());
                                 txtRemark.setText(tag1.getRemark());
                                 txtDesi.setText(tag1.getDesignation());
-                                image.add(tag1.getCard_front());
-                                image.add(tag1.getCard_back());
+                                image.add(String.valueOf(tag1.getCard_front()));   // its change from integer to string
+                                image.add(String.valueOf(tag1.getCard_back()));    // its change from integer to string
                                 myPager = new CardSwipe(getApplicationContext(), image);
+
                                 mViewPager.setClipChildren(false);
                                 mViewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
                                 mViewPager.setOffscreenPageLimit(3);
                                 mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
-
 
                                 viewPager1.setAdapter(myPager);
 
@@ -345,9 +771,8 @@ public class CardDetail extends NfcActivity {
                                 viewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
                                 viewPager1.setOffscreenPageLimit(3);
                                 viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
-
-
                                 viewPager1.setAdapter(myPager);
+
                             }
                         }
 

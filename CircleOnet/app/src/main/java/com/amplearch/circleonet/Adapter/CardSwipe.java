@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.amplearch.circleonet.R;
 import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -21,9 +22,9 @@ import java.util.ArrayList;
 public class CardSwipe extends PagerAdapter
 {
     Context context ;
-    ArrayList<Integer> image;
+    ArrayList<String> image;
 
-    public CardSwipe(Context applicationContext, ArrayList<Integer> image)
+    public CardSwipe(Context applicationContext, ArrayList<String> image)
     {
         this.context = applicationContext ;
         this.image = image;
@@ -59,8 +60,8 @@ public class CardSwipe extends PagerAdapter
 //            imageView.setImageResource(image.get(position));
            // Bitmap bmp = BitmapFactory.decodeByteArray(image.get(position), 0, image.get(position).length);
             // ImageView image = (ImageView) findViewById(R.id.imageView1);
-
-            imageView.setImageResource(image.get(position));
+            Picasso.with(context).load(image.get(position)).into(imageView);
+//            imageView.setImageResource(image.get(position));
 //            Glide.with(context).load(image[position]).into(imageCover);
 
             container.addView(view);
