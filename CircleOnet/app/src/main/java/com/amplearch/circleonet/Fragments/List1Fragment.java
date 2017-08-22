@@ -118,6 +118,7 @@ public class List1Fragment extends Fragment
     public static TextView txtNoCard1;
     LoginSession session;
     String UserId = "";
+
     public List1Fragment()
     {
         // Required empty public constructor
@@ -333,7 +334,7 @@ public class List1Fragment extends Fragment
                 else
                 {
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
-                    mAdapter.Filter(text);
+//                    mAdapter.Filter(text);
                     //   mAdapter1.Filter(text);
                 }
             }
@@ -443,14 +444,16 @@ public class List1Fragment extends Fragment
         protected void onPostExecute(String result)
         {
             dialog.dismiss();
-            try {
-                if (result != null) {
+            try
+            {
+                if (result != null)
+                {
                     JSONObject jsonObject = new JSONObject(result);
                     JSONArray jsonArray = jsonObject.getJSONArray("connection");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
 
-                    for (int i = 0; i < jsonArray.length(); i++){
-
+                    for (int i = 0; i < jsonArray.length(); i++)
+                    {
                         JSONObject object = jsonArray.getJSONObject(i);
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
 
@@ -464,16 +467,22 @@ public class List1Fragment extends Fragment
                         nfcModelTag.setCard_front(object.getString("Card_Front"));
                         nfcModelTag.setCard_back(object.getString("Card_Back"));
                         nfcModelTag.setUser_image(object.getString("UserPhoto"));
+                        nfcModelTag.setProfile_id(object.getString("ProfileId"));
+
+//                        Toast.makeText(getActivity(),"Profile_id"+object.getString("ProfileId"),Toast.LENGTH_SHORT).show();
 
                         nfcModelTag.setNfc_tag("en000000001");
                         allTags.add(nfcModelTag);
                         GetData(getContext());
                     }
-                }else {
+                }
+                else
+                {
                     Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
                 }
 
-            } catch (JSONException e) {
+            }
+            catch (JSONException e) {
                 e.printStackTrace();
             }
         }
@@ -753,6 +762,7 @@ public class List1Fragment extends Fragment
             nfcModelTag.setCard_front(reTag.getCard_front());
             nfcModelTag.setCard_back(reTag.getCard_back());
             nfcModelTag.setNfc_tag(reTag.getNfc_tag());
+            nfcModelTag.setProfile_id(reTag.getProfile_id());
             nfcModel.add(nfcModelTag);
         }
 
@@ -761,12 +771,15 @@ public class List1Fragment extends Fragment
         mAdapter.notifyDataSetChanged();
         mAdapter1.notifyDataSetChanged();
 
-        if (nfcModel.size() == 0){
+        if (nfcModel.size() == 0)
+        {
             txtNoCard1.setVisibility(View.VISIBLE);
         }
-        else {
+        else
+        {
             txtNoCard1.setVisibility(View.GONE);
         }
+
         CardsActivity.setActionBarTitle("Cards - "+nfcModel.size());
         initRecyclerView1(recyclerView1,new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter ) ;
         initRecyclerView2(recyclerView2,new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter1 ) ;

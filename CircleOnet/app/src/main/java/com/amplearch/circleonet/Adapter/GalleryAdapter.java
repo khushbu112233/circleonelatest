@@ -22,12 +22,14 @@ import com.amplearch.circleonet.Activity.CardsActivity;
 import com.amplearch.circleonet.Fragments.CardsFragment;
 import com.amplearch.circleonet.Fragments.List1Fragment;
 import com.amplearch.circleonet.Helper.DatabaseHelper;
+import com.amplearch.circleonet.Helper.LoginSession;
 import com.amplearch.circleonet.Model.FriendConnection;
 import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
 /**
@@ -70,7 +72,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
         {
             int position = getAdapterPosition();
             Intent intent = new Intent(mContext, CardDetail.class);
-            intent.putExtra("tag_id", nfcModelList.get(position).getNfc_tag());
+            intent.putExtra("profile_id", nfcModelList.get(position).getProfile_id());
             mContext.startActivity(intent);
         }
     }
@@ -142,7 +144,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, CardDetail.class);
-                intent.putExtra("tag_id", nfcModelList.get(position).getNfc_tag());
+                intent.putExtra("profile_id", nfcModelList.get(position).getProfile_id());
                 mContext.startActivity(intent);
             }
         });
@@ -211,7 +213,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             mContext.startActivity(intent);*/
 
             Intent intent = new Intent(mContext, CardDetail.class);
-            intent.putExtra("tag_id", nfcModelList.get(posi).getNfc_tag());
+            intent.putExtra("profile_id", nfcModelList.get(posi).getProfile_id());
             mContext.startActivity(intent);
             return true;
         }
@@ -302,73 +304,43 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
     public void Filter(String charText)
     {
         charText = charText.toLowerCase(Locale.getDefault());
-        nfcModelList.clear();
-//        List1Fragment.nfcModel.clear();
+       /* nfcModelList.clear();
 
         if(charText.length() == 0)
         {
             nfcModelList.addAll(nfcModelListFilter);
-            try
-            {
+            try {
                 // List1Fragment.myPager.notifyDataSetChanged();
                 List1Fragment.nfcModel.clear();
-//                 List1Fragment.allTags = db.getActiveNFC();
-                nfcModelList.clear();
+                // List1Fragment.allTags = db.getActiveNFC();
+                //  nfcModelList.clear();
                 List1Fragment.GetData(mContext);
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e){
 
             }
         }
         else
         {
-//            List1Fragment.allTags.clear();
+            List1Fragment.allTags.clear();
             for(FriendConnection md : nfcModelListFilter)
             {
                 if(md.getName().toLowerCase(Locale.getDefault()).contains(charText))
                 {
                     nfcModelList.add(md);
-                    try
-                    {
+                    try {
                         //   List1Fragment.myPager.notifyDataSetChanged();
                         List1Fragment.nfcModel.clear();
                         List1Fragment.allTags.add(md);
-                        nfcModelList.clear();
+                        //  nfcModelList.clear();
                         List1Fragment.GetData(mContext);
-                    }
-                    catch (Exception e){
+                    } catch (Exception e){
 
                     }
                 }
                 CardsActivity.setActionBarTitle("Cards - "+nfcModelList.size());
             }
         }
-        notifyDataSetChanged();
+        notifyDataSetChanged();*/
     }
-
-/*
-    public void Filter(String charText)
-    {
-        charText = charText.toLowerCase(Locale.getDefault());
-        nfcModelList.clear();
-
-        if(charText.length() == 0)
-        {
-            nfcModelList.addAll(nfcModelListFilter);
-        }
-        else
-        {
-            for(FriendConnection md : nfcModelListFilter)
-            {
-                if(md.getName().toLowerCase(Locale.getDefault()).contains(charText))
-                {
-                    nfcModelList.add(md);
-                }
-            }
-        }
-        notifyDataSetChanged();
-    }
-*/
 
 }
