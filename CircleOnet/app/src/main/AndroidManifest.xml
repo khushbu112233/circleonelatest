@@ -128,7 +128,6 @@
         <activity android:name=".ExternalNFC.NFCExternal"
             android:screenOrientation="portrait">
 
-
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
                 <category android:name="android.intent.category.DEFAULT" />

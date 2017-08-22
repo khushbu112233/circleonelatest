@@ -16,7 +16,6 @@ public class Utility {
     public static final int MY_PERMISSIONS_REQUEST_CAMERA = 121;
     public static final int MY_PERMISSIONS_REQUEST_READ_CONTACT = 122;
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public static boolean checkStoragePermission(final Context context)
     {
         int currentAPIVersion = Build.VERSION.SDK_INT;
@@ -113,7 +112,6 @@ public class Utility {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public static boolean checkPermission(final Context context)
     {
         int currentAPIVersion = Build.VERSION.SDK_INT;

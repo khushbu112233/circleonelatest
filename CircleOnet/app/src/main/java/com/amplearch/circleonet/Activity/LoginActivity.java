@@ -104,7 +104,7 @@ import static com.amplearch.circleonet.Utils.Validation.validateLogin;
 
 public class LoginActivity extends AppCompatActivity implements
         View.OnClickListener,
-        GoogleApiClient.OnConnectionFailedListener {
+        GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
     Button btnSimpleLogin, btnRegister;
     //Boolean isConnected = false;
@@ -339,6 +339,19 @@ public class LoginActivity extends AppCompatActivity implements
 
         // 11. return result
         return result;
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int cause) {
+        // The connection to Google Play services was lost for some reason. We call connect() to
+        // attempt to re-establish the connection.
+        Log.i(TAG, "Connection suspended");
+        mGoogleApiClient.connect();
     }
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
@@ -667,7 +680,7 @@ public class LoginActivity extends AppCompatActivity implements
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                            Toast.makeText(LoginActivity.this, task.getException().toString(),
                                     Toast.LENGTH_SHORT).show();
                             // updateUI(null);
                         }
