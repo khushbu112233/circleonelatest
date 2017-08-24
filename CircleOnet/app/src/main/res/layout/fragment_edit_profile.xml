@@ -14,7 +14,8 @@
         android:clickable="true"
         app:layout_scrollFlags="scroll|snap" />
 
-    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/main_content"
         android:layout_width="match_parent"
@@ -44,7 +45,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
 
             <LinearLayout
                 android:id="@+id/frame_container1"
@@ -1072,8 +1072,10 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="15dp"
                         android:layout_marginTop="20dp"
+                        android:layout_marginBottom="10dp"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:weightSum="1">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -1081,16 +1083,19 @@
                             android:text="Preferred Event Industries"
                             android:textColor="@color/colorPrimary"
                             android:textSize="22sp"
-                            android:textStyle="normal" />
+                            android:textStyle="normal"
+                            android:layout_weight="0.7"/>
 
                         <ImageView
+                            android:id="@+id/ivArrowImg"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_marginLeft="10dp"
-                            android:src="@drawable/ic_down_arrow_blue" />
+                            android:layout_weight="0.3"
+                            android:src="@drawable/ic_right_arrow_blue" />
 
                     </LinearLayout>
-
+<!--
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -1218,27 +1223,61 @@
                                 android:layout_weight="0.25"
                                 android:text="Sports"
                                 android:textColor="@color/colorPrimary" />
-
                         </LinearLayout>
+                    </LinearLayout>
+-->
+                    <LinearLayout
+                        android:id="@+id/llEventBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="15dp"
+                        android:visibility="gone">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="10dp">
+                            <TextView
+                                android:id="@+id/tvEventInfo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAlignment="center"
+                                android:visibility="gone"
+                                android:layout_centerInParent="true"
+                                android:text="No event choosen by you.\nPlease choose event from below list"/>
+                            <GridView
+                                android:id="@+id/gridViewAdded"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:numColumns="2">
+                            </GridView>
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/colorPrimary"/>
+
+                        <GridView
+                            android:id="@+id/gridView"
+                            android:layout_width="match_parent"
+                            android:layout_height="800dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="20dp"
+                            android:numColumns="2">
+                        </GridView>
 
                     </LinearLayout>
 
 
-                    <GridView
-                        android:id="@+id/gridView"
-                        android:layout_width="match_parent"
-                        android:layout_height="1000dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginTop="20dp"
-                        android:numColumns="2">
-
-                    </GridView>
 
 
                 </LinearLayout>
             </LinearLayout>
+
         </com.amplearch.circleonet.Utils.StickyScrollView>
     </android.support.design.widget.CoordinatorLayout>
 </RelativeLayout>

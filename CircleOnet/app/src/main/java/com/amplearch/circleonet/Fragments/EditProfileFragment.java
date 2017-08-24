@@ -22,8 +22,9 @@ import java.util.ArrayList;
 public class EditProfileFragment extends Fragment
 {
 
-    private GridView gridView ;
+    private GridView gridView, gridViewAdded ;
     String[] array ;
+
 
     public EditProfileFragment() {
         // Required empty public constructor
@@ -41,6 +42,7 @@ public class EditProfileFragment extends Fragment
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
 
         gridView = (GridView)view.findViewById(R.id.gridView);
+        gridViewAdded = (GridView)view.findViewById(R.id.gridViewAdded);
 
         array = new String[]{"Accommodations","Information","Accounting","Information technology","Advertising",
                 "Insurance","Aerospace","Journalism & News","Agriculture & Agribusiness","Legal Services","Air Transportation",

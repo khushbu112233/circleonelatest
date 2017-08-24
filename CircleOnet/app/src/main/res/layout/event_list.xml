@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal"
+            android:weightSum="1">
+            <TextView
+                android:id="@+id/tvEventName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Animation"
+                android:textColor="@color/colorPrimary"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.8"/>
+            <ImageView
+                android:id="@+id/ivCancelEvent"
+                android:layout_width="15dp"
+                android:layout_height="12dp"
+                android:src="@drawable/ic_cancel"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.2"/>
+        </LinearLayout>
+
+</RelativeLayout>

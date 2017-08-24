@@ -30,10 +30,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amplearch.circleonet.Adapter.AddEventAdapter;
 import com.amplearch.circleonet.Adapter.CardSwipe;
 import com.amplearch.circleonet.Adapter.CustomAdapter;
 import com.amplearch.circleonet.Fragments.ProfileFragment;
@@ -72,7 +74,7 @@ import static junit.framework.Assert.assertEquals;
 
 public class EditProfileActivity extends AppCompatActivity
 {
-    private GridView gridView ;
+    private GridView gridView, gridViewAdded ;
     private String[] array ;
     private EditText etAttachFile ;
     private ImageView ivAttachFile ;
@@ -108,6 +110,15 @@ public class EditProfileActivity extends AppCompatActivity
     ArrayList<String> notice_array = new ArrayList<String>();
     public static List<TestimonialModel> allTaggs ;
 
+    //for adding event and expande & collapse
+    public static ArrayList<String> addEventList = new ArrayList<>();
+    private String addEventString ;
+    public static AddEventAdapter addEventAdapter ;
+    private LinearLayout llEventBox ;
+    private ImageView ivArrowImg ;
+    private TextView tvEventInfo ;
+    private String arrowStatus = "RIGHT";
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -117,6 +128,7 @@ public class EditProfileActivity extends AppCompatActivity
         autoCompleteDesignation = (AutoCompleteTextView) findViewById(R.id.autoCompleteDesignation);
         autoCompleteIndustry = (AutoCompleteTextView) findViewById(R.id.autoCompleteIndustry);
         gridView = (GridView)findViewById(R.id.gridView);
+        gridViewAdded = (GridView)findViewById(R.id.gridViewAdded);
         etAttachFile = (EditText)findViewById(R.id.etAttachFile);
         ivAttachFile = (ImageView)findViewById(R.id.ivAttachFile);
         imgDone = (ImageView) findViewById(R.id.imgDone);
@@ -135,9 +147,14 @@ public class EditProfileActivity extends AppCompatActivity
         lstTestimonial = (ListView) findViewById(R.id.lstTestimonial);
         txtTestimonial = (TextView) findViewById(R.id.txtTestimonial);
         txtMore = (TextView) findViewById(R.id.txtMore);
+        ivArrowImg = (ImageView)findViewById(R.id.ivArrowImg);
+        tvEventInfo = (TextView)findViewById(R.id.tvEventInfo);
+        llEventBox = (LinearLayout)findViewById(R.id.llEventBox);
+
         Intent intent = getIntent();
         profileId = intent.getStringExtra("profile_id");
         allTaggs = new ArrayList<>();
+
         array = new String[]{"Accommodations","Information","Accounting","Information technology","Advertising",
                 "Insurance","Aerospace","Journalism & News","Agriculture & Agribusiness","Legal Services","Air Transportation",
                 "Manufacturing","Apparel & Accessories","Media & Broadcasting","Auto","Medical Devices & Supplies","Banking",
@@ -150,10 +167,56 @@ public class EditProfileActivity extends AppCompatActivity
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
                 Toast.makeText(getApplicationContext(), array[position].toString(), Toast.LENGTH_LONG).show();
+
+                addEventString = array[position].toString() ;
+                addEventList.add(addEventString);
+
+                addEventAdapter = new AddEventAdapter(getApplicationContext(),addEventList);
+                gridViewAdded.setAdapter(addEventAdapter);
+                addEventAdapter.notifyDataSetChanged();
+
+                if(addEventList.size() != 0)
+                {
+                    tvEventInfo.setVisibility(View.GONE);
+                }
+                else if(addEventList.size() == 0)
+                {
+                    tvEventInfo.setVisibility(View.VISIBLE);
+                }
             }
         });
+
+        if(addEventList.size() == 0)
+        {
+            tvEventInfo.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            tvEventInfo.setVisibility(View.GONE);
+        }
+
+        ivArrowImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                if(arrowStatus.equalsIgnoreCase("RIGHT"))
+                {
+                    ivArrowImg.setImageResource(R.drawable.ic_down_arrow_blue);
+                    llEventBox.setVisibility(View.VISIBLE);
+                    arrowStatus = "DOWN" ;
+                }
+                else if(arrowStatus.equalsIgnoreCase("DOWN"))
+                {
+                    ivArrowImg.setImageResource(R.drawable.ic_right_arrow_blue);
+                    llEventBox.setVisibility(View.GONE);
+                    arrowStatus = "RIGHT";
+                }
+            }
+        });
+
         new HttpAsyncTaskCompany().execute("http://circle8.asia:8081/Onet.svc/GetCompanyList");
         new HttpAsyncTaskIndustry().execute("http://circle8.asia:8081/Onet.svc/GetIndustryList");
         new HttpAsyncTaskDesignation().execute("http://circle8.asia:8081/Onet.svc/GetDesignationList");

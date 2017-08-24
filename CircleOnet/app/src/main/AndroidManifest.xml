@@ -131,7 +131,8 @@
         <activity
             android:name=".Activity.EditProfileActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionbar" />
+            android:theme="@style/NoActionbar" >
+        </activity>
         <activity
             android:name=".Activity.FingerPrintLogin"
             android:screenOrientation="portrait" />

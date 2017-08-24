@@ -16,7 +16,8 @@ import com.amplearch.circleonet.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomAdapter extends BaseAdapter {
+public class CustomAdapter extends BaseAdapter
+{
 
     private Activity activity;
     // private ArrayList&lt;HashMap&lt;String, String&gt;&gt; data;
