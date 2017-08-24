@@ -114,7 +114,7 @@ public class List3Fragment extends Fragment
         allTags = new ArrayList<>();
         allTaggs = new ArrayList<>();
 
-        new List3Fragment.HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
 
         GestureDetector.OnGestureListener gestureListener = new MyOnGestureListener();
         GestureDetector.OnDoubleTapListener doubleTapListener = new MyOnDoubleTapListener();

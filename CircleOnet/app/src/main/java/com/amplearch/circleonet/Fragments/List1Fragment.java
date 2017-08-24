@@ -118,7 +118,6 @@ public class List1Fragment extends Fragment
     public static TextView txtNoCard1;
     LoginSession session;
     String UserId = "";
-
     public List1Fragment()
     {
         // Required empty public constructor

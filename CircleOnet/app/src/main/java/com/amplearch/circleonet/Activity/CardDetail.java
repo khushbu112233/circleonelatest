@@ -517,7 +517,7 @@ public class CardDetail extends NfcActivity
                         {
                             if(jsonObject.getString("Card_Front").equals(""))
                             {
-                               recycle_image1 ="http://circle8.asia/App_ImgLib/UserProfile/U20170811035609317.png";
+                               recycle_image1 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
                             }
                             else
                             {
@@ -526,14 +526,14 @@ public class CardDetail extends NfcActivity
                         }
                         catch (Exception e)
                         {
-                            recycle_image1 ="http://circle8.asia/App_ImgLib/UserProfile/U20170811035609317.png";
+                            recycle_image1 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
                         }
 
                     try
                     {
                         if(jsonObject.getString("Card_Back").equals(""))
                         {
-                            recycle_image2 ="http://circle8.asia/App_ImgLib/UserProfile/U20170811035609317.png";
+                            recycle_image2 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
                         }
                         else
                         {
@@ -542,7 +542,7 @@ public class CardDetail extends NfcActivity
                     }
                     catch (Exception e)
                     {
-                        recycle_image2 ="http://circle8.asia/App_ImgLib/UserProfile/U20170811035609317.png";
+                        recycle_image2 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
                     }
 
                     image.add(recycle_image1);
@@ -552,13 +552,13 @@ public class CardDetail extends NfcActivity
                     mViewPager.setClipChildren(false);
                     mViewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
                     mViewPager.setOffscreenPageLimit(3);
-                    mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
+                  //  mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
                     mViewPager.setAdapter(myPager);
 
                     viewPager1.setClipChildren(false);
                     viewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
                     viewPager1.setOffscreenPageLimit(3);
-                    viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
+                 //   viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
                     viewPager1.setAdapter(myPager);
 
 
@@ -763,14 +763,14 @@ public class CardDetail extends NfcActivity
                                 mViewPager.setClipChildren(false);
                                 mViewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
                                 mViewPager.setOffscreenPageLimit(3);
-                                mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
+                             //   mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
 
                                 viewPager1.setAdapter(myPager);
 
                                 viewPager1.setClipChildren(false);
                                 viewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
                                 viewPager1.setOffscreenPageLimit(3);
-                                viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
+                            //    viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
                                 viewPager1.setAdapter(myPager);
 
                             }

@@ -16,23 +16,31 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amplearch.circleonet.Adapter.CardSwipe;
+import com.amplearch.circleonet.Adapter.CustomAdapter;
 import com.amplearch.circleonet.Fragments.ProfileFragment;
+import com.amplearch.circleonet.Model.TestimonialModel;
 import com.amplearch.circleonet.R;
 import com.amplearch.circleonet.Utils.Utility;
+import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -54,7 +62,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.R.attr.path;
 import static junit.framework.Assert.assertEquals;
@@ -80,6 +91,22 @@ public class EditProfileActivity extends AppCompatActivity
     AutoCompleteTextView autoCompleteCompany, autoCompleteDesignation, autoCompleteIndustry;
     //String[] languages={"Android ","java","IOS","SQL","JDBC","Web services"};
     ArrayList<String> company, designation, industry;
+    String profileId = "", Card_Front = "", Card_Back = "", FirstName = "", LastName = "", UserPhoto = "", OfficePhone = "", PrimaryPhone = "", Emailid = "",
+            Facebook = "", Twitter = "", Google = "", IndustryName = "", CompanyName = "", CompanyProfile = "", Designation = "", ProfileDesc = "", Status = "";
+
+    EditText edtUserName, edtWork, edtPrimary, edtEmail, edtProfileDesc, edtCompanyDesc;
+    ViewPager mViewPager, viewPager1;
+    private ArrayList<String> image = new ArrayList<>();;
+    private CardSwipe myPager ;
+    CircleImageView imgProfile;
+    TextView tvPersonName, tvDesignation, tvCompany;
+    ListView lstTestimonial;
+    TextView txtTestimonial, txtMore;
+    CustomAdapter customAdapter;
+
+    ArrayList<String> title_array = new ArrayList<String>();
+    ArrayList<String> notice_array = new ArrayList<String>();
+    public static List<TestimonialModel> allTaggs ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -93,6 +120,24 @@ public class EditProfileActivity extends AppCompatActivity
         etAttachFile = (EditText)findViewById(R.id.etAttachFile);
         ivAttachFile = (ImageView)findViewById(R.id.ivAttachFile);
         imgDone = (ImageView) findViewById(R.id.imgDone);
+        edtUserName = (EditText) findViewById(R.id.edtUserName);
+        edtWork = (EditText) findViewById(R.id.edtWork);
+        edtEmail = (EditText) findViewById(R.id.edtEmail);
+        edtProfileDesc = (EditText) findViewById(R.id.edtProfileDesc);
+        edtCompanyDesc = (EditText) findViewById(R.id.edtCompanyDesc);
+        edtPrimary = (EditText) findViewById(R.id.edtPrimary);
+        mViewPager = (ViewPager) findViewById(R.id.viewPager);
+        viewPager1 = (ViewPager) findViewById(R.id.viewPager1);
+        imgProfile = (CircleImageView) findViewById(R.id.imgProfile);
+        tvCompany = (TextView) findViewById(R.id.tvCompany);
+        tvDesignation = (TextView) findViewById(R.id.tvDesignation);
+        tvPersonName = (TextView) findViewById(R.id.tvPersonName);
+        lstTestimonial = (ListView) findViewById(R.id.lstTestimonial);
+        txtTestimonial = (TextView) findViewById(R.id.txtTestimonial);
+        txtMore = (TextView) findViewById(R.id.txtMore);
+        Intent intent = getIntent();
+        profileId = intent.getStringExtra("profile_id");
+        allTaggs = new ArrayList<>();
         array = new String[]{"Accommodations","Information","Accounting","Information technology","Advertising",
                 "Insurance","Aerospace","Journalism & News","Agriculture & Agribusiness","Legal Services","Air Transportation",
                 "Manufacturing","Apparel & Accessories","Media & Broadcasting","Auto","Medical Devices & Supplies","Banking",
@@ -101,15 +146,60 @@ public class EditProfileActivity extends AppCompatActivity
                 "Consumer Products","Retail","Education","Service","Electronics","Sports","Employment","Technology","Energy",
                 "Telecommunications","Entertainment & Recreation","Tourism","Fashion","Transportation","Financial Services",
                 "Travel","Fine Arts","Utilities","Food & Beverage","Video Game","Green Technology","Web Services","Health"};
-        gridView.setAdapter(new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_list_item_1, array));
+        gridView.setAdapter(new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array));
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(), array[position].toString(), Toast.LENGTH_LONG).show();
+            }
+        });
         new HttpAsyncTaskCompany().execute("http://circle8.asia:8081/Onet.svc/GetCompanyList");
         new HttpAsyncTaskIndustry().execute("http://circle8.asia:8081/Onet.svc/GetIndustryList");
         new HttpAsyncTaskDesignation().execute("http://circle8.asia:8081/Onet.svc/GetDesignationList");
+        new HttpAsyncTaskUserProfile().execute("http://circle8.asia:8081/Onet.svc/GetUserProfile");
+        new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8081/Onet.svc/Testimonial/Fetch");
+
         imgDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/UpdateProfile");
 
+            }
+        });
+
+        txtMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), TestimonialActivity.class);
+                intent.putExtra("ProfileId", profileId);
+                startActivity(intent);
+            }
+        });
+
+        viewPager1.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            private int mScrollState = ViewPager.SCROLL_STATE_IDLE;
+
+            @Override
+            public void onPageScrolled(final int position, final float positionOffset, final int positionOffsetPixels) {
+                if (mScrollState == ViewPager.SCROLL_STATE_IDLE) {
+                    return;
+                }
+                mViewPager.scrollTo(viewPager1.getScrollX(), viewPager1.getScrollY());
+            }
+
+            @Override
+            public void onPageSelected(final int position) {
+                // mViewPager.setCurrentItem(position, true);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(final int state) {
+                mScrollState = state;
+                if (state == ViewPager.SCROLL_STATE_IDLE) {
+                    mViewPager.setCurrentItem(viewPager1.getCurrentItem(), false);
+                }
             }
         });
 
@@ -131,6 +221,148 @@ public class EditProfileActivity extends AppCompatActivity
             makeRequest();
         }
     }
+
+    private class HttpAsyncTaskTestimonial extends AsyncTask<String, Void, String>
+    {
+       // ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            /*dialog = new ProgressDialog(getActivity());
+            dialog.setMessage("Fetching Testimonials...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            return POST4(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+            //dialog.dismiss();
+            try {
+                if (result != null) {
+                    JSONObject jsonObject = new JSONObject(result);
+                    JSONArray jsonArray = jsonObject.getJSONArray("Testimonials");
+                    //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
+
+                    if (jsonArray.length() == 0){
+                        lstTestimonial.setVisibility(View.GONE);
+                        txtMore.setVisibility(View.GONE);
+                        txtTestimonial.setVisibility(View.VISIBLE);
+                    }
+                    else if (jsonArray.length() > 3){
+                        lstTestimonial.setVisibility(View.VISIBLE);
+                        txtMore.setVisibility(View.VISIBLE);
+                        txtTestimonial.setVisibility(View.GONE);
+                    }
+                    else {
+                        lstTestimonial.setVisibility(View.VISIBLE);
+                        txtMore.setVisibility(View.GONE);
+                        txtTestimonial.setVisibility(View.GONE);
+                    }
+
+                    for (int i = 0; i < jsonArray.length(); i++){
+
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
+
+                        TestimonialModel nfcModelTag = new TestimonialModel();
+                        nfcModelTag.setCompanyName(object.getString("CompanyName"));
+                        nfcModelTag.setDesignation(object.getString("Designation"));
+                        nfcModelTag.setFirstName(object.getString("FirstName"));
+                        nfcModelTag.setFriendProfileID(object.getString("FriendProfileID"));
+                        nfcModelTag.setLastName(object.getString("LastName"));
+                        nfcModelTag.setPurpose(object.getString("Purpose"));
+                        nfcModelTag.setStatus(object.getString("Status"));
+                        nfcModelTag.setTestimonial_Text(object.getString("Testimonial_Text"));
+                        nfcModelTag.setUserPhoto(object.getString("UserPhoto"));
+                        title_array.add(object.getString("Testimonial_Text").toString());
+                        notice_array.add(String.valueOf(i));
+                      //  Toast.makeText(getContext(), object.getString("Testimonial_Text"), Toast.LENGTH_LONG).show();
+                        allTaggs.add(nfcModelTag);
+                    }
+                    customAdapter = new CustomAdapter(EditProfileActivity.this, title_array, notice_array);
+                    lstTestimonial.setAdapter(customAdapter);
+
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                }
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public String POST4(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("ProfileId", profileId );
+            jsonObject.accumulate("numofrecords", "10" );
+            jsonObject.accumulate("pageno", "1" );
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
 
     public  String POST3(String url)
     {
@@ -328,6 +560,158 @@ public class EditProfileActivity extends AppCompatActivity
         }
     }
 
+    public  String POST5(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("profileid", profileId );
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    private class HttpAsyncTaskUserProfile extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(EditProfileActivity.this);
+            dialog.setMessage("Loading..");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            return POST5(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+            dialog.dismiss();
+           // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+
+
+            try {
+                if (result != null) {
+                    JSONObject jsonObject = new JSONObject(result);
+                    //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
+                    Card_Front = jsonObject.getString("Card_Front");
+                    Card_Back = jsonObject.getString("Card_Back");
+                    FirstName = jsonObject.getString("FirstName");
+                    LastName = jsonObject.getString("LastName");
+                    UserPhoto = jsonObject.getString("UserPhoto");
+                    OfficePhone = jsonObject.getString("OfficePhone");
+                    PrimaryPhone = jsonObject.getString("PrimaryPhone");
+                    Emailid = jsonObject.getString("Emailid");
+                    Facebook = jsonObject.getString("Facebook");
+                    Twitter = jsonObject.getString("Twitter");
+                    Google = jsonObject.getString("Google");
+                    IndustryName = jsonObject.getString("IndustryName");
+                    CompanyName = jsonObject.getString("CompanyName");
+                    CompanyProfile = jsonObject.getString("CompanyProfile");
+                    Designation = jsonObject.getString("Designation");
+                    ProfileDesc = jsonObject.getString("ProfileDesc");
+                    Status = jsonObject.getString("Status");
+                    tvCompany.setText(CompanyName);
+                    tvDesignation.setText(Designation);
+                    tvPersonName.setText(FirstName + " " + LastName);
+                    autoCompleteCompany.setText(CompanyName);
+                    autoCompleteIndustry.setText(IndustryName);
+                    autoCompleteDesignation.setText(Designation);
+                    edtUserName.setText(FirstName + " " + LastName);
+                    edtCompanyDesc.setText(CompanyProfile);
+                    edtProfileDesc.setText(ProfileDesc);
+                    edtEmail.setText(Emailid);
+                    edtPrimary.setText(PrimaryPhone);
+                    edtWork.setText(OfficePhone);
+
+                    if (UserPhoto.equals(""))
+                    {
+                        imgProfile.setImageResource(R.drawable.usr);
+                    }
+                    else {
+                        Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+UserPhoto).into(imgProfile);
+                    }
+
+                    image = new ArrayList<>();
+                    image.add("http://circle8.asia/App_ImgLib/Cards/"+Card_Front);
+                    image.add("http://circle8.asia/App_ImgLib/Cards/"+Card_Back);
+                    myPager = new CardSwipe(getApplicationContext(), image);
+
+                    mViewPager.setClipChildren(false);
+                    mViewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+                    mViewPager.setOffscreenPageLimit(1);
+                    //  mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
+                    mViewPager.setAdapter(myPager);
+
+                    viewPager1.setClipChildren(false);
+                    viewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+                    viewPager1.setOffscreenPageLimit(1);
+                    // viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
+                    viewPager1.setAdapter(myPager);
+
+                }else {
+                    Toast.makeText(getApplicationContext(), "Not able to load Profile..", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 
     public  String POST2(String url)

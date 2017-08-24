@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
@@ -23,17 +24,24 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amplearch.circleonet.Activity.EditProfileActivity;
 import com.amplearch.circleonet.Activity.Profile;
+import com.amplearch.circleonet.Activity.TestimonialActivity;
+import com.amplearch.circleonet.Adapter.CardSwipe;
+import com.amplearch.circleonet.Adapter.CustomAdapter;
+import com.amplearch.circleonet.Adapter.GalleryAdapter;
 import com.amplearch.circleonet.Helper.LoginSession;
 import com.amplearch.circleonet.Model.FriendConnection;
 import com.amplearch.circleonet.Model.ProfileModel;
+import com.amplearch.circleonet.Model.TestimonialModel;
 import com.amplearch.circleonet.Model.User;
 import com.amplearch.circleonet.R;
+import com.amplearch.circleonet.Utils.CarouselEffectTransformer;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -64,7 +72,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class ProfileFragment extends Fragment
 {
-    private ProgressBar firstBar = null;
+   // private ProgressBar firstBar = null;
     ImageView imgProfileShare, imgProfileMenu, imgQR, ivEditProfile;
     TextView tvPersonName ;
     public final static int QRcodeWidth = 500 ;
@@ -74,6 +82,7 @@ public class ProfileFragment extends Fragment
     LoginSession session;
     String UserID = "";
     public static ArrayList<ProfileModel> allTags ;
+    String profileId = "";
 
     private int i = 0;
     TextView tvDesignation, tvCompany, tvName, tvCompanyName, tvDesi, tvAssociation, tvAddress, tvWebsite, tvMail,
@@ -81,6 +90,18 @@ public class ProfileFragment extends Fragment
     ProfileModel nfcModelTag;
     CircleImageView imgProfile;
     LinearLayout lnrMob, lnrWork, lnrWebsite, lnrMap;
+    ViewPager mViewPager, viewPager1;
+    String recycle_image1, recycle_image2 ;
+    private ArrayList<String> image = new ArrayList<>();;
+    private CardSwipe myPager ;
+    public static List<TestimonialModel> allTaggs ;
+    String TestimonialProfileId = "";
+    ListView lstTestimonial;
+    TextView txtTestimonial, txtMore;
+    CustomAdapter customAdapter;
+
+    ArrayList<String> title_array = new ArrayList<String>();
+    ArrayList<String> notice_array = new ArrayList<String>();
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -117,13 +138,17 @@ public class ProfileFragment extends Fragment
         lnrWork = (LinearLayout) view.findViewById(R.id.lnrWork);
         lnrWebsite = (LinearLayout) view.findViewById(R.id.lnrWebsite);
         lnrMap = (LinearLayout) view.findViewById(R.id.lnrMap);
-
+        mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
+        viewPager1 = (ViewPager) view.findViewById(R.id.viewPager1);
+        lstTestimonial = (ListView) view.findViewById(R.id.lstTestimonial);
+        txtTestimonial = (TextView) view.findViewById(R.id.txtTestimonial);
+        txtMore = (TextView) view.findViewById(R.id.txtMore);
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Generating Qr Code...");
         progressDialog.setCancelable(false);
         allTags = new ArrayList<>();
         imgQR = (ImageView) view.findViewById(R.id.imgQR);
-        firstBar = (ProgressBar)view.findViewById(R.id.firstBar);
+      //  firstBar = (ProgressBar)view.findViewById(R.id.firstBar);
         tvPersonName = (TextView)view.findViewById(R.id.tvPersonName);
         imgProfileShare = (ImageView) view.findViewById(R.id.imgProfileShare);
         imgProfileMenu = (ImageView) view.findViewById(R.id.imgProfileMenu);
@@ -132,7 +157,7 @@ public class ProfileFragment extends Fragment
         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetUserProfile");
         HashMap<String, String> user = session.getUserDetails();
         UserID = user.get(LoginSession.KEY_USERID);
-
+        allTaggs = new ArrayList<>();
         lnrMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,6 +183,16 @@ public class ProfileFragment extends Fragment
                         })
                         .setIcon(android.R.drawable.ic_dialog_map)
                         .show();
+            }
+        });
+
+        txtMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getContext(), TestimonialActivity.class);
+                intent.putExtra("ProfileId", TestimonialProfileId);
+                startActivity(intent);
             }
         });
 
@@ -188,6 +223,33 @@ public class ProfileFragment extends Fragment
                         .show();
             }
         });
+
+        viewPager1.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            private int mScrollState = ViewPager.SCROLL_STATE_IDLE;
+
+            @Override
+            public void onPageScrolled(final int position, final float positionOffset, final int positionOffsetPixels) {
+                if (mScrollState == ViewPager.SCROLL_STATE_IDLE) {
+                    return;
+                }
+                mViewPager.scrollTo(viewPager1.getScrollX(), viewPager1.getScrollY());
+            }
+
+            @Override
+            public void onPageSelected(final int position) {
+                // mViewPager.setCurrentItem(position, true);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(final int state) {
+                mScrollState = state;
+                if (state == ViewPager.SCROLL_STATE_IDLE) {
+                    mViewPager.setCurrentItem(viewPager1.getCurrentItem(), false);
+                }
+            }
+        });
+
 
         lnrWebsite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -338,7 +400,7 @@ public class ProfileFragment extends Fragment
                                     tvCompanyName.setText(allTags.get(i).getCompanyName());
                                     tvDesi.setText(allTags.get(i).getDesignation());
                                     tvMob.setText(allTags.get(i).getPhone());
-
+                                    TestimonialProfileId = allTags.get(i).getProfileID();
                                     if (allTags.get(i).getUserPhoto().equals(""))
                                     {
                                         imgProfile.setImageResource(R.drawable.usr);
@@ -346,6 +408,61 @@ public class ProfileFragment extends Fragment
                                     else {
                                         Picasso.with(getContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+allTags.get(i).getUserPhoto()).into(imgProfile);
                                     }
+
+                                    new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8081/Onet.svc/Testimonial/Fetch");
+
+                                    try
+                                    {
+                                        if(allTags.get(i).getCard_Front().equals(""))
+                                        {
+                                            recycle_image1 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
+                                        }
+                                        else
+                                        {
+                                            recycle_image1 = "http://circle8.asia/App_ImgLib/Cards/"+allTags.get(i).getCard_Front();
+                                        }
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        recycle_image1 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
+                                    }
+
+                                    try
+                                    {
+                                        if(allTags.get(i).getCard_Back().equals(""))
+                                        {
+                                            recycle_image2 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
+                                        }
+                                        else
+                                        {
+                                            recycle_image2 = "http://circle8.asia/App_ImgLib/Cards/"+allTags.get(i).getCard_Back();
+                                        }
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        recycle_image2 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
+                                    }
+
+                                    image = new ArrayList<>();
+                                    image.add(recycle_image1);
+                                    image.add(recycle_image2);
+                                    myPager = new CardSwipe(getContext(), image);
+
+                                    mViewPager.setClipChildren(false);
+                                    mViewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+                                    mViewPager.setOffscreenPageLimit(1);
+                                  //  mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
+                                    mViewPager.setAdapter(myPager);
+
+                                    viewPager1.setClipChildren(false);
+                                    viewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+                                    viewPager1.setOffscreenPageLimit(1);
+                                   // viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
+                                    viewPager1.setAdapter(myPager);
+
+
+
+
                                 }
                             }
                         }
@@ -412,7 +529,9 @@ public class ProfileFragment extends Fragment
             public void onClick(View v)
             {
 //                Toast.makeText(getContext(),"Edit Profile",Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getContext(), EditProfileActivity.class));
+                Intent intent = new Intent(getContext(), EditProfileActivity.class);
+                intent.putExtra("profile_id", TestimonialProfileId);
+                startActivity(intent);
             }
         });
 
@@ -533,7 +652,7 @@ public class ProfileFragment extends Fragment
                         allTags.add(nfcModelTag);
                       //  GetData(getContext());
                     }
-
+                    TestimonialProfileId = allTags.get(0).getProfileID();
                     tvPersonName.setText(allTags.get(0).getFirstName() + " "+ allTags.get(0).getLastName());
                     tvDesignation.setText(allTags.get(0).getDesignation());
                     tvCompany.setText(allTags.get(0).getCompanyName());
@@ -542,6 +661,7 @@ public class ProfileFragment extends Fragment
                     tvDesi.setText(allTags.get(0).getDesignation());
                     tvMob.setText(allTags.get(0).getPhone());
 
+                    image = new ArrayList<>();
                     if (allTags.get(0).getUserPhoto().equals(""))
                     {
                         imgProfile.setImageResource(R.drawable.usr);
@@ -549,6 +669,58 @@ public class ProfileFragment extends Fragment
                     else {
                         Picasso.with(getContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+allTags.get(0).getUserPhoto()).into(imgProfile);
                     }
+
+                    new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8081/Onet.svc/Testimonial/Fetch");
+
+                    try
+                    {
+                        if(allTags.get(0).getCard_Front().equals(""))
+                        {
+                            recycle_image1 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
+                        }
+                        else
+                        {
+                            recycle_image1 = "http://circle8.asia/App_ImgLib/Cards/"+allTags.get(0).getCard_Front();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        recycle_image1 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
+                    }
+
+                    try
+                    {
+                        if(allTags.get(0).getCard_Back().equals(""))
+                        {
+                            recycle_image2 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
+                        }
+                        else
+                        {
+                            recycle_image2 = "http://circle8.asia/App_ImgLib/Cards/"+allTags.get(0).getCard_Back();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        recycle_image2 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
+                    }
+
+                    image.add(recycle_image1);
+                    image.add(recycle_image2);
+                    myPager = new CardSwipe(getContext(), image);
+
+                    mViewPager.setClipChildren(false);
+                    mViewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+                    mViewPager.setOffscreenPageLimit(1);
+                 //   mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
+                    mViewPager.setAdapter(myPager);
+
+                    viewPager1.setClipChildren(false);
+                    viewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+                    viewPager1.setOffscreenPageLimit(1);
+                 //   viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
+                    viewPager1.setAdapter(myPager);
+
+
 
                 }
                 else
@@ -561,6 +733,8 @@ public class ProfileFragment extends Fragment
             }
         }
     }
+
+
 
     public  String POST4(String url)
     {
@@ -631,6 +805,146 @@ public class ProfileFragment extends Fragment
         return result;
     }
 
+    private class HttpAsyncTaskTestimonial extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            dialog = new ProgressDialog(getActivity());
+            dialog.setMessage("Fetching Testimonials...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            return POST2(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+            dialog.dismiss();
+            try {
+                if (result != null) {
+                    JSONObject jsonObject = new JSONObject(result);
+                    JSONArray jsonArray = jsonObject.getJSONArray("Testimonials");
+                    //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
+
+                    if (jsonArray.length() == 0){
+                        lstTestimonial.setVisibility(View.GONE);
+                        txtMore.setVisibility(View.GONE);
+                        txtTestimonial.setVisibility(View.VISIBLE);
+                    }
+                    else if (jsonArray.length() > 3){
+                        lstTestimonial.setVisibility(View.VISIBLE);
+                        txtMore.setVisibility(View.VISIBLE);
+                        txtTestimonial.setVisibility(View.GONE);
+                    }
+                    else {
+                        lstTestimonial.setVisibility(View.VISIBLE);
+                        txtMore.setVisibility(View.GONE);
+                        txtTestimonial.setVisibility(View.GONE);
+                    }
+
+                    for (int i = 0; i < jsonArray.length(); i++){
+
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
+
+                        TestimonialModel nfcModelTag = new TestimonialModel();
+                        nfcModelTag.setCompanyName(object.getString("CompanyName"));
+                        nfcModelTag.setDesignation(object.getString("Designation"));
+                        nfcModelTag.setFirstName(object.getString("FirstName"));
+                        nfcModelTag.setFriendProfileID(object.getString("FriendProfileID"));
+                        nfcModelTag.setLastName(object.getString("LastName"));
+                        nfcModelTag.setPurpose(object.getString("Purpose"));
+                        nfcModelTag.setStatus(object.getString("Status"));
+                        nfcModelTag.setTestimonial_Text(object.getString("Testimonial_Text"));
+                        nfcModelTag.setUserPhoto(object.getString("UserPhoto"));
+                        title_array.add(object.getString("Testimonial_Text").toString());
+                        notice_array.add(String.valueOf(i));
+                        Toast.makeText(getContext(), object.getString("Testimonial_Text"), Toast.LENGTH_LONG).show();
+                        allTaggs.add(nfcModelTag);
+                    }
+                    customAdapter = new CustomAdapter(getActivity(), title_array, notice_array);
+                    lstTestimonial.setAdapter(customAdapter);
+
+                }
+                else
+                {
+                    Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                }
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public String POST2(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("ProfileId", TestimonialProfileId );
+            jsonObject.accumulate("numofrecords", "10" );
+            jsonObject.accumulate("pageno", "1" );
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
 
     private class HttpAsyncTaskAddProfile extends AsyncTask<String, Void, String>
     {
@@ -717,7 +1031,6 @@ public class ProfileFragment extends Fragment
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("profileid", "1" );
-            jsonObject.accumulate("userid", "1" );
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
 
@@ -797,6 +1110,8 @@ public class ProfileFragment extends Fragment
         {
             dialog.dismiss();
             Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+
+
           /*  try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
