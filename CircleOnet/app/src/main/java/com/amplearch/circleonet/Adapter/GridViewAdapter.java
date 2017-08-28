@@ -41,7 +41,8 @@ import java.util.Locale;
  * Created by admin on 06/08/2017.
  */
 
-public class GridViewAdapter extends BaseSwipeAdapter {
+public class GridViewAdapter extends BaseSwipeAdapter
+{
     private Context context;
     private int layoutResourceId;
     private ArrayList data = new ArrayList();
@@ -104,13 +105,16 @@ public class GridViewAdapter extends BaseSwipeAdapter {
 
         v.findViewById(R.id.trash).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
+
                 db.DeactiveCards(nfcModelList.get(position).getId());
                 Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_SHORT).show();
                 swipeLayout.close();
 
                 //  nfcModelList.remove(position);
-                try {
+                try
+                {
                     List2Fragment.gridAdapter.notifyDataSetChanged();
                     List2Fragment.allTags = db.getActiveNFC();
                     List2Fragment.nfcModel.clear();

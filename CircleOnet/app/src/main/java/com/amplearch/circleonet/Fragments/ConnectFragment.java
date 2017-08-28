@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.amplearch.circleonet.Activity.CardsActivity;
 import com.amplearch.circleonet.R;
@@ -20,9 +21,9 @@ import com.amplearch.circleonet.Utils.CustomViewPager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConnectFragment extends Fragment {
-
-    CustomViewPager mViewPager;
+public class ConnectFragment extends Fragment
+{
+    public static CustomViewPager mViewPager;
     TabLayout tabLayout;
 
     public ConnectFragment() {
@@ -45,22 +46,34 @@ public class ConnectFragment extends Fragment {
      //   SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity().getSupportFragmentManager());
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (CustomViewPager) view.findViewById(R.id.container2);
+
        // mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        SectionsPagerAdapter mSectionsPagerAdapter = new ConnectFragment.SectionsPagerAdapter(getActivity().getSupportFragmentManager());
+        mViewPager = (CustomViewPager) view.findViewById(R.id.container2);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setPagingEnabled(false);
+
         setupViewPager(mViewPager);
         tabLayout = (TabLayout) view.findViewById(R.id.tabs2);
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(android.R.color.white));
+
         return view;
     }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
-        adapter.addFrag(new ConnectListFragment(), "by Name");
+      /*  adapter.addFrag(new ConnectListFragment(), "by Name");
         adapter.addFrag(new ConnectListFragment(), "by Company Name");
         adapter.addFrag(new ConnectListFragment(), "by Title");
         adapter.addFrag(new ConnectListFragment(), "by Industry");
-        adapter.addFrag(new ConnectListFragment(), "by Association");
+        adapter.addFrag(new ConnectListFragment(), "by Association");*/
+        adapter.addFrag(new ByNameFragment(), "by Name");
+        adapter.addFrag(new ByCompanyFragment(), "by Company Name");
+        adapter.addFrag(new ByTitleFragment(), "by Title");
+        adapter.addFrag(new ByIndustryFragment(), "by Industry");
+        adapter.addFrag(new ByAssociationFragment(), "by Association");
 
         viewPager.setAdapter(adapter);
     }
@@ -102,22 +115,25 @@ public class ConnectFragment extends Fragment {
 
         @Override
         public Fragment getItem(int position) {
-            if (position == 0) {
-                return new List4Fragment();
-            } else if (position == 1) {
-                return new List4Fragment();
+            if (position == 0)
+            {
+                return new ByNameFragment();
+            }
+            else if (position == 1) {
+                return new ByCompanyFragment();
             }
             else if (position == 2) {
-                return new List4Fragment();
+                return new ByTitleFragment();
             }
             else if (position == 3) {
-                return new List4Fragment();
+                return new ByIndustryFragment();
             }
             else if (position == 4) {
-                return new List4Fragment();
+                return new ByAssociationFragment();
             }
-            else {
-                return new List4Fragment();
+            else
+            {
+                return new ByNameFragment();
             }
         }
 

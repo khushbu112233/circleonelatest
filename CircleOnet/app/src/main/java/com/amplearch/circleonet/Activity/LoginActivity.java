@@ -428,10 +428,27 @@ public class LoginActivity extends AppCompatActivity implements
                                 CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
                                 pref.setUserData(userDataString);
 
-                                Intent intent = new Intent(getApplicationContext(), FingerPrintLogin.class);
+                               /* Intent intent = new Intent(getApplicationContext(), FingerPrintLogin.class);
                                 //intent.putExtra("viewpager_position", 0);
                                 startActivity(intent);
-                                finish();
+                                finish();*/
+
+                                loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, userName, UserPhoto, "");
+                                // Toast.makeText(getApplicationContext(), getString(R.string.auth_successful), Toast.LENGTH_LONG).show();
+
+                                // login with only fingerprint
+                                if (prefs.getBoolean("firstrun", true)) {
+                                    // Do first run stuff here then set 'firstrun' as false
+                                    // using the following line to edit/commit prefs
+                                    Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                                    startActivity(intent);
+                                    prefs.edit().putBoolean("firstrun", false).commit();
+                                } else {
+                                    Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                                    userIntent.putExtra("viewpager_position", 0);
+                                    startActivity(userIntent);
+                                    finish();
+                                }
                             }
                             else
                             {

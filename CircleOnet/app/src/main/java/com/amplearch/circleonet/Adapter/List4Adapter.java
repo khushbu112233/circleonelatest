@@ -21,6 +21,7 @@ import com.amplearch.circleonet.Fragments.List2Fragment;
 import com.amplearch.circleonet.Fragments.List3Fragment;
 import com.amplearch.circleonet.Fragments.List4Fragment;
 import com.amplearch.circleonet.Helper.DatabaseHelper;
+import com.amplearch.circleonet.Model.ConnectList;
 import com.amplearch.circleonet.Model.FriendConnection;
 import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.R;
@@ -55,6 +56,9 @@ public class List4Adapter extends BaseSwipeAdapter {
 
     ArrayList<FriendConnection> nfcModelList1 = new ArrayList<>();
     ArrayList<FriendConnection> nfcModelListFilter1 = new ArrayList<>();
+
+    ArrayList<ConnectList> connectLists = new ArrayList<>();
+    ArrayList<ConnectList> connectListsFilter = new ArrayList<>();
 
     public List4Adapter(Context context, int layoutResourceId, ArrayList<byte[]> image, ArrayList<String> data, ArrayList<String> name, ArrayList<String> designation) {
         this.layoutResourceId = layoutResourceId;
@@ -189,7 +193,6 @@ public class List4Adapter extends BaseSwipeAdapter {
     {
         View row = convertView;
         ViewHolder holder = null;
-
 
         holder = new ViewHolder();
         holder.imageDesc = (TextView) row.findViewById(R.id.textList3);
