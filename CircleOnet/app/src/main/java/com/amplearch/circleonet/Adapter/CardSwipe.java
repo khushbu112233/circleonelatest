@@ -23,6 +23,7 @@ public class CardSwipe extends PagerAdapter
 {
     Context context ;
     ArrayList<String> image;
+    public static ImageView imageView;
 
     public CardSwipe(Context applicationContext, ArrayList<String> image)
     {
@@ -55,7 +56,7 @@ public class CardSwipe extends PagerAdapter
         {
 
 
-            ImageView imageView = (ImageView)view.findViewById(R.id.ivImages);
+            imageView = (ImageView)view.findViewById(R.id.ivImages);
 
 //            imageView.setImageResource(image.get(position));
            // Bitmap bmp = BitmapFactory.decodeByteArray(image.get(position), 0, image.get(position).length);

@@ -112,7 +112,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     String image;
     ProgressDialog pDialog;
     String encodedImageData, register_img;
-    String UserID = "";
+    String UserID = "", Facebook = "", Google = "", Linkedin = "", Twitter = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -141,6 +141,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         imgBack.setOnClickListener(this);
         pDialog = new ProgressDialog(this);
         civProfilePic =(CircleImageView)findViewById(R.id.imgProfileCard);
+
+        Intent intent = getIntent();
+        Twitter = intent.getStringExtra("Twitter");
+        Linkedin = intent.getStringExtra("Linkedin");
+        Google = intent.getStringExtra("Google");
+        Facebook = intent.getStringExtra("Facebook");
 
         ivMale.setOnClickListener(this);
         ivFemale.setOnClickListener(this);
@@ -522,12 +528,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("Facebook", Facebook );
             jsonObject.accumulate("FirstName", first_name );
             jsonObject.accumulate("Gender", gender );
-            jsonObject.accumulate("LastName", last_name );
+            jsonObject.accumulate("Google", Google);
+            jsonObject.accumulate("LastName", last_name);
+            jsonObject.accumulate("Linkedin", Linkedin);
             jsonObject.accumulate("Password", password);
             jsonObject.accumulate("Phone", phone_no);
             jsonObject.accumulate("Photo_String", register_img);
+            jsonObject.accumulate("Twitter", Twitter);
             jsonObject.accumulate("UserName", email);
 
             // 4. convert JSONObject to JSON to String

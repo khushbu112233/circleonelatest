@@ -172,6 +172,10 @@ public class LoginActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                intent.putExtra("Facebook", "");
+                intent.putExtra("Google", "");
+                intent.putExtra("Linkedin", "");
+                intent.putExtra("Twitter", "");
                 startActivity(intent);
             }
         });
