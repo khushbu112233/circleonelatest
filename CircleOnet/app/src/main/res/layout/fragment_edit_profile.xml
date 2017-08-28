@@ -1233,6 +1233,7 @@
                         android:orientation="vertical"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="15dp"
+                        android:layout_marginBottom="10dp"
                         android:visibility="gone">
 
                         <RelativeLayout
@@ -1248,12 +1249,12 @@
                                 android:visibility="gone"
                                 android:layout_centerInParent="true"
                                 android:text="No event choosen by you.\nPlease choose event from below list"/>
-                            <GridView
+                            <com.amplearch.circleonet.Utils.ExpandableHeightGridView
                                 android:id="@+id/gridViewAdded"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:numColumns="2">
-                            </GridView>
+                            </com.amplearch.circleonet.Utils.ExpandableHeightGridView>
                         </RelativeLayout>
 
                         <TextView
@@ -1261,14 +1262,14 @@
                             android:layout_height="1dp"
                             android:background="@color/colorPrimary"/>
 
-                        <GridView
+                        <com.amplearch.circleonet.Utils.ExpandableHeightGridView
                             android:id="@+id/gridView"
                             android:layout_width="match_parent"
-                            android:layout_height="800dp"
-                            android:layout_marginBottom="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
                             android:layout_marginTop="20dp"
                             android:numColumns="2">
-                        </GridView>
+                        </com.amplearch.circleonet.Utils.ExpandableHeightGridView>
 
                     </LinearLayout>
 

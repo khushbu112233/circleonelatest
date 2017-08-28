@@ -41,6 +41,7 @@ import com.amplearch.circleonet.Adapter.CustomAdapter;
 import com.amplearch.circleonet.Fragments.ProfileFragment;
 import com.amplearch.circleonet.Model.TestimonialModel;
 import com.amplearch.circleonet.R;
+import com.amplearch.circleonet.Utils.ExpandableHeightGridView;
 import com.amplearch.circleonet.Utils.Utility;
 import com.squareup.picasso.Picasso;
 
@@ -74,7 +75,7 @@ import static junit.framework.Assert.assertEquals;
 
 public class EditProfileActivity extends AppCompatActivity
 {
-    private GridView gridView, gridViewAdded ;
+    private ExpandableHeightGridView gridView, gridViewAdded ;
     private String[] array ;
     private EditText etAttachFile ;
     private ImageView ivAttachFile ;
@@ -116,7 +117,7 @@ public class EditProfileActivity extends AppCompatActivity
     public static AddEventAdapter addEventAdapter ;
     private LinearLayout llEventBox ;
     private ImageView ivArrowImg ;
-    private TextView tvEventInfo ;
+    public static TextView tvEventInfo ;
     private String arrowStatus = "RIGHT";
 
     @Override
@@ -127,8 +128,8 @@ public class EditProfileActivity extends AppCompatActivity
         autoCompleteCompany = (AutoCompleteTextView) findViewById(R.id.autoCompleteCompany);
         autoCompleteDesignation = (AutoCompleteTextView) findViewById(R.id.autoCompleteDesignation);
         autoCompleteIndustry = (AutoCompleteTextView) findViewById(R.id.autoCompleteIndustry);
-        gridView = (GridView)findViewById(R.id.gridView);
-        gridViewAdded = (GridView)findViewById(R.id.gridViewAdded);
+        gridView = (ExpandableHeightGridView) findViewById(R.id.gridView);
+        gridViewAdded = (ExpandableHeightGridView) findViewById(R.id.gridViewAdded);
         etAttachFile = (EditText)findViewById(R.id.etAttachFile);
         ivAttachFile = (ImageView)findViewById(R.id.ivAttachFile);
         imgDone = (ImageView) findViewById(R.id.imgDone);
@@ -164,18 +165,19 @@ public class EditProfileActivity extends AppCompatActivity
                 "Telecommunications","Entertainment & Recreation","Tourism","Fashion","Transportation","Financial Services",
                 "Travel","Fine Arts","Utilities","Food & Beverage","Video Game","Green Technology","Web Services","Health"};
         gridView.setAdapter(new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array));
-
+        gridView.setExpanded(true);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                Toast.makeText(getApplicationContext(), array[position].toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), array[position].toString(), Toast.LENGTH_SHORT).show();
 
                 addEventString = array[position].toString() ;
                 addEventList.add(addEventString);
 
                 addEventAdapter = new AddEventAdapter(getApplicationContext(),addEventList);
                 gridViewAdded.setAdapter(addEventAdapter);
+                gridViewAdded.setExpanded(true);
                 addEventAdapter.notifyDataSetChanged();
 
                 if(addEventList.size() != 0)

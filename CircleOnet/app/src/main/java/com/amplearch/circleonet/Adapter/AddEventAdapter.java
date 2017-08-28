@@ -62,6 +62,11 @@ public class AddEventAdapter extends BaseAdapter
             {
                 EditProfileActivity.addEventList.remove(position);
                 EditProfileActivity.addEventAdapter.notifyDataSetChanged();
+
+                if(EditProfileActivity.addEventList.size() == 0)
+                {
+                    EditProfileActivity.tvEventInfo.setVisibility(View.GONE);
+                }
             }
         });
 
