@@ -180,6 +180,7 @@ public class List2Fragment extends Fragment
         return view;
     }
 
+
     private class LoadDataForActivity extends AsyncTask<Void, Void, Void> {
 
         String data1;
@@ -223,7 +224,6 @@ public class List2Fragment extends Fragment
         }
         return imageItems;
     }
-
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String>
     {
@@ -516,8 +516,6 @@ public class List2Fragment extends Fragment
     */
     GestureDetector gestureDetector = new GestureDetector(simpleOnGestureListener);
 
-
-/*
     @Override
     public void onResume()
     {
@@ -526,7 +524,7 @@ public class List2Fragment extends Fragment
         nfcModel.clear();
         GetData(getContext());
     }
-*/
+
 
 /*
     public static void GetData(Context context)

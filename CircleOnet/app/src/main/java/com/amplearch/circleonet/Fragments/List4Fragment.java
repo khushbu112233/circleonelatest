@@ -362,7 +362,6 @@ public class List4Fragment extends Fragment
     }
 
 
-/*
     @Override
     public void onResume()
     {
@@ -371,7 +370,6 @@ public class List4Fragment extends Fragment
         nfcModel.clear();
         GetData(getContext());
     }
-*/
 
     class MyOnGestureListener implements GestureDetector.OnGestureListener  {
 

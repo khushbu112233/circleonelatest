@@ -114,7 +114,8 @@ public class List3Fragment extends Fragment
         allTags = new ArrayList<>();
         allTaggs = new ArrayList<>();
 
-        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+        webCall();
+
 
         GestureDetector.OnGestureListener gestureListener = new MyOnGestureListener();
         GestureDetector.OnDoubleTapListener doubleTapListener = new MyOnDoubleTapListener();
@@ -244,6 +245,11 @@ public class List3Fragment extends Fragment
         });
 
         return view;
+    }
+
+    public void webCall()
+    {
+        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
     }
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String>
@@ -539,7 +545,6 @@ public class List3Fragment extends Fragment
         }
     }
 
-/*
     @Override
     public void onResume()
     {
@@ -548,7 +553,6 @@ public class List3Fragment extends Fragment
         nfcModel1.clear();
         GetData(getContext());
     }
-*/
 
     public static void GetData(Context context)
     {
