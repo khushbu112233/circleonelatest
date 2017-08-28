@@ -4,8 +4,8 @@ package com.amplearch.circleonet.Model;
  * Created by admin on 08/11/2017.
  */
 
-public class FriendConnection {
-
+public class FriendConnection
+{
     String name;
     String company;
     String designation;
