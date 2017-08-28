@@ -39,7 +39,7 @@
         android:layout_height="1dp"
         android:background="@color/colorPrimary"></View>
 
-    <ScrollView
+   <!-- <ScrollView
         android:layout_marginBottom="8dp"
         android:layout_marginTop="20dp"
         android:layout_above="@+id/view1"
@@ -142,7 +142,36 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </ScrollView>-->
+
+    <ListView
+        android:divider="@color/white"
+        android:dividerHeight="0dp"
+        android:layout_below="@+id/view"
+        android:layout_above="@+id/view1"
+        android:id="@+id/lstGroupTag"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:nestedScrollingEnabled="true"
+        tools:listitem="@layout/testimonial_row"></ListView>
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/txtGroup"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_centerVertical="true"
+        android:textSize="13sp"
+        android:text="No Groups are Available"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+
+
     <View
         android:layout_above="@+id/lnrBottomTab"
         android:id="@+id/view1"
