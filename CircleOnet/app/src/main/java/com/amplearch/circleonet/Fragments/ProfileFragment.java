@@ -386,7 +386,12 @@ public class ProfileFragment extends Fragment
 
 
                         if (item.getTitle().toString().equals("Add New Profile")){
-                            new HttpAsyncTaskAddProfile().execute("http://circle8.asia:8081/Onet.svc/AddProfile");
+                           // new HttpAsyncTaskAddProfile().execute("http://circle8.asia:8081/Onet.svc/AddProfile");
+                            Intent intent = new Intent(getContext(), EditProfileActivity.class);
+                            intent.putExtra("profile_id", TestimonialProfileId);
+                            intent.putExtra("type", "add");
+                            startActivity(intent);
+
 
                         }
                         else {
@@ -530,6 +535,7 @@ public class ProfileFragment extends Fragment
             {
 //                Toast.makeText(getContext(),"Edit Profile",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(), EditProfileActivity.class);
+                intent.putExtra("type", "edit");
                 intent.putExtra("profile_id", TestimonialProfileId);
                 startActivity(intent);
             }

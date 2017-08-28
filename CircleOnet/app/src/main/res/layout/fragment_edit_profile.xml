@@ -223,7 +223,7 @@
                             android:gravity="center_vertical"
                             android:paddingBottom="15dp"
                             android:paddingLeft="10dp"
-                            android:text="full name"
+                            android:hint="Full Name"
                             android:textSize="13sp" />
                     </LinearLayout>
 
@@ -248,7 +248,7 @@
                             android:layout_height="wrap_content"
                             android:ems="10"
                             android:gravity="center_vertical"
-                            android:hint="title"
+                            android:hint="Designation"
                             android:paddingBottom="15dp"
                             android:paddingLeft="10dp"
                             android:textSize="13sp" />
@@ -277,7 +277,7 @@
                             android:gravity="center_vertical"
                             android:paddingBottom="15dp"
                             android:paddingLeft="10dp"
-                            android:text="company name"
+                            android:hint="Company Name"
                             android:textSize="13sp" />
 
                     </LinearLayout>
@@ -303,7 +303,7 @@
                             android:layout_height="wrap_content"
                             android:ems="10"
                             android:gravity="center_vertical"
-                            android:hint="title"
+                            android:hint="Industry"
                             android:paddingBottom="15dp"
                             android:paddingLeft="10dp"
                             android:textSize="13sp" />
@@ -339,7 +339,7 @@
                                 android:gravity="center_vertical"
                                 android:paddingBottom="15dp"
                                 android:paddingLeft="10dp"
-                                android:text="phone1"
+                                android:hint="phone1"
                                 android:textSize="13sp" />
                         </LinearLayout>
 
@@ -364,7 +364,7 @@
                                 android:gravity="center_vertical"
                                 android:paddingBottom="15dp"
                                 android:paddingLeft="10dp"
-                                android:text="phone2"
+                                android:hint="phone2"
                                 android:textSize="13sp" />
                         </LinearLayout>
 
@@ -400,7 +400,7 @@
                                 android:gravity="center_vertical"
                                 android:paddingBottom="15dp"
                                 android:paddingLeft="10dp"
-                                android:text="mobile1"
+                                android:hint="mobile1"
                                 android:textSize="13sp" />
                         </LinearLayout>
 
@@ -425,7 +425,7 @@
                                 android:gravity="center_vertical"
                                 android:paddingBottom="15dp"
                                 android:paddingLeft="10dp"
-                                android:text="mobile2"
+                                android:hint="mobile2"
                                 android:textSize="13sp" />
                         </LinearLayout>
 
@@ -453,7 +453,7 @@
                             android:gravity="center_vertical"
                             android:paddingBottom="15dp"
                             android:paddingLeft="10dp"
-                            android:text="email1"
+                            android:hint="email1"
                             android:textSize="13sp" />
                     </LinearLayout>
 
@@ -478,7 +478,7 @@
                             android:gravity="center_vertical"
                             android:paddingBottom="15dp"
                             android:paddingLeft="10dp"
-                            android:text="email2"
+                            android:hint="email2"
                             android:textSize="13sp" />
                     </LinearLayout>
 
@@ -511,7 +511,7 @@
                                 android:gravity="center_vertical"
                                 android:paddingBottom="15dp"
                                 android:paddingLeft="10dp"
-                                android:text="fax1"
+                                android:hint="fax1"
                                 android:textSize="13sp" />
                         </LinearLayout>
 
@@ -535,7 +535,7 @@
                                 android:gravity="center_vertical"
                                 android:paddingBottom="15dp"
                                 android:paddingLeft="10dp"
-                                android:text="fax2"
+                                android:hint="fax2"
                                 android:textSize="13sp" />
                         </LinearLayout>
 
@@ -557,12 +557,13 @@
                             android:src="@drawable/ic_location_blue" />
 
                         <EditText
+                            android:id="@+id/edtAddress1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:paddingBottom="15dp"
                             android:paddingLeft="10dp"
-                            android:text="address"
+                            android:hint="address"
                             android:textSize="13sp" />
                     </LinearLayout>
 
@@ -581,6 +582,7 @@
                             android:layout_marginRight="20dp" />
 
                         <EditText
+                            android:id="@+id/edtAddress2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
@@ -613,12 +615,13 @@
                                 android:layout_marginRight="20dp" />
 
                             <EditText
+                                android:id="@+id/edtAddress5"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:paddingBottom="15dp"
                                 android:paddingLeft="10dp"
-                                android:text="country"
+                                android:hint="country"
                                 android:textSize="13sp" />
                         </LinearLayout>
 
@@ -636,12 +639,13 @@
                                 android:layout_marginRight="20dp" />
 
                             <EditText
+                                android:id="@+id/edtAddress4"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:paddingBottom="15dp"
                                 android:paddingLeft="10dp"
-                                android:text="state"
+                                android:hint="state"
                                 android:textSize="13sp" />
                         </LinearLayout>
 
@@ -670,12 +674,13 @@
                                 android:layout_marginRight="20dp" />
 
                             <EditText
+                                android:id="@+id/edtAddress3"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:paddingBottom="15dp"
                                 android:paddingLeft="10dp"
-                                android:text="city"
+                                android:hint="city"
                                 android:textSize="13sp" />
                         </LinearLayout>
 
@@ -693,12 +698,13 @@
                                 android:layout_marginRight="20dp" />
 
                             <EditText
+                                android:id="@+id/edtAddress6"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:paddingBottom="15dp"
                                 android:paddingLeft="10dp"
-                                android:text="postcode"
+                                android:hint="postcode"
                                 android:textSize="13sp" />
                         </LinearLayout>
 
@@ -720,12 +726,13 @@
                             android:src="@drawable/ic_web_blue" />
 
                         <EditText
+                            android:id="@+id/edtWebsite"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:paddingBottom="15dp"
                             android:paddingLeft="10dp"
-                            android:text="website"
+                            android:hint="website"
                             android:textSize="13sp" />
                     </LinearLayout>
 
@@ -750,7 +757,7 @@
                             android:gravity="center_vertical"
                             android:paddingBottom="15dp"
                             android:paddingLeft="10dp"
-                            android:text="association"
+                            android:hint="Association"
                             android:textSize="13sp" />
 
                         <ImageView
