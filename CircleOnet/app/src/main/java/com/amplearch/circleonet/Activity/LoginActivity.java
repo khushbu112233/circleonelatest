@@ -144,6 +144,8 @@ public class LoginActivity extends AppCompatActivity implements
     private ProgressDialog progress;
     public static EditText etLoginUser, etLoginPass;
     String userName, userPassword;
+    String SocialMedia_Id = "", SocialMedia_Type = "", UserName = "";
+    String Facebook = "", Twitter = "", Google = "", Linkedin = "", final_name = "", final_email = "", final_image = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,6 +178,9 @@ public class LoginActivity extends AppCompatActivity implements
                 intent.putExtra("Google", "");
                 intent.putExtra("Linkedin", "");
                 intent.putExtra("Twitter", "");
+                intent.putExtra("UserName", "");
+                intent.putExtra("Email", "");
+                intent.putExtra("Image", "");
                 startActivity(intent);
             }
         });
@@ -312,6 +317,62 @@ public class LoginActivity extends AppCompatActivity implements
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Password", userPassword);
             jsonObject.accumulate("UserName", userName);
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    public String POSTSocialMedia(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("SocialMedia_Id", SocialMedia_Id);
+            jsonObject.accumulate("SocialMedia_Type", SocialMedia_Type);
+            jsonObject.accumulate("UserName", UserName);
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -943,7 +1004,21 @@ public class LoginActivity extends AppCompatActivity implements
                                 startActivity(intent);
                                 finish();
 */
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                Facebook = user.facebookID;
+                                Google = "";
+                                Linkedin = "";
+                                Twitter = "";
+
+                                final_name = user.name;
+                                final_email = user.email;
+                                final_image = personPhotoUrl;
+                                SocialMedia_Id = user.facebookID;
+                                SocialMedia_Type = "Facebook";
+                                UserName = user.name;
+
+                                new HttpAsyncTaskSocialMedia().execute("http://circle8.asia:8081/Onet.svc/SocialMediaLogin");
+
+                               /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                     // imgFinger.setVisibility(View.VISIBLE);
                                     Gson gson = ((MyApplication) getApplication()).getGsonObject();
                                     UserObject userData = new UserObject("", object.getString("name").toString(), object.getString("email").toString(), "", "", object.getString("gender").toString(), personPhotoUrl, false);
@@ -971,7 +1046,7 @@ public class LoginActivity extends AppCompatActivity implements
                                         startActivity(userIntent);
                                         finish();
                                     }
-                                }
+                                }*/
 
 
                                 //new UploadFacebook("IMG_" + timestamp1).execute();
@@ -1020,6 +1095,137 @@ public class LoginActivity extends AppCompatActivity implements
             case R.id.btn_sign_in:
                 signIn();
                 break;
+        }
+    }
+
+    private class HttpAsyncTaskSocialMedia extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(LoginActivity.this);
+            dialog.setMessage("Logging In...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            return POSTSocialMedia(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+            dialog.dismiss();
+            try {
+                if (result != null)
+                {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String success = jsonObject.getString("success").toString();
+                    String UserID = "", profileid = "", FirstName = "", LastName = "", UserPhoto = "";
+                    if (success.equals("1"))
+                    {
+                        //  Toast.makeText(getBaseContext(), "LoggedIn Successfully..", Toast.LENGTH_LONG).show();
+                        //   fingerPrintSession.createLoginSession(UserID, "", userName, "", "");
+
+                        JSONObject jsonArray = jsonObject.getJSONObject("profile");
+                        //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
+                        UserID = jsonArray.getString("userid");
+                        profileid = jsonArray.getString("profileid");
+                        FirstName = jsonArray.getString("FirstName");
+                        LastName = jsonArray.getString("LastName");
+                        UserPhoto = jsonArray.getString("UserPhoto");
+                        String Status = jsonArray.getString("Status");
+
+                        if (Status.equalsIgnoreCase("Verified"))
+                        {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                            {
+                                // imgFinger.setVisibility(View.VISIBLE);
+                                Gson gson = ((MyApplication) getApplication()).getGsonObject();
+                                UserObject userData = new UserObject(profileid, FirstName + " " + LastName, userName, userPassword, UserID, "", UserPhoto, false);
+                                String userDataString = gson.toJson(userData);
+                                CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
+                                pref.setUserData(userDataString);
+
+                               /* Intent intent = new Intent(getApplicationContext(), FingerPrintLogin.class);
+                                //intent.putExtra("viewpager_position", 0);
+                                startActivity(intent);
+                                finish();*/
+
+                                loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, userName, UserPhoto, "");
+                                // Toast.makeText(getApplicationContext(), getString(R.string.auth_successful), Toast.LENGTH_LONG).show();
+
+                                // login with only fingerprint
+                                if (prefs.getBoolean("firstrun", true)) {
+                                    // Do first run stuff here then set 'firstrun' as false
+                                    // using the following line to edit/commit prefs
+                                    Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                                    startActivity(intent);
+                                    prefs.edit().putBoolean("firstrun", false).commit();
+                                } else {
+                                    Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                                    userIntent.putExtra("viewpager_position", 0);
+                                    startActivity(userIntent);
+                                    finish();
+                                }
+                            }
+                            else
+                            {
+                                // imgFinger.setVisibility(View.GONE);
+                                loginSession.createLoginSession(profileid, UserID, "", userName, "", "");
+                                if (prefs.getBoolean("firstrun", true)) {
+                                    // Do first run stuff here then set 'firstrun' as false
+                                    // using the following line to edit/commit prefs
+                                    Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                                    startActivity(intent);
+                                    prefs.edit().putBoolean("firstrun", false).commit();
+                                }
+                                else
+                                {
+                                    Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                                    userIntent.putExtra("viewpager_position", 0);
+                                    startActivity(userIntent);
+                                    finish();
+                                }
+                            }
+                        }else {
+                            Toast.makeText(getBaseContext(), "You should verify your Account First..", Toast.LENGTH_LONG).show();
+                        }
+
+                    } else {
+                        Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                        intent.putExtra("Facebook", Facebook);
+                        intent.putExtra("Google", Google);
+                        intent.putExtra("Linkedin", Linkedin);
+                        intent.putExtra("Twitter", Twitter);
+                        intent.putExtra("UserName", final_name);
+                        intent.putExtra("Email", final_email);
+                        intent.putExtra("Image", final_image);
+                        startActivity(intent);
+                    }
+                } else {
+                    Toast.makeText(getBaseContext(), "Not able to Login..", Toast.LENGTH_LONG).show();
+                }
+
+
+            } catch (JSONException e) {
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                intent.putExtra("Facebook", Facebook);
+                intent.putExtra("Google", Google);
+                intent.putExtra("Linkedin", Linkedin);
+                intent.putExtra("Twitter", Twitter);
+                intent.putExtra("UserName", final_name);
+                intent.putExtra("Email", final_email);
+                intent.putExtra("Image", final_image);
+                startActivity(intent);
+            }
+            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
         }
     }
 
