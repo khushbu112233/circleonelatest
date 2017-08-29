@@ -147,7 +147,6 @@ public class List3Adapter extends BaseSwipeAdapter
                 new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/FriendConnection_Operation");
 
 
-
                 //nfcModelList.remove(position);
 
                /* try {
@@ -399,23 +398,20 @@ public class List3Adapter extends BaseSwipeAdapter
                     if(success.equals("1"))
                     {
                         Toast.makeText(context, "Delete Successfully", Toast.LENGTH_LONG).show();
-
-                        try
-                        {
-
-                            List3Fragment.refreshList();
-//                            List3Fragment.gridAdapter.notifyDataSetChanged();
-
-//                        List3Fragment.allTaggs.clear();
-//                        List3Fragment.nfcModel1.clear();
-//                        List3Fragment.GetData(context);
-                        }
-                        catch(Exception e) {    }
                     }
                     else
                     {
                         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                     }
+
+                    try
+                    {
+                        List3Fragment.gridAdapter.notifyDataSetChanged();
+//                        List3Fragment.GetData(context);
+//                        List3Fragment.allTaggs.clear();
+//                        List3Fragment.nfcModel1.clear();
+                    }
+                    catch(Exception e) {    }
 
                     try
                     {

@@ -38,8 +38,7 @@ public class VolleyDemo extends AppCompatActivity implements Response.Listener,
     protected void onStart() {
         super.onStart();
         // Instantiate the RequestQueue.
-        mQueue = CustomVolleyRequestQueue.getInstance(this.getApplicationContext())
-                .getRequestQueue();
+        mQueue = CustomVolleyRequestQueue.getInstance(this.getApplicationContext()).getRequestQueue();
         String url = "http://api.openweathermap.org/data/2.5/weather?q=Sydney&APPID=ea574594b9d36ab688642d5fbeab847e";
         final CustomJSONObjectRequest jsonRequest = new CustomJSONObjectRequest(Request.Method
                 .GET, url,

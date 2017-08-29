@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amplearch.circleonet.Activity.ConnectActivity;
+import com.amplearch.circleonet.Adapter.ConnectListAdapter;
 import com.amplearch.circleonet.Adapter.List5Adapter;
 import com.amplearch.circleonet.Helper.LoginSession;
 import com.amplearch.circleonet.Model.ConnectList;
@@ -54,6 +55,7 @@ public class ByIndustryFragment extends Fragment
     private TextView tvDataInfo ;
     private String find_by = "industry" ;
     private List5Adapter list5Adapter ;
+    private ConnectListAdapter connectListAdapter ;
     private AutoCompleteTextView searchText ;
 
     private ArrayList<ConnectList> connectTags = new ArrayList<>();
@@ -250,13 +252,13 @@ public class ByIndustryFragment extends Fragment
         listView.setAdapter(gridAdapter);
         gridAdapter.notifyDataSetChanged();*/
 
-     /*   connectListAdapter = new ConnectListAdapter(getContext(),R.layout.grid_list4_layout, connectLists);
+        connectListAdapter = new ConnectListAdapter(getContext(),R.layout.grid_list5_layout, connectLists);
         listView.setAdapter(connectListAdapter);
-        connectListAdapter.notifyDataSetChanged();*/
+        connectListAdapter.notifyDataSetChanged();
 
-        list5Adapter = new List5Adapter(getContext(), R.layout.grid_list4_layout, connectLists);
+       /* list5Adapter = new List5Adapter(getContext(), R.layout.grid_list4_layout, connectLists);
         listView.setAdapter(list5Adapter);
-        list5Adapter.notifyDataSetChanged();
+        list5Adapter.notifyDataSetChanged();*/
     }
 
     public  String POST(String url)

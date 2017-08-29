@@ -426,7 +426,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                 if (Content != null) {
                     JSONObject jsonResponse = new JSONObject(Content);
-                    Toast.makeText(getApplicationContext(), Content, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(), Content, Toast.LENGTH_LONG).show();
                     String status = jsonResponse.getString("status");
                     if ("200".equals(status)) {
 
@@ -470,7 +470,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 final_ImgBase64 = BitMapToString(resizedBitmap);
                // final_ImgBase64 = resizeBase64Image(s);
                 Log.d("base64string ", final_ImgBase64);
-                Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                 Upload();
                 civProfilePic.setImageBitmap(resizedBitmap);
             } catch (FileNotFoundException e) {
@@ -666,12 +666,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     String message = jsonObject.getString("message").toString();
                     String Status = jsonObject.getString("Status").toString();
                     UserID = jsonObject.getString("userId").toString();
-                    if (success.equals("1") && message.equalsIgnoreCase("Successfully Registered.")) {
+                    if (success.equals("1") && message.equalsIgnoreCase("Successfully Registered."))
+                    {
                         Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
 
-                        if (Status.equalsIgnoreCase("Not-Verfied")) {
+                        if (Status.equalsIgnoreCase("Not-Verfied"))
+                        {
                             new HttpAsyncTaskVerify().execute("http://circle8.asia:8081/Onet.svc/AccVerification/" + UserID);
-                        }else {
+                        }
+                        else
+                        {
                             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                             startActivity(intent);
                             finish();
@@ -800,7 +804,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         protected void onPostExecute(String result)
         {
             dialog.dismiss();
-            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
@@ -994,7 +998,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             {
                 super.onPostExecute(result);
 
-                Toast.makeText(getApplicationContext(), result , Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), result , Toast.LENGTH_LONG).show();
 
                 if (result.equals(""))
                 {
@@ -1044,7 +1048,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void asyncResponse(String response)
     {
-        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
 
         Log.i("SignIn response: ", response);
 
@@ -1114,7 +1118,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             super.onPostExecute(result);
             dialog.dismiss();
             System.out.println("Resulted Value: " + result);
-            Toast.makeText(getApplicationContext(), "Resulted value" + result, Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), "Resulted value" + result, Toast.LENGTH_LONG).show();
 
             if (result.equals("") || result == null)
             {

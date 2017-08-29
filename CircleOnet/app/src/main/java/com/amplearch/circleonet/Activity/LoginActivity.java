@@ -104,7 +104,8 @@ import static com.amplearch.circleonet.Utils.Validation.validateLogin;
 
 public class LoginActivity extends AppCompatActivity implements
         View.OnClickListener,
-        GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
+        GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks
+{
 
     Button btnSimpleLogin, btnRegister;
     //Boolean isConnected = false;
@@ -146,7 +147,8 @@ public class LoginActivity extends AppCompatActivity implements
     String userName, userPassword;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         TwitterAuthConfig authConfig = new TwitterAuthConfig(

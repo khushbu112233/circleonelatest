@@ -401,9 +401,11 @@ public class ProfileFragment extends Fragment
 
                         }
                         else {
-                            for (int i = 0; i < profile_array.size(); i++) {
-                                if (item.getTitle().toString().equals(profile_array.get(i).toString())) {
-                                    Toast.makeText(getContext(), profile_array.get(i).toString(), Toast.LENGTH_LONG).show();
+                            for (int i = 0; i < profile_array.size(); i++)
+                            {
+                                if (item.getTitle().toString().equals(profile_array.get(i).toString()))
+                                {
+//                                    Toast.makeText(getContext(), profile_array.get(i).toString(), Toast.LENGTH_LONG).show();
                                     tvPersonName.setText(allTags.get(i).getFirstName() + " "+ allTags.get(i).getLastName());
                                     tvDesignation.setText(allTags.get(i).getDesignation());
                                     tvCompany.setText(allTags.get(i).getCompanyName());
@@ -883,7 +885,7 @@ public class ProfileFragment extends Fragment
                         nfcModelTag.setUserPhoto(object.getString("UserPhoto"));
                         title_array.add(object.getString("Testimonial_Text").toString());
                         notice_array.add(String.valueOf(i));
-                        Toast.makeText(getContext(), object.getString("Testimonial_Text"), Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getContext(), object.getString("Testimonial_Text"), Toast.LENGTH_LONG).show();
                         allTaggs.add(nfcModelTag);
                     }
                     customAdapter = new CustomAdapter(getActivity(), title_array, notice_array);
@@ -985,7 +987,7 @@ public class ProfileFragment extends Fragment
         protected void onPostExecute(String result)
         {
             dialog.dismiss();
-            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+//            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
           /*  try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
@@ -1121,7 +1123,7 @@ public class ProfileFragment extends Fragment
         protected void onPostExecute(String result)
         {
             dialog.dismiss();
-            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+//            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
 
 
           /*  try {

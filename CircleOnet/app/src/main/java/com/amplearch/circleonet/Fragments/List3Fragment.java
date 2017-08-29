@@ -51,7 +51,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -115,7 +114,6 @@ public class List3Fragment extends Fragment
         allTaggs = new ArrayList<>();
 
         webCall();
-
 
         GestureDetector.OnGestureListener gestureListener = new MyOnGestureListener();
         GestureDetector.OnDoubleTapListener doubleTapListener = new MyOnDoubleTapListener();
@@ -251,6 +249,43 @@ public class List3Fragment extends Fragment
     {
         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
     }
+
+    public void RefreshList()
+    {
+        gridAdapter.notifyDataSetChanged();
+
+    }
+
+    public class RefreshAsyncTask extends AsyncTask<Void,Void,Void>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            dialog = new ProgressDialog(getContext());
+            dialog.setMessage("Refreshing...");
+            dialog.show();
+            dialog.setCancelable(false);
+        }
+
+        @Override
+        protected Void doInBackground(Void... params)
+        {
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid)
+        {
+            super.onPostExecute(aVoid);
+            dialog.dismiss();
+        }
+
+
+    }
+
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String>
     {
@@ -554,11 +589,7 @@ public class List3Fragment extends Fragment
         GetData(getContext());
     }
 
-    public static void refreshList()
-    {
-        nfcModel1.clear();
-        gridAdapter.notifyDataSetChanged();
-    }
+
 
     public static void GetData(Context context)
     {

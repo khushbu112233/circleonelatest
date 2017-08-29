@@ -67,7 +67,7 @@ public class ConnectListAdapter extends BaseAdapter
     public View getView(int position, View convertView, ViewGroup parent)
     {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(R.layout.grid_list4_layout, parent, false);
+        convertView = inflater.inflate(R.layout.grid_list5_layout, parent, false);
 
         CircleImageView circleImageView = (CircleImageView)convertView.findViewById(R.id.imageList4);
         TextView nameText = (TextView)convertView.findViewById(R.id.textNameList3);

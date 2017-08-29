@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.amplearch.circleonet.Fragments.List1Fragment;
+import com.amplearch.circleonet.Helper.LoginSession;
 import com.amplearch.circleonet.Model.FriendConnection;
 import com.amplearch.circleonet.R;
 
@@ -25,17 +26,26 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 
-public class Notification extends AppCompatActivity {
+public class Notification extends AppCompatActivity
+{
+    private LoginSession session ;
+    private String user_id ;
 
     ListView listNotification;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
         listNotification = (ListView) findViewById(R.id.listNotification);
         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/Notification");
+
+        session = new LoginSession(getApplicationContext());
+        HashMap<String, String> user = session.getUserDetails();
+        user_id = user.get(LoginSession.KEY_USERID);
 
     }
 
@@ -56,7 +66,7 @@ public class Notification extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("numofrecords", "10" );
             jsonObject.accumulate("pageno", "1" );
-            jsonObject.accumulate("userid", "1" );
+            jsonObject.accumulate("userid", user_id );
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -135,8 +145,10 @@ public class Notification extends AppCompatActivity {
         protected void onPostExecute(String result)
         {
             dialog.dismiss();
-            try {
-                if (result != null) {
+            try
+            {
+                if (result != null)
+                {
                     JSONObject jsonObject = new JSONObject(result);
                     JSONArray jsonArray = jsonObject.getJSONArray("notification");
                     Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
@@ -145,8 +157,6 @@ public class Notification extends AppCompatActivity {
 
                         JSONObject object = jsonArray.getJSONObject(i);
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
-
-
 
                         FriendConnection nfcModelTag = new FriendConnection();
                         nfcModelTag.setName(object.getString("FirstName") + " " + object.getString("LastName"));

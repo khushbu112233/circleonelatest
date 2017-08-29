@@ -167,7 +167,7 @@ public class List4Fragment extends Fragment
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(), "OnItemLongClickListener", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "OnItemLongClickListener", Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
