@@ -398,6 +398,18 @@ public class List3Adapter extends BaseSwipeAdapter
                     if(success.equals("1"))
                     {
                         Toast.makeText(context, "Delete Successfully", Toast.LENGTH_LONG).show();
+
+                        try
+                        {
+
+                           // List3Fragment.refreshList();
+//                            List3Fragment.gridAdapter.notifyDataSetChanged();
+
+//                        List3Fragment.allTaggs.clear();
+//                        List3Fragment.nfcModel1.clear();
+//                        List3Fragment.GetData(context);
+                        }
+                        catch(Exception e) {    }
                     }
                     else
                     {

@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="50dp"
         android:background="#FF5534"
         android:gravity="center"
         android:tag="Bottom3"
@@ -41,10 +41,18 @@
             android:textColor="#FF5534" />
     </LinearLayout>
 
-    <LinearLayout
-        android:gravity="center"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:id="@+id/lnrTestReq"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,7 +64,7 @@
                 app:civ_border_color="@color/colorPrimary"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/card2_front"
-                android:id="@+id/imageList4"
+                android:id="@+id/imgTestReq"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 />
@@ -75,7 +83,7 @@
                     android:gravity="left"
                     android:text="Physician Yong"
                     android:visibility="visible"
-                    android:id="@+id/textNameList3"
+                    android:id="@+id/txtTestPurpose"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:textSize="12sp" />
@@ -85,20 +93,24 @@
                     android:gravity="left"
                     android:text="Physician Yong"
                     android:visibility="visible"
-                    android:id="@+id/textDescList3"
+                    android:id="@+id/txtTestName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="12sp" />
             </LinearLayout>
             <Button
+                android:layout_gravity="center_vertical|left"
+                android:id="@+id/btnTestWrite"
                 android:textSize="12sp"
                 android:layout_weight="3"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="90dp"
                 android:layout_height="40dp"
-                android:text="Accept"/>
+                android:text="Write"/>
 
             <Button
+                android:layout_gravity="center_vertical|left"
+                android:id="@+id/btnTestReject"
                 android:textColor="@color/colorPrimary"
                 android:background="@drawable/txt_box_blue"
                 android:layout_marginRight="10dp"
@@ -109,10 +121,162 @@
                 android:layout_height="28dp"
                 android:text="Reject"/>
         </LinearLayout>
-        <View
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorAccent"></View>
     </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_centerInParent="true"
+            android:id="@+id/lnrTestRec"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_marginLeft="8dp"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="@color/colorPrimary"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/card2_front"
+                    android:id="@+id/imgTestRec"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    />
+
+                <LinearLayout
+                    android:layout_weight="0.5"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_gravity="center_vertical|left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:gravity="left"
+                        android:text="Physician Yong"
+                        android:visibility="visible"
+                        android:id="@+id/txtTestPurposeRec"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:textColor="@android:color/black"
+                        android:gravity="left"
+                        android:text="Physician Yong"
+                        android:visibility="visible"
+                        android:id="@+id/txtTestNameRec"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp" />
+                </LinearLayout>
+                <Button
+                    android:layout_gravity="center_vertical|left"
+                    android:id="@+id/btnTestAcceptRec"
+                    android:textSize="12sp"
+                    android:layout_weight="3"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="90dp"
+                    android:layout_height="40dp"
+                    android:text="Accept"/>
+
+                <Button
+                    android:layout_gravity="center_vertical|left"
+                    android:id="@+id/btnTestRejectRec"
+                    android:textColor="@color/colorPrimary"
+                    android:background="@drawable/txt_box_blue"
+                    android:layout_marginRight="10dp"
+                    android:textSize="12sp"
+                    android:layout_weight="3"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="90dp"
+                    android:layout_height="28dp"
+                    android:text="Reject"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/lnrFriend"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_marginLeft="8dp"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="@color/colorPrimary"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/card2_front"
+                    android:id="@+id/imgFriend"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    />
+
+                <LinearLayout
+                    android:layout_weight="0.5"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_gravity="center_vertical|left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:gravity="left"
+                        android:text="Physician Yong"
+                        android:visibility="visible"
+                        android:id="@+id/txtFriendPurpose"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:textColor="@android:color/black"
+                        android:gravity="left"
+                        android:text="Physician Yong"
+                        android:visibility="visible"
+                        android:id="@+id/txtFriendName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp" />
+                </LinearLayout>
+                <Button
+                    android:layout_gravity="center_vertical|left"
+                    android:id="@+id/btnAcceptFriend"
+                    android:textSize="12sp"
+                    android:layout_weight="3"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="90dp"
+                    android:layout_height="40dp"
+                    android:text="Accept"/>
+
+                <Button
+                    android:layout_gravity="center_vertical|left"
+                    android:id="@+id/btnRejectFriend"
+                    android:textColor="@color/colorPrimary"
+                    android:background="@drawable/txt_box_blue"
+                    android:layout_marginRight="10dp"
+                    android:textSize="12sp"
+                    android:layout_weight="3"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="90dp"
+                    android:layout_height="28dp"
+                    android:text="Reject"/>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
 </com.daimajia.swipe.SwipeLayout>
