@@ -135,7 +135,16 @@ public class GridViewAdapter extends BaseSwipeAdapter
 
                 swipeLayout.close();
 
-
+                List2Fragment.gridAdapter.notifyDataSetChanged();
+                try {
+                    List1Fragment.mAdapter.notifyDataSetChanged();
+                    List1Fragment.mAdapter1.notifyDataSetChanged();
+                    //   List1Fragment.allTags = db.getActiveNFC();
+                    List1Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List1Fragment.GetData(context);
+                } catch (Exception e) {
+                }
                 //  nfcModelList.remove(position);
                 /*try
                 {
@@ -362,7 +371,7 @@ public class GridViewAdapter extends BaseSwipeAdapter
                         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                     }
 
-                    try
+                 /*   try
                     {
 //                    List2Fragment.allTaggs.clear();
                         List2Fragment.nfcModel.clear();
@@ -400,7 +409,7 @@ public class GridViewAdapter extends BaseSwipeAdapter
                         List1Fragment.mAdapter1.notifyDataSetChanged();
                         List1Fragment.GetData(context);
                     }
-                    catch(Exception e) {    }
+                    catch(Exception e) {    }*/
 
                 }
 

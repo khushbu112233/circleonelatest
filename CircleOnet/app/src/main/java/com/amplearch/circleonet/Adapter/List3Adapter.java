@@ -403,7 +403,7 @@ public class List3Adapter extends BaseSwipeAdapter
                         try
                         {
 
-                            List3Fragment.refreshList();
+                           // List3Fragment.refreshList();
 //                            List3Fragment.gridAdapter.notifyDataSetChanged();
 
 //                        List3Fragment.allTaggs.clear();

@@ -493,12 +493,12 @@ public class LoginActivity extends AppCompatActivity implements
                                 CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
                                 pref.setUserData(userDataString);
 
-                               /* Intent intent = new Intent(getApplicationContext(), FingerPrintLogin.class);
+                                Intent intent = new Intent(getApplicationContext(), FingerPrintLogin.class);
                                 //intent.putExtra("viewpager_position", 0);
                                 startActivity(intent);
-                                finish();*/
+                                finish();
 
-                                loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, userName, UserPhoto, "");
+                              /*  loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, userName, UserPhoto, "");
                                 // Toast.makeText(getApplicationContext(), getString(R.string.auth_successful), Toast.LENGTH_LONG).show();
 
                                 // login with only fingerprint
@@ -513,7 +513,7 @@ public class LoginActivity extends AppCompatActivity implements
                                     userIntent.putExtra("viewpager_position", 0);
                                     startActivity(userIntent);
                                     finish();
-                                }
+                                }*/
                             }
                             else
                             {
@@ -1153,12 +1153,12 @@ public class LoginActivity extends AppCompatActivity implements
                                 CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
                                 pref.setUserData(userDataString);
 
-                               /* Intent intent = new Intent(getApplicationContext(), FingerPrintLogin.class);
+                                Intent intent = new Intent(getApplicationContext(), FingerPrintLogin.class);
                                 //intent.putExtra("viewpager_position", 0);
                                 startActivity(intent);
-                                finish();*/
+                                finish();
 
-                                loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, userName, UserPhoto, "");
+                               /* loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, userName, UserPhoto, "");
                                 // Toast.makeText(getApplicationContext(), getString(R.string.auth_successful), Toast.LENGTH_LONG).show();
 
                                 // login with only fingerprint
@@ -1173,7 +1173,7 @@ public class LoginActivity extends AppCompatActivity implements
                                     userIntent.putExtra("viewpager_position", 0);
                                     startActivity(userIntent);
                                     finish();
-                                }
+                                }*/
                             }
                             else
                             {
