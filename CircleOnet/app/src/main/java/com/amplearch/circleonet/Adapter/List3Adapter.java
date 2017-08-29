@@ -399,6 +399,18 @@ public class List3Adapter extends BaseSwipeAdapter
                     if(success.equals("1"))
                     {
                         Toast.makeText(context, "Delete Successfully", Toast.LENGTH_LONG).show();
+
+                        try
+                        {
+
+                            List3Fragment.refreshList();
+//                            List3Fragment.gridAdapter.notifyDataSetChanged();
+
+//                        List3Fragment.allTaggs.clear();
+//                        List3Fragment.nfcModel1.clear();
+//                        List3Fragment.GetData(context);
+                        }
+                        catch(Exception e) {    }
                     }
                     else
                     {
@@ -414,15 +426,6 @@ public class List3Adapter extends BaseSwipeAdapter
                     }
                     catch(Exception e) {    }
 
-                    try
-                    {
-                        List3Fragment.gridAdapter.notifyDataSetChanged();
-
-//                        List3Fragment.allTaggs.clear();
-//                        List3Fragment.nfcModel1.clear();
-//                        List3Fragment.GetData(context);
-                    }
-                    catch(Exception e) {    }
 
                     try
                     {
@@ -469,7 +472,7 @@ public class List3Adapter extends BaseSwipeAdapter
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Operation", "Remove" );
             jsonObject.accumulate("friendProfileId", nfcModelList1.get(posi).getProfile_id());
-            jsonObject.accumulate("myProfileId", "27" );
+            jsonObject.accumulate("myProfileId", "30" );
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();

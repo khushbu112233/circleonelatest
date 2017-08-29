@@ -29,6 +29,8 @@ import android.widget.Toast;
 
 import com.amplearch.circleonet.Adapter.CustomAdapter;
 import com.amplearch.circleonet.Adapter.GroupAdapter;
+import com.amplearch.circleonet.Fragments.ProfileFragment;
+import com.amplearch.circleonet.Helper.LoginSession;
 import com.amplearch.circleonet.Model.GroupModel;
 import com.amplearch.circleonet.Model.TestimonialModel;
 import com.amplearch.circleonet.R;
@@ -54,10 +56,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-public class GroupTag extends AppCompatActivity {
-
+public class GroupTag extends AppCompatActivity
+{
     private TextView textView;
     private ImageView imgCards, imgConnect, imgEvents, imgProfile, imgLogo;
     private int actionBarHeight;
@@ -67,6 +70,9 @@ public class GroupTag extends AppCompatActivity {
     private GroupAdapter customAdapter;
     ImageView imgAdd;
     String GroupName, GroupDesc;
+
+    private LoginSession session;
+    private String profile_id ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +99,10 @@ public class GroupTag extends AppCompatActivity {
         allTaggs = new ArrayList<>();
         //cardCount = db.getActiveNFCCount();
         new HttpAsyncTaskGroup().execute("http://circle8.asia:8081/Onet.svc/Group/Fetch");
+
+        session = new LoginSession(getApplicationContext());
+        HashMap<String, String> user = session.getUserDetails();
+        profile_id = user.get(LoginSession.KEY_PROFILEID);
 
         imgAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,7 +182,7 @@ public class GroupTag extends AppCompatActivity {
                             public void onClick(DialogInterface dialog,
                                                 int whichButton) {
 
-                                Toast.makeText(getApplicationContext(), allTaggs.get(position).getGroup_Name(), Toast.LENGTH_LONG).show();
+//                                Toast.makeText(getApplicationContext(), allTaggs.get(position).getGroup_Name(), Toast.LENGTH_LONG).show();
 
                               //  Log.i("AlertDialog", "TextEntry 1 Entered " + input1.getText().toString());
                               //  Log.i("AlertDialog", "TextEntry 2 Entered " + input2.getText().toString());
@@ -385,7 +395,7 @@ public class GroupTag extends AppCompatActivity {
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("ProfileId", "27");
+            jsonObject.accumulate("ProfileId", profile_id);
             jsonObject.accumulate("numofrecords", "10");
             jsonObject.accumulate("pageno", "1");
 
@@ -442,7 +452,7 @@ public class GroupTag extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("GroupDesc", GroupDesc);
             jsonObject.accumulate("GroupName", GroupName);
-            jsonObject.accumulate("ProfileId", "27");
+            jsonObject.accumulate("ProfileId", profile_id);
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();

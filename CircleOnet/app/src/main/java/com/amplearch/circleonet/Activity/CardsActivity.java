@@ -136,9 +136,8 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
+
         session = new LoginSession(getApplicationContext());
-
-
         HashMap<String, String> user = session.getUserDetails();
 
 
