@@ -193,8 +193,9 @@ public class EditProfileActivity extends AppCompatActivity {
         gridView.setExpanded(true);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), array[position].toString(), Toast.LENGTH_SHORT).show();
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+//                Toast.makeText(getApplicationContext(), array[position].toString(), Toast.LENGTH_SHORT).show();
 
                 addEventString = array[position].toString();
                 addEventList.add(addEventString);
@@ -980,7 +981,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 final_ImgBase64 = BitMapToString(resizedBitmap);
                 // final_ImgBase64 = resizeBase64Image(s);
                 Log.d("base64string ", final_ImgBase64);
-                Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                 // Upload();
                 CardSwipe.imageView.setImageBitmap(resizedBitmap);
                 if (cardType.equals("front"))
@@ -1233,7 +1234,7 @@ public class EditProfileActivity extends AppCompatActivity {
         }
 
         if (mb_size > 3.00) {
-//            Toast.makeText(getApplicationContext(),"File is greater than 3MB"+mb_size,Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"File is greater than 3MB"+mb_size,Toast.LENGTH_LONG).show();
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(EditProfileActivity.this);
             alertDialogBuilder.setTitle("Warning!");
             alertDialogBuilder.setMessage("Please select file less than 3MB.");
@@ -1297,7 +1298,7 @@ public class EditProfileActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             dialog.dismiss();
-            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
           /*  try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
@@ -1439,7 +1440,7 @@ public class EditProfileActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             dialog.dismiss();
-            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
 
 
             try {
@@ -1494,7 +1495,7 @@ public class EditProfileActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             dialog.dismiss();
-            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
 
 
             try {
@@ -1646,7 +1647,7 @@ public class EditProfileActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             dialog.dismiss();
-            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
 
 
             try {
@@ -1701,7 +1702,7 @@ public class EditProfileActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             dialog.dismiss();
-            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
           /*  try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
@@ -1764,7 +1765,7 @@ public class EditProfileActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             dialog.dismiss();
-            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
@@ -1814,7 +1815,7 @@ public class EditProfileActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             dialog.dismiss();
-            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);

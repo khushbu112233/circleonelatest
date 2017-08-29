@@ -2,6 +2,7 @@ package com.amplearch.circleonet.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,12 +13,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amplearch.circleonet.Activity.ConnectActivity;
 import com.amplearch.circleonet.Adapter.List5Adapter;
+import com.amplearch.circleonet.Helper.LoginSession;
 import com.amplearch.circleonet.Model.ConnectList;
 import com.amplearch.circleonet.R;
 
@@ -35,6 +39,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
 /**
@@ -54,6 +59,9 @@ public class ByAssociationFragment  extends Fragment
     private ArrayList<ConnectList> connectTags = new ArrayList<>();
     private ArrayList<ConnectList> connectLists = new ArrayList<>();
 
+    LoginSession session;
+    String profileID ;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -65,6 +73,10 @@ public class ByAssociationFragment  extends Fragment
         listView = (ListView) view.findViewById(R.id.listViewType4);
 
         listView.setVisibility(View.GONE);
+
+        session = new LoginSession(getContext());
+        HashMap<String, String> user = session.getUserDetails();
+        profileID = user.get(LoginSession.KEY_PROFILEID);
 
         searchText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -81,7 +93,7 @@ public class ByAssociationFragment  extends Fragment
                     connectTags.clear();
                     GetData(getContext());
                 }
-                else if(s.length() == 2)
+                else if(s.length() >= 2)
                 {
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
 
@@ -91,14 +103,25 @@ public class ByAssociationFragment  extends Fragment
                     String page_no = "1";
 
                     listView.setVisibility(View.VISIBLE);
+                    connectTags.clear();
                     new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/SearchConnect");
                 }
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
 
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                Intent intent = new Intent(getContext(), ConnectActivity.class);
+                intent.putExtra("friendProfileID", connectTags.get(position).getProfile_id());
+                intent.putExtra("ProfileID", profileID);
+                getContext().startActivity(intent);
             }
         });
 

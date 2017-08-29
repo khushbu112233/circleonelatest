@@ -72,10 +72,11 @@ public class CustomDate extends AppCompatActivity {
         //Handling custom calendar events
         calendarView.setCalendarListener(new CalendarListener() {
             @Override
-            public void onDateSelected(Date date) {
+            public void onDateSelected(Date date)
+            {
                 i++;
                 SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-                Toast.makeText(CustomDate.this, df.format(date), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(CustomDate.this, df.format(date), Toast.LENGTH_SHORT).show();
                 if ( i % 2 == 0 ){
                     date2 = date;
                 }

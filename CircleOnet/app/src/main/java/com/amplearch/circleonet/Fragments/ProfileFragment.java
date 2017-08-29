@@ -79,8 +79,10 @@ public class ProfileFragment extends Fragment
     Bitmap bitmap ;
     ProgressDialog progressDialog ;
     ArrayList<String> profile_array;
-    LoginSession session;
-    String UserID = "";
+
+    private LoginSession session;
+    private String UserID = "";
+
     public static ArrayList<ProfileModel> allTags ;
     String profileId = "";
 
@@ -153,10 +155,14 @@ public class ProfileFragment extends Fragment
         imgProfileShare = (ImageView) view.findViewById(R.id.imgProfileShare);
         imgProfileMenu = (ImageView) view.findViewById(R.id.imgProfileMenu);
         ivEditProfile = (ImageView)view.findViewById(R.id.ivEditProfile);
+
         session = new LoginSession(getContext());
         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetUserProfile");
+
         HashMap<String, String> user = session.getUserDetails();
         UserID = user.get(LoginSession.KEY_USERID);
+        profileId = user.get(LoginSession.KEY_PROFILEID);
+
         allTaggs = new ArrayList<>();
         lnrMap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1036,7 +1042,7 @@ public class ProfileFragment extends Fragment
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("profileid", "1" );
+            jsonObject.accumulate("profileid", TestimonialProfileId );
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
 

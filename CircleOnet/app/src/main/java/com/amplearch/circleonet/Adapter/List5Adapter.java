@@ -233,7 +233,7 @@ public class List5Adapter extends BaseSwipeAdapter
             }
             else
             {
-                Picasso.with(context).load("http://circle8.asia/App_ImgLib/Cards/"+connectLists.get(position).getUserphoto()).into(holder.image);
+                Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/"+connectLists.get(position).getUserphoto()).into(holder.image);
             }
         }
         catch (Exception e)

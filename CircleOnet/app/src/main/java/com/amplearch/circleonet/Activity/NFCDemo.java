@@ -263,7 +263,7 @@ public class NFCDemo extends NfcActivity {
                     // id += Integer.toHexString(tagId[i] & 0xFF) + " ";
                 }
                 id = bytesToHex(tagId);
-                Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
                 for (String data : mNfcReadUtility.readFromTagWithMap(paramIntent).values()) {
                     Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
                 }

@@ -1,11 +1,13 @@
 package com.amplearch.circleonet.Activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
 import android.provider.ContactsContract;
@@ -15,6 +17,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
@@ -24,11 +27,29 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amplearch.circleonet.Adapter.CardSwipe;
+import com.amplearch.circleonet.Adapter.List5Adapter;
+import com.amplearch.circleonet.Fragments.ByNameFragment;
 import com.amplearch.circleonet.Helper.DatabaseHelper;
+import com.amplearch.circleonet.Model.ConnectList;
+import com.amplearch.circleonet.Model.ConnectingModel;
 import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.R;
 import com.amplearch.circleonet.Utils.Utility;
+import com.squareup.picasso.Picasso;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,12 +75,14 @@ public class ConnectActivity extends AppCompatActivity
     private ImageView ivConnectImg, ivAddRound, ivConnectRound ;
     private TextView tvAdd, tvConnect, tvConnectLine1, tvConnectLine2, txtWeb, txtMail, txtNum, txtMob ;
     private RelativeLayout rlAdd, rlConnect ;
-    private String tag_id;
+    private String tag_id, profile_id, friendProfile_id;
     DatabaseHelper db;
     TextView tvPersonName, tvPersonDesignation, tvCompanyName;
     LinearLayout lnrWeb, lnrmail, lnrnum, lnrmob;
     int profile;
     String level;
+
+    private ArrayList<ConnectingModel> connectingTags = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -100,8 +123,19 @@ public class ConnectActivity extends AppCompatActivity
 
 
         Intent intent = getIntent();
-        tag_id = intent.getStringExtra("tag_id");
+//        tag_id = intent.getStringExtra("tag_id");
+        tag_id = "en100000001";
+        friendProfile_id = intent.getStringExtra("friendProfileID");
+        profile_id = intent.getStringExtra("ProfileID");
 
+        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/ConnectProfile");
+
+
+//        Toast.makeText(getApplicationContext(),"ProfileID & FriendID "+profile_id+" "+friendProfile_id,Toast.LENGTH_LONG).show();
+
+
+
+/*
         if (tag_id.equals("en100000001")){
             level = "2";
         }
@@ -125,8 +159,7 @@ public class ConnectActivity extends AppCompatActivity
         }
         else {
             level = "6";
-        }
-
+        }*/
         final List<NFCModel> modelList = db.getNFCbyTag(tag_id);
         try {
 
@@ -139,8 +172,8 @@ public class ConnectActivity extends AppCompatActivity
                    // imgCard.setImageResource(tag1.getCard_front());
 
                     //  Bitmap bmp1 = BitmapFactory.decodeByteArray(tag1.getUser_image(), 0, tag1.getUser_image().length);
-                    ivProfileImage.setImageResource(tag1.getUser_image());
-                    profile = tag1.getUser_image();
+//                    ivProfileImage.setImageResource(tag1.getUser_image());
+//                    profile = tag1.getUser_image();
                     tvPersonName.setText(tag1.getName());
                     tvCompanyName.setText(tag1.getCompany());
                     txtWeb.setText(tag1.getWebsite());
@@ -379,5 +412,155 @@ public class ConnectActivity extends AppCompatActivity
         tvAdd.setTextColor(getResources().getColor(R.color.unselected));
         tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
         return false;
+    }
+
+    private class HttpAsyncTask extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(ConnectActivity.this);
+            dialog.setMessage("Displaying Records...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            return POST(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+            dialog.dismiss();
+//            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+
+            try
+            {
+                if(result == "")
+                {
+                    Toast.makeText(getApplicationContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    JSONObject response = new JSONObject(result);
+
+                    JSONObject profile = response.getJSONObject("Profile");
+
+                    ConnectingModel connectingModel = new ConnectingModel();
+                    connectingModel.setFirstName(profile.getString("FirstName"));
+                    connectingModel.setLastName(profile.getString("LastName"));
+                    connectingModel.setCompanyName(profile.getString("CompanyName"));
+                    connectingModel.setWebsite(profile.getString("Website"));
+                    connectingModel.setUserPhoto(profile.getString("UserPhoto"));
+                    connectingModel.setPrimaryPhone(profile.getString("PrimaryPhone"));
+                    connectingModel.setOfficePhone(profile.getString("OfficePhone"));
+                    connectingModel.setDesignation(profile.getString("Designation"));
+                    connectingModel.setProfileDesc(profile.getString("ProfileDesc"));
+                    connectingModel.setCompanyProfile(profile.getString("CompanyProfile"));
+                    connectingModel.setEmailid(profile.getString("Emailid"));
+                    connectingTags.add(connectingModel);
+
+                    tvPersonName.setText(profile.getString("FirstName")+" "+profile.getString("LastName"));
+                    tvCompanyName.setText(profile.getString("CompanyName"));
+                    txtWeb.setText(profile.getString("Website"));
+                    txtMail.setText(profile.getString("Emailid"));
+                    txtNum.setText(profile.getString("OfficePhone"));
+                    // txtWork.setText(tag1.getWork_no());
+                    txtMob.setText(profile.getString("PrimaryPhone"));
+                    tvPersonDesignation.setText(profile.getString("Designation"));
+
+                    if(profile.getString("UserPhoto").equalsIgnoreCase(""))
+                    {
+                        ivProfileImage.setImageResource(R.drawable.usr);
+                    }
+                    else
+                    {
+                        Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+profile.getString("UserPhoto")).into(ivProfileImage);
+                    }
+
+                }
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    public  String POST(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("friendprofileID", friendProfile_id );
+            jsonObject.accumulate("myprofileID", profile_id);
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+        while((line = bufferedReader.readLine()) != null)
+            result += line;
+
+        inputStream.close();
+        return result;
+
     }
 }

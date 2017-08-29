@@ -554,6 +554,12 @@ public class List3Fragment extends Fragment
         GetData(getContext());
     }
 
+    public static void refreshList()
+    {
+        nfcModel1.clear();
+        gridAdapter.notifyDataSetChanged();
+    }
+
     public static void GetData(Context context)
     {
         nfcModel1.clear();
@@ -596,7 +602,6 @@ public class List3Fragment extends Fragment
         gridAdapter.notifyDataSetChanged();
         CardsActivity.setActionBarTitle("Cards - "+nfcModel1.size());
         gridAdapter.setMode(Attributes.Mode.Single);
-
     }
 
 }
