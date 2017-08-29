@@ -190,7 +190,9 @@ public class Notification extends AppCompatActivity {
 
                     notificationAdapter = new NotificationAdapter(Notification.this, allTags);
                     listNotification.setAdapter(notificationAdapter);
-                }else {
+                }
+                else
+                {
                     Toast.makeText(getApplicationContext(), "Not able to load Friends..", Toast.LENGTH_LONG).show();
                 }
 

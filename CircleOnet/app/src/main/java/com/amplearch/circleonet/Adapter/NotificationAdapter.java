@@ -4,13 +4,16 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +43,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by admin on 08/29/2017.
  */
 
-public class NotificationAdapter extends BaseAdapter {
+public class NotificationAdapter extends BaseAdapter
+{
     private Activity activity;
     ArrayList<NotificationModel> testimonialModels;
     private static LayoutInflater inflater = null;
@@ -50,13 +54,14 @@ public class NotificationAdapter extends BaseAdapter {
     String profileId = "", UserId = "";
     String accept = "";
 
-    public NotificationAdapter(Activity a, ArrayList<NotificationModel> testimonialModels) {
+    String testimonial;
+    EditText etTextMonial ;
+
+    public NotificationAdapter(Activity a, ArrayList<NotificationModel> testimonialModels)
+    {
         activity = a;
         this.testimonialModels = testimonialModels;
-
-        inflater = (LayoutInflater) activity
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+        inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     public int getCount() {
@@ -71,13 +76,15 @@ public class NotificationAdapter extends BaseAdapter {
         return position;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent)
+    {
         View vi = convertView;
+
         if (convertView == null)
             vi = inflater.inflate(R.layout.notification_item, null);
+
         loginSession = new LoginSession(activity);
         HashMap<String, String> user = loginSession.getUserDetails();
-
 
         profileId = user.get(LoginSession.KEY_PROFILEID);
         UserId = user.get(LoginSession.KEY_USERID);
@@ -109,7 +116,8 @@ public class NotificationAdapter extends BaseAdapter {
 
         posi = position;
         String purpose = testimonialModels.get(position).getPurpose();
-        if (purpose.equalsIgnoreCase("Recieved Testimonial")) {
+        if (purpose.equalsIgnoreCase("Recieved Testimonial"))
+        {
             lnrTestRec.setVisibility(View.VISIBLE);
             lnrTestReq.setVisibility(View.GONE);
             lnrFriend.setVisibility(View.GONE);
@@ -123,7 +131,9 @@ public class NotificationAdapter extends BaseAdapter {
             txtTestNameRec.setText(testimonialModels.get(position).getFirstName());
 
 
-        } else if (purpose.equalsIgnoreCase("Connection Requested")) {
+        }
+        else if (purpose.equalsIgnoreCase("Connection Requested"))
+        {
             lnrFriend.setVisibility(View.VISIBLE);
             lnrTestReq.setVisibility(View.GONE);
             lnrTestRec.setVisibility(View.GONE);
@@ -134,8 +144,9 @@ public class NotificationAdapter extends BaseAdapter {
             }
             txtFriendPurpose.setText(purpose);
             txtFriendName.setText(testimonialModels.get(position).getFirstName());
-
-        } else if (purpose.equalsIgnoreCase("Recieved Testimonial Request")) {
+        }
+        else if (purpose.equalsIgnoreCase("Recieved Testimonial Request"))
+        {
             lnrFriend.setVisibility(View.GONE);
             lnrTestReq.setVisibility(View.VISIBLE);
             lnrTestRec.setVisibility(View.GONE);
@@ -146,14 +157,53 @@ public class NotificationAdapter extends BaseAdapter {
             }
             txtTestPurpose.setText(purpose);
             txtTestName.setText(testimonialModels.get(position).getFirstName());
-
         }
+
+        btnTestWrite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                final AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
+                LayoutInflater inflater = activity.getLayoutInflater();
+                final View dialogView = inflater.inflate(R.layout.textimonial_write, null);
+
+                etTextMonial = (EditText)dialogView.findViewById(R.id.etTestiMonial);
+                Button btnWrite = (Button)dialogView.findViewById(R.id.btnWrite);
+                Button btnCancel = (Button)dialogView.findViewById(R.id.btnCancel);
+
+                btnWrite.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        final String text = etTextMonial.getText().toString();
+                        testimonial = text ;
+                        if(testimonial.isEmpty())
+                        {
+                            etTextMonial.setError("Please write testimonial");
+                        }
+                        else
+                        {
+                            etTextMonial.setText(null);
+                            new HttpAsyncWriteTextimonial().execute("http://circle8.asia:8081/Onet.svc/Testimonial/Write");
+                        }
+                    }
+                });
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
+
+                alertDialog.setView(dialogView);
+                alertDialog.show();
+            }
+        });
 
         btnAcceptFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new HttpAsyncTaskAcceptFriend().execute("http://circle8.asia:8081/Onet.svc/FriendConnection_Operation");
-
             }
         });
 
@@ -293,6 +343,63 @@ public class NotificationAdapter extends BaseAdapter {
         }
     }
 
+    private class HttpAsyncWriteTextimonial extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(activity);
+            dialog.setMessage("Writing Testimonial..");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            return POSTWriteTextimonial(urls[0]);
+        }
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+            dialog.dismiss();
+//            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+            try
+            {
+                if (result.equals(""))
+                {
+                    Toast.makeText(activity, "Check Internet Connection", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    JSONObject response = new JSONObject(result);
+                    String message = response.getString("TestimonialId");
+                    String success = response.getString("Success");
+
+                    if (success.equals("1"))
+                    {
+                        Toast.makeText(activity, "Testimonial Written Successfully..", Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
+                    }
+
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     private class HttpAsyncTaskAcceptFriend extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
@@ -341,7 +448,8 @@ public class NotificationAdapter extends BaseAdapter {
         }
     }
 
-    public String POST(String url) {
+    public String POST(String url)
+    {
         InputStream inputStream = null;
         String result = "";
         try {
@@ -357,6 +465,62 @@ public class NotificationAdapter extends BaseAdapter {
             jsonObject.accumulate("Operation", "Accept");
             jsonObject.accumulate("friendProfileId", testimonialModels.get(posi).getFriendProfileID());
             jsonObject.accumulate("myProfileId", profileId);
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    public String POSTWriteTextimonial(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("Testimonial_text", testimonial);
+            jsonObject.accumulate("friendprofileID", testimonialModels.get(posi).getFriendProfileID());
+            jsonObject.accumulate("myprofileID", profileId);
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
