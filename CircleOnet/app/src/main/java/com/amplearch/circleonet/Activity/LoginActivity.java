@@ -140,7 +140,7 @@ public class LoginActivity extends AppCompatActivity implements
 
     private static final String host = "api.linkedin.com";
     private static final String topCardUrl = "https://" + host + "/v1/people/~:" +
-            "(email-address,formatted-name,phone-numbers,public-profile-url,picture-url,picture-urls::(original))";
+            "(id,email-address,formatted-name,phone-numbers,public-profile-url,picture-url,picture-urls::(original))";
 
     private ProgressDialog progress;
     public static EditText etLoginUser, etLoginPass;
@@ -520,7 +520,7 @@ public class LoginActivity extends AppCompatActivity implements
                             else
                             {
                                 // imgFinger.setVisibility(View.GONE);
-                                loginSession.createLoginSession(profileid, UserID, "", userName, "", "");
+                                loginSession.createLoginSession(profileid, UserID, FirstName + " " +LastName, final_email, UserPhoto, "");
                                 if (prefs.getBoolean("firstrun", true)) {
                                     // Do first run stuff here then set 'firstrun' as false
                                     // using the following line to edit/commit prefs
@@ -634,10 +634,26 @@ public class LoginActivity extends AppCompatActivity implements
                 Log.e(TAG, "Name: " + personName + ", email: " + email
                 );
 
+                Facebook = "";
+                Google = acct.getId();
+                Linkedin = "";
+                Twitter = "";
+
+                final_name = personName;
+                final_email = email;
+                final_image = personPhotoUrl;
+                SocialMedia_Id = acct.getId();
+                SocialMedia_Type = "Google";
+                UserName = email;
+
+                new HttpAsyncTaskSocialMedia().execute("http://circle8.asia:8081/Onet.svc/SocialMediaLogin");
+
+
+
 
                 //  loginSession.createLoginSession("", personName, email, personPhotoUrl, "");
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+             /*   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     // imgFinger.setVisibility(View.VISIBLE);
                     Gson gson = ((MyApplication) getApplication()).getGsonObject();
                     UserObject userData = new UserObject("", personName, email, "", "", "", personPhotoUrl, false);
@@ -665,7 +681,7 @@ public class LoginActivity extends AppCompatActivity implements
                         finish();
                     }
                 }
-
+*/
                 // Toast.makeText(getApplicationContext(), "Name: " + personName + ", email: " + email, Toast.LENGTH_LONG).show();
 
            /* txtName.setText(personName);
@@ -746,7 +762,23 @@ public class LoginActivity extends AppCompatActivity implements
                             finish();
 */
 
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            Facebook = "";
+                            Google = "";
+                            Linkedin = "";
+                            Twitter = user.getUid();
+
+                            final_name = user.getDisplayName();
+                            final_email = user.getEmail();
+                            final_image = String.valueOf(user.getPhotoUrl());
+                            SocialMedia_Id = user.getUid();
+                            SocialMedia_Type = "Twitter";
+                            UserName = user.getEmail();
+
+                            new HttpAsyncTaskSocialMedia().execute("http://circle8.asia:8081/Onet.svc/SocialMediaLogin");
+
+
+
+                            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                 // imgFinger.setVisibility(View.VISIBLE);
                                 Gson gson = ((MyApplication) getApplication()).getGsonObject();
                                 UserObject userData = new UserObject("", user.getDisplayName(), user.getEmail(), "", "", "", String.valueOf(user.getPhotoUrl()), false);
@@ -773,7 +805,7 @@ public class LoginActivity extends AppCompatActivity implements
                                     startActivity(userIntent);
                                     finish();
                                 }
-                            }
+                            }*/
 
 
                             //updateUI(user);
@@ -849,7 +881,26 @@ public class LoginActivity extends AppCompatActivity implements
 
         try {
             Log.d("response link ", response.toString());
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
+            Facebook = "";
+            Google = "";
+            Linkedin = "";
+            Twitter = response.get("id").toString();
+
+            final_name = response.get("formattedName").toString();
+            final_email = response.get("emailAddress").toString();
+            String img = response.get("publicProfileUrl").toString().replaceAll("/", "");
+            final_image = img;
+            SocialMedia_Id = response.get("id").toString();
+            SocialMedia_Type = "Linkedin";
+            UserName = response.get("emailAddress").toString();
+
+            new HttpAsyncTaskSocialMedia().execute("http://circle8.asia:8081/Onet.svc/SocialMediaLogin");
+
+
+
+            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 // imgFinger.setVisibility(View.VISIBLE);
                 Gson gson = ((MyApplication) getApplication()).getGsonObject();
                 UserObject userData = new UserObject("", response.get("formattedName").toString(), response.get("emailAddress").toString(), "", "", "", response.get("publicProfileUrl").toString(), false);
@@ -877,7 +928,7 @@ public class LoginActivity extends AppCompatActivity implements
                     startActivity(userIntent);
                     finish();
                 }
-            }
+            }*/
 
 
         } catch (Exception e) {
@@ -1016,7 +1067,7 @@ public class LoginActivity extends AppCompatActivity implements
                                 final_image = personPhotoUrl;
                                 SocialMedia_Id = user.facebookID;
                                 SocialMedia_Type = "Facebook";
-                                UserName = user.name;
+                                UserName = user.email;
 
                                 new HttpAsyncTaskSocialMedia().execute("http://circle8.asia:8081/Onet.svc/SocialMediaLogin");
 
