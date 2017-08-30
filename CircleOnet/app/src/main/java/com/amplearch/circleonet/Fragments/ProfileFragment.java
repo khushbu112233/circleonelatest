@@ -104,6 +104,8 @@ public class ProfileFragment extends Fragment
 
     ArrayList<String> title_array = new ArrayList<String>();
     ArrayList<String> notice_array = new ArrayList<String>();
+    String Address1 = "", Address2 = "", Address3 = "", Address4 = "", City = "", State = "", Country = "", Postalcode = "", Website = "", Attachment_FileName = "";
+
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -413,6 +415,14 @@ public class ProfileFragment extends Fragment
                                     tvCompanyName.setText(allTags.get(i).getCompanyName());
                                     tvDesi.setText(allTags.get(i).getDesignation());
                                     tvMob.setText(allTags.get(i).getPhone());
+                                    tvAddress.setText(allTags.get(i).getAddress1()+ " "+allTags.get(i).getAddress2() + " "
+                                           + allTags.get(i).getAddress3()  + " "
+                                            + allTags.get(i).getAddress4() + " "
+                                            + allTags.get(i).getCity() + " "
+                                            + allTags.get(i).getState() + " "
+                                            + allTags.get(i).getCountry() + " "
+                                            + allTags.get(i).getPostalcode());
+                                    tvWebsite.setText(allTags.get(i).getWebsite());
                                     TestimonialProfileId = allTags.get(i).getProfileID();
                                     if (allTags.get(i).getUserPhoto().equals(""))
                                     {
@@ -663,6 +673,20 @@ public class ProfileFragment extends Fragment
                         nfcModelTag.setDesignation(object.getString("Designation"));
                         nfcModelTag.setCompanyName(object.getString("CompanyName"));
                         nfcModelTag.setPhone(object.getString("Phone"));
+                        nfcModelTag.setAddress1(object.getString("Address1"));
+                        nfcModelTag.setAddress2(object.getString("Address2"));
+                        nfcModelTag.setAddress3(object.getString("Address3"));
+                        nfcModelTag.setAddress4(object.getString("Address4"));
+                        nfcModelTag.setCity(object.getString("City"));
+                        nfcModelTag.setState(object.getString("State"));
+                        nfcModelTag.setCountry(object.getString("Country"));
+                        nfcModelTag.setPostalcode(object.getString("Postalcode"));
+                        nfcModelTag.setWebsite(object.getString("Website"));
+                        nfcModelTag.setFacebook(object.getString("Facebook"));
+                        nfcModelTag.setTwitter(object.getString("Twitter"));
+                        nfcModelTag.setGoogle(object.getString("Google"));
+                        nfcModelTag.setLinkedin(object.getString("Linkedin"));
+                        nfcModelTag.setAttachment_FileName(object.getString("Attachment_FileName"));
                         allTags.add(nfcModelTag);
                       //  GetData(getContext());
                     }
@@ -674,7 +698,14 @@ public class ProfileFragment extends Fragment
                     tvCompanyName.setText(allTags.get(0).getCompanyName());
                     tvDesi.setText(allTags.get(0).getDesignation());
                     tvMob.setText(allTags.get(0).getPhone());
-
+                    tvAddress.setText(allTags.get(0).getAddress1()+ " "+allTags.get(0).getAddress2() + " "
+                            + allTags.get(0).getAddress3()  + " "
+                            + allTags.get(0).getAddress4() + " "
+                            + allTags.get(0).getCity() + " "
+                            + allTags.get(0).getState() + " "
+                            + allTags.get(0).getCountry() + " "
+                            + allTags.get(0).getPostalcode());
+                    tvWebsite.setText(allTags.get(0).getWebsite());
                     image = new ArrayList<>();
                     if (allTags.get(0).getUserPhoto().equals(""))
                     {

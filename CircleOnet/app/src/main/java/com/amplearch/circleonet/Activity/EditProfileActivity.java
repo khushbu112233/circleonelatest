@@ -82,6 +82,7 @@ public class EditProfileActivity extends AppCompatActivity {
     ArrayList<String> company, designation, industry;
     String profileId = "", Card_Front = "", Card_Back = "", FirstName = "", LastName = "", UserPhoto = "", OfficePhone = "", PrimaryPhone = "", Emailid = "",
             Facebook = "", Twitter = "", Google = "", IndustryName = "", CompanyName = "", CompanyProfile = "", Designation = "", ProfileDesc = "", Status = "";
+    String Address1 = "", Address2 = "", Address3 = "", Address4 = "", City = "", State = "", Country = "", Postalcode = "", Website = "", Attachment_FileName = "";
     EditText edtUserName, edtWork, edtPrimary, edtEmail, edtProfileDesc, edtCompanyDesc;
     public static ViewPager mViewPager, viewPager1;
     CircleImageView imgProfile;
@@ -1574,6 +1575,17 @@ public class EditProfileActivity extends AppCompatActivity {
                     Designation = jsonObject.getString("Designation");
                     ProfileDesc = jsonObject.getString("ProfileDesc");
                     Status = jsonObject.getString("Status");
+                    Address1 = jsonObject.getString("Address1");
+                    Address2 = jsonObject.getString("Address2");
+                    Address3 = jsonObject.getString("Address3");
+                    Address4 = jsonObject.getString("Address4");
+                    City = jsonObject.getString("City");
+                    State = jsonObject.getString("State");
+                    Country = jsonObject.getString("Country");
+                    Postalcode = jsonObject.getString("Postalcode");
+                    Website = jsonObject.getString("Website");
+                    Attachment_FileName = jsonObject.getString("Attachment_FileName");
+
                     tvCompany.setText(CompanyName);
                     tvDesignation.setText(Designation);
                     tvPersonName.setText(FirstName + " " + LastName);
@@ -1586,6 +1598,14 @@ public class EditProfileActivity extends AppCompatActivity {
                     edtEmail.setText(Emailid);
                     edtPrimary.setText(PrimaryPhone);
                     edtWork.setText(OfficePhone);
+                    edtWebsite.setText(Website);
+                    edtAddress1.setText(Address1 + " "+ Address2);
+                    edtAddress2.setText(Address3 + " "+ Address4);
+                    edtAddress3.setText(City);
+                    edtAddress4.setText(State);
+                    edtAddress5.setText(Country);
+                    edtAddress6.setText(Postalcode);
+                    etAttachFile.setText(Attachment_FileName);
 
                     txtCardFront.setText(Card_Front);
                     txtCardBack.setText(Card_Back);

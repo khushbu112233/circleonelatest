@@ -15,7 +15,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -171,7 +173,26 @@ public class LoginActivity extends AppCompatActivity implements
         etLoginUser = (EditText) findViewById(R.id.etLoginUser);
         login_linkedin_btn = (ImageView) findViewById(R.id.login_button_linkedin);
         prefs = getSharedPreferences("com.amplearch.circleonet", MODE_PRIVATE);
+        etLoginPass.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        etLoginPass.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    userName = etLoginUser.getText().toString();
+                    userPassword = etLoginPass.getText().toString();
 
+                    if (!validateLogin(userName, userPassword))
+                    {
+                        Toast.makeText(getApplicationContext(), "Form Fill Invalid!", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/UserLogin");
+                    }
+                }
+                return false;
+            }
+        });
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -318,6 +339,8 @@ public class LoginActivity extends AppCompatActivity implements
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Password", userPassword);
+            jsonObject.accumulate("Platform", "Android");
+            jsonObject.accumulate("Token", "1234567890");
             jsonObject.accumulate("UserName", userName);
 
             // 4. convert JSONObject to JSON to String
@@ -840,13 +863,14 @@ public class LoginActivity extends AppCompatActivity implements
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
+        }else {
+            LISessionManager.getInstance(getApplicationContext()).onActivityResult(this, requestCode, resultCode, data);
+            progress = new ProgressDialog(this);
+            progress.setMessage("Logging in...");
+            progress.setCanceledOnTouchOutside(false);
+            progress.show();
+            linkededinApiHelper();
         }
-        LISessionManager.getInstance(getApplicationContext()).onActivityResult(this, requestCode, resultCode, data);
-        progress = new ProgressDialog(this);
-        progress.setMessage("Logging in...");
-        progress.setCanceledOnTouchOutside(false);
-        progress.show();
-        linkededinApiHelper();
     }
 
     public void linkededinApiHelper() {
