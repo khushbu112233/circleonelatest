@@ -120,7 +120,8 @@ public class EditProfileActivity extends AppCompatActivity
     TextView txtCardFront, txtCardBack;
     String cardType = "";
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException
+    {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line = "";
         String result = "";
@@ -129,7 +130,6 @@ public class EditProfileActivity extends AppCompatActivity
 
         inputStream.close();
         return result;
-
     }
 
     @Override
