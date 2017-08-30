@@ -101,7 +101,7 @@ public class TestimonialActivity extends AppCompatActivity {
                         nfcModelTag.setUserPhoto(object.getString("UserPhoto"));
                         allTaggs.add(nfcModelTag);
                     }
-                    adapter = new TestimonialAdapter(TestimonialActivity.this, allTaggs);
+                    adapter = new TestimonialAdapter(TestimonialActivity.this, R.layout.full_testimonial_row, allTaggs);
                     lstTestimonial.setAdapter(adapter);
 
                 }

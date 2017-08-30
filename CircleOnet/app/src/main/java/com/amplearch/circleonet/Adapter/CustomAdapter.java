@@ -12,22 +12,24 @@ import android.widget.TextView;
 import com.amplearch.circleonet.Model.ItemObject;
 import com.amplearch.circleonet.Model.TestimonialModel;
 import com.amplearch.circleonet.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CustomAdapter extends BaseAdapter
 {
 
     private Activity activity;
     // private ArrayList&lt;HashMap&lt;String, String&gt;&gt; data;
-    private static ArrayList title,notice;
+    private static ArrayList<TestimonialModel> testimonialModels;
     private static LayoutInflater inflater = null;
 
-    public CustomAdapter(Activity a, ArrayList b, ArrayList bod) {
+    public CustomAdapter(Activity a, ArrayList<TestimonialModel> testimonialModels) {
         activity = a;
-        this.title = b;
-        this.notice=bod;
+        this.testimonialModels = testimonialModels;
 
         inflater = (LayoutInflater) activity
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -35,7 +37,7 @@ public class CustomAdapter extends BaseAdapter
     }
 
     public int getCount() {
-        return title.size();
+        return testimonialModels.size();
     }
 
     public Object getItem(int position) {
@@ -51,16 +53,17 @@ public class CustomAdapter extends BaseAdapter
         if (convertView == null)
             vi = inflater.inflate(R.layout.testimonial_row, null);
 
-        TextView title2 = (TextView) vi.findViewById(R.id.txtTestimonial2); // title
-        String song = title.get(position).toString();
-        title2.setText(song);
+        CircleImageView circleImageView = (CircleImageView) vi.findViewById(R.id.imgUser);
+        TextView txtName = (TextView) vi.findViewById(R.id.txtName);
+        TextView txtTestimonial = (TextView) vi.findViewById(R.id.txtTestimonial);
 
-
-        TextView title22 = (TextView) vi.findViewById(R.id.txtTestimonial1); // notice
-        String pos = String.valueOf(position+1);
-        String song2 = "Testimonial "+pos+" : ";
-        title22.setText(song2);
-
+        if (testimonialModels.get(position).getUserPhoto().equals("")){
+            circleImageView.setImageResource(R.drawable.usr);
+        }else {
+            Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(circleImageView);
+        }
+        txtName.setText(testimonialModels.get(position).getFirstName() + " " + testimonialModels.get(position).getLastName());
+        txtTestimonial.setText(testimonialModels.get(position).getTestimonial_Text());
         return vi;
 
     }

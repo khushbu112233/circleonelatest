@@ -85,6 +85,7 @@
                             android:layout_height="match_parent">
 
                             <ImageView
+                                android:id="@+id/imgBack"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginLeft="10dp"
                                 android:layout_width="30dp"
@@ -564,6 +565,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                     <TextView
+                        android:id="@+id/txtTestLbl"
                         android:layout_marginTop="10dp"
                         android:layout_marginLeft="20dp"
                         android:layout_centerVertical="true"
@@ -573,17 +575,31 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" />
 
+                        <ImageView
+                            android:scaleType="fitEnd"
+                            android:layout_toRightOf="@+id/txtTestLbl"
+                            android:layout_marginRight="10dp"
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@+id/txtMore"
+                            android:id="@+id/imgAdd"
+                            android:layout_marginLeft="15dp"
+                            android:tint="@color/colorPrimary"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:src="@android:drawable/ic_input_add"/>
+
                     <TextView
+                        android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:id="@+id/txtMore"
                         android:layout_marginRight="10dp"
                         android:textAlignment="textEnd"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="More.."
                         android:textColor="@color/colorPrimary"/>
                     </RelativeLayout>
-                    <ListView
+                    <com.amplearch.circleonet.Utils.ExpandableHeightListView
                         android:nestedScrollingEnabled="true"
                         android:layout_marginTop="5dp"
                         tools:listitem="@layout/testimonial_row"
@@ -592,7 +608,7 @@
                         android:layout_marginLeft="20dp"
                         android:layout_centerVertical="true"
                         android:layout_width="match_parent"
-                        android:layout_height="52dp"></ListView>
+                        android:layout_height="wrap_content"></com.amplearch.circleonet.Utils.ExpandableHeightListView>
 
                     <TextView
                         android:visibility="gone"

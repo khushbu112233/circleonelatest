@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -29,6 +30,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amplearch.circleonet.Activity.CardsActivity;
 import com.amplearch.circleonet.Activity.EditProfileActivity;
 import com.amplearch.circleonet.Activity.Profile;
 import com.amplearch.circleonet.Activity.TestimonialActivity;
@@ -42,6 +44,7 @@ import com.amplearch.circleonet.Model.TestimonialModel;
 import com.amplearch.circleonet.Model.User;
 import com.amplearch.circleonet.R;
 import com.amplearch.circleonet.Utils.CarouselEffectTransformer;
+import com.amplearch.circleonet.Utils.ExpandableHeightListView;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -82,6 +85,7 @@ public class ProfileFragment extends Fragment
 
     private LoginSession session;
     private String UserID = "";
+    ImageView imgBack;
 
     public static ArrayList<ProfileModel> allTags ;
     String profileId = "";
@@ -96,9 +100,9 @@ public class ProfileFragment extends Fragment
     String recycle_image1, recycle_image2 ;
     private ArrayList<String> image = new ArrayList<>();;
     private CardSwipe myPager ;
-    public static List<TestimonialModel> allTaggs ;
+    public static ArrayList<TestimonialModel> allTaggs ;
     String TestimonialProfileId = "";
-    ListView lstTestimonial;
+    ExpandableHeightListView lstTestimonial;
     TextView txtTestimonial, txtMore;
     CustomAdapter customAdapter;
 
@@ -144,9 +148,10 @@ public class ProfileFragment extends Fragment
         lnrMap = (LinearLayout) view.findViewById(R.id.lnrMap);
         mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
         viewPager1 = (ViewPager) view.findViewById(R.id.viewPager1);
-        lstTestimonial = (ListView) view.findViewById(R.id.lstTestimonial);
+        lstTestimonial = (ExpandableHeightListView) view.findViewById(R.id.lstTestimonial);
         txtTestimonial = (TextView) view.findViewById(R.id.txtTestimonial);
         txtMore = (TextView) view.findViewById(R.id.txtMore);
+        imgBack = (ImageView) view.findViewById(R.id.imgBack);
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Generating Qr Code...");
         progressDialog.setCancelable(false);
@@ -201,6 +206,20 @@ public class ProfileFragment extends Fragment
                 Intent intent = new Intent(getContext(), TestimonialActivity.class);
                 intent.putExtra("ProfileId", TestimonialProfileId);
                 startActivity(intent);
+            }
+        });
+
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent go = new Intent(getContext(),CardsActivity.class);
+
+                // you pass the position you want the viewpager to show in the extra,
+                // please don't forget to define and initialize the position variable
+                // properly
+                go.putExtra("viewpager_position", 0);
+                startActivity(go);
+                getActivity().finish();
             }
         });
 
@@ -888,39 +907,37 @@ public class ProfileFragment extends Fragment
                         txtMore.setVisibility(View.GONE);
                         txtTestimonial.setVisibility(View.VISIBLE);
                     }
-                    else if (jsonArray.length() > 3){
-                        lstTestimonial.setVisibility(View.VISIBLE);
-                        txtMore.setVisibility(View.VISIBLE);
-                        txtTestimonial.setVisibility(View.GONE);
-                    }
                     else {
                         lstTestimonial.setVisibility(View.VISIBLE);
-                        txtMore.setVisibility(View.GONE);
+                        txtMore.setVisibility(View.VISIBLE);
                         txtTestimonial.setVisibility(View.GONE);
                     }
 
                     for (int i = 0; i < jsonArray.length(); i++){
 
-                        JSONObject object = jsonArray.getJSONObject(i);
-                        //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
+                        if (i < 3) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
 
-                        TestimonialModel nfcModelTag = new TestimonialModel();
-                        nfcModelTag.setCompanyName(object.getString("CompanyName"));
-                        nfcModelTag.setDesignation(object.getString("Designation"));
-                        nfcModelTag.setFirstName(object.getString("FirstName"));
-                        nfcModelTag.setFriendProfileID(object.getString("FriendProfileID"));
-                        nfcModelTag.setLastName(object.getString("LastName"));
-                        nfcModelTag.setPurpose(object.getString("Purpose"));
-                        nfcModelTag.setStatus(object.getString("Status"));
-                        nfcModelTag.setTestimonial_Text(object.getString("Testimonial_Text"));
-                        nfcModelTag.setUserPhoto(object.getString("UserPhoto"));
-                        title_array.add(object.getString("Testimonial_Text").toString());
-                        notice_array.add(String.valueOf(i));
+                            TestimonialModel nfcModelTag = new TestimonialModel();
+                            nfcModelTag.setCompanyName(object.getString("CompanyName"));
+                            nfcModelTag.setDesignation(object.getString("Designation"));
+                            nfcModelTag.setFirstName(object.getString("FirstName"));
+                            nfcModelTag.setFriendProfileID(object.getString("FriendProfileID"));
+                            nfcModelTag.setLastName(object.getString("LastName"));
+                            nfcModelTag.setPurpose(object.getString("Purpose"));
+                            nfcModelTag.setStatus(object.getString("Status"));
+                            nfcModelTag.setTestimonial_Text(object.getString("Testimonial_Text"));
+                            nfcModelTag.setUserPhoto(object.getString("UserPhoto"));
+                            title_array.add(object.getString("Testimonial_Text").toString());
+                            notice_array.add(String.valueOf(i));
 //                        Toast.makeText(getContext(), object.getString("Testimonial_Text"), Toast.LENGTH_LONG).show();
-                        allTaggs.add(nfcModelTag);
+                            allTaggs.add(nfcModelTag);
+                        }
                     }
-                    customAdapter = new CustomAdapter(getActivity(), title_array, notice_array);
+                    customAdapter = new CustomAdapter(getActivity(), allTaggs);
                     lstTestimonial.setAdapter(customAdapter);
+                    lstTestimonial.setExpanded(true);
 
                 }
                 else

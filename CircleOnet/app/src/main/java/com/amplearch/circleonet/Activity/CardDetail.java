@@ -147,6 +147,139 @@ public class CardDetail extends NfcActivity
             }
         });
 
+        imgMail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (txtEmail.getText().toString().equals(""))
+                {
+
+                }
+                else
+                {
+                    AlertDialog.Builder builder;
+                    builder = new AlertDialog.Builder(CardDetail.this);
+                    builder.setTitle("Mail to "+ txtName.getText().toString())
+                            .setMessage("Are you sure you want to drop Mail ?")
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // continue with delete
+                                    try
+                                    {
+                                        Intent intent = new Intent (Intent.ACTION_VIEW , Uri.parse("mailto:" + txtEmail.getText().toString()));
+                                        intent.putExtra(Intent.EXTRA_SUBJECT, "");
+                                        intent.putExtra(Intent.EXTRA_TEXT, "");
+                                        startActivity(intent);
+                                    }
+                                    catch(Exception e)
+                                    {
+                                        Toast.makeText(getApplicationContext(), "Sorry...You don't have any mail app", Toast.LENGTH_SHORT).show();
+                                        e.printStackTrace();
+                                    }
+                                }
+                            })
+                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // do nothing
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_dialog_email)
+                            .show();
+                }
+            }
+        });
+
+        imgSMS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (txtMob.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "You are not having contact to SMS..", Toast.LENGTH_LONG).show();
+                }else {
+                    Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+                    smsIntent.setType("vnd.android-dir/mms-sms");
+                    smsIntent.putExtra("address", txtMob.getText().toString());
+                    smsIntent.putExtra("sms_body", "");
+                    startActivity(smsIntent);
+                }
+            }
+        });
+
+        imgCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!txtMob.getText().toString().equals("")){
+                    AlertDialog.Builder builder;
+                    builder = new AlertDialog.Builder(CardDetail.this);
+
+                    builder.setTitle("Call to " + txtName.getText().toString())
+                            .setMessage("Are you sure you want to make a Call ?")
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // continue with delete
+                                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                                    intent.setData(Uri.parse("tel:" + txtMob.getText().toString()));
+                                    startActivity(intent);
+                                }
+                            })
+                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // do nothing
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_menu_call)
+                            .show();
+                }
+                else if (!txtWork.getText().toString().equals("")){
+                    AlertDialog.Builder builder;
+                    builder = new AlertDialog.Builder(CardDetail.this);
+
+                    builder.setTitle("Call to " + txtName.getText().toString())
+                            .setMessage("Are you sure you want to make a Call ?")
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // continue with delete
+                                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                                    intent.setData(Uri.parse("tel:" + txtWork.getText().toString()));
+                                    startActivity(intent);
+                                }
+                            })
+                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // do nothing
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_menu_call)
+                            .show();
+                }
+                else if (!txtPH.getText().toString().equals("")){
+                    AlertDialog.Builder builder;
+                    builder = new AlertDialog.Builder(CardDetail.this);
+
+                    builder.setTitle("Call to " + txtName.getText().toString())
+                            .setMessage("Are you sure you want to make a Call ?")
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // continue with delete
+                                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                                    intent.setData(Uri.parse("tel:" + txtPH.getText().toString()));
+                                    startActivity(intent);
+                                }
+                            })
+                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // do nothing
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_menu_call)
+                            .show();
+                }
+            }
+        });
+
         llEmailBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)

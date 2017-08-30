@@ -1,6 +1,7 @@
 package com.amplearch.circleonet.Activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -59,7 +60,7 @@ public class Notification extends AppCompatActivity {
         textView.setText("Notifications - 0");
         ImageView drawer = (ImageView) findViewById(R.id.drawer);
         drawer.setVisibility(View.GONE);
-        imgLogo.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
+       // imgLogo.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
 
         listNotification = (ListView) findViewById(R.id.listNotification);
         loginSession = new LoginSession(getApplicationContext());
@@ -67,6 +68,17 @@ public class Notification extends AppCompatActivity {
         UserId = user.get(LoginSession.KEY_USERID);
         allTags = new ArrayList<>();
         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/Notification");
+
+        imgLogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //Toast.makeText(getApplicationContext(), "Hello", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
     }
 

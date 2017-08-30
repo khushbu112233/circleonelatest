@@ -40,6 +40,7 @@ import com.amplearch.circleonet.Helper.LoginSession;
 import com.amplearch.circleonet.Model.TestimonialModel;
 import com.amplearch.circleonet.R;
 import com.amplearch.circleonet.Utils.ExpandableHeightGridView;
+import com.amplearch.circleonet.Utils.ExpandableHeightListView;
 import com.amplearch.circleonet.Utils.Utility;
 import com.squareup.picasso.Picasso;
 
@@ -72,7 +73,7 @@ import static junit.framework.Assert.assertEquals;
 public class EditProfileActivity extends AppCompatActivity
 {
     private static final int PICKFILE_RESULT_CODE = 1;
-    public static List<TestimonialModel> allTaggs;
+    public static ArrayList<TestimonialModel> allTaggs;
     //for adding event and expande & collapse
     public static ArrayList<String> addEventList = new ArrayList<>();
     public static AddEventAdapter addEventAdapter;
@@ -88,7 +89,7 @@ public class EditProfileActivity extends AppCompatActivity
     public static ViewPager mViewPager, viewPager1;
     CircleImageView imgProfile;
     TextView tvPersonName, tvDesignation, tvCompany;
-    ListView lstTestimonial;
+    ExpandableHeightListView lstTestimonial;
     TextView txtTestimonial, txtMore;
     CustomAdapter customAdapter;
     ArrayList<String> title_array = new ArrayList<String>();
@@ -96,6 +97,7 @@ public class EditProfileActivity extends AppCompatActivity
     String type = "";
     EditText edtAddress1, edtAddress2, edtAddress3, edtAddress4, edtAddress5, edtAddress6, edtWebsite;
     String UserID = "";
+    ImageView imgBack;
     private ExpandableHeightGridView gridView, gridViewAdded;
     private String[] array;
     private EditText etAttachFile;
@@ -146,6 +148,7 @@ public class EditProfileActivity extends AppCompatActivity
         ivAttachFile = (ImageView) findViewById(R.id.ivAttachFile);
         session = new LoginSession(getApplicationContext());
         imgDone = (ImageView) findViewById(R.id.imgDone);
+        imgBack = (ImageView) findViewById(R.id.imgBack);
         edtUserName = (EditText) findViewById(R.id.edtUserName);
         edtAddress1 = (EditText) findViewById(R.id.edtAddress1);
         edtAddress2 = (EditText) findViewById(R.id.edtAddress2);
@@ -165,7 +168,7 @@ public class EditProfileActivity extends AppCompatActivity
         tvCompany = (TextView) findViewById(R.id.tvCompany);
         tvDesignation = (TextView) findViewById(R.id.tvDesignation);
         tvPersonName = (TextView) findViewById(R.id.tvPersonName);
-        lstTestimonial = (ListView) findViewById(R.id.lstTestimonial);
+        lstTestimonial = (ExpandableHeightListView) findViewById(R.id.lstTestimonial);
         txtTestimonial = (TextView) findViewById(R.id.txtTestimonial);
         txtMore = (TextView) findViewById(R.id.txtMore);
         ivArrowImg = (ImageView) findViewById(R.id.ivArrowImg);
@@ -192,6 +195,19 @@ public class EditProfileActivity extends AppCompatActivity
                 "Travel", "Fine Arts", "Utilities", "Food & Beverage", "Video Game", "Green Technology", "Web Services", "Health"};
         gridView.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.mytextview, array));
         gridView.setExpanded(true);
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+
+                // you pass the position you want the viewpager to show in the extra,
+                // please don't forget to define and initialize the position variable
+                // properly
+                go.putExtra("viewpager_position", 3);
+                startActivity(go);
+                finish();
+            }
+        });
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
@@ -1374,38 +1390,37 @@ public class EditProfileActivity extends AppCompatActivity
                         lstTestimonial.setVisibility(View.GONE);
                         txtMore.setVisibility(View.GONE);
                         txtTestimonial.setVisibility(View.VISIBLE);
-                    } else if (jsonArray.length() > 3) {
+                    } else  {
                         lstTestimonial.setVisibility(View.VISIBLE);
                         txtMore.setVisibility(View.VISIBLE);
-                        txtTestimonial.setVisibility(View.GONE);
-                    } else {
-                        lstTestimonial.setVisibility(View.VISIBLE);
-                        txtMore.setVisibility(View.GONE);
                         txtTestimonial.setVisibility(View.GONE);
                     }
 
                     for (int i = 0; i < jsonArray.length(); i++) {
 
-                        JSONObject object = jsonArray.getJSONObject(i);
-                        //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
+                        if (i < 3) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
 
-                        TestimonialModel nfcModelTag = new TestimonialModel();
-                        nfcModelTag.setCompanyName(object.getString("CompanyName"));
-                        nfcModelTag.setDesignation(object.getString("Designation"));
-                        nfcModelTag.setFirstName(object.getString("FirstName"));
-                        nfcModelTag.setFriendProfileID(object.getString("FriendProfileID"));
-                        nfcModelTag.setLastName(object.getString("LastName"));
-                        nfcModelTag.setPurpose(object.getString("Purpose"));
-                        nfcModelTag.setStatus(object.getString("Status"));
-                        nfcModelTag.setTestimonial_Text(object.getString("Testimonial_Text"));
-                        nfcModelTag.setUserPhoto(object.getString("UserPhoto"));
-                        title_array.add(object.getString("Testimonial_Text").toString());
-                        notice_array.add(String.valueOf(i));
-                        //  Toast.makeText(getContext(), object.getString("Testimonial_Text"), Toast.LENGTH_LONG).show();
-                        allTaggs.add(nfcModelTag);
+                            TestimonialModel nfcModelTag = new TestimonialModel();
+                            nfcModelTag.setCompanyName(object.getString("CompanyName"));
+                            nfcModelTag.setDesignation(object.getString("Designation"));
+                            nfcModelTag.setFirstName(object.getString("FirstName"));
+                            nfcModelTag.setFriendProfileID(object.getString("FriendProfileID"));
+                            nfcModelTag.setLastName(object.getString("LastName"));
+                            nfcModelTag.setPurpose(object.getString("Purpose"));
+                            nfcModelTag.setStatus(object.getString("Status"));
+                            nfcModelTag.setTestimonial_Text(object.getString("Testimonial_Text"));
+                            nfcModelTag.setUserPhoto(object.getString("UserPhoto"));
+                            title_array.add(object.getString("Testimonial_Text").toString());
+                            notice_array.add(String.valueOf(i));
+                            //  Toast.makeText(getContext(), object.getString("Testimonial_Text"), Toast.LENGTH_LONG).show();
+                            allTaggs.add(nfcModelTag);
+                        }
                     }
-                    customAdapter = new CustomAdapter(EditProfileActivity.this, title_array, notice_array);
+                    customAdapter = new CustomAdapter(EditProfileActivity.this, allTaggs);
                     lstTestimonial.setAdapter(customAdapter);
+                    lstTestimonial.setExpanded(true);
 
                 } else {
                     Toast.makeText(getApplicationContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();

@@ -27,6 +27,7 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -135,7 +136,7 @@ public class List1Fragment extends Fragment
 
         view = inflater.inflate(R.layout.fragment_list1, container, false);
         vc = ViewConfiguration.get(view.getContext());
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
+       ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
         // frameList1 = (FrameLayout) view.findViewById(R.id.frameList1);
         mTouchSlop = vc.getScaledTouchSlop();
         recyclerView1 = (RecyclerView) view.findViewById(R.id.list_horizontal1);
@@ -158,6 +159,8 @@ public class List1Fragment extends Fragment
         initRecyclerView2(recyclerView2,new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter1 ) ;
 
         searchText = (AutoCompleteTextView)view.findViewById(R.id.searchView);
+        InputMethodManager keyboard = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        keyboard.hideSoftInputFromWindow(searchText.getWindowToken(), 0);
 
         lnrSearch.setVisibility(View.VISIBLE);
         line.setVisibility(View.VISIBLE);
@@ -190,12 +193,12 @@ public class List1Fragment extends Fragment
 
                 View view_instance = (View)view.findViewById(R.id.list_horizontal1);
                 ViewGroup.LayoutParams params=view_instance.getLayoutParams();
-                params.height=height/(29/10);
+                params.height=(height/(29/10))-10;
                 view_instance.setLayoutParams(params);
 
                 View view_instance1 = (View)view.findViewById(R.id.list_horizontal2);
                 ViewGroup.LayoutParams params1=view_instance1.getLayoutParams();
-                params1.height=height/(29/10);
+                params1.height=(height/(29/10))-10;
                 view_instance1.setLayoutParams(params1);
 
             }

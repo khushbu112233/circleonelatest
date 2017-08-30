@@ -84,6 +84,7 @@
                             android:layout_height="match_parent">
 
                             <ImageView
+                                android:id="@+id/imgBack"
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_alignParentLeft="true"
@@ -576,6 +577,11 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginRight="20dp" />
+
                         <EditText
                             android:id="@+id/edtAddress2"
                             android:layout_width="match_parent"
@@ -585,12 +591,6 @@
                             android:paddingLeft="10dp"
                             android:text=""
                             android:textSize="13sp" />
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginRight="20dp" />
-
                     </LinearLayout>
 
                     <LinearLayout
@@ -644,9 +644,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
-                                android:hint="state"
                                 android:paddingBottom="15dp"
                                 android:paddingLeft="10dp"
+                                android:hint="state"
                                 android:textSize="13sp" />
                         </LinearLayout>
 
@@ -1131,40 +1131,53 @@
                         android:layout_marginTop="15dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="20dp"
+                            android:id="@+id/txtTestLbl"
                             android:layout_marginTop="10dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_centerVertical="true"
                             android:fontFamily="monospace"
                             android:text="Testimonial"
                             android:textColor="@color/colorPrimary"
                             android:textSize="22sp"
-                            android:textStyle="normal" />
+                            android:textStyle="normal" android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
+
+                        <ImageView
+                            android:scaleType="fitEnd"
+                            android:layout_toRightOf="@+id/txtTestLbl"
+                            android:layout_marginRight="10dp"
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@+id/txtMore"
+                            android:id="@+id/imgAdd"
+                            android:layout_marginLeft="15dp"
+                            android:tint="@color/colorPrimary"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:src="@android:drawable/ic_input_add"/>
 
                         <TextView
-                            android:id="@+id/txtMore"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
+                            android:id="@+id/txtMore"
                             android:layout_marginRight="10dp"
-                            android:text="More.."
                             android:textAlignment="textEnd"
-                            android:textColor="@color/colorPrimary" />
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="More.."
+                            android:textColor="@color/colorPrimary"/>
                     </RelativeLayout>
 
-                    <ListView
+                    <com.amplearch.circleonet.Utils.ExpandableHeightListView
                         android:id="@+id/lstTestimonial"
                         android:layout_width="match_parent"
-                        android:layout_height="52dp"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="5dp"
                         android:nestedScrollingEnabled="true"
-                        tools:listitem="@layout/testimonial_row"></ListView>
+                        tools:listitem="@layout/testimonial_row"></com.amplearch.circleonet.Utils.ExpandableHeightListView>
 
                     <TextView
                         android:visibility="gone"

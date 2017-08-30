@@ -15,6 +15,8 @@ import com.amplearch.circleonet.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by LENOVO on 27-08-2017.
  */
@@ -51,15 +53,18 @@ public class GroupAdapter extends BaseAdapter {
         if (convertView == null)
             vi = inflater.inflate(R.layout.testimonial_row, null);
 
-        TextView title2 = (TextView) vi.findViewById(R.id.txtTestimonial2); // title
+        TextView title2 = (TextView) vi.findViewById(R.id.txtTestimonial); // title
         String song = groupModels.get(position).getGroup_Name();
         title2.setText(song);
 
 
-        TextView title22 = (TextView) vi.findViewById(R.id.txtTestimonial1); // notice
+        TextView title22 = (TextView) vi.findViewById(R.id.txtName); // notice
         String pos = String.valueOf(position+1);
         String song2 = "Testimonial "+pos+" : ";
         title22.setVisibility(View.GONE);
+
+        CircleImageView circleImageView = (CircleImageView) vi.findViewById(R.id.imgUser);
+        circleImageView.setVisibility(View.GONE);
 
         return vi;
 

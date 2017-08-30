@@ -618,7 +618,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
             else {
               //  getSupportActionBar().show();
               //  setActionBarTitle("Cards");
-                return new List1Fragment();
+                return new CardsFragment();
             }
         }
 
