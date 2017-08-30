@@ -173,8 +173,8 @@ public class Notification extends AppCompatActivity {
                     // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
 
                     textView.setText("Notifications - "+jsonArray.length());
-                    for (int i = 0; i < jsonArray.length(); i++){
-
+                    for (int i = 0; i < jsonArray.length(); i++)
+                    {
                         JSONObject object = jsonArray.getJSONObject(i);
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
 

@@ -69,7 +69,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static junit.framework.Assert.assertEquals;
 
-public class EditProfileActivity extends AppCompatActivity {
+public class EditProfileActivity extends AppCompatActivity
+{
     private static final int PICKFILE_RESULT_CODE = 1;
     public static List<TestimonialModel> allTaggs;
     //for adding event and expande & collapse
@@ -92,7 +93,6 @@ public class EditProfileActivity extends AppCompatActivity {
     CustomAdapter customAdapter;
     ArrayList<String> title_array = new ArrayList<String>();
     ArrayList<String> notice_array = new ArrayList<String>();
-    ;
     String type = "";
     EditText edtAddress1, edtAddress2, edtAddress3, edtAddress4, edtAddress5, edtAddress6, edtWebsite;
     String UserID = "";
@@ -121,7 +121,8 @@ public class EditProfileActivity extends AppCompatActivity {
     TextView txtCardFront, txtCardBack;
     String cardType = "";
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException
+    {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line = "";
         String result = "";
@@ -130,7 +131,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
         inputStream.close();
         return result;
-
     }
 
     @Override
