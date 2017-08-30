@@ -71,7 +71,9 @@ public class List4Fragment extends Fragment
     public static ArrayList<NFCModel> nfcModel ;
     public static ArrayList<FriendConnection> nfcModel1 ;
     LoginSession session;
-    String UserId = "";
+    static String UserId = "";
+
+    public static Context mContext ;
 
     public List4Fragment() {
         // Required empty public constructor
@@ -87,6 +89,8 @@ public class List4Fragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_list4, container, false);
+
+        mContext = List4Fragment.this.getContext() ;
 
         db = new DatabaseHelper(getContext());
         imgf = new ArrayList<byte[]>();
@@ -105,8 +109,8 @@ public class List4Fragment extends Fragment
         line = view.findViewById(R.id.view);
         /*lnrSearch.setVisibility(View.GONE);
         line.setVisibility(View.GONE);
-        CardsFragment.tabLayout.setVisibility(View.GONE);
-*/
+        CardsFragment.tabLayout.setVisibility(View.GONE); */
+
         listView = (ListView) view.findViewById(R.id.listViewType4);
 
         //considering from Database
@@ -122,7 +126,7 @@ public class List4Fragment extends Fragment
         nfcModel = new ArrayList<>();
         nfcModel1 = new ArrayList<>();
 
-        new List4Fragment.HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+        callFirst();
 
         /*List<NFCModel> allTags = db.getActiveNFC();
         for (NFCModel tag : allTags) {
@@ -226,7 +230,20 @@ public class List4Fragment extends Fragment
         return view;
     }
 
-    private class HttpAsyncTask extends AsyncTask<String, Void, String>
+    private void callFirst()
+    {
+        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+    }
+
+    public static void webCall()
+    {
+        allTaggs.clear();
+        gridAdapter.notifyDataSetChanged();
+        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+    }
+
+
+    private static class HttpAsyncTask extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
 
@@ -234,7 +251,7 @@ public class List4Fragment extends Fragment
         protected void onPreExecute()
         {
             super.onPreExecute();
-            dialog = new ProgressDialog(getActivity());
+            dialog = new ProgressDialog(mContext);
             dialog.setMessage("Fetching Cards...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
@@ -278,12 +295,12 @@ public class List4Fragment extends Fragment
                         nfcModelTag.setNfc_tag("en000000001");
 
                         allTaggs.add(nfcModelTag);
-                        GetData(getContext());
+                        GetData(mContext);
                     }
                 }
                 else
                 {
-                    Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "Not able to load Cards..", Toast.LENGTH_LONG).show();
                 }
             }
             catch (JSONException e) {
@@ -292,7 +309,7 @@ public class List4Fragment extends Fragment
         }
     }
 
-    public String POST(String url)
+    public static String POST(String url)
     {
         InputStream inputStream = null;
         String result = "";
@@ -367,8 +384,8 @@ public class List4Fragment extends Fragment
     {
         super.onResume();
 
-        nfcModel.clear();
-        GetData(getContext());
+//        nfcModel.clear();
+//        GetData(getContext());
     }
 
     class MyOnGestureListener implements GestureDetector.OnGestureListener  {

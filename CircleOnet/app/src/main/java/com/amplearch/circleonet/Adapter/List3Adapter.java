@@ -25,6 +25,7 @@ import com.amplearch.circleonet.Fragments.List2Fragment;
 import com.amplearch.circleonet.Fragments.List3Fragment;
 import com.amplearch.circleonet.Fragments.List4Fragment;
 import com.amplearch.circleonet.Helper.DatabaseHelper;
+import com.amplearch.circleonet.Helper.LoginSession;
 import com.amplearch.circleonet.Model.FriendConnection;
 import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.R;
@@ -50,6 +51,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
 /**
@@ -60,6 +62,7 @@ public class List3Adapter extends BaseSwipeAdapter
 {
     private Context context;
     private int layoutResourceId;
+    private List3Fragment fragment ;
     private ArrayList<String> data = new ArrayList();
     private ArrayList<Integer> id = new ArrayList();
     private ArrayList<byte[]> image = new ArrayList();
@@ -76,6 +79,8 @@ public class List3Adapter extends BaseSwipeAdapter
     ArrayList<FriendConnection> nfcModelListFilter1 = new ArrayList<>();
 
     private int posi ;
+    LoginSession session ;
+    String profile_id ;
 
 
     public List3Adapter(Context context, int layoutResourceId, ArrayList<byte[]> image,
@@ -98,12 +103,27 @@ public class List3Adapter extends BaseSwipeAdapter
         this.nfcModelListFilter.addAll(nfcModelList);
     }*/
 
-    public List3Adapter(Context context, int grid_list3_layout, ArrayList<FriendConnection> nfcModel) {
+    public List3Adapter(Context context, int grid_list3_layout, ArrayList<FriendConnection> nfcModel, List3Fragment fragment)
+    {
+        this.fragment = fragment ;
         this.context = context;
         this.layoutResourceId = grid_list3_layout;
         this.nfcModelList1 = nfcModel;
 //        this.nfcModelListFilter = new ArrayList<NFCModel>();
         this.nfcModelListFilter1.addAll(nfcModelList1);
+    }
+
+    public List3Adapter(Context context, int grid_list3_layout, ArrayList<FriendConnection> nfcModel)
+    {
+        this.context = context;
+        this.layoutResourceId = grid_list3_layout;
+        this.nfcModelList1 = nfcModel;
+//        this.nfcModelListFilter = new ArrayList<NFCModel>();
+        this.nfcModelListFilter1.addAll(nfcModelList1);
+
+        session = new LoginSession(context);
+        HashMap<String, String> user = session.getUserDetails();
+        profile_id = user.get(LoginSession.KEY_PROFILEID);
     }
 
 
@@ -113,10 +133,12 @@ public class List3Adapter extends BaseSwipeAdapter
     }
 
     @Override
-    public View generateView(final int position, ViewGroup parent) {
+    public View generateView(final int position, ViewGroup parent)
+    {
         View v = LayoutInflater.from(context).inflate(R.layout.grid_list3_layout, null);
 
         delete = (Button) v.findViewById(R.id.delete);
+
         final SwipeLayout swipeLayout = (SwipeLayout) v.findViewById(getSwipeLayoutResourceId(position));
         swipeLayout.addSwipeListener(new SimpleSwipeListener() {
             @Override
@@ -126,6 +148,8 @@ public class List3Adapter extends BaseSwipeAdapter
         });
 
         db = new DatabaseHelper(context);
+
+
 
         swipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {
             @Override
@@ -145,6 +169,17 @@ public class List3Adapter extends BaseSwipeAdapter
                 posi  = position ;
 
                 new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/FriendConnection_Operation");
+
+              /*  try
+                {
+                    List3Fragment.allTaggs.clear();
+                    List3Fragment.nfcModel1.clear();
+                    List3Fragment.gridAdapter.notifyDataSetChanged();
+                }
+                catch (Exception e)
+                {
+
+                }*/
 
 
                 //nfcModelList.remove(position);
@@ -398,25 +433,18 @@ public class List3Adapter extends BaseSwipeAdapter
                     if(success.equals("1"))
                     {
                         Toast.makeText(context, "Delete Successfully", Toast.LENGTH_LONG).show();
-
-                        try
-                        {
-
-                           // List3Fragment.refreshList();
-//                            List3Fragment.gridAdapter.notifyDataSetChanged();
-
-//                        List3Fragment.allTaggs.clear();
-//                        List3Fragment.nfcModel1.clear();
-//                        List3Fragment.GetData(context);
-                        }
-                        catch(Exception e) {    }
+//                        fragment.webCall();
+                        List1Fragment.webCall();
+                        List2Fragment.webCall();
+                        List3Fragment.webCall();
+                        List4Fragment.webCall();
                     }
                     else
                     {
                         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                     }
 
-                    try
+                    /*try
                     {
                         List3Fragment.gridAdapter.notifyDataSetChanged();
 //                        List3Fragment.GetData(context);
@@ -452,7 +480,8 @@ public class List3Adapter extends BaseSwipeAdapter
 //                        List1Fragment.nfcModel.clear();
 //                        List1Fragment.GetData(context);
                     }
-                    catch(Exception e) {    }
+                    catch(Exception e) {    }*/
+
                 }
 
             }
@@ -480,7 +509,7 @@ public class List3Adapter extends BaseSwipeAdapter
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Operation", "Remove" );
             jsonObject.accumulate("friendProfileId", nfcModelList1.get(posi).getProfile_id());
-            jsonObject.accumulate("myProfileId", "30" );
+            jsonObject.accumulate("myProfileId", profile_id );
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
