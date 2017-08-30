@@ -988,7 +988,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                             List3Fragment.allTags = db.getActiveNFC();
                             List3Fragment.nfcModel.clear();
                             //  nfcModelList.clear();
-                            List3Fragment.GetData(getApplicationContext());
+//                            List3Fragment.GetData(getApplicationContext());
                         } catch (Exception e){
 
                         }

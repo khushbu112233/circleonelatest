@@ -36,8 +36,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Notification extends AppCompatActivity {
-
+public class Notification extends AppCompatActivity
+{
     ListView listNotification;
     LoginSession loginSession;
     String UserId = "";
@@ -47,7 +47,8 @@ public class Notification extends AppCompatActivity {
     ImageView imgLogo;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
 
@@ -79,7 +80,7 @@ public class Notification extends AppCompatActivity {
                 finish();
             }
         });
-
+        
     }
 
     public  String POST(String url)
@@ -103,7 +104,6 @@ public class Notification extends AppCompatActivity {
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
-
             // ** Alternative way to convert Person object to JSON string usin Jackson Lib
             // ObjectMapper mapper = new ObjectMapper();
             // json = mapper.writeValueAsString(person);
@@ -124,14 +124,14 @@ public class Notification extends AppCompatActivity {
             // 9. receive response as inputStream
             inputStream = httpResponse.getEntity().getContent();
 
-
             // 10. convert inputstream to string
             if(inputStream != null)
                 result = convertInputStreamToString(inputStream);
             else
                 result = "Did not work!";
 
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Log.d("InputStream", e.getLocalizedMessage());
         }
 
@@ -139,7 +139,8 @@ public class Notification extends AppCompatActivity {
         return result;
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException
+    {
         BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
         String line = "";
         String result = "";
@@ -148,7 +149,6 @@ public class Notification extends AppCompatActivity {
 
         inputStream.close();
         return result;
-
     }
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String>
@@ -165,7 +165,6 @@ public class Notification extends AppCompatActivity {
             dialog.setCancelable(false);
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
-
         }
 
         @Override

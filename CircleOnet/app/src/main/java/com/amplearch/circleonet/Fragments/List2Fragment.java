@@ -82,7 +82,9 @@ public class List2Fragment extends Fragment
     public static ArrayList<FriendConnection> nfcModel ;
 
     LoginSession session;
-    String UserId = "";
+    static String UserId = "";
+
+    public static Context mContext ;
 
     //new asign value
     AutoCompleteTextView searchText ;
@@ -97,6 +99,9 @@ public class List2Fragment extends Fragment
     {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list2, container, false);
+
+        mContext = List2Fragment.this.getContext() ;
+
         /*db = new DatabaseHelper(getContext());
         imgf = new ArrayList<byte[]>();
 
@@ -114,6 +119,8 @@ public class List2Fragment extends Fragment
         session = new LoginSession(getContext());
         HashMap<String, String> user = session.getUserDetails();
         UserId = user.get(LoginSession.KEY_USERID);
+
+        callFirst();
 
         GestureDetector.OnGestureListener gestureListener = new MyOnGestureListener();
         GestureDetector.OnDoubleTapListener doubleTapListener = new MyOnDoubleTapListener();
@@ -175,9 +182,21 @@ public class List2Fragment extends Fragment
             }
         });
 
-        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+//        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
 
         return view;
+    }
+
+    private void callFirst()
+    {
+        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+    }
+
+    public static void webCall()
+    {
+        allTaggs.clear();
+        gridAdapter.notifyDataSetChanged();
+        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
     }
 
 
@@ -225,7 +244,7 @@ public class List2Fragment extends Fragment
         return imageItems;
     }
 
-    private class HttpAsyncTask extends AsyncTask<String, Void, String>
+    private static class HttpAsyncTask extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
 
@@ -233,7 +252,7 @@ public class List2Fragment extends Fragment
         protected void onPreExecute()
         {
             super.onPreExecute();
-            dialog = new ProgressDialog(getActivity());
+            dialog = new ProgressDialog(mContext);
             dialog.setMessage("Fetching Cards...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
@@ -276,12 +295,12 @@ public class List2Fragment extends Fragment
 
                         nfcModelTag.setNfc_tag("en000000001");
                         allTaggs.add(nfcModelTag);
-                        GetData(getContext());
+                        GetData(mContext);
                     }
                 }
                 else
                 {
-                    Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "Not able to load Cards..", Toast.LENGTH_LONG).show();
                 }
             }
             catch (JSONException e) {
@@ -290,7 +309,7 @@ public class List2Fragment extends Fragment
         }
     }
 
-    public String POST(String url)
+    public static String POST(String url)
     {
         InputStream inputStream = null;
         String result = "";
@@ -521,8 +540,8 @@ public class List2Fragment extends Fragment
     {
         super.onResume();
 
-        nfcModel.clear();
-        GetData(getContext());
+//        nfcModel.clear();
+//        GetData(getContext());
     }
 
 

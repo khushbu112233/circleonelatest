@@ -24,6 +24,7 @@ import com.amplearch.circleonet.Fragments.List2Fragment;
 import com.amplearch.circleonet.Fragments.List3Fragment;
 import com.amplearch.circleonet.Fragments.List4Fragment;
 import com.amplearch.circleonet.Helper.DatabaseHelper;
+import com.amplearch.circleonet.Helper.LoginSession;
 import com.amplearch.circleonet.Model.ConnectList;
 import com.amplearch.circleonet.Model.FriendConnection;
 import com.amplearch.circleonet.Model.NFCModel;
@@ -48,6 +49,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -77,6 +79,8 @@ public class List4Adapter extends BaseSwipeAdapter
     ArrayList<ConnectList> connectListsFilter = new ArrayList<>();
 
     private int posi ;
+    LoginSession session ;
+    String profile_id ;
 
     public List4Adapter(Context context, int layoutResourceId, ArrayList<byte[]> image, ArrayList<String> data, ArrayList<String> name, ArrayList<String> designation) {
         this.layoutResourceId = layoutResourceId;
@@ -103,6 +107,10 @@ public class List4Adapter extends BaseSwipeAdapter
         this.nfcModelList1 = nfcModel ;
 //        this.nfcModelListFilter = new ArrayList<NFCModel>();
         this.nfcModelListFilter1.addAll(nfcModelList1);
+
+        session = new LoginSession(context);
+        HashMap<String, String> user = session.getUserDetails();
+        profile_id = user.get(LoginSession.KEY_PROFILEID);
     }
 
     @Override
@@ -125,6 +133,8 @@ public class List4Adapter extends BaseSwipeAdapter
 
         db = new DatabaseHelper(context);
 
+
+
         swipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {
             @Override
             public void onDoubleClick(SwipeLayout layout, boolean surface) {
@@ -144,7 +154,7 @@ public class List4Adapter extends BaseSwipeAdapter
 
                 new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/FriendConnection_Operation");
 
-                try
+                /*try
                 {
                     List2Fragment.gridAdapter.notifyDataSetChanged();
                     List2Fragment.allTaggs.clear();
@@ -179,7 +189,7 @@ public class List4Adapter extends BaseSwipeAdapter
                     List1Fragment.nfcModel.clear();
                     List1Fragment.GetData(context);
                 }
-                catch(Exception e) {    }
+                catch(Exception e) {    }*/
 
                 //nfcModelList.remove(position);
 
@@ -410,6 +420,10 @@ public class List4Adapter extends BaseSwipeAdapter
                     if(success.equals("1"))
                     {
                         Toast.makeText(context, "Delete Successfully", Toast.LENGTH_LONG).show();
+                        List1Fragment.webCall();
+                        List2Fragment.webCall();
+                        List3Fragment.webCall();
+                        List4Fragment.webCall();
                     }
                     else
                     {
@@ -442,7 +456,7 @@ public class List4Adapter extends BaseSwipeAdapter
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Operation", "Remove" );
             jsonObject.accumulate("friendProfileId", nfcModelList1.get(posi).getProfile_id());
-            jsonObject.accumulate("myProfileId", "27" );
+            jsonObject.accumulate("myProfileId", profile_id );
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();

@@ -27,6 +27,7 @@ import com.amplearch.circleonet.Fragments.List2Fragment;
 import com.amplearch.circleonet.Fragments.List3Fragment;
 import com.amplearch.circleonet.Fragments.List4Fragment;
 import com.amplearch.circleonet.Helper.DatabaseHelper;
+import com.amplearch.circleonet.Helper.LoginSession;
 import com.amplearch.circleonet.Model.ConnectList;
 import com.amplearch.circleonet.Model.FriendConnection;
 import com.amplearch.circleonet.Model.ImageItem;
@@ -53,6 +54,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
 /**
@@ -71,6 +73,8 @@ public class GridViewAdapter extends BaseSwipeAdapter
     ArrayList<NFCModel> nfcModelListFilter = new ArrayList<>();
 
     int posi ;
+    LoginSession session ;
+    String profile_id ;
 
     ArrayList<FriendConnection> nfcModelList1 = new ArrayList<>();
     ArrayList<FriendConnection> nfcModelListFilter1 = new ArrayList<>();
@@ -95,6 +99,10 @@ public class GridViewAdapter extends BaseSwipeAdapter
         this.nfcModelList1 = nfcModel;
 //        this.nfcModelListFilter = new ArrayList<NFCModel>();
         this.nfcModelListFilter1.addAll(nfcModelList1);
+
+        session = new LoginSession(context);
+        HashMap<String, String> user = session.getUserDetails();
+        profile_id = user.get(LoginSession.KEY_PROFILEID);
     }
 
     @Override
@@ -103,7 +111,8 @@ public class GridViewAdapter extends BaseSwipeAdapter
     }
 
     @Override
-    public View generateView(final int position, ViewGroup parent) {
+    public View generateView(final int position, ViewGroup parent)
+    {
         View v = LayoutInflater.from(context).inflate(R.layout.grid_list2_layout, null);
 
         final SwipeLayout swipeLayout = (SwipeLayout) v.findViewById(getSwipeLayoutResourceId(position));
@@ -115,6 +124,8 @@ public class GridViewAdapter extends BaseSwipeAdapter
         });
 
         db = new DatabaseHelper(context);
+
+
 
         swipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {
             @Override
@@ -128,14 +139,14 @@ public class GridViewAdapter extends BaseSwipeAdapter
             public void onClick(View view)
             {
 //                db.DeactiveCards(nfcModelList.get(position).getId());
+                swipeLayout.close();
+
                 posi  = position ;
 //                Toast.makeText(context, "Friend Profile ID: "+ nfcModelList1.get(posi).getProfile_id(), Toast.LENGTH_SHORT).show();
 
                 new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/FriendConnection_Operation");
 
-                swipeLayout.close();
-
-                List2Fragment.gridAdapter.notifyDataSetChanged();
+               /* List2Fragment.gridAdapter.notifyDataSetChanged();
                 try {
                     List1Fragment.mAdapter.notifyDataSetChanged();
                     List1Fragment.mAdapter1.notifyDataSetChanged();
@@ -144,7 +155,7 @@ public class GridViewAdapter extends BaseSwipeAdapter
                     //  nfcModelList.clear();
                     List1Fragment.GetData(context);
                 } catch (Exception e) {
-                }
+                }*/
                 //  nfcModelList.remove(position);
                 /*try
                 {
@@ -328,7 +339,8 @@ public class GridViewAdapter extends BaseSwipeAdapter
         ProgressDialog dialog;
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             super.onPreExecute();
             dialog = new ProgressDialog(context);
             dialog.setMessage("Deleting Records...");
@@ -365,6 +377,10 @@ public class GridViewAdapter extends BaseSwipeAdapter
                     if(success.equals("1"))
                     {
                         Toast.makeText(context, "Delete Successfully", Toast.LENGTH_LONG).show();
+                        List1Fragment.webCall();
+                        List2Fragment.webCall();
+                        List3Fragment.webCall();
+                        List4Fragment.webCall();
                     }
                     else
                     {
@@ -438,7 +454,7 @@ public class GridViewAdapter extends BaseSwipeAdapter
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Operation", "Remove" );
             jsonObject.accumulate("friendProfileId", nfcModelList1.get(posi).getProfile_id());
-            jsonObject.accumulate("myProfileId", "27" );
+            jsonObject.accumulate("myProfileId", profile_id );
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
