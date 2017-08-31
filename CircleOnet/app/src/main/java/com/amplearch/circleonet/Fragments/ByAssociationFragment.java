@@ -92,8 +92,10 @@ public class ByAssociationFragment  extends Fragment
                 if(s.length() <= 0)
                 {
                     listView.setVisibility(View.GONE);
+                    tvDataInfo.setVisibility(View.GONE);
                     connectTags.clear();
-                    GetData(getContext());
+                    connectListAdapter.notifyDataSetChanged();
+//                    GetData(getContext());
                 }
                 else if(s.length() >= 2)
                 {
@@ -131,14 +133,14 @@ public class ByAssociationFragment  extends Fragment
         return view;
     }
 
-    @Override
+   /* @Override
     public void onResume()
     {
         super.onResume();
 //        connectLists.clear();
         connectTags.clear();
         GetData(getContext());
-    }
+    }*/
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String>
     {
@@ -190,6 +192,8 @@ public class ByAssociationFragment  extends Fragment
                     if(connect.length() == 0)
                     {
                         tvDataInfo.setVisibility(View.VISIBLE);
+                        connectTags.clear();
+                        connectListAdapter.notifyDataSetChanged();
                     }
                     else
                     {
@@ -217,7 +221,11 @@ public class ByAssociationFragment  extends Fragment
                             connectModel.setWebsite(iCon.getString("Website"));
                             connectTags.add(connectModel);
 
-                            GetData(getContext());
+                            connectListAdapter = new ConnectListAdapter(getContext(),R.layout.grid_list5_layout, connectTags);
+                            listView.setAdapter(connectListAdapter);
+                            connectListAdapter.notifyDataSetChanged();
+
+//                            GetData(getContext());
                         }
                     }
                 }

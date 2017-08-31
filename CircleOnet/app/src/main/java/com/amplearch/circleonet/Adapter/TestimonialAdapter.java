@@ -16,11 +16,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amplearch.circleonet.Activity.CardsActivity;
+import com.amplearch.circleonet.Activity.TestimonialActivity;
 import com.amplearch.circleonet.Fragments.List1Fragment;
 import com.amplearch.circleonet.Fragments.List2Fragment;
 import com.amplearch.circleonet.Fragments.List3Fragment;
 import com.amplearch.circleonet.Fragments.List4Fragment;
 import com.amplearch.circleonet.Helper.DatabaseHelper;
+import com.amplearch.circleonet.Helper.LoginSession;
 import com.amplearch.circleonet.Model.FriendConnection;
 import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.Model.TestimonialModel;
@@ -45,6 +47,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -59,17 +62,24 @@ public class TestimonialAdapter extends BaseSwipeAdapter
     private int layoutResourceId;
     Button delete;
 
+    String user_id, testimonial_id ;
+    LoginSession session;
+
     //newly added
 
     ArrayList<TestimonialModel> testimonialModels = new ArrayList<>();
 
     private int posi ;
 
-    public TestimonialAdapter(Context context, int grid_list3_layout, ArrayList<TestimonialModel> testimonialModels) {
+    public TestimonialAdapter(Context context, int grid_list3_layout, ArrayList<TestimonialModel> testimonialModels)
+    {
         this.context = context;
         this.layoutResourceId = grid_list3_layout;
         this.testimonialModels = testimonialModels;
 
+        session = new LoginSession(context);
+        HashMap<String, String> user = session.getUserDetails();
+        user_id = user.get(LoginSession.KEY_USERID);
     }
 
 
@@ -79,11 +89,15 @@ public class TestimonialAdapter extends BaseSwipeAdapter
     }
 
     @Override
-    public View generateView(final int position, ViewGroup parent) {
+    public View generateView(final int position, ViewGroup parent)
+    {
         View v = LayoutInflater.from(context).inflate(R.layout.full_testimonial_row, null);
 
         delete = (Button) v.findViewById(R.id.delete);
         final SwipeLayout swipeLayout = (SwipeLayout) v.findViewById(getSwipeLayoutResourceId(position));
+
+        testimonial_id = testimonialModels.get(position).getTestimonial_ID();
+
         swipeLayout.addSwipeListener(new SimpleSwipeListener() {
             @Override
             public void onOpen(SwipeLayout layout) {
@@ -105,11 +119,8 @@ public class TestimonialAdapter extends BaseSwipeAdapter
 //                db.DeactiveCards(nfcModelList.get(position).getId());
 //                Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_SHORT).show();
                 swipeLayout.close();
-
                 posi  = position ;
-
-              //  new List3Adapter.HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/FriendConnection_Operation");
-
+                new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/Testimonial/Delete");
             }
         });
 
@@ -122,10 +133,10 @@ public class TestimonialAdapter extends BaseSwipeAdapter
     }
 
     @Override
-    public void fillValues(int position, View convertView) {
+    public void fillValues(int position, View convertView)
+    {
         View row = convertView;
         ViewHolder holder = null;
-
 
         holder = new ViewHolder();
         holder.circleImageView = (CircleImageView) row.findViewById(R.id.imgUser);
@@ -133,7 +144,7 @@ public class TestimonialAdapter extends BaseSwipeAdapter
         holder.txtTestimonial = (TextView) row.findViewById(R.id.txtTestimonial);
         row.setTag(holder);
 
-        /*holder.imageDesc.setText(data.get(position));
+        /* holder.imageDesc.setText(data.get(position));
         holder.imageName.setText(name.get(position));
         try {
             if (!designation.get(position).equalsIgnoreCase("")) {
@@ -144,17 +155,20 @@ public class TestimonialAdapter extends BaseSwipeAdapter
         }
         Bitmap bmp = BitmapFactory.decodeByteArray(image.get(position), 0, image.get(position).length);
         // ImageView image = (ImageView) findViewById(R.id.imageView1);
-        holder.image.setImageBitmap(bmp);
-*/
+        holder.image.setImageBitmap(bmp); */
+
         String name = testimonialModels.get(position).getFirstName() + " " + testimonialModels.get(position).getLastName();
         String testimonial = testimonialModels.get(position).getTestimonial_Text();
 
         holder.txtName.setText(name);
         holder.txtTestimonial.setText(testimonial);
 
-        if (testimonialModels.get(position).getUserPhoto().equals("")){
+        if (testimonialModels.get(position).getUserPhoto().equals(""))
+        {
             holder.circleImageView.setImageResource(R.drawable.usr);
-        }else {
+        }
+        else
+        {
             Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.circleImageView);
         }
         //Picasso.with(context).load("http://circle8.asia/App_ImgLib/Cards/" + nfcModelList1.get(position).getCard_front()).into(holder.image);
@@ -176,13 +190,14 @@ public class TestimonialAdapter extends BaseSwipeAdapter
         return position;
     }
 
-    static class ViewHolder {
+    static class ViewHolder
+    {
         CircleImageView circleImageView;
         TextView txtName;
         TextView txtTestimonial;
     }
 
-  /*  private class HttpAsyncTask extends AsyncTask<String, Void, String>
+    private class HttpAsyncTask extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
 
@@ -224,63 +239,13 @@ public class TestimonialAdapter extends BaseSwipeAdapter
                     if(success.equals("1"))
                     {
                         Toast.makeText(context, "Delete Successfully", Toast.LENGTH_LONG).show();
-
-                        try
-                        {
-
-                            // List3Fragment.refreshList();
-//                            List3Fragment.gridAdapter.notifyDataSetChanged();
-
-//                        List3Fragment.allTaggs.clear();
-//                        List3Fragment.nfcModel1.clear();
-//                        List3Fragment.GetData(context);
-                        }
-                        catch(Exception e) {    }
+                        TestimonialActivity.webCall();
                     }
                     else
                     {
                         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                     }
-
-                    try
-                    {
-                        List3Fragment.gridAdapter.notifyDataSetChanged();
-//                        List3Fragment.GetData(context);
-//                        List3Fragment.allTaggs.clear();
-//                        List3Fragment.nfcModel1.clear();
-                    }
-                    catch(Exception e) {    }
-
-                    try
-                    {
-                        List2Fragment.gridAdapter.notifyDataSetChanged();
-//                        List2Fragment.allTaggs.clear();
-//                        List2Fragment.nfcModel.clear();
-//                        List2Fragment.GetData(context);
-                    }
-                    catch(Exception e) {    }
-
-
-                    try
-                    {
-                        List4Fragment.gridAdapter.notifyDataSetChanged();
-//                        List4Fragment.allTaggs.clear();
-//                        List4Fragment.nfcModel1.clear();
-//                        List4Fragment.GetData(context);
-                    }
-                    catch(Exception e) {    }
-
-                    try
-                    {
-                        List1Fragment.mAdapter.notifyDataSetChanged();
-                        List1Fragment.mAdapter1.notifyDataSetChanged();
-//                        List1Fragment.allTags.clear();
-//                        List1Fragment.nfcModel.clear();
-//                        List1Fragment.GetData(context);
-                    }
-                    catch(Exception e) {    }
                 }
-
             }
             catch (JSONException e)
             {
@@ -304,9 +269,8 @@ public class TestimonialAdapter extends BaseSwipeAdapter
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("Operation", "Remove" );
-            jsonObject.accumulate("friendProfileId", nfcModelList1.get(posi).getProfile_id());
-            jsonObject.accumulate("myProfileId", "30" );
+            jsonObject.accumulate("TestimonialId", testimonial_id);
+            jsonObject.accumulate("userId", user_id);
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -331,7 +295,6 @@ public class TestimonialAdapter extends BaseSwipeAdapter
             // 9. receive response as inputStream
             inputStream = httpResponse.getEntity().getContent();
 
-
             // 10. convert inputstream to string
             if(inputStream != null)
                 result = convertInputStreamToString(inputStream);
@@ -345,7 +308,7 @@ public class TestimonialAdapter extends BaseSwipeAdapter
         // 11. return result
         return result;
     }
-*/
+
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
         String line = "";
