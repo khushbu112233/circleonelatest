@@ -96,7 +96,6 @@ public class List1Fragment extends Fragment
     private String DEBUG_TAG = "gesture";
     //  private GestureDetector gestureDetector;
     //  private View.OnTouchListener gestureListener;
-
     public static List<FriendConnection> allTags ;
     //new asign value
     AutoCompleteTextView searchText ;

@@ -129,7 +129,7 @@
                                     <de.hdodenhof.circleimageview.CircleImageView
                                         app:civ_border_width="0dp"
                                         app:civ_border_color="@color/colorPrimary"
-                                        android:src="@drawable/profile3"
+                                        android:src="@drawable/usr"
                                         android:id="@+id/imgProfile"
                                         android:layout_width="70dp"
                                         android:layout_height="70dp" />
@@ -143,7 +143,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:textAlignment="center"
-                                    android:text="Westley Wan"
+                                    android:text="Person"
                                     android:textStyle="bold"
                                     android:textColor="@color/white"/>
 
@@ -154,7 +154,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:textAlignment="center"
-                                    android:text="General Manager"
+                                    android:text="Designation"
                                     android:textColor="@color/white"/>
                                 <TextView
                                     android:id="@+id/tvCompany"
@@ -163,7 +163,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:textAlignment="center"
-                                    android:text="Unico Creative pte ltd"
+                                    android:text="Company"
                                     android:textColor="@color/white"/>
 
                             </LinearLayout>
@@ -219,7 +219,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:text="Wasley Wan"
+                            android:text="Person"
                             android:textAlignment="center"
                             android:textColor="#6b6c6e"
                             android:textSize="13sp" />
@@ -252,7 +252,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:text="UNICO Creative ple ltd"
+                            android:text="Company"
                             android:textAlignment="center"
                             android:textColor="#6b6c6e"
                             android:textSize="13sp" />
@@ -278,7 +278,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:text="Branding &amp; Marketing / IT"
+                            android:text="Industry"
                             android:textAlignment="center"
                             android:textColor="#6b6c6e"
                             android:textSize="13sp" />
@@ -304,7 +304,7 @@
                             android:gravity="center"
                             android:textColor="#6b6c6e"
                             android:textSize="13sp"
-                            android:text="Business Development Director"
+                            android:text="Designation"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent" />
                     </LinearLayout>
@@ -354,7 +354,7 @@
                             android:id="@+id/tvAddress"
                             android:textColor="#6b6c6e"
                             android:textSize="13sp"
-                            android:text="246 Macpherson Road.Betime Building #03-04.Singapore 348578"
+                            android:text="Address"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
@@ -380,7 +380,7 @@
                             android:gravity="center"
                             android:textColor="#6b6c6e"
                             android:textSize="13sp"
-                            android:text="www.tcmong.com.sg"
+                            android:text="www.website.com"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent" />
                     </LinearLayout>
@@ -405,7 +405,7 @@
                             android:gravity="center"
                             android:textColor="#6b6c6e"
                             android:textSize="13sp"
-                            android:text="tcmong@tcmong.com.sg"
+                            android:text="e@mail.com"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent" />
                     </LinearLayout>
@@ -431,7 +431,7 @@
                             android:gravity="center"
                             android:textColor="#6b6c6e"
                             android:textSize="13sp"
-                            android:text="+65 8842 6688"
+                            android:text="Personal Phone No."
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent" />
                     </LinearLayout>
@@ -457,7 +457,7 @@
                             android:gravity="center"
                             android:textColor="#6b6c6e"
                             android:textSize="13sp"
-                            android:text="+65 6842 6186"
+                            android:text="Work Phone No."
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent" />
                     </LinearLayout>
@@ -536,7 +536,7 @@
                         android:layout_centerVertical="true"
                         android:textColor="@android:color/black"
                         android:textSize="13sp"
-                        android:text="vnfjvnf fbvdfnkvnf fdgfg fdgfdg dfg fg dfgfdg fgdfgfd drgdfgfd dfgdfg gdfg dfgdfg dfgfdg dfgfdg dfgfdg dfgfd fdgfdg dfgfdgfgfd dfgfdgfd dfgfdgf gdfgfdg dfgfdg dfgfdg dfgfdg dfgfd fdgfdkdfvncjkvn nvcklxnv klvncklxv klcvncklxv klcvncklxv klvnxcklv"
+                        android:text="Personal Profile Details"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" />
 
@@ -557,7 +557,7 @@
                         android:layout_centerVertical="true"
                         android:textColor="@android:color/black"
                         android:textSize="13sp"
-                        android:text="vnfjvnf fbvdfnkvnf fdgfg fdgfdg dfg fg dfgfdg fgdfgfd drgdfgfd dfgdfg gdfg dfgdfg dfgfdg dfgfdg dfgfdg dfgfd fdgfdg dfgfdgfgfd dfgfdgfd dfgfdgf gdfgfdg dfgfdg dfgfdg dfgfdg dfgfd fdgfdkdfvncjkvn nvcklxnv klvncklxv klcvncklxv klcvncklxv klvnxcklv"
+                        android:text="Company Profile Details"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" />
 

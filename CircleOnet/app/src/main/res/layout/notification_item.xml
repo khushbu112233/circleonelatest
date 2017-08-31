@@ -63,7 +63,7 @@
                 app:civ_border_width="2dp"
                 app:civ_border_color="@color/colorPrimary"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/card2_front"
+                android:src="@drawable/usr"
                 android:id="@+id/imgTestReq"
                 android:layout_width="50dp"
                 android:layout_height="50dp"

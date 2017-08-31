@@ -130,7 +130,7 @@
                                         android:id="@+id/imgProfile"
                                         android:layout_width="70dp"
                                         android:layout_height="70dp"
-                                        android:src="@drawable/profile3"
+                                        android:src="@drawable/usr"
                                         app:civ_border_color="@color/colorPrimary"
                                         app:civ_border_width="0dp" />
 
@@ -141,7 +141,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="8dp"
-                                    android:text="Westley Wan"
+                                    android:text="Person"
                                     android:textAlignment="center"
                                     android:textColor="@color/white"
                                     android:textSize="19dp"
@@ -152,7 +152,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="0dp"
-                                    android:text="General Manager"
+                                    android:text="Designation"
                                     android:textAlignment="center"
                                     android:textColor="@color/white"
                                     android:textSize="19dp" />
@@ -162,7 +162,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="0dp"
-                                    android:text="Unico Creative pte ltd"
+                                    android:text="Company"
                                     android:textAlignment="center"
                                     android:textColor="@color/white"
                                     android:textSize="19dp" />
