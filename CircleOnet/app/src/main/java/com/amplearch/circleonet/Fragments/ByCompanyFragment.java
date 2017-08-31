@@ -80,8 +80,8 @@ public class ByCompanyFragment  extends Fragment
         HashMap<String, String> user = session.getUserDetails();
         profileID = user.get(LoginSession.KEY_PROFILEID);
 
-
-        searchText.addTextChangedListener(new TextWatcher() {
+        searchText.addTextChangedListener(new TextWatcher()
+        {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after)
             {
@@ -93,8 +93,10 @@ public class ByCompanyFragment  extends Fragment
                 if(s.length() <= 0)
                 {
                     listView.setVisibility(View.GONE);
+                    tvDataInfo.setVisibility(View.GONE);
                     connectTags.clear();
-                    GetData(getContext());
+                    connectListAdapter.notifyDataSetChanged();
+//                    GetData(getContext());
                 }
                 else if(s.length() >= 2)
                 {
@@ -132,14 +134,14 @@ public class ByCompanyFragment  extends Fragment
         return view;
     }
 
-    @Override
+  /*  @Override
     public void onResume()
     {
         super.onResume();
 //        connectLists.clear();
         connectTags.clear();
         GetData(getContext());
-    }
+    }*/
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String>
     {
@@ -191,6 +193,8 @@ public class ByCompanyFragment  extends Fragment
                     if(connect.length() == 0)
                     {
                         tvDataInfo.setVisibility(View.VISIBLE);
+                        connectTags.clear();
+                        connectListAdapter.notifyDataSetChanged();
                     }
                     else
                     {
@@ -217,7 +221,11 @@ public class ByCompanyFragment  extends Fragment
                             connectModel.setWebsite(iCon.getString("Website"));
                             connectTags.add(connectModel);
 
-                            GetData(getContext());
+                            connectListAdapter = new ConnectListAdapter(getContext(),R.layout.grid_list5_layout, connectTags);
+                            listView.setAdapter(connectListAdapter);
+                            connectListAdapter.notifyDataSetChanged();
+
+//                            GetData(getContext());
                         }
                     }
                 }

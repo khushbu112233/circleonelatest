@@ -927,7 +927,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             dialog.dismiss();
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
-                if (result != null) {
+                if (result != null)
+                {
                     JSONObject jsonObject = new JSONObject(result);
                     String ImgName = jsonObject.getString("ImgName").toString();
                     String success = jsonObject.getString("success").toString();

@@ -77,6 +77,7 @@ public class ByNameFragment extends Fragment
         listView = (ListView) view.findViewById(R.id.listViewType4);
 
         listView.setVisibility(View.GONE);
+//        tvDataInfo.setVisibility(View.VISIBLE);
 
         session = new LoginSession(getContext());
         HashMap<String, String> user = session.getUserDetails();
@@ -94,8 +95,10 @@ public class ByNameFragment extends Fragment
                 if(s.length() <= 0)
                 {
                     listView.setVisibility(View.GONE);
+                    tvDataInfo.setVisibility(View.GONE);
                     connectTags.clear();
-                    GetData(getContext());
+                    connectListAdapter.notifyDataSetChanged();
+//                    GetData(getContext());
                 }
                 else if(s.length() >= 2)
                 {
@@ -110,7 +113,6 @@ public class ByNameFragment extends Fragment
                     connectTags.clear();
                     new ByNameFragment.HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/SearchConnect");
                 }
-
             }
 
             @Override
@@ -192,6 +194,8 @@ public class ByNameFragment extends Fragment
                     if(connect.length() == 0)
                     {
                         tvDataInfo.setVisibility(View.VISIBLE);
+                        connectTags.clear();
+                        connectListAdapter.notifyDataSetChanged();
                     }
                     else
                     {

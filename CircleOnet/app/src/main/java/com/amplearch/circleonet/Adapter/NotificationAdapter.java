@@ -122,15 +122,16 @@ public class NotificationAdapter extends BaseAdapter
             lnrTestReq.setVisibility(View.GONE);
             lnrFriend.setVisibility(View.GONE);
 
-            if (testimonialModels.get(position).getUserPhoto().equals("")) {
+            if (testimonialModels.get(position).getUserPhoto().equals(""))
+            {
                 imgTestRec.setImageResource(R.drawable.usr);
-            } else {
+            }
+            else
+            {
                 Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(imgTestRec);
             }
             txtTestPurposeRec.setText(purpose);
             txtTestNameRec.setText(testimonialModels.get(position).getFirstName());
-
-
         }
         else if (purpose.equalsIgnoreCase("Connection Requested"))
         {
@@ -184,6 +185,7 @@ public class NotificationAdapter extends BaseAdapter
                         else
                         {
                             etTextMonial.setText(null);
+                            alertDialog.dismiss();
                             new HttpAsyncWriteTextimonial().execute("http://circle8.asia:8081/Onet.svc/Testimonial/Write");
                         }
                     }
@@ -434,9 +436,12 @@ public class NotificationAdapter extends BaseAdapter
                     String message = response.getString("message");
                     String success = response.getString("success");
 
-                    if (success.equals("1")) {
+                    if (success.equals("1"))
+                    {
                         Toast.makeText(activity, "Friend Request Accepted..", Toast.LENGTH_LONG).show();
-                    } else {
+                    }
+                    else
+                    {
                         Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
                     }
 
