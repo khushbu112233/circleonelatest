@@ -79,8 +79,7 @@ public class ConnectActivity extends AppCompatActivity
     DatabaseHelper db;
     TextView tvPersonName, tvPersonDesignation, tvCompanyName;
     LinearLayout lnrWeb, lnrmail, lnrnum, lnrmob;
-    int profile;
-    String level;
+    String profileImg = "", friendUserID = "";
 
     private ArrayList<ConnectingModel> connectingTags = new ArrayList<>();
 
@@ -127,6 +126,7 @@ public class ConnectActivity extends AppCompatActivity
         tag_id = "en100000001";
         friendProfile_id = intent.getStringExtra("friendProfileID");
         profile_id = intent.getStringExtra("ProfileID");
+        friendUserID = intent.getStringExtra("friendUserID");
 
         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/ConnectProfile");
 
@@ -256,8 +256,8 @@ public class ConnectActivity extends AppCompatActivity
                                 tvAdd.setTextColor(getResources().getColor(R.color.unselected));
                                 tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
                                 Intent go = new Intent(getApplicationContext(),Connect3Activity.class);
-                                go.putExtra("level", level);
-                                go.putExtra("profile", profile);
+                                go.putExtra("profile", profileImg);
+                                go.putExtra("friendUserID", friendUserID);
                                 startActivity(go);
                                 finish();
                             }
@@ -281,8 +281,8 @@ public class ConnectActivity extends AppCompatActivity
                                 tvAdd.setTextColor(getResources().getColor(R.color.unselected));
                                 tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
                                 Intent go = new Intent(getApplicationContext(),Connect3Activity.class);
-                                go.putExtra("level", level);
-                                go.putExtra("profile", profile);
+                                go.putExtra("profile", profileImg);
+                                go.putExtra("friendUserID", friendUserID);
                                 startActivity(go);
                                 finish();
                             }
@@ -477,6 +477,7 @@ public class ConnectActivity extends AppCompatActivity
                     txtMob.setText(profile.getString("PrimaryPhone"));
                     tvPersonDesignation.setText(profile.getString("Designation"));
 
+                    profileImg = "http://circle8.asia/App_ImgLib/UserProfile/"+profile.getString("UserPhoto");
                     if(profile.getString("UserPhoto").equalsIgnoreCase(""))
                     {
                         ivProfileImage.setImageResource(R.drawable.usr);

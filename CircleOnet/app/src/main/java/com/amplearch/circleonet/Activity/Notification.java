@@ -80,7 +80,7 @@ public class Notification extends AppCompatActivity
                 finish();
             }
         });
-        
+
     }
 
     public  String POST(String url)

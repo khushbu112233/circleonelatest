@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amplearch.circleonet.R;
+import com.squareup.picasso.Picasso;
 
 public class Connect4Activity extends AppCompatActivity {
 
@@ -15,7 +16,7 @@ public class Connect4Activity extends AppCompatActivity {
     TextView txtAsk, txtLink;
     String level = "0";
     ImageView level1, level2, level3, level4, level5, level6, ivImage1;
-    int profile;
+    String profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +39,17 @@ public class Connect4Activity extends AppCompatActivity {
 
         Intent intent = getIntent();
         level = intent.getStringExtra("level");
-        profile = intent.getIntExtra("profile", 0);
-        ivImage1.setImageResource(profile);
+        profile = intent.getStringExtra("profile");
+        Picasso.with(getApplicationContext()).load(profile).placeholder(R.drawable.usr).into(ivImage1);
+        if (level.equals("0")){
+            txtLink.setText("You are not having any Connection.");
+            level1.setVisibility(View.GONE);
+            level2.setVisibility(View.GONE);
+            level3.setVisibility(View.GONE);
+            level4.setVisibility(View.GONE);
+            level5.setVisibility(View.GONE);
+            level6.setVisibility(View.GONE);
+        }
         if (level.equals("1")){
             txtLink.setText("You have a 1st level connection.");
             level1.setVisibility(View.VISIBLE);

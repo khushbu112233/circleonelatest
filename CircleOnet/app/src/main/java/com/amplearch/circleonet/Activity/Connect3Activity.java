@@ -1,9 +1,12 @@
 package com.amplearch.circleonet.Activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -11,15 +14,37 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amplearch.circleonet.Adapter.NotificationAdapter;
+import com.amplearch.circleonet.Helper.LoginSession;
+import com.amplearch.circleonet.Model.Level7thConnectionModel;
+import com.amplearch.circleonet.Model.NotificationModel;
 import com.amplearch.circleonet.R;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Connect3Activity extends AppCompatActivity
 {
     private ImageView imgBack, imgCards, imgConnect, imgEvents, imgProfile, imgConnecting, imgConnecting1;
     TextView txtConnecting;
-    String level =  "0";
     int x = 0;
-    int profile;
+    String profile;
+    LoginSession loginSession ;
+    String UserId = "", friendUserID = "";
+    ArrayList<Level7thConnectionModel> allTags;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,10 +58,16 @@ public class Connect3Activity extends AppCompatActivity
         imgConnecting = (ImageView) findViewById(R.id.imgConnecting);
         imgConnecting1 = (ImageView) findViewById(R.id.imgConnecting1);
         txtConnecting = (TextView) findViewById(R.id.txtConnecting);
+        loginSession = new LoginSession(getApplicationContext());
+
+        HashMap<String, String> user = loginSession.getUserDetails();
+
+        UserId = user.get(LoginSession.KEY_USERID);      // name
 
         Intent intent = getIntent();
-        level = intent.getStringExtra("level");
-        profile = intent.getIntExtra("profile", 0);
+        profile = intent.getStringExtra("profile");
+        friendUserID = intent.getStringExtra("friendUserID");
+        allTags = new ArrayList<>();
        // Toast.makeText(getApplicationContext(), level, Toast.LENGTH_LONG).show();
        /* Handler handler = new Handler();
 
@@ -57,6 +88,7 @@ public class Connect3Activity extends AppCompatActivity
             }, i);
         }*/
 
+        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/Connection7Level");
 
         Handler h = new Handler();
         h.postDelayed(new Runnable(){
@@ -76,20 +108,6 @@ public class Connect3Activity extends AppCompatActivity
             }
         }, 100);
 
-        imgConnecting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent go = new Intent(getApplicationContext(),Connect4Activity.class);
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("level", level);
-                go.putExtra("profile", profile);
-                startActivity(go);
-                finish();
-            }
-        });
         Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
         imgConnecting.startAnimation(anim);
 
@@ -98,14 +116,14 @@ public class Connect3Activity extends AppCompatActivity
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent go = new Intent(getApplicationContext(),ConnectActivity.class);
+              /*  Intent go = new Intent(getApplicationContext(),ConnectActivity.class);
                 go.putExtra("level", level);
                 go.putExtra("profile", profile);
                 // you pass the position you want the viewpager to show in the extra,
                 // please don't forget to define and initialize the position variable
                 // properly
                 startActivity(go);
-                finish();
+                finish();*/
             }
         });
 
@@ -170,4 +188,141 @@ public class Connect3Activity extends AppCompatActivity
         });
 
     }
+
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException
+    {
+        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+        while((line = bufferedReader.readLine()) != null)
+            result += line;
+
+        inputStream.close();
+        return result;
+    }
+
+    public  String POST(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("userId_dest", friendUserID );
+            jsonObject.accumulate("userId_src", UserId );
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        }
+        catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    private class HttpAsyncTask extends AsyncTask<String, Void, String>
+    {
+      //  ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+           /* dialog = new ProgressDialog(Connect3Activity.this);
+            dialog.setMessage("Getting Notifications...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            return POST(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+          //  dialog.dismiss();
+            try {
+                if (result != null) {
+                    JSONObject jsonObject = new JSONObject(result);
+                    JSONArray jsonArray = jsonObject.getJSONArray("connection");
+                    Toast.makeText(getApplicationContext(), jsonArray.length()+"", Toast.LENGTH_LONG).show();
+
+                    for (int i = 0; i < jsonArray.length(); i++)
+                    {
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
+
+                        Level7thConnectionModel nfcModelTag = new Level7thConnectionModel();
+                        nfcModelTag.setFirstName(object.getString("FirstName"));
+                        nfcModelTag.setLastName(object.getString("LastName"));
+                        nfcModelTag.setProfileId(object.getString("ProfileId"));
+                        nfcModelTag.setUserPhoto(object.getString("UserPhoto"));
+                        nfcModelTag.setConnection_Status(object.getString("Connection_Status"));
+                        allTags.add(nfcModelTag);
+                    }
+
+//                    notificationAdapter = new NotificationAdapter(Notification.this, allTags);
+//                    listNotification.setAdapter(notificationAdapter);
+
+                    Intent go = new Intent(getApplicationContext(),Connect4Activity.class);
+                    // you pass the position you want the viewpager to show in the extra,
+                    // please don't forget to define and initialize the position variable
+                    // properly
+                    go.putExtra("level", jsonArray.length()+"");
+                    go.putExtra("profile", profile);
+                    startActivity(go);
+                    finish();
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "Not able to load Friends..", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }

@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.GridView;
@@ -89,7 +90,7 @@ public class List2Fragment extends Fragment
     //new asign value
     AutoCompleteTextView searchText ;
 //    public static ArrayList<NFCModel> nfcModel ;
-
+    public static int pageno = 1;
     public List2Fragment() {
         // Required empty public constructor
     }
@@ -101,7 +102,7 @@ public class List2Fragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_list2, container, false);
 
         mContext = List2Fragment.this.getContext() ;
-
+        pageno = 1;
         /*db = new DatabaseHelper(getContext());
         imgf = new ArrayList<byte[]>();
 
@@ -297,6 +298,33 @@ public class List2Fragment extends Fragment
                         allTaggs.add(nfcModelTag);
                         GetData(mContext);
                     }
+
+                    gridView.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+                        @Override
+                        public void onScrollStateChanged(AbsListView view,
+                                                         int scrollState) { // TODO Auto-generated method stub
+                            int threshold = 1;
+                            int count = gridView.getCount();
+
+                            if (scrollState == SCROLL_STATE_IDLE) {
+                                if (gridView.getLastVisiblePosition() >= count
+                                        - threshold) {
+                                    // Execute LoadMoreDataTask AsyncTask
+                                    new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onScroll(AbsListView view, int firstVisibleItem,
+                                             int visibleItemCount, int totalItemCount) {
+                            // TODO Auto-generated method stub
+
+                        }
+
+                    });
+
                 }
                 else
                 {
@@ -324,8 +352,8 @@ public class List2Fragment extends Fragment
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("numofrecords", "10" );
-            jsonObject.accumulate("pageno", "1" );
+            jsonObject.accumulate("numofrecords", "3" );
+            jsonObject.accumulate("pageno", pageno );
             jsonObject.accumulate("userid", UserId );
 
             // 4. convert JSONObject to JSON to String
@@ -361,7 +389,7 @@ public class List2Fragment extends Fragment
         } catch (Exception e) {
             Log.d("InputStream", e.getLocalizedMessage());
         }
-
+        pageno++;
         // 11. return result
         return result;
     }
@@ -490,9 +518,9 @@ public class List2Fragment extends Fragment
                             CardsFragment.tabLayout.setVisibility(View.VISIBLE);
                         } else {
                            // Toast.makeText(getContext(), "Up", Toast.LENGTH_LONG).show();
-                            lnrSearch.setVisibility(View.GONE);
-                            line.setVisibility(View.GONE);
-                            CardsFragment.tabLayout.setVisibility(View.GONE);
+                            lnrSearch.setVisibility(View.VISIBLE);
+                            line.setVisibility(View.VISIBLE);
+                            CardsFragment.tabLayout.setVisibility(View.VISIBLE);
                         }
                     }
                 }
