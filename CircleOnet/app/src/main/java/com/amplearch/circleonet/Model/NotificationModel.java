@@ -12,8 +12,17 @@ public class NotificationModel {
     String LastName = "";
     String UserPhoto = "";
     String Purpose = "";
+    String Testimonial_ID = "";
 
     public NotificationModel() {
+    }
+
+    public String getTestimonial_ID() {
+        return Testimonial_ID;
+    }
+
+    public void setTestimonial_ID(String testimonial_ID) {
+        Testimonial_ID = testimonial_ID;
     }
 
     public String getFriendUserID() {

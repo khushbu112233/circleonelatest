@@ -1,5 +1,6 @@
 package com.amplearch.circleonet.Activity;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,13 +19,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amplearch.circleonet.Adapter.CardSwipe;
+import com.amplearch.circleonet.Adapter.GroupAdapter;
 import com.amplearch.circleonet.Fragments.List1Fragment;
 import com.amplearch.circleonet.Helper.DatabaseHelper;
+import com.amplearch.circleonet.Helper.LoginSession;
 import com.amplearch.circleonet.Model.FriendConnection;
+import com.amplearch.circleonet.Model.GroupModel;
 import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.Utils.CarouselEffectTransformer;
 import com.amplearch.circleonet.R;
@@ -45,6 +50,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import be.appfoundry.nfclibrary.activities.NfcActivity;
@@ -68,19 +74,23 @@ public class CardDetail extends NfcActivity
     DatabaseHelper db ;
     TextView txtName, txtCompany, txtWebsite, txtEmail, txtPH, txtWork, txtMob, txtAddress, txtRemark, txtDesi;
     CircleImageView imgProfileCard;
-    String user_id, profile_id;
+    String user_id = "", profile_id;
     StickyScrollView scroll;
     ImageView imgCall, imgSMS, imgMail;
     String recycle_image1, recycle_image2 ;
-
+    ImageView imgAddGroupFriend;
     String userImg , frontCardImg, backCardImg ;
-
+    List<CharSequence> list;
+    List<CharSequence> listGroupId;
+    LoginSession loginSession;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_detail);
-
+        loginSession = new LoginSession(getApplicationContext());
+        HashMap<String, String> user = loginSession.getUserDetails();
+        user_id = user.get(LoginSession.KEY_USERID);
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager1 = (ViewPager) findViewById(R.id.viewPager1);
         imgCards = (ImageView) findViewById(R.id.imgCards);
@@ -106,16 +116,77 @@ public class CardDetail extends NfcActivity
         txtRemark = (TextView) findViewById(R.id.txtRemark);
         txtDesi = (TextView) findViewById(R.id.txtDesi);
         scroll = (StickyScrollView) findViewById(R.id.scroll);
-
+        imgAddGroupFriend = (ImageView) findViewById(R.id.imgAddGroupFriend);
         llWebsiteBox = (LinearLayout)findViewById(R.id.llWebsiteBox);
         llEmailBox = (LinearLayout)findViewById(R.id.llEmailBox);
         llMobileBox = (LinearLayout)findViewById(R.id.llMobileBox);
         llTeleBox = (LinearLayout)findViewById(R.id.llTeleBox);
         llFaxBox = (LinearLayout)findViewById(R.id.llFaxBox);
-
+        list = new ArrayList<CharSequence>();
+        listGroupId = new ArrayList<CharSequence>();
         Intent intent = getIntent();
         profile_id = intent.getStringExtra("profile_id");
+
+        new HttpAsyncTaskGroup().execute("http://circle8.asia:8081/Onet.svc/Group/Fetch");
+
         new CardDetail.HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetUserProfile");
+
+        imgAddGroupFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Group", Toast.LENGTH_LONG).show();
+                // Intialize  readable sequence of char values
+                final CharSequence[] dialogList=  list.toArray(new CharSequence[list.size()]);
+                final AlertDialog.Builder builderDialog = new AlertDialog.Builder(CardDetail.this);
+                builderDialog.setTitle("Select Item");
+                int count = dialogList.length;
+                boolean[] is_checked = new boolean[count];
+
+                // Creating multiple selection by using setMutliChoiceItem method
+                builderDialog.setMultiChoiceItems(dialogList, is_checked,
+                        new DialogInterface.OnMultiChoiceClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int whichButton, boolean isChecked) {
+                            }
+                        });
+
+                builderDialog.setPositiveButton("Save",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                ListView list = ((AlertDialog) dialog).getListView();
+                                // make selected item in the comma seprated string
+                                StringBuilder stringBuilder = new StringBuilder();
+                                for (int i = 0; i < list.getCount(); i++) {
+                                    boolean checked = list.isItemChecked(i);
+
+                                    if (checked) {
+                                        if (stringBuilder.length() > 0) stringBuilder.append("");
+                                        stringBuilder.append(listGroupId.get(i));
+
+                                        new HttpAsyncTaskGroupAddFriend().execute("http://circle8.asia:8081/Onet.svc/Group/AddFriend");
+                                    }
+                                }
+
+                        /*Check string builder is empty or not. If string builder is not empty.
+                          It will display on the screen.
+                         */
+                                Toast.makeText(getApplicationContext(), stringBuilder.toString(), Toast.LENGTH_LONG).show();
+                            }
+                        });
+
+                builderDialog.setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ((TextView) findViewById(R.id.text)).setText("Click here to open Dialog");
+                            }
+                        });
+                AlertDialog alert = builderDialog.create();
+                alert.show();
+            }
+        });
 
         llWebsiteBox.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -578,6 +649,215 @@ public class CardDetail extends NfcActivity
             }
         });
     }
+
+    public String POST4(String url) {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("ProfileId", profile_id);
+            jsonObject.accumulate("numofrecords", "10");
+            jsonObject.accumulate("pageno", "1");
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    public String POST5(String url) {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            int i[] = new int[]{1,2,3};
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("GroupID", listGroupId.get(0));
+            jsonObject.accumulate("UserID", user_id);
+            jsonObject.accumulate("myFriendProfileIds", i);
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+
+    private class HttpAsyncTaskGroup extends AsyncTask<String, Void, String> {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(CardDetail.this);
+            dialog.setMessage("Fetching Groups...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return POST4(urls[0]);
+        }
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+            dialog.dismiss();
+            try {
+                if (result != null) {
+                    JSONObject jsonObject = new JSONObject(result);
+                    JSONArray jsonArray = jsonObject.getJSONArray("Groups");
+                    //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
+
+                        GroupModel nfcModelTag = new GroupModel();
+                        nfcModelTag.setGroup_ID(object.getString("group_ID"));
+                        nfcModelTag.setGroup_Name(object.getString("group_Name"));
+                        //  Toast.makeText(getContext(), object.getString("Testimonial_Text"), Toast.LENGTH_LONG).show();
+                        list.add(object.getString("group_Name"));
+                        listGroupId.add(object.getString("group_ID"));
+                    }
+                    // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
+                } else {
+                    Toast.makeText(getApplicationContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private class HttpAsyncTaskGroupAddFriend extends AsyncTask<String, Void, String> {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(CardDetail.this);
+            dialog.setMessage("Adding Friend...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return POST5(urls[0]);
+        }
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+            dialog.dismiss();
+            try {
+                if (result != null) {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String Success = jsonObject.getString("Success");
+                    if (Success.equals("1")){
+                        Toast.makeText(getApplicationContext(), "Friend Added..", Toast.LENGTH_LONG).show();
+                    }else {
+                        Toast.makeText(getApplicationContext(), "Friend not Added..", Toast.LENGTH_LONG).show();
+                    }
+                    // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
+                } else {
+                    Toast.makeText(getApplicationContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String>
     {
