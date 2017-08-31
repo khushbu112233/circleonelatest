@@ -125,6 +125,7 @@ public class ByNameFragment extends Fragment
            {
                Intent intent = new Intent(getContext(), ConnectActivity.class);
                intent.putExtra("friendProfileID", connectTags.get(position).getProfile_id());
+               intent.putExtra("friendUserID", connectTags.get(position).getUserID());
                intent.putExtra("ProfileID", profileID);
                getContext().startActivity(intent);
            }
@@ -201,6 +202,7 @@ public class ByNameFragment extends Fragment
                         {
                             JSONObject iCon = connect.getJSONObject(i);
                             ConnectList connectModel = new ConnectList();
+                            connectModel.setUserID(iCon.getString("UserID"));
                             connectModel.setFirstname(iCon.getString("FirstName"));
                             connectModel.setLastname(iCon.getString("LastName"));
                             connectModel.setUsername(iCon.getString("UserName"));
@@ -241,6 +243,7 @@ public class ByNameFragment extends Fragment
         for(ConnectList reTag : connectTags)
         {
             ConnectList connectModelTag = new ConnectList();
+            connectModelTag.setUserID(reTag.getUserID());
             connectModelTag.setFirstname(reTag.getFirstname());
             connectModelTag.setLastname(reTag.getLastname());
             connectModelTag.setCompanyname(reTag.getCompanyname());

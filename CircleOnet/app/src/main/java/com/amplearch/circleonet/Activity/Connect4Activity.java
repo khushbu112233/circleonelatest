@@ -41,6 +41,15 @@ public class Connect4Activity extends AppCompatActivity {
         level = intent.getStringExtra("level");
         profile = intent.getStringExtra("profile");
         Picasso.with(getApplicationContext()).load(profile).placeholder(R.drawable.usr).into(ivImage1);
+        if (level.equals("0")){
+            txtLink.setText("You are not having any Connection.");
+            level1.setVisibility(View.GONE);
+            level2.setVisibility(View.GONE);
+            level3.setVisibility(View.GONE);
+            level4.setVisibility(View.GONE);
+            level5.setVisibility(View.GONE);
+            level6.setVisibility(View.GONE);
+        }
         if (level.equals("1")){
             txtLink.setText("You have a 1st level connection.");
             level1.setVisibility(View.VISIBLE);

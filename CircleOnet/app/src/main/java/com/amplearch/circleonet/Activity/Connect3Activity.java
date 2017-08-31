@@ -43,7 +43,7 @@ public class Connect3Activity extends AppCompatActivity
     int x = 0;
     String profile;
     LoginSession loginSession ;
-    String UserId = "";
+    String UserId = "", friendUserID = "";
     ArrayList<Level7thConnectionModel> allTags;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +66,7 @@ public class Connect3Activity extends AppCompatActivity
 
         Intent intent = getIntent();
         profile = intent.getStringExtra("profile");
+        friendUserID = intent.getStringExtra("friendUserID");
         allTags = new ArrayList<>();
        // Toast.makeText(getApplicationContext(), level, Toast.LENGTH_LONG).show();
        /* Handler handler = new Handler();
@@ -215,7 +216,7 @@ public class Connect3Activity extends AppCompatActivity
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("userId_dest", "1030" );
+            jsonObject.accumulate("userId_dest", friendUserID );
             jsonObject.accumulate("userId_src", UserId );
 
             // 4. convert JSONObject to JSON to String

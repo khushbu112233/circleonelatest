@@ -79,7 +79,7 @@ public class ConnectActivity extends AppCompatActivity
     DatabaseHelper db;
     TextView tvPersonName, tvPersonDesignation, tvCompanyName;
     LinearLayout lnrWeb, lnrmail, lnrnum, lnrmob;
-    String profileImg;
+    String profileImg = "", friendUserID = "";
 
     private ArrayList<ConnectingModel> connectingTags = new ArrayList<>();
 
@@ -126,6 +126,7 @@ public class ConnectActivity extends AppCompatActivity
         tag_id = "en100000001";
         friendProfile_id = intent.getStringExtra("friendProfileID");
         profile_id = intent.getStringExtra("ProfileID");
+        friendUserID = intent.getStringExtra("friendUserID");
 
         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/ConnectProfile");
 
@@ -256,6 +257,7 @@ public class ConnectActivity extends AppCompatActivity
                                 tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
                                 Intent go = new Intent(getApplicationContext(),Connect3Activity.class);
                                 go.putExtra("profile", profileImg);
+                                go.putExtra("friendUserID", friendUserID);
                                 startActivity(go);
                                 finish();
                             }
@@ -280,6 +282,7 @@ public class ConnectActivity extends AppCompatActivity
                                 tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
                                 Intent go = new Intent(getApplicationContext(),Connect3Activity.class);
                                 go.putExtra("profile", profileImg);
+                                go.putExtra("friendUserID", friendUserID);
                                 startActivity(go);
                                 finish();
                             }

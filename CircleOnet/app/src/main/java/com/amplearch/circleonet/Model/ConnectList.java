@@ -21,13 +21,15 @@ public class ConnectList
     String google ;
     String linkedin ;
     String website ;
+    String UserID;
 
     public ConnectList() {    }
 
-    public ConnectList(String firstname, String lastname, String username, String userphoto, String card_front,
+    public ConnectList(String UserID, String firstname, String lastname, String username, String userphoto, String card_front,
             String card_back, String profile_id, String phone, String companyname, String designation,
             String facebook, String twitter, String google, String linkedin, String website)
     {
+        this.UserID = UserID ;
         this.firstname = firstname ;
         this.lastname = lastname ;
         this.username = username ;
@@ -43,6 +45,14 @@ public class ConnectList
         this.google = google ;
         this.linkedin = linkedin ;
         this.website = website ;
+    }
+
+    public String getUserID() {
+        return UserID;
+    }
+
+    public void setUserID(String userID) {
+        UserID = userID;
     }
 
     public String getFirstname() {
