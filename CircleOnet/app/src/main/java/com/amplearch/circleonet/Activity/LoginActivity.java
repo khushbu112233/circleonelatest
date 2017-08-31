@@ -380,8 +380,10 @@ public class LoginActivity extends AppCompatActivity implements
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("Platform", "Android");
             jsonObject.accumulate("SocialMedia_Id", SocialMedia_Id);
             jsonObject.accumulate("SocialMedia_Type", SocialMedia_Type);
+            jsonObject.accumulate("Token", "1234567890");
             jsonObject.accumulate("UserName", UserName);
 
             // 4. convert JSONObject to JSON to String
