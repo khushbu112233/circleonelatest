@@ -684,7 +684,6 @@ public class CardDetail extends NfcActivity
                  //   viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
                     viewPager1.setAdapter(myPager);
 
-
                         /*FriendConnection nfcModelTag = new FriendConnection();
                         nfcModelTag.setName(object.getString("FirstName") + " " + object.getString("LastName"));
                         nfcModelTag.setCompany(object.getString("CompanyName"));

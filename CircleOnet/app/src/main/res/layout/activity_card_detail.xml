@@ -206,7 +206,6 @@
                             android:layout_marginTop="5dp"
                             android:src="@drawable/ic_keyboard_arrow_left_black_24dp" />
 
-
                         <ImageView
                             android:layout_width="22dp"
                             android:layout_height="30dp"
@@ -228,7 +227,7 @@
                                 android:id="@+id/imgProfileCard"
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
-                                android:src="@drawable/profile3"
+                                android:src="@drawable/usr"
                                 app:civ_border_color="@color/colorPrimary"
                                 app:civ_border_width="2dp" />
 
@@ -237,17 +236,18 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginTop="8dp"
-                                android:text="Westley Wan"
+                                android:text="Person"
                                 android:textAlignment="center"
                                 android:textColor="@color/white"
                                 android:textSize="19dp"
                                 android:textStyle="bold" />
+
                             <TextView
                                 android:id="@+id/txtDesi"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginTop="3dp"
-                                android:text="Unico Creative pte ltd"
+                                android:text="Designation"
                                 android:textAlignment="center"
                                 android:textColor="@color/white"
                                 android:textSize="19dp" />
@@ -257,7 +257,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginTop="3dp"
-                                android:text="Unico Creative pte ltd"
+                                android:text="Company"
                                 android:textAlignment="center"
                                 android:textColor="@color/white"
                                 android:textSize="19dp" />
