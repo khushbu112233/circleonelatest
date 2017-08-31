@@ -79,10 +79,13 @@ public class CardDetail extends NfcActivity
     ImageView imgCall, imgSMS, imgMail;
     String recycle_image1, recycle_image2 ;
     ImageView imgAddGroupFriend;
-    String userImg , frontCardImg, backCardImg ;
+
+    String userImg , frontCardImg, backCardImg, personName, personAddress ;
+
     List<CharSequence> list;
     List<CharSequence> listGroupId;
     LoginSession loginSession;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -908,45 +911,130 @@ public class CardDetail extends NfcActivity
           backCardImg = jsonObject.getString("Card_Back");
               userImg = jsonObject.getString("UserPhoto");
 
-                        txtName.setText(jsonObject.getString("FirstName")+" "+jsonObject.getString("LastName"));
-                        txtDesi.setText(jsonObject.getString("Designation"));
-                        txtCompany.setText(jsonObject.getString("CompanyName"));
-                        txtEmail.setText(jsonObject.getString("Emailid"));
-                        txtMob.setText(jsonObject.getString("PrimaryPhone"));
-                        txtPH.setText(jsonObject.getString("OfficePhone"));
-                        txtAddress.setText(jsonObject.getString("Address1") + " " + jsonObject.getString("Address2")
+//                        txtName.setText(jsonObject.getString("FirstName")+" "+jsonObject.getString("LastName"));
+//                        txtDesi.setText(jsonObject.getString("Designation"));
+//                        txtCompany.setText(jsonObject.getString("CompanyName"));
+//                        txtEmail.setText(jsonObject.getString("Emailid"));
+//                        txtMob.setText(jsonObject.getString("PrimaryPhone"));
+//                        txtPH.setText(jsonObject.getString("OfficePhone"));
+                        /*txtAddress.setText(jsonObject.getString("Address1") + " " + jsonObject.getString("Address2")
                             + " " + jsonObject.getString("Address3") + " " + jsonObject.getString("Address4")
                             + " " + jsonObject.getString("City")  + " " + jsonObject.getString("State")
-                            + " " + jsonObject.getString("Country") + " " + jsonObject.getString("Postalcode"));
+                            + " " + jsonObject.getString("Country") + " " + jsonObject.getString("Postalcode"));*/
+//                    txtWebsite.setText(jsonObject.getString("Website"));
+
+                    personName = jsonObject.getString("FirstName")+" "+jsonObject.getString("LastName") ;
+                    personAddress = jsonObject.getString("Address1") + " " + jsonObject.getString("Address2")
+                            + " " + jsonObject.getString("Address3") + " " + jsonObject.getString("Address4")
+                            + " " + jsonObject.getString("City")  + " " + jsonObject.getString("State")
+                            + " " + jsonObject.getString("Country") + " " + jsonObject.getString("Postalcode") ;
+
+                    if(personName.equalsIgnoreCase("") || personName.equalsIgnoreCase("null"))
+                    {
+                        txtName.setText("Person");
+                    }
+                    else
+                    {
+                        txtName.setText(personName);
+                    }
+
+                    if(jsonObject.getString("Designation").equalsIgnoreCase("")
+                            || jsonObject.getString("Designation").equalsIgnoreCase("null"))
+                    {
+                        txtDesi.setText("Designation");
+                    }
+                    else
+                    {
+                        txtDesi.setText(jsonObject.getString("Designation"));
+                    }
+
+                    if(jsonObject.getString("CompanyName").equalsIgnoreCase("")
+                            || jsonObject.getString("CompanyName").equalsIgnoreCase("null"))
+                    {
+                        txtCompany.setText("Company");
+                    }
+                    else
+                    {
+                        txtCompany.setText(jsonObject.getString("CompanyName"));
+                    }
+
+                    if(jsonObject.getString("Website").equalsIgnoreCase("")
+                            || jsonObject.getString("Website").equalsIgnoreCase("null"))
+                    {
+                        txtWebsite.setText("Website");
+                    }
+                    else
+                    {
                         txtWebsite.setText(jsonObject.getString("Website"));
+                    }
 
+                    if(jsonObject.getString("Emailid").equalsIgnoreCase("")
+                            || jsonObject.getString("Emailid").equalsIgnoreCase("null"))
+                    {
+                        txtEmail.setText("Email Address");
+                    }
+                    else
+                    {
+                        txtEmail.setText(jsonObject.getString("Emailid"));
+                    }
 
-                        if(userImg.equalsIgnoreCase(""))
-                        {
-                            imgProfileCard.setImageResource(R.drawable.usr) ;
-                        }
-                        else
-                        {
-                            Picasso.with(CardDetail.this).load("http://circle8.asia/App_ImgLib/UserProfile/"+userImg).into(imgProfileCard) ;
-                        }
+                    if(jsonObject.getString("OfficePhone").equalsIgnoreCase("")
+                            || jsonObject.getString("OfficePhone").equalsIgnoreCase("null"))
+                    {
+                        txtPH.setText("Phone No.");
+                    }
+                    else
+                    {
+                        txtPH.setText(jsonObject.getString("OfficePhone"));
+                    }
 
-                        if(frontCardImg.equalsIgnoreCase(""))
-                        {
-                           recycle_image1 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg" ;
-                        }
-                        else
-                        {
-                            recycle_image1 = "http://circle8.asia/App_ImgLib/Cards/"+frontCardImg ;
-                        }
+                    if(jsonObject.getString("PrimaryPhone").equalsIgnoreCase("")
+                            || jsonObject.getString("PrimaryPhone").equalsIgnoreCase("null"))
+                    {
+                        txtMob.setText("Mobile No.");
+                    }
+                    else
+                    {
+                        txtMob.setText(jsonObject.getString("PrimaryPhone"));
+                    }
 
-                        if(backCardImg.equalsIgnoreCase(""))
-                        {
-                            recycle_image2 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg" ;
-                        }
-                        else
-                        {
-                            recycle_image2 = "http://circle8.asia/App_ImgLib/Cards/"+backCardImg ;
-                        }
+                    if(personAddress.startsWith(" ")
+                            || personAddress.equalsIgnoreCase("null")
+                            || personAddress.equalsIgnoreCase(""))
+                    {
+                        txtAddress.setText("Address");
+                    }
+                    else
+                    {
+                        txtAddress.setText(personAddress);
+                    }
+
+                    if(userImg.equalsIgnoreCase(""))
+                    {
+                        imgProfileCard.setImageResource(R.drawable.usr) ;
+                    }
+                    else
+                    {
+                        Picasso.with(CardDetail.this).load("http://circle8.asia/App_ImgLib/UserProfile/"+userImg).into(imgProfileCard) ;
+                    }
+
+                    if(frontCardImg.equalsIgnoreCase(""))
+                    {
+                       recycle_image1 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg" ;
+                    }
+                    else
+                    {
+                        recycle_image1 = "http://circle8.asia/App_ImgLib/Cards/"+frontCardImg ;
+                    }
+
+                    if(backCardImg.equalsIgnoreCase(""))
+                    {
+                        recycle_image2 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg" ;
+                    }
+                    else
+                    {
+                        recycle_image2 = "http://circle8.asia/App_ImgLib/Cards/"+backCardImg ;
+                    }
 
                     image.add(recycle_image1);
                     image.add(recycle_image2);

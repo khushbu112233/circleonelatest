@@ -514,7 +514,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="www.tcmong.com.sg"
+                    android:text="Website"
                     android:textAlignment="center"
                     android:textColor="#6b6c6e"
                     android:textSize="13sp" />
@@ -540,7 +540,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="tcmong@tcmong.com.sg"
+                    android:text="Email Address"
                     android:textAlignment="center"
                     android:textColor="#6b6c6e"
                     android:textSize="13sp" />
@@ -566,7 +566,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="+65 6842 6186      +65 6842 6288"
+                    android:text="Telephone No."
                     android:textAlignment="center"
                     android:textColor="#6b6c6e"
                     android:textSize="13sp" />
@@ -590,7 +590,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="+65 6842 6288"
+                    android:text="Fax No."
                     android:textAlignment="center"
                     android:textColor="#6b6c6e"
                     android:textSize="13sp" />
@@ -616,7 +616,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="+65 8842 6688"
+                    android:text="Mobile No."
                     android:textAlignment="center"
                     android:textColor="#6b6c6e"
                     android:textSize="13sp" />
@@ -640,7 +640,7 @@
                     android:id="@+id/txtAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="246 Macpherson Road.Betime Building #03-04.Singapore 348578"
+                    android:text="Address"
                     android:textColor="#6b6c6e"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -678,7 +678,6 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="15sp" />
 
-
                 <ImageView
                     android:layout_marginTop="5dp"
                     android:layout_width="35dp"
@@ -689,7 +688,6 @@
 
             </RelativeLayout>
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -699,12 +697,12 @@
                 android:textColor="#6b6c6e"
                 android:textSize="13sp" />
 
-
             <LinearLayout
                 android:layout_marginTop="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

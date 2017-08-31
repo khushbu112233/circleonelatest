@@ -40,6 +40,8 @@ public class ConnectListAdapter extends BaseAdapter
     private int layoutResourceId;
     DatabaseHelper db;
 
+    String personName, designation, company, website, email ;
+
     public ConnectListAdapter(Context context, int grid_list3_layout, ArrayList<ConnectList> connectLists)
     {
         this.context = context ;
@@ -75,9 +77,52 @@ public class ConnectListAdapter extends BaseAdapter
         TextView detailText = (TextView)convertView.findViewById(R.id.textList3);
 
         nameText.setText(connectLists.get(position).getFirstname()+" "+connectLists.get(position).getLastname());
-        descText.setText(connectLists.get(position).getDesignation());
-        detailText.setText(connectLists.get(position).getCompanyname()+"\n"+connectLists.get(position).getUsername()+"\n"
-                +connectLists.get(position).getWebsite());
+//        descText.setText(connectLists.get(position).getDesignation());
+//        detailText.setText(connectLists.get(position).getCompanyname()+"\n"+connectLists.get(position).getUsername()+"\n"
+//                +connectLists.get(position).getWebsite());
+
+        if(connectLists.get(position).getCompanyname().equalsIgnoreCase("")
+                || connectLists.get(position).getCompanyname().equalsIgnoreCase("null"))
+        {
+            company = "Company" ;
+        }
+        else
+        {
+            company = connectLists.get(position).getCompanyname() ;
+        }
+
+        if(connectLists.get(position).getUsername().equalsIgnoreCase("")
+                || connectLists.get(position).getUsername().equalsIgnoreCase("null"))
+        {
+            email = "Email" ;
+        }
+        else
+        {
+            email = connectLists.get(position).getUsername() ;
+        }
+
+        if(connectLists.get(position).getWebsite().equalsIgnoreCase("")
+                || connectLists.get(position).getWebsite().equalsIgnoreCase("null"))
+        {
+            website = "Website" ;
+        }
+        else
+        {
+            website = connectLists.get(position).getWebsite() ;
+        }
+
+        if(connectLists.get(position).getDesignation().equalsIgnoreCase("")
+                || connectLists.get(position).getDesignation().equalsIgnoreCase("null"))
+        {
+            descText.setText("Designation");
+        }
+        else
+        {
+            descText.setText(connectLists.get(position).getDesignation());
+        }
+
+        detailText.setText(company+"\n"+email+"\n"+website);
+
 
         if(connectLists.get(position).getUserphoto().equalsIgnoreCase(""))
         {
@@ -87,6 +132,9 @@ public class ConnectListAdapter extends BaseAdapter
         {
             Picasso.with(context).load("http://circle8.asia/App_ImgLib/Cards/"+connectLists.get(position).getUserphoto()).into(circleImageView);
         }
+
+
+
 
         return convertView;
     }

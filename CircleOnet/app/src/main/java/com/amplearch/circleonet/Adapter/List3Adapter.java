@@ -254,7 +254,8 @@ public class List3Adapter extends BaseSwipeAdapter
     }
 
     @Override
-    public void fillValues(int position, View convertView) {
+    public void fillValues(int position, View convertView)
+    {
         View row = convertView;
         ViewHolder holder = null;
 

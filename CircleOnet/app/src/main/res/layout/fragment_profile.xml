@@ -405,7 +405,7 @@
                             android:gravity="center"
                             android:textColor="#6b6c6e"
                             android:textSize="13sp"
-                            android:text="e@mail.com"
+                            android:text="Email Address"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent" />
                     </LinearLayout>

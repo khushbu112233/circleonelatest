@@ -454,7 +454,6 @@ public class List1Fragment extends Fragment
             dialog.setCancelable(false);
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
-
         }
 
         @Override
@@ -552,7 +551,6 @@ public class List1Fragment extends Fragment
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(mAdapter);
         recyclerView.addOnScrollListener(new CenterScrollListener());
-
     }
 
     public static void initRecyclerView2(final RecyclerView recyclerView, final CarouselLayoutManager layoutManager, GalleryAdapter1 mAdapter)

@@ -91,8 +91,8 @@ public class ProfileFragment extends Fragment
     String profileId = "";
 
     private int i = 0;
-    TextView tvDesignation, tvCompany, tvName, tvCompanyName, tvDesi, tvAssociation, tvAddress, tvWebsite, tvMail,
-            tvMob, tvWork;
+    TextView tvDesignation, tvCompany, tvName, tvCompanyName, tvDesi,
+            tvAssociation, tvAddress, tvWebsite, tvMail, tvMob, tvWork;
     ProfileModel nfcModelTag;
     CircleImageView imgProfile;
     LinearLayout lnrMob, lnrWork, lnrWebsite, lnrMap;
@@ -412,16 +412,16 @@ public class ProfileFragment extends Fragment
                         //Toast.makeText(getContext(),"You Clicked : " + item.getTitle(),Toast.LENGTH_SHORT).show();
 
 
-                        if (item.getTitle().toString().equals("Add New Profile")){
+                        if (item.getTitle().toString().equals("Add New Profile"))
+                        {
                            // new HttpAsyncTaskAddProfile().execute("http://circle8.asia:8081/Onet.svc/AddProfile");
                             Intent intent = new Intent(getContext(), EditProfileActivity.class);
                             intent.putExtra("profile_id", TestimonialProfileId);
                             intent.putExtra("type", "add");
                             startActivity(intent);
-
-
                         }
-                        else {
+                        else
+                        {
                             for (int i = 0; i < profile_array.size(); i++)
                             {
                                 if (item.getTitle().toString().equals(profile_array.get(i).toString()))
