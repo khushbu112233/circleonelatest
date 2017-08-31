@@ -40,8 +40,6 @@
 
         </android.support.design.widget.AppBarLayout>
 
-
-
     <LinearLayout
         android:background="@color/white"
         android:id="@+id/lnrBottomTab"
