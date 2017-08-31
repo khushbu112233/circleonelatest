@@ -580,7 +580,7 @@ public class NotificationAdapter extends BaseAdapter
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Accept", accept);
-            jsonObject.accumulate("TestimonialId", testimonialModels.get(posi).getFriendProfileID());
+            jsonObject.accumulate("TestimonialId", testimonialModels.get(posi).getTestimonial_ID());
             jsonObject.accumulate("userId", UserId);
 
             // 4. convert JSONObject to JSON to String

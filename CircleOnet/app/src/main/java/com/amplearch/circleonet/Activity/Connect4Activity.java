@@ -13,7 +13,7 @@ import com.squareup.picasso.Picasso;
 public class Connect4Activity extends AppCompatActivity {
 
     private ImageView imgBack, imgCards, imgConnect, imgEvents, imgProfile, imgConnecting;
-    TextView txtAsk, txtLink;
+    TextView txtAsk, txtLink, txtCongratulations;
     String level = "0";
     ImageView level1, level2, level3, level4, level5, level6, ivImage1;
     String profile;
@@ -36,12 +36,15 @@ public class Connect4Activity extends AppCompatActivity {
         level5 = (ImageView) findViewById(R.id.imgLevel5);
         level6 = (ImageView) findViewById(R.id.imgLevel6);
         ivImage1 = (ImageView) findViewById(R.id.ivImage1);
+        txtCongratulations = (TextView) findViewById(R.id.txtCongratulations);
 
         Intent intent = getIntent();
         level = intent.getStringExtra("level");
         profile = intent.getStringExtra("profile");
         Picasso.with(getApplicationContext()).load(profile).placeholder(R.drawable.usr).into(ivImage1);
         if (level.equals("0")){
+            txtCongratulations.setVisibility(View.GONE);
+            txtAsk.setVisibility(View.GONE);
             txtLink.setText("You are not having any Connection.");
             level1.setVisibility(View.GONE);
             level2.setVisibility(View.GONE);
@@ -51,6 +54,8 @@ public class Connect4Activity extends AppCompatActivity {
             level6.setVisibility(View.GONE);
         }
         if (level.equals("1")){
+            txtCongratulations.setVisibility(View.VISIBLE);
+            txtAsk.setVisibility(View.VISIBLE);
             txtLink.setText("You have a 1st level connection.");
             level1.setVisibility(View.VISIBLE);
             level2.setVisibility(View.GONE);
@@ -60,6 +65,8 @@ public class Connect4Activity extends AppCompatActivity {
             level6.setVisibility(View.GONE);
         }
         else if (level.equals("2")){
+            txtCongratulations.setVisibility(View.VISIBLE);
+            txtAsk.setVisibility(View.VISIBLE);
             txtLink.setText("You have a 2nd level connection.");
             level1.setVisibility(View.VISIBLE);
             level2.setVisibility(View.VISIBLE);
@@ -69,6 +76,8 @@ public class Connect4Activity extends AppCompatActivity {
             level6.setVisibility(View.GONE);
         }
         else if (level.equals("3")){
+            txtCongratulations.setVisibility(View.VISIBLE);
+            txtAsk.setVisibility(View.VISIBLE);
             txtLink.setText("You have a 3rd level connection.");
             level1.setVisibility(View.VISIBLE);
             level2.setVisibility(View.VISIBLE);
@@ -78,6 +87,8 @@ public class Connect4Activity extends AppCompatActivity {
             level6.setVisibility(View.GONE);
         }
         else if (level.equals("4")){
+            txtCongratulations.setVisibility(View.VISIBLE);
+            txtAsk.setVisibility(View.VISIBLE);
             txtLink.setText("You have a 4th level connection.");
             level1.setVisibility(View.VISIBLE);
             level2.setVisibility(View.VISIBLE);
@@ -87,6 +98,8 @@ public class Connect4Activity extends AppCompatActivity {
             level6.setVisibility(View.GONE);
         }
         else if (level.equals("5")){
+            txtCongratulations.setVisibility(View.VISIBLE);
+            txtAsk.setVisibility(View.VISIBLE);
             txtLink.setText("You have a 5th level connection.");
             level1.setVisibility(View.VISIBLE);
             level2.setVisibility(View.VISIBLE);
@@ -96,6 +109,8 @@ public class Connect4Activity extends AppCompatActivity {
             level6.setVisibility(View.GONE);
         }
         else if (level.equals("6")){
+            txtCongratulations.setVisibility(View.VISIBLE);
+            txtAsk.setVisibility(View.VISIBLE);
             txtLink.setText("You have a 6th level connection.");
             level1.setVisibility(View.VISIBLE);
             level2.setVisibility(View.VISIBLE);
