@@ -30,6 +30,10 @@ public class FriendConnection
     String user_image;
     String date;
     String profile_id ;
+    String UserID = "";
+    String FirstName = "";
+    String LastName = "";
+
 
     public String getProfile_id() {
         return profile_id;
@@ -67,6 +71,30 @@ public class FriendConnection
         this.user_image = user_image;
         this.date = date;
         this.profile_id = profile_id ;
+    }
+
+    public String getUserID() {
+        return UserID;
+    }
+
+    public void setUserID(String userID) {
+        UserID = userID;
+    }
+
+    public String getFirstName() {
+        return FirstName;
+    }
+
+    public void setFirstName(String firstName) {
+        FirstName = firstName;
+    }
+
+    public String getLastName() {
+        return LastName;
+    }
+
+    public void setLastName(String lastName) {
+        LastName = lastName;
     }
 
     public String getName() {

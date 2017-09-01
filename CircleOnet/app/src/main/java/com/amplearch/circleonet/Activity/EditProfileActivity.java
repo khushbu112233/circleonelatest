@@ -78,7 +78,7 @@ public class EditProfileActivity extends AppCompatActivity
     public static ArrayList<String> addEventList = new ArrayList<>();
     public static AddEventAdapter addEventAdapter;
     public static TextView tvEventInfo;
-    ImageView imgDone;
+    ImageView imgDone, imgAdd;
     AutoCompleteTextView autoCompleteCompany, autoCompleteDesignation, autoCompleteIndustry;
     //String[] languages={"Android ","java","IOS","SQL","JDBC","Web services"};
     ArrayList<String> company, designation, industry;
@@ -175,6 +175,7 @@ public class EditProfileActivity extends AppCompatActivity
         txtMore = (TextView) findViewById(R.id.txtMore);
         ivArrowImg = (ImageView) findViewById(R.id.ivArrowImg);
         tvEventInfo = (TextView) findViewById(R.id.tvEventInfo);
+        imgAdd = (ImageView) findViewById(R.id.imgAdd);
         llEventBox = (LinearLayout) findViewById(R.id.llEventBox);
         ivAttachBackImage = (ImageView) findViewById(R.id.ivAttachBackImage);
         ivAttachFrontImage = (ImageView) findViewById(R.id.ivAttachFrontImage);
@@ -208,6 +209,15 @@ public class EditProfileActivity extends AppCompatActivity
                 go.putExtra("viewpager_position", 3);
                 startActivity(go);
                 finish();
+            }
+        });
+
+        imgAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), TestimonialRequest.class);
+                intent.putExtra("ProfileId", profileId);
+                startActivity(intent);
             }
         });
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
