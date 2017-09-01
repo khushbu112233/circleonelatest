@@ -83,7 +83,7 @@ public class EditProfileActivity extends AppCompatActivity
     //String[] languages={"Android ","java","IOS","SQL","JDBC","Web services"};
     ArrayList<String> company, designation, industry;
     String profileId = "", Card_Front = "", Card_Back = "", FirstName = "", LastName = "", UserPhoto = "", OfficePhone = "", PrimaryPhone = "", Emailid = "",
-            Facebook = "", Twitter = "", Google = "", IndustryName = "", CompanyName = "", CompanyProfile = "", Designation = "", ProfileDesc = "", Status = "";
+            Facebook = "", Twitter = "", Google = "", LinkedIn = "", IndustryName = "", CompanyName = "", CompanyProfile = "", Designation = "", ProfileDesc = "", Status = "";
     String Address1 = "", Address2 = "", Address3 = "", Address4 = "", City = "", State = "", Country = "", Postalcode = "", Website = "", Attachment_FileName = "";
     EditText edtUserName, edtWork, edtPrimary, edtEmail, edtProfileDesc, edtCompanyDesc;
     public static ViewPager mViewPager, viewPager1;
@@ -122,6 +122,8 @@ public class EditProfileActivity extends AppCompatActivity
     ImageView ivAttachBackImage, ivAttachFrontImage;
     TextView txtCardFront, txtCardBack;
     String cardType = "";
+
+    String companyID, designationID, industryID, associationID, addressID ;
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException
     {
@@ -296,15 +298,16 @@ public class EditProfileActivity extends AppCompatActivity
 
         imgDone.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
-                if (type.equals("add")) {
-
+            public void onClick(View v)
+            {
+                if (type.equals("add"))
+                {
                     new HttpAsyncTaskAddProfile().execute("http://circle8.asia:8081/Onet.svc/AddProfile");
-                } else if (type.equals("edit")) {
+                }
+                else if (type.equals("edit"))
+                {
                     new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/UpdateProfile");
                 }
-
             }
         });
 
@@ -428,16 +431,16 @@ public class EditProfileActivity extends AppCompatActivity
             jsonObject.accumulate("Card_Front", txtCardFront.getText().toString());
             jsonObject.accumulate("City", edtAddress3.getText().toString());
             jsonObject.accumulate("CompanyDesc", edtCompanyDesc.getText().toString());
-            jsonObject.accumulate("CompanyID", "1");
+            jsonObject.accumulate("CompanyID", companyID);
             jsonObject.accumulate("CompanyName", autoCompleteCompany.getText().toString());
             jsonObject.accumulate("Country", edtAddress5.getText().toString());
             jsonObject.accumulate("Designation", autoCompleteDesignation.getText().toString());
-            jsonObject.accumulate("DesignationID", "1");
+            jsonObject.accumulate("DesignationID", designationID);
             jsonObject.accumulate("Email", edtEmail.getText().toString());
-            jsonObject.accumulate("Email_Type", "");
+            jsonObject.accumulate("Email_Type", "work");
             jsonObject.accumulate("Facebook", "");
             jsonObject.accumulate("Google", "");
-            jsonObject.accumulate("IndustryID", "1");
+            jsonObject.accumulate("IndustryID", industryID);
             jsonObject.accumulate("IndustryName", autoCompleteIndustry.getText().toString());
             jsonObject.accumulate("Linkedin", "");
             jsonObject.accumulate("Phone", edtWork.getText().toString());
@@ -445,7 +448,7 @@ public class EditProfileActivity extends AppCompatActivity
             jsonObject.accumulate("Postalcode", edtAddress6.getText().toString());
             jsonObject.accumulate("ProfileID", profileId);
             jsonObject.accumulate("Profile_Desc", ProfileDesc);
-            jsonObject.accumulate("Profile_Type", "");
+            jsonObject.accumulate("Profile_Type", "work");
             jsonObject.accumulate("State", edtAddress4.getText().toString());
             jsonObject.accumulate("Twitter", "");
             jsonObject.accumulate("UserID", UserID);
@@ -792,16 +795,16 @@ public class EditProfileActivity extends AppCompatActivity
             jsonObject.accumulate("Card_Front", txtCardFront.getText().toString());
             jsonObject.accumulate("City", edtAddress3.getText().toString());
             jsonObject.accumulate("CompanyDesc", edtCompanyDesc.getText().toString());
-            jsonObject.accumulate("CompanyID", "1");
+            jsonObject.accumulate("CompanyID", companyID);
             jsonObject.accumulate("CompanyName", autoCompleteCompany.getText().toString());
             jsonObject.accumulate("Country", edtAddress5.getText().toString());
             jsonObject.accumulate("Designation", autoCompleteDesignation.getText().toString());
-            jsonObject.accumulate("DesignationID", "1");
+            jsonObject.accumulate("DesignationID", designationID);
             jsonObject.accumulate("Email", edtEmail.getText().toString());
-            jsonObject.accumulate("Email_Type", "");
+            jsonObject.accumulate("Email_Type", "work");
             jsonObject.accumulate("Facebook", "");
             jsonObject.accumulate("Google", "");
-            jsonObject.accumulate("IndustryID", "1");
+            jsonObject.accumulate("IndustryID", industryID);
             jsonObject.accumulate("IndustryName", autoCompleteIndustry.getText().toString());
             jsonObject.accumulate("Linkedin", "");
             jsonObject.accumulate("Phone", edtWork.getText().toString());
@@ -809,7 +812,7 @@ public class EditProfileActivity extends AppCompatActivity
             jsonObject.accumulate("Postalcode", edtAddress6.getText().toString());
             jsonObject.accumulate("ProfileID", profileId);
             jsonObject.accumulate("Profile_Desc", ProfileDesc);
-            jsonObject.accumulate("Profile_Type", "");
+            jsonObject.accumulate("Profile_Type", "work");
             jsonObject.accumulate("State", edtAddress4.getText().toString());
             jsonObject.accumulate("Twitter", "");
             jsonObject.accumulate("UserID", UserID);
@@ -1290,11 +1293,13 @@ public class EditProfileActivity extends AppCompatActivity
 
     }
 
-    private class HttpAsyncTaskAddProfile extends AsyncTask<String, Void, String> {
+    private class HttpAsyncTaskAddProfile extends AsyncTask<String, Void, String>
+    {
         ProgressDialog dialog;
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             super.onPreExecute();
             dialog = new ProgressDialog(EditProfileActivity.this);
             dialog.setMessage("Creating Profile..");
@@ -1303,7 +1308,6 @@ public class EditProfileActivity extends AppCompatActivity
             dialog.setCancelable(false);
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
-
         }
 
         @Override
@@ -1313,46 +1317,36 @@ public class EditProfileActivity extends AppCompatActivity
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(String result)
+        {
             dialog.dismiss();
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-          /*  try {
-                if (result != null) {
+           try
+           {
+                if (result != null)
+                {
                     JSONObject jsonObject = new JSONObject(result);
-                    JSONArray jsonArray = jsonObject.getJSONArray("connection");
-                    //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
+                    String success = jsonObject.getString("success");
+                    String message = jsonObject.getString("message");
+                    String UserID = jsonObject.getString("UserID");
+                    String ProfileID = jsonObject.getString("ProfileID");
 
-                    for (int i = 0; i < jsonArray.length(); i++){
-
-                        JSONObject object = jsonArray.getJSONObject(i);
-                        //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
-
-
-
-                        FriendConnection nfcModelTag = new FriendConnection();
-                        nfcModelTag.setName(object.getString("FirstName") + " " + object.getString("LastName"));
-                        nfcModelTag.setCompany(object.getString("CompanyName"));
-                        nfcModelTag.setEmail(object.getString("UserName"));
-                        nfcModelTag.setWebsite("");
-                        nfcModelTag.setMob_no(object.getString("Phone"));
-                        nfcModelTag.setDesignation(object.getString("Designation"));
-                        *//*nfcModelTag.setCard_front(object.getString("Card_Front"));
-                        nfcModelTag.setCard_back(object.getString("Card_Back"));*//*
-                        nfcModelTag.setCard_front("000000002.jpg");
-                        nfcModelTag.setCard_back("000000006.jpg");
-
-
-                        nfcModelTag.setNfc_tag("en000000001");
-                        allTags.add(nfcModelTag);
-                        GetData(getContext());
+                    if(success.equalsIgnoreCase("1"))
+                    {
+                        Toast.makeText(getApplicationContext(),"Successfully Added",Toast.LENGTH_SHORT).show();
                     }
-                }else {
-                    Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
-                }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
+                    }
 
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }*/
+                    //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
+                }
+           }
+           catch (JSONException e1)
+           {
+               e1.printStackTrace();
+           }
         }
     }
 
@@ -1396,12 +1390,12 @@ public class EditProfileActivity extends AppCompatActivity
                         txtTestimonial.setVisibility(View.GONE);
                     }
 
-                    for (int i = 0; i < jsonArray.length(); i++) {
-
-                        if (i < 3) {
+                    for (int i = 0; i < jsonArray.length(); i++)
+                    {
+                        if (i < 3)
+                        {
                             JSONObject object = jsonArray.getJSONObject(i);
                             //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
-
                             TestimonialModel nfcModelTag = new TestimonialModel();
                             nfcModelTag.setCompanyName(object.getString("CompanyName"));
                             nfcModelTag.setDesignation(object.getString("Designation"));
@@ -1412,6 +1406,7 @@ public class EditProfileActivity extends AppCompatActivity
                             nfcModelTag.setStatus(object.getString("Status"));
                             nfcModelTag.setTestimonial_Text(object.getString("Testimonial_Text"));
                             nfcModelTag.setUserPhoto(object.getString("UserPhoto"));
+                            nfcModelTag.setTestimonial_ID(object.getString("Testimonial_ID"));
                             title_array.add(object.getString("Testimonial_Text").toString());
                             notice_array.add(String.valueOf(i));
                             //  Toast.makeText(getContext(), object.getString("Testimonial_Text"), Toast.LENGTH_LONG).show();
@@ -1470,6 +1465,7 @@ public class EditProfileActivity extends AppCompatActivity
                         JSONObject object = jsonArray.getJSONObject(i);
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
                         designation.add(object.getString("DesignationName"));
+                        designationID = object.getString("DesignationID");
                     }
                 } else {
                     // Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
@@ -1525,6 +1521,7 @@ public class EditProfileActivity extends AppCompatActivity
                         JSONObject object = jsonArray.getJSONObject(i);
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
                         company.add(object.getString("CompanyName"));
+                        companyID = object.getString("CompanyID");
                     }
                 } else {
                     // Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
@@ -1541,7 +1538,7 @@ public class EditProfileActivity extends AppCompatActivity
         }
     }
 
-    private class HttpAsyncTaskUserProfile extends AsyncTask<String, Void, String> {
+    private class   HttpAsyncTaskUserProfile extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
@@ -1584,6 +1581,7 @@ public class EditProfileActivity extends AppCompatActivity
                     Facebook = jsonObject.getString("Facebook");
                     Twitter = jsonObject.getString("Twitter");
                     Google = jsonObject.getString("Google");
+                    LinkedIn = jsonObject.getString("LinkedIn");
                     IndustryName = jsonObject.getString("IndustryName");
                     CompanyName = jsonObject.getString("CompanyName");
                     CompanyProfile = jsonObject.getString("CompanyProfile");
@@ -1696,6 +1694,7 @@ public class EditProfileActivity extends AppCompatActivity
                         JSONObject object = jsonArray.getJSONObject(i);
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
                         industry.add(object.getString("IndustryName"));
+                        industryID = object.getString("IndustryID");
                     }
                 } else {
                     // Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
@@ -1712,11 +1711,13 @@ public class EditProfileActivity extends AppCompatActivity
         }
     }
 
-    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
+    private class HttpAsyncTask extends AsyncTask<String, Void, String>
+    {
         ProgressDialog dialog;
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             super.onPreExecute();
             dialog = new ProgressDialog(EditProfileActivity.this);
             dialog.setMessage("Updating Profile..");
@@ -1725,7 +1726,6 @@ public class EditProfileActivity extends AppCompatActivity
             dialog.setCancelable(false);
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
-
         }
 
         @Override
@@ -1735,46 +1735,37 @@ public class EditProfileActivity extends AppCompatActivity
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(String result)
+        {
             dialog.dismiss();
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-          /*  try {
-                if (result != null) {
+            try
+            {
+                if (result != null)
+                {
                     JSONObject jsonObject = new JSONObject(result);
-                    JSONArray jsonArray = jsonObject.getJSONArray("connection");
-                    //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
+                    String success = jsonObject.getString("success");
+                    String message = jsonObject.getString("message");
+                    String UserID = jsonObject.getString("UserID");
+                    String ProfileID = jsonObject.getString("ProfileID");
 
-                    for (int i = 0; i < jsonArray.length(); i++){
-
-                        JSONObject object = jsonArray.getJSONObject(i);
-                        //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
-
-
-
-                        FriendConnection nfcModelTag = new FriendConnection();
-                        nfcModelTag.setName(object.getString("FirstName") + " " + object.getString("LastName"));
-                        nfcModelTag.setCompany(object.getString("CompanyName"));
-                        nfcModelTag.setEmail(object.getString("UserName"));
-                        nfcModelTag.setWebsite("");
-                        nfcModelTag.setMob_no(object.getString("Phone"));
-                        nfcModelTag.setDesignation(object.getString("Designation"));
-                        *//*nfcModelTag.setCard_front(object.getString("Card_Front"));
-                        nfcModelTag.setCard_back(object.getString("Card_Back"));*//*
-                        nfcModelTag.setCard_front("000000002.jpg");
-                        nfcModelTag.setCard_back("000000006.jpg");
-
-
-                        nfcModelTag.setNfc_tag("en000000001");
-                        allTags.add(nfcModelTag);
-                        GetData(getContext());
+                    if(success.equalsIgnoreCase("1"))
+                    {
+                        Toast.makeText(getApplicationContext(),"Successfully Updated",Toast.LENGTH_SHORT).show();
                     }
-                }else {
-                    Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
-                }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
+                    }
 
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }*/
+                    //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
+                }
+            }
+            catch (JSONException e1)
+            {
+                e1.printStackTrace();
+            }
+
         }
     }
 
