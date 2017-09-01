@@ -160,12 +160,13 @@ public class ConnectActivity extends AppCompatActivity
         else {
             level = "6";
         }*/
-        final List<NFCModel> modelList = db.getNFCbyTag(tag_id);
-        try {
-
-            if (modelList != null){
-
-                for (NFCModel tag1 : modelList) {
+      /*  final List<NFCModel> modelList = db.getNFCbyTag(tag_id);
+        try
+        {
+            if (modelList != null)
+            {
+                for (NFCModel tag1 : modelList)
+                {
                     // Toast.makeText(getApplicationContext(), tag1.getName(), Toast.LENGTH_LONG).show();
 
                     //Bitmap bmp = BitmapFactory.decodeByteArray(tag1.getCard_front(), 0, tag1.getCard_front().length);
@@ -182,13 +183,11 @@ public class ConnectActivity extends AppCompatActivity
                    // txtWork.setText(tag1.getWork_no());
                     txtMob.setText(tag1.getMob_no());
                     tvPersonDesignation.setText(tag1.getDesignation());
-
                 }
             }
 
-        }catch (Exception e){
-
         }
+        catch (Exception e){  }*/
 
 
         ivConnectImg.setOnClickListener(new View.OnClickListener() {

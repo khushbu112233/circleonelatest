@@ -19,6 +19,10 @@ public class ProfileModel {
     String Phone = "";
     String Facebook = "", Twitter = "", Google = "", Linkedin = "";
     String Address1 = "", Address2 = "", Address3 = "", Address4 = "", City = "", State = "", Country = "", Postalcode = "", Website = "", Attachment_FileName = "";
+    String Association = "" ;
+    String Work_no = "";
+    String Industry = "";
+
 
     public ProfileModel() {
     }
@@ -221,5 +225,29 @@ public class ProfileModel {
 
     public void setLinkedin(String linkedin) {
         Linkedin = linkedin;
+    }
+
+    public String getAssociation() {
+        return Association;
+    }
+
+    public void setAssociation(String association) {
+        Association = association;
+    }
+
+    public String getWork_no() {
+        return Work_no;
+    }
+
+    public void setWork_no(String work_no) {
+        Work_no = work_no;
+    }
+
+    public String getIndustry() {
+        return Industry;
+    }
+
+    public void setIndustry(String industry) {
+        Industry = industry;
     }
 }

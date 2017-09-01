@@ -92,10 +92,11 @@ public class ProfileFragment extends Fragment
 
     private int i = 0;
     TextView tvDesignation, tvCompany, tvName, tvCompanyName, tvDesi,
-            tvAssociation, tvAddress, tvWebsite, tvMail, tvMob, tvWork;
+            tvAssociation, tvAddress, tvWebsite, tvMail, tvMob, tvWork, textIndustry;
     ProfileModel nfcModelTag;
     CircleImageView imgProfile;
-    LinearLayout lnrMob, lnrWork, lnrWebsite, lnrMap;
+    LinearLayout lnrMob, lnrWork, lnrWebsite, lnrMap, llNameBox, llCompanyBox,
+                 llIndustryBox, llDesignationBox, llAssociationBox , llMailBox;
     ViewPager mViewPager, viewPager1;
     String recycle_image1, recycle_image2 ;
     private ArrayList<String> image = new ArrayList<>();;
@@ -109,6 +110,7 @@ public class ProfileFragment extends Fragment
     ArrayList<String> title_array = new ArrayList<String>();
     ArrayList<String> notice_array = new ArrayList<String>();
     String Address1 = "", Address2 = "", Address3 = "", Address4 = "", City = "", State = "", Country = "", Postalcode = "", Website = "", Attachment_FileName = "";
+    String personName , personAddress ;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -130,12 +132,20 @@ public class ProfileFragment extends Fragment
       //  ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
 
+        llNameBox = (LinearLayout)view.findViewById(R.id.llNameBox);
+        llCompanyBox = (LinearLayout)view.findViewById(R.id.llCompanyBox);
+        llIndustryBox = (LinearLayout)view.findViewById(R.id.llIndustryBox);
+        llDesignationBox = (LinearLayout)view.findViewById(R.id.llDesignationBox);
+        llAssociationBox = (LinearLayout)view.findViewById(R.id.llAssociationBox);
+        llMailBox = (LinearLayout)view.findViewById(R.id.llMailBox);
+
         tvDesignation = (TextView)view.findViewById(R.id.tvDesignation);
         tvCompany = (TextView)view.findViewById(R.id.tvCompany);
         tvName = (TextView)view.findViewById(R.id.tvName);
         tvCompanyName = (TextView)view.findViewById(R.id.tvCompanyName);
         tvDesi = (TextView)view.findViewById(R.id.tvDesi);
         tvAssociation = (TextView)view.findViewById(R.id.tvAssociation);
+        textIndustry = (TextView)view.findViewById(R.id.textIndustry);
         tvAddress = (TextView)view.findViewById(R.id.tvAddress);
         tvWebsite = (TextView)view.findViewById(R.id.tvWebsite);
         tvMail = (TextView)view.findViewById(R.id.tvMail);
@@ -164,7 +174,9 @@ public class ProfileFragment extends Fragment
         ivEditProfile = (ImageView)view.findViewById(R.id.ivEditProfile);
 
         session = new LoginSession(getContext());
-        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetUserProfile");
+
+//        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetUserProfile");
+        new HttpAsyncTaskProfiles().execute("http://circle8.asia:8081/Onet.svc/MyProfiles");
 
         HashMap<String, String> user = session.getUserDetails();
         UserID = user.get(LoginSession.KEY_USERID);
@@ -392,7 +404,7 @@ public class ProfileFragment extends Fragment
             }
         });
 
-        new HttpAsyncTaskProfiles().execute("http://circle8.asia:8081/Onet.svc/MyProfiles");
+
 
 
         imgProfileMenu.setOnClickListener(new View.OnClickListener() {
@@ -501,10 +513,6 @@ public class ProfileFragment extends Fragment
                                     viewPager1.setOffscreenPageLimit(1);
                                    // viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
                                     viewPager1.setAdapter(myPager);
-
-
-
-
                                 }
                             }
                         }
@@ -521,7 +529,7 @@ public class ProfileFragment extends Fragment
             public void onClick(View v)
             {
                 Toast.makeText(getContext(), "Generating QR Code.. Please Wait..", Toast.LENGTH_LONG).show();
-                String barName = "Westley Wan";
+                String barName = tvName.getText().toString();
                 try
                 {
                     AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
@@ -706,25 +714,137 @@ public class ProfileFragment extends Fragment
                         nfcModelTag.setGoogle(object.getString("Google"));
                         nfcModelTag.setLinkedin(object.getString("Linkedin"));
                         nfcModelTag.setAttachment_FileName(object.getString("Attachment_FileName"));
+                        nfcModelTag.setAssociation("");
+                        nfcModelTag.setWork_no("");
+                        nfcModelTag.setIndustry("");
                         allTags.add(nfcModelTag);
                       //  GetData(getContext());
                     }
+
                     TestimonialProfileId = allTags.get(0).getProfileID();
-                    tvPersonName.setText(allTags.get(0).getFirstName() + " "+ allTags.get(0).getLastName());
-                    tvDesignation.setText(allTags.get(0).getDesignation());
-                    tvCompany.setText(allTags.get(0).getCompanyName());
-                    tvName.setText(allTags.get(0).getFirstName() + " "+ allTags.get(0).getLastName());
-                    tvCompanyName.setText(allTags.get(0).getCompanyName());
-                    tvDesi.setText(allTags.get(0).getDesignation());
-                    tvMob.setText(allTags.get(0).getPhone());
-                    tvAddress.setText(allTags.get(0).getAddress1()+ " "+allTags.get(0).getAddress2() + " "
+
+//                    tvName.setText(allTags.get(0).getFirstName() + " "+ allTags.get(0).getLastName());
+//                    tvPersonName.setText(allTags.get(0).getFirstName() + " "+ allTags.get(0).getLastName());
+                    personName = allTags.get(0).getFirstName() + " "+ allTags.get(0).getLastName() ;
+                    if(personName.equalsIgnoreCase("") || personName.equalsIgnoreCase("null"))
+                    {
+                        tvPersonName.setVisibility(View.GONE);
+                        llNameBox.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        tvName.setText(personName);
+                        tvPersonName.setText(personName);
+                    }
+
+//                    tvDesignation.setText(allTags.get(0).getDesignation());
+//                    tvDesi.setText(allTags.get(0).getDesignation());
+                    if(allTags.get(0).getDesignation().equalsIgnoreCase("")
+                            || allTags.get(0).getDesignation().equalsIgnoreCase("null"))
+                    {
+                        tvDesignation.setVisibility(View.GONE);
+                        llDesignationBox.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        tvDesignation.setText(allTags.get(0).getDesignation());
+                        tvDesi.setText(allTags.get(0).getDesignation());
+                    }
+//                    tvCompany.setText(allTags.get(0).getCompanyName());
+//                    tvCompanyName.setText(allTags.get(0).getCompanyName());
+                    if(allTags.get(0).getCompanyName().equalsIgnoreCase("")
+                            || allTags.get(0).getCompanyName().equalsIgnoreCase("null"))
+                    {
+                        tvCompany.setVisibility(View.GONE);
+                        llCompanyBox.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        tvCompany.setText(allTags.get(0).getCompanyName());
+                        tvCompanyName.setText(allTags.get(0).getCompanyName());
+                    }
+//                    tvMob.setText(allTags.get(0).getPhone());
+                    if(allTags.get(0).getPhone().equalsIgnoreCase("")
+                            || allTags.get(0).getPhone().equalsIgnoreCase("null"))
+                    {
+                        lnrMob.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        tvMob.setText(allTags.get(0).getPhone());
+                    }
+//                    tvWebsite.setText(allTags.get(0).getWebsite());
+                    if(allTags.get(0).getWebsite().equalsIgnoreCase("")
+                            || allTags.get(0).getWebsite().equalsIgnoreCase("null"))
+                    {
+                        lnrWebsite.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        tvWebsite.setText(allTags.get(0).getWebsite());
+                    }
+
+                    if(allTags.get(0).getUserName().equalsIgnoreCase("")
+                            || allTags.get(0).getUserName().equalsIgnoreCase("null"))
+                    {
+                       llMailBox.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        tvMail.setText(allTags.get(0).getUserName());
+                    }
+                    if(allTags.get(0).getAssociation().equalsIgnoreCase("")
+                            || allTags.get(0).getAssociation().equalsIgnoreCase("null"))
+                    {
+                        llAssociationBox.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        tvAssociation.setText(allTags.get(0).getAssociation());
+                    }
+                    if(allTags.get(0).getWork_no().equalsIgnoreCase("")
+                            || allTags.get(0).getWork_no().equalsIgnoreCase("null"))
+                    {
+                        lnrWork.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        tvWork.setText(allTags.get(0).getWork_no());
+                    }
+                    if(allTags.get(0).getIndustry().equalsIgnoreCase("")
+                            || allTags.get(0).getIndustry().equalsIgnoreCase("null"))
+                    {
+                        llIndustryBox.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        textIndustry.setText(allTags.get(0).getIndustry());
+                    }
+                    /*tvAddress.setText(allTags.get(0).getAddress1()+ " "+allTags.get(0).getAddress2() + " "
                             + allTags.get(0).getAddress3()  + " "
                             + allTags.get(0).getAddress4() + " "
                             + allTags.get(0).getCity() + " "
                             + allTags.get(0).getState() + " "
                             + allTags.get(0).getCountry() + " "
-                            + allTags.get(0).getPostalcode());
-                    tvWebsite.setText(allTags.get(0).getWebsite());
+                            + allTags.get(0).getPostalcode());*/
+                    personAddress = allTags.get(0).getAddress1()+ " "+allTags.get(0).getAddress2() + " "
+                            + allTags.get(0).getAddress3()  + " "
+                            + allTags.get(0).getAddress4() + " "
+                            + allTags.get(0).getCity() + " "
+                            + allTags.get(0).getState() + " "
+                            + allTags.get(0).getCountry() + " "
+                            + allTags.get(0).getPostalcode() ;
+                    if(personAddress.equalsIgnoreCase("")
+                            || personAddress.equalsIgnoreCase("null")
+                            || personAddress.startsWith(" "))
+                    {
+                        lnrMap.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        tvAddress.setText(personAddress);
+                    }
+
                     image = new ArrayList<>();
                     if (allTags.get(0).getUserPhoto().equals(""))
                     {
@@ -797,8 +917,6 @@ public class ProfileFragment extends Fragment
             }
         }
     }
-
-
 
     public  String POST4(String url)
     {
@@ -929,6 +1047,7 @@ public class ProfileFragment extends Fragment
                             nfcModelTag.setStatus(object.getString("Status"));
                             nfcModelTag.setTestimonial_Text(object.getString("Testimonial_Text"));
                             nfcModelTag.setUserPhoto(object.getString("UserPhoto"));
+                            nfcModelTag.setTestimonial_ID(object.getString("Testimonial_ID"));
                             title_array.add(object.getString("Testimonial_Text").toString());
                             notice_array.add(String.valueOf(i));
 //                        Toast.makeText(getContext(), object.getString("Testimonial_Text"), Toast.LENGTH_LONG).show();
@@ -1143,7 +1262,6 @@ public class ProfileFragment extends Fragment
 
     }
 
-
     private class HttpAsyncTask extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -1213,7 +1331,6 @@ public class ProfileFragment extends Fragment
             }*/
         }
     }
-
 
     Bitmap TextToImageEncode(String Value) throws WriterException
     {

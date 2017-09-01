@@ -11,6 +11,7 @@ import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -67,7 +68,7 @@ public class CardDetail extends NfcActivity
     private CardSwipe myPager ;
     private ImageView imgCards, imgConnect, imgEvents, imgProfile, imgBack, imgCard, imgMap;
     private static final String TAG = NFCDemo.class.getName();
-    private LinearLayout llWebsiteBox, llEmailBox, llMobileBox, llTeleBox, llFaxBox ;
+    private LinearLayout llWebsiteBox, llEmailBox, llMobileBox, llTeleBox, llFaxBox, llAddressBox ;
 
     NfcReadUtility mNfcReadUtility = new NfcReadUtilityImpl();
     ProgressDialog mProgressDialog;
@@ -85,6 +86,8 @@ public class CardDetail extends NfcActivity
     List<CharSequence> list;
     List<CharSequence> listGroupId;
     LoginSession loginSession;
+
+    AppBarLayout appBarLayout ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -125,6 +128,9 @@ public class CardDetail extends NfcActivity
         llMobileBox = (LinearLayout)findViewById(R.id.llMobileBox);
         llTeleBox = (LinearLayout)findViewById(R.id.llTeleBox);
         llFaxBox = (LinearLayout)findViewById(R.id.llFaxBox);
+        llAddressBox = (LinearLayout)findViewById(R.id.llAddressBox);
+        appBarLayout = (AppBarLayout)findViewById(R.id.appbar);
+
         list = new ArrayList<CharSequence>();
         listGroupId = new ArrayList<CharSequence>();
         Intent intent = getIntent();
@@ -136,7 +142,8 @@ public class CardDetail extends NfcActivity
 
         imgAddGroupFriend.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 Toast.makeText(getApplicationContext(), "Group", Toast.LENGTH_LONG).show();
                 // Intialize  readable sequence of char values
                 final CharSequence[] dialogList=  list.toArray(new CharSequence[list.size()]);
@@ -156,15 +163,16 @@ public class CardDetail extends NfcActivity
                 builderDialog.setPositiveButton("Save",
                         new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
+                            public void onClick(DialogInterface dialog, int which)
+                            {
                                 ListView list = ((AlertDialog) dialog).getListView();
                                 // make selected item in the comma seprated string
                                 StringBuilder stringBuilder = new StringBuilder();
-                                for (int i = 0; i < list.getCount(); i++) {
+                                for (int i = 0; i < list.getCount(); i++)
+                                {
                                     boolean checked = list.isItemChecked(i);
-
-                                    if (checked) {
+                                    if (checked)
+                                    {
                                         if (stringBuilder.length() > 0) stringBuilder.append("");
                                         stringBuilder.append(listGroupId.get(i));
 
@@ -173,8 +181,7 @@ public class CardDetail extends NfcActivity
                                 }
 
                         /*Check string builder is empty or not. If string builder is not empty.
-                          It will display on the screen.
-                         */
+                          It will display on the screen. */
                                 Toast.makeText(getApplicationContext(), stringBuilder.toString(), Toast.LENGTH_LONG).show();
                             }
                         });
@@ -693,7 +700,6 @@ public class CardDetail extends NfcActivity
             // 9. receive response as inputStream
             inputStream = httpResponse.getEntity().getContent();
 
-
             // 10. convert inputstream to string
             if (inputStream != null)
                 result = convertInputStreamToString(inputStream);
@@ -766,11 +772,13 @@ public class CardDetail extends NfcActivity
     }
 
 
-    private class HttpAsyncTaskGroup extends AsyncTask<String, Void, String> {
+    private class HttpAsyncTaskGroup extends AsyncTask<String, Void, String>
+    {
         ProgressDialog dialog;
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             super.onPreExecute();
             dialog = new ProgressDialog(CardDetail.this);
             dialog.setMessage("Fetching Groups...");
@@ -942,6 +950,7 @@ public class CardDetail extends NfcActivity
                             || jsonObject.getString("Designation").equalsIgnoreCase("null"))
                     {
                         txtDesi.setText("Designation");
+                        txtDesi.setVisibility(View.GONE);
                     }
                     else
                     {
@@ -952,6 +961,7 @@ public class CardDetail extends NfcActivity
                             || jsonObject.getString("CompanyName").equalsIgnoreCase("null"))
                     {
                         txtCompany.setText("Company");
+                        txtCompany.setVisibility(View.GONE);
                     }
                     else
                     {
@@ -962,6 +972,7 @@ public class CardDetail extends NfcActivity
                             || jsonObject.getString("Website").equalsIgnoreCase("null"))
                     {
                         txtWebsite.setText("Website");
+                        llWebsiteBox.setVisibility(View.GONE);
                     }
                     else
                     {
@@ -972,6 +983,7 @@ public class CardDetail extends NfcActivity
                             || jsonObject.getString("Emailid").equalsIgnoreCase("null"))
                     {
                         txtEmail.setText("Email Address");
+                        llEmailBox.setVisibility(View.GONE);
                     }
                     else
                     {
@@ -982,6 +994,7 @@ public class CardDetail extends NfcActivity
                             || jsonObject.getString("OfficePhone").equalsIgnoreCase("null"))
                     {
                         txtPH.setText("Phone No.");
+                        llTeleBox.setVisibility(View.GONE);
                     }
                     else
                     {
@@ -992,6 +1005,7 @@ public class CardDetail extends NfcActivity
                             || jsonObject.getString("PrimaryPhone").equalsIgnoreCase("null"))
                     {
                         txtMob.setText("Mobile No.");
+                        llMobileBox.setVisibility(View.GONE);
                     }
                     else
                     {
@@ -1003,11 +1017,14 @@ public class CardDetail extends NfcActivity
                             || personAddress.equalsIgnoreCase(""))
                     {
                         txtAddress.setText("Address");
+                        llAddressBox.setVisibility(View.GONE);
                     }
                     else
                     {
                         txtAddress.setText(personAddress);
                     }
+
+                    llFaxBox.setVisibility(View.GONE);
 
                     if(userImg.equalsIgnoreCase(""))
                     {
@@ -1016,6 +1033,15 @@ public class CardDetail extends NfcActivity
                     else
                     {
                         Picasso.with(CardDetail.this).load("http://circle8.asia/App_ImgLib/UserProfile/"+userImg).into(imgProfileCard) ;
+                    }
+
+                    if(frontCardImg.equalsIgnoreCase("") && backCardImg.equalsIgnoreCase(""))
+                    {
+                        appBarLayout.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+//                        appBarLayout.setVisibility(View.VISIBLE);
                     }
 
                     if(frontCardImg.equalsIgnoreCase(""))
