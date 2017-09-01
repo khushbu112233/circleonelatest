@@ -40,7 +40,7 @@ public class ConnectListAdapter extends BaseAdapter
     private int layoutResourceId;
     DatabaseHelper db;
 
-    String personName, designation, company, website, email ;
+    String personName, designation, company, website, email, description ;
 
     public ConnectListAdapter(Context context, int grid_list3_layout, ArrayList<ConnectList> connectLists)
     {
@@ -84,7 +84,7 @@ public class ConnectListAdapter extends BaseAdapter
         if(connectLists.get(position).getCompanyname().equalsIgnoreCase("")
                 || connectLists.get(position).getCompanyname().equalsIgnoreCase("null"))
         {
-            company = "Company" ;
+            company = "" ;
         }
         else
         {
@@ -94,7 +94,7 @@ public class ConnectListAdapter extends BaseAdapter
         if(connectLists.get(position).getUsername().equalsIgnoreCase("")
                 || connectLists.get(position).getUsername().equalsIgnoreCase("null"))
         {
-            email = "Email" ;
+            email = "" ;
         }
         else
         {
@@ -104,7 +104,7 @@ public class ConnectListAdapter extends BaseAdapter
         if(connectLists.get(position).getWebsite().equalsIgnoreCase("")
                 || connectLists.get(position).getWebsite().equalsIgnoreCase("null"))
         {
-            website = "Website" ;
+            website = "" ;
         }
         else
         {
@@ -114,12 +114,15 @@ public class ConnectListAdapter extends BaseAdapter
         if(connectLists.get(position).getDesignation().equalsIgnoreCase("")
                 || connectLists.get(position).getDesignation().equalsIgnoreCase("null"))
         {
-            descText.setText("Designation");
+            descText.setText("");
+//            descText.setVisibility(View.GONE);
         }
         else
         {
             descText.setText(connectLists.get(position).getDesignation());
         }
+
+        designation = company+"\n"+email+"\n"+website ;
 
         detailText.setText(company+"\n"+email+"\n"+website);
 
@@ -132,9 +135,6 @@ public class ConnectListAdapter extends BaseAdapter
         {
             Picasso.with(context).load("http://circle8.asia/App_ImgLib/Cards/"+connectLists.get(position).getUserphoto()).into(circleImageView);
         }
-
-
-
 
         return convertView;
     }
