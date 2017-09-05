@@ -8,15 +8,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amplearch.circleonet.Adapter.CustomAdapter;
 import com.amplearch.circleonet.Adapter.TestimonialAdapter;
-import com.amplearch.circleonet.Fragments.ProfileFragment;
+import com.amplearch.circleonet.Adapter.TestimonialRequestAdapter;
 import com.amplearch.circleonet.Model.TestimonialModel;
 import com.amplearch.circleonet.R;
 
@@ -35,24 +33,19 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class TestimonialActivity extends AppCompatActivity
-{
-    static String TestimonialProfileId = "";
-    static TestimonialAdapter adapter;
-    static ListView lstTestimonial;
-    static ArrayList<TestimonialModel> allTaggs;
+public class TestimonialRequest extends AppCompatActivity {
 
+    static ListView lstTestimonial;
     static Context mContext ;
+    static String TestimonialProfileId = "";
+    static ArrayList<TestimonialModel> allTaggs;
     TextView textView;
     ImageView imgLogo;
-
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_testimonial);
-
-        mContext = TestimonialActivity.this ;
+        setContentView(R.layout.activity_testimonial_request);
+        mContext = TestimonialRequest.this ;
 
         final ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -64,35 +57,23 @@ public class TestimonialActivity extends AppCompatActivity
 
         Intent intent = getIntent();
         TestimonialProfileId = intent.getStringExtra("ProfileId");
+        allTaggs = new ArrayList<>();
         lstTestimonial = (ListView) findViewById(R.id.lstTestimonial);
 
-        allTaggs = new ArrayList<>();
-
-        callFirst();
-    }
-
-    private void callFirst()
-    {
-        new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8081/Onet.svc/Testimonial/Fetch");
-    }
-
-    public static void webCall()
-    {
-        allTaggs.clear();
-        adapter.notifyDataSetChanged();
-        new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8081/Onet.svc/Testimonial/Fetch");
+        new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8081/Onet.svc/GetFriends_Profile");
     }
 
     private static class HttpAsyncTaskTestimonial extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
+        private TestimonialRequestAdapter adapter;
 
         @Override
         protected void onPreExecute()
         {
             super.onPreExecute();
             dialog = new ProgressDialog(mContext);
-            dialog.setMessage("Fetching Testimonials...");
+            dialog.setMessage("Loading...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
             dialog.setCancelable(false);
@@ -113,29 +94,29 @@ public class TestimonialActivity extends AppCompatActivity
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
-                    JSONArray jsonArray = jsonObject.getJSONArray("Testimonials");
-                    //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
+                    String success = jsonObject.getString("success");
+                    if (success.equals("1")) {
+                        JSONArray jsonArray = jsonObject.getJSONArray("Profiles");
+                        //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
 
-                    for (int i = 0; i < jsonArray.length(); i++){
+                        for (int i = 0; i < jsonArray.length(); i++) {
 
-                        JSONObject object = jsonArray.getJSONObject(i);
-                        //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
 
-                        TestimonialModel nfcModelTag = new TestimonialModel();
-                        nfcModelTag.setTestimonial_ID(object.getString("Testimonial_ID"));
-                        nfcModelTag.setCompanyName(object.getString("CompanyName"));
-                        nfcModelTag.setDesignation(object.getString("Designation"));
-                        nfcModelTag.setFirstName(object.getString("FirstName"));
-                        nfcModelTag.setFriendProfileID(object.getString("FriendProfileID"));
-                        nfcModelTag.setLastName(object.getString("LastName"));
-                        nfcModelTag.setPurpose(object.getString("Purpose"));
-                        nfcModelTag.setStatus(object.getString("Status"));
-                        nfcModelTag.setTestimonial_Text(object.getString("Testimonial_Text"));
-                        nfcModelTag.setUserPhoto(object.getString("UserPhoto"));
-                        allTaggs.add(nfcModelTag);
+                            TestimonialModel nfcModelTag = new TestimonialModel();
+                            nfcModelTag.setFriendProfileID(object.getString("Friend_ProfileID"));
+                            nfcModelTag.setUserPhoto(object.getString("Friend_Photo"));
+                            nfcModelTag.setFirstName(object.getString("Friend_FirstName"));
+                            nfcModelTag.setLastName(object.getString("Friend_LastName"));
+                            nfcModelTag.setCompanyName(object.getString("Friend_Company"));
+                            nfcModelTag.setDesignation(object.getString("Friend_Designation"));
+                            nfcModelTag.setPurpose(object.getString("Testimonial_Request_Status"));
+                            allTaggs.add(nfcModelTag);
+                        }
+                        adapter = new TestimonialRequestAdapter(mContext, R.layout.full_testimonial_row, allTaggs);
+                        lstTestimonial.setAdapter(adapter);
                     }
-                    adapter = new TestimonialAdapter(mContext, R.layout.full_testimonial_row, allTaggs);
-                    lstTestimonial.setAdapter(adapter);
 
                 }
                 else
@@ -164,9 +145,9 @@ public class TestimonialActivity extends AppCompatActivity
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("ProfileId", TestimonialProfileId );
-            jsonObject.accumulate("numofrecords", "10" );
+            jsonObject.accumulate("numofrecords", "30" );
             jsonObject.accumulate("pageno", "1" );
+            jsonObject.accumulate("profileId", TestimonialProfileId );
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -217,6 +198,4 @@ public class TestimonialActivity extends AppCompatActivity
         return result;
 
     }
-
-
 }

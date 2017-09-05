@@ -45,6 +45,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
@@ -623,46 +624,46 @@ public class LoginActivity extends AppCompatActivity implements
 
 
             if (mGoogleApiClient.isConnected()) {
-                if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
-                    Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
+                if (mGoogleApiClient.hasConnectedApi(Plus.API)) {
+                    if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
+                        Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
 
-                    Log.e(TAG, "display name: " + acct.getDisplayName());
+                        Log.e(TAG, "display name: " + acct.getDisplayName());
 
-                    String personName = acct.getDisplayName();
+                        String personName = acct.getDisplayName();
 //            String personPhotoUrl = acct.getPhotoUrl().toString();
-                    String email = acct.getEmail();
-                    String personPhotoUrl = currentPerson.getImage().getUrl();
-                    Log.e(TAG, "Name: " + personName + ", email: " + email
-                    );
+                        String email = acct.getEmail();
+                        String personPhotoUrl = currentPerson.getImage().getUrl();
+                        Log.e(TAG, "Name: " + personName + ", email: " + email
+                        );
 
-                    Facebook = "";
-                    Google = acct.getId();
-                    Linkedin = "";
-                    Twitter = "";
+                        Facebook = "";
+                        Google = acct.getId();
+                        Linkedin = "";
+                        Twitter = "";
 
-                    final_name = personName;
-                    final_email = email;
-                    final_image = personPhotoUrl;
-                    SocialMedia_Id = acct.getId();
-                    SocialMedia_Type = "Google";
-                    UserName = email;
+                        final_name = personName;
+                        final_email = email;
+                        final_image = personPhotoUrl;
+                        SocialMedia_Id = acct.getId();
+                        SocialMedia_Type = "Google";
+                        UserName = email;
 
-                    new HttpAsyncTaskSocialMedia().execute("http://circle8.asia:8081/Onet.svc/SocialMediaLogin");
-                    updateUI(true);
+                        new HttpAsyncTaskSocialMedia().execute("http://circle8.asia:8081/Onet.svc/SocialMediaLogin");
+                        updateUI(true);
+                    }
                 }
             } else {
                 //connect it
                 mGoogleApiClient.connect(GoogleApiClient.SIGN_IN_MODE_OPTIONAL);
 
-                if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
-                    Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
 
                     Log.e(TAG, "display name: " + acct.getDisplayName());
 
                     String personName = acct.getDisplayName();
 //            String personPhotoUrl = acct.getPhotoUrl().toString();
                     String email = acct.getEmail();
-                    String personPhotoUrl = currentPerson.getImage().getUrl();
+                    String personPhotoUrl = "";
                     Log.e(TAG, "Name: " + personName + ", email: " + email
                     );
 
@@ -723,7 +724,6 @@ public class LoginActivity extends AppCompatActivity implements
                     .into(imgProfilePic);*/
 
                     updateUI(true);
-                }
             }
         } else {
             // Signed out, show unauthenticated UI.

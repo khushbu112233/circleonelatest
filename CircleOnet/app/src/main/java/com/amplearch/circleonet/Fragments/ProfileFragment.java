@@ -32,8 +32,10 @@ import android.widget.Toast;
 
 import com.amplearch.circleonet.Activity.CardsActivity;
 import com.amplearch.circleonet.Activity.EditProfileActivity;
+import com.amplearch.circleonet.Activity.LoginActivity;
 import com.amplearch.circleonet.Activity.Profile;
 import com.amplearch.circleonet.Activity.TestimonialActivity;
+import com.amplearch.circleonet.Activity.TestimonialRequest;
 import com.amplearch.circleonet.Adapter.CardSwipe;
 import com.amplearch.circleonet.Adapter.CustomAdapter;
 import com.amplearch.circleonet.Adapter.GalleryAdapter;
@@ -45,10 +47,22 @@ import com.amplearch.circleonet.Model.User;
 import com.amplearch.circleonet.R;
 import com.amplearch.circleonet.Utils.CarouselEffectTransformer;
 import com.amplearch.circleonet.Utils.ExpandableHeightListView;
+import com.amplearch.circleonet.Utils.PrefUtils;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
+import com.linkedin.platform.LISessionManager;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpResponse;
@@ -82,10 +96,10 @@ public class ProfileFragment extends Fragment
     Bitmap bitmap ;
     ProgressDialog progressDialog ;
     ArrayList<String> profile_array;
-
+    private LoginButton loginButton;
     private LoginSession session;
     private String UserID = "";
-    ImageView imgBack;
+    ImageView imgBack, imgAdd;
 
     public static ArrayList<ProfileModel> allTags ;
     String profileId = "";
@@ -106,12 +120,13 @@ public class ProfileFragment extends Fragment
     ExpandableHeightListView lstTestimonial;
     TextView txtTestimonial, txtMore;
     CustomAdapter customAdapter;
-
+    ImageView fbUrl, linkedInUrl, twitterUrl, googleUrl, youtubeUrl;
     ArrayList<String> title_array = new ArrayList<String>();
     ArrayList<String> notice_array = new ArrayList<String>();
     String Address1 = "", Address2 = "", Address3 = "", Address4 = "", City = "", State = "", Country = "", Postalcode = "", Website = "", Attachment_FileName = "";
     String personName , personAddress ;
-
+    private CallbackManager callbackManager;
+    View view;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -119,7 +134,7 @@ public class ProfileFragment extends Fragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        FacebookSdk.sdkInitialize(getContext());
      //   getActivity().requestWindowFeature(Window.FEATURE_NO_TITLE);
     }
 
@@ -127,18 +142,21 @@ public class ProfileFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        view = inflater.inflate(R.layout.fragment_profile, container, false);
       //  getActivity().requestWindowFeature(Window.FEATURE_NO_TITLE);
       //  ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
-
+        callbackManager = CallbackManager.Factory.create();
         llNameBox = (LinearLayout)view.findViewById(R.id.llNameBox);
         llCompanyBox = (LinearLayout)view.findViewById(R.id.llCompanyBox);
         llIndustryBox = (LinearLayout)view.findViewById(R.id.llIndustryBox);
         llDesignationBox = (LinearLayout)view.findViewById(R.id.llDesignationBox);
         llAssociationBox = (LinearLayout)view.findViewById(R.id.llAssociationBox);
         llMailBox = (LinearLayout)view.findViewById(R.id.llMailBox);
-
+        fbUrl = (ImageView) view.findViewById(R.id.fbUrl);
+        googleUrl = (ImageView) view.findViewById(R.id.googleUrl);
+        youtubeUrl = (ImageView) view.findViewById(R.id.youtubeUrl);
+        twitterUrl = (ImageView) view.findViewById(R.id.twitterUrl);
         tvDesignation = (TextView)view.findViewById(R.id.tvDesignation);
         tvCompany = (TextView)view.findViewById(R.id.tvCompany);
         tvName = (TextView)view.findViewById(R.id.tvName);
@@ -167,12 +185,13 @@ public class ProfileFragment extends Fragment
         progressDialog.setCancelable(false);
         allTags = new ArrayList<>();
         imgQR = (ImageView) view.findViewById(R.id.imgQR);
+        imgAdd = (ImageView) view.findViewById(R.id.imgAdd);
       //  firstBar = (ProgressBar)view.findViewById(R.id.firstBar);
         tvPersonName = (TextView)view.findViewById(R.id.tvPersonName);
         imgProfileShare = (ImageView) view.findViewById(R.id.imgProfileShare);
         imgProfileMenu = (ImageView) view.findViewById(R.id.imgProfileMenu);
         ivEditProfile = (ImageView)view.findViewById(R.id.ivEditProfile);
-
+        loginButton = (LoginButton) view.findViewById(R.id.login_button);
         session = new LoginSession(getContext());
 
 //        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetUserProfile");
@@ -181,6 +200,48 @@ public class ProfileFragment extends Fragment
         HashMap<String, String> user = session.getUserDetails();
         UserID = user.get(LoginSession.KEY_USERID);
         profileId = user.get(LoginSession.KEY_PROFILEID);
+
+        fbUrl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressDialog = new ProgressDialog(getContext());
+                progressDialog.setMessage("Loading...");
+                progressDialog.show();
+
+                loginButton.performClick();
+
+                loginButton.setPressed(true);
+
+                loginButton.invalidate();
+
+                loginButton.registerCallback(callbackManager, mCallBack);
+
+                loginButton.setPressed(false);
+
+                loginButton.invalidate();
+            }
+        });
+
+        googleUrl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        youtubeUrl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        twitterUrl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         allTaggs = new ArrayList<>();
         lnrMap.setOnClickListener(new View.OnClickListener() {
@@ -216,6 +277,15 @@ public class ProfileFragment extends Fragment
             public void onClick(View v) {
 
                 Intent intent = new Intent(getContext(), TestimonialActivity.class);
+                intent.putExtra("ProfileId", TestimonialProfileId);
+                startActivity(intent);
+            }
+        });
+
+        imgAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), TestimonialRequest.class);
                 intent.putExtra("ProfileId", TestimonialProfileId);
                 startActivity(intent);
             }
@@ -588,6 +658,93 @@ public class ProfileFragment extends Fragment
 
         return view;
     }
+
+   /* @Override
+    public void onResume() {
+        super.onResume();
+
+        callbackManager = CallbackManager.Factory.create();
+
+        loginButton = (LoginButton) view.findViewById(R.id.login_button);
+
+        loginButton.setReadPermissions("public_profile", "email");
+
+        fbUrl = (ImageView) view.findViewById(R.id.fbUrl);
+        fbUrl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                progressDialog = new ProgressDialog(getContext());
+                progressDialog.setMessage("Loading...");
+                progressDialog.show();
+
+                loginButton.performClick();
+
+                loginButton.setPressed(true);
+
+                loginButton.invalidate();
+
+                loginButton.registerCallback(callbackManager, mCallBack);
+
+                loginButton.setPressed(false);
+
+                loginButton.invalidate();
+
+            }
+        });
+    }*/
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private FacebookCallback<LoginResult> mCallBack = new FacebookCallback<LoginResult>() {
+        @Override
+        public void onSuccess(LoginResult loginResult) {
+
+            progressDialog.dismiss();
+
+            // App code
+            GraphRequest request = GraphRequest.newMeRequest(
+                    loginResult.getAccessToken(),
+                    new GraphRequest.GraphJSONObjectCallback() {
+                        @Override
+                        public void onCompleted(
+                                JSONObject object,
+                                GraphResponse response) {
+
+                            Log.e("response: ", response + "");
+                            // Toast.makeText(AccountActivity.this, response.toString(), Toast.LENGTH_LONG).show();
+                            try {
+                                String Facebook_url = "https://www.facebook.com/profile.php?id="+object.getString("id").toString();
+                                Toast.makeText(getContext(), Facebook_url, Toast.LENGTH_LONG).show();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                    });
+
+            Bundle parameters = new Bundle();
+            parameters.putString("fields", "id,name,email,gender, birthday");
+            request.setParameters(parameters);
+            request.executeAsync();
+        }
+
+        @Override
+        public void onCancel() {
+            progressDialog.dismiss();
+        }
+
+        @Override
+        public void onError(FacebookException e) {
+            progressDialog.dismiss();
+        }
+    };
+
 
     public  String POST5(String url)
     {
