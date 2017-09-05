@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.amplearch.circleonet.R;
 
@@ -14,6 +15,7 @@ public class Connect5Activity extends AppCompatActivity {
 
     String level = "0";
     int profile;
+    TextView txtCongratulations;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +28,7 @@ public class Connect5Activity extends AppCompatActivity {
         imgConnect = (ImageView) findViewById(R.id.imgConnect);
         imgEvents = (ImageView) findViewById(R.id.imgEvents);
         imgProfile = (ImageView) findViewById(R.id.imgProfile);
+        txtCongratulations = (TextView) findViewById(R.id.txtCongratulations);
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override

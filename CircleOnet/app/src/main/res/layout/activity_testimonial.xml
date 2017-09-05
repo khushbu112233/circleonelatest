@@ -11,8 +11,8 @@
         android:layout_marginTop="10dp"
         tools:listitem="@layout/testimonial_row"
         android:id="@+id/lstTestimonial"
-        android:divider="@null"
-        android:dividerHeight="0dp"
+        android:divider="@color/colorPrimary"
+        android:dividerHeight="1dp"
         android:layout_centerVertical="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></ListView>

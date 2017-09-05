@@ -6,6 +6,7 @@ package com.amplearch.circleonet.Model;
 
 public class TestimonialModel {
 
+    String Testimonial_ID = "" ;
     String CompanyName = "";
     String Designation = "";
     String FirstName = "";
@@ -17,6 +18,14 @@ public class TestimonialModel {
     String UserPhoto = "";
 
     public TestimonialModel() {
+    }
+
+    public String getTestimonial_ID() {
+        return Testimonial_ID;
+    }
+
+    public void setTestimonial_ID(String testimonial_ID) {
+        Testimonial_ID = testimonial_ID;
     }
 
     public String getCompanyName() {

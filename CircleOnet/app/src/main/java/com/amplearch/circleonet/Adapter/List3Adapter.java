@@ -1,10 +1,13 @@
 package com.amplearch.circleonet.Adapter;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +25,7 @@ import com.amplearch.circleonet.Fragments.List2Fragment;
 import com.amplearch.circleonet.Fragments.List3Fragment;
 import com.amplearch.circleonet.Fragments.List4Fragment;
 import com.amplearch.circleonet.Helper.DatabaseHelper;
+import com.amplearch.circleonet.Helper.LoginSession;
 import com.amplearch.circleonet.Model.FriendConnection;
 import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.R;
@@ -32,18 +36,33 @@ import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
 import com.squareup.picasso.Picasso;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
 /**
  * Created by admin on 06/08/2017.
  */
 
-public class List3Adapter extends BaseSwipeAdapter {
+public class List3Adapter extends BaseSwipeAdapter
+{
     private Context context;
     private int layoutResourceId;
+    private List3Fragment fragment ;
     private ArrayList<String> data = new ArrayList();
     private ArrayList<Integer> id = new ArrayList();
     private ArrayList<byte[]> image = new ArrayList();
@@ -58,6 +77,10 @@ public class List3Adapter extends BaseSwipeAdapter {
 
     ArrayList<FriendConnection> nfcModelList1 = new ArrayList<>();
     ArrayList<FriendConnection> nfcModelListFilter1 = new ArrayList<>();
+
+    private int posi ;
+    LoginSession session ;
+    String profile_id ;
 
 
     public List3Adapter(Context context, int layoutResourceId, ArrayList<byte[]> image,
@@ -80,12 +103,27 @@ public class List3Adapter extends BaseSwipeAdapter {
         this.nfcModelListFilter.addAll(nfcModelList);
     }*/
 
-    public List3Adapter(Context context, int grid_list3_layout, ArrayList<FriendConnection> nfcModel) {
+    public List3Adapter(Context context, int grid_list3_layout, ArrayList<FriendConnection> nfcModel, List3Fragment fragment)
+    {
+        this.fragment = fragment ;
         this.context = context;
         this.layoutResourceId = grid_list3_layout;
         this.nfcModelList1 = nfcModel;
 //        this.nfcModelListFilter = new ArrayList<NFCModel>();
         this.nfcModelListFilter1.addAll(nfcModelList1);
+    }
+
+    public List3Adapter(Context context, int grid_list3_layout, ArrayList<FriendConnection> nfcModel)
+    {
+        this.context = context;
+        this.layoutResourceId = grid_list3_layout;
+        this.nfcModelList1 = nfcModel;
+//        this.nfcModelListFilter = new ArrayList<NFCModel>();
+        this.nfcModelListFilter1.addAll(nfcModelList1);
+
+        session = new LoginSession(context);
+        HashMap<String, String> user = session.getUserDetails();
+        profile_id = user.get(LoginSession.KEY_PROFILEID);
     }
 
 
@@ -95,10 +133,12 @@ public class List3Adapter extends BaseSwipeAdapter {
     }
 
     @Override
-    public View generateView(final int position, ViewGroup parent) {
+    public View generateView(final int position, ViewGroup parent)
+    {
         View v = LayoutInflater.from(context).inflate(R.layout.grid_list3_layout, null);
 
         delete = (Button) v.findViewById(R.id.delete);
+
         final SwipeLayout swipeLayout = (SwipeLayout) v.findViewById(getSwipeLayoutResourceId(position));
         swipeLayout.addSwipeListener(new SimpleSwipeListener() {
             @Override
@@ -109,6 +149,8 @@ public class List3Adapter extends BaseSwipeAdapter {
 
         db = new DatabaseHelper(context);
 
+
+
         swipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {
             @Override
             public void onDoubleClick(SwipeLayout layout, boolean surface) {
@@ -118,13 +160,31 @@ public class List3Adapter extends BaseSwipeAdapter {
 
         v.findViewById(R.id.delete).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
 //                db.DeactiveCards(nfcModelList.get(position).getId());
-                Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_SHORT).show();
                 swipeLayout.close();
+
+                posi  = position ;
+
+                new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/FriendConnection_Operation");
+
+              /*  try
+                {
+                    List3Fragment.allTaggs.clear();
+                    List3Fragment.nfcModel1.clear();
+                    List3Fragment.gridAdapter.notifyDataSetChanged();
+                }
+                catch (Exception e)
+                {
+
+                }*/
+
+
                 //nfcModelList.remove(position);
 
-                try {
+               /* try {
                     List2Fragment.gridAdapter.notifyDataSetChanged();
                     List2Fragment.allTags = db.getActiveNFC();
                     List2Fragment.nfcModel.clear();
@@ -161,8 +221,7 @@ public class List3Adapter extends BaseSwipeAdapter {
                     List1Fragment.GetData(context);
                 } catch (Exception e) {
 
-                }
-
+                } */
                 /*notifyDataSetChanged();
 
                 if (CardsActivity.mViewPager.getCurrentItem() == 0){
@@ -195,7 +254,8 @@ public class List3Adapter extends BaseSwipeAdapter {
     }
 
     @Override
-    public void fillValues(int position, View convertView) {
+    public void fillValues(int position, View convertView)
+    {
         View row = convertView;
         ViewHolder holder = null;
 
@@ -332,4 +392,173 @@ public class List3Adapter extends BaseSwipeAdapter {
         notifyDataSetChanged();
     }
 
+    private class HttpAsyncTask extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(context);
+            dialog.setMessage("Deleting Records...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            return POST(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+            dialog.dismiss();
+//            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+            try
+            {
+                if(result == "")
+                {
+                    Toast.makeText(context, "Check Internet Connection", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    JSONObject response = new JSONObject(result);
+                    String message = response.getString("message");
+                    String success = response.getString("success");
+
+                    if(success.equals("1"))
+                    {
+                        Toast.makeText(context, "Delete Successfully", Toast.LENGTH_LONG).show();
+//                        fragment.webCall();
+                        List1Fragment.webCall();
+                        List2Fragment.webCall();
+                        List3Fragment.webCall();
+                        List4Fragment.webCall();
+                    }
+                    else
+                    {
+                        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                    }
+
+                    /*try
+                    {
+                        List3Fragment.gridAdapter.notifyDataSetChanged();
+//                        List3Fragment.GetData(context);
+//                        List3Fragment.allTaggs.clear();
+//                        List3Fragment.nfcModel1.clear();
+                    }
+                    catch(Exception e) {    }
+
+                    try
+                    {
+                        List2Fragment.gridAdapter.notifyDataSetChanged();
+//                        List2Fragment.allTaggs.clear();
+//                        List2Fragment.nfcModel.clear();
+//                        List2Fragment.GetData(context);
+                    }
+                    catch(Exception e) {    }
+
+
+                    try
+                    {
+                        List4Fragment.gridAdapter.notifyDataSetChanged();
+//                        List4Fragment.allTaggs.clear();
+//                        List4Fragment.nfcModel1.clear();
+//                        List4Fragment.GetData(context);
+                    }
+                    catch(Exception e) {    }
+
+                    try
+                    {
+                        List1Fragment.mAdapter.notifyDataSetChanged();
+                        List1Fragment.mAdapter1.notifyDataSetChanged();
+//                        List1Fragment.allTags.clear();
+//                        List1Fragment.nfcModel.clear();
+//                        List1Fragment.GetData(context);
+                    }
+                    catch(Exception e) {    }*/
+
+                }
+
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public  String POST(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("Operation", "Remove" );
+            jsonObject.accumulate("friendProfileId", nfcModelList1.get(posi).getProfile_id());
+            jsonObject.accumulate("myProfileId", profile_id );
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+        while((line = bufferedReader.readLine()) != null)
+            result += line;
+
+        inputStream.close();
+        return result;
+
+    }
 }

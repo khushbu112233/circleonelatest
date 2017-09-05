@@ -84,6 +84,7 @@
                             android:layout_height="match_parent">
 
                             <ImageView
+                                android:id="@+id/imgBack"
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_alignParentLeft="true"
@@ -129,7 +130,7 @@
                                         android:id="@+id/imgProfile"
                                         android:layout_width="70dp"
                                         android:layout_height="70dp"
-                                        android:src="@drawable/profile3"
+                                        android:src="@drawable/usr"
                                         app:civ_border_color="@color/colorPrimary"
                                         app:civ_border_width="0dp" />
 
@@ -140,7 +141,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="8dp"
-                                    android:text="Westley Wan"
+                                    android:text="Person"
                                     android:textAlignment="center"
                                     android:textColor="@color/white"
                                     android:textSize="19dp"
@@ -151,7 +152,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="0dp"
-                                    android:text="General Manager"
+                                    android:text="Designation"
                                     android:textAlignment="center"
                                     android:textColor="@color/white"
                                     android:textSize="19dp" />
@@ -161,7 +162,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="0dp"
-                                    android:text="Unico Creative pte ltd"
+                                    android:text="Company"
                                     android:textAlignment="center"
                                     android:textColor="@color/white"
                                     android:textSize="19dp" />
@@ -223,7 +224,7 @@
                             android:gravity="center_vertical"
                             android:paddingBottom="15dp"
                             android:paddingLeft="10dp"
-                            android:text="full name"
+                            android:hint="Full Name"
                             android:textSize="13sp" />
                     </LinearLayout>
 
@@ -248,7 +249,7 @@
                             android:layout_height="wrap_content"
                             android:ems="10"
                             android:gravity="center_vertical"
-                            android:hint="title"
+                            android:hint="Designation"
                             android:paddingBottom="15dp"
                             android:paddingLeft="10dp"
                             android:textSize="13sp" />
@@ -277,7 +278,7 @@
                             android:gravity="center_vertical"
                             android:paddingBottom="15dp"
                             android:paddingLeft="10dp"
-                            android:text="company name"
+                            android:hint="Company Name"
                             android:textSize="13sp" />
 
                     </LinearLayout>
@@ -303,7 +304,7 @@
                             android:layout_height="wrap_content"
                             android:ems="10"
                             android:gravity="center_vertical"
-                            android:hint="title"
+                            android:hint="Industry"
                             android:paddingBottom="15dp"
                             android:paddingLeft="10dp"
                             android:textSize="13sp" />
@@ -339,7 +340,7 @@
                                 android:gravity="center_vertical"
                                 android:paddingBottom="15dp"
                                 android:paddingLeft="10dp"
-                                android:text="phone1"
+                                android:hint="phone1"
                                 android:textSize="13sp" />
                         </LinearLayout>
 
@@ -364,7 +365,7 @@
                                 android:gravity="center_vertical"
                                 android:paddingBottom="15dp"
                                 android:paddingLeft="10dp"
-                                android:text="phone2"
+                                android:hint="phone2"
                                 android:textSize="13sp" />
                         </LinearLayout>
 
@@ -400,7 +401,7 @@
                                 android:gravity="center_vertical"
                                 android:paddingBottom="15dp"
                                 android:paddingLeft="10dp"
-                                android:text="mobile1"
+                                android:hint="mobile1"
                                 android:textSize="13sp" />
                         </LinearLayout>
 
@@ -425,7 +426,7 @@
                                 android:gravity="center_vertical"
                                 android:paddingBottom="15dp"
                                 android:paddingLeft="10dp"
-                                android:text="mobile2"
+                                android:hint="mobile2"
                                 android:textSize="13sp" />
                         </LinearLayout>
 
@@ -453,7 +454,7 @@
                             android:gravity="center_vertical"
                             android:paddingBottom="15dp"
                             android:paddingLeft="10dp"
-                            android:text="email1"
+                            android:hint="email1"
                             android:textSize="13sp" />
                     </LinearLayout>
 
@@ -478,7 +479,7 @@
                             android:gravity="center_vertical"
                             android:paddingBottom="15dp"
                             android:paddingLeft="10dp"
-                            android:text="email2"
+                            android:hint="email2"
                             android:textSize="13sp" />
                     </LinearLayout>
 
@@ -511,7 +512,7 @@
                                 android:gravity="center_vertical"
                                 android:paddingBottom="15dp"
                                 android:paddingLeft="10dp"
-                                android:text="fax1"
+                                android:hint="fax1"
                                 android:textSize="13sp" />
                         </LinearLayout>
 
@@ -535,7 +536,7 @@
                                 android:gravity="center_vertical"
                                 android:paddingBottom="15dp"
                                 android:paddingLeft="10dp"
-                                android:text="fax2"
+                                android:hint="fax2"
                                 android:textSize="13sp" />
                         </LinearLayout>
 
@@ -557,12 +558,13 @@
                             android:src="@drawable/ic_location_blue" />
 
                         <EditText
+                            android:id="@+id/edtAddress1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:paddingBottom="15dp"
                             android:paddingLeft="10dp"
-                            android:text="address"
+                            android:hint="address"
                             android:textSize="13sp" />
                     </LinearLayout>
 
@@ -581,6 +583,7 @@
                             android:layout_marginRight="20dp" />
 
                         <EditText
+                            android:id="@+id/edtAddress2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
@@ -613,12 +616,13 @@
                                 android:layout_marginRight="20dp" />
 
                             <EditText
+                                android:id="@+id/edtAddress5"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:paddingBottom="15dp"
                                 android:paddingLeft="10dp"
-                                android:text="country"
+                                android:hint="country"
                                 android:textSize="13sp" />
                         </LinearLayout>
 
@@ -636,12 +640,13 @@
                                 android:layout_marginRight="20dp" />
 
                             <EditText
+                                android:id="@+id/edtAddress4"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:paddingBottom="15dp"
                                 android:paddingLeft="10dp"
-                                android:text="state"
+                                android:hint="state"
                                 android:textSize="13sp" />
                         </LinearLayout>
 
@@ -670,12 +675,13 @@
                                 android:layout_marginRight="20dp" />
 
                             <EditText
+                                android:id="@+id/edtAddress3"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:paddingBottom="15dp"
                                 android:paddingLeft="10dp"
-                                android:text="city"
+                                android:hint="city"
                                 android:textSize="13sp" />
                         </LinearLayout>
 
@@ -693,12 +699,13 @@
                                 android:layout_marginRight="20dp" />
 
                             <EditText
+                                android:id="@+id/edtAddress6"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:paddingBottom="15dp"
                                 android:paddingLeft="10dp"
-                                android:text="postcode"
+                                android:hint="postcode"
                                 android:textSize="13sp" />
                         </LinearLayout>
 
@@ -720,12 +727,13 @@
                             android:src="@drawable/ic_web_blue" />
 
                         <EditText
+                            android:id="@+id/edtWebsite"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:paddingBottom="15dp"
                             android:paddingLeft="10dp"
-                            android:text="website"
+                            android:hint="website"
                             android:textSize="13sp" />
                     </LinearLayout>
 
@@ -750,7 +758,7 @@
                             android:gravity="center_vertical"
                             android:paddingBottom="15dp"
                             android:paddingLeft="10dp"
-                            android:text="association"
+                            android:hint="Association"
                             android:textSize="13sp" />
 
                         <ImageView
@@ -1016,44 +1024,160 @@
 
                     </LinearLayout>
 
-                    <RelativeLayout
-                        android:layout_marginTop="15dp"
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:fontFamily="monospace"
-                            android:text="Testimonial"
+                            android:text="Card Front"
                             android:textColor="@color/colorPrimary"
                             android:textSize="22sp"
                             android:textStyle="normal" />
 
-                        <TextView
-                            android:id="@+id/txtMore"
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp">
+
+                            <TextView
+                                android:id="@+id/txtCardFront"
+                                android:layout_width="200dp"
+                                android:layout_height="40dp"
+                                android:layout_alignParentLeft="true"
+                                android:background="@drawable/txt_box_blue"
+                                android:gravity="start"
+                                android:padding="10dp"
+                                android:hint="Front Card"
+                                android:textSize="13sp" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/ivAttachFrontImage"
+                                    android:layout_width="20dp"
+                                    android:layout_height="40dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:src="@drawable/ic_attach_blue" />
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:text="Card Back"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="22sp"
+                            android:textStyle="normal" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp">
+
+                            <TextView
+                                android:id="@+id/txtCardBack"
+                                android:layout_width="200dp"
+                                android:layout_height="40dp"
+                                android:layout_alignParentLeft="true"
+                                android:background="@drawable/txt_box_blue"
+                                android:gravity="start"
+                                android:padding="10dp"
+                                android:hint="Front Card"
+                                android:textSize="13sp" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/ivAttachBackImage"
+                                    android:layout_width="20dp"
+                                    android:layout_height="40dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:src="@drawable/ic_attach_blue" />
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_marginTop="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/txtTestLbl"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="20dp"
                             android:layout_centerVertical="true"
+                            android:fontFamily="monospace"
+                            android:text="Testimonial"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="22sp"
+                            android:textStyle="normal" android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
+
+                        <ImageView
+                            android:scaleType="fitEnd"
+                            android:layout_toRightOf="@+id/txtTestLbl"
                             android:layout_marginRight="10dp"
-                            android:text="More.."
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@+id/txtMore"
+                            android:id="@+id/imgAdd"
+                            android:layout_marginLeft="15dp"
+                            android:tint="@color/colorPrimary"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:src="@android:drawable/ic_input_add"/>
+
+                        <TextView
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:id="@+id/txtMore"
+                            android:layout_marginRight="10dp"
                             android:textAlignment="textEnd"
-                            android:textColor="@color/colorPrimary" />
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="More.."
+                            android:textColor="@color/colorPrimary"/>
                     </RelativeLayout>
 
-                    <ListView
+                    <com.amplearch.circleonet.Utils.ExpandableHeightListView
                         android:id="@+id/lstTestimonial"
                         android:layout_width="match_parent"
-                        android:layout_height="52dp"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="5dp"
                         android:nestedScrollingEnabled="true"
-                        tools:listitem="@layout/testimonial_row"></ListView>
+                        tools:listitem="@layout/testimonial_row"></com.amplearch.circleonet.Utils.ExpandableHeightListView>
 
                     <TextView
                         android:visibility="gone"
@@ -1233,6 +1357,7 @@
                         android:orientation="vertical"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="15dp"
+                        android:layout_marginBottom="10dp"
                         android:visibility="gone">
 
                         <RelativeLayout
@@ -1248,12 +1373,12 @@
                                 android:visibility="gone"
                                 android:layout_centerInParent="true"
                                 android:text="No event choosen by you.\nPlease choose event from below list"/>
-                            <GridView
+                            <com.amplearch.circleonet.Utils.ExpandableHeightGridView
                                 android:id="@+id/gridViewAdded"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:numColumns="2">
-                            </GridView>
+                            </com.amplearch.circleonet.Utils.ExpandableHeightGridView>
                         </RelativeLayout>
 
                         <TextView
@@ -1261,14 +1386,14 @@
                             android:layout_height="1dp"
                             android:background="@color/colorPrimary"/>
 
-                        <GridView
+                        <com.amplearch.circleonet.Utils.ExpandableHeightGridView
                             android:id="@+id/gridView"
                             android:layout_width="match_parent"
-                            android:layout_height="800dp"
-                            android:layout_marginBottom="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
                             android:layout_marginTop="20dp"
                             android:numColumns="2">
-                        </GridView>
+                        </com.amplearch.circleonet.Utils.ExpandableHeightGridView>
 
                     </LinearLayout>
 

@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:id="@+id/rltFragmentProfile"
     android:background="@color/white"
     android:fitsSystemWindows="true">
 
@@ -25,6 +26,7 @@
         <android.support.design.widget.AppBarLayout
             android:background="@android:color/transparent"
             android:id="@+id/appbar"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/NoActionbar"
@@ -85,6 +87,7 @@
                             android:layout_height="match_parent">
 
                             <ImageView
+                                android:id="@+id/imgBack"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginLeft="10dp"
                                 android:layout_width="30dp"
@@ -128,7 +131,7 @@
                                     <de.hdodenhof.circleimageview.CircleImageView
                                         app:civ_border_width="0dp"
                                         app:civ_border_color="@color/colorPrimary"
-                                        android:src="@drawable/profile3"
+                                        android:src="@drawable/usr"
                                         android:id="@+id/imgProfile"
                                         android:layout_width="70dp"
                                         android:layout_height="70dp" />
@@ -142,7 +145,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:textAlignment="center"
-                                    android:text="Westley Wan"
+                                    android:text="Person"
                                     android:textStyle="bold"
                                     android:textColor="@color/white"/>
 
@@ -153,7 +156,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:textAlignment="center"
-                                    android:text="General Manager"
+                                    android:text="Designation"
                                     android:textColor="@color/white"/>
                                 <TextView
                                     android:id="@+id/tvCompany"
@@ -162,7 +165,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:textAlignment="center"
-                                    android:text="Unico Creative pte ltd"
+                                    android:text="Company"
                                     android:textColor="@color/white"/>
 
                             </LinearLayout>
@@ -200,6 +203,7 @@
                     android:layout_height="match_parent">
 
                     <LinearLayout
+                        android:id="@+id/llNameBox"
                         android:layout_marginRight="15dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="15dp"
@@ -218,7 +222,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:text="Wasley Wan"
+                            android:text="Person"
                             android:textAlignment="center"
                             android:textColor="#6b6c6e"
                             android:textSize="13sp" />
@@ -233,6 +237,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/llCompanyBox"
                         android:layout_marginRight="15dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="15dp"
@@ -251,7 +256,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:text="UNICO Creative ple ltd"
+                            android:text="Company"
                             android:textAlignment="center"
                             android:textColor="#6b6c6e"
                             android:textSize="13sp" />
@@ -259,6 +264,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/llIndustryBox"
                         android:layout_marginRight="15dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="15dp"
@@ -273,17 +279,18 @@
                             android:src="@drawable/ic_branding"/>
 
                         <TextView
-                            android:id="@+id/textView4"
+                            android:id="@+id/textIndustry"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:text="Branding &amp; Marketing / IT"
+                            android:text="Industry"
                             android:textAlignment="center"
                             android:textColor="#6b6c6e"
                             android:textSize="13sp" />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/llDesignationBox"
                         android:layout_marginRight="15dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="15dp"
@@ -303,13 +310,13 @@
                             android:gravity="center"
                             android:textColor="#6b6c6e"
                             android:textSize="13sp"
-                            android:text="Business Development Director"
+                            android:text="Designation"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/lnrAssociation"
+                        android:id="@+id/llAssociationBox"
                         android:layout_marginRight="15dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="15dp"
@@ -353,7 +360,7 @@
                             android:id="@+id/tvAddress"
                             android:textColor="#6b6c6e"
                             android:textSize="13sp"
-                            android:text="246 Macpherson Road.Betime Building #03-04.Singapore 348578"
+                            android:text="Address"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
@@ -379,12 +386,13 @@
                             android:gravity="center"
                             android:textColor="#6b6c6e"
                             android:textSize="13sp"
-                            android:text="www.tcmong.com.sg"
+                            android:text="www.website.com"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent" />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/llMailBox"
                         android:layout_marginRight="15dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="15dp"
@@ -404,7 +412,7 @@
                             android:gravity="center"
                             android:textColor="#6b6c6e"
                             android:textSize="13sp"
-                            android:text="tcmong@tcmong.com.sg"
+                            android:text="Email Address"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent" />
                     </LinearLayout>
@@ -430,7 +438,7 @@
                             android:gravity="center"
                             android:textColor="#6b6c6e"
                             android:textSize="13sp"
-                            android:text="+65 8842 6688"
+                            android:text="Personal Phone No."
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent" />
                     </LinearLayout>
@@ -456,7 +464,7 @@
                             android:gravity="center"
                             android:textColor="#6b6c6e"
                             android:textSize="13sp"
-                            android:text="+65 6842 6186"
+                            android:text="Work Phone No."
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent" />
                     </LinearLayout>
@@ -479,7 +487,17 @@
                             android:orientation="horizontal">
 
 
+                            <com.facebook.login.widget.LoginButton
+                                android:id="@+id/login_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginBottom="30dp"
+                                android:layout_marginTop="30dp"
+                                android:visibility="gone" />
+
                             <ImageView
+                                android:id="@+id/fbUrl"
                                 android:layout_marginLeft="30dp"
                                 android:layout_weight="1"
                                 android:padding="6dp"
@@ -487,24 +505,28 @@
                                 android:layout_height="38dp"
                                 android:src="@drawable/icon_fb"/>
                             <ImageView
+                                android:id="@+id/linkedInUrl"
                                 android:layout_weight="1"
                                 android:padding="5dp"
                                 android:layout_width="38dp"
                                 android:layout_height="38dp"
                                 android:src="@drawable/icon_linkedin_gray"/>
                             <ImageView
+                                android:id="@+id/twitterUrl"
                                 android:layout_weight="1"
                                 android:padding="5dp"
                                 android:layout_width="38dp"
                                 android:layout_height="38dp"
                                 android:src="@drawable/icon_twitter"/>
                             <ImageView
+                                android:id="@+id/googleUrl"
                                 android:layout_weight="1"
                                 android:padding="5dp"
                                 android:layout_width="38dp"
                                 android:layout_height="38dp"
                                 android:src="@drawable/icon_google"/>
                             <ImageView
+                                android:id="@+id/youtubeUrl"
                                 android:layout_marginRight="30dp"
                                 android:layout_weight="1"
                                 android:padding="5dp"
@@ -535,7 +557,7 @@
                         android:layout_centerVertical="true"
                         android:textColor="@android:color/black"
                         android:textSize="13sp"
-                        android:text="vnfjvnf fbvdfnkvnf fdgfg fdgfdg dfg fg dfgfdg fgdfgfd drgdfgfd dfgdfg gdfg dfgdfg dfgfdg dfgfdg dfgfdg dfgfd fdgfdg dfgfdgfgfd dfgfdgfd dfgfdgf gdfgfdg dfgfdg dfgfdg dfgfdg dfgfd fdgfdkdfvncjkvn nvcklxnv klvncklxv klcvncklxv klcvncklxv klvnxcklv"
+                        android:text="Personal Profile Details"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" />
 
@@ -556,7 +578,7 @@
                         android:layout_centerVertical="true"
                         android:textColor="@android:color/black"
                         android:textSize="13sp"
-                        android:text="vnfjvnf fbvdfnkvnf fdgfg fdgfdg dfg fg dfgfdg fgdfgfd drgdfgfd dfgdfg gdfg dfgdfg dfgfdg dfgfdg dfgfdg dfgfd fdgfdg dfgfdgfgfd dfgfdgfd dfgfdgf gdfgfdg dfgfdg dfgfdg dfgfdg dfgfd fdgfdkdfvncjkvn nvcklxnv klvncklxv klcvncklxv klcvncklxv klvnxcklv"
+                        android:text="Company Profile Details"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" />
 
@@ -564,6 +586,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                     <TextView
+                        android:id="@+id/txtTestLbl"
                         android:layout_marginTop="10dp"
                         android:layout_marginLeft="20dp"
                         android:layout_centerVertical="true"
@@ -573,17 +596,31 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" />
 
+                        <ImageView
+                            android:scaleType="fitEnd"
+                            android:layout_toRightOf="@+id/txtTestLbl"
+                            android:layout_marginRight="10dp"
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@+id/txtMore"
+                            android:id="@+id/imgAdd"
+                            android:layout_marginLeft="15dp"
+                            android:tint="@color/colorPrimary"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:src="@android:drawable/ic_input_add"/>
+
                     <TextView
+                        android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:id="@+id/txtMore"
                         android:layout_marginRight="10dp"
                         android:textAlignment="textEnd"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="More.."
                         android:textColor="@color/colorPrimary"/>
                     </RelativeLayout>
-                    <ListView
+                    <com.amplearch.circleonet.Utils.ExpandableHeightListView
                         android:nestedScrollingEnabled="true"
                         android:layout_marginTop="5dp"
                         tools:listitem="@layout/testimonial_row"
@@ -592,7 +629,7 @@
                         android:layout_marginLeft="20dp"
                         android:layout_centerVertical="true"
                         android:layout_width="match_parent"
-                        android:layout_height="52dp"></ListView>
+                        android:layout_height="wrap_content"></com.amplearch.circleonet.Utils.ExpandableHeightListView>
 
                     <TextView
                         android:visibility="gone"

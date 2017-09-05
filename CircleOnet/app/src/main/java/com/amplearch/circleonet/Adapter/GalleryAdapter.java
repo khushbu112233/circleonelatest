@@ -123,7 +123,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             imageView.setTag(position);
             imageView.setVisibility(View.GONE);
             defaultCard.setVisibility(View.VISIBLE);
-            try {
+            try
+            {
                 if (nfcModelList.get(position).getName().equals("")) {
                     tvPersonName.setVisibility(View.GONE);
                 }
@@ -139,7 +140,9 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
                 if (nfcModelList.get(position).getPh_no().equals("")) {
                     tvPersonContact.setVisibility(View.GONE);
                 }
-            }catch (Exception e){}
+            }
+            catch (Exception e){   }
+
             tvPersonName.setText(nfcModelList.get(position).getName());
             tvPersonProfile.setText(nfcModelList.get(position).getDesignation());
             tvPersonWebsite.setText(nfcModelList.get(position).getWebsite());

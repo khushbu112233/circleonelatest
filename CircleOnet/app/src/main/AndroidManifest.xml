@@ -124,6 +124,7 @@
             android:theme="@style/NoActionbar" />
         <activity
             android:name=".Walkthrough.HelpActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.AddQRActivity"
@@ -131,8 +132,7 @@
         <activity
             android:name=".Activity.EditProfileActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionbar" >
-        </activity>
+            android:theme="@style/NoActionbar"></activity>
         <activity
             android:name=".Activity.FingerPrintLogin"
             android:screenOrientation="portrait" />
@@ -153,7 +153,11 @@
                 <data android:mimeType="application/com.amplearch.circleonet" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.TestimonialActivity"></activity>
+        <activity
+            android:name=".Activity.TestimonialActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Activity.TestimonialRequest"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

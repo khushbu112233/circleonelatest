@@ -6,6 +6,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.graphics.Region;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 import android.util.Base64;
 import android.util.Log;
 
@@ -19,9 +21,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 
-public class MyApplication extends Application {
-
-
+public class MyApplication extends MultiDexApplication
+{
     private static MyApplication mInstance ;
 
     private Gson gson;
@@ -30,9 +31,10 @@ public class MyApplication extends Application {
     private CustomSharedPreference shared;
 
     @Override
-    protected void attachBaseContext(Context base) {
+    protected void attachBaseContext(Context base)
+    {
         super.attachBaseContext(base);
-        //MultiDex.install(this);
+        MultiDex.install(this);
     }
 
     @Override

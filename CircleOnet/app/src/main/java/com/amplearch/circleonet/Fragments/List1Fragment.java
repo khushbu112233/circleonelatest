@@ -27,6 +27,7 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -95,7 +96,6 @@ public class List1Fragment extends Fragment
     private String DEBUG_TAG = "gesture";
     //  private GestureDetector gestureDetector;
     //  private View.OnTouchListener gestureListener;
-
     public static List<FriendConnection> allTags ;
     //new asign value
     AutoCompleteTextView searchText ;
@@ -117,7 +117,11 @@ public class List1Fragment extends Fragment
     RelativeLayout rlt;
     public static TextView txtNoCard1;
     LoginSession session;
-    String UserId = "";
+
+    static String UserId = "";
+
+    public static Context mContext ;
+
     public List1Fragment()
     {
         // Required empty public constructor
@@ -129,27 +133,30 @@ public class List1Fragment extends Fragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
 
         view = inflater.inflate(R.layout.fragment_list1, container, false);
         vc = ViewConfiguration.get(view.getContext());
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
+       ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
         // frameList1 = (FrameLayout) view.findViewById(R.id.frameList1);
         mTouchSlop = vc.getScaledTouchSlop();
+
+        mContext = List1Fragment.this.getContext() ;
+
         recyclerView1 = (RecyclerView) view.findViewById(R.id.list_horizontal1);
         recyclerView2 = (RecyclerView) view.findViewById(R.id.list_horizontal2);
         txtNoCard1 = (TextView) view.findViewById(R.id.txtNoCard1);
         lnrList = (LinearLayout) view.findViewById(R.id.lnrList);
         frame = (FrameLayout) view.findViewById(R.id.frame);
         frame1 = (FrameLayout) view.findViewById(R.id.frame1);
+
         session = new LoginSession(getContext());
-
         HashMap<String, String> user = session.getUserDetails();
-
         // name
         UserId = user.get(LoginSession.KEY_USERID);
+
         db = new DatabaseHelper(getContext());
         //viewPager = (ViewPager)view.findViewById(R.id.viewPager);
         lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
@@ -158,6 +165,8 @@ public class List1Fragment extends Fragment
         initRecyclerView2(recyclerView2,new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter1 ) ;
 
         searchText = (AutoCompleteTextView)view.findViewById(R.id.searchView);
+        InputMethodManager keyboard = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        keyboard.hideSoftInputFromWindow(searchText.getWindowToken(), 0);
 
         lnrSearch.setVisibility(View.VISIBLE);
         line.setVisibility(View.VISIBLE);
@@ -172,7 +181,9 @@ public class List1Fragment extends Fragment
         allTags = new ArrayList<>();
 
         // new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+//        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+
+        callFirst();
 
         recyclerView1.addOnScrollListener(scrollListener);
         recyclerView2.addOnScrollListener(scrollListener);
@@ -190,12 +201,12 @@ public class List1Fragment extends Fragment
 
                 View view_instance = (View)view.findViewById(R.id.list_horizontal1);
                 ViewGroup.LayoutParams params=view_instance.getLayoutParams();
-                params.height=height/(29/10);
+                params.height=(height/(29/10))-10;
                 view_instance.setLayoutParams(params);
 
                 View view_instance1 = (View)view.findViewById(R.id.list_horizontal2);
                 ViewGroup.LayoutParams params1=view_instance1.getLayoutParams();
-                params1.height=height/(29/10);
+                params1.height=(height/(29/10))-10;
                 view_instance1.setLayoutParams(params1);
 
             }
@@ -347,7 +358,20 @@ public class List1Fragment extends Fragment
         return view;
     }
 
-    public String POST(String url)
+    private void callFirst()
+    {
+        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+    }
+
+    public static void webCall()
+    {
+        allTags.clear();
+        mAdapter.notifyDataSetChanged();
+        mAdapter1.notifyDataSetChanged();
+        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+    }
+
+    public static String POST(String url)
     {
         InputStream inputStream = null;
         String result = "";
@@ -416,21 +440,20 @@ public class List1Fragment extends Fragment
 
     }
 
-    private class HttpAsyncTask extends AsyncTask<String, Void, String>
+    private static class HttpAsyncTask extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(getActivity());
+            dialog = new ProgressDialog(mContext);
             dialog.setMessage("Fetching Cards...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
             dialog.setCancelable(false);
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
-
         }
 
         @Override
@@ -472,12 +495,12 @@ public class List1Fragment extends Fragment
 
                         nfcModelTag.setNfc_tag("en000000001");
                         allTags.add(nfcModelTag);
-                        GetData(getContext());
+                        GetData(mContext);
                     }
                 }
                 else
                 {
-                    Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "Not able to load Cards..", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -528,7 +551,6 @@ public class List1Fragment extends Fragment
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(mAdapter);
         recyclerView.addOnScrollListener(new CenterScrollListener());
-
     }
 
     public static void initRecyclerView2(final RecyclerView recyclerView, final CarouselLayoutManager layoutManager, GalleryAdapter1 mAdapter)
@@ -733,14 +755,14 @@ public class List1Fragment extends Fragment
 
     GestureDetector gestureDetector = new GestureDetector(simpleOnGestureListener);
 
-   /* @Override
+    @Override
     public void onResume()
     {
         super.onResume();
 
-        nfcModel.clear();
-        GetData(getContext());
-    }*/
+//        nfcModel.clear();
+//        GetData(getContext());
+    }
 
     public static void GetData(Context context)
     {

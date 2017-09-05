@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.GridView;
@@ -26,12 +27,14 @@ import android.widget.Toast;
 
 import com.amplearch.circleonet.Activity.CardDetail;
 import com.amplearch.circleonet.Activity.CardsActivity;
+import com.amplearch.circleonet.Adapter.ConnectListAdapter;
 import com.amplearch.circleonet.Adapter.GalleryAdapter;
 import com.amplearch.circleonet.Adapter.GalleryAdapter1;
 import com.amplearch.circleonet.Adapter.GridViewAdapter;
 import com.amplearch.circleonet.Adapter.List3Adapter;
 import com.amplearch.circleonet.Helper.DatabaseHelper;
 import com.amplearch.circleonet.Helper.LoginSession;
+import com.amplearch.circleonet.Model.ConnectList;
 import com.amplearch.circleonet.Model.FriendConnection;
 import com.amplearch.circleonet.Model.ImageItem;
 import com.amplearch.circleonet.Model.NFCModel;
@@ -77,17 +80,19 @@ public class List2Fragment extends Fragment
     private GestureDetector gestureDetector1;
 
     public static List<NFCModel> allTags ;
-    public static List<FriendConnection> allTaggs ;
+    public static ArrayList<FriendConnection> allTaggs ;
 
     public static ArrayList<FriendConnection> nfcModel ;
 
     LoginSession session;
-    String UserId = "";
+    static String UserId = "";
+
+    public static Context mContext ;
 
     //new asign value
     AutoCompleteTextView searchText ;
 //    public static ArrayList<NFCModel> nfcModel ;
-
+    public static int pageno = 1;
     public List2Fragment() {
         // Required empty public constructor
     }
@@ -97,6 +102,9 @@ public class List2Fragment extends Fragment
     {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list2, container, false);
+
+        mContext = List2Fragment.this.getContext() ;
+        pageno = 1;
         /*db = new DatabaseHelper(getContext());
         imgf = new ArrayList<byte[]>();
 
@@ -114,6 +122,8 @@ public class List2Fragment extends Fragment
         session = new LoginSession(getContext());
         HashMap<String, String> user = session.getUserDetails();
         UserId = user.get(LoginSession.KEY_USERID);
+
+        callFirst();
 
         GestureDetector.OnGestureListener gestureListener = new MyOnGestureListener();
         GestureDetector.OnDoubleTapListener doubleTapListener = new MyOnDoubleTapListener();
@@ -157,7 +167,7 @@ public class List2Fragment extends Fragment
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
-                if(s.length() <= 0)
+               /* if(s.length() <= 0)
                 {
                     nfcModel.clear();
                     GetData(getContext());
@@ -166,7 +176,28 @@ public class List2Fragment extends Fragment
                 {
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
                     gridAdapter.Filter(text);
+                }*/
+
+                if(s.length() <= 0)
+                {
+                    pageno = 1;
+                    allTaggs.clear();
+                    new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+//                    GetData(getContext());
                 }
+                else if(s.length() >= 2)
+                {
+                    String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
+
+                    String Findby = "name";
+                    String Search = "Circle One" ;
+                    String rc_no = "10";
+                    String page_no = "1";
+
+                    allTaggs.clear();
+                    new HttpAsyncTaskSearch().execute("http://circle8.asia:8081/Onet.svc/SearchConnect");
+                }
+
             }
 
             @Override
@@ -175,10 +206,120 @@ public class List2Fragment extends Fragment
             }
         });
 
-        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+//        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
 
         return view;
     }
+
+    private class HttpAsyncTaskSearch extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(getActivity());
+            dialog.setMessage("Searching Records...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            return POSTSearch(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+            dialog.dismiss();
+//            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+
+            try
+            {
+                if(result == "")
+                {
+                    Toast.makeText(getContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    JSONObject response = new JSONObject(result);
+                    String message = response.getString("message");
+                    String success = response.getString("success");
+                    String findBy = response.getString("FindBy");
+                    String search = response.getString("Search");
+                    String count = response.getString("count");
+                    String pageno = response.getString("pageno");
+                    String recordno = response.getString("numofrecords");
+
+                    JSONArray connect = response.getJSONArray("connect");
+
+                    if(connect.length() == 0)
+                    {
+                        //tvDataInfo.setVisibility(View.VISIBLE);
+                        allTaggs.clear();
+                        gridAdapter.notifyDataSetChanged();
+                    }
+                    else
+                    {
+                      //  tvDataInfo.setVisibility(View.GONE);
+
+                        for(int i = 0 ; i <= connect.length() ; i++ )
+                        {
+                            JSONObject iCon = connect.getJSONObject(i);
+                            FriendConnection connectModel = new FriendConnection();
+                            connectModel.setUserID(iCon.getString("UserID"));
+                            connectModel.setFirstName(iCon.getString("FirstName"));
+                            connectModel.setLastName(iCon.getString("LastName"));
+                            connectModel.setName(iCon.getString("FirstName") + " " + iCon.getString("LastName"));
+                            connectModel.setUser_image(iCon.getString("UserPhoto"));
+                            connectModel.setCard_front(iCon.getString("Card_Front"));
+                            connectModel.setCard_back(iCon.getString("Card_Back"));
+                            connectModel.setProfile_id(iCon.getString("ProfileId"));
+                            connectModel.setPh_no(iCon.getString("Phone"));
+                            connectModel.setCompany(iCon.getString("CompanyName"));
+                            connectModel.setDesignation(iCon.getString("Designation"));
+                            connectModel.setFb_id(iCon.getString("Facebook"));
+                            connectModel.setTwitter_id(iCon.getString("Twitter"));
+                            connectModel.setGoogle_id(iCon.getString("Google"));
+                            connectModel.setLinkedin_id(iCon.getString("LinkedIn"));
+                            connectModel.setWebsite(iCon.getString("Website"));
+                            allTaggs.add(connectModel);
+
+                            gridAdapter = new GridViewAdapter(getContext(), R.layout.grid_list2_layout, allTaggs);
+                            gridView.setAdapter(gridAdapter);
+                            gridAdapter.notifyDataSetChanged();
+
+//                            GetData(getContext());
+                        }
+                    }
+                }
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
+    private void callFirst()
+    {
+        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+    }
+
+    public static void webCall()
+    {
+        allTaggs.clear();
+        gridAdapter.notifyDataSetChanged();
+        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+    }
+
 
     private class LoadDataForActivity extends AsyncTask<Void, Void, Void> {
 
@@ -224,8 +365,7 @@ public class List2Fragment extends Fragment
         return imageItems;
     }
 
-
-    private class HttpAsyncTask extends AsyncTask<String, Void, String>
+    private static class HttpAsyncTask extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
 
@@ -233,7 +373,7 @@ public class List2Fragment extends Fragment
         protected void onPreExecute()
         {
             super.onPreExecute();
-            dialog = new ProgressDialog(getActivity());
+            dialog = new ProgressDialog(mContext);
             dialog.setMessage("Fetching Cards...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
@@ -273,15 +413,44 @@ public class List2Fragment extends Fragment
                         nfcModelTag.setCard_front(object.getString("Card_Front"));
                         nfcModelTag.setCard_back(object.getString("Card_Back"));
                         nfcModelTag.setProfile_id(object.getString("ProfileId"));
+                        nfcModelTag.setAddress(object.getString("Address1") + " " + object.getString("Address2") + " "
+                        + object.getString("Address3") + object.getString("Address4"));
 
                         nfcModelTag.setNfc_tag("en000000001");
                         allTaggs.add(nfcModelTag);
-                        GetData(getContext());
+                        GetData(mContext);
                     }
+
+                    gridView.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+                        @Override
+                        public void onScrollStateChanged(AbsListView view,
+                                                         int scrollState) { // TODO Auto-generated method stub
+                            int threshold = 1;
+                            int count = gridView.getCount();
+
+                            if (scrollState == SCROLL_STATE_IDLE) {
+                                if (gridView.getLastVisiblePosition() >= count
+                                        - threshold) {
+                                    // Execute LoadMoreDataTask AsyncTask
+                                    new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onScroll(AbsListView view, int firstVisibleItem,
+                                             int visibleItemCount, int totalItemCount) {
+                            // TODO Auto-generated method stub
+
+                        }
+
+                    });
+
                 }
                 else
                 {
-                    Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "Not able to load Cards..", Toast.LENGTH_LONG).show();
                 }
             }
             catch (JSONException e) {
@@ -290,7 +459,7 @@ public class List2Fragment extends Fragment
         }
     }
 
-    public String POST(String url)
+    public  String POSTSearch(String url)
     {
         InputStream inputStream = null;
         String result = "";
@@ -305,9 +474,11 @@ public class List2Fragment extends Fragment
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("numofrecords", "10" );
+            jsonObject.accumulate("FindBy", "name" );
+            jsonObject.accumulate("Search", searchText.getText().toString() );
+            jsonObject.accumulate("UserID", UserId);
+            jsonObject.accumulate("numofrecords", "30" );
             jsonObject.accumulate("pageno", "1" );
-            jsonObject.accumulate("userid", UserId );
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -343,6 +514,63 @@ public class List2Fragment extends Fragment
             Log.d("InputStream", e.getLocalizedMessage());
         }
 
+        // 11. return result
+        return result;
+    }
+
+    public static String POST(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("numofrecords", "3" );
+            jsonObject.accumulate("pageno", pageno );
+            jsonObject.accumulate("userid", UserId );
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+        pageno++;
         // 11. return result
         return result;
     }
@@ -471,9 +699,9 @@ public class List2Fragment extends Fragment
                             CardsFragment.tabLayout.setVisibility(View.VISIBLE);
                         } else {
                            // Toast.makeText(getContext(), "Up", Toast.LENGTH_LONG).show();
-                            lnrSearch.setVisibility(View.GONE);
-                            line.setVisibility(View.GONE);
-                            CardsFragment.tabLayout.setVisibility(View.GONE);
+                            lnrSearch.setVisibility(View.VISIBLE);
+                            line.setVisibility(View.VISIBLE);
+                            CardsFragment.tabLayout.setVisibility(View.VISIBLE);
                         }
                     }
                 }
@@ -516,17 +744,15 @@ public class List2Fragment extends Fragment
     */
     GestureDetector gestureDetector = new GestureDetector(simpleOnGestureListener);
 
-
-/*
     @Override
     public void onResume()
     {
         super.onResume();
 
-        nfcModel.clear();
-        GetData(getContext());
+//        nfcModel.clear();
+//        GetData(getContext());
     }
-*/
+
 
 /*
     public static void GetData(Context context)
@@ -570,6 +796,7 @@ public class List2Fragment extends Fragment
             nfcModelTag.setCard_front(reTag.getCard_front());
             nfcModelTag.setNfc_tag(reTag.getNfc_tag());
             nfcModelTag.setProfile_id(reTag.getProfile_id());
+            nfcModelTag.setAddress(reTag.getAddress());
             nfcModel.add(nfcModelTag);
         }
 

@@ -136,9 +136,8 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
+
         session = new LoginSession(getApplicationContext());
-
-
         HashMap<String, String> user = session.getUserDetails();
 
 
@@ -619,7 +618,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
             else {
               //  getSupportActionBar().show();
               //  setActionBarTitle("Cards");
-                return new List1Fragment();
+                return new CardsFragment();
             }
         }
 
@@ -989,7 +988,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                             List3Fragment.allTags = db.getActiveNFC();
                             List3Fragment.nfcModel.clear();
                             //  nfcModelList.clear();
-                            List3Fragment.GetData(getApplicationContext());
+//                            List3Fragment.GetData(getApplicationContext());
                         } catch (Exception e){
 
                         }

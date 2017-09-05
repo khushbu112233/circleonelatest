@@ -8,23 +8,22 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Handler;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amplearch.circleonet.Activity.CardsActivity;
 import com.amplearch.circleonet.ApplicationUtils.MyApplication;
-import com.amplearch.circleonet.ConnectivityReceiver;
 import com.amplearch.circleonet.Helper.CustomSharedPreference;
 import com.amplearch.circleonet.Helper.FingerPrintSession;
 import com.amplearch.circleonet.Helper.LoginSession;
@@ -46,6 +45,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
@@ -70,7 +70,6 @@ import com.linkedin.platform.listeners.ApiListener;
 import com.linkedin.platform.listeners.ApiResponse;
 import com.linkedin.platform.listeners.AuthListener;
 import com.linkedin.platform.utils.Scope;
-import com.squareup.picasso.Picasso;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -78,14 +77,12 @@ import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
-import com.twitter.sdk.android.tweetcomposer.Card;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -98,7 +95,6 @@ import java.security.NoSuchAlgorithmException;
 
 import io.fabric.sdk.android.Fabric;
 
-import static com.amplearch.circleonet.Utils.Validation.validate;
 import static com.amplearch.circleonet.Utils.Validation.validateLogin;
 
 
@@ -139,11 +135,14 @@ public class LoginActivity extends AppCompatActivity implements
 
     private static final String host = "api.linkedin.com";
     private static final String topCardUrl = "https://" + host + "/v1/people/~:" +
-            "(email-address,formatted-name,phone-numbers,public-profile-url,picture-url,picture-urls::(original))";
+            "(id,email-address,formatted-name,phone-numbers,public-profile-url,picture-url,picture-urls::(original))";
 
     private ProgressDialog progress;
     public static EditText etLoginUser, etLoginPass;
     String userName, userPassword;
+    String SocialMedia_Id = "", SocialMedia_Type = "", UserName = "";
+    String Facebook = "", Twitter = "", Google = "", Linkedin = "", final_name = "", final_email = "", final_image = "";
+    private boolean LinkedInFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,11 +166,34 @@ public class LoginActivity extends AppCompatActivity implements
         etLoginUser = (EditText) findViewById(R.id.etLoginUser);
         login_linkedin_btn = (ImageView) findViewById(R.id.login_button_linkedin);
         prefs = getSharedPreferences("com.amplearch.circleonet", MODE_PRIVATE);
+        etLoginPass.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        etLoginPass.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    userName = etLoginUser.getText().toString();
+                    userPassword = etLoginPass.getText().toString();
 
+                    if (!validateLogin(userName, userPassword)) {
+                        Toast.makeText(getApplicationContext(), "Form Fill Invalid!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/UserLogin");
+                    }
+                }
+                return false;
+            }
+        });
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                intent.putExtra("Facebook", "");
+                intent.putExtra("Google", "");
+                intent.putExtra("Linkedin", "");
+                intent.putExtra("Twitter", "");
+                intent.putExtra("UserName", "");
+                intent.putExtra("Email", "");
+                intent.putExtra("Image", "");
                 startActivity(intent);
             }
         });
@@ -194,6 +216,7 @@ public class LoginActivity extends AppCompatActivity implements
         login_linkedin_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                LinkedInFlag = true;
                 login_linkedin();
             }
         });
@@ -231,12 +254,9 @@ public class LoginActivity extends AppCompatActivity implements
                 userName = etLoginUser.getText().toString();
                 userPassword = etLoginPass.getText().toString();
 
-                if (!validateLogin(userName, userPassword))
-                {
+                if (!validateLogin(userName, userPassword)) {
                     Toast.makeText(getApplicationContext(), "Form Fill Invalid!", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+                } else {
                     new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/UserLogin");
                 }
             /* Create an Intent that will start the Menu-Activity. */
@@ -292,8 +312,7 @@ public class LoginActivity extends AppCompatActivity implements
         }*/
     }
 
-    public String POST(String url)
-    {
+    public String POST(String url) {
         InputStream inputStream = null;
         String result = "";
         try {
@@ -307,7 +326,66 @@ public class LoginActivity extends AppCompatActivity implements
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Password", userPassword);
+            jsonObject.accumulate("Platform", "Android");
+            jsonObject.accumulate("Token", "1234567890");
             jsonObject.accumulate("UserName", userName);
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    public String POSTSocialMedia(String url) {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("Platform", "Android");
+            jsonObject.accumulate("SocialMedia_Id", SocialMedia_Id);
+            jsonObject.accumulate("SocialMedia_Type", SocialMedia_Type);
+            jsonObject.accumulate("Token", "1234567890");
+            jsonObject.accumulate("UserName", UserName);
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -372,8 +450,7 @@ public class LoginActivity extends AppCompatActivity implements
 
     }
 
-    private class HttpAsyncTask extends AsyncTask<String, Void, String>
-    {
+    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
@@ -393,18 +470,14 @@ public class LoginActivity extends AppCompatActivity implements
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result)
-        {
+        protected void onPostExecute(String result) {
             dialog.dismiss();
-            try
-            {
-                if (result != null)
-                {
+            try {
+                if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
                     String success = jsonObject.getString("success").toString();
                     String UserID = "", profileid = "", FirstName = "", LastName = "", UserPhoto = "";
-                    if (success.equals("1"))
-                    {
+                    if (success.equals("1")) {
                         //  Toast.makeText(getBaseContext(), "LoggedIn Successfully..", Toast.LENGTH_LONG).show();
                         //   fingerPrintSession.createLoginSession(UserID, "", userName, "", "");
 
@@ -417,10 +490,8 @@ public class LoginActivity extends AppCompatActivity implements
                         UserPhoto = jsonArray.getString("UserPhoto");
                         String Status = jsonArray.getString("Status");
 
-                        if (Status.equalsIgnoreCase("Verified"))
-                        {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                            {
+                        if (Status.equalsIgnoreCase("Verified")) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                 // imgFinger.setVisibility(View.VISIBLE);
                                 Gson gson = ((MyApplication) getApplication()).getGsonObject();
                                 UserObject userData = new UserObject(profileid, FirstName + " " + LastName, userName, userPassword, UserID, "", UserPhoto, false);
@@ -432,27 +503,40 @@ public class LoginActivity extends AppCompatActivity implements
                                 //intent.putExtra("viewpager_position", 0);
                                 startActivity(intent);
                                 finish();
-                            }
-                            else
-                            {
-                                // imgFinger.setVisibility(View.GONE);
-                                loginSession.createLoginSession(profileid, UserID, "", userName, "", "");
+
+                              /*  loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, userName, UserPhoto, "");
+                                // Toast.makeText(getApplicationContext(), getString(R.string.auth_successful), Toast.LENGTH_LONG).show();
+
+                                // login with only fingerprint
                                 if (prefs.getBoolean("firstrun", true)) {
                                     // Do first run stuff here then set 'firstrun' as false
                                     // using the following line to edit/commit prefs
                                     Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
                                     startActivity(intent);
                                     prefs.edit().putBoolean("firstrun", false).commit();
-                                }
-                                else
-                                {
+                                } else {
+                                    Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                                    userIntent.putExtra("viewpager_position", 0);
+                                    startActivity(userIntent);
+                                    finish();
+                                }*/
+                            } else {
+                                // imgFinger.setVisibility(View.GONE);
+                                loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, final_email, UserPhoto, "");
+                                if (prefs.getBoolean("firstrun", true)) {
+                                    // Do first run stuff here then set 'firstrun' as false
+                                    // using the following line to edit/commit prefs
+                                    Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                                    startActivity(intent);
+                                    prefs.edit().putBoolean("firstrun", false).commit();
+                                } else {
                                     Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
                                     userIntent.putExtra("viewpager_position", 0);
                                     startActivity(userIntent);
                                     finish();
                                 }
                             }
-                        }else {
+                        } else {
                             Toast.makeText(getBaseContext(), "You should verify your Account First..", Toast.LENGTH_LONG).show();
                         }
 
@@ -538,22 +622,69 @@ public class LoginActivity extends AppCompatActivity implements
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
 
-            if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
-                Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
 
-                Log.e(TAG, "display name: " + acct.getDisplayName());
+            if (mGoogleApiClient.isConnected()) {
+                if (mGoogleApiClient.hasConnectedApi(Plus.API)) {
+                    if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
+                        Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
 
-                String personName = acct.getDisplayName();
+                        Log.e(TAG, "display name: " + acct.getDisplayName());
+
+                        String personName = acct.getDisplayName();
 //            String personPhotoUrl = acct.getPhotoUrl().toString();
-                String email = acct.getEmail();
-                String personPhotoUrl = currentPerson.getImage().getUrl();
-                Log.e(TAG, "Name: " + personName + ", email: " + email
-                );
+                        String email = acct.getEmail();
+                        String personPhotoUrl = currentPerson.getImage().getUrl();
+                        Log.e(TAG, "Name: " + personName + ", email: " + email
+                        );
+
+                        Facebook = "";
+                        Google = acct.getId();
+                        Linkedin = "";
+                        Twitter = "";
+
+                        final_name = personName;
+                        final_email = email;
+                        final_image = personPhotoUrl;
+                        SocialMedia_Id = acct.getId();
+                        SocialMedia_Type = "Google";
+                        UserName = email;
+
+                        new HttpAsyncTaskSocialMedia().execute("http://circle8.asia:8081/Onet.svc/SocialMediaLogin");
+                        updateUI(true);
+                    }
+                }
+            } else {
+                //connect it
+                mGoogleApiClient.connect(GoogleApiClient.SIGN_IN_MODE_OPTIONAL);
 
 
-                //  loginSession.createLoginSession("", personName, email, personPhotoUrl, "");
+                    Log.e(TAG, "display name: " + acct.getDisplayName());
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    String personName = acct.getDisplayName();
+//            String personPhotoUrl = acct.getPhotoUrl().toString();
+                    String email = acct.getEmail();
+                    String personPhotoUrl = "";
+                    Log.e(TAG, "Name: " + personName + ", email: " + email
+                    );
+
+                    Facebook = "";
+                    Google = acct.getId();
+                    Linkedin = "";
+                    Twitter = "";
+
+                    final_name = personName;
+                    final_email = email;
+                    final_image = personPhotoUrl;
+                    SocialMedia_Id = acct.getId();
+                    SocialMedia_Type = "Google";
+                    UserName = email;
+
+                    new HttpAsyncTaskSocialMedia().execute("http://circle8.asia:8081/Onet.svc/SocialMediaLogin");
+
+
+                    //  loginSession.createLoginSession("", personName, email, personPhotoUrl, "");
+
+             /*   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     // imgFinger.setVisibility(View.VISIBLE);
                     Gson gson = ((MyApplication) getApplication()).getGsonObject();
                     UserObject userData = new UserObject("", personName, email, "", "", "", personPhotoUrl, false);
@@ -581,8 +712,8 @@ public class LoginActivity extends AppCompatActivity implements
                         finish();
                     }
                 }
-
-                // Toast.makeText(getApplicationContext(), "Name: " + personName + ", email: " + email, Toast.LENGTH_LONG).show();
+*/
+                    // Toast.makeText(getApplicationContext(), "Name: " + personName + ", email: " + email, Toast.LENGTH_LONG).show();
 
            /* txtName.setText(personName);
             txtEmail.setText(email);
@@ -592,7 +723,7 @@ public class LoginActivity extends AppCompatActivity implements
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(imgProfilePic);*/
 
-                updateUI(true);
+                    updateUI(true);
             }
         } else {
             // Signed out, show unauthenticated UI.
@@ -662,7 +793,23 @@ public class LoginActivity extends AppCompatActivity implements
                             finish();
 */
 
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            Facebook = "";
+                            Google = "";
+                            Linkedin = "";
+                            Twitter = user.getUid();
+
+                            final_name = user.getDisplayName();
+                            final_email = user.getEmail();
+                            final_image = String.valueOf(user.getPhotoUrl());
+                            SocialMedia_Id = user.getUid();
+                            SocialMedia_Type = "Twitter";
+                            UserName = user.getEmail();
+
+                            new HttpAsyncTaskSocialMedia().execute("http://circle8.asia:8081/Onet.svc/SocialMediaLogin");
+
+
+
+                            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                 // imgFinger.setVisibility(View.VISIBLE);
                                 Gson gson = ((MyApplication) getApplication()).getGsonObject();
                                 UserObject userData = new UserObject("", user.getDisplayName(), user.getEmail(), "", "", "", String.valueOf(user.getPhotoUrl()), false);
@@ -689,7 +836,7 @@ public class LoginActivity extends AppCompatActivity implements
                                     startActivity(userIntent);
                                     finish();
                                 }
-                            }
+                            }*/
 
 
                             //updateUI(user);
@@ -720,17 +867,18 @@ public class LoginActivity extends AppCompatActivity implements
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mLoginButton.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
+        } else if (LinkedInFlag == true) {
+            LISessionManager.getInstance(getApplicationContext()).onActivityResult(this, requestCode, resultCode, data);
+            progress = new ProgressDialog(this);
+            progress.setMessage("Logging in...");
+            progress.setCanceledOnTouchOutside(false);
+            progress.show();
+            linkededinApiHelper();
         }
-        LISessionManager.getInstance(getApplicationContext()).onActivityResult(this, requestCode, resultCode, data);
-        progress = new ProgressDialog(this);
-        progress.setMessage("Logging in...");
-        progress.setCanceledOnTouchOutside(false);
-        progress.show();
-        linkededinApiHelper();
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     public void linkededinApiHelper() {
@@ -765,7 +913,26 @@ public class LoginActivity extends AppCompatActivity implements
 
         try {
             Log.d("response link ", response.toString());
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
+            Facebook = "";
+            Google = "";
+            Linkedin = "";
+            Twitter = response.get("id").toString();
+
+            final_name = response.get("formattedName").toString();
+            final_email = response.get("emailAddress").toString();
+            String img = response.get("publicProfileUrl").toString().replaceAll("/", "");
+            final_image = img;
+            SocialMedia_Id = response.get("id").toString();
+            SocialMedia_Type = "Linkedin";
+            UserName = response.get("emailAddress").toString();
+
+            new HttpAsyncTaskSocialMedia().execute("http://circle8.asia:8081/Onet.svc/SocialMediaLogin");
+
+
+
+            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 // imgFinger.setVisibility(View.VISIBLE);
                 Gson gson = ((MyApplication) getApplication()).getGsonObject();
                 UserObject userData = new UserObject("", response.get("formattedName").toString(), response.get("emailAddress").toString(), "", "", "", response.get("publicProfileUrl").toString(), false);
@@ -793,7 +960,7 @@ public class LoginActivity extends AppCompatActivity implements
                     startActivity(userIntent);
                     finish();
                 }
-            }
+            }*/
 
 
         } catch (Exception e) {
@@ -922,7 +1089,21 @@ public class LoginActivity extends AppCompatActivity implements
                                 startActivity(intent);
                                 finish();
 */
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                Facebook = user.facebookID;
+                                Google = "";
+                                Linkedin = "";
+                                Twitter = "";
+
+                                final_name = user.name;
+                                final_email = user.email;
+                                final_image = personPhotoUrl;
+                                SocialMedia_Id = user.facebookID;
+                                SocialMedia_Type = "Facebook";
+                                UserName = user.email;
+
+                                new HttpAsyncTaskSocialMedia().execute("http://circle8.asia:8081/Onet.svc/SocialMediaLogin");
+
+                               /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                     // imgFinger.setVisibility(View.VISIBLE);
                                     Gson gson = ((MyApplication) getApplication()).getGsonObject();
                                     UserObject userData = new UserObject("", object.getString("name").toString(), object.getString("email").toString(), "", "", object.getString("gender").toString(), personPhotoUrl, false);
@@ -950,7 +1131,7 @@ public class LoginActivity extends AppCompatActivity implements
                                         startActivity(userIntent);
                                         finish();
                                     }
-                                }
+                                }*/
 
 
                                 //new UploadFacebook("IMG_" + timestamp1).execute();
@@ -999,6 +1180,127 @@ public class LoginActivity extends AppCompatActivity implements
             case R.id.btn_sign_in:
                 signIn();
                 break;
+        }
+    }
+
+    private class HttpAsyncTaskSocialMedia extends AsyncTask<String, Void, String> {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(LoginActivity.this);
+            dialog.setMessage("Logging In...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return POSTSocialMedia(urls[0]);
+        }
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+            dialog.dismiss();
+            try {
+                if (result != null) {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String success = jsonObject.getString("success").toString();
+                    String UserID = "", profileid = "", FirstName = "", LastName = "", UserPhoto = "";
+                    if (success.equals("1")) {
+                        //  Toast.makeText(getBaseContext(), "LoggedIn Successfully..", Toast.LENGTH_LONG).show();
+                        //   fingerPrintSession.createLoginSession(UserID, "", userName, "", "");
+
+                        JSONObject jsonArray = jsonObject.getJSONObject("profile");
+                        //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
+                        UserID = jsonArray.getString("userid");
+                        profileid = jsonArray.getString("profileid");
+                        FirstName = jsonArray.getString("FirstName");
+                        LastName = jsonArray.getString("LastName");
+                        UserPhoto = jsonArray.getString("UserPhoto");
+                        String Status = jsonArray.getString("Status");
+
+                        if (Status.equalsIgnoreCase("Verified")) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                // imgFinger.setVisibility(View.VISIBLE);
+                                Gson gson = ((MyApplication) getApplication()).getGsonObject();
+                                UserObject userData = new UserObject(profileid, FirstName + " " + LastName, userName, userPassword, UserID, "", UserPhoto, false);
+                                String userDataString = gson.toJson(userData);
+                                CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
+                                pref.setUserData(userDataString);
+
+                                Intent intent = new Intent(getApplicationContext(), FingerPrintLogin.class);
+                                //intent.putExtra("viewpager_position", 0);
+                                startActivity(intent);
+                                finish();
+
+                               /* loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, userName, UserPhoto, "");
+                                // Toast.makeText(getApplicationContext(), getString(R.string.auth_successful), Toast.LENGTH_LONG).show();
+
+                                // login with only fingerprint
+                                if (prefs.getBoolean("firstrun", true)) {
+                                    // Do first run stuff here then set 'firstrun' as false
+                                    // using the following line to edit/commit prefs
+                                    Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                                    startActivity(intent);
+                                    prefs.edit().putBoolean("firstrun", false).commit();
+                                } else {
+                                    Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                                    userIntent.putExtra("viewpager_position", 0);
+                                    startActivity(userIntent);
+                                    finish();
+                                }*/
+                            } else {
+                                // imgFinger.setVisibility(View.GONE);
+                                loginSession.createLoginSession(profileid, UserID, "", userName, "", "");
+                                if (prefs.getBoolean("firstrun", true)) {
+                                    // Do first run stuff here then set 'firstrun' as false
+                                    // using the following line to edit/commit prefs
+                                    Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                                    startActivity(intent);
+                                    prefs.edit().putBoolean("firstrun", false).commit();
+                                } else {
+                                    Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                                    userIntent.putExtra("viewpager_position", 0);
+                                    startActivity(userIntent);
+                                    finish();
+                                }
+                            }
+                        } else {
+                            Toast.makeText(getBaseContext(), "You should verify your Account First..", Toast.LENGTH_LONG).show();
+                        }
+
+                    } else {
+                        Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                        intent.putExtra("Facebook", Facebook);
+                        intent.putExtra("Google", Google);
+                        intent.putExtra("Linkedin", Linkedin);
+                        intent.putExtra("Twitter", Twitter);
+                        intent.putExtra("UserName", final_name);
+                        intent.putExtra("Email", final_email);
+                        intent.putExtra("Image", final_image);
+                        startActivity(intent);
+                    }
+                } else {
+                    Toast.makeText(getBaseContext(), "Not able to Login..", Toast.LENGTH_LONG).show();
+                }
+
+
+            } catch (JSONException e) {
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                intent.putExtra("Facebook", Facebook);
+                intent.putExtra("Google", Google);
+                intent.putExtra("Linkedin", Linkedin);
+                intent.putExtra("Twitter", Twitter);
+                intent.putExtra("UserName", final_name);
+                intent.putExtra("Email", final_email);
+                intent.putExtra("Image", final_image);
+                startActivity(intent);
+            }
+            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
         }
     }
 

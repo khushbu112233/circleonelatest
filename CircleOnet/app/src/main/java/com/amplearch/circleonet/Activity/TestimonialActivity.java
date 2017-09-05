@@ -1,13 +1,17 @@
 package com.amplearch.circleonet.Activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amplearch.circleonet.Adapter.CustomAdapter;
@@ -31,27 +35,55 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class TestimonialActivity extends AppCompatActivity {
+public class TestimonialActivity extends AppCompatActivity
+{
+    static String TestimonialProfileId = "";
+    static TestimonialAdapter adapter;
+    static ListView lstTestimonial;
+    static ArrayList<TestimonialModel> allTaggs;
 
-    String TestimonialProfileId = "";
-    TestimonialAdapter adapter;
-    ListView lstTestimonial;
-    ArrayList<TestimonialModel> allTaggs;
+    static Context mContext ;
+    TextView textView;
+    ImageView imgLogo;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testimonial);
+
+        mContext = TestimonialActivity.this ;
+
+        final ActionBar actionBar = getSupportActionBar();
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.custom_actionbar);
+        getSupportActionBar().setShowHideAnimationEnabled(false);
+        textView = (TextView) findViewById(R.id.mytext);
+        imgLogo = (ImageView) findViewById(R.id.imgLogo);
+        textView.setText("Testimonial");
 
         Intent intent = getIntent();
         TestimonialProfileId = intent.getStringExtra("ProfileId");
         lstTestimonial = (ListView) findViewById(R.id.lstTestimonial);
 
         allTaggs = new ArrayList<>();
-        new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8081/Onet.svc/Testimonial/Fetch");
 
+        callFirst();
     }
 
-    private class HttpAsyncTaskTestimonial extends AsyncTask<String, Void, String>
+    private void callFirst()
+    {
+        new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8081/Onet.svc/Testimonial/Fetch");
+    }
+
+    public static void webCall()
+    {
+        allTaggs.clear();
+        adapter.notifyDataSetChanged();
+        new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8081/Onet.svc/Testimonial/Fetch");
+    }
+
+    private static class HttpAsyncTaskTestimonial extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
 
@@ -59,7 +91,7 @@ public class TestimonialActivity extends AppCompatActivity {
         protected void onPreExecute()
         {
             super.onPreExecute();
-            dialog = new ProgressDialog(TestimonialActivity.this);
+            dialog = new ProgressDialog(mContext);
             dialog.setMessage("Fetching Testimonials...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
@@ -90,6 +122,7 @@ public class TestimonialActivity extends AppCompatActivity {
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
 
                         TestimonialModel nfcModelTag = new TestimonialModel();
+                        nfcModelTag.setTestimonial_ID(object.getString("Testimonial_ID"));
                         nfcModelTag.setCompanyName(object.getString("CompanyName"));
                         nfcModelTag.setDesignation(object.getString("Designation"));
                         nfcModelTag.setFirstName(object.getString("FirstName"));
@@ -101,13 +134,13 @@ public class TestimonialActivity extends AppCompatActivity {
                         nfcModelTag.setUserPhoto(object.getString("UserPhoto"));
                         allTaggs.add(nfcModelTag);
                     }
-                    adapter = new TestimonialAdapter(TestimonialActivity.this, allTaggs);
+                    adapter = new TestimonialAdapter(mContext, R.layout.full_testimonial_row, allTaggs);
                     lstTestimonial.setAdapter(adapter);
 
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "Not able to load Cards..", Toast.LENGTH_LONG).show();
                 }
             }
             catch (JSONException e) {
@@ -116,7 +149,7 @@ public class TestimonialActivity extends AppCompatActivity {
         }
     }
 
-    public String POST2(String url)
+    public static String POST2(String url)
     {
         InputStream inputStream = null;
         String result = "";

@@ -25,6 +25,7 @@
     <android.support.design.widget.AppBarLayout
         android:background="@android:color/transparent"
         android:id="@+id/appbar"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/NoActionbar"
@@ -39,8 +40,6 @@
             android:layout_height="245dp" />
 
         </android.support.design.widget.AppBarLayout>
-
-
 
     <LinearLayout
         android:background="@color/white"
@@ -208,7 +207,6 @@
                             android:layout_marginTop="5dp"
                             android:src="@drawable/ic_keyboard_arrow_left_black_24dp" />
 
-
                         <ImageView
                             android:layout_width="22dp"
                             android:layout_height="30dp"
@@ -230,7 +228,7 @@
                                 android:id="@+id/imgProfileCard"
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
-                                android:src="@drawable/profile3"
+                                android:src="@drawable/usr"
                                 app:civ_border_color="@color/colorPrimary"
                                 app:civ_border_width="2dp" />
 
@@ -239,17 +237,18 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginTop="8dp"
-                                android:text="Westley Wan"
+                                android:text="Person"
                                 android:textAlignment="center"
                                 android:textColor="@color/white"
                                 android:textSize="19dp"
                                 android:textStyle="bold" />
+
                             <TextView
                                 android:id="@+id/txtDesi"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginTop="3dp"
-                                android:text="Unico Creative pte ltd"
+                                android:text="Designation"
                                 android:textAlignment="center"
                                 android:textColor="@color/white"
                                 android:textSize="19dp" />
@@ -259,7 +258,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginTop="3dp"
-                                android:text="Unico Creative pte ltd"
+                                android:text="Company"
                                 android:textAlignment="center"
                                 android:textColor="@color/white"
                                 android:textSize="19dp" />
@@ -290,6 +289,7 @@
                     android:tag="sticky">
 
                     <ImageView
+                        android:id="@+id/imgCall"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_marginLeft="25dp"
@@ -298,6 +298,7 @@
                         android:src="@drawable/ic_call" />
 
                     <ImageView
+                        android:id="@+id/imgSMS"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_weight="1"
@@ -305,6 +306,7 @@
                         android:src="@drawable/ic_sms" />
 
                     <ImageView
+                        android:id="@+id/imgMail"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_weight="1"
@@ -466,7 +468,7 @@
                 <ImageView
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
-                    android:id="@+id/img1"
+                    android:id="@+id/imgAddGroupFriend"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="right"
@@ -513,7 +515,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="www.tcmong.com.sg"
+                    android:text="Website"
                     android:textAlignment="center"
                     android:textColor="#6b6c6e"
                     android:textSize="13sp" />
@@ -539,7 +541,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="tcmong@tcmong.com.sg"
+                    android:text="Email Address"
                     android:textAlignment="center"
                     android:textColor="#6b6c6e"
                     android:textSize="13sp" />
@@ -565,7 +567,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="+65 6842 6186      +65 6842 6288"
+                    android:text="Telephone No."
                     android:textAlignment="center"
                     android:textColor="#6b6c6e"
                     android:textSize="13sp" />
@@ -589,7 +591,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="+65 6842 6288"
+                    android:text="Fax No."
                     android:textAlignment="center"
                     android:textColor="#6b6c6e"
                     android:textSize="13sp" />
@@ -615,13 +617,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="+65 8842 6688"
+                    android:text="Mobile No."
                     android:textAlignment="center"
                     android:textColor="#6b6c6e"
                     android:textSize="13sp" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llAddressBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -639,7 +642,7 @@
                     android:id="@+id/txtAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="246 Macpherson Road.Betime Building #03-04.Singapore 348578"
+                    android:text="Address"
                     android:textColor="#6b6c6e"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -677,7 +680,6 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="15sp" />
 
-
                 <ImageView
                     android:layout_marginTop="5dp"
                     android:layout_width="35dp"
@@ -688,7 +690,6 @@
 
             </RelativeLayout>
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -698,12 +699,12 @@
                 android:textColor="#6b6c6e"
                 android:textSize="13sp" />
 
-
             <LinearLayout
                 android:layout_marginTop="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

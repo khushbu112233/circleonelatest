@@ -33,6 +33,8 @@ import android.widget.Toast;
 import com.amplearch.circleonet.R;
 import com.amplearch.circleonet.Utils.AsyncRequest;
 import com.amplearch.circleonet.Utils.Utility;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -51,10 +53,12 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
+import org.apache.http.util.ByteArrayBuffer;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
@@ -68,7 +72,10 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -77,6 +84,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -112,7 +120,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     String image;
     ProgressDialog pDialog;
     String encodedImageData, register_img;
-    String UserID = "";
+    String UserID = "", Facebook = "", Google = "", Linkedin = "", Twitter = "", UserName = "", Email = "", Image = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -142,11 +150,93 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         pDialog = new ProgressDialog(this);
         civProfilePic =(CircleImageView)findViewById(R.id.imgProfileCard);
 
+        Intent intent = getIntent();
+        Twitter = intent.getStringExtra("Twitter");
+        Linkedin = intent.getStringExtra("Linkedin");
+        Google = intent.getStringExtra("Google");
+        Facebook = intent.getStringExtra("Facebook");
+        UserName = intent.getStringExtra("UserName");
+        Email = intent.getStringExtra("Email");
+        Image = intent.getStringExtra("Image");
+
+        etEmail.setText(Email);
+        etUserName.setText(UserName);
+        Uri targetUri = Uri.parse(Image);
+        Glide.with(getApplicationContext())
+                .load(targetUri)
+                .asBitmap()
+                .into(new BitmapImageViewTarget(civProfilePic) {
+                    @Override
+                    protected void setResource(Bitmap resource) {
+                        //Play with bitmap
+                        super.setResource(resource);
+                        final_ImgBase64 = BitMapToString(resource);
+                       // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
+
+                    }
+                });
+
+
+       /* Thread thread = new Thread(new Runnable(){
+            @Override
+            public void run() {
+                try {
+                    civProfilePic.setImageBitmap(getBitmapFromURL(Image));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread.start();*/
+
+
+       /* URL imageURL = null;
+        try {
+            imageURL = new URL(Image);
+            civProfilePic.setImageBitmap(downloadImage(Image));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        */
+
         ivMale.setOnClickListener(this);
         ivFemale.setOnClickListener(this);
         ivConnect.setOnClickListener(this);
         lnrRegister.setOnClickListener(this);
         civProfilePic.setOnClickListener(this);
+    }
+
+
+    private Bitmap downloadImage(String stringUrl) {
+        URL url;
+        Bitmap bm = null;
+        try {
+            url = new URL(stringUrl);
+            URLConnection ucon = url.openConnection();
+            InputStream is;
+            if (ucon instanceof HttpURLConnection) {
+                HttpURLConnection httpConn = (HttpURLConnection) ucon;
+                int statusCode = httpConn.getResponseCode();
+                if (statusCode == 200) {
+                    is = httpConn.getInputStream();
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inSampleSize = 8;
+                    BufferedInputStream bis = new BufferedInputStream(is, 8192);
+                    ByteArrayBuffer baf = new ByteArrayBuffer(1024);
+                    int current = 0;
+                    while ((current = bis.read()) != -1) {
+                        baf.append((byte) current);
+                    }
+                    byte[] rawImage = baf.toByteArray();
+                    bm = BitmapFactory.decodeByteArray(rawImage, 0, rawImage.length);
+                    bis.close();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bm;
     }
 
     @Override
@@ -420,7 +510,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                 if (Content != null) {
                     JSONObject jsonResponse = new JSONObject(Content);
-                    Toast.makeText(getApplicationContext(), Content, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(), Content, Toast.LENGTH_LONG).show();
                     String status = jsonResponse.getString("status");
                     if ("200".equals(status)) {
 
@@ -464,7 +554,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 final_ImgBase64 = BitMapToString(resizedBitmap);
                // final_ImgBase64 = resizeBase64Image(s);
                 Log.d("base64string ", final_ImgBase64);
-                Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                 Upload();
                 civProfilePic.setImageBitmap(resizedBitmap);
             } catch (FileNotFoundException e) {
@@ -475,6 +565,41 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
 //        BmToString(bm);
     }
+
+    public static Bitmap StringToBitmap(String encodedString) {
+        try {
+
+            String s = URLDecoder.decode(encodedString, "UTF-8");
+            byte[] encodeByte = Base64.decode(s, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch (NullPointerException e) {
+            e.getMessage();
+            return null;
+        } catch (OutOfMemoryError e) {
+            return null;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static Bitmap getBitmapFromURL(String src) {
+        try {
+            URL url = new URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            return myBitmap;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
     public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality)
     {
         ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
@@ -522,12 +647,18 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("Facebook", Facebook );
             jsonObject.accumulate("FirstName", first_name );
             jsonObject.accumulate("Gender", gender );
-            jsonObject.accumulate("LastName", last_name );
+            jsonObject.accumulate("Google", Google);
+            jsonObject.accumulate("LastName", last_name);
+            jsonObject.accumulate("Linkedin", Linkedin);
             jsonObject.accumulate("Password", password);
             jsonObject.accumulate("Phone", phone_no);
             jsonObject.accumulate("Photo_String", register_img);
+            jsonObject.accumulate("Platform", "Android");
+            jsonObject.accumulate("Token", "1234567890");
+            jsonObject.accumulate("Twitter", Twitter);
             jsonObject.accumulate("UserName", email);
 
             // 4. convert JSONObject to JSON to String
@@ -656,12 +787,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     String message = jsonObject.getString("message").toString();
                     String Status = jsonObject.getString("Status").toString();
                     UserID = jsonObject.getString("userId").toString();
-                    if (success.equals("1") && message.equalsIgnoreCase("Successfully Registered.")) {
+                    if (success.equals("1") && message.equalsIgnoreCase("Successfully Registered."))
+                    {
                         Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
 
-                        if (Status.equalsIgnoreCase("Not-Verfied")) {
+                        if (Status.equalsIgnoreCase("Not-Verfied"))
+                        {
                             new HttpAsyncTaskVerify().execute("http://circle8.asia:8081/Onet.svc/AccVerification/" + UserID);
-                        }else {
+                        }
+                        else
+                        {
                             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                             startActivity(intent);
                             finish();
@@ -790,9 +925,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         protected void onPostExecute(String result)
         {
             dialog.dismiss();
-            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
-                if (result != null) {
+                if (result != null)
+                {
                     JSONObject jsonObject = new JSONObject(result);
                     String ImgName = jsonObject.getString("ImgName").toString();
                     String success = jsonObject.getString("success").toString();
@@ -984,7 +1120,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             {
                 super.onPostExecute(result);
 
-                Toast.makeText(getApplicationContext(), result , Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), result , Toast.LENGTH_LONG).show();
 
                 if (result.equals(""))
                 {
@@ -1034,7 +1170,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void asyncResponse(String response)
     {
-        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
 
         Log.i("SignIn response: ", response);
 
@@ -1104,7 +1240,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             super.onPostExecute(result);
             dialog.dismiss();
             System.out.println("Resulted Value: " + result);
-            Toast.makeText(getApplicationContext(), "Resulted value" + result, Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), "Resulted value" + result, Toast.LENGTH_LONG).show();
 
             if (result.equals("") || result == null)
             {

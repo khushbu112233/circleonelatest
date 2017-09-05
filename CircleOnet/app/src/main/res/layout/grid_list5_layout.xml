@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:swipe="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
+    android:id="@+id/swipe"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    swipe:leftEdgeSwipeOffset="0dp"
+    swipe:rightEdgeSwipeOffset="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_marginLeft="8dp"
+        app:civ_border_width="2dp"
+        app:civ_border_color="@color/colorPrimary"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/usr"
+        android:id="@+id/imageList4"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        />
+
+    <LinearLayout
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_gravity="center_vertical|left"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:gravity="left"
+            android:text="Physician Yong"
+            android:visibility="visible"
+            android:id="@+id/textNameList3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp" />
+
+        <TextView
+            android:textColor="@android:color/black"
+            android:gravity="left"
+            android:text="Physician Yong"
+            android:visibility="visible"
+            android:id="@+id/textDescList3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <TextView
+        android:ellipsize="end"
+        android:maxLines="5"
+        android:layout_gravity="center_vertical|right"
+        android:gravity="left|center_vertical"
+        android:text="TCMOng Medicare pvt ltd \n gbfgbfgbgfb rgrfgfdgfd\n rfgdfgdfgfgg dfgf\nfgffgf\nfdgdfgfg"
+        android:visibility="visible"
+        android:id="@+id/textList3"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:textSize="12sp" />
+    </LinearLayout>
+    <View
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorAccent"></View>
+    </LinearLayout>
+</RelativeLayout>

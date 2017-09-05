@@ -17,6 +17,12 @@ public class ProfileModel {
     String Designation = "";
     String CompanyName = "";
     String Phone = "";
+    String Facebook = "", Twitter = "", Google = "", Linkedin = "";
+    String Address1 = "", Address2 = "", Address3 = "", Address4 = "", City = "", State = "", Country = "", Postalcode = "", Website = "", Attachment_FileName = "";
+    String Association = "" ;
+    String Work_no = "";
+    String Industry = "";
+
 
     public ProfileModel() {
     }
@@ -107,5 +113,141 @@ public class ProfileModel {
 
     public void setPhone(String phone) {
         Phone = phone;
+    }
+
+    public String getAddress1() {
+        return Address1;
+    }
+
+    public void setAddress1(String address1) {
+        Address1 = address1;
+    }
+
+    public String getAddress2() {
+        return Address2;
+    }
+
+    public void setAddress2(String address2) {
+        Address2 = address2;
+    }
+
+    public String getAddress3() {
+        return Address3;
+    }
+
+    public void setAddress3(String address3) {
+        Address3 = address3;
+    }
+
+    public String getAddress4() {
+        return Address4;
+    }
+
+    public void setAddress4(String address4) {
+        Address4 = address4;
+    }
+
+    public String getCity() {
+        return City;
+    }
+
+    public void setCity(String city) {
+        City = city;
+    }
+
+    public String getState() {
+        return State;
+    }
+
+    public void setState(String state) {
+        State = state;
+    }
+
+    public String getCountry() {
+        return Country;
+    }
+
+    public void setCountry(String country) {
+        Country = country;
+    }
+
+    public String getPostalcode() {
+        return Postalcode;
+    }
+
+    public void setPostalcode(String postalcode) {
+        Postalcode = postalcode;
+    }
+
+    public String getWebsite() {
+        return Website;
+    }
+
+    public void setWebsite(String website) {
+        Website = website;
+    }
+
+    public String getAttachment_FileName() {
+        return Attachment_FileName;
+    }
+
+    public void setAttachment_FileName(String attachment_FileName) {
+        Attachment_FileName = attachment_FileName;
+    }
+
+    public String getFacebook() {
+        return Facebook;
+    }
+
+    public void setFacebook(String facebook) {
+        Facebook = facebook;
+    }
+
+    public String getTwitter() {
+        return Twitter;
+    }
+
+    public void setTwitter(String twitter) {
+        Twitter = twitter;
+    }
+
+    public String getGoogle() {
+        return Google;
+    }
+
+    public void setGoogle(String google) {
+        Google = google;
+    }
+
+    public String getLinkedin() {
+        return Linkedin;
+    }
+
+    public void setLinkedin(String linkedin) {
+        Linkedin = linkedin;
+    }
+
+    public String getAssociation() {
+        return Association;
+    }
+
+    public void setAssociation(String association) {
+        Association = association;
+    }
+
+    public String getWork_no() {
+        return Work_no;
+    }
+
+    public void setWork_no(String work_no) {
+        Work_no = work_no;
+    }
+
+    public String getIndustry() {
+        return Industry;
+    }
+
+    public void setIndustry(String industry) {
+        Industry = industry;
     }
 }
