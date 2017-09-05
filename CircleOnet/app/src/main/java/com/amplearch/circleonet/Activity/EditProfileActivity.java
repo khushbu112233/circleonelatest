@@ -62,6 +62,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -122,6 +123,7 @@ public class EditProfileActivity extends AppCompatActivity
     ImageView ivAttachBackImage, ivAttachFrontImage;
     TextView txtCardFront, txtCardBack;
     String cardType = "";
+    String Attach_String = "";
 
     String companyID, designationID, industryID, associationID, addressID ;
 
@@ -649,6 +651,63 @@ public class EditProfileActivity extends AppCompatActivity
         return result;
     }
 
+    public  String POST8(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("FileName", etAttachFile.getText().toString() );
+            jsonObject.accumulate("ImgBase64", Attach_String );
+            jsonObject.accumulate("classification", "others" );
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
     public String POST1(String url) {
         InputStream inputStream = null;
         String result = "";
@@ -955,6 +1014,14 @@ public class EditProfileActivity extends AppCompatActivity
                 String file_name = file.getName();
 
                 etAttachFile.setText(file_name);
+                try {
+                    byte[] data1 = file_name.getBytes("UTF-8");
+                    String base64 = Base64.encodeToString(data1, Base64.DEFAULT);
+                    Toast.makeText(getApplicationContext(), base64, Toast.LENGTH_LONG).show();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
             } else if (requestCode == REQUEST_CAMERA) {
                 onCaptureImageResult(data);
             } else if (requestCode == REQUEST_GALLERY) {
@@ -1278,6 +1345,16 @@ public class EditProfileActivity extends AppCompatActivity
             alertDialog.show();
         } else {
             etAttachFile.setText(fileName);
+            File imgFile = new File(fileName);
+            new HttpAsyncTaskDocUpload().execute("http://circle8.asia:8081/Onet.svc/ImgUpload");
+            try {
+                byte[] data = fileName.getBytes("UTF-8");
+                String base64 = Base64.encodeToString(data, Base64.DEFAULT);
+                Attach_String = base64;
+                Toast.makeText(getApplicationContext(), base64, Toast.LENGTH_LONG).show();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
         }
 
     }
@@ -1825,6 +1902,57 @@ public class EditProfileActivity extends AppCompatActivity
             //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
         }
     }
+
+    private class HttpAsyncTaskDocUpload extends AsyncTask<String, Void, String> {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(EditProfileActivity.this);
+            dialog.setMessage("Uploading...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return POST8(urls[0]);
+        }
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+            dialog.dismiss();
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            try {
+                if (result != null) {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String ImgName = jsonObject.getString("ImgName").toString();
+                    String success = jsonObject.getString("success").toString();
+
+                    if (success.equals("1") && ImgName != null) {
+                        /*Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(intent);
+                        finish();*/
+                        // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
+                        etAttachFile.setText(ImgName);
+                    } else {
+                        Toast.makeText(getBaseContext(), "Error While Uploading Image..", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(getBaseContext(), "Not able to Register..", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
+        }
+    }
+
 
     private class HttpAsyncTaskBackUpload extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
