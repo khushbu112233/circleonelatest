@@ -76,6 +76,10 @@ public class List4Fragment extends Fragment
     public static Context mContext ;
     public static int pageno = 1;
 
+    static RelativeLayout rlLoadMore ;
+
+    static String comeAtTime = "FIRST" ;
+
     public List4Fragment() {
         // Required empty public constructor
     }
@@ -113,6 +117,7 @@ public class List4Fragment extends Fragment
         CardsFragment.tabLayout.setVisibility(View.GONE); */
 
         listView = (ListView) view.findViewById(R.id.listViewType4);
+        rlLoadMore = (RelativeLayout)view.findViewById(R.id.rlLoadMore);
 
         //considering from Database
 //        allTags = db.getActiveNFC();
@@ -255,8 +260,17 @@ public class List4Fragment extends Fragment
             dialog = new ProgressDialog(mContext);
             dialog.setMessage("Fetching Cards...");
             //dialog.setTitle("Saving Reminder");
-            dialog.show();
             dialog.setCancelable(false);
+            if(comeAtTime.equalsIgnoreCase("FIRST"))
+            {
+                dialog.show();
+                comeAtTime = "SECOND";
+            }
+            else
+            {
+                dialog.dismiss();
+            }
+
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
         }
@@ -271,11 +285,15 @@ public class List4Fragment extends Fragment
         protected void onPostExecute(String result)
         {
             dialog.dismiss();
-            try {
-                if (result != null) {
+            try
+            {
+                if (result != null)
+                {
                     JSONObject jsonObject = new JSONObject(result);
                     JSONArray jsonArray = jsonObject.getJSONArray("connection");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
+
+                    rlLoadMore.setVisibility(View.GONE);
 
                     for (int i = 0; i < jsonArray.length(); i++){
 
@@ -307,9 +325,11 @@ public class List4Fragment extends Fragment
                             int threshold = 1;
                             int count = listView.getCount();
 
-                            if (scrollState == SCROLL_STATE_IDLE) {
-                                if (listView.getLastVisiblePosition() >= count
-                                        - threshold) {
+                            if (scrollState == SCROLL_STATE_IDLE)
+                            {
+                                if (listView.getLastVisiblePosition() >= count - threshold)
+                                {
+                                    rlLoadMore.setVisibility(View.VISIBLE);
                                     // Execute LoadMoreDataTask AsyncTask
                                     new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
                                 }
@@ -608,6 +628,8 @@ public class List4Fragment extends Fragment
 
             nfcModel1.add(nfcModelTag);
         }
+
+//        rlLoadMore.setVisibility(View.GONE);
 
         gridAdapter = new List4Adapter(context, R.layout.grid_list4_layout, nfcModel1);
         listView.setAdapter(gridAdapter);

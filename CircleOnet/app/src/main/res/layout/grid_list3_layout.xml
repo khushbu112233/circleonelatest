@@ -57,6 +57,7 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/card2_front"
                 android:id="@+id/imageList3"
+                android:layout_marginTop="3dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
             <RelativeLayout

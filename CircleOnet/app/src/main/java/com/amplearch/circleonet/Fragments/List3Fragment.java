@@ -56,7 +56,6 @@ import java.util.Locale;
  */
 public class List3Fragment extends Fragment
 {
-
     private static ListView listView;
     public static List3Adapter gridAdapter;
     ArrayList<byte[]> imgf;
@@ -83,6 +82,11 @@ public class List3Fragment extends Fragment
     public static Context mContext ;
     public static int pageno = 1;
 
+    static boolean  userScrolled = false;
+    static RelativeLayout rlLoadMore ;
+
+    static String comeAtTime = "FIRST" ;
+
     public List3Fragment() {
         // Required empty public constructor
     }
@@ -104,6 +108,8 @@ public class List3Fragment extends Fragment
 
         listView = (ListView) view.findViewById(R.id.listViewType3);
         searchText = (AutoCompleteTextView)view.findViewById(R.id.searchView);
+        rlLoadMore = (RelativeLayout)view.findViewById(R.id.rlLoadMore);
+
         pageno = 1;
         nfcModel = new ArrayList<>();
         nfcModel1 = new ArrayList<>();
@@ -196,6 +202,7 @@ public class List3Fragment extends Fragment
                 return true;
             }
         });
+
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -224,6 +231,7 @@ public class List3Fragment extends Fragment
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after)
             {
+
             }
 
             @Override
@@ -262,40 +270,6 @@ public class List3Fragment extends Fragment
         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
     }
 
-    public void RefreshList()
-    {
-
-
-    }
-
-    public class RefreshAsyncTask extends AsyncTask<Void,Void,Void>
-    {
-        ProgressDialog dialog;
-
-        @Override
-        protected void onPreExecute()
-        {
-            super.onPreExecute();
-            dialog = new ProgressDialog(getContext());
-            dialog.setMessage("Refreshing...");
-            dialog.show();
-            dialog.setCancelable(false);
-        }
-
-        @Override
-        protected Void doInBackground(Void... params)
-        {
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid)
-        {
-            super.onPostExecute(aVoid);
-            dialog.dismiss();
-        }
-    }
-
     private static class HttpAsyncTask extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -307,8 +281,16 @@ public class List3Fragment extends Fragment
             dialog = new ProgressDialog(mContext);
             dialog.setMessage("Fetching Cards...");
             //dialog.setTitle("Saving Reminder");
-            dialog.show();
             dialog.setCancelable(false);
+            if(comeAtTime.equalsIgnoreCase("FIRST"))
+            {
+                dialog.show();
+                comeAtTime = "SECOND";
+            }
+            else
+            {
+                dialog.dismiss();
+            }
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
         }
@@ -323,13 +305,18 @@ public class List3Fragment extends Fragment
         protected void onPostExecute(String result)
         {
             dialog.dismiss();
-            try {
-                if (result != null) {
+            try
+            {
+                if (result != null)
+                {
                     JSONObject jsonObject = new JSONObject(result);
                     JSONArray jsonArray = jsonObject.getJSONArray("connection");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
 
-                    for (int i = 0; i < jsonArray.length(); i++){
+                    rlLoadMore.setVisibility(View.GONE);
+
+                    for (int i = 0; i < jsonArray.length(); i++)
+                    {
 
                         JSONObject object = jsonArray.getJSONObject(i);
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
@@ -348,19 +335,22 @@ public class List3Fragment extends Fragment
                         nfcModelTag.setNfc_tag("en000000001");
                         allTaggs.add(nfcModelTag);
                         GetData(mContext);
+
                     }
 
-                    listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-
+                    listView.setOnScrollListener(new AbsListView.OnScrollListener()
+                    {
                         @Override
-                        public void onScrollStateChanged(AbsListView view,
-                                                         int scrollState) { // TODO Auto-generated method stub
+                        public void onScrollStateChanged(AbsListView view, int scrollState)
+                        { // TODO Auto-generated method stub
                             int threshold = 1;
                             int count = listView.getCount();
 
-                            if (scrollState == SCROLL_STATE_IDLE) {
-                                if (listView.getLastVisiblePosition() >= count
-                                        - threshold) {
+                            if (scrollState == SCROLL_STATE_IDLE)
+                            {
+                                if (listView.getLastVisiblePosition() >= count - threshold)
+                                {
+                                    rlLoadMore.setVisibility(View.VISIBLE);
                                     // Execute LoadMoreDataTask AsyncTask
                                     new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
                                 }
@@ -369,13 +359,13 @@ public class List3Fragment extends Fragment
 
                         @Override
                         public void onScroll(AbsListView view, int firstVisibleItem,
-                                             int visibleItemCount, int totalItemCount) {
+                                             int visibleItemCount, int totalItemCount)
+                        {
                             // TODO Auto-generated method stub
 
+
                         }
-
                     });
-
                 }
                 else
                 {
@@ -660,6 +650,8 @@ public class List3Fragment extends Fragment
 
             nfcModel1.add(nfcModelTag);
         }
+
+//        rlLoadMore.setVisibility(View.GONE);
 
 //        gridAdapter = new List3Adapter(context, R.layout.grid_list3_layout, nfcModel1, List3Fragment.this);
         gridAdapter = new List3Adapter(context, R.layout.grid_list3_layout, nfcModel1);

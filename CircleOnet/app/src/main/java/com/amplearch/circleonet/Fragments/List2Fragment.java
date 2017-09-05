@@ -91,6 +91,11 @@ public class List2Fragment extends Fragment
     AutoCompleteTextView searchText ;
 //    public static ArrayList<NFCModel> nfcModel ;
     public static int pageno = 1;
+
+    static RelativeLayout rlLoadMore ;
+
+    static String comeAtTime = "FIRST" ;
+
     public List2Fragment() {
         // Required empty public constructor
     }
@@ -110,10 +115,12 @@ public class List2Fragment extends Fragment
         for (NFCModel tag : allTags) {
             imgf.add(tag.getCard_front());
         }*/
+
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
         db = new DatabaseHelper(getContext());
         gridView = (GridView) view.findViewById(R.id.gridView);
         searchText = (AutoCompleteTextView)view.findViewById(R.id.searchView);
+        rlLoadMore = (RelativeLayout)view.findViewById(R.id.rlLoadMore);
 
         nfcModel = new ArrayList<>();
 
@@ -256,8 +263,17 @@ public class List2Fragment extends Fragment
             dialog = new ProgressDialog(mContext);
             dialog.setMessage("Fetching Cards...");
             //dialog.setTitle("Saving Reminder");
-            dialog.show();
             dialog.setCancelable(false);
+            if(comeAtTime.equalsIgnoreCase("FIRST"))
+            {
+                dialog.show();
+                comeAtTime = "SECOND";
+            }
+            else
+            {
+                dialog.dismiss();
+            }
+
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
         }
@@ -272,14 +288,18 @@ public class List2Fragment extends Fragment
         protected void onPostExecute(String result)
         {
             dialog.dismiss();
-            try {
-                if (result != null) {
+            try
+            {
+                if (result != null)
+                {
                     JSONObject jsonObject = new JSONObject(result);
                     JSONArray jsonArray = jsonObject.getJSONArray("connection");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
 
-                    for (int i = 0; i < jsonArray.length(); i++){
+                    rlLoadMore.setVisibility(View.GONE);
 
+                    for (int i = 0; i < jsonArray.length(); i++)
+                    {
                         JSONObject object = jsonArray.getJSONObject(i);
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
 
@@ -299,17 +319,20 @@ public class List2Fragment extends Fragment
                         GetData(mContext);
                     }
 
-                    gridView.setOnScrollListener(new AbsListView.OnScrollListener() {
-
+                    gridView.setOnScrollListener(new AbsListView.OnScrollListener()
+                    {
                         @Override
-                        public void onScrollStateChanged(AbsListView view,
-                                                         int scrollState) { // TODO Auto-generated method stub
+                        public void onScrollStateChanged(AbsListView view, int scrollState)
+                        {
+                            // TODO Auto-generated method stub
                             int threshold = 1;
                             int count = gridView.getCount();
 
-                            if (scrollState == SCROLL_STATE_IDLE) {
-                                if (gridView.getLastVisiblePosition() >= count
-                                        - threshold) {
+                            if (scrollState == SCROLL_STATE_IDLE)
+                            {
+                                if (gridView.getLastVisiblePosition() >= count - threshold)
+                                {
+                                    rlLoadMore.setVisibility(View.VISIBLE);
                                     // Execute LoadMoreDataTask AsyncTask
                                     new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
                                 }
@@ -646,6 +669,7 @@ public class List2Fragment extends Fragment
             }
         });
 
+//        rlLoadMore.setVisibility(View.GONE);
         gridAdapter = new GridViewAdapter(context, R.layout.grid_list2_layout, nfcModel);
         gridView.setAdapter(gridAdapter);
         gridAdapter.notifyDataSetChanged();
