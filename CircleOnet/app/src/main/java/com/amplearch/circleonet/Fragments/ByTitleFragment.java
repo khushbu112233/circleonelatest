@@ -62,7 +62,7 @@ public class ByTitleFragment extends Fragment
     private ArrayList<ConnectList> connectLists = new ArrayList<>();
 
     LoginSession session;
-    String profileID ;
+    String profileID, userID ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -79,6 +79,7 @@ public class ByTitleFragment extends Fragment
         session = new LoginSession(getContext());
         HashMap<String, String> user = session.getUserDetails();
         profileID = user.get(LoginSession.KEY_PROFILEID);
+        userID = user.get(LoginSession.KEY_USERID);
 
         searchText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -97,7 +98,7 @@ public class ByTitleFragment extends Fragment
                     connectListAdapter.notifyDataSetChanged();
 //                    GetData(getContext());
                 }
-                else if(s.length() >= 2)
+                else if(s.length() >= 1)
                 {
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
 
@@ -289,6 +290,7 @@ public class ByTitleFragment extends Fragment
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("FindBy", find_by );
             jsonObject.accumulate("Search", searchText.getText().toString() );
+            jsonObject.accumulate("UserID", userID );
             jsonObject.accumulate("numofrecords", "10" );
             jsonObject.accumulate("pageno", "1" );
 

@@ -244,10 +244,12 @@ public class GridViewAdapter extends BaseSwipeAdapter
         holder.tvPersonContact = (TextView) row.findViewById(R.id.tvPersonContact);
         row.setTag(holder);
 
-        if (nfcModelList1.get(position).getCard_front().equals("")) {
+        if (nfcModelList1.get(position).getCard_front().equals(""))
+        {
             holder.image.setVisibility(View.GONE);
             holder.defaultCard.setVisibility(View.VISIBLE);
-            try {
+            try
+            {
                 if (nfcModelList1.get(position).getName().equals("")) {
                     holder.tvPersonName.setVisibility(View.GONE);
                 }
@@ -263,14 +265,17 @@ public class GridViewAdapter extends BaseSwipeAdapter
                 if (nfcModelList1.get(position).getPh_no().equals("")) {
                     holder.tvPersonContact.setVisibility(View.GONE);
                 }
-            } catch (Exception e) {
             }
+            catch (Exception e) {  }
+
             holder.tvPersonName.setText(nfcModelList1.get(position).getName());
             holder.tvPersonProfile.setText(nfcModelList1.get(position).getDesignation());
             holder.tvPersonWebsite.setText(nfcModelList1.get(position).getWebsite());
             holder.tvPersonAddress.setText(nfcModelList1.get(position).getAddress());
             holder.tvPersonContact.setText(nfcModelList1.get(position).getPh_no());
-        } else {
+        }
+        else
+        {
             holder.image.setVisibility(View.VISIBLE);
             holder.defaultCard.setVisibility(View.GONE);
             //imageView.setImageResource(nfcModelList.get(position).getCard_front());

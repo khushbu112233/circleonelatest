@@ -122,6 +122,8 @@ public class List1Fragment extends Fragment
 
     public static Context mContext ;
 
+    static String comeAtTime = "FIRST" ;
+
     public List1Fragment()
     {
         // Required empty public constructor
@@ -190,7 +192,8 @@ public class List1Fragment extends Fragment
         ViewTreeObserver vto = lnrList.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
-            public void onGlobalLayout() {
+            public void onGlobalLayout()
+            {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
                     lnrList.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 } else {
@@ -450,8 +453,16 @@ public class List1Fragment extends Fragment
             dialog = new ProgressDialog(mContext);
             dialog.setMessage("Fetching Cards...");
             //dialog.setTitle("Saving Reminder");
-            dialog.show();
             dialog.setCancelable(false);
+            if(comeAtTime.equalsIgnoreCase("FIRST"))
+            {
+                dialog.show();
+                comeAtTime = "SECOND";
+            }
+            else
+            {
+                dialog.dismiss();
+            }
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
         }

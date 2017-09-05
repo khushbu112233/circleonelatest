@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amplearch.circleonet.Activity.Notification;
 import com.amplearch.circleonet.Helper.LoginSession;
 import com.amplearch.circleonet.Model.NotificationModel;
 import com.amplearch.circleonet.R;
@@ -45,7 +46,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class NotificationAdapter extends BaseAdapter
 {
-    private Activity activity;
+    private Context activity;
     ArrayList<NotificationModel> testimonialModels;
     private static LayoutInflater inflater = null;
     LinearLayout lnrTestReq, lnrTestRec, lnrFriend;
@@ -57,11 +58,11 @@ public class NotificationAdapter extends BaseAdapter
     String testimonial;
     EditText etTextMonial ;
 
-    public NotificationAdapter(Activity a, ArrayList<NotificationModel> testimonialModels)
+    public NotificationAdapter(Context a, ArrayList<NotificationModel> testimonialModels)
     {
-        activity = a;
+        this.activity = a;
         this.testimonialModels = testimonialModels;
-        inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     public int getCount() {
@@ -116,6 +117,7 @@ public class NotificationAdapter extends BaseAdapter
 
         posi = position;
         String purpose = testimonialModels.get(position).getPurpose();
+
         if (purpose.equalsIgnoreCase("Recieved Testimonial"))
         {
             lnrTestRec.setVisibility(View.VISIBLE);
@@ -138,9 +140,12 @@ public class NotificationAdapter extends BaseAdapter
             lnrFriend.setVisibility(View.VISIBLE);
             lnrTestReq.setVisibility(View.GONE);
             lnrTestRec.setVisibility(View.GONE);
-            if (testimonialModels.get(position).getUserPhoto().equals("")) {
+            if (testimonialModels.get(position).getUserPhoto().equals(""))
+            {
                 imgFriend.setImageResource(R.drawable.usr);
-            } else {
+            }
+            else
+            {
                 Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(imgFriend);
             }
             txtFriendPurpose.setText(purpose);
@@ -151,9 +156,12 @@ public class NotificationAdapter extends BaseAdapter
             lnrFriend.setVisibility(View.GONE);
             lnrTestReq.setVisibility(View.VISIBLE);
             lnrTestRec.setVisibility(View.GONE);
-            if (testimonialModels.get(position).getUserPhoto().equals("")) {
+            if (testimonialModels.get(position).getUserPhoto().equals(""))
+            {
                 imgTestReq.setImageResource(R.drawable.usr);
-            } else {
+            }
+            else
+            {
                 Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(imgTestReq);
             }
             txtTestPurpose.setText(purpose);
@@ -165,7 +173,7 @@ public class NotificationAdapter extends BaseAdapter
             public void onClick(View v)
             {
                 final AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
-                LayoutInflater inflater = activity.getLayoutInflater();
+//                LayoutInflater inflater = activity.getLayoutInflater();
                 final View dialogView = inflater.inflate(R.layout.textimonial_write, null);
 
                 etTextMonial = (EditText)dialogView.findViewById(R.id.etTestiMonial);
@@ -213,7 +221,6 @@ public class NotificationAdapter extends BaseAdapter
             @Override
             public void onClick(View v) {
                 new HttpAsyncTaskRejectFriend().execute("http://circle8.asia:8081/Onet.svc/FriendConnection_Operation");
-
             }
         });
 
@@ -222,7 +229,6 @@ public class NotificationAdapter extends BaseAdapter
             public void onClick(View v) {
                 accept = "1";
                 new HttpAsyncTaskAcceptTestimonial().execute("http://circle8.asia:8081/Onet.svc/Testimonial/Accept_Reject");
-
             }
         });
 
@@ -231,7 +237,6 @@ public class NotificationAdapter extends BaseAdapter
             public void onClick(View v) {
                 accept = "0";
                 new HttpAsyncTaskAcceptTestimonial().execute("http://circle8.asia:8081/Onet.svc/Testimonial/Accept_Reject");
-
             }
         });
 
@@ -240,7 +245,6 @@ public class NotificationAdapter extends BaseAdapter
             public void onClick(View v) {
                 accept = "0";
                 new HttpAsyncTaskAcceptTestimonial().execute("http://circle8.asia:8081/Onet.svc/Testimonial/Accept_Reject");
-
             }
         });
 
@@ -281,12 +285,21 @@ public class NotificationAdapter extends BaseAdapter
                     String message = response.getString("message");
                     String success = response.getString("success");
 
-                    if (success.equals("1")) {
+                    if (success.equals("1"))
+                    {
                         if (accept.equals("1"))
+                        {
                             Toast.makeText(activity, "Testimonial Accepted..", Toast.LENGTH_LONG).show();
+                            Notification.webCall();
+                        }
                         else if (accept.equals("0"))
+                        {
                             Toast.makeText(activity, "Testimonial Rejected..", Toast.LENGTH_LONG).show();
-                    } else {
+                            Notification.webCall();
+                        }
+                    }
+                    else
+                    {
                         Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
                     }
 
@@ -331,9 +344,13 @@ public class NotificationAdapter extends BaseAdapter
                     String message = response.getString("message");
                     String success = response.getString("success");
 
-                    if (success.equals("1")) {
+                    if (success.equals("1"))
+                    {
                         Toast.makeText(activity, "Friend Request Rejected..", Toast.LENGTH_LONG).show();
-                    } else {
+                        Notification.webCall();
+                    }
+                    else
+                    {
                         Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
                     }
 
@@ -388,6 +405,7 @@ public class NotificationAdapter extends BaseAdapter
                     if (success.equals("1"))
                     {
                         Toast.makeText(activity, "Testimonial Written Successfully..", Toast.LENGTH_LONG).show();
+                        Notification.webCall();
                     }
                     else
                     {
@@ -439,6 +457,7 @@ public class NotificationAdapter extends BaseAdapter
                     if (success.equals("1"))
                     {
                         Toast.makeText(activity, "Friend Request Accepted..", Toast.LENGTH_LONG).show();
+                        Notification.webCall();
                     }
                     else
                     {

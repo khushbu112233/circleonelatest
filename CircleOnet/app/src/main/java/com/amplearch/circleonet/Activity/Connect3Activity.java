@@ -45,8 +45,10 @@ public class Connect3Activity extends AppCompatActivity
     LoginSession loginSession ;
     String UserId = "", friendUserID = "";
     ArrayList<Level7thConnectionModel> allTags;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connect3);
 

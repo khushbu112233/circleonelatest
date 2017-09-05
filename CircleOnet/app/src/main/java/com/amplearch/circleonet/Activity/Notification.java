@@ -1,6 +1,7 @@
 package com.amplearch.circleonet.Activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
@@ -38,19 +39,23 @@ import java.util.HashMap;
 
 public class Notification extends AppCompatActivity
 {
-    ListView listNotification;
+    static ListView listNotification;
     LoginSession loginSession;
-    String UserId = "";
-    ArrayList<NotificationModel> allTags;
-    NotificationAdapter notificationAdapter;
-    private TextView textView;
+    static String UserId = "";
+    static ArrayList<NotificationModel> allTags;
+    static NotificationAdapter notificationAdapter;
+    private static TextView textView;
     ImageView imgLogo;
+
+    public static Context mContext ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
+
+        mContext = Notification.this ;
 
         final ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -68,7 +73,8 @@ public class Notification extends AppCompatActivity
         HashMap<String, String> user = loginSession.getUserDetails();
         UserId = user.get(LoginSession.KEY_USERID);
         allTags = new ArrayList<>();
-        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/Notification");
+
+        callFirst();
 
         imgLogo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,10 +86,21 @@ public class Notification extends AppCompatActivity
                 finish();
             }
         });
-
     }
 
-    public  String POST(String url)
+    private void callFirst()
+    {
+        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/Notification");
+    }
+
+    public static void webCall()
+    {
+        allTags.clear();
+        notificationAdapter.notifyDataSetChanged();
+        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/Notification");
+    }
+
+    public static String POST(String url)
     {
         InputStream inputStream = null;
         String result = "";
@@ -151,14 +168,14 @@ public class Notification extends AppCompatActivity
         return result;
     }
 
-    private class HttpAsyncTask extends AsyncTask<String, Void, String>
+    private static class HttpAsyncTask extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(Notification.this);
+            dialog = new ProgressDialog(mContext);
             dialog.setMessage("Getting Notifications...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
@@ -200,12 +217,12 @@ public class Notification extends AppCompatActivity
                         allTags.add(nfcModelTag);
                     }
 
-                    notificationAdapter = new NotificationAdapter(Notification.this, allTags);
+                    notificationAdapter = new NotificationAdapter(mContext, allTags);
                     listNotification.setAdapter(notificationAdapter);
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "Not able to load Friends..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "Not able to load Friends..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
