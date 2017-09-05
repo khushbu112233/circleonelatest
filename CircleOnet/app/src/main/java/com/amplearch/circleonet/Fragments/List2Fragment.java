@@ -458,6 +458,7 @@ public class List2Fragment extends Fragment
                                     // Execute LoadMoreDataTask AsyncTask
                                     new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
                                 }
+
                             }
                         }
 

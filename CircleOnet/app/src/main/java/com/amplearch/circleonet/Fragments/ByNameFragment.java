@@ -192,7 +192,6 @@ public class ByNameFragment extends Fragment
                     {
                         tvDataInfo.setVisibility(View.VISIBLE);
                         connectTags.clear();
-                        connectListAdapter.notifyDataSetChanged();
                     }
                     else
                     {

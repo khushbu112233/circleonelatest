@@ -88,7 +88,6 @@ import be.appfoundry.nfclibrary.utilities.interfaces.NfcReadUtility;
 import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
 import io.fabric.sdk.android.Fabric;
 
-
 public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConnectionFailedListener
 {
     public static CustomViewPager mViewPager;
