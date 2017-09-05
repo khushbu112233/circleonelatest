@@ -390,14 +390,11 @@ public class EditProfileActivity extends AppCompatActivity
                     if (result1)
 //                        activeTakePhoto();
                         cameraCardIntent();
-
                 } else if (items[item].equals("Choose from Library")) {
                     userChoosenTask = "Choose from Library";
                     if (result)
 //                        activeGallery();
                         galleryCardIntent();
-
-
                 } else if (items[item].equals("Cancel")) {
                     dialog.dismiss();
                 }

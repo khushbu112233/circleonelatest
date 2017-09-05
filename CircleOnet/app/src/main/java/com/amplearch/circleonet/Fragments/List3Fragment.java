@@ -525,9 +525,17 @@ public class List3Fragment extends Fragment
 
                             if (scrollState == SCROLL_STATE_IDLE)
                             {
+                               /* View convertView = listView.getChildAt(listView.getLastVisiblePosition());
+                                convertView.findViewById(R.id.listViewType3);*/
+
+                                /*ListView listView = (ListView) view;
+                                int location = listView.getFirstVisiblePosition();
+                                View firstView = listView.getChildAt(location);*/
+
                                 if (listView.getLastVisiblePosition() >= count - threshold)
                                 {
                                     rlLoadMore.setVisibility(View.VISIBLE);
+                                    listView.getChildAt(listView.getLastVisiblePosition());
                                     // Execute LoadMoreDataTask AsyncTask
                                     new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
                                 }

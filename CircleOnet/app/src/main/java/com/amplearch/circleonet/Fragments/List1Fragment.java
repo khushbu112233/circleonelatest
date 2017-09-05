@@ -454,7 +454,8 @@ public class List1Fragment extends Fragment
             dialog.setMessage("Fetching Cards...");
             //dialog.setTitle("Saving Reminder");
             dialog.setCancelable(false);
-            if(comeAtTime.equalsIgnoreCase("FIRST"))
+            dialog.show();
+           /* if(comeAtTime.equalsIgnoreCase("FIRST"))
             {
                 dialog.show();
                 comeAtTime = "SECOND";
@@ -462,7 +463,7 @@ public class List1Fragment extends Fragment
             else
             {
                 dialog.dismiss();
-            }
+            }*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
         }
