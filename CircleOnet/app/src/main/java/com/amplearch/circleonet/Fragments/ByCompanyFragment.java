@@ -96,7 +96,7 @@ public class ByCompanyFragment  extends Fragment
                     listView.setVisibility(View.GONE);
                     tvDataInfo.setVisibility(View.GONE);
                     connectTags.clear();
-                    connectListAdapter.notifyDataSetChanged();
+//                    connectListAdapter.notifyDataSetChanged();
 //                    GetData(getContext());
                 }
                 else if(s.length() >= 1)

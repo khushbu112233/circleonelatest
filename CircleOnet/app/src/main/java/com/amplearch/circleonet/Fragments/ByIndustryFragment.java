@@ -95,9 +95,10 @@ public class ByIndustryFragment extends Fragment
                 {
                     listView.setVisibility(View.GONE);
                     tvDataInfo.setVisibility(View.GONE);
-//                    GetData(getContext());
                     connectTags.clear();
-                    connectListAdapter.notifyDataSetChanged();
+//                    GetData(getContext());
+
+//                    connectListAdapter.notifyDataSetChanged();
                 }
                 else if(s.length() >= 1)
                 {

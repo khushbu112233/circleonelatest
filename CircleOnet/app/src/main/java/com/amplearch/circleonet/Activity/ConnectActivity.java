@@ -230,10 +230,13 @@ public class ConnectActivity extends AppCompatActivity
                 }
             }
         });
+
         boolean result = Utility.checkContactPermission(ConnectActivity.this);
-        if (result) {
+        if (result)
+        {
             contactExists(getApplicationContext(), "+91 9737032082");
         }
+
         rlConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -242,7 +245,8 @@ public class ConnectActivity extends AppCompatActivity
                 if (result) {
                     Boolean aBoolean = contactExists(getApplicationContext(), "+91 9737032082");
 
-                    if (aBoolean == true) {
+                    if (aBoolean == true)
+                    {
                         TranslateAnimation slide1 = new TranslateAnimation(0, 170, 0, 0);
                         slide1.setDuration(1000);
                         ivConnectImg.startAnimation(slide1);
@@ -300,12 +304,10 @@ public class ConnectActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-
                 // you pass the position you want the viewpager to show in the extra,
                 // please don't forget to define and initialize the position variable
                 // properly
                 go.putExtra("viewpager_position", 1);
-
                 startActivity(go);
                 finish();
             }
@@ -411,6 +413,13 @@ public class ConnectActivity extends AppCompatActivity
         tvAdd.setTextColor(getResources().getColor(R.color.unselected));
         tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
         return false;
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/ConnectProfile");
     }
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String>

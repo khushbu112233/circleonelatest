@@ -10,7 +10,8 @@ import android.widget.TextView;
 import com.amplearch.circleonet.R;
 import com.squareup.picasso.Picasso;
 
-public class Connect4Activity extends AppCompatActivity {
+public class Connect4Activity extends AppCompatActivity
+{
 
     private ImageView imgBack, imgCards, imgConnect, imgEvents, imgProfile, imgConnecting;
     TextView txtAsk, txtLink, txtCongratulations;
@@ -19,7 +20,8 @@ public class Connect4Activity extends AppCompatActivity {
     String profile;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connect4);
         imgBack = (ImageView) findViewById(R.id.imgBack);
@@ -41,8 +43,26 @@ public class Connect4Activity extends AppCompatActivity {
         Intent intent = getIntent();
         level = intent.getStringExtra("level");
         profile = intent.getStringExtra("profile");
-        Picasso.with(getApplicationContext()).load(profile).placeholder(R.drawable.usr).into(ivImage1);
-        if (level.equals("0")){
+
+        try
+        {
+            if(profile.equalsIgnoreCase("") || profile.equalsIgnoreCase("null"))
+            {
+                ivImage1.setImageResource(R.drawable.usr);
+            }
+            else
+            {
+                Picasso.with(getApplicationContext()).load(profile).into(ivImage1);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+
+        if (level.equals("0"))
+        {
             txtCongratulations.setVisibility(View.GONE);
             txtAsk.setVisibility(View.GONE);
             txtLink.setText("You are not having any Connection.");
@@ -136,7 +156,7 @@ public class Connect4Activity extends AppCompatActivity {
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent go = new Intent(getApplicationContext(),Connect3Activity.class);
+                Intent go = new Intent(getApplicationContext(),ConnectActivity.class);
                 go.putExtra("level", level);
                 go.putExtra("profile", profile);
                 // you pass the position you want the viewpager to show in the extra,
@@ -206,5 +226,10 @@ public class Connect4Activity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

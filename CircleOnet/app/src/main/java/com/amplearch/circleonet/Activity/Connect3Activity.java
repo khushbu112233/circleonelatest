@@ -92,7 +92,7 @@ public class Connect3Activity extends AppCompatActivity
 
         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/Connection7Level");
 
-        Handler h = new Handler();
+        /*Handler h = new Handler();
         h.postDelayed(new Runnable(){
             public void run(){
 //change your text here
@@ -108,16 +108,21 @@ public class Connect3Activity extends AppCompatActivity
                     x = 0;
                 }
             }
-        }, 100);
+        }, 100);*/
 
         Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
         imgConnecting.startAnimation(anim);
 
         Animation anim1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.clockwise);
         imgConnecting1.startAnimation(anim1);
+
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
+                Intent go = new Intent(getApplicationContext(),ConnectActivity.class);
+                startActivity(go);
+                finish();
               /*  Intent go = new Intent(getApplicationContext(),ConnectActivity.class);
                 go.putExtra("level", level);
                 go.putExtra("profile", profile);
@@ -188,6 +193,11 @@ public class Connect3Activity extends AppCompatActivity
                 finish();
             }
         });
+
+    }
+
+    @Override
+    public void onBackPressed() {
 
     }
 
