@@ -78,7 +78,7 @@ public class EventsFragment extends Fragment
         HashMap<String, String> user = session.getUserDetails();
         user_id = user.get(LoginSession.KEY_USERID);
 
-//        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/Events/List");
+        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/Events/List");
 
         ArrayList<Integer> image = new ArrayList<Integer>();
         image.add(R.drawable.events1);
@@ -106,9 +106,9 @@ public class EventsFragment extends Fragment
         lnrSearch.setVisibility(View.GONE);
         line.setVisibility(View.GONE);
 
-        listView = (ListView) view.findViewById(R.id.listEvents);
-        gridAdapter = new EventsAdapter(getContext(), R.layout.row_events, image, title, desc);
-        listView.setAdapter(gridAdapter);
+        listView = (ListView)view.findViewById(R.id.listEvents);
+       /* gridAdapter = new EventsAdapter(getContext(), R.layout.row_events, image, title, desc);
+        listView.setAdapter(gridAdapter);*/
 
         listView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -121,12 +121,12 @@ public class EventsFragment extends Fragment
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
                 Intent intent = new Intent(getContext(), EventDetail.class);
                 startActivity(intent);
             }
         });
-
 
         return view;
     }
@@ -179,12 +179,12 @@ public class EventsFragment extends Fragment
         ProgressDialog dialog;
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             super.onPreExecute();
             dialog = new ProgressDialog(getActivity());
             dialog.setMessage("Finding Events...");
             dialog.show();
-            dialog.setCancelable(false);
         }
 
         @Override
@@ -212,7 +212,7 @@ public class EventsFragment extends Fragment
                     String success = response.getString("success");
                     String count = response.getString("count");
                     String pageno = response.getString("pageno");
-                    String recordno = response.getString("numofrecords");
+                    String numofrecords = response.getString("numofrecords");
 
                     JSONArray eventList = response.getJSONArray("EventList");
 
@@ -229,7 +229,7 @@ public class EventsFragment extends Fragment
                             EventModel eventModel = new EventModel();
                             eventModel.setEvent_ID(eList.getString("Event_ID"));
                             eventModel.setEvent_Name(eList.getString("Event_Name"));
-                            eventModel.setEvent_Name(eList.getString("Event_Image"));
+                            eventModel.setEvent_Image(eList.getString("Event_Image"));
                             eventModel.setEvent_Desc(eList.getString("Event_Desc"));
                             eventModel.setEvent_StartDate(eList.getString("Event_StartDate"));
                             eventModel.setEvent_EndDate(eList.getString("Event_EndDate"));
@@ -245,6 +245,8 @@ public class EventsFragment extends Fragment
                             eventModel.setAddress4(eList.getString("Address4"));
                             eventModelArrayList.add(eventModel);
 
+                            gridAdapter = new EventsAdapter(getContext(), R.layout.row_events, eventModelArrayList);
+                            listView.setAdapter(gridAdapter);
                         }
                     }
                 }
@@ -271,9 +273,9 @@ public class EventsFragment extends Fragment
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("my_userid", user_id );
+            jsonObject.accumulate("my_userid", "" );
             jsonObject.accumulate("numofrecords", "10");
-            jsonObject.accumulate("pageno", "10" );
+            jsonObject.accumulate("pageno", "1" );
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();

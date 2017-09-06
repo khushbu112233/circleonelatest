@@ -535,7 +535,8 @@ public class List3Fragment extends Fragment
                                 if (listView.getLastVisiblePosition() >= count - threshold)
                                 {
                                     rlLoadMore.setVisibility(View.VISIBLE);
-                                    listView.getChildAt(listView.getLastVisiblePosition());
+//                                    listView.getChildAt(listView.getLastVisiblePosition());
+//                                    listView.setSelection(gridAdapter.getCount() - 1);
                                     // Execute LoadMoreDataTask AsyncTask
                                     new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
                                 }
@@ -548,6 +549,10 @@ public class List3Fragment extends Fragment
                         {
                             // TODO Auto-generated method stub
 
+//                            listView.getChildAt(listView.getLastVisiblePosition());
+                            /*int index = listView.getLastVisiblePosition();
+                                // do your update stuff
+                            listView.smoothScrollToPosition(index);*/
 
                         }
                     });

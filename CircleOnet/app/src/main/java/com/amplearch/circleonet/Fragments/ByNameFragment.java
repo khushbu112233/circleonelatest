@@ -104,7 +104,6 @@ public class ByNameFragment extends Fragment
                 else if(s.length() >= 1)
                 {
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
-
                     listView.setVisibility(View.VISIBLE);
                     connectTags.clear();
                     new ByNameFragment.HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/SearchConnect");

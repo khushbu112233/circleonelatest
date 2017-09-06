@@ -18,14 +18,15 @@ import android.widget.TextView;
 
 import com.amplearch.circleonet.R;
 
-public class EventDetail extends AppCompatActivity {
-
+public class EventDetail extends AppCompatActivity
+{
     private TextView actionText;
     private ImageView imgDrawer, imgCards, imgConnect, imgEvents, imgProfile, imgLogo;
     private int actionBarHeight;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_detail);
 

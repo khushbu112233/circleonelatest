@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amplearch.circleonet.Model.EventModel;
 import com.amplearch.circleonet.R;
 
 import java.util.ArrayList;
@@ -19,14 +20,18 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by admin on 06/09/2017.
  */
 
-public class EventsAdapter extends ArrayAdapter {
+public class EventsAdapter extends ArrayAdapter
+{
     private Context context;
     private int layoutResourceId;
     private ArrayList<Integer> image = new ArrayList();
     private ArrayList<String> title = new ArrayList();
     private ArrayList<String> desc = new ArrayList();
 
-    public EventsAdapter(Context context, int layoutResourceId, ArrayList<Integer> image, ArrayList<String> title, ArrayList<String> desc) {
+    private ArrayList<EventModel> eventModelArrayList ;
+
+    public EventsAdapter(Context context, int layoutResourceId, ArrayList<Integer> image, ArrayList<String> title, ArrayList<String> desc)
+    {
         super(context, layoutResourceId, title);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
@@ -35,12 +40,22 @@ public class EventsAdapter extends ArrayAdapter {
         this.desc = desc;
     }
 
+    public EventsAdapter(Context context, int row_events, ArrayList<EventModel> eventModelArrayList)
+    {
+        super(context, row_events, eventModelArrayList);
+        this.layoutResourceId = row_events;
+        this.context = context;
+        this.eventModelArrayList = eventModelArrayList ;
+    }
+
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent)
+    {
         View row = convertView;
         ViewHolder holder = null;
 
-        if (row == null) {
+        if (row == null)
+        {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
             holder = new ViewHolder();
@@ -48,18 +63,33 @@ public class EventsAdapter extends ArrayAdapter {
             holder.txtDesc = (TextView) row.findViewById(R.id.txtEventDetail);
             holder.image = (ImageView) row.findViewById(R.id.imgEvents);
             row.setTag(holder);
-        } else {
+        }
+        else
+        {
             holder = (ViewHolder) row.getTag();
         }
 
-        holder.txtTitle.setText(title.get(position));
-        holder.txtDesc.setText(desc.get(position));
+        /*holder.txtTitle.setText(title.get(position));
+        holder.txtDesc.setText(desc.get(position));*/
 
-        holder.image.setImageResource(image.get(position));
+        holder.txtTitle.setText(eventModelArrayList.get(position).getEvent_Name());
+        holder.txtDesc.setText(eventModelArrayList.get(position).getEvent_Desc());
+
+        if(eventModelArrayList.get(position).getEvent_Image().equalsIgnoreCase("")
+                || eventModelArrayList.get(position).getEvent_Image().equalsIgnoreCase("null") )
+        {
+            holder.image.setImageResource(R.drawable.events4);
+        }
+        else
+        {
+
+        }
+//        holder.image.setImageResource(image.get(position));
         return row;
     }
 
-    static class ViewHolder {
+    static class ViewHolder
+    {
         TextView txtTitle;
         TextView txtDesc;
         ImageView image;

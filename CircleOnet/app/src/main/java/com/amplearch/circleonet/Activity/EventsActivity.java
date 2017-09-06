@@ -15,14 +15,15 @@ import com.amplearch.circleonet.R;
 
 import java.util.ArrayList;
 
-public class EventsActivity extends AppCompatActivity {
-
+public class EventsActivity extends AppCompatActivity
+{
     private ListView listView;
     private EventsAdapter gridAdapter;
     private TextView actionText;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events);
 
