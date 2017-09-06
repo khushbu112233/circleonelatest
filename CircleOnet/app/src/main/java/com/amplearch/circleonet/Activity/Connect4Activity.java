@@ -41,7 +41,11 @@ public class Connect4Activity extends AppCompatActivity {
         Intent intent = getIntent();
         level = intent.getStringExtra("level");
         profile = intent.getStringExtra("profile");
-        Picasso.with(getApplicationContext()).load(profile).placeholder(R.drawable.usr).into(ivImage1);
+        try {
+            Picasso.with(getApplicationContext()).load(profile).placeholder(R.drawable.usr).into(ivImage1);
+        } catch (Exception e){
+            ivImage1.setImageResource(R.drawable.usr);
+        }
         if (level.equals("0")){
             txtCongratulations.setVisibility(View.GONE);
             txtAsk.setVisibility(View.GONE);
