@@ -413,7 +413,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
             getSupportActionBar().setCustomView(R.layout.custom_actionbar);
             getSupportActionBar().setShowHideAnimationEnabled(false);
             textView = (TextView) findViewById(R.id.mytext);
-            cardCount = db.getActiveNFCCount();
+           // cardCount = db.getActiveNFCCount();
             SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
             // textView.setText("Cards 256");
@@ -442,7 +442,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
             getSupportActionBar().setShowHideAnimationEnabled(false);
             if (position == 0) {
                 getSupportActionBar().show();
-                setActionBarTitle("Cards - "+cardCount);
+              //  setActionBarTitle("Cards - "+cardCount);
                 setActionBarRightImage(R.drawable.ic_drawer);
             } else if (position == 1) {
                 getSupportActionBar().show();
