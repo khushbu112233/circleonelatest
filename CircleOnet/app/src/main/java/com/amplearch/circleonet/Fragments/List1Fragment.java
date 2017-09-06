@@ -173,12 +173,12 @@ public class List1Fragment extends Fragment
         lnrSearch.setVisibility(View.VISIBLE);
         line.setVisibility(View.VISIBLE);
         CardsFragment.tabLayout.setVisibility(View.VISIBLE);
-        GestureDetector.OnGestureListener gestureListener = new MyOnGestureListener();
+
+       /* GestureDetector.OnGestureListener gestureListener = new MyOnGestureListener();
         GestureDetector.OnDoubleTapListener doubleTapListener = new MyOnDoubleTapListener();
-
         gestureDetector1= new GestureDetector(getContext(), gestureListener);
+        gestureDetector1.setOnDoubleTapListener(doubleTapListener);*/
 
-        gestureDetector1.setOnDoubleTapListener(doubleTapListener);
         nfcModel = new ArrayList<>();
         allTags = new ArrayList<>();
 
@@ -190,6 +190,7 @@ public class List1Fragment extends Fragment
         recyclerView1.addOnScrollListener(scrollListener);
         recyclerView2.addOnScrollListener(scrollListener);
         ViewTreeObserver vto = lnrList.getViewTreeObserver();
+
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout()
@@ -211,11 +212,10 @@ public class List1Fragment extends Fragment
                 ViewGroup.LayoutParams params1=view_instance1.getLayoutParams();
                 params1.height=(height/(29/10))-10;
                 view_instance1.setLayoutParams(params1);
-
             }
         });
 
-        frame.setOnTouchListener(new View.OnTouchListener() {
+       /* frame.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent me) {
                 gestureDetector1.onTouchEvent(me);
                 recyclerView1.requestFocus();
@@ -227,21 +227,20 @@ public class List1Fragment extends Fragment
                 //recyclerView2.dispatchTouchEvent(me);
                 return true;
             }
-        });
+        });*/
 
-        frame1.setOnTouchListener(new View.OnTouchListener() {
+       /* frame1.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent me) {
                 gestureDetector1.onTouchEvent(me);
                 recyclerView2.requestFocus();
                 recyclerView2.dispatchTouchEvent(me); // don't cause scrolling
                 //recyclerView1.dispatchTouchEvent(me); // don't cause scrolling? Alternative solutoin?
-
                 //recyclerView2.requestFocus();
                 // recyclerView2.dispatchTouchEvent(mBackupTouchDownEvent); // don't cause scrolling
                 //recyclerView2.dispatchTouchEvent(me);
                 return true;
             }
-        });
+        });*/
 
 
         /*frame.setOnScrollChangeListener(new View.OnScrollChangeListener() {
@@ -577,7 +576,7 @@ public class List1Fragment extends Fragment
         recyclerView.addOnScrollListener(new CenterScrollListener());
     }
 
-    class MyOnGestureListener implements GestureDetector.OnGestureListener  {
+   /* class MyOnGestureListener implements GestureDetector.OnGestureListener  {
 
         private static final int SWIPE_THRESHOLD = 100;
         private static final int SWIPE_VELOCITY_THRESHOLD = 1000;
@@ -604,10 +603,10 @@ public class List1Fragment extends Fragment
             //   Log.e(TAG, "onSingleTapUp");
 
             // final_position = List1Fragment.viewPager.getCurrentItem();
-           /* Intent intent = new Intent(getContext(), CardDetail.class);
+           *//* Intent intent = new Intent(getContext(), CardDetail.class);
             intent.putExtra("tag_id", GalleryAdapter.nfcModelList.get(GalleryAdapter.posi).getNfc_tag());
             getContext().startActivity(intent);
-*/            return true;
+*//*            return true;
         }
 
         @Override
@@ -640,8 +639,8 @@ public class List1Fragment extends Fragment
                         } else {
                             // onSwipeLeft();
                         }
-                       /* recyclerView1.addOnScrollListener(scrollListener);
-                        recyclerView2.addOnScrollListener(scrollListener);*/
+                       *//* recyclerView1.addOnScrollListener(scrollListener);
+                        recyclerView2.addOnScrollListener(scrollListener);*//*
                     }
                 } else {
                     if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
@@ -666,8 +665,8 @@ public class List1Fragment extends Fragment
 
 
     }
-
-    class MyOnDoubleTapListener implements GestureDetector.OnDoubleTapListener {
+*/
+   /* class MyOnDoubleTapListener implements GestureDetector.OnDoubleTapListener {
 
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
@@ -692,7 +691,7 @@ public class List1Fragment extends Fragment
             //  Log.e(TAG, "onDoubleTapEvent");
             return true;
         }
-    }
+    }*/
 
     private RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
         public int y=0;
@@ -721,7 +720,7 @@ public class List1Fragment extends Fragment
         }
     };
 
-    GestureDetector.SimpleOnGestureListener simpleOnGestureListener
+   /* GestureDetector.SimpleOnGestureListener simpleOnGestureListener
             = new GestureDetector.SimpleOnGestureListener()
     {
         @Override
@@ -763,18 +762,166 @@ public class List1Fragment extends Fragment
                 return true;
             }
         }
-    };
+    };*/
 
-    GestureDetector gestureDetector = new GestureDetector(simpleOnGestureListener);
+    /*GestureDetector gestureDetector = new GestureDetector(simpleOnGestureListener);*/
 
     @Override
     public void onResume()
     {
         super.onResume();
-
 //        nfcModel.clear();
 //        GetData(getContext());
     }
+
+    private class HttpAsyncTaskSearch extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(getActivity());
+            dialog.setMessage("Searching Records...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            return POSTSearch(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+            dialog.dismiss();
+//            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+
+            try
+            {
+                if(result == "")
+                {
+                    Toast.makeText(getContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    JSONObject response = new JSONObject(result);
+                    String message = response.getString("message");
+                    String success = response.getString("success");
+                    String findBy = response.getString("FindBy");
+                    String search = response.getString("Search");
+                    String count = response.getString("count");
+                    String pageno = response.getString("pageno");
+                    String recordno = response.getString("numofrecords");
+
+                    JSONArray connect = response.getJSONArray("connect");
+
+                    if(connect.length() == 0)
+                    {
+                        //tvDataInfo.setVisibility(View.VISIBLE);
+                    }
+                    else
+                    {
+                        //  tvDataInfo.setVisibility(View.GONE);
+
+                        for(int i = 0 ; i <= connect.length() ; i++ )
+                        {
+                            JSONObject iCon = connect.getJSONObject(i);
+                            FriendConnection connectModel = new FriendConnection();
+                            connectModel.setUserID(iCon.getString("UserID"));
+                            connectModel.setFirstName(iCon.getString("FirstName"));
+                            connectModel.setLastName(iCon.getString("LastName"));
+                            connectModel.setName(iCon.getString("FirstName") + " " + iCon.getString("LastName"));
+                            connectModel.setUser_image(iCon.getString("UserPhoto"));
+                            connectModel.setCard_front(iCon.getString("Card_Front"));
+                            connectModel.setCard_back(iCon.getString("Card_Back"));
+                            connectModel.setProfile_id(iCon.getString("ProfileId"));
+                            connectModel.setPh_no(iCon.getString("Phone"));
+                            connectModel.setCompany(iCon.getString("CompanyName"));
+                            connectModel.setDesignation(iCon.getString("Designation"));
+                            connectModel.setFb_id(iCon.getString("Facebook"));
+                            connectModel.setTwitter_id(iCon.getString("Twitter"));
+                            connectModel.setGoogle_id(iCon.getString("Google"));
+                            connectModel.setLinkedin_id(iCon.getString("LinkedIn"));
+                            connectModel.setWebsite(iCon.getString("Website"));
+//                            allTaggs.add(connectModel);
+
+//                            GetData(getContext());
+                        }
+                    }
+                }
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public  String POSTSearch(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("FindBy", "name" );
+            jsonObject.accumulate("Search", searchText.getText().toString() );
+            jsonObject.accumulate("UserID", UserId);
+            jsonObject.accumulate("numofrecords", "30" );
+            jsonObject.accumulate("pageno", "1" );
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
 
     public static void GetData(Context context)
     {

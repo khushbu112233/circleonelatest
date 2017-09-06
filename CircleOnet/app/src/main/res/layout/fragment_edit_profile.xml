@@ -753,6 +753,7 @@
                             android:src="@drawable/ic_association_blue" />
 
                         <EditText
+                            android:id="@+id/etAssociationName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
@@ -762,6 +763,7 @@
                             android:textSize="13sp" />
 
                         <ImageView
+                            android:id="@+id/ivAddAssociate"
                             android:layout_width="15dp"
                             android:layout_height="15dp"
                             android:src="@drawable/ic_plus_blue" />

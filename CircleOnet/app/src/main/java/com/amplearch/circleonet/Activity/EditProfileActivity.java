@@ -22,7 +22,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -34,6 +36,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amplearch.circleonet.Adapter.AddEventAdapter;
+import com.amplearch.circleonet.Adapter.AssociationAdapter;
 import com.amplearch.circleonet.Adapter.CardSwipe;
 import com.amplearch.circleonet.Adapter.CustomAdapter;
 import com.amplearch.circleonet.Helper.LoginSession;
@@ -83,6 +86,7 @@ public class EditProfileActivity extends AppCompatActivity
     AutoCompleteTextView autoCompleteCompany, autoCompleteDesignation, autoCompleteIndustry;
     //String[] languages={"Android ","java","IOS","SQL","JDBC","Web services"};
     ArrayList<String> company, designation, industry;
+    String association_ID, association_NAME ;
     String profileId = "", Card_Front = "", Card_Back = "", FirstName = "", LastName = "", UserPhoto = "", OfficePhone = "", PrimaryPhone = "", Emailid = "",
             Facebook = "", Twitter = "", Google = "", LinkedIn = "", IndustryName = "", CompanyName = "", CompanyProfile = "", Designation = "", ProfileDesc = "", Status = "";
     String Address1 = "", Address2 = "", Address3 = "", Address4 = "", City = "", State = "", Country = "", Postalcode = "", Website = "", Attachment_FileName = "";
@@ -96,7 +100,7 @@ public class EditProfileActivity extends AppCompatActivity
     ArrayList<String> title_array = new ArrayList<String>();
     ArrayList<String> notice_array = new ArrayList<String>();
     String type = "";
-    EditText edtAddress1, edtAddress2, edtAddress3, edtAddress4, edtAddress5, edtAddress6, edtWebsite;
+    EditText edtAddress1, edtAddress2, edtAddress3, edtAddress4, edtAddress5, edtAddress6, edtWebsite, etAssociationName;
     String UserID = "";
     ImageView imgBack;
     private ExpandableHeightGridView gridView, gridViewAdded;
@@ -120,12 +124,14 @@ public class EditProfileActivity extends AppCompatActivity
     private int REQUEST_CAMERA_CARD = 501;
     private String final_ImgBase64 = "";
     private int cardposition = 0;
-    ImageView ivAttachBackImage, ivAttachFrontImage;
+    ImageView ivAttachBackImage, ivAttachFrontImage, ivAddAssociate;
     TextView txtCardFront, txtCardBack;
     String cardType = "";
     String Attach_String = "";
-
     String companyID, designationID, industryID, associationID, addressID ;
+
+    ArrayList<String> AssoNameList = new ArrayList<>();
+    ArrayList<String> AssoIdList = new ArrayList<>();
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException
     {
@@ -140,9 +146,13 @@ public class EditProfileActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_edit_profile);
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
         autoCompleteCompany = (AutoCompleteTextView) findViewById(R.id.autoCompleteCompany);
         autoCompleteDesignation = (AutoCompleteTextView) findViewById(R.id.autoCompleteDesignation);
         autoCompleteIndustry = (AutoCompleteTextView) findViewById(R.id.autoCompleteIndustry);
@@ -183,12 +193,17 @@ public class EditProfileActivity extends AppCompatActivity
         ivAttachFrontImage = (ImageView) findViewById(R.id.ivAttachFrontImage);
         txtCardFront = (TextView) findViewById(R.id.txtCardFront);
         txtCardBack = (TextView) findViewById(R.id.txtCardBack);
+        ivAddAssociate = (ImageView)findViewById(R.id.ivAddAssociate);
+        etAssociationName = (EditText)findViewById(R.id.etAssociationName);
+
         Intent intent = getIntent();
         type = intent.getStringExtra("type");
         HashMap<String, String> user = session.getUserDetails();
         UserID = user.get(LoginSession.KEY_USERID);
         profileId = intent.getStringExtra("profile_id");
         allTaggs = new ArrayList<>();
+
+
 
         array = new String[]{"Accommodations", "Information", "Accounting", "Information technology", "Advertising",
                 "Insurance", "Aerospace", "Journalism & News", "Agriculture & Agribusiness", "Legal Services", "Air Transportation",
@@ -200,6 +215,7 @@ public class EditProfileActivity extends AppCompatActivity
                 "Travel", "Fine Arts", "Utilities", "Food & Beverage", "Video Game", "Green Technology", "Web Services", "Health"};
         gridView.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.mytextview, array));
         gridView.setExpanded(true);
+
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -299,9 +315,43 @@ public class EditProfileActivity extends AppCompatActivity
             }
         });
 
+        ivAddAssociate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                final AlertDialog alertDialog = new AlertDialog.Builder(EditProfileActivity.this).create();
+                LayoutInflater inflater = getLayoutInflater();
+                final View dialogView = inflater.inflate(R.layout.association_dialog, null);
+
+                ListView listView1 = (ListView)dialogView.findViewById(R.id.listView_Asso);
+
+//                AssociationAdapter associationAdapter = new AssociationAdapter(EditProfileActivity.this, AssoIdList, AssoNameList );
+                AssociationAdapter associationAdapter = new AssociationAdapter(EditProfileActivity.this, R.layout.association_value, AssoIdList, AssoNameList );
+                listView1.setAdapter(associationAdapter);
+                associationAdapter.notifyDataSetChanged();
+
+                listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                    {
+//                        Toast.makeText(getApplicationContext(),"ID NAME: "+
+//                                AssoIdList.get(position)+" "+AssoNameList.get(position),Toast.LENGTH_LONG).show();
+
+                        associationID = AssoIdList.get(position);
+                        etAssociationName.setText(AssoNameList.get(position));
+                        alertDialog.dismiss();
+                    }
+                });
+
+                alertDialog.setView(dialogView);
+                alertDialog.show();
+            }
+        });
+
         new HttpAsyncTaskCompany().execute("http://circle8.asia:8081/Onet.svc/GetCompanyList");
         new HttpAsyncTaskIndustry().execute("http://circle8.asia:8081/Onet.svc/GetIndustryList");
         new HttpAsyncTaskDesignation().execute("http://circle8.asia:8081/Onet.svc/GetDesignationList");
+        new HttpAsyncTaskAssociation().execute("http://circle8.asia:8081/Onet.svc/GetAssociationList");
 
         if (type.equals("edit")) {
             new HttpAsyncTaskUserProfile().execute("http://circle8.asia:8081/Onet.svc/GetUserProfile");
@@ -436,7 +486,7 @@ public class EditProfileActivity extends AppCompatActivity
             jsonObject.accumulate("Address4", edtAddress5.getText().toString() + " " + edtAddress6.getText().toString());
             jsonObject.accumulate("Address_ID", "1");
             jsonObject.accumulate("Address_Type", "work");
-            jsonObject.accumulate("AssociationID", "1");
+            jsonObject.accumulate("AssociationID", associationID);
             jsonObject.accumulate("Attachment_FileName", etAttachFile.getText().toString());
             jsonObject.accumulate("Card_Back", txtCardBack.getText().toString());
             jsonObject.accumulate("Card_Front", txtCardFront.getText().toString());
@@ -748,7 +798,8 @@ public class EditProfileActivity extends AppCompatActivity
         return result;
     }
 
-    public String POST5(String url) {
+    public String POST5(String url)
+    {
         InputStream inputStream = null;
         String result = "";
         try {
@@ -800,7 +851,8 @@ public class EditProfileActivity extends AppCompatActivity
         return result;
     }
 
-    public String POST2(String url) {
+    public String POST2(String url)
+    {
         InputStream inputStream = null;
         String result = "";
         try {
@@ -838,7 +890,47 @@ public class EditProfileActivity extends AppCompatActivity
         return result;
     }
 
-    public String POST(String url) {
+    public String PostAssociate(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpGet httpPost = new HttpGet(url);
+
+            // 6. set httpPost Entity
+            //   httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    public String POST(String url)
+    {
         InputStream inputStream = null;
         String result = "";
         try {
@@ -857,7 +949,7 @@ public class EditProfileActivity extends AppCompatActivity
             jsonObject.accumulate("Address4", edtAddress5.getText().toString() + " " + edtAddress6.getText().toString());
             jsonObject.accumulate("Address_ID", "1");
             jsonObject.accumulate("Address_Type", "work");
-            jsonObject.accumulate("AssociationID", "1");
+            jsonObject.accumulate("AssociationID", associationID);
             jsonObject.accumulate("Attachment_FileName", etAttachFile.getText().toString());
             jsonObject.accumulate("Card_Back", txtCardBack.getText().toString());
             jsonObject.accumulate("Card_Front", txtCardFront.getText().toString());
@@ -1379,6 +1471,58 @@ public class EditProfileActivity extends AppCompatActivity
 
     }
 
+    private class HttpAsyncTaskAssociation extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            dialog = new ProgressDialog(EditProfileActivity.this);
+            dialog.setMessage("Get Association..");
+            dialog.show();
+            dialog.setCancelable(false);
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            return PostAssociate(urls[0]);
+        }
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+            dialog.dismiss();
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            try
+            {
+                if (result != null)
+                {
+                    JSONObject jsonObject = new JSONObject(result);
+                    JSONArray jsonArray = jsonObject.getJSONArray("association");
+                    //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
+                    for (int i = 0; i < jsonArray.length(); i++)
+                    {
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        association_NAME = object.getString("AssociationName");
+                        association_ID = object.getString("AssociationID");
+
+                        AssoIdList.add(association_ID);
+                        AssoNameList.add(association_NAME);
+                    }
+                }
+                else
+                {
+                    // Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
     private class HttpAsyncTaskAddProfile extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -1397,7 +1541,8 @@ public class EditProfileActivity extends AppCompatActivity
         }
 
         @Override
-        protected String doInBackground(String... urls) {
+        protected String doInBackground(String... urls)
+        {
             return POST6(urls[0]);
         }
 
@@ -1764,25 +1909,28 @@ public class EditProfileActivity extends AppCompatActivity
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(String result)
+        {
             dialog.dismiss();
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-
-
-            try {
-                if (result != null) {
+            try
+            {
+                if (result != null)
+                {
                     JSONObject jsonObject = new JSONObject(result);
                     JSONArray jsonArray = jsonObject.getJSONArray("industry");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
                     industry = new ArrayList<>();
-                    for (int i = 0; i < jsonArray.length(); i++) {
-
+                    for (int i = 0; i < jsonArray.length(); i++)
+                    {
                         JSONObject object = jsonArray.getJSONObject(i);
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
                         industry.add(object.getString("IndustryName"));
                         industryID = object.getString("IndustryID");
                     }
-                } else {
+                }
+                else
+                {
                     // Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
                 }
 
@@ -1790,9 +1938,7 @@ public class EditProfileActivity extends AppCompatActivity
                 e.printStackTrace();
             }
 
-            ArrayAdapter adapter = new
-                    ArrayAdapter(EditProfileActivity.this, android.R.layout.simple_list_item_1, industry);
-
+            ArrayAdapter adapter = new ArrayAdapter(EditProfileActivity.this, android.R.layout.simple_list_item_1, industry);
             autoCompleteIndustry.setAdapter(adapter);
         }
     }
