@@ -81,6 +81,8 @@ public class List4Fragment extends Fragment
 
     static String comeAtTime = "FIRST" ;
 
+    static int numberCount, listSize ;
+
     public List4Fragment() {
         // Required empty public constructor
     }
@@ -466,6 +468,9 @@ public class List4Fragment extends Fragment
                 if (result != null)
                 {
                     JSONObject jsonObject = new JSONObject(result);
+
+                    numberCount = Integer.parseInt(jsonObject.getString("count")) ;
+
                     JSONArray jsonArray = jsonObject.getJSONArray("connection");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
 
@@ -494,6 +499,8 @@ public class List4Fragment extends Fragment
                         GetData(mContext);
                     }
 
+                    listSize = allTaggs.size() ;
+
                     listView.setOnScrollListener(new AbsListView.OnScrollListener() {
 
                         @Override
@@ -504,11 +511,18 @@ public class List4Fragment extends Fragment
 
                             if (scrollState == SCROLL_STATE_IDLE)
                             {
-                                if (listView.getLastVisiblePosition() >= count - threshold)
+                                if(listSize <= numberCount)
                                 {
-                                    rlLoadMore.setVisibility(View.VISIBLE);
-                                    // Execute LoadMoreDataTask AsyncTask
-                                    new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+                                    if (listView.getLastVisiblePosition() >= count - threshold)
+                                    {
+                                        rlLoadMore.setVisibility(View.VISIBLE);
+                                        // Execute LoadMoreDataTask AsyncTask
+                                        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+                                    }
+                                }
+                                else
+                                {
+
                                 }
                             }
                         }

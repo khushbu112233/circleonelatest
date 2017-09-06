@@ -87,6 +87,8 @@ public class List3Fragment extends Fragment
     static RelativeLayout rlLoadMore ;
 
     static String comeAtTime = "FIRST" ;
+    static String totalArray ;
+    static int numberCount, listSize ;
 
     public List3Fragment() {
         // Required empty public constructor
@@ -484,6 +486,12 @@ public class List3Fragment extends Fragment
                 if (result != null)
                 {
                     JSONObject jsonObject = new JSONObject(result);
+                    totalArray = jsonObject.getString("count");
+
+                    numberCount = Integer.parseInt(totalArray) ;
+
+//                    Toast.makeText(mContext,"Counts: "+numberCount,Toast.LENGTH_SHORT).show();
+
                     JSONArray jsonArray = jsonObject.getJSONArray("connection");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
 
@@ -510,8 +518,11 @@ public class List3Fragment extends Fragment
                         nfcModelTag.setNfc_tag("en000000001");
                         allTaggs.add(nfcModelTag);
                         GetData(mContext);
-
                     }
+
+                    listSize = allTaggs.size() ;
+
+//                    Toast.makeText(mContext,"ListView size: "+allTaggs.size(),Toast.LENGTH_SHORT).show();
 
                     listView.setOnScrollListener(new AbsListView.OnScrollListener()
                     {
@@ -530,13 +541,20 @@ public class List3Fragment extends Fragment
                                 int location = listView.getFirstVisiblePosition();
                                 View firstView = listView.getChildAt(location);*/
 
-                                if (listView.getLastVisiblePosition() >= count - threshold)
+                                if(listSize <= numberCount)
                                 {
-                                    rlLoadMore.setVisibility(View.VISIBLE);
+                                    if (listView.getLastVisiblePosition() >= count - threshold)
+                                    {
+                                        rlLoadMore.setVisibility(View.VISIBLE);
 //                                    listView.getChildAt(listView.getLastVisiblePosition());
 //                                    listView.setSelection(gridAdapter.getCount() - 1);
-                                    // Execute LoadMoreDataTask AsyncTask
-                                    new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+                                        // Execute LoadMoreDataTask AsyncTask
+                                        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+                                    }
+                                }
+                                else
+                                {
+
                                 }
                             }
                         }
@@ -845,6 +863,8 @@ public class List3Fragment extends Fragment
         gridAdapter.notifyDataSetChanged();
         CardsActivity.setActionBarTitle("Cards - "+nfcModel1.size());
         gridAdapter.setMode(Attributes.Mode.Single);
+
+//        Toast.makeText(mContext,"ListView size: "+nfcModel1.size(),Toast.LENGTH_SHORT).show();
     }
 
 }

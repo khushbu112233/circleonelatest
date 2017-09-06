@@ -98,6 +98,9 @@ public class List2Fragment extends Fragment
 
     static String comeAtTime = "FIRST" ;
 
+    static int numberCount, gridSize ;
+
+
     public List2Fragment() {
         // Required empty public constructor
     }
@@ -412,6 +415,9 @@ public class List2Fragment extends Fragment
                 if (result != null)
                 {
                     JSONObject jsonObject = new JSONObject(result);
+
+                    numberCount = Integer.parseInt(jsonObject.getString("count")) ;
+
                     JSONArray jsonArray = jsonObject.getJSONArray("connection");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
 
@@ -440,6 +446,8 @@ public class List2Fragment extends Fragment
                         GetData(mContext);
                     }
 
+                    gridSize = allTaggs.size() ;
+
                     gridView.setOnScrollListener(new AbsListView.OnScrollListener()
                     {
                         @Override
@@ -451,13 +459,19 @@ public class List2Fragment extends Fragment
 
                             if (scrollState == SCROLL_STATE_IDLE)
                             {
-                                if (gridView.getLastVisiblePosition() >= count - threshold)
+                                if(gridSize <= numberCount)
                                 {
-                                    rlLoadMore.setVisibility(View.VISIBLE);
-                                    // Execute LoadMoreDataTask AsyncTask
-                                    new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+                                    if (gridView.getLastVisiblePosition() >= count - threshold)
+                                    {
+                                        rlLoadMore.setVisibility(View.VISIBLE);
+                                        // Execute LoadMoreDataTask AsyncTask
+                                        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+                                    }
                                 }
+                                else
+                                {
 
+                                }
                             }
                         }
 
