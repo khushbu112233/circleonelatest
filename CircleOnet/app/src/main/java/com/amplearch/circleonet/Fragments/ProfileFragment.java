@@ -95,7 +95,7 @@ public class ProfileFragment extends Fragment
     public final static int QRcodeWidth = 500 ;
     Bitmap bitmap ;
     ProgressDialog progressDialog ;
-    ArrayList<String> profile_array;
+    ArrayList<String> profile_array, NameArray, DesignationArray;
     private LoginButton loginButton;
     private LoginSession session;
     private String UserID = "";
@@ -839,12 +839,17 @@ public class ProfileFragment extends Fragment
                     JSONArray jsonArray = jsonObject.getJSONArray("Profiles");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
                     profile_array = new ArrayList<String>();
+                    NameArray = new ArrayList<>();
+                    DesignationArray = new ArrayList<>();
 
                     for (int i = 0; i < jsonArray.length(); i++)
                     {
                         JSONObject object = jsonArray.getJSONObject(i);
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
-                        profile_array.add(object.getString("CompanyName"));
+                        profile_array.add(object.getString("CompanyName")+ " " + object.getString("FirstName") + " " + object.getString("LastName")
+                        + " " + object.getString("Designation") );
+                        NameArray.add(object.getString("FirstName") + " " + object.getString("LastName"));
+                        DesignationArray.add(object.getString("Designation"));
 
                         nfcModelTag = new ProfileModel();
                         nfcModelTag.setUserID(object.getString("UserID"));
