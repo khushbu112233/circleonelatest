@@ -9,7 +9,8 @@ import android.widget.TextView;
 
 import com.amplearch.circleonet.R;
 
-public class Connect5Activity extends AppCompatActivity {
+public class Connect5Activity extends AppCompatActivity
+{
 
     private ImageView imgBack, imgCards, imgConnect, imgEvents, imgProfile, imgConnecting;
 
@@ -33,12 +34,13 @@ public class Connect5Activity extends AppCompatActivity {
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent go = new Intent(getApplicationContext(),Connect4Activity.class);
+               /* Intent go = new Intent(getApplicationContext(),Connect4Activity.class);
                 go.putExtra("level", level);
                 go.putExtra("profile", profile);
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
+                startActivity(go);
+                finish();*/
+                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+                go.putExtra("viewpager_position", 1);
                 startActivity(go);
                 finish();
             }

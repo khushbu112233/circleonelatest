@@ -120,9 +120,9 @@ public class Connect3Activity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent go = new Intent(getApplicationContext(),ConnectActivity.class);
+               /* Intent go = new Intent(getApplicationContext(),ConnectActivity.class);
                 startActivity(go);
-                finish();
+                finish();*/
               /*  Intent go = new Intent(getApplicationContext(),ConnectActivity.class);
                 go.putExtra("level", level);
                 go.putExtra("profile", profile);
