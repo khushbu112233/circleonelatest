@@ -328,6 +328,8 @@ public class EditProfileActivity extends AppCompatActivity
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), TestimonialActivity.class);
                 intent.putExtra("ProfileId", profileId);
+                intent.putExtra("from", "editprofile");
+                intent.putExtra("type", type);
                 startActivity(intent);
             }
         });

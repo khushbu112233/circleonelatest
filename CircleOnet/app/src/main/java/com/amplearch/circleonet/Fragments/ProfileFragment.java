@@ -278,6 +278,7 @@ public class ProfileFragment extends Fragment
 
                 Intent intent = new Intent(getContext(), TestimonialActivity.class);
                 intent.putExtra("ProfileId", TestimonialProfileId);
+                intent.putExtra("from", "profile");
                 startActivity(intent);
             }
         });
