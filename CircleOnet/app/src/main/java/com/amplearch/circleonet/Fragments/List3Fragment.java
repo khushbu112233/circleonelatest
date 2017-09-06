@@ -127,12 +127,10 @@ public class List3Fragment extends Fragment
 
         callFirst();
 
-        GestureDetector.OnGestureListener gestureListener = new MyOnGestureListener();
+      /*  GestureDetector.OnGestureListener gestureListener = new MyOnGestureListener();
         GestureDetector.OnDoubleTapListener doubleTapListener = new MyOnDoubleTapListener();
-
         this.gestureDetector1= new GestureDetector(getContext(), gestureListener);
-
-        this.gestureDetector1.setOnDoubleTapListener(doubleTapListener);
+        this.gestureDetector1.setOnDoubleTapListener(doubleTapListener);*/
 
         lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
         line = view.findViewById(R.id.view);
@@ -162,11 +160,11 @@ public class List3Fragment extends Fragment
             }
         });*/
 
-        listView.setOnTouchListener(new View.OnTouchListener() {
+      /*  listView.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent me) {
                 return gestureDetector1.onTouchEvent(me);
             }
-        });
+        });*/
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -196,15 +194,15 @@ public class List3Fragment extends Fragment
 //        GetData(getContext());
 
 
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+       /* listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
               //  Toast.makeText(getContext(), "OnItemLongClickListener", Toast.LENGTH_SHORT).show();
                 return true;
             }
-        });
+        });*/
 
-        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+       /* listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 Log.e("ListView", "onScrollStateChanged");
@@ -214,9 +212,9 @@ public class List3Fragment extends Fragment
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
             }
-        });
+        });*/
 
-        listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+       /* listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.e("ListView", "onItemSelected:" + position);
@@ -226,7 +224,7 @@ public class List3Fragment extends Fragment
             public void onNothingSelected(AdapterView<?> parent) {
                 Log.e("ListView", "onNothingSelected:");
             }
-        });
+        });*/
 
         searchText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -637,10 +635,9 @@ public class List3Fragment extends Fragment
         return result;
     }
 
-    GestureDetector.SimpleOnGestureListener simpleOnGestureListener
-            = new GestureDetector.SimpleOnGestureListener(){
-
-
+   /* GestureDetector.SimpleOnGestureListener simpleOnGestureListener
+            = new GestureDetector.SimpleOnGestureListener()
+    {
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
                                float velocityY) {
@@ -659,14 +656,14 @@ public class List3Fragment extends Fragment
 
                 if ((e1.getY() - e2.getY()) > sensitvity) {
                     swipe += "Swipe Up\n";
-                    /*lnrSearch.setVisibility(View.GONE);
+                    *//*lnrSearch.setVisibility(View.GONE);
                     line.setVisibility(View.GONE);
-                    CardsFragment.tabLayout.setVisibility(View.GONE);*/
+                    CardsFragment.tabLayout.setVisibility(View.GONE);*//*
                 } else if ((e2.getY() - e1.getY()) > sensitvity) {
                     swipe += "Swipe Down\n";
-                   /* lnrSearch.setVisibility(View.VISIBLE);
+                   *//* lnrSearch.setVisibility(View.VISIBLE);
                     line.setVisibility(View.VISIBLE);
-                    CardsFragment.tabLayout.setVisibility(View.VISIBLE);*/
+                    CardsFragment.tabLayout.setVisibility(View.VISIBLE);*//*
                 } else {
                     swipe += "\n";
                 }
@@ -679,14 +676,12 @@ public class List3Fragment extends Fragment
                 return true;
             }
         }
-    };
+    };*/
 
-    GestureDetector gestureDetector
-            = new GestureDetector(simpleOnGestureListener);
+//    GestureDetector gestureDetector = new GestureDetector(simpleOnGestureListener);
 
-
-
-    class MyOnGestureListener implements GestureDetector.OnGestureListener  {
+    /*class MyOnGestureListener implements GestureDetector.OnGestureListener
+    {
 
         private static final int SWIPE_THRESHOLD = 100;
         private static final int SWIPE_VELOCITY_THRESHOLD = 100;
@@ -767,9 +762,10 @@ public class List3Fragment extends Fragment
         }
 
 
-    }
+    }*/
 
-    class MyOnDoubleTapListener implements GestureDetector.OnDoubleTapListener {
+  /*  class MyOnDoubleTapListener implements GestureDetector.OnDoubleTapListener
+    {
 
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
@@ -794,7 +790,7 @@ public class List3Fragment extends Fragment
           //  Log.e(TAG, "onDoubleTapEvent");
             return true;
         }
-    }
+    }*/
 
     @Override
     public void onResume()

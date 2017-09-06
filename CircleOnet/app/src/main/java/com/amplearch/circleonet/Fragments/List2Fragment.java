@@ -132,11 +132,10 @@ public class List2Fragment extends Fragment
 
         callFirst();
 
-        GestureDetector.OnGestureListener gestureListener = new MyOnGestureListener();
+        /*GestureDetector.OnGestureListener gestureListener = new MyOnGestureListener();
         GestureDetector.OnDoubleTapListener doubleTapListener = new MyOnDoubleTapListener();
-
         this.gestureDetector1 = new GestureDetector(getContext(), gestureListener);
-        this.gestureDetector1.setOnDoubleTapListener(doubleTapListener);
+        this.gestureDetector1.setOnDoubleTapListener(doubleTapListener);*/
 
        // gridAdapter = new GridViewAdapter(getContext(), R.layout.grid_list2_layout, getData());
        // gridView.setAdapter(gridAdapter);
@@ -149,11 +148,11 @@ public class List2Fragment extends Fragment
         allTaggs = new ArrayList<>();
 //        new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
-        gridView.setOnTouchListener(new View.OnTouchListener() {
+       /* gridView.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent me) {
                 return gestureDetector1.onTouchEvent(me);
             }
-        });
+        });*/
 
         /*gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -610,7 +609,7 @@ public class List2Fragment extends Fragment
         return result;
     }
 
-    GestureDetector.SimpleOnGestureListener simpleOnGestureListener
+   /* GestureDetector.SimpleOnGestureListener simpleOnGestureListener
             = new GestureDetector.SimpleOnGestureListener()
     {
         @Override
@@ -653,9 +652,9 @@ public class List2Fragment extends Fragment
                 return true;
             }
         }
-    };
+    };*/
 
-    class MyOnGestureListener implements GestureDetector.OnGestureListener  {
+   /* class MyOnGestureListener implements GestureDetector.OnGestureListener  {
 
         private static final int SWIPE_THRESHOLD = 100;
         private static final int SWIPE_VELOCITY_THRESHOLD = 100;
@@ -734,9 +733,9 @@ public class List2Fragment extends Fragment
             }
             return result;
         }
-    }
+    }*/
 
-    class MyOnDoubleTapListener implements GestureDetector.OnDoubleTapListener
+   /* class MyOnDoubleTapListener implements GestureDetector.OnDoubleTapListener
     {
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
@@ -761,12 +760,12 @@ public class List2Fragment extends Fragment
             Log.e(TAG, "onDoubleTapEvent");
             return true;
         }
-    }
+    }*/
 
     /*GestureDetector gestureDetector
             = new GestureDetector(simpleOnGestureListener);
     */
-    GestureDetector gestureDetector = new GestureDetector(simpleOnGestureListener);
+//    GestureDetector gestureDetector = new GestureDetector(simpleOnGestureListener);
 
     @Override
     public void onResume()
