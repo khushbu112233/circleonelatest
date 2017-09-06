@@ -864,7 +864,6 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                 mNfcAdapter.enableForegroundDispatch(this, pendingIntent, nfcIntentFilter, null);
 
         }
-    }
 
     /**
      * Launched when in foreground dispatch mode
