@@ -44,7 +44,8 @@ public class TestimonialActivity extends AppCompatActivity
 
     static Context mContext ;
     TextView textView;
-    ImageView imgLogo;
+    ImageView imgLogo, imgDrawer;
+    String from = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -60,13 +61,44 @@ public class TestimonialActivity extends AppCompatActivity
         getSupportActionBar().setShowHideAnimationEnabled(false);
         textView = (TextView) findViewById(R.id.mytext);
         imgLogo = (ImageView) findViewById(R.id.imgLogo);
+        imgDrawer = (ImageView) findViewById(R.id.drawer);
+        imgDrawer.setVisibility(View.GONE);
         textView.setText("Testimonial");
+        imgLogo.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
 
         Intent intent = getIntent();
         TestimonialProfileId = intent.getStringExtra("ProfileId");
+        from = intent.getStringExtra("from");
         lstTestimonial = (ListView) findViewById(R.id.lstTestimonial);
 
         allTaggs = new ArrayList<>();
+
+        imgLogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (from.equalsIgnoreCase("profile")) {
+                    Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+
+                    // you pass the position you want the viewpager to show in the extra,
+                    // please don't forget to define and initialize the position variable
+                    // properly
+                    go.putExtra("viewpager_position", 3);
+                    startActivity(go);
+                    finish();
+                } else if (from.equalsIgnoreCase("editprofile")) {
+                    Intent go = new Intent(getApplicationContext(),EditProfileActivity.class);
+
+                    // you pass the position you want the viewpager to show in the extra,
+                    // please don't forget to define and initialize the position variable
+                    // properly
+                    go.putExtra("profile_id", TestimonialProfileId);
+                    startActivity(go);
+                    finish();
+                }
+
+            }
+        });
 
         callFirst();
     }
