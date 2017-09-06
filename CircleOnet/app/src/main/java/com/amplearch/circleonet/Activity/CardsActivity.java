@@ -2,6 +2,7 @@ package com.amplearch.circleonet.Activity;
 
 import android.app.Dialog;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -40,6 +41,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amplearch.circleonet.Adapter.CardSwipe;
+import com.amplearch.circleonet.Adapter.GridViewAdapter;
 import com.amplearch.circleonet.Fragments.CardsFragment;
 import com.amplearch.circleonet.Fragments.ConnectFragment;
 import com.amplearch.circleonet.Fragments.EventsFragment;
@@ -72,6 +74,18 @@ import com.linkedin.platform.LISessionManager;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -107,6 +121,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
     public static GoogleApiClient mGoogleApiClient;
     LoginSession session;
     private FirebaseAuth mAuth;
+    String profileId = "", nfcProfileId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -141,6 +156,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
 
 
         String name = user.get(LoginSession.KEY_NAME);      // name
+        profileId = user.get(LoginSession.KEY_PROFILEID);
         String email = user.get(LoginSession.KEY_EMAIL);    // email
         String image = user.get(LoginSession.KEY_IMAGE);
         String gender = user.get(LoginSession.KEY_GENDER);
@@ -772,7 +788,15 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                     done = true;
                     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     message = message.substring(1, message.length());
-                    Boolean aBoolean = db.verification(message);
+
+                    nfcProfileId = message;
+                    try {
+                        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/FriendConnection_Operation");
+                    }catch (Exception e){
+                        Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                    }
+
+                    /*Boolean aBoolean = db.verification(message);
                     if (aBoolean == true) {
                         Toast.makeText(getApplicationContext(), "Already Activated", Toast.LENGTH_LONG).show();
                     } else {
@@ -824,7 +848,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                             }
                         } else if (i == 11) {
                             Toast.makeText(getApplicationContext(), "Data Does not exists in Database..", Toast.LENGTH_LONG).show();
-                        }
+                        }*/
                     }
                 }
             }
@@ -840,7 +864,6 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                 mNfcAdapter.enableForegroundDispatch(this, pendingIntent, nfcIntentFilter, null);
 
         }
-    }
 
     /**
      * Launched when in foreground dispatch mode
@@ -959,7 +982,14 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
          //   Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
             // callData(id);
             for (String data : mNfcReadUtility.readFromTagWithMap(paramIntent).values()) {
-                Boolean aBoolean = db.verification(data);
+                Toast.makeText(getApplicationContext(), data, Toast.LENGTH_LONG).show();
+                nfcProfileId = data;
+                try {
+                    new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/FriendConnection_Operation");
+                }catch (Exception e){
+                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                }
+                /*Boolean aBoolean = db.verification(data);
                 if (aBoolean == true)
                 {
                     Toast.makeText(getApplicationContext(), "Already Activated", Toast.LENGTH_LONG).show();
@@ -1017,7 +1047,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                     //  Toast.makeText(getApplicationContext(), String.valueOf(i), Toast.LENGTH_LONG).show();
                     // notifyAll();
 
-                    /*if (mViewPager.getCurrentItem() == 0){
+                    *//*if (mViewPager.getCurrentItem() == 0){
                         Intent go = new Intent(getApplicationContext(),CardsActivity.class);
 
                         // you pass the position you want the viewpager to show in the extra,
@@ -1034,11 +1064,183 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                         Intent go = new Intent(getApplicationContext(),CardsActivity.class);
                         startActivity(go);
                         finish();
-                    }*/
-                }
+                    }*//*
+                }*/
               //  Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private class HttpAsyncTask extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            dialog = new ProgressDialog(CardsActivity.this);
+            dialog.setMessage("Adding Records...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            return POST(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+            dialog.dismiss();
+            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            try
+            {
+                if(result == "")
+                {
+                    Toast.makeText(getApplicationContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    JSONObject response = new JSONObject(result);
+                    String message = response.getString("message");
+                    String success = response.getString("success");
+
+                    if(success.equals("1"))
+                    {
+                        Toast.makeText(getApplicationContext(), "Added Successfully", Toast.LENGTH_LONG).show();
+                        /*List1Fragment.webCall();
+                        List2Fragment.webCall();
+                        List3Fragment.webCall();
+                        List4Fragment.webCall();*/
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                    }
+
+                 /*   try
+                    {
+//                    List2Fragment.allTaggs.clear();
+                        List2Fragment.nfcModel.clear();
+                        List2Fragment.gridAdapter.notifyDataSetChanged();
+                        List2Fragment.GetData(context);
+                    }
+                    catch(Exception e) {    }
+
+                    try
+                    {
+
+//                    List3Fragment.allTaggs.clear();
+                        List3Fragment.nfcModel1.clear();
+                        List3Fragment.gridAdapter.notifyDataSetChanged();
+                        List3Fragment.GetData(context);
+                    }
+                    catch(Exception e) {    }
+
+                    try
+                    {
+
+//                    List4Fragment.allTaggs.clear();
+                        List4Fragment.nfcModel1.clear();
+                        List4Fragment.gridAdapter.notifyDataSetChanged();
+                        List4Fragment.GetData(context);
+                    }
+                    catch(Exception e) {    }
+
+                    try
+                    {
+
+//                    List1Fragment.allTags.clear();
+                        List1Fragment.nfcModel.clear();
+                        List1Fragment.mAdapter.notifyDataSetChanged();
+                        List1Fragment.mAdapter1.notifyDataSetChanged();
+                        List1Fragment.GetData(context);
+                    }
+                    catch(Exception e) {    }*/
+
+                }
+
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public  String POST(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("Operation", "Request" );
+            jsonObject.accumulate("friendProfileId", nfcProfileId);
+            jsonObject.accumulate("myProfileId", profileId );
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+        while((line = bufferedReader.readLine()) != null)
+            result += line;
+
+        inputStream.close();
+        return result;
+
     }
 
     @Override
