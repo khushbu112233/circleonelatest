@@ -288,7 +288,7 @@ public class ByAssociationFragment  extends Fragment
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("FindBy", find_by );
             jsonObject.accumulate("Search", searchText.getText().toString() );
-            jsonObject.accumulate("UserID", userID );
+            jsonObject.accumulate("UserID", "" );
             jsonObject.accumulate("numofrecords", "10" );
             jsonObject.accumulate("pageno", "1" );
 
