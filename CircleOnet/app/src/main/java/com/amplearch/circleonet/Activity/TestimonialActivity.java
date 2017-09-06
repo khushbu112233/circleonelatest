@@ -45,7 +45,7 @@ public class TestimonialActivity extends AppCompatActivity
     static Context mContext ;
     TextView textView;
     ImageView imgLogo, imgDrawer;
-    String from = "";
+    String from = "", type = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -69,6 +69,7 @@ public class TestimonialActivity extends AppCompatActivity
         Intent intent = getIntent();
         TestimonialProfileId = intent.getStringExtra("ProfileId");
         from = intent.getStringExtra("from");
+        type = intent.getStringExtra("type");
         lstTestimonial = (ListView) findViewById(R.id.lstTestimonial);
 
         allTaggs = new ArrayList<>();
@@ -93,6 +94,7 @@ public class TestimonialActivity extends AppCompatActivity
                     // please don't forget to define and initialize the position variable
                     // properly
                     go.putExtra("profile_id", TestimonialProfileId);
+                    go.putExtra("type", type);
                     startActivity(go);
                     finish();
                 }
