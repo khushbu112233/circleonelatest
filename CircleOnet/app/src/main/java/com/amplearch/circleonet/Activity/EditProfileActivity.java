@@ -32,6 +32,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -132,6 +133,7 @@ public class EditProfileActivity extends AppCompatActivity
 
     ArrayList<String> AssoNameList = new ArrayList<>();
     ArrayList<String> AssoIdList = new ArrayList<>();
+    Spinner spnAssociation;
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException
     {
@@ -194,16 +196,14 @@ public class EditProfileActivity extends AppCompatActivity
         txtCardFront = (TextView) findViewById(R.id.txtCardFront);
         txtCardBack = (TextView) findViewById(R.id.txtCardBack);
         ivAddAssociate = (ImageView)findViewById(R.id.ivAddAssociate);
-        etAssociationName = (EditText)findViewById(R.id.etAssociationName);
-
+      //  etAssociationName = (EditText)findViewById(R.id.etAssociationName);
+        spnAssociation = (Spinner) findViewById(R.id.spnAssociation);
         Intent intent = getIntent();
         type = intent.getStringExtra("type");
         HashMap<String, String> user = session.getUserDetails();
         UserID = user.get(LoginSession.KEY_USERID);
         profileId = intent.getStringExtra("profile_id");
         allTaggs = new ArrayList<>();
-
-
 
         array = new String[]{"Accommodations", "Information", "Accounting", "Information technology", "Advertising",
                 "Insurance", "Aerospace", "Journalism & News", "Agriculture & Agribusiness", "Legal Services", "Air Transportation",
@@ -315,7 +315,7 @@ public class EditProfileActivity extends AppCompatActivity
             }
         });
 
-        ivAddAssociate.setOnClickListener(new View.OnClickListener() {
+      /*  ivAddAssociate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -347,7 +347,7 @@ public class EditProfileActivity extends AppCompatActivity
                 alertDialog.show();
             }
         });
-
+*/
         new HttpAsyncTaskCompany().execute("http://circle8.asia:8081/Onet.svc/GetCompanyList");
         new HttpAsyncTaskIndustry().execute("http://circle8.asia:8081/Onet.svc/GetIndustryList");
         new HttpAsyncTaskDesignation().execute("http://circle8.asia:8081/Onet.svc/GetDesignationList");
@@ -362,6 +362,8 @@ public class EditProfileActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+
+                associationID = AssoIdList.get(spnAssociation.getSelectedItemPosition()).toString();
                 if (type.equals("add"))
                 {
                     new HttpAsyncTaskAddProfile().execute("http://circle8.asia:8081/Onet.svc/AddProfile");
@@ -1510,6 +1512,10 @@ public class EditProfileActivity extends AppCompatActivity
 
                         AssoIdList.add(association_ID);
                         AssoNameList.add(association_NAME);
+                        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(EditProfileActivity.this,
+                                android.R.layout.simple_spinner_item, AssoNameList);
+                        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spnAssociation.setAdapter(dataAdapter);
                     }
                 }
                 else
