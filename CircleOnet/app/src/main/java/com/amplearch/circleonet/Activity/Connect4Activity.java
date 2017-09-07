@@ -54,7 +54,7 @@ public class Connect4Activity extends AppCompatActivity {
             }
         }
         catch (Exception e) {
-            e.printStackTrace();
+            ivImage1.setImageResource(R.drawable.usr);
         }
 
            /* try

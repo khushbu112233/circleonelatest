@@ -1114,7 +1114,13 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                     if(success.equals("1"))
                     {
                         Toast.makeText(getApplicationContext(), "Added Successfully", Toast.LENGTH_LONG).show();
-                        /*List1Fragment.webCall();
+                        Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
+                        intent.putExtra("viewpager_position", CardsActivity.mViewPager.getCurrentItem());
+                        intent.putExtra("nested_viewpager_position", CardsFragment.mViewPager.getCurrentItem());
+                        startActivity(intent);
+                        finish();
+                        /*CardsFragment.mViewPager.getCurrentItem();
+                        List1Fragment.webCall();
                         List2Fragment.webCall();
                         List3Fragment.webCall();
                         List4Fragment.webCall();*/

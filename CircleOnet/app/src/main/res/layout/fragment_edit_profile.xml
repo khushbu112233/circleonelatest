@@ -752,15 +752,11 @@
                             android:layout_marginRight="20dp"
                             android:src="@drawable/ic_association_blue" />
 
-                        <EditText
-                            android:id="@+id/etAssociationName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:paddingBottom="15dp"
-                            android:paddingLeft="10dp"
-                            android:hint="Association"
-                            android:textSize="13sp" />
+                        <Spinner
+                            android:textSize="13sp"
+                            android:id="@+id/spnAssociation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
 
                         <ImageView
                             android:id="@+id/ivAddAssociate"

@@ -64,6 +64,7 @@
                 android:layout_marginBottom="45dp"/>
 
             <TextView
+                android:id="@+id/txtLink"
                 android:textSize="18dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

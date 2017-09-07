@@ -121,6 +121,7 @@ public class ProfileFragment extends Fragment
     TextView txtTestimonial, txtMore;
     CustomAdapter customAdapter;
     ImageView fbUrl, linkedInUrl, twitterUrl, googleUrl, youtubeUrl;
+    String strfbUrl, strlinkedInUrl, strtwitterUrl, strgoogleUrl, stryoutubeUrl;
     ArrayList<String> title_array = new ArrayList<String>();
     ArrayList<String> notice_array = new ArrayList<String>();
     String Address1 = "", Address2 = "", Address3 = "", Address4 = "", City = "", State = "", Country = "", Postalcode = "", Website = "", Attachment_FileName = "";
@@ -157,6 +158,7 @@ public class ProfileFragment extends Fragment
         googleUrl = (ImageView) view.findViewById(R.id.googleUrl);
         youtubeUrl = (ImageView) view.findViewById(R.id.youtubeUrl);
         twitterUrl = (ImageView) view.findViewById(R.id.twitterUrl);
+        linkedInUrl = (ImageView) view.findViewById(R.id.linkedInUrl);
         tvDesignation = (TextView)view.findViewById(R.id.tvDesignation);
         tvCompany = (TextView)view.findViewById(R.id.tvCompany);
         tvName = (TextView)view.findViewById(R.id.tvName);
@@ -204,42 +206,60 @@ public class ProfileFragment extends Fragment
         fbUrl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressDialog = new ProgressDialog(getContext());
-                progressDialog.setMessage("Loading...");
-                progressDialog.show();
-
-                loginButton.performClick();
-
-                loginButton.setPressed(true);
-
-                loginButton.invalidate();
-
-                loginButton.registerCallback(callbackManager, mCallBack);
-
-                loginButton.setPressed(false);
-
-                loginButton.invalidate();
+                if (strfbUrl!=null) {
+                    if (!strfbUrl.startsWith("http://") && !strfbUrl.startsWith("https://"))
+                        strfbUrl = "http://" + strfbUrl;
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(strfbUrl));
+                    startActivity(browserIntent);
+                }
             }
         });
 
         googleUrl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (strgoogleUrl!=null) {
+                    if (!strgoogleUrl.startsWith("http://") && !strgoogleUrl.startsWith("https://"))
+                        strgoogleUrl = "http://" + strgoogleUrl;
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(strgoogleUrl));
+                    startActivity(browserIntent);
+                }
             }
         });
 
         youtubeUrl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (stryoutubeUrl!=null) {
+                    if (!stryoutubeUrl.startsWith("http://") && !stryoutubeUrl.startsWith("https://"))
+                        stryoutubeUrl = "http://" + stryoutubeUrl;
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(stryoutubeUrl));
+                    startActivity(browserIntent);
+                }
             }
         });
 
         twitterUrl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (strtwitterUrl!=null) {
+                    if (!strtwitterUrl.startsWith("http://") && !strtwitterUrl.startsWith("https://"))
+                        strtwitterUrl = "http://" + strtwitterUrl;
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(strtwitterUrl));
+                    startActivity(browserIntent);
+                }
+            }
+        });
 
+        linkedInUrl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (strlinkedInUrl!=null) {
+                    if (!strlinkedInUrl.startsWith("http://") && !strlinkedInUrl.startsWith("https://"))
+                        strlinkedInUrl = "http://" + strlinkedInUrl;
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(strlinkedInUrl));
+                    startActivity(browserIntent);
+                }
             }
         });
 
@@ -532,6 +552,49 @@ public class ProfileFragment extends Fragment
                                     }
                                     else {
                                         Picasso.with(getContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+allTags.get(i).getUserPhoto()).into(imgProfile);
+                                    }
+                                    if (allTags.get(i).getFacebook().equals("") || allTags.get(i).getFacebook().equals(null))
+                                    {
+                                        fbUrl.setImageResource(R.drawable.ic_fb_gray);
+                                        fbUrl.setEnabled(false);
+                                    }
+                                    else {
+                                        fbUrl.setImageResource(R.drawable.icon_fb);
+                                        fbUrl.setEnabled(true);
+                                        strfbUrl = allTags.get(i).getFacebook().toString();
+                                    }
+
+                                    if (allTags.get(i).getGoogle().equals("") || allTags.get(i).getGoogle().equals(null))
+                                    {
+                                        googleUrl.setImageResource(R.drawable.ic_google_gray);
+                                        googleUrl.setEnabled(false);
+                                    }
+                                    else {
+                                        googleUrl.setImageResource(R.drawable.icon_google);
+                                        googleUrl.setEnabled(true);
+                                        strgoogleUrl = allTags.get(i).getGoogle().toString();
+                                    }
+
+                                    if (allTags.get(i).getTwitter().equals("") || allTags.get(i).getTwitter().equals(null))
+                                    {
+                                        twitterUrl.setImageResource(R.drawable.icon_twitter_gray);
+                                        twitterUrl.setEnabled(false);
+                                    }
+                                    else {
+                                        twitterUrl.setImageResource(R.drawable.icon_twitter);
+                                        twitterUrl.setEnabled(true);
+                                        strtwitterUrl = allTags.get(i).getTwitter().toString();
+                                    }
+
+                                    if (allTags.get(i).getLinkedin().equals("") || allTags.get(i).getLinkedin().equals(null))
+                                    {
+                                        linkedInUrl.setImageResource(R.drawable.icon_linkedin_gray);
+                                        linkedInUrl.setEnabled(false);
+                                    }
+                                    else {
+                                        linkedInUrl.setImageResource(R.drawable.icon_linkedin);
+                                        linkedInUrl.setEnabled(true);
+                                        strlinkedInUrl = allTags.get(i).getLinkedin().toString();
                                     }
 
                                     new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8081/Onet.svc/Testimonial/Fetch");
@@ -899,6 +962,52 @@ public class ProfileFragment extends Fragment
                         tvName.setText(personName);
                         tvPersonName.setText(personName);
                     }
+
+                    if (allTags.get(0).getFacebook().equals("") || allTags.get(0).getFacebook().equals(null))
+                    {
+                        fbUrl.setImageResource(R.drawable.ic_fb_gray);
+                        fbUrl.setEnabled(false);
+                    }
+                    else {
+                        fbUrl.setImageResource(R.drawable.icon_fb);
+                        fbUrl.setEnabled(true);
+                        strfbUrl = allTags.get(0).getFacebook().toString();
+                    }
+
+                    if (allTags.get(0).getGoogle().equals("") || allTags.get(0).getGoogle().equals(null))
+                    {
+                        googleUrl.setImageResource(R.drawable.ic_google_gray);
+                        googleUrl.setEnabled(false);
+                    }
+                    else {
+                        googleUrl.setImageResource(R.drawable.icon_google);
+                        googleUrl.setEnabled(true);
+                        strgoogleUrl = allTags.get(0).getGoogle().toString();
+                    }
+
+                    if (allTags.get(0).getTwitter().equals("") || allTags.get(0).getTwitter().equals(null))
+                    {
+                        twitterUrl.setImageResource(R.drawable.icon_twitter_gray);
+                        twitterUrl.setEnabled(false);
+                    }
+                    else {
+                        twitterUrl.setImageResource(R.drawable.icon_twitter);
+                        twitterUrl.setEnabled(true);
+                        strtwitterUrl = allTags.get(0).getTwitter().toString();
+                    }
+
+                    if (allTags.get(0).getLinkedin().equals("") || allTags.get(0).getLinkedin().equals(null))
+                    {
+                        linkedInUrl.setImageResource(R.drawable.icon_linkedin_gray);
+                        linkedInUrl.setEnabled(false);
+                    }
+                    else {
+                        linkedInUrl.setImageResource(R.drawable.icon_linkedin);
+                        linkedInUrl.setEnabled(true);
+                        strlinkedInUrl = allTags.get(0).getLinkedin().toString();
+                    }
+
+
 
 //                    tvDesignation.setText(allTags.get(0).getDesignation());
 //                    tvDesi.setText(allTags.get(0).getDesignation());
