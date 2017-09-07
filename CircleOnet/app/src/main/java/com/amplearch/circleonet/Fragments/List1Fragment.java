@@ -341,6 +341,7 @@ public class List1Fragment extends Fragment
             {
                 if(s.length() <= 0)
                 {
+                    tvNoCard.setVisibility(View.GONE);
 //                    nfcModel.clear();
                     // allTags = db.getActiveNFC();
 //                    GetData(getContext());
@@ -374,11 +375,14 @@ public class List1Fragment extends Fragment
 
     private void callFirst()
     {
+        tvNoCard.setVisibility(View.GONE);
+        nfcModel.clear();
         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
     }
 
     public static void webCall()
     {
+
         allTags.clear();
         mAdapter.notifyDataSetChanged();
         mAdapter1.notifyDataSetChanged();
