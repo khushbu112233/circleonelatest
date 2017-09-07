@@ -766,13 +766,14 @@ public class List1Fragment extends Fragment
 
     /*GestureDetector gestureDetector = new GestureDetector(simpleOnGestureListener);*/
 
-    @Override
+   /* @Override
     public void onResume()
     {
         super.onResume();
+        callFirst();
 //        nfcModel.clear();
 //        GetData(getContext());
-    }
+    }*/
 
     private class HttpAsyncTaskSearch extends AsyncTask<String, Void, String>
     {

@@ -124,6 +124,7 @@ public class EventsFragment extends Fragment
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 Intent intent = new Intent(getContext(), EventDetail.class);
+                intent.putExtra("Event_ID", eventModelArrayList.get(position).getEvent_ID());
                 startActivity(intent);
             }
         });
@@ -229,6 +230,7 @@ public class EventsFragment extends Fragment
                             EventModel eventModel = new EventModel();
                             eventModel.setEvent_ID(eList.getString("Event_ID"));
                             eventModel.setEvent_Name(eList.getString("Event_Name"));
+                            eventModel.setEvent_Type(eList.getString("Event_Type"));
                             eventModel.setEvent_Image(eList.getString("Event_Image"));
                             eventModel.setEvent_Desc(eList.getString("Event_Desc"));
                             eventModel.setEvent_StartDate(eList.getString("Event_StartDate"));
@@ -314,7 +316,6 @@ public class EventsFragment extends Fragment
         // 11. return result
         return result;
     }
-
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));

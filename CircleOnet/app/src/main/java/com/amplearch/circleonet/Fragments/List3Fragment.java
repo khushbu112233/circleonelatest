@@ -55,7 +55,7 @@ import java.util.Locale;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class List3Fragment extends Fragment
+public class List3Fragment extends Fragment implements AbsListView.OnScrollListener
 {
     private static ListView listView;
     public static List3Adapter gridAdapter;
@@ -71,6 +71,7 @@ public class List3Fragment extends Fragment
 
     public static List<NFCModel> allTags ;
     public static ArrayList<FriendConnection> allTaggs ;
+    public static ArrayList<FriendConnection> searchTags ;
 
     //new asign value
     AutoCompleteTextView searchText ;
@@ -116,6 +117,9 @@ public class List3Fragment extends Fragment
         pageno = 1;
         nfcModel = new ArrayList<>();
         nfcModel1 = new ArrayList<>();
+        allTags = new ArrayList<>();
+        allTaggs = new ArrayList<>();
+        searchTags = new ArrayList<>();
 
         session = new LoginSession(getContext());
         HashMap<String, String> user = session.getUserDetails();
@@ -124,18 +128,28 @@ public class List3Fragment extends Fragment
         //considering from database
 //        allTags = db.getActiveNFC();
 
-        allTags = new ArrayList<>();
-        allTaggs = new ArrayList<>();
-
         callFirst();
+
+        lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
+        line = view.findViewById(R.id.view);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getContext(), CardDetail.class);
+                intent.putExtra("tag_id", nfcModel1.get(position).getNfc_tag());
+                intent.putExtra("profile_id", nfcModel1.get(position).getProfile_id());
+                getContext().startActivity(intent);
+            }
+        });
+
+        listView.setOnScrollListener(this);
 
       /*  GestureDetector.OnGestureListener gestureListener = new MyOnGestureListener();
         GestureDetector.OnDoubleTapListener doubleTapListener = new MyOnDoubleTapListener();
         this.gestureDetector1= new GestureDetector(getContext(), gestureListener);
         this.gestureDetector1.setOnDoubleTapListener(doubleTapListener);*/
 
-        lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
-        line = view.findViewById(R.id.view);
         /*lnrSearch.setVisibility(View.GONE);
         line.setVisibility(View.GONE);
         CardsFragment.tabLayout.setVisibility(View.GONE);*/
@@ -151,14 +165,10 @@ public class List3Fragment extends Fragment
         gridAdapter = new List3Adapter(getContext(), R.layout.grid_list3_layout, imgf, desc, name, designation, id);
         listView.setAdapter(gridAdapter);*/
 
-
-
         /*listView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
                 return gestureDetector.onTouchEvent(event);
-
             }
         });*/
 
@@ -168,15 +178,7 @@ public class List3Fragment extends Fragment
             }
         });*/
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getContext(), CardDetail.class);
-                intent.putExtra("tag_id", nfcModel1.get(position).getNfc_tag());
-                intent.putExtra("profile_id", nfcModel1.get(position).getProfile_id());
-                getContext().startActivity(intent);
-            }
-        });
+
 
        /* listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -195,7 +197,6 @@ public class List3Fragment extends Fragment
         //retrive data
 //        GetData(getContext());
 
-
        /* listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -209,10 +210,8 @@ public class List3Fragment extends Fragment
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 Log.e("ListView", "onScrollStateChanged");
             }
-
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
             }
         });*/
 
@@ -253,22 +252,17 @@ public class List3Fragment extends Fragment
                 {
                     pageno = 1;
                     allTaggs.clear();
+                    searchTags.clear();
                     new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
 //                    GetData(getContext());
                 }
                 else if(s.length() >= 2)
                 {
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
-
-                    String Findby = "name";
-                    String Search = "Circle One" ;
-                    String rc_no = "10";
-                    String page_no = "1";
-
                     allTaggs.clear();
+                    searchTags.clear();
                     new HttpAsyncTaskSearch().execute("http://circle8.asia:8081/Onet.svc/SearchConnect");
                 }
-
             }
 
             @Override
@@ -339,6 +333,18 @@ public class List3Fragment extends Fragment
         return result;
     }
 
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState)
+    {
+
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+    {
+
+    }
+
     private class HttpAsyncTaskSearch extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -390,6 +396,7 @@ public class List3Fragment extends Fragment
                     {
                         //tvDataInfo.setVisibility(View.VISIBLE);
                         allTaggs.clear();
+                        searchTags.clear();
                         gridAdapter.notifyDataSetChanged();
                     }
                     else
@@ -416,12 +423,11 @@ public class List3Fragment extends Fragment
                             connectModel.setGoogle_id(iCon.getString("Google"));
                             connectModel.setLinkedin_id(iCon.getString("LinkedIn"));
                             connectModel.setWebsite(iCon.getString("Website"));
-                            allTaggs.add(connectModel);
+                            searchTags.add(connectModel);
 
-                            gridAdapter = new List3Adapter(getContext(), R.layout.grid_list3_layout, allTaggs);
+                            gridAdapter = new List3Adapter(getContext(), R.layout.grid_list3_layout, searchTags);
                             listView.setAdapter(gridAdapter);
                             gridAdapter.notifyDataSetChanged();
-
 //                            GetData(getContext());
                         }
                     }
@@ -434,7 +440,7 @@ public class List3Fragment extends Fragment
         }
     }
 
-    private void callFirst()
+    public static void callFirst()
     {
         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
     }
@@ -476,6 +482,7 @@ public class List3Fragment extends Fragment
         {
             return POST(urls[0]);
         }
+
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
@@ -499,7 +506,6 @@ public class List3Fragment extends Fragment
 
                     for (int i = 0; i < jsonArray.length(); i++)
                     {
-
                         JSONObject object = jsonArray.getJSONObject(i);
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
 
@@ -517,12 +523,15 @@ public class List3Fragment extends Fragment
                                 + object.getString("Address3") + object.getString("Address4"));
                         nfcModelTag.setNfc_tag("en000000001");
                         allTaggs.add(nfcModelTag);
+
+                       /* gridAdapter = new List3Adapter(mContext, R.layout.grid_list3_layout, allTaggs);
+                        listView.setAdapter(gridAdapter);
+                        gridAdapter.notifyDataSetChanged();*/
+
                         GetData(mContext);
                     }
 
                     listSize = allTaggs.size() ;
-
-//                    Toast.makeText(mContext,"ListView size: "+allTaggs.size(),Toast.LENGTH_SHORT).show();
 
                     listView.setOnScrollListener(new AbsListView.OnScrollListener()
                     {
@@ -534,27 +543,13 @@ public class List3Fragment extends Fragment
 
                             if (scrollState == SCROLL_STATE_IDLE)
                             {
-                               /* View convertView = listView.getChildAt(listView.getLastVisiblePosition());
-                                convertView.findViewById(R.id.listViewType3);*/
-
-                                /*ListView listView = (ListView) view;
-                                int location = listView.getFirstVisiblePosition();
-                                View firstView = listView.getChildAt(location);*/
-
                                 if(listSize <= numberCount)
                                 {
                                     if (listView.getLastVisiblePosition() >= count - threshold)
                                     {
                                         rlLoadMore.setVisibility(View.VISIBLE);
-//                                    listView.getChildAt(listView.getLastVisiblePosition());
-//                                    listView.setSelection(gridAdapter.getCount() - 1);
-                                        // Execute LoadMoreDataTask AsyncTask
                                         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
                                     }
-                                }
-                                else
-                                {
-
                                 }
                             }
                         }
@@ -565,13 +560,11 @@ public class List3Fragment extends Fragment
                         {
                             // TODO Auto-generated method stub
 
-//                            listView.getChildAt(listView.getLastVisiblePosition());
-                            /*int index = listView.getLastVisiblePosition();
-                                // do your update stuff
-                            listView.smoothScrollToPosition(index);*/
-
                         }
                     });
+
+//                    Toast.makeText(mContext,"ListView size: "+allTaggs.size(),Toast.LENGTH_SHORT).show();
+
                 }
                 else
                 {
@@ -599,7 +592,7 @@ public class List3Fragment extends Fragment
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("numofrecords", "3" );
+            jsonObject.accumulate("numofrecords", "20" );
             jsonObject.accumulate("pageno", pageno );
             jsonObject.accumulate("userid", UserId );
 
@@ -651,6 +644,55 @@ public class List3Fragment extends Fragment
 
         inputStream.close();
         return result;
+    }
+
+    public static void GetData(Context context)
+    {
+        nfcModel1.clear();
+        //newly added
+       /* for(NFCModel reTag : allTags)
+        {
+            NFCModel nfcModelTag = new NFCModel();
+            nfcModelTag.setId(reTag.getId());
+            nfcModelTag.setName(reTag.getName());
+            nfcModelTag.setCompany(reTag.getCompany());
+            nfcModelTag.setEmail(reTag.getEmail());
+            nfcModelTag.setWebsite(reTag.getWebsite());
+            nfcModelTag.setMob_no(reTag.getMob_no());
+            nfcModelTag.setDesignation(reTag.getDesignation());
+            nfcModelTag.setCard_front(reTag.getCard_front());
+            nfcModelTag.setNfc_tag(reTag.getNfc_tag());
+
+            nfcModel.add(nfcModelTag);
+        }*/
+
+        for(FriendConnection reTag : allTaggs)
+        {
+            FriendConnection nfcModelTag = new FriendConnection();
+//            nfcModelTag.setId(reTag.getId());
+            nfcModelTag.setName(reTag.getName());
+            nfcModelTag.setCompany(reTag.getCompany());
+            nfcModelTag.setEmail(reTag.getEmail());
+            nfcModelTag.setWebsite(reTag.getWebsite());
+            nfcModelTag.setMob_no(reTag.getMob_no());
+            nfcModelTag.setDesignation(reTag.getDesignation());
+            nfcModelTag.setCard_front(reTag.getCard_front());
+            nfcModelTag.setNfc_tag(reTag.getNfc_tag());
+            nfcModelTag.setProfile_id(reTag.getProfile_id());
+            nfcModelTag.setAddress(reTag.getAddress());
+            nfcModel1.add(nfcModelTag);
+        }
+
+//        rlLoadMore.setVisibility(View.GONE);
+
+//        gridAdapter = new List3Adapter(context, R.layout.grid_list3_layout, nfcModel1, List3Fragment.this);
+        gridAdapter = new List3Adapter(context, R.layout.grid_list3_layout, nfcModel1);
+        listView.setAdapter(gridAdapter);
+        gridAdapter.notifyDataSetChanged();
+        CardsActivity.setActionBarTitle("Cards - "+nfcModel1.size());
+        gridAdapter.setMode(Attributes.Mode.Single);
+
+//        Toast.makeText(mContext,"ListView size: "+nfcModel1.size(),Toast.LENGTH_SHORT).show();
     }
 
    /* GestureDetector.SimpleOnGestureListener simpleOnGestureListener
@@ -810,61 +852,13 @@ public class List3Fragment extends Fragment
         }
     }*/
 
-    @Override
+   /* @Override
     public void onResume()
     {
         super.onResume();
+        callFirst();
 //        nfcModel1.clear();
 //        GetData(getContext());
-    }
-
-    public static void GetData(Context context)
-    {
-        nfcModel1.clear();
-        //newly added
-       /* for(NFCModel reTag : allTags)
-        {
-            NFCModel nfcModelTag = new NFCModel();
-            nfcModelTag.setId(reTag.getId());
-            nfcModelTag.setName(reTag.getName());
-            nfcModelTag.setCompany(reTag.getCompany());
-            nfcModelTag.setEmail(reTag.getEmail());
-            nfcModelTag.setWebsite(reTag.getWebsite());
-            nfcModelTag.setMob_no(reTag.getMob_no());
-            nfcModelTag.setDesignation(reTag.getDesignation());
-            nfcModelTag.setCard_front(reTag.getCard_front());
-            nfcModelTag.setNfc_tag(reTag.getNfc_tag());
-
-            nfcModel.add(nfcModelTag);
-        }*/
-
-        for(FriendConnection reTag : allTaggs)
-        {
-            FriendConnection nfcModelTag = new FriendConnection();
-//            nfcModelTag.setId(reTag.getId());
-            nfcModelTag.setName(reTag.getName());
-            nfcModelTag.setCompany(reTag.getCompany());
-            nfcModelTag.setEmail(reTag.getEmail());
-            nfcModelTag.setWebsite(reTag.getWebsite());
-            nfcModelTag.setMob_no(reTag.getMob_no());
-            nfcModelTag.setDesignation(reTag.getDesignation());
-            nfcModelTag.setCard_front(reTag.getCard_front());
-            nfcModelTag.setNfc_tag(reTag.getNfc_tag());
-            nfcModelTag.setProfile_id(reTag.getProfile_id());
-            nfcModelTag.setAddress(reTag.getAddress());
-            nfcModel1.add(nfcModelTag);
-        }
-
-//        rlLoadMore.setVisibility(View.GONE);
-
-//        gridAdapter = new List3Adapter(context, R.layout.grid_list3_layout, nfcModel1, List3Fragment.this);
-        gridAdapter = new List3Adapter(context, R.layout.grid_list3_layout, nfcModel1);
-        listView.setAdapter(gridAdapter);
-        gridAdapter.notifyDataSetChanged();
-        CardsActivity.setActionBarTitle("Cards - "+nfcModel1.size());
-        gridAdapter.setMode(Attributes.Mode.Single);
-
-//        Toast.makeText(mContext,"ListView size: "+nfcModel1.size(),Toast.LENGTH_SHORT).show();
-    }
+    }*/
 
 }

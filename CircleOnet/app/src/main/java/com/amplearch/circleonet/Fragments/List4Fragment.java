@@ -617,14 +617,14 @@ public class List4Fragment extends Fragment
     }
 
 
-    @Override
+  /*  @Override
     public void onResume()
     {
         super.onResume();
-
+        callFirst();
 //        nfcModel.clear();
 //        GetData(getContext());
-    }
+    }*/
 
    /* class MyOnGestureListener implements GestureDetector.OnGestureListener  {
 

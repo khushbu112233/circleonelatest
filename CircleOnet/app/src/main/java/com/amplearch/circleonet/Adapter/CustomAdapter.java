@@ -48,7 +48,8 @@ public class CustomAdapter extends BaseAdapter
         return position;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent)
+    {
         View vi = convertView;
         if (convertView == null)
             vi = inflater.inflate(R.layout.testimonial_row, null);
