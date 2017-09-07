@@ -8,6 +8,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amplearch.circleonet.R;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Connect5Activity extends AppCompatActivity
 {
@@ -15,21 +18,46 @@ public class Connect5Activity extends AppCompatActivity
     private ImageView imgBack, imgCards, imgConnect, imgEvents, imgProfile, imgConnecting;
 
     String level = "0";
-    int profile;
-    TextView txtCongratulations;
+    String profile;
+    TextView txtCongratulations, txtLink;
+    CircleImageView ivImage1;
+    ImageView level1, level2, level3, level4, level5, level6;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connect5);
         Intent intent = getIntent();
         level = intent.getStringExtra("level");
-        profile = intent.getIntExtra("profile", 0);
+        profile = intent.getStringExtra("profile");
+        ivImage1 = (CircleImageView) findViewById(R.id.ivImage1);
         imgBack = (ImageView) findViewById(R.id.imgBack);
         imgCards = (ImageView) findViewById(R.id.imgCards);
         imgConnect = (ImageView) findViewById(R.id.imgConnect);
         imgEvents = (ImageView) findViewById(R.id.imgEvents);
         imgProfile = (ImageView) findViewById(R.id.imgProfile);
+        level1 = (ImageView) findViewById(R.id.imgLevel1);
+        level2 = (ImageView) findViewById(R.id.imgLevel2);
+        level3 = (ImageView) findViewById(R.id.imgLevel3);
+        level4 = (ImageView) findViewById(R.id.imgLevel4);
+        level5 = (ImageView) findViewById(R.id.imgLevel5);
+        level6 = (ImageView) findViewById(R.id.imgLevel6);
+        txtLink = (TextView) findViewById(R.id.txtLink);
         txtCongratulations = (TextView) findViewById(R.id.txtCongratulations);
+
+        try
+        {
+            if (profile.equalsIgnoreCase("") || profile.equalsIgnoreCase("null"))
+            {
+                ivImage1.setImageResource(R.drawable.usr);
+            }
+            else
+            {
+                Picasso.with(getApplicationContext()).load(profile).into(ivImage1);
+            }
+        }
+        catch (Exception e) {
+            ivImage1.setImageResource(R.drawable.usr);
+        }
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +73,85 @@ public class Connect5Activity extends AppCompatActivity
                 finish();
             }
         });
+
+        if (level.equals("0"))
+        {
+            txtCongratulations.setVisibility(View.GONE);
+            txtLink.setText("You are not having any Connection.");
+            level1.setVisibility(View.GONE);
+            level2.setVisibility(View.GONE);
+            level3.setVisibility(View.GONE);
+            level4.setVisibility(View.GONE);
+            level5.setVisibility(View.GONE);
+            level6.setVisibility(View.GONE);
+        }
+        if (level.equals("1"))
+        {
+            txtCongratulations.setVisibility(View.VISIBLE);
+            txtLink.setText("You have a 1st level connection.");
+            level1.setVisibility(View.VISIBLE);
+            level2.setVisibility(View.GONE);
+            level3.setVisibility(View.GONE);
+            level4.setVisibility(View.GONE);
+            level5.setVisibility(View.GONE);
+            level6.setVisibility(View.GONE);
+        }
+        else if (level.equals("2"))
+        {
+            txtCongratulations.setVisibility(View.VISIBLE);
+            txtLink.setText("You have a 2nd level connection.");
+            level1.setVisibility(View.VISIBLE);
+            level2.setVisibility(View.VISIBLE);
+            level3.setVisibility(View.GONE);
+            level4.setVisibility(View.GONE);
+            level5.setVisibility(View.GONE);
+            level6.setVisibility(View.GONE);
+        }
+        else if (level.equals("3"))
+        {
+            txtCongratulations.setVisibility(View.VISIBLE);
+            txtLink.setText("You have a 3rd level connection.");
+            level1.setVisibility(View.VISIBLE);
+            level2.setVisibility(View.VISIBLE);
+            level3.setVisibility(View.VISIBLE);
+            level4.setVisibility(View.GONE);
+            level5.setVisibility(View.GONE);
+            level6.setVisibility(View.GONE);
+        }
+        else if (level.equals("4"))
+        {
+            txtCongratulations.setVisibility(View.VISIBLE);
+            txtLink.setText("You have a 4th level connection.");
+            level1.setVisibility(View.VISIBLE);
+            level2.setVisibility(View.VISIBLE);
+            level3.setVisibility(View.VISIBLE);
+            level4.setVisibility(View.VISIBLE);
+            level5.setVisibility(View.GONE);
+            level6.setVisibility(View.GONE);
+        }
+        else if (level.equals("5"))
+        {
+            txtCongratulations.setVisibility(View.VISIBLE);
+            txtLink.setText("You have a 5th level connection.");
+            level1.setVisibility(View.VISIBLE);
+            level2.setVisibility(View.VISIBLE);
+            level3.setVisibility(View.VISIBLE);
+            level4.setVisibility(View.VISIBLE);
+            level5.setVisibility(View.VISIBLE);
+            level6.setVisibility(View.GONE);
+        }
+        else if (level.equals("6"))
+        {
+            txtCongratulations.setVisibility(View.VISIBLE);
+            txtLink.setText("You have a 6th level connection.");
+            level1.setVisibility(View.VISIBLE);
+            level2.setVisibility(View.VISIBLE);
+            level3.setVisibility(View.VISIBLE);
+            level4.setVisibility(View.VISIBLE);
+            level5.setVisibility(View.VISIBLE);
+            level6.setVisibility(View.VISIBLE);
+        }
+
 
         imgCards.setOnClickListener(new View.OnClickListener() {
             @Override
