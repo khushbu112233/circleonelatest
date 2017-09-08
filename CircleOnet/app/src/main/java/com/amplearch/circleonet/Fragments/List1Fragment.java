@@ -347,8 +347,12 @@ public class List1Fragment extends Fragment
 //                    GetData(getContext());
                     nfcModel.clear();
                     allTags.clear();
-                    mAdapter.notifyDataSetChanged();
-                    mAdapter1.notifyDataSetChanged();
+                    try {
+                        mAdapter.notifyDataSetChanged();
+                    }catch (Exception e){}
+                    try {
+                        mAdapter1.notifyDataSetChanged();
+                    }catch (Exception e){}
                     callFirst();
                 }
                 else if( s.length() > 0 )
