@@ -32,7 +32,7 @@ public class SortAndFilterOption extends AppCompatActivity {
     private int actionBarHeight;
     LinearLayout lnrSortRecent, lnrSortName, lnrSortCompany;
     DatabaseHelper db;
-    public static int cardSort = 1;
+    public static String SortType = "asc";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class SortAndFilterOption extends AppCompatActivity {
         lnrSortRecent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cardSort = 1;
+                SortType = "desc";
                 try {
                     List2Fragment.gridAdapter.notifyDataSetChanged();
                     List2Fragment.allTags = db.getActiveNFC();
@@ -109,7 +109,7 @@ public class SortAndFilterOption extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                cardSort = 2;
+                SortType = "Name";
                 try {
                     List2Fragment.gridAdapter.notifyDataSetChanged();
                     List2Fragment.allTags = db.getActiveNFC();
@@ -159,7 +159,7 @@ public class SortAndFilterOption extends AppCompatActivity {
         lnrSortCompany.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cardSort = 3;
+                SortType = "CompanyName";
                 try {
                     List2Fragment.gridAdapter.notifyDataSetChanged();
                     List2Fragment.allTags = db.getActiveNFC();

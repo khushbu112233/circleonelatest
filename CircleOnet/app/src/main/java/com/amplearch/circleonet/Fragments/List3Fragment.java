@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.amplearch.circleonet.Activity.CardDetail;
 import com.amplearch.circleonet.Activity.CardsActivity;
+import com.amplearch.circleonet.Activity.SortAndFilterOption;
 import com.amplearch.circleonet.Adapter.GridViewAdapter;
 import com.amplearch.circleonet.Adapter.List3Adapter;
 import com.amplearch.circleonet.Helper.DatabaseHelper;
@@ -247,21 +248,21 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
                     gridAdapter.Filter(text);
                 }*/
-
-                if(s.length() <= 0)
-                {
-                    pageno = 1;
-                    allTaggs.clear();
-                    searchTags.clear();
-                    new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+                if (allTags.size() == 0){
+                    //tvNoCard.setVisibility(View.VISIBLE);
+                }else {
+                    if (s.length() <= 0) {
+                        pageno = 1;
+                        allTaggs.clear();
+                        searchTags.clear();
+                        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
 //                    GetData(getContext());
-                }
-                else if(s.length() >= 2)
-                {
-                    String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
-                    allTaggs.clear();
-                    searchTags.clear();
-                    new HttpAsyncTaskSearch().execute("http://circle8.asia:8081/Onet.svc/SearchConnect");
+                    } else if (s.length() >= 2) {
+                        String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
+                        allTaggs.clear();
+                        searchTags.clear();
+                        new HttpAsyncTaskSearch().execute("http://circle8.asia:8081/Onet.svc/SearchConnect");
+                    }
                 }
             }
 
@@ -590,7 +591,8 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("numofrecords", "20" );
+            jsonObject.accumulate("Type", SortAndFilterOption.SortType );
+            jsonObject.accumulate("numofrecords", "3" );
             jsonObject.accumulate("pageno", pageno );
             jsonObject.accumulate("userid", UserId );
 

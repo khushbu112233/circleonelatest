@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.amplearch.circleonet.Activity.CardDetail;
 import com.amplearch.circleonet.Activity.CardsActivity;
+import com.amplearch.circleonet.Activity.SortAndFilterOption;
 import com.amplearch.circleonet.Adapter.ConnectListAdapter;
 import com.amplearch.circleonet.Adapter.GalleryAdapter;
 import com.amplearch.circleonet.Adapter.GalleryAdapter1;
@@ -99,6 +100,7 @@ public class List2Fragment extends Fragment
     static String comeAtTime = "FIRST" ;
 
     static int numberCount, gridSize ;
+
 
 
     public List2Fragment() {
@@ -186,25 +188,25 @@ public class List2Fragment extends Fragment
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
                     gridAdapter.Filter(text);
                 }*/
-
-                if(s.length() <= 0)
-                {
-                    pageno = 1;
-                    allTaggs.clear();
-                    new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+                if (allTags.size() == 0){
+                    //tvNoCard.setVisibility(View.VISIBLE);
+                }else {
+                    if (s.length() <= 0) {
+                        pageno = 1;
+                        allTaggs.clear();
+                        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
 //                    GetData(getContext());
-                }
-                else if(s.length() >= 2)
-                {
-                    String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
+                    } else if (s.length() >= 2) {
+                        String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
 
-                    String Findby = "name";
-                    String Search = "Circle One" ;
-                    String rc_no = "10";
-                    String page_no = "1";
+                        String Findby = "name";
+                        String Search = "Circle One";
+                        String rc_no = "10";
+                        String page_no = "1";
 
-                    allTaggs.clear();
-                    new HttpAsyncTaskSearch().execute("http://circle8.asia:8081/Onet.svc/SearchConnect");
+                        allTaggs.clear();
+                        new HttpAsyncTaskSearch().execute("http://circle8.asia:8081/Onet.svc/SearchConnect");
+                    }
                 }
 
             }
@@ -567,6 +569,7 @@ public class List2Fragment extends Fragment
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("Type", SortAndFilterOption.SortType );
             jsonObject.accumulate("numofrecords", "3" );
             jsonObject.accumulate("pageno", pageno );
             jsonObject.accumulate("userid", UserId );
