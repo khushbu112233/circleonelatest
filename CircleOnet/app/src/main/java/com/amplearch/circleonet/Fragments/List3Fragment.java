@@ -495,7 +495,15 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                     JSONObject jsonObject = new JSONObject(result);
                     totalArray = jsonObject.getString("count");
 
-                    numberCount = Integer.parseInt(totalArray) ;
+                    String count = jsonObject.getString("count");
+                    if(count.equals("") || count.equals("null"))
+                    {
+                        numberCount = 0 ;
+                    }
+                    else
+                    {
+                        numberCount = Integer.parseInt(count);
+                    }
 
 //                    Toast.makeText(mContext,"Counts: "+numberCount,Toast.LENGTH_SHORT).show();
 

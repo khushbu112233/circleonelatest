@@ -347,8 +347,8 @@ public class List1Fragment extends Fragment
 //                    GetData(getContext());
                     nfcModel.clear();
                     allTags.clear();
-                    mAdapter.notifyDataSetChanged();
-                    mAdapter1.notifyDataSetChanged();
+//                    mAdapter.notifyDataSetChanged();
+//                    mAdapter1.notifyDataSetChanged();
                     callFirst();
                 }
                 else if( s.length() > 0 )
@@ -358,8 +358,8 @@ public class List1Fragment extends Fragment
                     //   mAdapter1.Filter(text);
                     nfcModel.clear();
                     allTags.clear();
-                    mAdapter.notifyDataSetChanged();
-                    mAdapter1.notifyDataSetChanged();
+//                    mAdapter.notifyDataSetChanged();
+//                    mAdapter1.notifyDataSetChanged();
                     new HttpAsyncTaskSearch().execute("http://circle8.asia:8081/Onet.svc/SearchConnect");
                 }
             }

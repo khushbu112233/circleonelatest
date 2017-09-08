@@ -132,7 +132,7 @@
         <activity
             android:name=".Activity.EditProfileActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionbar"></activity>
+            android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.FingerPrintLogin"
             android:screenOrientation="portrait" />
@@ -156,8 +156,10 @@
         <activity
             android:name=".Activity.TestimonialActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activity.TestimonialRequest"
-            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".Activity.TestimonialRequest"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Activity.MyAccountActivity" android:theme="@style/NoActionbar"></activity>
     </application>
 
 </manifest>

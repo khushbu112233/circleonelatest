@@ -246,7 +246,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             startActivity(intent);
             finish();
         }
-        if (v == ivMale) {
+        if (v == ivMale)
+        {
             TranslateAnimation slide1 = new TranslateAnimation(0, -190, 0, 0);
             slide1.setDuration(1000);
             ivConnect.startAnimation(slide1);
