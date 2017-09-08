@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.amplearch.circleonet.Model.EventModel;
 import com.amplearch.circleonet.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -83,7 +84,7 @@ public class EventsAdapter extends ArrayAdapter
         }
         else
         {
-
+            Picasso.with(context).load("http://circle8.asia/App_ImgLib/Events/"+eventModelArrayList.get(position).getEvent_Image()).into(holder.image);
         }
 //        holder.image.setImageResource(image.get(position));
         return row;

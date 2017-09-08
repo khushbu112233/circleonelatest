@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.amplearch.circleonet.Adapter.EventDetailAdapter;
 import com.amplearch.circleonet.Model.EventModel;
 import com.amplearch.circleonet.R;
+import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -43,7 +44,7 @@ import java.util.ArrayList;
 public class EventDetail extends AppCompatActivity
 {
     private TextView actionText;
-    private ImageView imgDrawer, imgCards, imgConnect, imgEvents, imgProfile, imgLogo;
+    private ImageView imgDrawer, imgCards, imgConnect, imgEvents, imgProfile, imgLogo, imgEvent;
     private int actionBarHeight;
     private TextView tvEventTitle, tvEventDate, tvEventDesc, tvEventType, tvEventAddress, tvCompanyName, tvIndustryName ;
     private ListView listViewTimeShow ;
@@ -86,7 +87,7 @@ public class EventDetail extends AppCompatActivity
         tvIndustryName = (TextView)findViewById(R.id.tvIndustryName);
         listViewTimeShow = (ListView)findViewById(R.id.listViewTimeShow);
         llShowTime = (LinearLayout)findViewById(R.id.llShowTime);
-
+        imgEvent = (ImageView) findViewById(R.id.imgEvent);
         Intent i = getIntent();
         event_ID = i.getStringExtra("Event_ID");
 
@@ -304,6 +305,16 @@ public class EventDetail extends AppCompatActivity
                     else
                     {
                         tvIndustryName.setText("("+eventDetail.getString("IndustryName")+")");
+                    }
+
+                    if(eventDetail.getString("Event_Image").equals("")
+                            || eventDetail.getString("Event_Image").equals(null))
+                    {
+                        imgEvent.setImageResource(R.drawable.events4);
+                    }
+                    else
+                    {
+                        Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/Events/"+eventDetail.getString("Event_Image")).into(imgEvent);
                     }
 
                     tvEventDate.setText(eventDetail.getString("Event_StartDate")
