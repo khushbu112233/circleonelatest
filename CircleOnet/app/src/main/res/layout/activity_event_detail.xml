@@ -16,8 +16,9 @@
         android:orientation="vertical">
 
         <ImageView
+            android:id="@+id/imgEvent"
             android:scaleType="fitXY"
-            android:src="@drawable/events3"
+            android:src="@drawable/events4"
             android:layout_width="match_parent"
             android:layout_height="180dp" />
 

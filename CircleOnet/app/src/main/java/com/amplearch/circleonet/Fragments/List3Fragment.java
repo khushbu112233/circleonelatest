@@ -504,12 +504,11 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                     {
                         numberCount = Integer.parseInt(count);
                     }
-
 //                    Toast.makeText(mContext,"Counts: "+numberCount,Toast.LENGTH_SHORT).show();
 
                     JSONArray jsonArray = jsonObject.getJSONArray("connection");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
-
+                    numberCount = jsonArray.length();
                     rlLoadMore.setVisibility(View.GONE);
 
                     for (int i = 0; i < jsonArray.length(); i++)

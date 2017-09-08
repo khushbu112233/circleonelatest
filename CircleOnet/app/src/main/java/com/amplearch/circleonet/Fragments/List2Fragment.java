@@ -426,6 +426,7 @@ public class List2Fragment extends Fragment
 
                     JSONArray jsonArray = jsonObject.getJSONArray("connection");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
+                    numberCount = jsonArray.length();
 
                     rlLoadMore.setVisibility(View.GONE);
 

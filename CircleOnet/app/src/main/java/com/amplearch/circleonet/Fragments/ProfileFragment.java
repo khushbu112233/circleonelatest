@@ -1302,7 +1302,7 @@ public class ProfileFragment extends Fragment
                         txtMore.setVisibility(View.VISIBLE);
                         txtTestimonial.setVisibility(View.GONE);
                     }
-
+                    allTaggs.clear();
                     for (int i = 0; i < jsonArray.length(); i++){
 
                         if (i < 3) {
