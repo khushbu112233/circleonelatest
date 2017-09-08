@@ -19,8 +19,7 @@
             android:scaleType="fitXY"
             android:src="@drawable/events3"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
-            />
+            android:layout_height="180dp" />
 
         <LinearLayout
             android:gravity="center_vertical"
@@ -38,7 +37,7 @@
                 android:textColor="@android:color/white"
                 android:text="HSBC Singapore Rugby Sevens"
                 android:visibility="visible"
-                android:id="@+id/txtEventTitle"
+                android:id="@+id/tvEventTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp" />
@@ -48,7 +47,7 @@
                 android:textColor="@android:color/white"
                 android:text="HSBC Singapore Rugby Sevens"
                 android:visibility="visible"
-                android:id="@+id/txtEventDetail"
+                android:id="@+id/tvEventDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp" />
@@ -62,45 +61,78 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+                <TextView
+                    android:id="@+id/tvCompanyName"
+                    android:textSize="22dp"
+                    android:textColor="@color/colorAccent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Company Name"
+                    android:layout_centerVertical="true"/>
+                <TextView
+                    android:id="@+id/tvIndustryName"
+                    android:textSize="20dp"
+                    android:textColor="@color/colorAccent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(Industry Name)"
+                    android:layout_marginLeft="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tvCompanyName"/>
+            </RelativeLayout>
+
             <TextView
+                android:id="@+id/tvEventType"
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="18dp"
+                android:layout_marginTop="5dp"
                 android:textColor="@color/colorAccent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="MEDLAB asia pacific opens for day two!"/>
+                android:text="Event Type"/>
 
             <TextView
+                android:id="@+id/tvEventDesc"
                 android:layout_marginTop="10dp"
                 android:textSize="13dp"
                 android:textColor="#979799"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Join over 3000 laboratory professionals from more than 25 countries to meet and do business under one roof. \nsee more at:"/>
-            <TextView
-                android:textSize="13dp"
-                android:textColor="@color/colorAccent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="http://www.medlab.com/"/>
 
-            <TextView
-                android:layout_marginTop="15dp"
-                android:textAllCaps="true"
-                android:textSize="15dp"
-                android:textColor="@color/colorAccent"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/llShowTime"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Show Timings"/>
+                android:orientation="vertical">
+                <TextView
+                    android:layout_marginTop="15dp"
+                    android:textAllCaps="true"
+                    android:textSize="15dp"
+                    android:textColor="@color/colorAccent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Show Timings"/>
+                <ListView
+                    android:id="@+id/listViewTimeShow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </ListView>
+            </LinearLayout>
 
-            <TextView
+            <!--<TextView
                 android:layout_marginTop="5dp"
                 android:textSize="13dp"
                 android:textColor="#979799"
@@ -109,7 +141,7 @@
                 android:text="Monday - April 3, 2017 - 9:30am - 5:00pm
 Monday - April 3, 2017 - 9:30am - 5:00pm
 Monday - April 3, 2017 - 9:30am - 5:00pm"/>
-
+-->
             <TextView
                 android:layout_marginTop="15dp"
                 android:textAllCaps="true"
@@ -120,6 +152,7 @@ Monday - April 3, 2017 - 9:30am - 5:00pm"/>
                 android:text="Location:"/>
 
             <TextView
+                android:id="@+id/tvEventAddress"
                 android:layout_marginTop="5dp"
                 android:textSize="13dp"
                 android:textColor="#979799"

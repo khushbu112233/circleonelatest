@@ -778,14 +778,14 @@ public class List2Fragment extends Fragment
     */
 //    GestureDetector gestureDetector = new GestureDetector(simpleOnGestureListener);
 
-    @Override
+   /* @Override
     public void onResume()
     {
         super.onResume();
-
+        callFirst();
 //        nfcModel.clear();
 //        GetData(getContext());
-    }
+    }*/
 
 
 /*

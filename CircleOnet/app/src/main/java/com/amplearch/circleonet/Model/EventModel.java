@@ -8,6 +8,7 @@ public class EventModel
 {
     String Event_ID ;
     String Event_Name ;
+    String Event_Type ;
     String Event_Image ;
     String Event_Desc ;
     String Event_StartDate ;
@@ -23,15 +24,21 @@ public class EventModel
     String Country ;
     String PostalCode ;
 
+    String EventDate;
+    String StartDate ;
+    String EndDate ;
+
     public EventModel() {    }
 
     public EventModel(String Event_ID, String Event_Name, String Event_Image, String Event_Desc,
             String Event_StartDate, String Event_EndDate, String CompanyName, String IndustryName,
             String Address1, String Address2, String Address3, String Address4,
-            String City, String State, String Country, String PostalCode)
+            String City, String State, String Country, String PostalCode, String Event_Type,
+            String EventDate, String StartDate, String EndDate )
     {
         this.Event_ID        = Event_ID        ;
         this.Event_Name      = Event_Name      ;
+        this.Event_Type      = Event_Type      ;
         this.Event_Image     = Event_Image     ;
         this.Event_Desc      = Event_Desc      ;
         this.Event_StartDate = Event_StartDate ;
@@ -46,6 +53,9 @@ public class EventModel
         this.State           = State           ;
         this.Country         = Country         ;
         this.PostalCode      = PostalCode      ;
+        this.EventDate       = EventDate       ;
+        this.StartDate       = StartDate       ;
+        this.EndDate         = EndDate         ;
     }
 
     public String getEvent_ID() {
@@ -62,6 +72,14 @@ public class EventModel
 
     public void setEvent_Name(String event_Name) {
         Event_Name = event_Name;
+    }
+
+    public String getEvent_Type() {
+        return Event_Type;
+    }
+
+    public void setEvent_Type(String event_Type) {
+        Event_Type = event_Type;
     }
 
     public String getEvent_Image() {
@@ -174,5 +192,29 @@ public class EventModel
 
     public void setPostalCode(String postalCode) {
         PostalCode = postalCode;
+    }
+
+    public String getEventDate() {
+        return EventDate;
+    }
+
+    public void setEventDate(String eventDate) {
+        EventDate = eventDate;
+    }
+
+    public String getStartDate() {
+        return StartDate;
+    }
+
+    public void setStartDate(String startDate) {
+        StartDate = startDate;
+    }
+
+    public String getEndDate() {
+        return EndDate;
+    }
+
+    public void setEndDate(String endDate) {
+        EndDate = endDate;
     }
 }

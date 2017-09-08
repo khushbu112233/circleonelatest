@@ -115,7 +115,7 @@ public class List1Fragment extends Fragment
     public static CarouselLayoutManager manager1, manager2;
     private int draggingView = -1;
     RelativeLayout rlt;
-    public static TextView txtNoCard1;
+    public static TextView txtNoCard1, tvNoCard;
     LoginSession session;
 
     static String UserId = "";
@@ -141,6 +141,7 @@ public class List1Fragment extends Fragment
 
         view = inflater.inflate(R.layout.fragment_list1, container, false);
         vc = ViewConfiguration.get(view.getContext());
+
        ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
         // frameList1 = (FrameLayout) view.findViewById(R.id.frameList1);
         mTouchSlop = vc.getScaledTouchSlop();
@@ -150,6 +151,7 @@ public class List1Fragment extends Fragment
         recyclerView1 = (RecyclerView) view.findViewById(R.id.list_horizontal1);
         recyclerView2 = (RecyclerView) view.findViewById(R.id.list_horizontal2);
         txtNoCard1 = (TextView) view.findViewById(R.id.txtNoCard1);
+        tvNoCard = (TextView)view.findViewById(R.id.tvNoCard);
         lnrList = (LinearLayout) view.findViewById(R.id.lnrList);
         frame = (FrameLayout) view.findViewById(R.id.frame);
         frame1 = (FrameLayout) view.findViewById(R.id.frame1);
@@ -339,15 +341,26 @@ public class List1Fragment extends Fragment
             {
                 if(s.length() <= 0)
                 {
-                    nfcModel.clear();
+                    tvNoCard.setVisibility(View.GONE);
+//                    nfcModel.clear();
                     // allTags = db.getActiveNFC();
-                    GetData(getContext());
+//                    GetData(getContext());
+                    nfcModel.clear();
+                    allTags.clear();
+                    mAdapter.notifyDataSetChanged();
+                    mAdapter1.notifyDataSetChanged();
+                    callFirst();
                 }
-                else
+                else if( s.length() > 0 )
                 {
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
 //                    mAdapter.Filter(text);
                     //   mAdapter1.Filter(text);
+                    nfcModel.clear();
+                    allTags.clear();
+                    mAdapter.notifyDataSetChanged();
+                    mAdapter1.notifyDataSetChanged();
+                    new HttpAsyncTaskSearch().execute("http://circle8.asia:8081/Onet.svc/SearchConnect");
                 }
             }
 
@@ -362,11 +375,14 @@ public class List1Fragment extends Fragment
 
     private void callFirst()
     {
+        tvNoCard.setVisibility(View.GONE);
+        nfcModel.clear();
         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
     }
 
     public static void webCall()
     {
+
         allTags.clear();
         mAdapter.notifyDataSetChanged();
         mAdapter1.notifyDataSetChanged();
@@ -506,6 +522,7 @@ public class List1Fragment extends Fragment
 
                         nfcModelTag.setNfc_tag("en000000001");
                         allTags.add(nfcModelTag);
+
                         GetData(mContext);
                     }
                 }
@@ -766,13 +783,14 @@ public class List1Fragment extends Fragment
 
     /*GestureDetector gestureDetector = new GestureDetector(simpleOnGestureListener);*/
 
-    @Override
+   /* @Override
     public void onResume()
     {
         super.onResume();
+        callFirst();
 //        nfcModel.clear();
 //        GetData(getContext());
-    }
+    }*/
 
     private class HttpAsyncTaskSearch extends AsyncTask<String, Void, String>
     {
@@ -823,11 +841,11 @@ public class List1Fragment extends Fragment
 
                     if(connect.length() == 0)
                     {
-                        //tvDataInfo.setVisibility(View.VISIBLE);
+                        tvNoCard.setVisibility(View.VISIBLE);
                     }
                     else
                     {
-                        //  tvDataInfo.setVisibility(View.GONE);
+                          tvNoCard.setVisibility(View.GONE);
 
                         for(int i = 0 ; i <= connect.length() ; i++ )
                         {
@@ -849,9 +867,9 @@ public class List1Fragment extends Fragment
                             connectModel.setGoogle_id(iCon.getString("Google"));
                             connectModel.setLinkedin_id(iCon.getString("LinkedIn"));
                             connectModel.setWebsite(iCon.getString("Website"));
-//                            allTaggs.add(connectModel);
+                            allTags.add(connectModel);
 
-//                            GetData(getContext());
+                            GetData(mContext);
                         }
                     }
                 }
@@ -921,7 +939,6 @@ public class List1Fragment extends Fragment
         // 11. return result
         return result;
     }
-
 
     public static void GetData(Context context)
     {
