@@ -1,7 +1,10 @@
 package com.amplearch.circleonet.Activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.amplearch.circleonet.Adapter.NewCardRequestAdapter;
@@ -109,5 +112,20 @@ public class NewCardRequestActivity extends AppCompatActivity
                 name,company,designation,email,phone,profile,image);
         listView.setAdapter(newCardRequestAdapter);
         newCardRequestAdapter.notifyDataSetChanged();
+
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                Intent i = new Intent(getApplicationContext(), NewCardRequestDetailActivity.class);
+                i.putExtra("person", name.get(position));
+                i.putExtra("designation", designation.get(position));
+                i.putExtra("company", company.get(position));
+                i.putExtra("profile", profile.get(position));
+                i.putExtra("image", image.get(position));
+                startActivity(i);
+            }
+        });
     }
 }
