@@ -53,7 +53,7 @@ public class ByTitleFragment extends Fragment
 
     private ListView listView;
     private TextView tvDataInfo ;
-    private String find_by = "title" ;
+    private String find_by = "JOB_ROLE" ;
     private List5Adapter list5Adapter ;
     private ConnectListAdapter connectListAdapter ;
     private AutoCompleteTextView searchText ;

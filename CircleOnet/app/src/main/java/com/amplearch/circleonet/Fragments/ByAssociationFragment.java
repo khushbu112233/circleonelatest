@@ -53,7 +53,7 @@ public class ByAssociationFragment  extends Fragment
 
     private ListView listView;
     private TextView tvDataInfo ;
-    private String find_by = "association" ;
+    private String find_by = "ASSOCIATION" ;
     private List5Adapter list5Adapter ;
     private ConnectListAdapter connectListAdapter ;
     private AutoCompleteTextView searchText ;
