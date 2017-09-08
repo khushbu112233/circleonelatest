@@ -122,15 +122,4 @@
         android:layout_height="wrap_content"
         android:text="You are not having any Friends.."/>
 
-    <TextView
-        android:visibility="gone"
-        android:id="@+id/tvNoCard"
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="No one card found!"/>
-
-
-
-
 </RelativeLayout>
