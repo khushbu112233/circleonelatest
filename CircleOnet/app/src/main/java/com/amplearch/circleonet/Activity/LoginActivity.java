@@ -38,6 +38,7 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
@@ -221,12 +222,12 @@ public class LoginActivity extends AppCompatActivity implements
             }
         });
 
-        if (loginSession.isLoggedIn()) {
+       /* if (loginSession.isLoggedIn()) {
 
             Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
             startActivity(intent);
             finish();
-        }
+        }*/
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
 
@@ -1274,6 +1275,21 @@ public class LoginActivity extends AppCompatActivity implements
                         }
 
                     } else {
+                        if (!Google.equals("")) {
+                            signOut();
+                        }
+                        if (!Facebook.equals("")) {
+                            PrefUtils.clearCurrentUser(LoginActivity.this);
+                            // We can logout from facebook by calling following method
+                            LoginManager.getInstance().logOut();
+                        }
+                        if (!Twitter.equals("")) {
+                            mAuth.signOut();
+                            com.twitter.sdk.android.Twitter.logOut();
+                        }
+                        if (!Linkedin.equals("")) {
+                            LISessionManager.getInstance(getApplicationContext()).clearSession();
+                        }
                         Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
                         intent.putExtra("Facebook", Facebook);
                         intent.putExtra("Google", Google);

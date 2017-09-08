@@ -344,7 +344,7 @@ public class List1Fragment extends Fragment
 
                     if(s.length() <= 0)
                     {
-                       
+
 //                    nfcModel.clear();
                         // allTags = db.getActiveNFC();
 //                    GetData(getContext());

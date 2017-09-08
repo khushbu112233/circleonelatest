@@ -61,38 +61,37 @@ import be.appfoundry.nfclibrary.utilities.interfaces.NfcReadUtility;
 import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CardDetail extends NfcActivity
-{
+public class CardDetail extends NfcActivity {
 
     ViewPager mViewPager, viewPager1;
-    private ArrayList<String> image = new ArrayList<>();;
-    private CardSwipe myPager ;
+    private ArrayList<String> image = new ArrayList<>();
+    ;
+    private CardSwipe myPager;
     private ImageView imgCards, imgConnect, imgEvents, imgProfile, imgBack, imgCard, imgMap;
     private static final String TAG = NFCDemo.class.getName();
-    private LinearLayout llWebsiteBox, llEmailBox, llMobileBox, llTeleBox, llFaxBox, llAddressBox ;
-
+    private LinearLayout llWebsiteBox, llEmailBox, llMobileBox, llTeleBox, llFaxBox, llAddressBox;
+    ImageView fbUrl, linkedInUrl, twitterUrl, googleUrl, youtubeUrl;
     NfcReadUtility mNfcReadUtility = new NfcReadUtilityImpl();
     ProgressDialog mProgressDialog;
-    DatabaseHelper db ;
+    DatabaseHelper db;
     TextView txtName, txtCompany, txtWebsite, txtEmail, txtPH, txtWork, txtMob, txtAddress, txtRemark, txtDesi;
     CircleImageView imgProfileCard;
     String user_id = "", profile_id;
     StickyScrollView scroll;
     ImageView imgCall, imgSMS, imgMail;
-    String recycle_image1, recycle_image2 ;
+    String recycle_image1, recycle_image2;
     ImageView imgAddGroupFriend;
 
-    String userImg , frontCardImg, backCardImg, personName, personAddress ;
+    String userImg, frontCardImg, backCardImg, personName, personAddress;
 
     List<CharSequence> list;
     List<CharSequence> listGroupId;
     LoginSession loginSession;
-
-    AppBarLayout appBarLayout ;
+    String strfbUrl = "", strlinkedInUrl = "", strtwitterUrl = "", strgoogleUrl = "", stryoutubeUrl = "";
+    AppBarLayout appBarLayout;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_detail);
         loginSession = new LoginSession(getApplicationContext());
@@ -109,7 +108,7 @@ public class CardDetail extends NfcActivity
         imgCall = (ImageView) findViewById(R.id.imgCall);
         imgSMS = (ImageView) findViewById(R.id.imgSMS);
         imgMail = (ImageView) findViewById(R.id.imgMail);
-        imgMap = (ImageView)findViewById(R.id.ivMap);
+        imgMap = (ImageView) findViewById(R.id.ivMap);
         imgProfileCard = (CircleImageView) findViewById(R.id.imgProfileCard);
         db = new DatabaseHelper(getApplicationContext());
         txtName = (TextView) findViewById(R.id.txtName);
@@ -124,14 +123,18 @@ public class CardDetail extends NfcActivity
         txtDesi = (TextView) findViewById(R.id.txtDesi);
         scroll = (StickyScrollView) findViewById(R.id.scroll);
         imgAddGroupFriend = (ImageView) findViewById(R.id.imgAddGroupFriend);
-        llWebsiteBox = (LinearLayout)findViewById(R.id.llWebsiteBox);
-        llEmailBox = (LinearLayout)findViewById(R.id.llEmailBox);
-        llMobileBox = (LinearLayout)findViewById(R.id.llMobileBox);
-        llTeleBox = (LinearLayout)findViewById(R.id.llTeleBox);
-        llFaxBox = (LinearLayout)findViewById(R.id.llFaxBox);
-        llAddressBox = (LinearLayout)findViewById(R.id.llAddressBox);
-        appBarLayout = (AppBarLayout)findViewById(R.id.appbar);
-
+        llWebsiteBox = (LinearLayout) findViewById(R.id.llWebsiteBox);
+        llEmailBox = (LinearLayout) findViewById(R.id.llEmailBox);
+        llMobileBox = (LinearLayout) findViewById(R.id.llMobileBox);
+        llTeleBox = (LinearLayout) findViewById(R.id.llTeleBox);
+        llFaxBox = (LinearLayout) findViewById(R.id.llFaxBox);
+        llAddressBox = (LinearLayout) findViewById(R.id.llAddressBox);
+        appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+        fbUrl = (ImageView) findViewById(R.id.fbUrl);
+        googleUrl = (ImageView) findViewById(R.id.googleUrl);
+        youtubeUrl = (ImageView) findViewById(R.id.youtubeUrl);
+        twitterUrl = (ImageView) findViewById(R.id.twitterUrl);
+        linkedInUrl = (ImageView) findViewById(R.id.linkedInUrl);
         list = new ArrayList<CharSequence>();
         listGroupId = new ArrayList<CharSequence>();
         Intent intent = getIntent();
@@ -143,11 +146,10 @@ public class CardDetail extends NfcActivity
 
         imgAddGroupFriend.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "Group", Toast.LENGTH_LONG).show();
                 // Intialize  readable sequence of char values
-                final CharSequence[] dialogList=  list.toArray(new CharSequence[list.size()]);
+                final CharSequence[] dialogList = list.toArray(new CharSequence[list.size()]);
                 final AlertDialog.Builder builderDialog = new AlertDialog.Builder(CardDetail.this);
                 builderDialog.setTitle("Select Item");
                 int count = dialogList.length;
@@ -164,16 +166,13 @@ public class CardDetail extends NfcActivity
                 builderDialog.setPositiveButton("Save",
                         new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which)
-                            {
+                            public void onClick(DialogInterface dialog, int which) {
                                 ListView list = ((AlertDialog) dialog).getListView();
                                 // make selected item in the comma seprated string
                                 StringBuilder stringBuilder = new StringBuilder();
-                                for (int i = 0; i < list.getCount(); i++)
-                                {
+                                for (int i = 0; i < list.getCount(); i++) {
                                     boolean checked = list.isItemChecked(i);
-                                    if (checked)
-                                    {
+                                    if (checked) {
                                         if (stringBuilder.length() > 0) stringBuilder.append("");
                                         stringBuilder.append(listGroupId.get(i));
 
@@ -191,7 +190,7 @@ public class CardDetail extends NfcActivity
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                               dialog.dismiss();
+                                dialog.dismiss();
                             }
                         });
                 AlertDialog alert = builderDialog.create();
@@ -199,10 +198,70 @@ public class CardDetail extends NfcActivity
             }
         });
 
+        fbUrl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (strfbUrl != null) {
+                    if (!strfbUrl.startsWith("http://") && !strfbUrl.startsWith("https://"))
+                        strfbUrl = "http://" + strfbUrl;
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(strfbUrl));
+                    startActivity(browserIntent);
+                }
+            }
+        });
+
+        googleUrl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (strgoogleUrl != null) {
+                    if (!strgoogleUrl.startsWith("http://") && !strgoogleUrl.startsWith("https://"))
+                        strgoogleUrl = "http://" + strgoogleUrl;
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(strgoogleUrl));
+                    startActivity(browserIntent);
+                }
+            }
+        });
+
+        youtubeUrl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (stryoutubeUrl != null) {
+                    if (!stryoutubeUrl.startsWith("http://") && !stryoutubeUrl.startsWith("https://"))
+                        stryoutubeUrl = "http://" + stryoutubeUrl;
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(stryoutubeUrl));
+                    startActivity(browserIntent);
+                }
+            }
+        });
+
+        twitterUrl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (strtwitterUrl != null) {
+                    if (!strtwitterUrl.startsWith("http://") && !strtwitterUrl.startsWith("https://"))
+                        strtwitterUrl = "http://" + strtwitterUrl;
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(strtwitterUrl));
+                    startActivity(browserIntent);
+                }
+            }
+        });
+
+        linkedInUrl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (strlinkedInUrl != null) {
+                    if (!strlinkedInUrl.startsWith("http://") && !strlinkedInUrl.startsWith("https://"))
+                        strlinkedInUrl = "http://" + strlinkedInUrl;
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(strlinkedInUrl));
+                    startActivity(browserIntent);
+                }
+            }
+        });
+
+
         llWebsiteBox.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 AlertDialog.Builder builder;
                 builder = new AlertDialog.Builder(CardDetail.this);
 
@@ -212,7 +271,7 @@ public class CardDetail extends NfcActivity
                             public void onClick(DialogInterface dialog, int which) {
                                 // continue with delete
                                 String url = txtWebsite.getText().toString();
-                                if (url!=null) {
+                                if (url != null) {
                                     if (!url.startsWith("http://") && !url.startsWith("https://"))
                                         url = "http://" + url;
                                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
@@ -234,28 +293,22 @@ public class CardDetail extends NfcActivity
         imgMail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (txtEmail.getText().toString().equals(""))
-                {
+                if (txtEmail.getText().toString().equals("")) {
 
-                }
-                else
-                {
+                } else {
                     AlertDialog.Builder builder;
                     builder = new AlertDialog.Builder(CardDetail.this);
-                    builder.setTitle("Mail to "+ txtName.getText().toString())
+                    builder.setTitle("Mail to " + txtName.getText().toString())
                             .setMessage("Are you sure you want to drop Mail ?")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     // continue with delete
-                                    try
-                                    {
-                                        Intent intent = new Intent (Intent.ACTION_VIEW , Uri.parse("mailto:" + txtEmail.getText().toString()));
+                                    try {
+                                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("mailto:" + txtEmail.getText().toString()));
                                         intent.putExtra(Intent.EXTRA_SUBJECT, "");
                                         intent.putExtra(Intent.EXTRA_TEXT, "");
                                         startActivity(intent);
-                                    }
-                                    catch(Exception e)
-                                    {
+                                    } catch (Exception e) {
                                         Toast.makeText(getApplicationContext(), "Sorry...You don't have any mail app", Toast.LENGTH_SHORT).show();
                                         e.printStackTrace();
                                     }
@@ -278,17 +331,17 @@ public class CardDetail extends NfcActivity
             public void onClick(View v) {
 
                 boolean result = Utility.checkSMSPermission(CardDetail.this);
-                    if (result) {
-                        if (txtMob.getText().toString().equals("")) {
-                            Toast.makeText(getApplicationContext(), "You are not having contact to SMS..", Toast.LENGTH_LONG).show();
-                        } else {
-                            Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-                            smsIntent.setType("vnd.android-dir/mms-sms");
-                            smsIntent.putExtra("address", txtMob.getText().toString());
-                            smsIntent.putExtra("sms_body", "");
-                            startActivity(smsIntent);
-                        }
+                if (result) {
+                    if (txtMob.getText().toString().equals("")) {
+                        Toast.makeText(getApplicationContext(), "You are not having contact to SMS..", Toast.LENGTH_LONG).show();
+                    } else {
+                        Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+                        smsIntent.setType("vnd.android-dir/mms-sms");
+                        smsIntent.putExtra("address", txtMob.getText().toString());
+                        smsIntent.putExtra("sms_body", "");
+                        startActivity(smsIntent);
                     }
+                }
             }
         });
 
@@ -296,7 +349,7 @@ public class CardDetail extends NfcActivity
             @Override
             public void onClick(View v) {
 
-                if (!txtMob.getText().toString().equals("")){
+                if (!txtMob.getText().toString().equals("")) {
                     AlertDialog.Builder builder;
                     builder = new AlertDialog.Builder(CardDetail.this);
 
@@ -318,8 +371,7 @@ public class CardDetail extends NfcActivity
                             })
                             .setIcon(android.R.drawable.ic_menu_call)
                             .show();
-                }
-                else if (!txtWork.getText().toString().equals("")){
+                } else if (!txtWork.getText().toString().equals("")) {
                     AlertDialog.Builder builder;
                     builder = new AlertDialog.Builder(CardDetail.this);
 
@@ -341,8 +393,7 @@ public class CardDetail extends NfcActivity
                             })
                             .setIcon(android.R.drawable.ic_menu_call)
                             .show();
-                }
-                else if (!txtPH.getText().toString().equals("")){
+                } else if (!txtPH.getText().toString().equals("")) {
                     AlertDialog.Builder builder;
                     builder = new AlertDialog.Builder(CardDetail.this);
 
@@ -370,30 +421,23 @@ public class CardDetail extends NfcActivity
 
         llEmailBox.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                if (txtEmail.getText().toString().equals(""))
-                {
+            public void onClick(View v) {
+                if (txtEmail.getText().toString().equals("")) {
 
-                }
-                else
-                {
+                } else {
                     AlertDialog.Builder builder;
                     builder = new AlertDialog.Builder(CardDetail.this);
-                    builder.setTitle("Mail to "+ txtName.getText().toString())
+                    builder.setTitle("Mail to " + txtName.getText().toString())
                             .setMessage("Are you sure you want to drop Mail ?")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     // continue with delete
-                                    try
-                                    {
-                                        Intent intent = new Intent (Intent.ACTION_VIEW , Uri.parse("mailto:" + txtEmail.getText().toString()));
+                                    try {
+                                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("mailto:" + txtEmail.getText().toString()));
                                         intent.putExtra(Intent.EXTRA_SUBJECT, "");
                                         intent.putExtra(Intent.EXTRA_TEXT, "");
                                         startActivity(intent);
-                                    }
-                                    catch(Exception e)
-                                    {
+                                    } catch (Exception e) {
                                         Toast.makeText(getApplicationContext(), "Sorry...You don't have any mail app", Toast.LENGTH_SHORT).show();
                                         e.printStackTrace();
                                     }
@@ -413,18 +457,17 @@ public class CardDetail extends NfcActivity
 
         llMobileBox.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 AlertDialog.Builder builder;
                 builder = new AlertDialog.Builder(CardDetail.this);
 
-                builder.setTitle("Call to "+ txtName.getText().toString())
+                builder.setTitle("Call to " + txtName.getText().toString())
                         .setMessage("Are you sure you want to make a Call ?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // continue with delete
                                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                                intent.setData(Uri.parse("tel:"+txtMob.getText().toString()));
+                                intent.setData(Uri.parse("tel:" + txtMob.getText().toString()));
                                 startActivity(intent);
                             }
                         })
@@ -441,18 +484,17 @@ public class CardDetail extends NfcActivity
 
         llTeleBox.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 AlertDialog.Builder builder;
                 builder = new AlertDialog.Builder(CardDetail.this);
 
-                builder.setTitle("Call to "+ txtName.getText().toString())
+                builder.setTitle("Call to " + txtName.getText().toString())
                         .setMessage("Are you sure you want to make a Call ?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // continue with delete
                                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                                intent.setData(Uri.parse("tel:"+txtPH.getText().toString()));
+                                intent.setData(Uri.parse("tel:" + txtPH.getText().toString()));
                                 startActivity(intent);
                             }
                         })
@@ -469,8 +511,7 @@ public class CardDetail extends NfcActivity
 
         llFaxBox.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
 
             }
         });
@@ -540,7 +581,7 @@ public class CardDetail extends NfcActivity
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+                Intent go = new Intent(getApplicationContext(), CardsActivity.class);
 
                 // you pass the position you want the viewpager to show in the extra,
                 // please don't forget to define and initialize the position variable
@@ -565,7 +606,7 @@ public class CardDetail extends NfcActivity
 
             @Override
             public void onPageSelected(final int position) {
-               // mViewPager.setCurrentItem(position, true);
+                // mViewPager.setCurrentItem(position, true);
             }
 
             @Override
@@ -580,7 +621,7 @@ public class CardDetail extends NfcActivity
         imgCards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+                Intent go = new Intent(getApplicationContext(), CardsActivity.class);
 
                 // you pass the position you want the viewpager to show in the extra,
                 // please don't forget to define and initialize the position variable
@@ -595,7 +636,7 @@ public class CardDetail extends NfcActivity
         imgConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+                Intent go = new Intent(getApplicationContext(), CardsActivity.class);
                 // you pass the position you want the viewpager to show in the extra,
                 // please don't forget to define and initialize the position variable
                 // properly
@@ -609,7 +650,7 @@ public class CardDetail extends NfcActivity
         imgEvents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+                Intent go = new Intent(getApplicationContext(), CardsActivity.class);
 
                 // you pass the position you want the viewpager to show in the extra,
                 // please don't forget to define and initialize the position variable
@@ -624,7 +665,7 @@ public class CardDetail extends NfcActivity
         imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+                Intent go = new Intent(getApplicationContext(), CardsActivity.class);
 
                 // you pass the position you want the viewpager to show in the extra,
                 // please don't forget to define and initialize the position variable
@@ -638,8 +679,7 @@ public class CardDetail extends NfcActivity
 
         imgMap.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 AlertDialog.Builder builder;
                 builder = new AlertDialog.Builder(CardDetail.this);
 
@@ -730,7 +770,7 @@ public class CardDetail extends NfcActivity
             HttpPost httpPost = new HttpPost(url);
             String json = "";
 
-            int i[] = new int[]{1,2,3};
+            int i[] = new int[]{1, 2, 3};
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
@@ -777,13 +817,11 @@ public class CardDetail extends NfcActivity
     }
 
 
-    private class HttpAsyncTaskGroup extends AsyncTask<String, Void, String>
-    {
+    private class HttpAsyncTaskGroup extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
-        protected void onPreExecute()
-        {
+        protected void onPreExecute() {
             super.onPreExecute();
             dialog = new ProgressDialog(CardDetail.this);
             dialog.setMessage("Fetching Groups...");
@@ -859,9 +897,9 @@ public class CardDetail extends NfcActivity
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
                     String Success = jsonObject.getString("Success");
-                    if (Success.equals("1")){
+                    if (Success.equals("1")) {
                         Toast.makeText(getApplicationContext(), "Friend Added..", Toast.LENGTH_LONG).show();
-                    }else {
+                    } else {
                         Toast.makeText(getApplicationContext(), "Friend not Added..", Toast.LENGTH_LONG).show();
                     }
                     // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
@@ -875,8 +913,7 @@ public class CardDetail extends NfcActivity
     }
 
 
-    private class HttpAsyncTask extends AsyncTask<String, Void, String>
-    {
+    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
@@ -892,37 +929,76 @@ public class CardDetail extends NfcActivity
         }
 
         @Override
-        protected String doInBackground(String... urls)
-        {
+        protected String doInBackground(String... urls) {
             return POST(urls[0]);
         }
+
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result)
-        {
+        protected void onPostExecute(String result) {
             dialog.dismiss();
-            try
-            {
-                if (result != null)
-                {
+            try {
+                if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
 
-                        jsonObject.getString("FirstName");
-                        jsonObject.getString("LastName");
-                        jsonObject.getString("OfficePhone");
-                        jsonObject.getString("PrimaryPhone");
-                        jsonObject.getString("Emailid");
-                        jsonObject.getString("IndustryName");
-                        jsonObject.getString("CompanyName");
-                        jsonObject.getString("CompanyProfile");
-                        jsonObject.getString("Designation");
-                        jsonObject.getString("Facebook");
-                        jsonObject.getString("Twitter");
-                        jsonObject.getString("Google");
-         frontCardImg = jsonObject.getString("Card_Front");
-          backCardImg = jsonObject.getString("Card_Back");
-              userImg = jsonObject.getString("UserPhoto");
+                    jsonObject.getString("FirstName");
+                    jsonObject.getString("LastName");
+                    jsonObject.getString("OfficePhone");
+                    jsonObject.getString("PrimaryPhone");
+                    jsonObject.getString("Emailid");
+                    jsonObject.getString("IndustryName");
+                    jsonObject.getString("CompanyName");
+                    jsonObject.getString("CompanyProfile");
+                    jsonObject.getString("Designation");
+                    strlinkedInUrl = jsonObject.getString("LinkedIn");
+                    strfbUrl = jsonObject.getString("Facebook");
+                    strtwitterUrl = jsonObject.getString("Twitter");
+                    strgoogleUrl = jsonObject.getString("Google");
+                    frontCardImg = jsonObject.getString("Card_Front");
+                    backCardImg = jsonObject.getString("Card_Back");
+                    userImg = jsonObject.getString("UserPhoto");
+
+                    if (strfbUrl.equals("") || strfbUrl.equals(null))
+                    {
+                        fbUrl.setImageResource(R.drawable.ic_fb_gray);
+                        fbUrl.setEnabled(false);
+                    }
+                    else {
+                        fbUrl.setImageResource(R.drawable.icon_fb);
+                        fbUrl.setEnabled(true);
+                    }
+
+                    if (strgoogleUrl.equals("") || strgoogleUrl.equals(null))
+                    {
+                        googleUrl.setImageResource(R.drawable.ic_google_gray);
+                        googleUrl.setEnabled(false);
+                    }
+                    else {
+                        googleUrl.setImageResource(R.drawable.icon_google);
+                        googleUrl.setEnabled(true);
+                    }
+
+                    if (strtwitterUrl.equals("") || strtwitterUrl.equals(null))
+                    {
+                        twitterUrl.setImageResource(R.drawable.icon_twitter_gray);
+                        twitterUrl.setEnabled(false);
+                    }
+                    else {
+                        twitterUrl.setImageResource(R.drawable.icon_twitter);
+                        twitterUrl.setEnabled(true);
+                    }
+
+                    if (strlinkedInUrl.equals("") || strlinkedInUrl.equals(null))
+                    {
+                        linkedInUrl.setImageResource(R.drawable.icon_linkedin_gray);
+                        linkedInUrl.setEnabled(false);
+                    }
+                    else {
+                        linkedInUrl.setImageResource(R.drawable.icon_linkedin);
+                        linkedInUrl.setEnabled(true);
+                    }
+
 
 //                        txtName.setText(jsonObject.getString("FirstName")+" "+jsonObject.getString("LastName"));
 //                        txtDesi.setText(jsonObject.getString("Designation"));
@@ -936,135 +1012,99 @@ public class CardDetail extends NfcActivity
                             + " " + jsonObject.getString("Country") + " " + jsonObject.getString("Postalcode"));*/
 //                    txtWebsite.setText(jsonObject.getString("Website"));
 
-                    personName = jsonObject.getString("FirstName")+" "+jsonObject.getString("LastName") ;
+                    personName = jsonObject.getString("FirstName") + " " + jsonObject.getString("LastName");
                     personAddress = jsonObject.getString("Address1") + " " + jsonObject.getString("Address2")
                             + " " + jsonObject.getString("Address3") + " " + jsonObject.getString("Address4")
-                            + " " + jsonObject.getString("City")  + " " + jsonObject.getString("State")
-                            + " " + jsonObject.getString("Country") + " " + jsonObject.getString("Postalcode") ;
+                            + " " + jsonObject.getString("City") + " " + jsonObject.getString("State")
+                            + " " + jsonObject.getString("Country") + " " + jsonObject.getString("Postalcode");
 
-                    if(personName.equalsIgnoreCase("") || personName.equalsIgnoreCase("null"))
-                    {
+                    if (personName.equalsIgnoreCase("") || personName.equalsIgnoreCase("null")) {
                         txtName.setText("Person");
-                    }
-                    else
-                    {
+                    } else {
                         txtName.setText(personName);
                     }
 
-                    if(jsonObject.getString("Designation").equalsIgnoreCase("")
-                            || jsonObject.getString("Designation").equalsIgnoreCase("null"))
-                    {
+                    if (jsonObject.getString("Designation").equalsIgnoreCase("")
+                            || jsonObject.getString("Designation").equalsIgnoreCase("null")) {
                         txtDesi.setText("Designation");
                         txtDesi.setVisibility(View.GONE);
-                    }
-                    else
-                    {
+                    } else {
                         txtDesi.setText(jsonObject.getString("Designation"));
                     }
 
-                    if(jsonObject.getString("CompanyName").equalsIgnoreCase("")
-                            || jsonObject.getString("CompanyName").equalsIgnoreCase("null"))
-                    {
+                    if (jsonObject.getString("CompanyName").equalsIgnoreCase("")
+                            || jsonObject.getString("CompanyName").equalsIgnoreCase("null")) {
                         txtCompany.setText("Company");
                         txtCompany.setVisibility(View.GONE);
-                    }
-                    else
-                    {
+                    } else {
                         txtCompany.setText(jsonObject.getString("CompanyName"));
                     }
 
-                    if(jsonObject.getString("Website").equalsIgnoreCase("")
-                            || jsonObject.getString("Website").equalsIgnoreCase("null"))
-                    {
+                    if (jsonObject.getString("Website").equalsIgnoreCase("")
+                            || jsonObject.getString("Website").equalsIgnoreCase("null")) {
                         txtWebsite.setText("Website");
                         llWebsiteBox.setVisibility(View.GONE);
-                    }
-                    else
-                    {
+                    } else {
                         txtWebsite.setText(jsonObject.getString("Website"));
                     }
 
-                    if(jsonObject.getString("Emailid").equalsIgnoreCase("")
-                            || jsonObject.getString("Emailid").equalsIgnoreCase("null"))
-                    {
+                    if (jsonObject.getString("Emailid").equalsIgnoreCase("")
+                            || jsonObject.getString("Emailid").equalsIgnoreCase("null")) {
                         txtEmail.setText("Email Address");
                         llEmailBox.setVisibility(View.GONE);
-                    }
-                    else
-                    {
+                    } else {
                         txtEmail.setText(jsonObject.getString("Emailid"));
                     }
 
-                    if(jsonObject.getString("OfficePhone").equalsIgnoreCase("")
-                            || jsonObject.getString("OfficePhone").equalsIgnoreCase("null"))
-                    {
+                    if (jsonObject.getString("OfficePhone").equalsIgnoreCase("")
+                            || jsonObject.getString("OfficePhone").equalsIgnoreCase("null")) {
                         txtPH.setText("Phone No.");
                         llTeleBox.setVisibility(View.GONE);
-                    }
-                    else
-                    {
+                    } else {
                         txtPH.setText(jsonObject.getString("OfficePhone"));
                     }
 
-                    if(jsonObject.getString("PrimaryPhone").equalsIgnoreCase("")
-                            || jsonObject.getString("PrimaryPhone").equalsIgnoreCase("null"))
-                    {
+                    if (jsonObject.getString("PrimaryPhone").equalsIgnoreCase("")
+                            || jsonObject.getString("PrimaryPhone").equalsIgnoreCase("null")) {
                         txtMob.setText("Mobile No.");
                         llMobileBox.setVisibility(View.GONE);
-                    }
-                    else
-                    {
+                    } else {
                         txtMob.setText(jsonObject.getString("PrimaryPhone"));
                     }
 
-                    if(personAddress.startsWith(" ")
+                    if (personAddress.startsWith(" ")
                             || personAddress.equalsIgnoreCase("null")
-                            || personAddress.equalsIgnoreCase(""))
-                    {
+                            || personAddress.equalsIgnoreCase("")) {
                         txtAddress.setText("Address");
                         llAddressBox.setVisibility(View.GONE);
-                    }
-                    else
-                    {
+                    } else {
                         txtAddress.setText(personAddress);
                     }
 
                     llFaxBox.setVisibility(View.GONE);
 
-                    if(userImg.equalsIgnoreCase(""))
-                    {
-                        imgProfileCard.setImageResource(R.drawable.usr) ;
-                    }
-                    else
-                    {
-                        Picasso.with(CardDetail.this).load("http://circle8.asia/App_ImgLib/UserProfile/"+userImg).into(imgProfileCard) ;
+                    if (userImg.equalsIgnoreCase("")) {
+                        imgProfileCard.setImageResource(R.drawable.usr);
+                    } else {
+                        Picasso.with(CardDetail.this).load("http://circle8.asia/App_ImgLib/UserProfile/" + userImg).into(imgProfileCard);
                     }
 
-                    if(frontCardImg.equalsIgnoreCase("") && backCardImg.equalsIgnoreCase(""))
-                    {
+                    if (frontCardImg.equalsIgnoreCase("") && backCardImg.equalsIgnoreCase("")) {
                         appBarLayout.setVisibility(View.GONE);
-                    }
-                    else
-                    {
+                    } else {
 //                        appBarLayout.setVisibility(View.VISIBLE);
                     }
 
-                    if(frontCardImg.equalsIgnoreCase(""))
-                    {
-                       recycle_image1 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg" ;
-                    }
-                    else
-                    {
-                        recycle_image1 = "http://circle8.asia/App_ImgLib/Cards/"+frontCardImg ;
+                    if (frontCardImg.equalsIgnoreCase("")) {
+                        recycle_image1 = "http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
+                    } else {
+                        recycle_image1 = "http://circle8.asia/App_ImgLib/Cards/" + frontCardImg;
                     }
 
-                    if(backCardImg.equalsIgnoreCase(""))
-                    {
-                        recycle_image2 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg" ;
-                    }
-                    else
-                    {
-                        recycle_image2 = "http://circle8.asia/App_ImgLib/Cards/"+backCardImg ;
+                    if (backCardImg.equalsIgnoreCase("")) {
+                        recycle_image2 = "http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
+                    } else {
+                        recycle_image2 = "http://circle8.asia/App_ImgLib/Cards/" + backCardImg;
                     }
 
                     image.add(recycle_image1);
@@ -1074,13 +1114,13 @@ public class CardDetail extends NfcActivity
                     mViewPager.setClipChildren(false);
                     mViewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
                     mViewPager.setOffscreenPageLimit(3);
-                  //  mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
+                    //  mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
                     mViewPager.setAdapter(myPager);
 
                     viewPager1.setClipChildren(false);
                     viewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
                     viewPager1.setOffscreenPageLimit(3);
-                 //   viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
+                    //   viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
                     viewPager1.setAdapter(myPager);
 
                         /*FriendConnection nfcModelTag = new FriendConnection();
@@ -1099,25 +1139,20 @@ public class CardDetail extends NfcActivity
                         allTags.add(nfcModelTag);*/
 //                        GetData(getContext());
 
-                }
-                else
-                {
+                } else {
                     Toast.makeText(getApplicationContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
                 }
 
-            }
-            catch (JSONException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public String POST(String url)
-    {
+    public String POST(String url) {
         InputStream inputStream = null;
         String result = "";
-        try
-        {
+        try {
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
 
@@ -1127,7 +1162,7 @@ public class CardDetail extends NfcActivity
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("profileid", profile_id );
+            jsonObject.accumulate("profileid", profile_id);
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -1154,7 +1189,7 @@ public class CardDetail extends NfcActivity
 
 
             // 10. convert inputstream to string
-            if(inputStream != null)
+            if (inputStream != null)
                 result = convertInputStreamToString(inputStream);
             else
                 result = "Did not work!";
@@ -1167,12 +1202,11 @@ public class CardDetail extends NfcActivity
         return result;
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException
-    {
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line = "";
         String result = "";
-        while((line = bufferedReader.readLine()) != null)
+        while ((line = bufferedReader.readLine()) != null)
             result += line;
 
         inputStream.close();
@@ -1195,9 +1229,10 @@ public class CardDetail extends NfcActivity
     }
 
     private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
+
     public static String bytesToHex(byte[] bytes) {
         char[] hexChars = new char[bytes.length * 2];
-        for ( int j = 0; j < bytes.length; j++ ) {
+        for (int j = 0; j < bytes.length; j++) {
             int v = bytes[j] & 0xFF;
             hexChars[j * 2] = hexArray[v >>> 4];
             hexChars[j * 2 + 1] = hexArray[v & 0x0F];
@@ -1208,30 +1243,28 @@ public class CardDetail extends NfcActivity
     /**
      * Launched when in foreground dispatch mode
      *
-     * @param paramIntent
-     *         containing found data
+     * @param paramIntent containing found data
      */
     @Override
-    public void onNewIntent(final Intent paramIntent)
-    {
+    public void onNewIntent(final Intent paramIntent) {
         super.onNewIntent(paramIntent);
 
 
-            Tag tag = paramIntent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            if(tag == null){
-                Toast.makeText(getApplicationContext(), "tag == null", Toast.LENGTH_LONG).show();
-                //textViewInfo.setText("tag == null");
-            }else {
-                String tagInfo = tag.toString() + "\n";
-                String id = "";
-                tagInfo += "\nTag Id: \n";
-                byte[] tagId = tag.getId();
-                tagInfo += "length = " + tagId.length + "\n";
-                for (int i = 0; i < tagId.length; i++) {
-                    tagInfo += Integer.toHexString(tagId[i] & 0xFF) + " ";
-                    // id += Integer.toHexString(tagId[i] & 0xFF) + " ";
-                }
-                id = bytesToHex(tagId);
+        Tag tag = paramIntent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+        if (tag == null) {
+            Toast.makeText(getApplicationContext(), "tag == null", Toast.LENGTH_LONG).show();
+            //textViewInfo.setText("tag == null");
+        } else {
+            String tagInfo = tag.toString() + "\n";
+            String id = "";
+            tagInfo += "\nTag Id: \n";
+            byte[] tagId = tag.getId();
+            tagInfo += "length = " + tagId.length + "\n";
+            for (int i = 0; i < tagId.length; i++) {
+                tagInfo += Integer.toHexString(tagId[i] & 0xFF) + " ";
+                // id += Integer.toHexString(tagId[i] & 0xFF) + " ";
+            }
+            id = bytesToHex(tagId);
                /* try {
 
                     if (allTags != null){
@@ -1247,64 +1280,62 @@ public class CardDetail extends NfcActivity
                 }*/
 
 
-              //  Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
-               // callData(id);
-                for (String data : mNfcReadUtility.readFromTagWithMap(paramIntent).values())
-                {
-                    Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
-                    List<NFCModel> modelList = db.getNFCbyTag(data);
+            //  Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
+            // callData(id);
+            for (String data : mNfcReadUtility.readFromTagWithMap(paramIntent).values()) {
+                Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
+                List<NFCModel> modelList = db.getNFCbyTag(data);
 
-                    try {
+                try {
 
-                        if (modelList != null){
+                    if (modelList != null) {
 
-                            for (NFCModel tag1 : modelList)
-                            {
-                                // Toast.makeText(getApplicationContext(), tag1.getName(), Toast.LENGTH_LONG).show();
+                        for (NFCModel tag1 : modelList) {
+                            // Toast.makeText(getApplicationContext(), tag1.getName(), Toast.LENGTH_LONG).show();
 
-                               // Bitmap bmp = BitmapFactory.decodeByteArray(tag1.getCard_front(), 0, tag1.getCard_front().length);
-                                imgCard.setImageResource(tag1.getCard_front());
+                            // Bitmap bmp = BitmapFactory.decodeByteArray(tag1.getCard_front(), 0, tag1.getCard_front().length);
+                            imgCard.setImageResource(tag1.getCard_front());
 
-                               // Bitmap bmp1 = BitmapFactory.decodeByteArray(tag1.getUser_image(), 0, tag1.getUser_image().length);
-                                imgProfileCard.setImageResource(tag1.getUser_image());
-                                txtName.setText(tag1.getName());
-                                txtCompany.setText(tag1.getCompany());
-                                txtWebsite.setText(tag1.getWebsite());
-                                txtEmail.setText(tag1.getEmail());
-                                txtPH.setText(tag1.getPh_no());
-                                txtWork.setText(tag1.getWork_no());
-                                txtMob.setText(tag1.getMob_no());
-                                txtAddress.setText(tag1.getAddress());
-                                txtRemark.setText(tag1.getRemark());
-                                txtDesi.setText(tag1.getDesignation());
-                                image.add(String.valueOf(tag1.getCard_front()));   // its change from integer to string
-                                image.add(String.valueOf(tag1.getCard_back()));    // its change from integer to string
-                                myPager = new CardSwipe(getApplicationContext(), image);
+                            // Bitmap bmp1 = BitmapFactory.decodeByteArray(tag1.getUser_image(), 0, tag1.getUser_image().length);
+                            imgProfileCard.setImageResource(tag1.getUser_image());
+                            txtName.setText(tag1.getName());
+                            txtCompany.setText(tag1.getCompany());
+                            txtWebsite.setText(tag1.getWebsite());
+                            txtEmail.setText(tag1.getEmail());
+                            txtPH.setText(tag1.getPh_no());
+                            txtWork.setText(tag1.getWork_no());
+                            txtMob.setText(tag1.getMob_no());
+                            txtAddress.setText(tag1.getAddress());
+                            txtRemark.setText(tag1.getRemark());
+                            txtDesi.setText(tag1.getDesignation());
+                            image.add(String.valueOf(tag1.getCard_front()));   // its change from integer to string
+                            image.add(String.valueOf(tag1.getCard_back()));    // its change from integer to string
+                            myPager = new CardSwipe(getApplicationContext(), image);
 
-                                mViewPager.setClipChildren(false);
-                                mViewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
-                                mViewPager.setOffscreenPageLimit(3);
-                             //   mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
+                            mViewPager.setClipChildren(false);
+                            mViewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+                            mViewPager.setOffscreenPageLimit(3);
+                            //   mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
 
-                                viewPager1.setAdapter(myPager);
+                            viewPager1.setAdapter(myPager);
 
-                                viewPager1.setClipChildren(false);
-                                viewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
-                                viewPager1.setOffscreenPageLimit(3);
+                            viewPager1.setClipChildren(false);
+                            viewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+                            viewPager1.setOffscreenPageLimit(3);
                             //    viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
-                                viewPager1.setAdapter(myPager);
+                            viewPager1.setAdapter(myPager);
 
-                            }
                         }
-
-                    }catch (Exception e){
-
                     }
+
+                } catch (Exception e) {
+
                 }
+            }
         }
     }
 
-    public void callData(String id){
+    public void callData(String id) {
 
     }
 

@@ -340,6 +340,7 @@
 
 
                     <ImageView
+                        android:id="@+id/fbUrl"
                         android:layout_width="38dp"
                         android:layout_height="38dp"
                         android:layout_marginLeft="25dp"
@@ -348,6 +349,7 @@
                         android:src="@drawable/icon_fb" />
 
                     <ImageView
+                        android:id="@+id/linkedInUrl"
                         android:layout_width="38dp"
                         android:layout_height="38dp"
                         android:layout_weight="1"
@@ -355,6 +357,7 @@
                         android:src="@drawable/icon_linkedin_gray" />
 
                     <ImageView
+                        android:id="@+id/twitterUrl"
                         android:layout_width="38dp"
                         android:layout_height="38dp"
                         android:layout_weight="1"
@@ -362,6 +365,7 @@
                         android:src="@drawable/icon_twitter" />
 
                     <ImageView
+                        android:id="@+id/googleUrl"
                         android:layout_width="38dp"
                         android:layout_height="38dp"
                         android:layout_weight="1"
@@ -369,6 +373,7 @@
                         android:src="@drawable/icon_google" />
 
                     <ImageView
+                        android:id="@+id/youtubeUrl"
                         android:layout_width="38dp"
                         android:layout_height="38dp"
                         android:layout_marginRight="25dp"
