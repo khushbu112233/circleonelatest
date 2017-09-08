@@ -53,7 +53,7 @@ public class ByCompanyFragment  extends Fragment
 
     private ListView listView;
     private TextView tvDataInfo ;
-    private String find_by = "company" ;
+    private String find_by = "COMPANY" ;
     private List5Adapter list5Adapter ;
     private ConnectListAdapter connectListAdapter ;
     private AutoCompleteTextView searchText ;

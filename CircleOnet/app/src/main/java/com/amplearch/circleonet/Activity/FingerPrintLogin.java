@@ -23,6 +23,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amplearch.circleonet.ApplicationUtils.MyApplication;
@@ -56,6 +57,7 @@ public class FingerPrintLogin extends AppCompatActivity {
     private KeyGenerator keyGenerator;
     private Cipher cipher;
     private FingerprintManager.CryptoObject cryptoObject;
+    TextView txtSkip;
 
     private FingerprintHandler fingerprintHandler;
 
@@ -78,7 +80,7 @@ public class FingerPrintLogin extends AppCompatActivity {
 
         mGson = ((MyApplication) getApplication()).getGsonObject();
         mPref = ((MyApplication) getApplication()).getShared();
-
+        txtSkip = (TextView) findViewById(R.id.txtSkip);
         fingerprintHandler = new FingerprintHandler(this);
         loginSession = new LoginSession(getApplicationContext());
         fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
@@ -96,6 +98,33 @@ public class FingerPrintLogin extends AppCompatActivity {
             }
         }
         fingerprintHandler.completeFingerAuthentication(fingerprintManager, cryptoObject);
+        txtSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userString = mPref.getUserData();
+                mUser = mGson.fromJson(userString, UserObject.class);
+                if (mUser != null) {
+                    loginSession.createLoginSession(mUser.getProfileid(), mUser.getUserId(), mUser.getUsername(), mUser.getEmail(), mUser.getImage(), mUser.getGender());
+                    Toast.makeText(getApplicationContext(), "LoggedIn Successfully..", Toast.LENGTH_LONG).show();
+
+                    // login with only fingerprint
+                    if (prefs.getBoolean("firstrun", true)) {
+                        // Do first run stuff here then set 'firstrun' as false
+                        // using the following line to edit/commit prefs
+                        Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                        startActivity(intent);
+                        prefs.edit().putBoolean("firstrun", false).commit();
+                    } else {
+                        Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                        userIntent.putExtra("viewpager_position", 0);
+                        startActivity(userIntent);
+                        finish();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "You must register before login with fingerprint", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
     }
 

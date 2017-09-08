@@ -20,8 +20,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import static com.amplearch.circleonet.Activity.SortAndFilterOption.cardSort;
-
 
 public class DatabaseHelper extends SQLiteOpenHelper
 {
@@ -720,13 +718,13 @@ public class DatabaseHelper extends SQLiteOpenHelper
     public List<NFCModel> getActiveNFC() {
         List<NFCModel> tags = new ArrayList<NFCModel>();
         String selectQuery = "";
-        if (cardSort == 1) {
+       /* if (cardSort == 1) {*/
             selectQuery = "SELECT  * FROM " + TABLE_NFC + " WHERE " + KEY_ACTIVE + "='true' ORDER BY datetime(\"date\") DESC";
-        }else if (cardSort == 2){
+        /*}else if (cardSort == 2){
             selectQuery = "SELECT  * FROM " + TABLE_NFC + " WHERE " + KEY_ACTIVE + "='true' ORDER BY "+ KEY_NAME;
         }else if (cardSort == 3){
             selectQuery = "SELECT  * FROM " + TABLE_NFC + " WHERE " + KEY_ACTIVE + "='true' ORDER BY "+ KEY_COMPANY;
-        }
+        }*/
 
         Log.e(LOG, selectQuery);
 

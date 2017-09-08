@@ -54,7 +54,7 @@ public class ByNameFragment extends Fragment
 
     private ListView listView;
     private TextView tvDataInfo ;
-    private String find_by = "name" ;
+    private String find_by = "NAME" ;
     private List5Adapter list5Adapter ;
     private ConnectListAdapter connectListAdapter ;
     private AutoCompleteTextView searchText ;

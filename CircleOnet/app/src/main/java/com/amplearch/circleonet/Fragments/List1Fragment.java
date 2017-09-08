@@ -40,6 +40,7 @@ import android.widget.Toast;
 import com.amplearch.circleonet.Activity.CardDetail;
 import com.amplearch.circleonet.Activity.CardsActivity;
 import com.amplearch.circleonet.Activity.LoginActivity;
+import com.amplearch.circleonet.Activity.SortAndFilterOption;
 import com.amplearch.circleonet.Adapter.GalleryAdapter;
 import com.amplearch.circleonet.Adapter.GalleryAdapter1;
 import com.amplearch.circleonet.Adapter.GridViewAdapter;
@@ -115,7 +116,7 @@ public class List1Fragment extends Fragment
     public static CarouselLayoutManager manager1, manager2;
     private int draggingView = -1;
     RelativeLayout rlt;
-    public static TextView txtNoCard1, tvNoCard;
+    public static TextView txtNoCard1;
     LoginSession session;
 
     static String UserId = "";
@@ -151,7 +152,6 @@ public class List1Fragment extends Fragment
         recyclerView1 = (RecyclerView) view.findViewById(R.id.list_horizontal1);
         recyclerView2 = (RecyclerView) view.findViewById(R.id.list_horizontal2);
         txtNoCard1 = (TextView) view.findViewById(R.id.txtNoCard1);
-        tvNoCard = (TextView)view.findViewById(R.id.tvNoCard);
         lnrList = (LinearLayout) view.findViewById(R.id.lnrList);
         frame = (FrameLayout) view.findViewById(R.id.frame);
         frame1 = (FrameLayout) view.findViewById(R.id.frame1);
@@ -339,34 +339,39 @@ public class List1Fragment extends Fragment
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
-                if(s.length() <= 0)
-                {
-                    tvNoCard.setVisibility(View.GONE);
+                if (allTags.size() == 0){
+                }else {
+
+                    if(s.length() <= 0)
+                    {
+                       
 //                    nfcModel.clear();
-                    // allTags = db.getActiveNFC();
+                        // allTags = db.getActiveNFC();
 //                    GetData(getContext());
-                    nfcModel.clear();
-                    allTags.clear();
+                        nfcModel.clear();
+                        allTags.clear();
 //                    mAdapter.notifyDataSetChanged();
 //                    mAdapter1.notifyDataSetChanged();
-                    try {
-                        mAdapter.notifyDataSetChanged();
-                    }catch (Exception e){}
-                    try {
-                        mAdapter1.notifyDataSetChanged();
-                    }catch (Exception e){}
-                    callFirst();
-                }
-                else if( s.length() > 0 )
-                {
-                    String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
+                        try {
+                            mAdapter.notifyDataSetChanged();
+                        }catch (Exception e){}
+                        try {
+                            mAdapter1.notifyDataSetChanged();
+                        }catch (Exception e){}
+                        callFirst();
+                    }
+                    else if( s.length() > 0 )
+                    {
+                        String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
 //                    mAdapter.Filter(text);
-                    //   mAdapter1.Filter(text);
-                    nfcModel.clear();
-                    allTags.clear();
+                        //   mAdapter1.Filter(text);
+                        nfcModel.clear();
+                        allTags.clear();
 //                    mAdapter.notifyDataSetChanged();
 //                    mAdapter1.notifyDataSetChanged();
-                    new HttpAsyncTaskSearch().execute("http://circle8.asia:8081/Onet.svc/SearchConnect");
+                        new HttpAsyncTaskSearch().execute("http://circle8.asia:8081/Onet.svc/SearchConnect");
+                    }
+
                 }
             }
 
@@ -381,7 +386,7 @@ public class List1Fragment extends Fragment
 
     private void callFirst()
     {
-        tvNoCard.setVisibility(View.GONE);
+       // tvNoCard.setVisibility(View.GONE);
         nfcModel.clear();
         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
     }
@@ -410,6 +415,7 @@ public class List1Fragment extends Fragment
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("Type", SortAndFilterOption.SortType);
             jsonObject.accumulate("numofrecords", "10" );
             jsonObject.accumulate("pageno", "1" );
             jsonObject.accumulate("userid", UserId );
@@ -847,11 +853,11 @@ public class List1Fragment extends Fragment
 
                     if(connect.length() == 0)
                     {
-                        tvNoCard.setVisibility(View.VISIBLE);
+                      //  tvNoCard.setVisibility(View.VISIBLE);
                     }
                     else
                     {
-                          tvNoCard.setVisibility(View.GONE);
+                        //  tvNoCard.setVisibility(View.GONE);
 
                         for(int i = 0 ; i <= connect.length() ; i++ )
                         {
