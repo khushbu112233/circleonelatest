@@ -488,13 +488,11 @@ public class List3Fragment extends Fragment
                     JSONObject jsonObject = new JSONObject(result);
                     totalArray = jsonObject.getString("count");
 
-                    numberCount = Integer.parseInt(totalArray) ;
-
 //                    Toast.makeText(mContext,"Counts: "+numberCount,Toast.LENGTH_SHORT).show();
 
                     JSONArray jsonArray = jsonObject.getJSONArray("connection");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
-
+                    numberCount = jsonArray.length();
                     rlLoadMore.setVisibility(View.GONE);
 
                     for (int i = 0; i < jsonArray.length(); i++)

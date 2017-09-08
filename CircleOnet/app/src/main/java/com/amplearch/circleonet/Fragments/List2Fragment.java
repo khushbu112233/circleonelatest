@@ -414,10 +414,9 @@ public class List2Fragment extends Fragment
                 {
                     JSONObject jsonObject = new JSONObject(result);
 
-                    numberCount = Integer.parseInt(jsonObject.getString("count")) ;
-
                     JSONArray jsonArray = jsonObject.getJSONArray("connection");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
+                    numberCount = jsonArray.length();
 
                     rlLoadMore.setVisibility(View.GONE);
 

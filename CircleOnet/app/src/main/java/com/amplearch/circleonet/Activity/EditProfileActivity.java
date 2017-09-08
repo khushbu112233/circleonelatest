@@ -6,7 +6,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,6 +17,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -42,10 +46,35 @@ import com.amplearch.circleonet.Adapter.CardSwipe;
 import com.amplearch.circleonet.Adapter.CustomAdapter;
 import com.amplearch.circleonet.Helper.LoginSession;
 import com.amplearch.circleonet.Model.TestimonialModel;
+import com.amplearch.circleonet.Model.User;
 import com.amplearch.circleonet.R;
 import com.amplearch.circleonet.Utils.ExpandableHeightGridView;
 import com.amplearch.circleonet.Utils.ExpandableHeightListView;
+import com.amplearch.circleonet.Utils.PrefUtils;
 import com.amplearch.circleonet.Utils.Utility;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.OptionalPendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.plus.Plus;
+import com.google.android.gms.plus.model.people.Person;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.linkedin.platform.utils.Scope;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpResponse;
@@ -67,6 +96,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -75,15 +106,18 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static junit.framework.Assert.assertEquals;
 
-public class EditProfileActivity extends AppCompatActivity
+public class EditProfileActivity extends AppCompatActivity implements
+        View.OnClickListener,
+        GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks
 {
+    public static final String PACKAGE = "com.amplearch.circleonet";
     private static final int PICKFILE_RESULT_CODE = 1;
     public static ArrayList<TestimonialModel> allTaggs;
     //for adding event and expande & collapse
     public static ArrayList<String> addEventList = new ArrayList<>();
     public static AddEventAdapter addEventAdapter;
     public static TextView tvEventInfo;
-    ImageView imgDone, imgAdd;
+    ImageView imgDone, imgAdd, imgFb, imgLinkedin, imgTwitter, imgGoogle, imgYoutube;
     AutoCompleteTextView autoCompleteCompany, autoCompleteDesignation, autoCompleteIndustry;
     //String[] languages={"Android ","java","IOS","SQL","JDBC","Web services"};
     ArrayList<String> company, designation, industry;
@@ -101,6 +135,7 @@ public class EditProfileActivity extends AppCompatActivity
     ArrayList<String> title_array = new ArrayList<String>();
     ArrayList<String> notice_array = new ArrayList<String>();
     String type = "";
+    private ProgressDialog progressDialog;
     EditText edtAddress1, edtAddress2, edtAddress3, edtAddress4, edtAddress5, edtAddress6, edtWebsite, etAssociationName;
     String UserID = "";
     ImageView imgBack;
@@ -130,10 +165,16 @@ public class EditProfileActivity extends AppCompatActivity
     String cardType = "";
     String Attach_String = "";
     String companyID, designationID, industryID, associationID, addressID ;
-
+    private ProgressDialog mProgressDialog;
     ArrayList<String> AssoNameList = new ArrayList<>();
     ArrayList<String> AssoIdList = new ArrayList<>();
     Spinner spnAssociation;
+    String strFB = "", strLinkedin = "", strGoogle = "", strTwitter = "", strYoutube = "";
+    private CallbackManager callbackManager;
+    private LoginButton loginButton;
+    private SignInButton btnSignIn;
+    private GoogleApiClient mGoogleApiClient;
+    private static final int RC_SIGN_IN = 007;
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException
     {
@@ -151,6 +192,7 @@ public class EditProfileActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.fragment_edit_profile);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -173,6 +215,7 @@ public class EditProfileActivity extends AppCompatActivity
         edtAddress5 = (EditText) findViewById(R.id.edtAddress5);
         edtAddress6 = (EditText) findViewById(R.id.edtAddress6);
         edtWork = (EditText) findViewById(R.id.edtWork);
+        btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
         edtEmail = (EditText) findViewById(R.id.edtEmail);
         edtWebsite = (EditText) findViewById(R.id.edtWebsite);
         edtProfileDesc = (EditText) findViewById(R.id.edtProfileDesc);
@@ -187,6 +230,7 @@ public class EditProfileActivity extends AppCompatActivity
         lstTestimonial = (ExpandableHeightListView) findViewById(R.id.lstTestimonial);
         txtTestimonial = (TextView) findViewById(R.id.txtTestimonial);
         txtMore = (TextView) findViewById(R.id.txtMore);
+        loginButton = (LoginButton) findViewById(R.id.login_button);
         ivArrowImg = (ImageView) findViewById(R.id.ivArrowImg);
         tvEventInfo = (TextView) findViewById(R.id.tvEventInfo);
         imgAdd = (ImageView) findViewById(R.id.imgAdd);
@@ -198,12 +242,38 @@ public class EditProfileActivity extends AppCompatActivity
         ivAddAssociate = (ImageView)findViewById(R.id.ivAddAssociate);
       //  etAssociationName = (EditText)findViewById(R.id.etAssociationName);
         spnAssociation = (Spinner) findViewById(R.id.spnAssociation);
+        imgYoutube = (ImageView) findViewById(R.id.imgYoutube);
+        imgGoogle = (ImageView) findViewById(R.id.imgGoogle);
+        imgTwitter = (ImageView) findViewById(R.id.imgTwitter);
+        imgLinkedin = (ImageView) findViewById(R.id.imgLinkedin);
+        imgFb = (ImageView) findViewById(R.id.imgFb);
+        loginButton = (LoginButton) findViewById(R.id.login_button);
         Intent intent = getIntent();
         type = intent.getStringExtra("type");
         HashMap<String, String> user = session.getUserDetails();
         UserID = user.get(LoginSession.KEY_USERID);
         profileId = intent.getStringExtra("profile_id");
         allTaggs = new ArrayList<>();
+
+        btnSignIn.setOnClickListener(this);
+        imgGoogle.setOnClickListener(this);
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .addApi(Plus.API, Plus.PlusOptions.builder().build())
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+
+
+        // Customizing G+ button
+        btnSignIn.setSize(SignInButton.SIZE_ICON_ONLY);
+        btnSignIn.setScopes(gso.getScopeArray());
+
 
         array = new String[]{"Accommodations", "Information", "Accounting", "Information technology", "Advertising",
                 "Insurance", "Aerospace", "Journalism & News", "Agriculture & Agribusiness", "Legal Services", "Air Transportation",
@@ -215,6 +285,27 @@ public class EditProfileActivity extends AppCompatActivity
                 "Travel", "Fine Arts", "Utilities", "Food & Beverage", "Video Game", "Green Technology", "Web Services", "Health"};
         gridView.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.mytextview, array));
         gridView.setExpanded(true);
+
+        imgFb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressDialog = new ProgressDialog(EditProfileActivity.this);
+                progressDialog.setMessage("Loading...");
+                progressDialog.show();
+
+                loginButton.performClick();
+
+                loginButton.setPressed(true);
+
+                loginButton.invalidate();
+
+                loginButton.registerCallback(callbackManager, mCallBack);
+
+                loginButton.setPressed(false);
+
+                loginButton.invalidate();
+            }
+        });
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -374,7 +465,7 @@ public class EditProfileActivity extends AppCompatActivity
                 }
             }
         });
-
+        generateHashkey();
         txtMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -428,6 +519,144 @@ public class EditProfileActivity extends AppCompatActivity
             makeRequest();
         }
     }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int cause) {
+        // The connection to Google Play services was lost for some reason. We call connect() to
+        // attempt to re-establish the connection.
+        Log.i("TAG", "Connection suspended");
+        mGoogleApiClient.connect();
+    }
+
+    private void signIn() {
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    private void handleSignInResult(GoogleSignInResult result) {
+        Log.d("TAG", "handleSignInResult:" + result.isSuccess());
+        if (result.isSuccess()) {
+            // Signed in successfully, show authenticated UI.
+            GoogleSignInAccount acct = result.getSignInAccount();
+
+
+            if (mGoogleApiClient.isConnected()) {
+                if (mGoogleApiClient.hasConnectedApi(Plus.API)) {
+                    if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
+                        Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
+
+                        Log.e("TAG", "display name: " + acct.getDisplayName());
+
+                        String personName = acct.getDisplayName();
+//            String personPhotoUrl = acct.getPhotoUrl().toString();
+                        String email = acct.getEmail();
+                        String personPhotoUrl = currentPerson.getImage().getUrl();
+                        Log.e("TAG", "Name: " + personName + ", email: " + email
+                        );
+                        strGoogle = "https://plus.google.com/"+acct.getId();
+                        imgGoogle.setImageResource(R.drawable.icon_google);
+                    }
+                }
+            } else {
+                //connect it
+                mGoogleApiClient.connect(GoogleApiClient.SIGN_IN_MODE_OPTIONAL);
+
+                updateUI(true);
+            }
+        } else {
+            // Signed out, show unauthenticated UI.
+            updateUI(false);
+        }
+    }
+
+
+    private FacebookCallback<LoginResult> mCallBack = new FacebookCallback<LoginResult>() {
+        @Override
+        public void onSuccess(LoginResult loginResult) {
+
+            progressDialog.dismiss();
+
+            // App code
+            GraphRequest request = GraphRequest.newMeRequest(
+                    loginResult.getAccessToken(),
+                    new GraphRequest.GraphJSONObjectCallback() {
+                        @Override
+                        public void onCompleted(
+                                JSONObject object,
+                                GraphResponse response) {
+
+                            Log.e("response: ", response + "");
+                            Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
+                            try {
+                                strFB = "https://www.facebook.com/profile.php?id=" + object.getString("id").toString();
+                                Toast.makeText(getApplicationContext(), strFB, Toast.LENGTH_LONG).show();
+                                imgFb.setImageResource(R.drawable.icon_fb);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                    });
+
+            Bundle parameters = new Bundle();
+            parameters.putString("fields", "id,name,email,gender, birthday");
+            request.setParameters(parameters);
+            request.executeAsync();
+        }
+
+        @Override
+        public void onCancel() {
+            progressDialog.dismiss();
+        }
+
+        @Override
+        public void onError(FacebookException e) {
+            progressDialog.dismiss();
+        }
+    };
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        callbackManager = CallbackManager.Factory.create();
+
+        loginButton = (LoginButton) findViewById(R.id.login_button);
+
+        loginButton.setReadPermissions("public_profile", "email");
+
+        imgFb= (ImageView) findViewById(R.id.imgFb);
+        imgFb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                progressDialog = new ProgressDialog(EditProfileActivity.this);
+                progressDialog.setMessage("Loading...");
+                progressDialog.show();
+
+                loginButton.performClick();
+
+                loginButton.setPressed(true);
+
+                loginButton.invalidate();
+
+                loginButton.registerCallback(callbackManager, mCallBack);
+
+                loginButton.setPressed(false);
+
+                loginButton.invalidate();
+
+            }
+        });
+    }
+
 
     private void selectImage() {
         items = new CharSequence[]{"Take Photo", "Choose from Library", "Cancel"};
@@ -501,11 +730,11 @@ public class EditProfileActivity extends AppCompatActivity
             jsonObject.accumulate("DesignationID", designationID);
             jsonObject.accumulate("Email", edtEmail.getText().toString());
             jsonObject.accumulate("Email_Type", "work");
-            jsonObject.accumulate("Facebook", "");
-            jsonObject.accumulate("Google", "");
+            jsonObject.accumulate("Facebook", strFB);
+            jsonObject.accumulate("Google", strGoogle);
             jsonObject.accumulate("IndustryID", industryID);
             jsonObject.accumulate("IndustryName", autoCompleteIndustry.getText().toString());
-            jsonObject.accumulate("Linkedin", "");
+            jsonObject.accumulate("Linkedin", strLinkedin);
             jsonObject.accumulate("Phone", edtWork.getText().toString());
             jsonObject.accumulate("Phone_type", "work");
             jsonObject.accumulate("Postalcode", edtAddress6.getText().toString());
@@ -513,7 +742,7 @@ public class EditProfileActivity extends AppCompatActivity
             jsonObject.accumulate("Profile_Desc", ProfileDesc);
             jsonObject.accumulate("Profile_Type", "work");
             jsonObject.accumulate("State", edtAddress4.getText().toString());
-            jsonObject.accumulate("Twitter", "");
+            jsonObject.accumulate("Twitter", strTwitter);
             jsonObject.accumulate("UserID", UserID);
             jsonObject.accumulate("Website", edtWebsite.getText().toString());
 
@@ -964,11 +1193,11 @@ public class EditProfileActivity extends AppCompatActivity
             jsonObject.accumulate("DesignationID", designationID);
             jsonObject.accumulate("Email", edtEmail.getText().toString());
             jsonObject.accumulate("Email_Type", "work");
-            jsonObject.accumulate("Facebook", "");
-            jsonObject.accumulate("Google", "");
+            jsonObject.accumulate("Facebook", strFB);
+            jsonObject.accumulate("Google", strGoogle);
             jsonObject.accumulate("IndustryID", industryID);
             jsonObject.accumulate("IndustryName", autoCompleteIndustry.getText().toString());
-            jsonObject.accumulate("Linkedin", "");
+            jsonObject.accumulate("Linkedin", strLinkedin);
             jsonObject.accumulate("Phone", edtWork.getText().toString());
             jsonObject.accumulate("Phone_type", "work");
             jsonObject.accumulate("Postalcode", edtAddress6.getText().toString());
@@ -976,7 +1205,7 @@ public class EditProfileActivity extends AppCompatActivity
             jsonObject.accumulate("Profile_Desc", ProfileDesc);
             jsonObject.accumulate("Profile_Type", "work");
             jsonObject.accumulate("State", edtAddress4.getText().toString());
-            jsonObject.accumulate("Twitter", "");
+            jsonObject.accumulate("Twitter", strTwitter);
             jsonObject.accumulate("UserID", UserID);
             jsonObject.accumulate("Website", edtWebsite.getText().toString());
 
@@ -1097,12 +1326,38 @@ public class EditProfileActivity extends AppCompatActivity
         startActivityForResult(Intent.createChooser(intent, "Audio"), REQUEST_AUDIO);
     }
 
+    public void generateHashkey() {
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    PACKAGE,
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+
+                // ((TextView) findViewById(R.id.package_name)).setText(info.packageName);
+                Log.d("KeyHash ", Base64.encodeToString(md.digest(), Base64.NO_WRAP));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.d("TAG", e.getMessage(), e);
+        } catch (NoSuchAlgorithmException e) {
+            Log.d("TAG", e.getMessage(), e);
+        }
+    }
+    private static Scope buildScope() {
+        return Scope.build(Scope.R_BASICPROFILE, Scope.R_EMAILADDRESS);
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
 
         super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == RC_SIGN_IN) {
+                GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                handleSignInResult(result);
+            }
             if (resultCode == PICKFILE_RESULT_CODE) {
                 String FilePath = data.getData().getPath();
 
@@ -1132,6 +1387,84 @@ public class EditProfileActivity extends AppCompatActivity
             else if (requestCode == REQUEST_CAMERA_CARD)
                 onCaptureImageResultCard(data);
         }
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
+        if (opr.isDone()) {
+            // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
+            // and the GoogleSignInResult will be available instantly.
+            Log.d("TAG", "Got cached sign-in");
+            GoogleSignInResult result = opr.get();
+            handleSignInResult(result);
+        } else {
+            // If the user has not previously signed in on this device or the sign-in has expired,
+            // this asynchronous branch will attempt to sign in the user silently.  Cross-device
+            // single sign-on will occur in this branch.
+            showProgressDialog();
+            opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
+                @Override
+                public void onResult(GoogleSignInResult googleSignInResult) {
+                    hideProgressDialog();
+                    handleSignInResult(googleSignInResult);
+                }
+            });
+        }
+    }
+
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setMessage("Google Login..");
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.hide();
+        }
+    }
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+
+        switch (id) {
+            case R.id.btn_sign_in:
+                signIn();
+                break;
+            case R.id.imgGoogle:
+                signIn();
+                break;
+        }
+    }
+
+    private void updateUI(boolean isSignedIn) {
+        if (isSignedIn) {
+            btnSignIn.setVisibility(View.GONE);
+            //loginSession.createLoginSession(user.getDisplayName(), user.getEmail(), String.valueOf(user.getPhotoUrl()), "");
+          /*  Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
+            intent.putExtra("viewpager_position", 0);
+            startActivity(intent);
+            finish();*/
+            // btnSignOut.setVisibility(View.VISIBLE);
+            //  btnRevokeAccess.setVisibility(View.VISIBLE);
+            // llProfileLayout.setVisibility(View.VISIBLE);
+        } else {
+            btnSignIn.setVisibility(View.VISIBLE);
+            //  btnSignOut.setVisibility(View.GONE);
+            //  btnRevokeAccess.setVisibility(View.GONE);
+            // llProfileLayout.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 
     private void onCaptureImageResultCard(Intent data) {
@@ -1626,7 +1959,7 @@ public class EditProfileActivity extends AppCompatActivity
                         txtMore.setVisibility(View.VISIBLE);
                         txtTestimonial.setVisibility(View.GONE);
                     }
-
+                    allTaggs.clear();
                     for (int i = 0; i < jsonArray.length(); i++)
                     {
                         if (i < 3)
@@ -1816,9 +2149,13 @@ public class EditProfileActivity extends AppCompatActivity
                     PrimaryPhone = jsonObject.getString("PrimaryPhone");
                     Emailid = jsonObject.getString("Emailid");
                     Facebook = jsonObject.getString("Facebook");
+                    strFB = jsonObject.getString("Facebook");
                     Twitter = jsonObject.getString("Twitter");
+                    strTwitter = jsonObject.getString("Twitter");
                     Google = jsonObject.getString("Google");
+                    strGoogle = jsonObject.getString("Google");
                     LinkedIn = jsonObject.getString("LinkedIn");
+                    strLinkedin = jsonObject.getString("LinkedIn");
                     IndustryName = jsonObject.getString("IndustryName");
                     CompanyName = jsonObject.getString("CompanyName");
                     CompanyProfile = jsonObject.getString("CompanyProfile");

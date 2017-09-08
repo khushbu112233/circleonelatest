@@ -35,6 +35,7 @@ import com.amplearch.circleonet.Model.NFCModel;
 import com.amplearch.circleonet.Utils.CarouselEffectTransformer;
 import com.amplearch.circleonet.R;
 import com.amplearch.circleonet.Utils.StickyScrollView;
+import com.amplearch.circleonet.Utils.Utility;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpResponse;
@@ -190,7 +191,7 @@ public class CardDetail extends NfcActivity
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                ((TextView) findViewById(R.id.text)).setText("Click here to open Dialog");
+                               dialog.dismiss();
                             }
                         });
                 AlertDialog alert = builderDialog.create();
@@ -275,15 +276,19 @@ public class CardDetail extends NfcActivity
         imgSMS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (txtMob.getText().toString().equals("")){
-                    Toast.makeText(getApplicationContext(), "You are not having contact to SMS..", Toast.LENGTH_LONG).show();
-                }else {
-                    Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-                    smsIntent.setType("vnd.android-dir/mms-sms");
-                    smsIntent.putExtra("address", txtMob.getText().toString());
-                    smsIntent.putExtra("sms_body", "");
-                    startActivity(smsIntent);
-                }
+
+                boolean result = Utility.checkSMSPermission(CardDetail.this);
+                    if (result) {
+                        if (txtMob.getText().toString().equals("")) {
+                            Toast.makeText(getApplicationContext(), "You are not having contact to SMS..", Toast.LENGTH_LONG).show();
+                        } else {
+                            Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+                            smsIntent.setType("vnd.android-dir/mms-sms");
+                            smsIntent.putExtra("address", txtMob.getText().toString());
+                            smsIntent.putExtra("sms_body", "");
+                            startActivity(smsIntent);
+                        }
+                    }
             }
         });
 
