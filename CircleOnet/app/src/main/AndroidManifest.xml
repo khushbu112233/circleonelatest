@@ -163,7 +163,10 @@
         <activity
             android:name=".Activity.MyAccountActivity"
             android:theme="@style/NoActionbar" />
-        <activity android:name=".Activity.WriteTestimonialActivity" android:theme="@style/NoActionbar">
+        <activity
+            android:name=".Activity.WriteTestimonialActivity"
+            android:theme="@style/NoActionbar"></activity>
+        <activity android:name=".Activity.NewCardRequestActivity" android:theme="@style/NoActionbar">
 
         </activity>
     </application>
