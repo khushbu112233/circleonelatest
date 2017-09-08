@@ -42,6 +42,7 @@ import android.widget.Toast;
 
 import com.amplearch.circleonet.Adapter.CardSwipe;
 import com.amplearch.circleonet.Adapter.GridViewAdapter;
+import com.amplearch.circleonet.Adapter.NewCardRequestAdapter;
 import com.amplearch.circleonet.Fragments.CardsFragment;
 import com.amplearch.circleonet.Fragments.ConnectFragment;
 import com.amplearch.circleonet.Fragments.EventsFragment;
@@ -498,7 +499,8 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         tabLayout.getTabAt(3).setCustomView(tabThree1);
     }*/
 
-    public void showDialog(Context context, int x, int y){
+    public void showDialog(Context context, int x, int y)
+    {
         // x -->  X-Cordinate
         // y -->  Y-Cordinate
         final Dialog dialog  = new Dialog(context, R.style.PauseDialog);
@@ -507,10 +509,21 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         dialog.setContentView(R.layout.listview_with_text_image);
         dialog.setCanceledOnTouchOutside(true);
 
+        LinearLayout lnrMyAccount = (LinearLayout)dialog.findViewById(R.id.lnrMyAcc);
         LinearLayout lnrLogout = (LinearLayout) dialog.findViewById(R.id.lnrLogout);
         LinearLayout lnrAddQR = (LinearLayout) dialog.findViewById(R.id.lnrAddQR);
         LinearLayout lnrGroup = (LinearLayout) dialog.findViewById(R.id.lnrGroup);
         LinearLayout lnrNotification = (LinearLayout) dialog.findViewById(R.id.lnrNotification);
+        LinearLayout lnrRequestNewCard = (LinearLayout)dialog.findViewById(R.id.lnrRequestNewCard);
+
+        lnrMyAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MyAccountActivity.class);
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        });
 
         lnrNotification.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -534,6 +547,15 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), AddQRActivity.class);
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        });
+
+        lnrRequestNewCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), NewCardRequestActivity.class);
                 startActivity(intent);
                 dialog.dismiss();
             }
