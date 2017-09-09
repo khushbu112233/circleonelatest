@@ -4,7 +4,8 @@ package com.amplearch.circleonet.Model;
  * Created by admin on 08/28/2017.
  */
 
-public class GroupModel {
+public class GroupModel
+{
 
     String group_ID = "";
     String group_Name = "";

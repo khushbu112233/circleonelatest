@@ -175,7 +175,10 @@
         <activity
             android:name=".Activity.NewCardRequestActivity1"
             android:theme="@style/NoActionbar" />
-        <activity android:name=".Activity.ContactUsActivity"
+        <activity
+            android:name=".Activity.ContactUsActivity"
+            android:theme="@style/NoActionbar" />
+        <activity android:name=".Activity.GroupDetailActivity"
             android:theme="@style/NoActionbar"></activity>
     </application>
 
