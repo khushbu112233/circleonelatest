@@ -69,12 +69,12 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 Intent i = new Intent(getApplicationContext(), NewCardRequestActivity1.class);
-                i.putExtra("person", i.getStringExtra("person"));
-                i.putExtra("designation", i.getStringExtra("designation"));
-                i.putExtra("company", i.getStringExtra("company"));
-                i.putExtra("profile", i.getStringExtra("profile"));
-                i.putExtra("image", i.getStringExtra("image"));
-                i.putExtra("phone", i.getStringExtra("phone"));
+                i.putExtra("person", name);
+                i.putExtra("designation", designation);
+                i.putExtra("company", company);
+                i.putExtra("profile", profile);
+                i.putExtra("image", image);
+                i.putExtra("phone",profile);
                 startActivity(i);
             }
         });

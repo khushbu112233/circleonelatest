@@ -8,7 +8,7 @@
     tools:context="com.amplearch.circleonet.Activity.NewCardRequestActivity1">
 
     <android.support.v4.view.ViewPager
-        android:clickable="true"
+        android:clickable="false"
         app:layout_scrollFlags="scroll|snap"
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
         <android.support.design.widget.AppBarLayout
             android:background="@android:color/transparent"
             android:id="@+id/appbar"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/NoActionbar"
@@ -110,7 +110,7 @@
                                 android:layout_marginBottom="3dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Please choose the profile for the new card(s)"
+                                android:text="slide down to check the front &amp; back"
                                 android:textColor="@color/white"/>
 
                             <LinearLayout

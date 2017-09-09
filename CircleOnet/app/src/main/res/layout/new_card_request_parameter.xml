@@ -150,8 +150,8 @@
                 android:layout_height="18dp"
                 android:src="@drawable/mini_camera_blue"
                 android:layout_alignParentRight="false"
-                android:layout_marginTop="50dp"
-                android:layout_marginLeft="50dp"/>
+                android:layout_marginTop="45dp"
+                android:layout_marginLeft="40dp"/>
         </RelativeLayout>
         <TextView
             android:id="@+id/tvProfile"
