@@ -486,7 +486,6 @@
                             android:layout_height="40dip"
                             android:orientation="horizontal">
 
-
                             <com.facebook.login.widget.LoginButton
                                 android:id="@+id/login_button"
                                 android:layout_width="wrap_content"
