@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.amplearch.circleonet.Activity.Help2Activity">
+
+    <RelativeLayout
+        android:id="@+id/rlTabBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent" >
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+        <TextView
+            android:id="@+id/txtTitle"
+            android:textSize="18dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Help"
+            android:textColor="@color/white"/>
+        <TextView
+            android:layout_below="@+id/txtTitle"
+            android:textSize="12dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tap on the Question to reveal the answers"
+            android:textColor="@color/white"/>
+        <ImageView
+            android:id="@+id/imgProfileMenu"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="22dp"
+            android:layout_height="30dp"
+            android:visibility="visible"
+            android:src="@drawable/ic_dehaze_black_24dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="5dp"
+        android:id="@+id/lnrSearch"
+        android:layout_below="@+id/appbar1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <AutoCompleteTextView
+            android:layout_centerVertical="true"
+            android:background="@drawable/txt_back"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_toLeftOf="@+id/imgSearch"
+            android:paddingLeft="10dp"
+            android:hint="Filter by key words"
+            android:textColorHint="@color/gray_text"
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:focusableInTouchMode="true"
+            android:imeOptions="actionSearch"
+            android:inputType="textAutoComplete|textAutoCorrect"
+            android:textColor="@android:color/black" />
+
+        <ImageView
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:backgroundTint="@color/colorAccent"
+            android:background="@drawable/search"
+            android:id="@+id/imgSearch"
+            android:layout_alignParentRight="true"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+    </RelativeLayout>
+
+    <View
+        android:layout_marginTop="3dp"
+        android:id="@+id/view"
+        android:layout_below="@+id/lnrSearch"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimary"/>
+
+    <ExpandableListView
+        android:id="@+id/QA_listview"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:scrollbars="none"
+        android:groupIndicator="@drawable/expandable_indicator"
+        android:transcriptMode="alwaysScroll">
+
+    </ExpandableListView>
+
+
+
+
+
+</LinearLayout>

@@ -181,7 +181,10 @@
         <activity
             android:name=".Activity.GroupDetailActivity"
             android:theme="@style/NoActionbar" />
-        <activity android:name=".Activity.SubscriptionActivity"
+        <activity
+            android:name=".Activity.SubscriptionActivity"
+            android:theme="@style/NoActionbar" />
+        <activity android:name=".Activity.Help2Activity"
             android:theme="@style/NoActionbar"></activity>
     </application>
 

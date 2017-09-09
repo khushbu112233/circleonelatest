@@ -517,6 +517,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         LinearLayout lnrRequestNewCard = (LinearLayout)dialog.findViewById(R.id.lnrRequestNewCard);
         LinearLayout lnrContactUs = (LinearLayout)dialog.findViewById(R.id.lnrContactUs);
         LinearLayout lnrSubscription = (LinearLayout)dialog.findViewById(R.id.lnrSubscription);
+        LinearLayout lnrHelp = (LinearLayout)dialog.findViewById(R.id.lnrHelp);
 
         lnrMyAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -577,6 +578,15 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SubscriptionActivity.class);
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        });
+
+        lnrHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Help2Activity.class);
                 startActivity(intent);
                 dialog.dismiss();
             }
