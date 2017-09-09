@@ -27,6 +27,6 @@ public class ContactUsActivity extends AppCompatActivity
         tvEmail = (TextView)findViewById(R.id.tvMail);
         tvPhone = (TextView)findViewById(R.id.tvPhone);
         tvFax = (TextView)findViewById(R.id.tvWork);
-        
+
     }
 }
