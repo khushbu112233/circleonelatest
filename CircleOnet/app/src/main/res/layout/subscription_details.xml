@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="10dp"
+        android:paddingTop="0dp">
+
+    <RelativeLayout
+        android:id="@+id/rlLeftConnection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp">
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@drawable/up_expandable"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"/>
+        <TextView
+            android:id="@+id/tvLeftConnection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2 connections left, until end of this month"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tvPackageName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Free Package"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/colorPrimary"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="0.9"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center_vertical">
+            <TextView
+                android:id="@+id/tvContact_Group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="200 contacts, up to 5 groups,"
+                android:textColor="@color/colorPrimary"/>
+            <TextView
+                android:id="@+id/tvConnection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0 connections per month"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginTop="5dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="0.1"
+            android:layout_gravity="center_vertical">
+            <TextView
+                android:id="@+id/tvAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="S&amp; 0"
+                android:textStyle="bold"
+                android:textSize="30dp"
+                android:layout_gravity="right"
+                android:textColor="@color/colorPrimary"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="/user/month billed"
+                android:layout_gravity="right"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginTop="0dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

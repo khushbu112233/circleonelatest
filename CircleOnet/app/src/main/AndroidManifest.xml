@@ -178,7 +178,10 @@
         <activity
             android:name=".Activity.ContactUsActivity"
             android:theme="@style/NoActionbar" />
-        <activity android:name=".Activity.GroupDetailActivity"
+        <activity
+            android:name=".Activity.GroupDetailActivity"
+            android:theme="@style/NoActionbar" />
+        <activity android:name=".Activity.SubscriptionActivity"
             android:theme="@style/NoActionbar"></activity>
     </application>
 
