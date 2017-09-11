@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="0.3">
+            <!--for 1st group member view-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_marginLeft="8dp"
+                        app:civ_border_width="2dp"
+                        app:civ_border_color="@color/colorPrimary"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/usr_1"
+                        android:id="@+id/imgProfile1"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp" />
+                    <LinearLayout
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_gravity="center_vertical|left"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:textStyle="bold"
+                            android:textColor="@android:color/black"
+                            android:gravity="left"
+                            android:text="Physician Yong"
+                            android:visibility="visible"
+                            android:id="@+id/tvPersonName1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="10sp" />
+                        <TextView
+                            android:textColor="@color/gray_text"
+                            android:gravity="left"
+                            android:text="Physician Yong"
+                            android:visibility="visible"
+                            android:id="@+id/tvDesignation1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+                    <TextView
+                        android:ellipsize="end"
+                        android:maxLines="4"
+                        android:layout_gravity="center_vertical|right"
+                        android:gravity="left|center_vertical"
+                        android:text="Address\n Company Name\n Email\n Website\n Telephone\n Mobile"
+                        android:visibility="visible"
+                        android:textColor="@color/gray_text"
+                        android:id="@+id/tvPersonDetail1"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:textSize="10sp" />
+                </LinearLayout>
+                <View
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorAccent"/>
+            </LinearLayout>
+            <!--for 2nd group member view-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_marginLeft="8dp"
+                        app:civ_border_width="2dp"
+                        app:civ_border_color="@color/colorPrimary"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/usr_1"
+                        android:id="@+id/imgProfile2"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp" />
+                    <LinearLayout
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_gravity="center_vertical|left"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:textStyle="bold"
+                            android:textColor="@android:color/black"
+                            android:gravity="left"
+                            android:text="Physician Yong"
+                            android:visibility="visible"
+                            android:id="@+id/tvPersonName2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="10sp" />
+                        <TextView
+                            android:textColor="@color/gray_text"
+                            android:gravity="left"
+                            android:text="Physician Yong"
+                            android:visibility="visible"
+                            android:id="@+id/tvDesignation2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+                    <TextView
+                        android:ellipsize="end"
+                        android:maxLines="4"
+                        android:layout_gravity="center_vertical|right"
+                        android:gravity="left|center_vertical"
+                        android:text="Address\n Company Name\n Email\n Website\n Telephone\n Mobile"
+                        android:visibility="visible"
+                        android:textColor="@color/gray_text"
+                        android:id="@+id/tvPersonDetail2"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:textSize="10sp" />
+                </LinearLayout>
+                <View
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorAccent"/>
+            </LinearLayout>
+            <!--for 3rd group member view-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_marginLeft="8dp"
+                        app:civ_border_width="2dp"
+                        app:civ_border_color="@color/colorPrimary"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/usr_1"
+                        android:id="@+id/imgProfile3"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp" />
+                    <LinearLayout
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_gravity="center_vertical|left"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:textStyle="bold"
+                            android:textColor="@android:color/black"
+                            android:gravity="left"
+                            android:text="Physician Yong"
+                            android:visibility="visible"
+                            android:id="@+id/tvPersonName3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="10sp" />
+                        <TextView
+                            android:textColor="@color/gray_text"
+                            android:gravity="left"
+                            android:text="Physician Yong"
+                            android:visibility="visible"
+                            android:id="@+id/tvDesignation3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+                    <TextView
+                        android:ellipsize="end"
+                        android:maxLines="4"
+                        android:layout_gravity="center_vertical|right"
+                        android:gravity="left|center_vertical"
+                        android:text="Address\n Company Name\n Email\n Website\n Telephone\n Mobile"
+                        android:visibility="visible"
+                        android:textColor="@color/gray_text"
+                        android:id="@+id/tvPersonDetail3"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:textSize="10sp" />
+                </LinearLayout>
+                <View
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:visibility="gone"
+                    android:background="@color/colorAccent"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="0.7"
+            android:layout_gravity="center_vertical">
+            <RelativeLayout
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center_horizontal">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    app:civ_border_width="1dp"
+                    app:civ_border_color="@color/colorPrimary"
+                    android:src="@drawable/usr"
+                    android:id="@+id/imgGroup"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp" />
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/mini_camera_blue"
+                    android:layout_alignParentRight="false"
+                    android:layout_marginTop="55dp"
+                    android:layout_marginLeft="50dp"/>
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/tvGroupName"
+                android:textSize="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textAlignment="center"
+                android:text="Group 1"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/colorPrimary"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

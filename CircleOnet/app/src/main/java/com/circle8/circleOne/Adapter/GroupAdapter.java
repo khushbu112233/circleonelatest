@@ -19,7 +19,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by LENOVO on 27-08-2017.
  */
 
-public class GroupAdapter extends BaseAdapter {
+public class GroupAdapter extends BaseAdapter
+{
     private Activity activity;
     // private ArrayList&lt;HashMap&lt;String, String&gt;&gt; data;
     private static List<GroupModel> groupModels;

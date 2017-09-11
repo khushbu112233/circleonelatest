@@ -15,7 +15,7 @@
     <uses-feature android:name="android.hardware.nfc" />
 
     <application
-        android:name="com.circle8.circleOne.ApplicationUtils.MyApplication"
+        android:name=".ApplicationUtils.MyApplication"
         android:allowBackup="true"
         android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
@@ -29,7 +29,7 @@
             android:value="@string/facebook_app_id" />
 
         <activity
-            android:name="com.circle8.circleOne.Activity.CardsActivity"
+            android:name=".Activity.CardsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait">
 
@@ -44,22 +44,22 @@
             -->
         </activity>
         <activity
-            android:name="com.circle8.circleOne.Activity.EventsActivity"
+            android:name=".Activity.EventsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.circle8.circleOne.Activity.EventDetail"
+            android:name=".Activity.EventDetail"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.circle8.circleOne.Activity.Connect"
+            android:name=".Activity.Connect"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.circle8.circleOne.Activity.SortAndFilterOption"
+            android:name=".Activity.SortAndFilterOption"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.circle8.circleOne.Activity.EventsSelectOption"
+            android:name=".Activity.EventsSelectOption"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.circle8.circleOne.Activity.Profile"
+            android:name=".Activity.Profile"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         <activity
@@ -74,43 +74,43 @@
             android:exported="true" />
 
         <activity
-            android:name="com.circle8.circleOne.Activity.LoginActivity"
+            android:name=".Activity.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         <activity
-            android:name="com.circle8.circleOne.Activity.CardDetail"
+            android:name=".Activity.CardDetail"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         <activity
-            android:name="com.circle8.circleOne.Activity.ConnectActivity"
+            android:name=".Activity.ConnectActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         <activity
-            android:name="com.circle8.circleOne.Activity.Connect3Activity"
+            android:name=".Activity.Connect3Activity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         <activity
-            android:name="com.circle8.circleOne.Activity.Connect4Activity"
+            android:name=".Activity.Connect4Activity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         <activity
-            android:name="com.circle8.circleOne.Activity.Connect5Activity"
+            android:name=".Activity.Connect5Activity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         <activity
-            android:name="com.circle8.circleOne.Activity.CustomDate"
+            android:name=".Activity.CustomDate"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.circle8.circleOne.Activity.NFCDemo"
+            android:name=".Activity.NFCDemo"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.circle8.circleOne.Activity.VolleyDemo"
+            android:name=".Activity.VolleyDemo"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.circle8.circleOne.Activity.MainActivity"
+            android:name=".Activity.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.circle8.circleOne.Activity.SplashActivity"
+            android:name=".Activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar">
             <intent-filter>
@@ -120,31 +120,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.circle8.circleOne.Activity.RegisterActivity"
+            android:name=".Activity.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         <activity
-            android:name="com.circle8.circleOne.Walkthrough.HelpActivity"
+            android:name=".Walkthrough.HelpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         <activity
-            android:name="com.circle8.circleOne.Activity.AddQRActivity"
+            android:name=".Activity.AddQRActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.circle8.circleOne.Activity.EditProfileActivity"
+            android:name=".Activity.EditProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         <activity
-            android:name="com.circle8.circleOne.Activity.FingerPrintLogin"
+            android:name=".Activity.FingerPrintLogin"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.circle8.circleOne.Activity.GroupTag"
+            android:name=".Activity.GroupTag"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.circle8.circleOne.Activity.Notification"
+            android:name=".Activity.Notification"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.circle8.circleOne.ExternalNFC.NFCExternal"
+            android:name=".ExternalNFC.NFCExternal"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
@@ -155,36 +155,39 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.circle8.circleOne.Activity.TestimonialActivity"
+            android:name=".Activity.TestimonialActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.circle8.circleOne.Activity.TestimonialRequest"
+            android:name=".Activity.TestimonialRequest"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.circle8.circleOne.Activity.MyAccountActivity"
+            android:name=".Activity.MyAccountActivity"
             android:theme="@style/NoActionbar" />
         <activity
-            android:name="com.circle8.circleOne.Activity.WriteTestimonialActivity"
+            android:name=".Activity.WriteTestimonialActivity"
             android:theme="@style/NoActionbar" />
         <activity
-            android:name="com.circle8.circleOne.Activity.NewCardRequestActivity"
+            android:name=".Activity.NewCardRequestActivity"
             android:theme="@style/NoActionbar" />
         <activity
-            android:name="com.circle8.circleOne.Activity.NewCardRequestDetailActivity"
+            android:name=".Activity.NewCardRequestDetailActivity"
             android:theme="@style/NoActionbar" />
         <activity
-            android:name="com.circle8.circleOne.Activity.NewCardRequestActivity1"
+            android:name=".Activity.NewCardRequestActivity1"
             android:theme="@style/NoActionbar" />
         <activity
-            android:name="com.circle8.circleOne.Activity.ContactUsActivity"
+            android:name=".Activity.ContactUsActivity"
             android:theme="@style/NoActionbar" />
         <activity
-            android:name="com.circle8.circleOne.Activity.GroupDetailActivity"
+            android:name=".Activity.GroupDetailActivity"
             android:theme="@style/NoActionbar" />
         <activity
-            android:name="com.circle8.circleOne.Activity.SubscriptionActivity"
+            android:name=".Activity.SubscriptionActivity"
             android:theme="@style/NoActionbar" />
-        <activity android:name="com.circle8.circleOne.Activity.Help2Activity"
+        <activity
+            android:name=".Activity.Help2Activity"
+            android:theme="@style/NoActionbar" />
+        <activity android:name=".Activity.GroupsActivity"
             android:theme="@style/NoActionbar"></activity>
     </application>
 

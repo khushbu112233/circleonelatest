@@ -517,7 +517,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
             @Override
             public void onClick(View v) {
 //                Intent intent = new Intent(getApplicationContext(), GroupTag.class);
-                Intent intent = new Intent(getApplicationContext(), GroupDetailActivity.class);
+                Intent intent = new Intent(getApplicationContext(), GroupsActivity.class);
                 startActivity(intent);
                 dialog.dismiss();
             }

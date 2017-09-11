@@ -113,9 +113,9 @@ public class Notification extends AppCompatActivity
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("userid", UserId );
-            jsonObject.accumulate("pageno", "1" );
             jsonObject.accumulate("numofrecords", "30" );
+            jsonObject.accumulate("pageno", "1" );
+            jsonObject.accumulate("userid", UserId );
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -211,7 +211,7 @@ public class Notification extends AppCompatActivity
                         nfcModelTag.setLastName(object.getString("LastName"));
                         nfcModelTag.setUserPhoto(object.getString("UserPhoto"));
                         nfcModelTag.setPurpose(object.getString("Purpose"));
-                        nfcModelTag.setTestimonial_ID(object.getString("Testimonial_ID"));
+//                        nfcModelTag.setTestimonial_ID(object.getString("Testimonial_ID"));
                         allTags.add(nfcModelTag);
                     }
 
