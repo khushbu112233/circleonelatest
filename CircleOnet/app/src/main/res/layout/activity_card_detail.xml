@@ -152,7 +152,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <com.amplearch.circleonet.Utils.StickyScrollView
+    <com.circle8.circleOne.Utils.StickyScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -730,7 +730,7 @@
             </LinearLayout>
         </LinearLayout>
 
-    </com.amplearch.circleonet.Utils.StickyScrollView>
+    </com.circle8.circleOne.Utils.StickyScrollView>
 
     <!--  <ImageView
           android:id="@+id/fab"

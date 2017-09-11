@@ -40,7 +40,7 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <com.amplearch.circleonet.Utils.StickyScrollView
+        <com.circle8.circleOne.Utils.StickyScrollView
             android:id="@+id/scroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -1193,7 +1193,7 @@
                             android:textColor="@color/colorPrimary"/>
                     </RelativeLayout>
 
-                    <com.amplearch.circleonet.Utils.ExpandableHeightListView
+                    <com.circle8.circleOne.Utils.ExpandableHeightListView
                         android:id="@+id/lstTestimonial"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -1202,7 +1202,7 @@
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="5dp"
                         android:nestedScrollingEnabled="true"
-                        tools:listitem="@layout/testimonial_row"></com.amplearch.circleonet.Utils.ExpandableHeightListView>
+                        tools:listitem="@layout/testimonial_row"></com.circle8.circleOne.Utils.ExpandableHeightListView>
 
                     <TextView
                         android:visibility="gone"
@@ -1398,12 +1398,12 @@
                                 android:visibility="gone"
                                 android:layout_centerInParent="true"
                                 android:text="No event choosen by you.\nPlease choose event from below list"/>
-                            <com.amplearch.circleonet.Utils.ExpandableHeightGridView
+                            <com.circle8.circleOne.Utils.ExpandableHeightGridView
                                 android:id="@+id/gridViewAdded"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:numColumns="2">
-                            </com.amplearch.circleonet.Utils.ExpandableHeightGridView>
+                            </com.circle8.circleOne.Utils.ExpandableHeightGridView>
                         </RelativeLayout>
 
                         <TextView
@@ -1411,14 +1411,14 @@
                             android:layout_height="1dp"
                             android:background="@color/colorPrimary"/>
 
-                        <com.amplearch.circleonet.Utils.ExpandableHeightGridView
+                        <com.circle8.circleOne.Utils.ExpandableHeightGridView
                             android:id="@+id/gridView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="20dp"
                             android:layout_marginTop="20dp"
                             android:numColumns="2">
-                        </com.amplearch.circleonet.Utils.ExpandableHeightGridView>
+                        </com.circle8.circleOne.Utils.ExpandableHeightGridView>
 
                     </LinearLayout>
 
@@ -1428,6 +1428,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-        </com.amplearch.circleonet.Utils.StickyScrollView>
+        </com.circle8.circleOne.Utils.StickyScrollView>
     </android.support.design.widget.CoordinatorLayout>
 </RelativeLayout>

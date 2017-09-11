@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:fillViewport="true"
     android:nestedScrollingEnabled="false"
-    tools:context="com.amplearch.circleonet.Fragments.List1Fragment">
+    tools:context="com.circle8.circleOne.Fragments.List1Fragment">
 
     <RelativeLayout
         android:layout_marginTop="5dp"

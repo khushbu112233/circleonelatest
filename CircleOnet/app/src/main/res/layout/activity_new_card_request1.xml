@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.amplearch.circleonet.Activity.NewCardRequestActivity1">
+    tools:context="com.circle8.circleOne.Activity.NewCardRequestActivity1">
 
     <android.support.v4.view.ViewPager
         android:clickable="false"
@@ -41,7 +41,7 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <com.amplearch.circleonet.Utils.StickyScrollView
+        <com.circle8.circleOne.Utils.StickyScrollView
             android:id="@+id/scroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -456,7 +456,7 @@
 
             </LinearLayout>
 
-        </com.amplearch.circleonet.Utils.StickyScrollView>
+        </com.circle8.circleOne.Utils.StickyScrollView>
 
         <!--  <ImageView
               android:id="@+id/fab"

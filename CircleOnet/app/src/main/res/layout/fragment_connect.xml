@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.amplearch.circleonet.Activity.CardsActivity">
+    tools:context="com.circle8.circleOne.Activity.CardsActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar2"
@@ -23,7 +23,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <com.amplearch.circleonet.Utils.CustomViewPager
+    <com.circle8.circleOne.Utils.CustomViewPager
         android:layout_above="@+id/view1"
         android:layout_below="@+id/appbar2"
         android:id="@+id/container2"
@@ -79,7 +79,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.amplearch.circleonet.Activity.EventsActivity">
+        tools:context="circle8ircleonet.Activity.EventsActivity">
 
         <RelativeLayout
             android:layout_marginBottom="5dp"
