@@ -228,8 +228,6 @@
                 app:ccpDialog_textColor="@color/colorPrimary"
                 android:textColor="@color/colorPrimary"
                 android:textSize="15dp"
-                android:backgroundTint="@color/colorPrimary"
-                android:textColorHint="@color/colorPrimary"
                 app:ccp_showNameCode="false"
                 app:ccp_showPhoneCode="true"
                 app:ccp_showFlag="false"

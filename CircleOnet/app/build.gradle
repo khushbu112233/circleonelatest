@@ -71,5 +71,6 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.intuit.sdp:sdp-android:1.0.3'
     testCompile 'junit:junit:4.12'
+    compile 'com.hbb20:ccp:2.0.2'
 }
 apply plugin: 'com.google.gms.google-services'
