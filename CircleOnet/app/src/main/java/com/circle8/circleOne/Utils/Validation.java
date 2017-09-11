@@ -52,7 +52,7 @@ public class Validation
             RegisterActivity.etEmail.setError(null);
         }
 
-        if(contactNo.isEmpty() || contactNo.length() != 10  )
+        if(contactNo.isEmpty() || contactNo.length() <= 8  )
         {
             RegisterActivity.etPhone.setError("10 Characters Required");
             valid = false ;

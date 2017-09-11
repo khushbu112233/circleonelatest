@@ -17,13 +17,15 @@ public class HelpActivity extends AppIntro {
         super.onCreate(savedInstanceState);
        // setContentView(R.layout.activity_help);
 
-        addSlide(AppIntroFragment.newInstance("Welcome!", "This is a demo of the AppIntro library.", R.drawable.ic_slide1, Color.BLUE));
+        addSlide(AppIntroFragment.newInstance("", "", R.drawable.walkthrough_1, Color.TRANSPARENT));
 
-        addSlide(AppIntroFragment.newInstance("Welcome!", "This is a demo of the AppIntro library.", R.drawable.ic_slide2, Color.CYAN));
+        addSlide(AppIntroFragment.newInstance("", "", R.drawable.walkthrough_2, Color.TRANSPARENT));
 
-        addSlide(AppIntroFragment.newInstance("Welcome!", "This is a demo of the AppIntro library.", R.drawable.ic_slide3, Color.GRAY));
+        addSlide(AppIntroFragment.newInstance("", "", R.drawable.walkthrough_3, Color.TRANSPARENT));
 
-        addSlide(AppIntroFragment.newInstance("Welcome!", "This is a demo of the AppIntro library.", R.drawable.ic_slide4, Color.GREEN));
+        addSlide(AppIntroFragment.newInstance("", "", R.drawable.walkthrough_4, Color.TRANSPARENT));
+
+        addSlide(AppIntroFragment.newInstance("", "", R.drawable.walkthrough_5, Color.TRANSPARENT));
 
     }
 

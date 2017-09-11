@@ -32,6 +32,7 @@ import com.circle8.circleOne.Utils.AsyncRequest;
 import com.circle8.circleOne.Utils.Utility;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.hbb20.CountryCodePicker;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -92,7 +93,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     ImageView ivMaleRound, ivMaleImg, ivFemaleround, ivFemaleImg, imgBack;
     TextView txtGender;
     String final_ImgBase64 = "";
-
+    CountryCodePicker ccp;
     private String UrlRegister = "http://circle8.asia:8081/Onet.svc/Registration";
     private ArrayList<NameValuePair> params ;
 
@@ -128,6 +129,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         etConfirmPass = (EditText) findViewById(R.id.etConfirmPass);
         etPhone = (EditText) findViewById(R.id.etPhone);
         etEmail = (EditText) findViewById(R.id.etEmail);
+        ccp = (CountryCodePicker) findViewById(R.id.ccp);
         ivMaleRound = (ImageView) findViewById(R.id.ivMaleRound);
         ivMaleImg = (ImageView) findViewById(R.id.ivMaleImg);
         ivFemaleround = (ImageView) findViewById(R.id.ivFemaleround);
@@ -168,7 +170,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     }
                 });
 
-
+        ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
+            @Override
+            public void onCountrySelected() {
+                // Toast.makeText(getApplicationContext(), "Updated " + ccp.getSelectedCountryCode(), Toast.LENGTH_SHORT).show();
+            }
+        });
        /* Thread thread = new Thread(new Runnable(){
             @Override
             public void run() {
@@ -291,6 +298,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             password = etPassword.getText().toString();
             c_password = etConfirmPass.getText().toString();
             email = etEmail.getText().toString();
+
+            String code = ccp.getSelectedCountryCode().toString();
+            String contact = phone_no;
+            phone_no = "+"+code+contact ;
 
             if (!validate(user_name, first_name, last_name, password, c_password, phone_no, email)) {
                 Toast.makeText(getApplicationContext(), "Form Fill Invalid!", Toast.LENGTH_SHORT).show();

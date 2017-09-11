@@ -162,6 +162,26 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.hbb20.CountryCodePicker
+                app:ccp_textSize="15dp"
+                app:ccpDialog_textColor="@color/colorPrimary"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimary"
+                app:ccp_showNameCode="false"
+                app:ccp_showPhoneCode="true"
+                app:ccp_showFlag="false"
+                android:layout_marginRight="10dp"
+                android:id="@+id/ccp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
         <EditText
             android:id="@+id/etPhone"
             android:layout_marginTop="3dp"
@@ -174,6 +194,7 @@
             android:layout_height="wrap_content"
             android:inputType="number"/>
 
+            </LinearLayout>
         <EditText
             android:id="@+id/etEmail"
             android:layout_marginTop="3dp"
