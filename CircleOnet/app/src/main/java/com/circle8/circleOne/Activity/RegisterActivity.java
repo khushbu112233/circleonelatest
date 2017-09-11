@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -429,7 +431,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void Upload() {
-
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new UploadFile().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "http://circle8.asia:8081/Onet.svc/ImgUpload");
@@ -550,24 +551,83 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         if (data != null)
         {
             Uri targetUri = data.getData();
-            Bitmap bitmap;
-            try {
+
+            String photoPath = getPath(targetUri);
+
+            ExifInterface ei = null;
+            try
+            {
+                ei = new ExifInterface(photoPath);
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+
+            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+
+            Bitmap bitmap = null;
+            Bitmap rotatedBitmap = null;
+
+            try
+            {
                 bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
+
                 Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 150, 150, false);
-                image = ConvertBitmapToString(resizedBitmap);
-                final_ImgBase64 = BitMapToString(resizedBitmap);
+//                image = ConvertBitmapToString(resizedBitmap);
+//                final_ImgBase64 = BitMapToString(resizedBitmap);
                // final_ImgBase64 = resizeBase64Image(s);
                 Log.d("base64string ", final_ImgBase64);
 //                Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
-                Upload();
-                civProfilePic.setImageBitmap(resizedBitmap);
-            } catch (FileNotFoundException e) {
+//                Upload();
+//                civProfilePic.setImageBitmap(resizedBitmap);
+            }
+            catch (FileNotFoundException e)
+            {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-        }
 
+            switch (orientation)
+            {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    rotatedBitmap = rotateImage(bitmap, 90);
+                    civProfilePic.setImageBitmap(rotatedBitmap);
+                    final_ImgBase64 = BitMapToString(rotatedBitmap);
+                    Upload();
+                    break;
+
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    rotatedBitmap = rotateImage(bitmap, 180);
+                    civProfilePic.setImageBitmap(rotatedBitmap);
+                    final_ImgBase64 = BitMapToString(rotatedBitmap);
+                    Upload();
+                    break;
+
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    rotatedBitmap = rotateImage(bitmap, 270);
+                    civProfilePic.setImageBitmap(rotatedBitmap);
+                    final_ImgBase64 = BitMapToString(rotatedBitmap);
+                    Upload();
+                    break;
+
+                case ExifInterface.ORIENTATION_NORMAL:
+                default:
+                    rotatedBitmap = bitmap;
+                    civProfilePic.setImageBitmap(rotatedBitmap);
+                    final_ImgBase64 = BitMapToString(rotatedBitmap);
+                    Upload();
+            }
+
+        }
 //        BmToString(bm);
+    }
+
+    public static Bitmap rotateImage(Bitmap source, float angle)
+    {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
 
     public static Bitmap StringToBitmap(String encodedString) {

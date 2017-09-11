@@ -113,6 +113,8 @@ public class LoginActivity extends AppCompatActivity implements
     private GoogleApiClient mGoogleApiClient;
     private ProgressDialog mProgressDialog;
 
+    public static TextView tvUsernameInfo , tvPasswordInfo ;
+
     private SignInButton btnSignIn;
     private Button btnSignOut, btnRevokeAccess;
     ImageView btnLoginTwitter;
@@ -145,7 +147,8 @@ public class LoginActivity extends AppCompatActivity implements
     private boolean LinkedInFlag = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         TwitterAuthConfig authConfig = new TwitterAuthConfig(
@@ -160,11 +163,15 @@ public class LoginActivity extends AppCompatActivity implements
         btnLogin = (ImageView) findViewById(R.id.fbLogin);
         loginButton = (LoginButton) findViewById(R.id.login_button);
         imgFinger = (ImageView) findViewById(R.id.imgFinger);
-        //  btnLoginTwitter = (ImageView) findViewById(R.id.btnLoginTwitter);
+//          btnLoginTwitter = (ImageView) findViewById(R.id.btnLoginTwitter);
         btnRegister = (Button) findViewById(R.id.btnRegister);
         etLoginPass = (EditText) findViewById(R.id.etLoginPass);
         etLoginUser = (EditText) findViewById(R.id.etLoginUser);
         login_linkedin_btn = (ImageView) findViewById(R.id.login_button_linkedin);
+
+        tvUsernameInfo = (TextView)findViewById(R.id.tvUserInfo);
+        tvPasswordInfo = (TextView)findViewById(R.id.tvPasswordInfo);
+
         prefs = getSharedPreferences("com.circle8.circleOne", MODE_PRIVATE);
         etLoginPass.setImeOptions(EditorInfo.IME_ACTION_DONE);
         etLoginPass.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -174,9 +181,12 @@ public class LoginActivity extends AppCompatActivity implements
                     userName = etLoginUser.getText().toString();
                     userPassword = etLoginPass.getText().toString();
 
-                    if (!validateLogin(userName, userPassword)) {
-                        Toast.makeText(getApplicationContext(), "Form Fill Invalid!", Toast.LENGTH_SHORT).show();
-                    } else {
+                    if (!validateLogin(userName, userPassword))
+                    {
+                        Toast.makeText(getApplicationContext(), "All fields are require!", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
                         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/UserLogin");
                     }
                 }
@@ -232,6 +242,7 @@ public class LoginActivity extends AppCompatActivity implements
 
         // [START initialize_twitter_login]
         mLoginButton = (TwitterLoginButton) findViewById(R.id.button_twitter_login);
+
         mLoginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
@@ -767,7 +778,8 @@ public class LoginActivity extends AppCompatActivity implements
         });
     }
 
-    private void handleTwitterSession(TwitterSession session) {
+    private void handleTwitterSession(TwitterSession session)
+    {
         Log.d(TAG, "handleTwitterSession:" + session);
         // [START_EXCLUDE silent]
         showProgressDialog();
@@ -867,10 +879,13 @@ public class LoginActivity extends AppCompatActivity implements
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mLoginButton.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode == RC_SIGN_IN)
+        {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
-        } else if (LinkedInFlag == true) {
+        }
+        else if (LinkedInFlag == true)
+        {
             LISessionManager.getInstance(getApplicationContext()).onActivityResult(this, requestCode, resultCode, data);
             progress = new ProgressDialog(this);
             progress.setMessage("Logging in...");

@@ -48,16 +48,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <View
             android:layout_above="@+id/lnrBottomTab"
             android:id="@+id/view1"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/colorPrimary"></View>
+            android:background="@color/colorPrimary"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="4dp">
 
             <LinearLayout
                 android:gravity="center"
@@ -71,7 +74,7 @@
                 android:orientation="vertical">
             <ImageView
                 android:id="@+id/imgCards"
-                android:layout_width="30dp"
+                android:layout_width="55dp"
                 android:layout_height="30dp"
                 android:src="@drawable/ic_icon1b" />
 
@@ -80,7 +83,8 @@
                     android:textColor="@color/colorPrimary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cards"/>
+                    android:text="Cards"
+                    android:textSize="9sp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -94,7 +98,7 @@
                 android:orientation="vertical">
                 <ImageView
                     android:id="@+id/imgConnect"
-                    android:layout_width="30dp"
+                    android:layout_width="55dp"
                     android:layout_height="30dp"
                     android:src="@drawable/ic_icon2" />
 
@@ -103,7 +107,8 @@
                     android:textColor="@color/unselected"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Connect"/>
+                    android:text="Connect"
+                    android:textSize="9sp"/>
             </LinearLayout>
             <LinearLayout
                 android:gravity="center"
@@ -116,7 +121,7 @@
                 android:orientation="vertical">
                 <ImageView
                     android:id="@+id/imgEvents"
-                    android:layout_width="30dp"
+                    android:layout_width="55dp"
                     android:layout_height="30dp"
                     android:src="@drawable/ic_icon3" />
 
@@ -125,7 +130,8 @@
                     android:textColor="@color/unselected"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Events"/>
+                    android:text="Events"
+                    android:textSize="9sp"/>
             </LinearLayout>
             <LinearLayout
                 android:gravity="center"
@@ -138,7 +144,7 @@
                 android:orientation="vertical">
                 <ImageView
                     android:id="@+id/imgProfile"
-                    android:layout_width="30dp"
+                    android:layout_width="55dp"
                     android:layout_height="30dp"
                     android:src="@drawable/ic_icon4" />
 
@@ -147,7 +153,8 @@
                     android:textColor="@color/unselected"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Profile"/>
+                    android:text="Profile"
+                    android:textSize="9sp"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

@@ -95,7 +95,7 @@ public class ProfileFragment extends Fragment
                  llIndustryBox, llDesignationBox, llAssociationBox , llMailBox;
     ViewPager mViewPager, viewPager1;
     String recycle_image1, recycle_image2 ;
-    private ArrayList<String> image = new ArrayList<>();;
+    private ArrayList<String> image = new ArrayList<>();
     private CardSwipe myPager ;
     public static ArrayList<TestimonialModel> allTaggs ;
     String TestimonialProfileId = "";

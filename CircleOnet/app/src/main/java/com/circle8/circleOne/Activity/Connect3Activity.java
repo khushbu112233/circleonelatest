@@ -294,7 +294,7 @@ public class Connect3Activity extends AppCompatActivity
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
                     JSONArray jsonArray = jsonObject.getJSONArray("connection");
-                    Toast.makeText(getApplicationContext(), jsonArray.length()+"", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(), jsonArray.length()+"", Toast.LENGTH_LONG).show();
 
                     for (int i = 0; i < jsonArray.length(); i++)
                     {

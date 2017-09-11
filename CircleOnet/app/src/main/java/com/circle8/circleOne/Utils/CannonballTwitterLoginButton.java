@@ -30,13 +30,14 @@ public class CannonballTwitterLoginButton extends TwitterLoginButton {
         if (isInEditMode()){
             return;
         }
-       /* setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable
+        /*setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable
                 .icon_twitter), null, null, null);*/
-        setBackgroundResource(R.drawable.icon_twitter);
+//        setBackgroundResource(R.drawable.circle_shape);
         setTextSize(20);
         setHeight(28);
         setWidth(28);
-        setPadding(30, 0, 30, 0);
+        setPadding(0, 0, 70, 0);
         setTextColor(getResources().getColor(R.color.tw__blue_default));
+//        setBackgroundColor(getResources().getColor(R.color.white));
     }
 }
