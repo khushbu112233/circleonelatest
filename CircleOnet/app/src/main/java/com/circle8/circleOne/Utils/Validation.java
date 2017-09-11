@@ -18,41 +18,49 @@ public class Validation
 
         if(userName.isEmpty() || userName.length() < 3 )
         {
-            RegisterActivity.etUserName.setError("Minimum 3 Characters.");
+//            RegisterActivity.etUserName.setError("Minimum 3 Characters.");
+            RegisterActivity.tvUsernameInfo.setVisibility(View.VISIBLE);
             valid = false ;
         }
         else
         {
-            RegisterActivity.etUserName.setError(null);
+//            RegisterActivity.etUserName.setError(null);
+            RegisterActivity.tvUsernameInfo.setVisibility(View.GONE);
         }
 
         if(firstName.isEmpty() || firstName.length() < 3 )
         {
-            RegisterActivity.etFirstName.setError("Minimum 3 Characters.");
+//            RegisterActivity.etFirstName.setError("Minimum 3 Characters.");
+            RegisterActivity.tvFirstnameInfo.setVisibility(View.VISIBLE);
             valid = false ;
         }
         else
         {
-            RegisterActivity.etFirstName.setError(null);
+//            RegisterActivity.etFirstName.setError(null);
+            RegisterActivity.tvFirstnameInfo.setVisibility(View.GONE);
         }
 
         if(lastName.isEmpty() || lastName.length() < 3 )
         {
-            RegisterActivity.etLastName.setError("Minimum 3 Characters.");
+//            RegisterActivity.etLastName.setError("Minimum 3 Characters.");
+            RegisterActivity.tvLastnameInfo.setVisibility(View.VISIBLE);
             valid = false ;
         }
         else
         {
-            RegisterActivity.etLastName.setError(null);
+//            RegisterActivity.etLastName.setError(null);
+            RegisterActivity.tvLastnameInfo.setVisibility(View.GONE);
         }
 
         if (emailAddress.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(emailAddress).matches())
         {
-            RegisterActivity.etEmail.setError("Not a valid Email Address");
+//            RegisterActivity.etEmail.setError("Not a valid Email Address");
+            RegisterActivity.tvEmailInfo.setVisibility(View.VISIBLE);
             valid = false;
         }
         else {
-            RegisterActivity.etEmail.setError(null);
+//            RegisterActivity.etEmail.setError(null);
+            RegisterActivity.tvEmailInfo.setVisibility(View.GONE);
         }
 
         if(contactNo.isEmpty() || contactNo.length() <= 8  )
@@ -69,20 +77,24 @@ public class Validation
 
         if (password.isEmpty() || password.length() < 4)
         {
-            RegisterActivity.etPassword.setError("Minimum 4 Characters");
+//            RegisterActivity.etPassword.setError("Minimum 4 Characters");
+            RegisterActivity.tvPasswordInfo.setVisibility(View.VISIBLE);
             valid = false;
         }
         else {
-            RegisterActivity.etPassword.setError(null);
+//            RegisterActivity.etPassword.setError(null);
+            RegisterActivity.tvPasswordInfo.setVisibility(View.GONE);
         }
 
         if (rePassword.equals(password))
         {
-
             RegisterActivity.etConfirmPass.setError(null);
         }
-        else {
-            RegisterActivity.etConfirmPass.setError("Password does not match");
+        else
+        {
+//            RegisterActivity.etConfirmPass.setError("Password does not match");
+            RegisterActivity.tvPasswordInfo.setText("Password does not match");
+            RegisterActivity.tvRePasswordInfo.setVisibility(View.VISIBLE);
             valid = false;
         }
 
