@@ -1,5 +1,8 @@
 package com.circle8.circleOne.Utils;
 
+import android.text.Html;
+import android.view.View;
+
 import com.circle8.circleOne.Activity.LoginActivity;
 import com.circle8.circleOne.Activity.RegisterActivity;
 
@@ -92,22 +95,26 @@ public class Validation
 
         if(userName.isEmpty())
         {
-            LoginActivity.etLoginUser.setError("Enter UserName");
+//            LoginActivity.etLoginUser.setError(Html.fromHtml("<font color='red'>Username can't be empty</font>"));
+            LoginActivity.tvUsernameInfo.setVisibility(View.VISIBLE);
             valid = false ;
         }
         else
         {
-            LoginActivity.etLoginUser.setError(null);
+//            LoginActivity.etLoginUser.setError(null);
+            LoginActivity.tvUsernameInfo.setVisibility(View.GONE);
         }
 
         if(password.isEmpty())
         {
-            LoginActivity.etLoginPass.setError("Enter Password");
+//            LoginActivity.etLoginPass.setError("Enter Password");
+            LoginActivity.tvPasswordInfo.setVisibility(View.VISIBLE);
             valid = false ;
         }
         else
         {
-            LoginActivity.etLoginPass.setError(null);
+//            LoginActivity.etLoginPass.setError(null);
+            LoginActivity.tvPasswordInfo.setVisibility(View.GONE);
         }
 
         return valid;

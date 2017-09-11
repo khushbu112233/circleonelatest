@@ -47,6 +47,16 @@
             android:paddingTop="10dp"
             android:textColor="@color/white"
             android:textColorHint="@color/white" />
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tvUserInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Please! Enter Username"
+            android:textSize="11sp"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="45dp" />
 
         <EditText
             android:singleLine="true"
@@ -66,6 +76,17 @@
             android:paddingTop="10dp"
             android:textColor="@color/white"
             android:textColorHint="@color/white" />
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tvPasswordInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Please! Enter Password"
+            android:textSize="11sp"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="45dp" />
+
 
         <Button
             android:id="@+id/btnLogin"
