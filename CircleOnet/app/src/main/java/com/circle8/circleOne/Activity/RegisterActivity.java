@@ -88,6 +88,7 @@ import static com.circle8.circleOne.Utils.Validation.validate;
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, AsyncRequest.OnAsyncRequestComplete
 {
     public static EditText etUserName, etFirstName, etLastName, etPassword, etConfirmPass, etPhone, etEmail;
+    public static TextView tvUsernameInfo , tvFirstnameInfo, tvLastnameInfo, tvPasswordInfo, tvRePasswordInfo, tvEmailInfo ;
     private LinearLayout lnrRegister;
     private ImageView ivConnect ;
     RelativeLayout ivMale, ivFemale;
@@ -145,6 +146,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         imgBack.setOnClickListener(this);
         pDialog = new ProgressDialog(this);
         civProfilePic =(CircleImageView)findViewById(R.id.imgProfileCard);
+
+        tvUsernameInfo = (TextView)findViewById(R.id.tvUsernameInfo);
+        tvFirstnameInfo = (TextView)findViewById(R.id.tvFirstNameInfo);
+        tvLastnameInfo = (TextView)findViewById(R.id.tvLastNameInfo);
+        tvPasswordInfo = (TextView)findViewById(R.id.tvPasswordInfo);
+        tvRePasswordInfo = (TextView)findViewById(R.id.tvAgainPasswordInfo);
+        tvEmailInfo = (TextView)findViewById(R.id.tvEmailInfo);
 
         Intent intent = getIntent();
         Twitter = intent.getStringExtra("Twitter");
