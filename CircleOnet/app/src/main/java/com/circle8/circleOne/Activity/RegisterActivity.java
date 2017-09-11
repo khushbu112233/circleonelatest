@@ -650,7 +650,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             jsonObject.accumulate("Phone", phone_no);
             jsonObject.accumulate("Photo_String", register_img);
             jsonObject.accumulate("Platform", "Android");
-            jsonObject.accumulate("Token", LoginActivity.pushToken);
+            jsonObject.accumulate("Token", "1234567890");
             jsonObject.accumulate("Twitter", Twitter);
             jsonObject.accumulate("UserName", email);
 

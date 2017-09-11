@@ -51,7 +51,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.internal.pu;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
@@ -71,8 +70,6 @@ import com.linkedin.platform.listeners.ApiListener;
 import com.linkedin.platform.listeners.ApiResponse;
 import com.linkedin.platform.listeners.AuthListener;
 import com.linkedin.platform.utils.Scope;
-import com.onesignal.OSPermissionSubscriptionState;
-import com.onesignal.OneSignal;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -115,7 +112,6 @@ public class LoginActivity extends AppCompatActivity implements
     private static final int RC_SIGN_IN = 007;
     private GoogleApiClient mGoogleApiClient;
     private ProgressDialog mProgressDialog;
-    public static String pushToken = "";
 
     private SignInButton btnSignIn;
     private Button btnSignOut, btnRevokeAccess;
@@ -171,18 +167,6 @@ public class LoginActivity extends AppCompatActivity implements
         login_linkedin_btn = (ImageView) findViewById(R.id.login_button_linkedin);
         prefs = getSharedPreferences("com.circle8.circleOne", MODE_PRIVATE);
         etLoginPass.setImeOptions(EditorInfo.IME_ACTION_DONE);
-
-        OSPermissionSubscriptionState status = OneSignal.getPermissionSubscriptionState();
-        boolean isEnabled = status.getPermissionStatus().getEnabled();
-
-        boolean isSubscribed = status.getSubscriptionStatus().getSubscribed();
-        boolean subscriptionSetting = status.getSubscriptionStatus().getUserSubscriptionSetting();
-        String userID = status.getSubscriptionStatus().getUserId();
-        pushToken = status.getSubscriptionStatus().getPushToken();
-
-        Toast.makeText(getApplicationContext(), pushToken, Toast.LENGTH_LONG).show();
-       // textView.setText("PlayerID: " + userID + "\nPushToken: " + pushToken);
-
         etLoginPass.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -343,7 +327,7 @@ public class LoginActivity extends AppCompatActivity implements
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Password", userPassword);
             jsonObject.accumulate("Platform", "Android");
-            jsonObject.accumulate("Token", pushToken);
+            jsonObject.accumulate("Token", "1234567890");
             jsonObject.accumulate("UserName", userName);
 
             // 4. convert JSONObject to JSON to String
@@ -400,7 +384,7 @@ public class LoginActivity extends AppCompatActivity implements
             jsonObject.accumulate("Platform", "Android");
             jsonObject.accumulate("SocialMedia_Id", SocialMedia_Id);
             jsonObject.accumulate("SocialMedia_Type", SocialMedia_Type);
-            jsonObject.accumulate("Token", pushToken);
+            jsonObject.accumulate("Token", "1234567890");
             jsonObject.accumulate("UserName", UserName);
 
             // 4. convert JSONObject to JSON to String
