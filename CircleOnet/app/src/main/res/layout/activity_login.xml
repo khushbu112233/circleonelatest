@@ -156,13 +156,15 @@
                 <com.circle8.circleOne.Utils.CannonballTwitterLoginButton
                     android:id="@+id/button_twitter_login"
                     android:layout_width="28dp"
-                    android:layout_height="28dp" />
-
-                <!--  <ImageView
+                    android:layout_height="28dp"
+                    android:drawablePadding="5dp"
+                    android:background="@android:color/transparent"/>
+                  <ImageView
                       android:id="@+id/btnLoginTwitter"
                       android:layout_width="28dp"
                       android:layout_height="28dp"
-                      android:src="@drawable/icon_twitter" />-->
+                      android:src="@drawable/icon_twitter" />
+
             </RelativeLayout>
 
             <RelativeLayout

@@ -168,14 +168,16 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         getSupportActionBar().setShowHideAnimationEnabled(false);
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
+            public void onTabSelected(TabLayout.Tab tab)
+            {
                 mViewPager.setCurrentItem(tab.getPosition(), false);
                 getSupportActionBar().setShowHideAnimationEnabled(false);
                 if (tab.getPosition() == 3){
                     getSupportActionBar().hide();
                 }
                 int  i = tab.getPosition();
-                if ( i == 0 ){
+                if ( i == 0 )
+                {
                     View view = tab.getCustomView();
                     ImageView imageView = (ImageView) view.findViewById(R.id.icon);
                     imageView.setImageResource(R.drawable.ic_icon1b);
@@ -186,7 +188,6 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                 else if ( i == 1 ){
                  //   View view1 = getLayoutInflater().inflate(R.layout.tab_view, null);
                     // view1.findViewById(R.id.icon).set(R.drawable.ic_icon1);
-
                     View view = tab.getCustomView();
                     ImageView imageView = (ImageView) view.findViewById(R.id.icon);
                     imageView.setImageResource(R.drawable.ic_icon2b);

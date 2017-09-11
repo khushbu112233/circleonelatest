@@ -123,11 +123,11 @@ public class TestimonialActivity extends AppCompatActivity
         protected void onPreExecute()
         {
             super.onPreExecute();
-            dialog = new ProgressDialog(mContext);
-            dialog.setMessage("Fetching Testimonials...");
-            //dialog.setTitle("Saving Reminder");
-            dialog.show();
-            dialog.setCancelable(false);
+//            dialog = new ProgressDialog(mContext);
+//            dialog.setMessage("Fetching Testimonials...");
+//            //dialog.setTitle("Saving Reminder");
+//            dialog.show();
+//            dialog.setCancelable(false);
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
         }
@@ -141,7 +141,7 @@ public class TestimonialActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
+//            dialog.dismiss();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);

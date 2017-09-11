@@ -437,11 +437,14 @@ public class ConnectActivity extends AppCompatActivity
                     JSONObject response = new JSONObject(result);
                     String Matched = response.getString("Matched");
 
-                    if (Matched.equals("1")){
+                    if (Matched.equals("1"))
+                    {
                         ivAddRound.setImageResource(R.drawable.round_gray);
                         tvAdd.setTextColor(getResources().getColor(R.color.unselected));
                         tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
-                    } else {
+                    }
+                    else
+                    {
                         ivAddRound.setImageResource(R.drawable.round_blue);
                         tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
                         tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
