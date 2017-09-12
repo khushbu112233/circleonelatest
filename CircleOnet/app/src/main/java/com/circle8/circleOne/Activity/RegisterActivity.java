@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -88,7 +89,7 @@ import static com.circle8.circleOne.Utils.Validation.validate;
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, AsyncRequest.OnAsyncRequestComplete
 {
     public static EditText etUserName, etFirstName, etLastName, etPassword, etConfirmPass, etPhone, etEmail;
-    public static TextView tvUsernameInfo , tvFirstnameInfo, tvLastnameInfo, tvPasswordInfo, tvRePasswordInfo, tvEmailInfo ;
+    public static TextView tvUsernameInfo , tvFirstnameInfo, tvLastnameInfo, tvPasswordInfo, tvRePasswordInfo, tvEmailInfo, tvPhoneInfo ;
     private LinearLayout lnrRegister;
     private ImageView ivConnect ;
     RelativeLayout ivMale, ivFemale;
@@ -123,6 +124,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
         txtGender = (TextView) findViewById(R.id.txtGender);
         lnrRegister = (LinearLayout) findViewById(R.id.lnrBottomReg);
         etUserName = (EditText) findViewById(R.id.etUserName);
@@ -153,6 +157,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         tvPasswordInfo = (TextView)findViewById(R.id.tvPasswordInfo);
         tvRePasswordInfo = (TextView)findViewById(R.id.tvAgainPasswordInfo);
         tvEmailInfo = (TextView)findViewById(R.id.tvEmailInfo);
+        tvPhoneInfo = (TextView)findViewById(R.id.tvPhoneInfo);
 
         Intent intent = getIntent();
         Twitter = intent.getStringExtra("Twitter");
@@ -257,7 +262,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
         if (v == ivMale)
         {
-            TranslateAnimation slide1 = new TranslateAnimation(0, -190, 0, 0);
+            TranslateAnimation slide1 = new TranslateAnimation(0, -185, 0, 0);
             slide1.setDuration(1000);
             ivConnect.startAnimation(slide1);
 
@@ -269,7 +274,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     ivFemaleImg.setImageResource(R.drawable.ic_female_gray);
                     ivFemaleround.setImageResource(R.drawable.round_gray);
                 }
-            }, 1100);
+            }, 1300);
             //second things
             line_view1.setBackground(getResources().getDrawable(R.drawable.dotted));
             ivMaleImg.setImageResource(R.drawable.ic_male);
@@ -278,7 +283,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             txtGender.setText("Gender: Male");
         }
         if (v == ivFemale) {
-            TranslateAnimation slide = new TranslateAnimation(0, 190, 0, 0);
+            TranslateAnimation slide = new TranslateAnimation(0, 185, 0, 0);
             slide.setDuration(1000);
             ivConnect.startAnimation(slide);
 
@@ -290,7 +295,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     ivMaleImg.setImageResource(R.drawable.ic_male_gray);
                     ivMaleRound.setImageResource(R.drawable.round_gray);
                 }
-            }, 1100);
+            }, 1300);
             //second things
             line_view2.setBackground(getResources().getDrawable(R.drawable.dotted));
             ivFemaleImg.setImageResource(R.drawable.ic_female);
@@ -313,13 +318,20 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             String contact = phone_no;
             phone_no = "+"+code+contact ;
 
-            if (!validate(user_name, first_name, last_name, password, c_password, phone_no, email)) {
-                Toast.makeText(getApplicationContext(), "Form Fill Invalid!", Toast.LENGTH_SHORT).show();
-            } else if (gender.equals("")) {
+            if (!validate(user_name, first_name, last_name, password, c_password, phone_no, email))
+            {
+//                Toast.makeText(getApplicationContext(), "Something Wrong!", Toast.LENGTH_SHORT).show();
+            }
+            else if (gender.equals(""))
+            {
                 Toast.makeText(getApplicationContext(), "Select Gender", Toast.LENGTH_SHORT).show();
-            } else if (final_ImgBase64.equals("")) {
+            }
+            else if (final_ImgBase64.equals(""))
+            {
                 Toast.makeText(getApplicationContext(), "Upload Image", Toast.LENGTH_SHORT).show();
-            } else {
+            }
+            else
+            {
                 new HttpAsyncTaskPhotoUpload().execute("http://circle8.asia:8081/Onet.svc/ImgUpload");
             }
         }

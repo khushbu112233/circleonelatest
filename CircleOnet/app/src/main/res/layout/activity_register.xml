@@ -222,7 +222,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-
             <com.hbb20.CountryCodePicker
                 app:ccp_textSize="15dp"
                 app:ccpDialog_textColor="@color/colorPrimary"
@@ -233,22 +232,38 @@
                 app:ccp_showFlag="false"
                 android:layout_marginRight="10dp"
                 android:id="@+id/ccp"
+                android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/etPhone"
-            android:layout_marginTop="3dp"
-            android:textColor="@color/colorPrimary"
-            android:textSize="15dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:textColorHint="@color/colorPrimary"
-            android:hint="* Phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"/>
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <EditText
+                    android:id="@+id/etPhone"
+                    android:layout_marginTop="3dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="15dp"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:textColorHint="@color/colorPrimary"
+                    android:hint="* Phone"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"/>
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/tvPhoneInfo"
+                    android:textColor="@color/unselected"
+                    android:textSize="10sp"
+                    android:text="Enter Phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"/>
             </LinearLayout>
+
+        </LinearLayout>
+
         <EditText
             android:id="@+id/etEmail"
             android:layout_marginTop="3dp"

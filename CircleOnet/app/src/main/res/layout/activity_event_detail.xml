@@ -205,10 +205,12 @@ Monday - April 3, 2017 - 9:30am - 5:00pm"/>
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/colorPrimary"></View>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="4dp">
 
             <LinearLayout
                 android:gravity="center"
@@ -222,7 +224,7 @@ Monday - April 3, 2017 - 9:30am - 5:00pm"/>
                 android:orientation="vertical">
                 <ImageView
                     android:id="@+id/imgCards"
-                    android:layout_width="30dp"
+                    android:layout_width="55dp"
                     android:layout_height="30dp"
                     android:src="@drawable/ic_icon1" />
 
@@ -231,7 +233,8 @@ Monday - April 3, 2017 - 9:30am - 5:00pm"/>
                     android:textColor="@color/unselected"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cards"/>
+                    android:text="Cards"
+                    android:textSize="9sp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -245,7 +248,7 @@ Monday - April 3, 2017 - 9:30am - 5:00pm"/>
                 android:orientation="vertical">
                 <ImageView
                     android:id="@+id/imgConnect"
-                    android:layout_width="30dp"
+                    android:layout_width="55dp"
                     android:layout_height="30dp"
                     android:src="@drawable/ic_icon2" />
 
@@ -254,7 +257,8 @@ Monday - April 3, 2017 - 9:30am - 5:00pm"/>
                     android:textColor="@color/unselected"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Connect"/>
+                    android:text="Connect"
+                    android:textSize="9sp"/>
             </LinearLayout>
             <LinearLayout
                 android:gravity="center"
@@ -267,7 +271,7 @@ Monday - April 3, 2017 - 9:30am - 5:00pm"/>
                 android:orientation="vertical">
                 <ImageView
                     android:id="@+id/imgEvents"
-                    android:layout_width="30dp"
+                    android:layout_width="55dp"
                     android:layout_height="30dp"
                     android:src="@drawable/ic_icon3b" />
 
@@ -276,7 +280,8 @@ Monday - April 3, 2017 - 9:30am - 5:00pm"/>
                     android:textColor="@color/colorPrimary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Events"/>
+                    android:text="Events"
+                    android:textSize="9sp"/>
             </LinearLayout>
             <LinearLayout
                 android:gravity="center"
@@ -289,7 +294,7 @@ Monday - April 3, 2017 - 9:30am - 5:00pm"/>
                 android:orientation="vertical">
                 <ImageView
                     android:id="@+id/imgProfile"
-                    android:layout_width="30dp"
+                    android:layout_width="55dp"
                     android:layout_height="30dp"
                     android:src="@drawable/ic_icon4" />
 
@@ -298,7 +303,8 @@ Monday - April 3, 2017 - 9:30am - 5:00pm"/>
                     android:textColor="@color/unselected"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Profile"/>
+                    android:text="Profile"
+                    android:textSize="9sp"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
