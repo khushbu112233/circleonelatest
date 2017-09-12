@@ -227,28 +227,21 @@ public class List4Fragment extends Fragment
                     gridAdapter.Filter(text);
                 }*/
 
-                if (allTags.size() == 0){
-                    //tvNoCard.setVisibility(View.VISIBLE);
-                }else {
-                    if (s.length() <= 0) {
+                    if (s.length() <= 0)
+                    {
                         pageno = 1;
                         allTaggs.clear();
                         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
 //                    GetData(getContext());
-                    } else if (s.length() >= 2) {
+                    }
+                    else if (s.length() > 0)
+                    {
                         String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
-
-                        String Findby = "name";
-                        String Search = "Circle One";
-                        String rc_no = "10";
-                        String page_no = "1";
 
                         allTaggs.clear();
                         new HttpAsyncTaskSearch().execute("http://circle8.asia:8081/Onet.svc/SearchConnect");
                     }
                 }
-
-            }
 
             @Override
             public void afterTextChanged(Editable s) {

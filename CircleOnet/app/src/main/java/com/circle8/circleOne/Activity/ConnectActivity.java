@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -41,6 +42,8 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.circle8.circleOne.R.id.view;
+
 
 public class ConnectActivity extends AppCompatActivity
 {
@@ -48,6 +51,7 @@ public class ConnectActivity extends AppCompatActivity
     private static final int PERMISSION_REQUEST_CODE = 200;
     CircleImageView ivProfileImage;
 
+    private  RelativeLayout rlSocial ;
     private ImageView ivConnectImg, ivAddRound, ivConnectRound ;
     private TextView tvAdd, tvConnect, tvConnectLine1, tvConnectLine2, txtWeb, txtMail, txtNum, txtMob ;
     private RelativeLayout rlAdd, rlConnect ;
@@ -88,13 +92,25 @@ public class ConnectActivity extends AppCompatActivity
         tvConnectLine1 = (TextView)findViewById(R.id.tvConnectLine1);
         tvConnectLine2 = (TextView)findViewById(R.id.tvConnectLine2);
 
-
         tvPersonName = (TextView)findViewById(R.id.tvPersonName);
         tvPersonDesignation = (TextView)findViewById(R.id.tvPersonDesignation);
         tvCompanyName = (TextView)findViewById(R.id.tvCompanyName);
 
         rlAdd = (RelativeLayout)findViewById(R.id.rlAdd);
         rlConnect = (RelativeLayout)findViewById(R.id.rlConnect);
+        rlSocial = (RelativeLayout)findViewById(R.id.rlSocial);
+
+        /*Rect loc = new Rect();
+        int[] location = new int[2];
+        rlConnect.getLocationOnScreen(location);
+
+        loc.left = location[0];
+        loc.top = location[1];
+        loc.right = loc.left + rlConnect.getWidth();
+        loc.bottom = loc.top + rlConnect.getHeight();*/
+
+//        Rect r_connect =
+//        Toast.makeText(getApplicationContext(),"Connect pos: "+rlConnect.getX() +","+rlConnect.getY() ,Toast.LENGTH_LONG).show();
 
 
         Intent intent = getIntent();
@@ -106,10 +122,7 @@ public class ConnectActivity extends AppCompatActivity
 
         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/ConnectProfile");
 
-
 //        Toast.makeText(getApplicationContext(),"ProfileID & FriendID "+profile_id+" "+friendProfile_id,Toast.LENGTH_LONG).show();
-
-
 
 /*
         if (tag_id.equals("en100000001")){
@@ -182,7 +195,7 @@ public class ConnectActivity extends AppCompatActivity
                     Boolean aBoolean = contactExists(getApplicationContext(), txtMob.getText().toString());
 
                     if (aBoolean == true) {
-                        TranslateAnimation slide1 = new TranslateAnimation(0, -170, 0, 0);
+                        TranslateAnimation slide1 = new TranslateAnimation(0, -190, 0, 0);
                         slide1.setDuration(1000);
                         ivConnectImg.startAnimation(slide1);
 
@@ -194,7 +207,7 @@ public class ConnectActivity extends AppCompatActivity
                                 tvConnect.setTextColor(getResources().getColor(R.color.unselected));
                                 tvConnectLine2.setTextColor(getResources().getColor(R.color.unselected));
                             }
-                        }, 1100);
+                        }, 1600);
                         // Second Things
                         ivAddRound.setImageResource(R.drawable.round_blue);
                         tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
@@ -223,7 +236,7 @@ public class ConnectActivity extends AppCompatActivity
 
                     if (aBoolean == true)
                     {
-                        TranslateAnimation slide1 = new TranslateAnimation(0, 170, 0, 0);
+                        TranslateAnimation slide1 = new TranslateAnimation(0, 190, 0, 0);
                         slide1.setDuration(1000);
                         ivConnectImg.startAnimation(slide1);
 
@@ -240,15 +253,16 @@ public class ConnectActivity extends AppCompatActivity
                                 startActivity(go);
                                 finish();
                             }
-                        }, 1100);
+                        }, 1600);
                         // Second Things
                         ivConnectRound.setImageResource(R.drawable.round_blue);
                         tvConnect.setTextColor(getResources().getColor(R.color.colorPrimary));
                         tvConnectLine2.setTextColor(getResources().getColor(R.color.colorPrimary));
 
                     }
-                    else {
-                        TranslateAnimation slide1 = new TranslateAnimation(0, 170, 0, 0);
+                    else
+                    {
+                        TranslateAnimation slide1 = new TranslateAnimation(0, 190, 0, 0);
                         slide1.setDuration(1000);
                         ivConnectImg.startAnimation(slide1);
 
@@ -265,12 +279,11 @@ public class ConnectActivity extends AppCompatActivity
                                 startActivity(go);
                                 finish();
                             }
-                        }, 1100);
+                        }, 1600);
                         // Second Things
                         ivConnectRound.setImageResource(R.drawable.round_blue);
                         tvConnect.setTextColor(getResources().getColor(R.color.colorPrimary));
                         tvConnectLine2.setTextColor(getResources().getColor(R.color.colorPrimary));
-
                     }
                 }
             }
@@ -364,6 +377,25 @@ public class ConnectActivity extends AppCompatActivity
         });
 
     }
+
+    public Rect locateView(View view)
+    {
+        Rect loc = new Rect();
+        int[] location = new int[2];
+        if (view == null)
+        {
+            return loc;
+        }
+        view.getLocationOnScreen(location);
+
+        loc.left = location[0];
+        loc.top = location[1];
+        loc.right = loc.left + view.getWidth();
+        loc.bottom = loc.top + view.getHeight();
+
+        return loc;
+    }
+
 
     public boolean contactExists(Context context, String number) {
 /// number is the phone number

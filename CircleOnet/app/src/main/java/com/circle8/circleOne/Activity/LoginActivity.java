@@ -191,7 +191,6 @@ public class LoginActivity extends AppCompatActivity implements
         Fabric.with(this, new Twitter(authConfig));
         loginSession = new LoginSession(getApplicationContext());
         fingerPrintSession = new FingerPrintSession(getApplicationContext());
-        fingerprintHandler = new FingerprintHandler(this);
         setContentView(R.layout.activity_login);
         btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
         btnSimpleLogin = (Button) findViewById(R.id.btnLogin);
@@ -230,27 +229,31 @@ public class LoginActivity extends AppCompatActivity implements
             }
         });
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+        {
             imgFinger.setVisibility(View.VISIBLE);
-        } else {
+            fingerprintHandler = new FingerprintHandler(this);
+            fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
+            keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
+            prefs = getSharedPreferences("com.circle8.circleOne", MODE_PRIVATE);
+            // check support for android fingerprint on device
+            checkDeviceFingerprintSupport();
+            //generate fingerprint keystore
+            generateFingerprintKeyStore();
+            //instantiate Cipher class
+            Cipher mCipher = instantiateCipher();
+            if (mCipher != null)
+            {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    cryptoObject = new FingerprintManager.CryptoObject(mCipher);
+                }
+            }
+            fingerprintHandler.completeFingerAuthentication(fingerprintManager, cryptoObject);
+        }
+        else
+            {
             imgFinger.setVisibility(View.GONE);
         }
-
-        fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
-        keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
-        prefs = getSharedPreferences("com.circle8.circleOne", MODE_PRIVATE);
-        // check support for android fingerprint on device
-        checkDeviceFingerprintSupport();
-        //generate fingerprint keystore
-        generateFingerprintKeyStore();
-        //instantiate Cipher class
-        Cipher mCipher = instantiateCipher();
-        if (mCipher != null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                cryptoObject = new FingerprintManager.CryptoObject(mCipher);
-            }
-        }
-        fingerprintHandler.completeFingerAuthentication(fingerprintManager, cryptoObject);
 
 
         btnRegister.setOnClickListener(new View.OnClickListener() {

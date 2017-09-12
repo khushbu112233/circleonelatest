@@ -314,41 +314,44 @@ public class List1Fragment extends Fragment
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
-                if (allTags.size() == 0){
-                }else {
-
                     if(s.length() <= 0)
                     {
-
-//                    nfcModel.clear();
                         // allTags = db.getActiveNFC();
 //                    GetData(getContext());
-                        nfcModel.clear();
+//                        nfcModel.clear();
                         allTags.clear();
-//                    mAdapter.notifyDataSetChanged();
-//                    mAdapter1.notifyDataSetChanged();
-                        try {
+                        try
+                        {
                             mAdapter.notifyDataSetChanged();
-                        }catch (Exception e){}
-                        try {
+                        }
+                        catch (Exception e){}
+                        try
+                        {
                             mAdapter1.notifyDataSetChanged();
-                        }catch (Exception e){}
+                        }
+                        catch (Exception e){}
                         callFirst();
                     }
                     else if( s.length() > 0 )
                     {
                         String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
-//                    mAdapter.Filter(text);
-                        //   mAdapter1.Filter(text);
-                        nfcModel.clear();
+
+//                        nfcModel.clear();
                         allTags.clear();
-//                    mAdapter.notifyDataSetChanged();
-//                    mAdapter1.notifyDataSetChanged();
+                        try
+                        {
+                            mAdapter.notifyDataSetChanged();
+                        }
+                        catch (Exception e){}
+                        try
+                        {
+                            mAdapter1.notifyDataSetChanged();
+                        }
+                        catch (Exception e){}
                         new HttpAsyncTaskSearch().execute("http://circle8.asia:8081/Onet.svc/SearchConnect");
                     }
-
                 }
-            }
+
 
             @Override
             public void afterTextChanged(Editable s) {

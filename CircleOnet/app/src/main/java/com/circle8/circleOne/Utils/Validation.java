@@ -19,6 +19,7 @@ public class Validation
         if(userName.isEmpty() || userName.length() < 3 )
         {
 //            RegisterActivity.etUserName.setError("Minimum 3 Characters.");
+            RegisterActivity.tvUsernameInfo.setText("Mini 3 Characters");
             RegisterActivity.tvUsernameInfo.setVisibility(View.VISIBLE);
             valid = false ;
         }
@@ -31,6 +32,7 @@ public class Validation
         if(firstName.isEmpty() || firstName.length() < 3 )
         {
 //            RegisterActivity.etFirstName.setError("Minimum 3 Characters.");
+            RegisterActivity.tvFirstnameInfo.setText("Mini 3 Characters");
             RegisterActivity.tvFirstnameInfo.setVisibility(View.VISIBLE);
             valid = false ;
         }
@@ -43,6 +45,7 @@ public class Validation
         if(lastName.isEmpty() || lastName.length() < 3 )
         {
 //            RegisterActivity.etLastName.setError("Minimum 3 Characters.");
+            RegisterActivity.tvLastnameInfo.setText("Mini 3 Characters");
             RegisterActivity.tvLastnameInfo.setVisibility(View.VISIBLE);
             valid = false ;
         }
@@ -52,48 +55,64 @@ public class Validation
             RegisterActivity.tvLastnameInfo.setVisibility(View.GONE);
         }
 
-        if (emailAddress.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(emailAddress).matches())
+        if (emailAddress.isEmpty())
         {
 //            RegisterActivity.etEmail.setError("Not a valid Email Address");
             RegisterActivity.tvEmailInfo.setVisibility(View.VISIBLE);
             valid = false;
         }
-        else {
+        else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailAddress).matches())
+        {
+            RegisterActivity.tvEmailInfo.setText("Not a valid Email Address");
+            RegisterActivity.tvEmailInfo.setVisibility(View.VISIBLE);
+            valid = false;
+        }
+        else
+        {
 //            RegisterActivity.etEmail.setError(null);
             RegisterActivity.tvEmailInfo.setVisibility(View.GONE);
         }
 
         if(contactNo.isEmpty() || contactNo.length() <= 8  )
         {
-            RegisterActivity.etPhone.setError("10 Characters Required");
+//            RegisterActivity.etPhone.setError("10 Characters Required");
+            RegisterActivity.tvPhoneInfo.setText("Mini 8 digit");
+            RegisterActivity.tvPhoneInfo.setVisibility(View.VISIBLE);
             valid = false ;
         }
-        else if(contactNo.length() > 10){
-            RegisterActivity.etPhone.setError("10 Characters Required");
-        }
-        else {
-            RegisterActivity.etPhone.setError(null);
+        else
+        {
+//            RegisterActivity.etPhone.setError(null);
+            RegisterActivity.tvPhoneInfo.setVisibility(View.GONE);
         }
 
         if (password.isEmpty() || password.length() < 4)
         {
 //            RegisterActivity.etPassword.setError("Minimum 4 Characters");
+            RegisterActivity.tvPasswordInfo.setText("Mini 4 Characters");
             RegisterActivity.tvPasswordInfo.setVisibility(View.VISIBLE);
             valid = false;
         }
-        else {
+        else
+        {
 //            RegisterActivity.etPassword.setError(null);
             RegisterActivity.tvPasswordInfo.setVisibility(View.GONE);
         }
 
-        if (rePassword.equals(password))
+        if(rePassword.isEmpty())
+        {
+            RegisterActivity.tvRePasswordInfo.setText("Enter Re-Password");
+            RegisterActivity.tvRePasswordInfo.setVisibility(View.VISIBLE);
+            valid = false;
+        }
+        else if (rePassword.equals(password))
         {
             RegisterActivity.etConfirmPass.setError(null);
         }
         else
         {
 //            RegisterActivity.etConfirmPass.setError("Password does not match");
-            RegisterActivity.tvPasswordInfo.setText("Password does not match");
+            RegisterActivity.tvRePasswordInfo.setText("Password does not match");
             RegisterActivity.tvRePasswordInfo.setVisibility(View.VISIBLE);
             valid = false;
         }

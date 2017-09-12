@@ -245,23 +245,23 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
                     gridAdapter.Filter(text);
                 }*/
-                if (allTags.size() == 0){
-                    //tvNoCard.setVisibility(View.VISIBLE);
-                }else {
-                    if (s.length() <= 0) {
+                    if (s.length() <= 0)
+                    {
                         pageno = 1;
                         allTaggs.clear();
                         searchTags.clear();
                         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
 //                    GetData(getContext());
-                    } else if (s.length() >= 2) {
+                    }
+                    else if (s.length() > 0)
+                    {
                         String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
+
                         allTaggs.clear();
                         searchTags.clear();
                         new HttpAsyncTaskSearch().execute("http://circle8.asia:8081/Onet.svc/SearchConnect");
                     }
                 }
-            }
 
             @Override
             public void afterTextChanged(Editable s) {
