@@ -390,6 +390,9 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
 
                     JSONArray connect = response.getJSONArray("connect");
 
+                    allTaggs.clear();
+                    gridAdapter.notifyDataSetChanged();
+
                     if(connect.length() == 0)
                     {
                         //tvDataInfo.setVisibility(View.VISIBLE);
@@ -421,9 +424,9 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                             connectModel.setGoogle_id(iCon.getString("Google"));
                             connectModel.setLinkedin_id(iCon.getString("LinkedIn"));
                             connectModel.setWebsite(iCon.getString("Website"));
-                            searchTags.add(connectModel);
+                            allTaggs.add(connectModel);
 
-                            gridAdapter = new List3Adapter(getContext(), R.layout.grid_list3_layout, searchTags);
+                            gridAdapter = new List3Adapter(getContext(), R.layout.grid_list3_layout, allTaggs);
                             listView.setAdapter(gridAdapter);
                             gridAdapter.notifyDataSetChanged();
 //                            GetData(getContext());

@@ -192,10 +192,13 @@ public class ByCompanyFragment  extends Fragment
 
                     JSONArray connect = response.getJSONArray("connect");
 
+                    connectTags.clear();
+
                     if(connect.length() == 0)
                     {
                         tvDataInfo.setVisibility(View.VISIBLE);
                         connectTags.clear();
+                        connectListAdapter.notifyDataSetChanged();
                     }
                     else
                     {

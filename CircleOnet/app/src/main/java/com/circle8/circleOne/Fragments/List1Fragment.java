@@ -829,9 +829,16 @@ public class List1Fragment extends Fragment
 
                     JSONArray connect = response.getJSONArray("connect");
 
+                    allTags.clear();
+                    mAdapter.notifyDataSetChanged();
+                    mAdapter1.notifyDataSetChanged();
+
                     if(connect.length() == 0)
                     {
                       //  tvNoCard.setVisibility(View.VISIBLE);
+                        allTags.clear();
+                        mAdapter.notifyDataSetChanged();
+                        mAdapter1.notifyDataSetChanged();
                     }
                     else
                     {

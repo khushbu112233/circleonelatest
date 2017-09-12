@@ -107,7 +107,8 @@ public class Validation
         }
         else if (rePassword.equals(password))
         {
-            RegisterActivity.etConfirmPass.setError(null);
+//            RegisterActivity.etConfirmPass.setError(null);
+            RegisterActivity.tvRePasswordInfo.setVisibility(View.GONE);
         }
         else
         {

@@ -358,6 +358,9 @@ public class List4Fragment extends Fragment
 
                     JSONArray connect = response.getJSONArray("connect");
 
+                    allTaggs.clear();
+                    gridAdapter.notifyDataSetChanged();
+
                     if(connect.length() == 0)
                     {
                         //tvDataInfo.setVisibility(View.VISIBLE);

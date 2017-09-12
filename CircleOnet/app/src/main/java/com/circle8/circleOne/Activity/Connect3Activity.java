@@ -290,8 +290,10 @@ public class Connect3Activity extends AppCompatActivity
         protected void onPostExecute(String result)
         {
           //  dialog.dismiss();
-            try {
-                if (result != null) {
+            try
+            {
+                if (result != null)
+                {
                     JSONObject jsonObject = new JSONObject(result);
                     JSONArray jsonArray = jsonObject.getJSONArray("connection");
 //                    Toast.makeText(getApplicationContext(), jsonArray.length()+"", Toast.LENGTH_LONG).show();
@@ -310,6 +312,8 @@ public class Connect3Activity extends AppCompatActivity
                         allTags.add(nfcModelTag);
                     }
 
+                    String level = jsonArray.length()+"";
+
 //                    notificationAdapter = new NotificationAdapter(Notification.this, allTags);
 //                    listNotification.setAdapter(notificationAdapter);
 
@@ -317,7 +321,7 @@ public class Connect3Activity extends AppCompatActivity
                     // you pass the position you want the viewpager to show in the extra,
                     // please don't forget to define and initialize the position variable
                     // properly
-                    go.putExtra("level", jsonArray.length()+"");
+                    go.putExtra("level", level);
                     go.putExtra("profile", profile);
                     startActivity(go);
                     finish();
