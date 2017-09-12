@@ -10,16 +10,18 @@ import android.widget.TextView;
 import com.circle8.circleOne.R;
 import com.squareup.picasso.Picasso;
 
-public class Connect4Activity extends AppCompatActivity {
+public class Connect4Activity extends AppCompatActivity
+{
 
     private ImageView imgBack, imgCards, imgConnect, imgEvents, imgProfile, imgConnecting;
     TextView txtAsk, txtLink, txtCongratulations;
-    String level = "0";
+    String level = "";
     ImageView level1, level2, level3, level4, level5, level6, ivImage1;
     String profile;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connect4);
         imgBack = (ImageView) findViewById(R.id.imgBack);
@@ -77,7 +79,7 @@ public class Connect4Activity extends AppCompatActivity {
                 level5.setVisibility(View.GONE);
                 level6.setVisibility(View.GONE);
             }
-            if (level.equals("1"))
+            else if (level.equals("1"))
             {
                 txtCongratulations.setVisibility(View.VISIBLE);
                 txtAsk.setVisibility(View.VISIBLE);
