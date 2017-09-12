@@ -16,15 +16,94 @@ public class ProfileModel {
     String UserPhoto = "";
     String Designation = "";
     String CompanyName = "";
-    String Phone = "";
-    String Facebook = "", Twitter = "", Google = "", Linkedin = "";
+    String Company_Profile = "", Phone1 = "", Phone2 = "", Mobile1 = "", Mobile2 = "", Fax1 = "", Fax2 = "", Email1 = "", Email2 = "";
+    String Facebook = "", Twitter = "", Google = "", Linkedin = "", Youtube = "";
     String Address1 = "", Address2 = "", Address3 = "", Address4 = "", City = "", State = "", Country = "", Postalcode = "", Website = "", Attachment_FileName = "";
     String Association = "" ;
-    String Work_no = "";
     String Industry = "";
 
 
     public ProfileModel() {
+    }
+
+    public String getCompany_Profile() {
+        return Company_Profile;
+    }
+
+    public void setCompany_Profile(String company_Profile) {
+        Company_Profile = company_Profile;
+    }
+
+    public String getPhone1() {
+        return Phone1;
+    }
+
+    public void setPhone1(String phone1) {
+        Phone1 = phone1;
+    }
+
+    public String getPhone2() {
+        return Phone2;
+    }
+
+    public void setPhone2(String phone2) {
+        Phone2 = phone2;
+    }
+
+    public String getMobile1() {
+        return Mobile1;
+    }
+
+    public void setMobile1(String mobile1) {
+        Mobile1 = mobile1;
+    }
+
+    public String getMobile2() {
+        return Mobile2;
+    }
+
+    public void setMobile2(String mobile2) {
+        Mobile2 = mobile2;
+    }
+
+    public String getFax1() {
+        return Fax1;
+    }
+
+    public void setFax1(String fax1) {
+        Fax1 = fax1;
+    }
+
+    public String getFax2() {
+        return Fax2;
+    }
+
+    public void setFax2(String fax2) {
+        Fax2 = fax2;
+    }
+
+    public String getEmail1() {
+        return Email1;
+    }
+
+    public void setEmail1(String email1) {
+        Email1 = email1;
+    }
+
+    public String getEmail2() {
+        return Email2;
+    }
+
+    public void setEmail2(String email2) {
+        Email2 = email2;
+    }
+
+    public String getYoutube() {
+        return Youtube;
+    }
+
+    public void setYoutube(String youtube) {
+        Youtube = youtube;
     }
 
     public String getUserID() {
@@ -105,14 +184,6 @@ public class ProfileModel {
 
     public void setCompanyName(String companyName) {
         CompanyName = companyName;
-    }
-
-    public String getPhone() {
-        return Phone;
-    }
-
-    public void setPhone(String phone) {
-        Phone = phone;
     }
 
     public String getAddress1() {
@@ -233,14 +304,6 @@ public class ProfileModel {
 
     public void setAssociation(String association) {
         Association = association;
-    }
-
-    public String getWork_no() {
-        return Work_no;
-    }
-
-    public void setWork_no(String work_no) {
-        Work_no = work_no;
     }
 
     public String getIndustry() {
