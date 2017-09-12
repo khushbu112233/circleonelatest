@@ -187,8 +187,10 @@
         <activity
             android:name=".Activity.Help2Activity"
             android:theme="@style/NoActionbar" />
-        <activity android:name=".Activity.GroupsActivity"
-            android:theme="@style/NoActionbar"></activity>
+        <activity
+            android:name=".Activity.GroupsActivity"
+            android:theme="@style/NoActionbar" />
+        <activity android:name=".Activity.StripeActivity"></activity>
     </application>
 
 </manifest>
