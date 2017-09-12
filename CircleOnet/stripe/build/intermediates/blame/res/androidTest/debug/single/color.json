@@ -1,0 +1,86 @@
+[
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\R&D\\stripe-android-master\\stripe\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\abc_tint_default.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\746344a8310d94ba5c2e12190be22bebb61d01b1\\output\\res\\color\\abc_tint_default.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\R&D\\stripe-android-master\\stripe\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\abc_tint_edittext.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\746344a8310d94ba5c2e12190be22bebb61d01b1\\output\\res\\color\\abc_tint_edittext.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\R&D\\stripe-android-master\\stripe\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\abc_primary_text_material_light.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\746344a8310d94ba5c2e12190be22bebb61d01b1\\output\\res\\color\\abc_primary_text_material_light.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\R&D\\stripe-android-master\\stripe\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\abc_primary_text_disable_only_material_dark.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\746344a8310d94ba5c2e12190be22bebb61d01b1\\output\\res\\color\\abc_primary_text_disable_only_material_dark.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\R&D\\stripe-android-master\\stripe\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\abc_tint_seek_thumb.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\746344a8310d94ba5c2e12190be22bebb61d01b1\\output\\res\\color\\abc_tint_seek_thumb.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\R&D\\stripe-android-master\\stripe\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\abc_search_url_text.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\746344a8310d94ba5c2e12190be22bebb61d01b1\\output\\res\\color\\abc_search_url_text.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\R&D\\stripe-android-master\\stripe\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\abc_hint_foreground_material_light.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\746344a8310d94ba5c2e12190be22bebb61d01b1\\output\\res\\color\\abc_hint_foreground_material_light.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\R&D\\stripe-android-master\\stripe\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\abc_tint_btn_checkable.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\746344a8310d94ba5c2e12190be22bebb61d01b1\\output\\res\\color\\abc_tint_btn_checkable.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\R&D\\stripe-android-master\\stripe\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\abc_primary_text_disable_only_material_light.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\746344a8310d94ba5c2e12190be22bebb61d01b1\\output\\res\\color\\abc_primary_text_disable_only_material_light.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\R&D\\stripe-android-master\\stripe\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\abc_tint_spinner.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\746344a8310d94ba5c2e12190be22bebb61d01b1\\output\\res\\color\\abc_tint_spinner.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\R&D\\stripe-android-master\\stripe\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\abc_secondary_text_material_dark.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\746344a8310d94ba5c2e12190be22bebb61d01b1\\output\\res\\color\\abc_secondary_text_material_dark.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\R&D\\stripe-android-master\\stripe\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\design_error.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\f96858d8bd31f362462be64ce22a783d5bb1e12e\\output\\res\\color\\design_error.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\R&D\\stripe-android-master\\stripe\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\abc_btn_colored_text_material.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\746344a8310d94ba5c2e12190be22bebb61d01b1\\output\\res\\color\\abc_btn_colored_text_material.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\R&D\\stripe-android-master\\stripe\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\design_tint_password_toggle.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\f96858d8bd31f362462be64ce22a783d5bb1e12e\\output\\res\\color\\design_tint_password_toggle.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\R&D\\stripe-android-master\\stripe\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\switch_thumb_material_dark.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\746344a8310d94ba5c2e12190be22bebb61d01b1\\output\\res\\color\\switch_thumb_material_dark.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\R&D\\stripe-android-master\\stripe\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\abc_tint_switch_track.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\746344a8310d94ba5c2e12190be22bebb61d01b1\\output\\res\\color\\abc_tint_switch_track.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\R&D\\stripe-android-master\\stripe\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\abc_hint_foreground_material_dark.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\746344a8310d94ba5c2e12190be22bebb61d01b1\\output\\res\\color\\abc_hint_foreground_material_dark.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\R&D\\stripe-android-master\\stripe\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\abc_btn_colored_borderless_text_material.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\746344a8310d94ba5c2e12190be22bebb61d01b1\\output\\res\\color\\abc_btn_colored_borderless_text_material.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\R&D\\stripe-android-master\\stripe\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\switch_thumb_material_light.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\746344a8310d94ba5c2e12190be22bebb61d01b1\\output\\res\\color\\switch_thumb_material_light.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\R&D\\stripe-android-master\\stripe\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\abc_secondary_text_material_light.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\746344a8310d94ba5c2e12190be22bebb61d01b1\\output\\res\\color\\abc_secondary_text_material_light.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\R&D\\stripe-android-master\\stripe\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\abc_primary_text_material_dark.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\746344a8310d94ba5c2e12190be22bebb61d01b1\\output\\res\\color\\abc_primary_text_material_dark.xml"
+    }
+]

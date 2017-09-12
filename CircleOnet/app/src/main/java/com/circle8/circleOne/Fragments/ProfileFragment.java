@@ -518,7 +518,7 @@ public class ProfileFragment extends Fragment
                                     tvName.setText(allTags.get(i).getFirstName() + " "+ allTags.get(i).getLastName());
                                     tvCompanyName.setText(allTags.get(i).getCompanyName());
                                     tvDesi.setText(allTags.get(i).getDesignation());
-                                    tvMob.setText(allTags.get(i).getPhone());
+                                    tvMob.setText(allTags.get(i).getMobile1());
                                     tvAddress.setText(allTags.get(i).getAddress1()+ " "+allTags.get(i).getAddress2() + " "
                                            + allTags.get(i).getAddress3()  + " "
                                             + allTags.get(i).getAddress4() + " "
@@ -907,7 +907,15 @@ public class ProfileFragment extends Fragment
                         nfcModelTag.setUserPhoto(object.getString("UserPhoto"));
                         nfcModelTag.setDesignation(object.getString("Designation"));
                         nfcModelTag.setCompanyName(object.getString("CompanyName"));
-                        nfcModelTag.setPhone(object.getString("Phone"));
+                        nfcModelTag.setCompany_Profile(object.getString("Company_Profile"));
+                        nfcModelTag.setPhone1(object.getString("Phone1"));
+                        nfcModelTag.setPhone2(object.getString("Phone2"));
+                        nfcModelTag.setMobile1(object.getString("Mobile1"));
+                        nfcModelTag.setMobile2(object.getString("Mobile2"));
+                        nfcModelTag.setFax1(object.getString("Fax1"));
+                        nfcModelTag.setFax2(object.getString("Fax2"));
+                        nfcModelTag.setEmail1(object.getString("Email1"));
+                        nfcModelTag.setEmail2(object.getString("Email2"));
                         nfcModelTag.setAddress1(object.getString("Address1"));
                         nfcModelTag.setAddress2(object.getString("Address2"));
                         nfcModelTag.setAddress3(object.getString("Address3"));
@@ -921,10 +929,8 @@ public class ProfileFragment extends Fragment
                         nfcModelTag.setTwitter(object.getString("Twitter"));
                         nfcModelTag.setGoogle(object.getString("Google"));
                         nfcModelTag.setLinkedin(object.getString("Linkedin"));
+                        nfcModelTag.setYoutube(object.getString("Youtube"));
                         nfcModelTag.setAttachment_FileName(object.getString("Attachment_FileName"));
-                        nfcModelTag.setAssociation("");
-                        nfcModelTag.setWork_no("");
-                        nfcModelTag.setIndustry("");
                         allTags.add(nfcModelTag);
                       //  GetData(getContext());
                     }
@@ -1018,14 +1024,14 @@ public class ProfileFragment extends Fragment
                         tvCompanyName.setText(allTags.get(0).getCompanyName());
                     }
 //                    tvMob.setText(allTags.get(0).getPhone());
-                    if(allTags.get(0).getPhone().equalsIgnoreCase("")
-                            || allTags.get(0).getPhone().equalsIgnoreCase("null"))
+                    if(allTags.get(0).getPhone1().equalsIgnoreCase("")
+                            || allTags.get(0).getPhone1().equalsIgnoreCase("null"))
                     {
                         lnrMob.setVisibility(View.GONE);
                     }
                     else
                     {
-                        tvMob.setText(allTags.get(0).getPhone());
+                        tvMob.setText(allTags.get(0).getPhone1());
                     }
 //                    tvWebsite.setText(allTags.get(0).getWebsite());
                     if(allTags.get(0).getWebsite().equalsIgnoreCase("")
@@ -1056,16 +1062,16 @@ public class ProfileFragment extends Fragment
                     {
                         tvAssociation.setText(allTags.get(0).getAssociation());
                     }
-                    if(allTags.get(0).getWork_no().equalsIgnoreCase("")
-                            || allTags.get(0).getWork_no().equalsIgnoreCase("null"))
+                    if(allTags.get(0).getFax1().equalsIgnoreCase("")
+                            || allTags.get(0).getFax1().equalsIgnoreCase("null"))
                     {
                         lnrWork.setVisibility(View.GONE);
                     }
                     else
                     {
-                        tvWork.setText(allTags.get(0).getWork_no());
+                        tvWork.setText(allTags.get(0).getFax1());
                     }
-                    if(allTags.get(0).getIndustry().equalsIgnoreCase("")
+                  /*  if(allTags.get(0).getIndustry().equalsIgnoreCase("")
                             || allTags.get(0).getIndustry().equalsIgnoreCase("null"))
                     {
                         llIndustryBox.setVisibility(View.GONE);
@@ -1073,7 +1079,7 @@ public class ProfileFragment extends Fragment
                     else
                     {
                         textIndustry.setText(allTags.get(0).getIndustry());
-                    }
+                    }*/
                     /*tvAddress.setText(allTags.get(0).getAddress1()+ " "+allTags.get(0).getAddress2() + " "
                             + allTags.get(0).getAddress3()  + " "
                             + allTags.get(0).getAddress4() + " "

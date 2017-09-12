@@ -155,7 +155,7 @@ public class Connect4Activity extends AppCompatActivity
             txtAsk.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent go = new Intent(getApplicationContext(), Connect5Activity.class);
+                    Intent go = new Intent(getApplicationContext(), StripeActivity.class);
                     go.putExtra("level", level);
                     go.putExtra("profile", profile);
                     // you pass the position you want the viewpager to show in the extra,
