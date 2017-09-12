@@ -33,6 +33,7 @@ public class SortAndFilterOption extends AppCompatActivity {
     LinearLayout lnrSortRecent, lnrSortName, lnrSortCompany;
     DatabaseHelper db;
     public static String SortType = "asc";
+    LinearLayout lnrAllCards;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,62 @@ public class SortAndFilterOption extends AppCompatActivity {
         lnrSortRecent = (LinearLayout) findViewById(R.id.lnrSortRecent);
         lnrSortName = (LinearLayout) findViewById(R.id.lnrSortName);
         lnrSortCompany = (LinearLayout) findViewById(R.id.lnrSortCompany);
+        lnrAllCards = (LinearLayout) findViewById(R.id.lnrAllCards);
+
+        lnrAllCards.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SortType = "asc";
+                try {
+                    List2Fragment.gridAdapter.notifyDataSetChanged();
+                    List2Fragment.allTags = db.getActiveNFC();
+                    List2Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List2Fragment.GetData(getApplicationContext());
+                } catch (Exception e) {
+
+                }
+
+                try {
+                    List3Fragment.gridAdapter.notifyDataSetChanged();
+                    List3Fragment.allTags = db.getActiveNFC();
+                    List3Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List3Fragment.GetData(getApplicationContext());
+                } catch (Exception e) {
+
+                }
+                try {
+                    List4Fragment.gridAdapter.notifyDataSetChanged();
+                    List4Fragment.allTags = db.getActiveNFC();
+                    List4Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List4Fragment.GetData(getApplicationContext());
+                } catch (Exception e) {
+
+                }
+
+                try {
+                    //List1Fragment.myPager.notifyDataSetChanged();
+                    // List1Fragment.allTags = db.getActiveNFC();
+
+                    List1Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List1Fragment.GetData(getApplicationContext());
+                } catch (Exception e) {
+
+                }
+                Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                userIntent.putExtra("viewpager_position", 0);
+                startActivity(userIntent);
+                finish();
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+               /* Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
+                startActivity(intent);
+                finish();
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);*/
+            }
+        });
 
         lnrSortRecent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +155,11 @@ public class SortAndFilterOption extends AppCompatActivity {
                 } catch (Exception e) {
 
                 }
+                Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                userIntent.putExtra("viewpager_position", 0);
+                startActivity(userIntent);
+                finish();
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                /* Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
                 startActivity(intent);
                 finish();
@@ -149,6 +211,11 @@ public class SortAndFilterOption extends AppCompatActivity {
                 } catch (Exception e) {
 
                 }
+                Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                userIntent.putExtra("viewpager_position", 0);
+                startActivity(userIntent);
+                finish();
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                 /*Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
                 startActivity(intent);
                 finish();
@@ -199,6 +266,11 @@ public class SortAndFilterOption extends AppCompatActivity {
                 } catch (Exception e) {
 
                 }
+                Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                userIntent.putExtra("viewpager_position", 0);
+                startActivity(userIntent);
+                finish();
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                 /*Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
                 startActivity(intent);
                 finish();

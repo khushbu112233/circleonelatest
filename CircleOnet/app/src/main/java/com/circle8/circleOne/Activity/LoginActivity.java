@@ -299,7 +299,7 @@ public class LoginActivity extends AppCompatActivity implements
 
         // [START initialize_twitter_login]
         mLoginButton = (TwitterLoginButton) findViewById(R.id.button_twitter_login);
-
+        client = new TwitterAuthClient();
         btnLoginTwitter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -317,7 +317,6 @@ public class LoginActivity extends AppCompatActivity implements
                     }
                 });*/
 
-                client = new TwitterAuthClient();
                 client.authorize(LoginActivity.this, new Callback<TwitterSession>() {
                     @Override
                     public void success(Result<TwitterSession> twitterSessionResult) {

@@ -78,7 +78,9 @@ public class CardDetail extends NfcActivity
     LoginSession loginSession;
     String strfbUrl = "", strlinkedInUrl = "", strtwitterUrl = "", strgoogleUrl = "", stryoutubeUrl = "";
     AppBarLayout appBarLayout;
-
+    String FirstName = "", LastName = "", UserPhoto = "", Phone1 = "", Phone2 = "", Mobile1 = "", Mobile2 = "", Fax1 = "",
+            Fax2 = "", Email1 = "", Email2 = "", IndustryName = "", CompanyName = "", CompanyProfile = "", Designation = "",
+            ProfileDesc = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -930,15 +932,23 @@ public class CardDetail extends NfcActivity
                     JSONObject jsonObject = new JSONObject(result);
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
 
-                    jsonObject.getString("FirstName");
-                    jsonObject.getString("LastName");
-                    jsonObject.getString("Phone1");
-                    jsonObject.getString("Phone2");
-                    jsonObject.getString("Email1");
-                    jsonObject.getString("IndustryName");
-                    jsonObject.getString("CompanyName");
-                    jsonObject.getString("CompanyProfile");
-                    jsonObject.getString("Designation");
+                    FirstName = jsonObject.getString("FirstName");
+                    LastName = jsonObject.getString("LastName");
+                    userImg = jsonObject.getString("UserPhoto");
+                    Phone1 = jsonObject.getString("Phone1");
+                    Phone2 = jsonObject.getString("Phone2");
+                    Mobile1 = jsonObject.getString("Mobile1");
+                    Mobile2 = jsonObject.getString("Mobile2");
+                    Fax1 = jsonObject.getString("Fax1");
+                    Fax2 = jsonObject.getString("Fax2");
+                    Email1 = jsonObject.getString("Email1");
+                    Email2 = jsonObject.getString("Email2");
+                    stryoutubeUrl = jsonObject.getString("Youtube");
+                    IndustryName = jsonObject.getString("IndustryName");
+                    CompanyName = jsonObject.getString("CompanyName");
+                    CompanyProfile = jsonObject.getString("CompanyProfile");
+                    Designation = jsonObject.getString("Designation");
+                    ProfileDesc = jsonObject.getString("ProfileDesc");
                     strlinkedInUrl = jsonObject.getString("LinkedIn");
                     strfbUrl = jsonObject.getString("Facebook");
                     strtwitterUrl = jsonObject.getString("Twitter");
@@ -946,7 +956,6 @@ public class CardDetail extends NfcActivity
                     strgoogleUrl = jsonObject.getString("Google");
                     frontCardImg = jsonObject.getString("Card_Front");
                     backCardImg = jsonObject.getString("Card_Back");
-                    userImg = jsonObject.getString("UserPhoto");
 
                     if (strfbUrl.equals("") || strfbUrl.equals(null))
                     {
@@ -988,6 +997,16 @@ public class CardDetail extends NfcActivity
                         twitterUrl.setEnabled(true);
                     }
 
+                    if (stryoutubeUrl.equals("") || stryoutubeUrl.equals(null))
+                    {
+                        youtubeUrl.setImageResource(R.drawable.icon_utube_gray);
+                        youtubeUrl.setEnabled(false);
+                    }
+                    else {
+                        youtubeUrl.setImageResource(R.drawable.icon_utube_red);
+                        youtubeUrl.setEnabled(true);
+                    }
+
 
                     if (strlinkedInUrl.equals("") || strlinkedInUrl.equals(null))
                     {
@@ -1018,62 +1037,63 @@ public class CardDetail extends NfcActivity
                             + " " + jsonObject.getString("City") + " " + jsonObject.getString("State")
                             + " " + jsonObject.getString("Country") + " " + jsonObject.getString("Postalcode");
 
-                    if (personName.equalsIgnoreCase("") || personName.equalsIgnoreCase("null")) {
+                    txtRemark.setText(personAddress);
+                    if (personName.equalsIgnoreCase("") || personName.equalsIgnoreCase(null)) {
                         txtName.setText("Person");
                     } else {
                         txtName.setText(personName);
                     }
 
-                    if (jsonObject.getString("Designation").equalsIgnoreCase("")
-                            || jsonObject.getString("Designation").equalsIgnoreCase("null")) {
+                    if (Designation.equalsIgnoreCase("")
+                            || Designation.equalsIgnoreCase(null)) {
                         txtDesi.setText("Designation");
                         txtDesi.setVisibility(View.GONE);
                     } else {
-                        txtDesi.setText(jsonObject.getString("Designation"));
+                        txtDesi.setText(Designation);
                     }
 
-                    if (jsonObject.getString("CompanyName").equalsIgnoreCase("")
-                            || jsonObject.getString("CompanyName").equalsIgnoreCase("null")) {
+                    if (CompanyName.equalsIgnoreCase("")
+                            || CompanyName.equalsIgnoreCase(null)) {
                         txtCompany.setText("Company");
                         txtCompany.setVisibility(View.GONE);
                     } else {
-                        txtCompany.setText(jsonObject.getString("CompanyName"));
+                        txtCompany.setText(CompanyName);
                     }
 
                     if (jsonObject.getString("Website").equalsIgnoreCase("")
-                            || jsonObject.getString("Website").equalsIgnoreCase("null")) {
+                            || jsonObject.getString("Website").equalsIgnoreCase(null)) {
                         txtWebsite.setText("Website");
                         llWebsiteBox.setVisibility(View.GONE);
                     } else {
                         txtWebsite.setText(jsonObject.getString("Website"));
                     }
 
-                    if (jsonObject.getString("Email1").equalsIgnoreCase("")
-                            || jsonObject.getString("Email1").equalsIgnoreCase("null")) {
+                    if (Email1.equalsIgnoreCase("")
+                            || Email1.equalsIgnoreCase(null)) {
                         txtEmail.setText("Email Address");
                         llEmailBox.setVisibility(View.GONE);
                     } else {
-                        txtEmail.setText(jsonObject.getString("Email1"));
+                        txtEmail.setText(Email1);
                     }
 
-                    if (jsonObject.getString("Phone1").equalsIgnoreCase("")
-                            || jsonObject.getString("Phone1").equalsIgnoreCase("null")) {
+                    if (Phone1.equalsIgnoreCase("")
+                            || Phone1.equalsIgnoreCase(null)) {
                         txtPH.setText("Phone No.");
                         llTeleBox.setVisibility(View.GONE);
                     } else {
-                        txtPH.setText(jsonObject.getString("Phone1"));
+                        txtPH.setText(Phone1);
                     }
 
-                    if (jsonObject.getString("PrimaryPhone").equalsIgnoreCase("")
-                            || jsonObject.getString("PrimaryPhone").equalsIgnoreCase("null")) {
+                    if (Mobile1.equalsIgnoreCase("")
+                            || Mobile1.equalsIgnoreCase(null)) {
                         txtMob.setText("Mobile No.");
                         llMobileBox.setVisibility(View.GONE);
                     } else {
-                        txtMob.setText(jsonObject.getString("PrimaryPhone"));
+                        txtMob.setText(Mobile1);
                     }
 
                     if (personAddress.startsWith(" ")
-                            || personAddress.equalsIgnoreCase("null")
+                            || personAddress.equalsIgnoreCase(null)
                             || personAddress.equalsIgnoreCase("")) {
                         txtAddress.setText("Address");
                         llAddressBox.setVisibility(View.GONE);
@@ -1081,7 +1101,13 @@ public class CardDetail extends NfcActivity
                         txtAddress.setText(personAddress);
                     }
 
-                    llFaxBox.setVisibility(View.GONE);
+                    if (Fax1.equalsIgnoreCase("")
+                            || Fax1.equalsIgnoreCase(null)) {
+                        txtWork.setText("Fax");
+                        llFaxBox.setVisibility(View.GONE);
+                    } else {
+                        txtWork.setText(Fax1);
+                    }
 
                     if (userImg.equalsIgnoreCase("")) {
                         imgProfileCard.setImageResource(R.drawable.usr);
