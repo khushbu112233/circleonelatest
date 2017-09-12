@@ -175,6 +175,7 @@
                 android:layout_height="wrap_content">
 
                 <com.circle8.circleOne.Utils.CannonballTwitterLoginButton
+                    android:visibility="gone"
                     android:id="@+id/button_twitter_login"
                     android:layout_width="28dp"
                     android:layout_height="28dp"

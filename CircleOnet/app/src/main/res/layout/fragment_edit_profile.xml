@@ -360,6 +360,7 @@
                                 android:src="@drawable/ic_phone_blue" />
 
                             <EditText
+                                android:id="@+id/edtWork2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
@@ -421,6 +422,7 @@
                                 android:src="@drawable/ic_mob_blue" />
 
                             <EditText
+                                android:id="@+id/edtPrimary2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
@@ -474,6 +476,7 @@
                             android:src="@drawable/ic_mail_blue" />
 
                         <EditText
+                            android:id="@+id/edtEmail2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
@@ -507,6 +510,7 @@
                                 android:src="@drawable/ic_fax_blue" />
 
                             <EditText
+                                android:id="@+id/edtFax1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
@@ -531,6 +535,7 @@
                                 android:src="@drawable/ic_fax_blue" />
 
                             <EditText
+                                android:id="@+id/edtFax2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
@@ -836,7 +841,6 @@
                                 android:id="@+id/imgGoogle"
                                 android:layout_width="38dp"
                                 android:layout_height="38dp"
-
                                 android:src="@drawable/icon_google_gray" />
 </RelativeLayout>
                             <ImageView

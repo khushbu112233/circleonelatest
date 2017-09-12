@@ -85,6 +85,7 @@ import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 import org.apache.http.HttpResponse;
@@ -134,7 +135,6 @@ public class LoginActivity extends AppCompatActivity implements
 
     private SignInButton btnSignIn;
     private Button btnSignOut, btnRevokeAccess;
-    ImageView btnLoginTwitter;
 
     ProgressDialog pDialog;
     SharedPreferences prefs = null;
@@ -177,8 +177,8 @@ public class LoginActivity extends AppCompatActivity implements
     private static final String FINGERPRINT_KEY = "key_name";
 
     private static final int REQUEST_USE_FINGERPRINT = 300;
-
-
+    ImageView btnLoginTwitter;
+    private TwitterAuthClient client;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -201,6 +201,7 @@ public class LoginActivity extends AppCompatActivity implements
         btnRegister = (Button) findViewById(R.id.btnRegister);
         etLoginPass = (EditText) findViewById(R.id.etLoginPass);
         etLoginUser = (EditText) findViewById(R.id.etLoginUser);
+        btnLoginTwitter = (ImageView) findViewById(R.id.btnLoginTwitter);
         login_linkedin_btn = (ImageView) findViewById(R.id.login_button_linkedin);
 
         tvUsernameInfo = (TextView)findViewById(R.id.tvUserInfo);
@@ -299,17 +300,37 @@ public class LoginActivity extends AppCompatActivity implements
         // [START initialize_twitter_login]
         mLoginButton = (TwitterLoginButton) findViewById(R.id.button_twitter_login);
 
-        mLoginButton.setCallback(new Callback<TwitterSession>() {
+        btnLoginTwitter.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void success(Result<TwitterSession> result) {
-                Log.d(TAG, "twitterLogin:success" + result);
-                handleTwitterSession(result.data);
-            }
+            public void onClick(View v) {
+               /* mLoginButton.setCallback(new Callback<TwitterSession>() {
+                    @Override
+                    public void success(Result<TwitterSession> result) {
+                        Log.d(TAG, "twitterLogin:success" + result);
+                        handleTwitterSession(result.data);
+                    }
 
-            @Override
-            public void failure(TwitterException exception) {
-                Log.w(TAG, "twitterLogin:failure", exception);
-                //updateUI(null);
+                    @Override
+                    public void failure(TwitterException exception) {
+                        Log.w(TAG, "twitterLogin:failure", exception);
+                        //updateUI(null);
+                    }
+                });*/
+
+                client = new TwitterAuthClient();
+                client.authorize(LoginActivity.this, new Callback<TwitterSession>() {
+                    @Override
+                    public void success(Result<TwitterSession> twitterSessionResult) {
+                        Toast.makeText(LoginActivity.this, "success", Toast.LENGTH_SHORT).show();
+                        handleTwitterSession(twitterSessionResult.data);
+                    }
+
+                    @Override
+                    public void failure(TwitterException e) {
+                        Toast.makeText(LoginActivity.this, "failure", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
         });
 
@@ -1080,7 +1101,8 @@ public class LoginActivity extends AppCompatActivity implements
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mLoginButton.onActivityResult(requestCode, resultCode, data);
+       // mLoginButton.onActivityResult(requestCode, resultCode, data);
+        client.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN)
         {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
