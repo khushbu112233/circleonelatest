@@ -1,1 +1,1 @@
-include ':app', ':library', ':nfclib', ':carousel', ':linkedin-sdk'
+include ':app', ':library', ':nfclib', ':carousel', ':linkedin-sdk', ':appIntroLibrary'

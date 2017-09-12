@@ -154,7 +154,7 @@ public class ByTitleFragment extends Fragment
             dialog = new ProgressDialog(getActivity());
             dialog.setMessage("Searching Records...");
             //dialog.setTitle("Saving Reminder");
-            dialog.show();
+           // dialog.show();
             dialog.setCancelable(false);
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
@@ -169,7 +169,7 @@ public class ByTitleFragment extends Fragment
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
+          //  dialog.dismiss();
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
 
             try

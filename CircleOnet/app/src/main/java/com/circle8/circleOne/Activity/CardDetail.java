@@ -932,9 +932,9 @@ public class CardDetail extends NfcActivity
 
                     jsonObject.getString("FirstName");
                     jsonObject.getString("LastName");
-                    jsonObject.getString("OfficePhone");
-                    jsonObject.getString("PrimaryPhone");
-                    jsonObject.getString("Emailid");
+                    jsonObject.getString("Phone1");
+                    jsonObject.getString("Phone2");
+                    jsonObject.getString("Email1");
                     jsonObject.getString("IndustryName");
                     jsonObject.getString("CompanyName");
                     jsonObject.getString("CompanyProfile");
@@ -942,6 +942,7 @@ public class CardDetail extends NfcActivity
                     strlinkedInUrl = jsonObject.getString("LinkedIn");
                     strfbUrl = jsonObject.getString("Facebook");
                     strtwitterUrl = jsonObject.getString("Twitter");
+                    stryoutubeUrl = jsonObject.getString("Youtube");
                     strgoogleUrl = jsonObject.getString("Google");
                     frontCardImg = jsonObject.getString("Card_Front");
                     backCardImg = jsonObject.getString("Card_Back");
@@ -955,6 +956,16 @@ public class CardDetail extends NfcActivity
                     else {
                         fbUrl.setImageResource(R.drawable.icon_fb);
                         fbUrl.setEnabled(true);
+                    }
+
+                    if (stryoutubeUrl.equals("") || stryoutubeUrl.equals(null))
+                    {
+                        youtubeUrl.setImageResource(R.drawable.icon_utube_gray);
+                        youtubeUrl.setEnabled(false);
+                    }
+                    else {
+                        youtubeUrl.setImageResource(R.drawable.icon_utube_red);
+                        youtubeUrl.setEnabled(true);
                     }
 
                     if (strgoogleUrl.equals("") || strgoogleUrl.equals(null))
@@ -976,6 +987,7 @@ public class CardDetail extends NfcActivity
                         twitterUrl.setImageResource(R.drawable.icon_twitter);
                         twitterUrl.setEnabled(true);
                     }
+
 
                     if (strlinkedInUrl.equals("") || strlinkedInUrl.equals(null))
                     {
@@ -1036,20 +1048,20 @@ public class CardDetail extends NfcActivity
                         txtWebsite.setText(jsonObject.getString("Website"));
                     }
 
-                    if (jsonObject.getString("Emailid").equalsIgnoreCase("")
-                            || jsonObject.getString("Emailid").equalsIgnoreCase("null")) {
+                    if (jsonObject.getString("Email1").equalsIgnoreCase("")
+                            || jsonObject.getString("Email1").equalsIgnoreCase("null")) {
                         txtEmail.setText("Email Address");
                         llEmailBox.setVisibility(View.GONE);
                     } else {
-                        txtEmail.setText(jsonObject.getString("Emailid"));
+                        txtEmail.setText(jsonObject.getString("Email1"));
                     }
 
-                    if (jsonObject.getString("OfficePhone").equalsIgnoreCase("")
-                            || jsonObject.getString("OfficePhone").equalsIgnoreCase("null")) {
+                    if (jsonObject.getString("Phone1").equalsIgnoreCase("")
+                            || jsonObject.getString("Phone1").equalsIgnoreCase("null")) {
                         txtPH.setText("Phone No.");
                         llTeleBox.setVisibility(View.GONE);
                     } else {
-                        txtPH.setText(jsonObject.getString("OfficePhone"));
+                        txtPH.setText(jsonObject.getString("Phone1"));
                     }
 
                     if (jsonObject.getString("PrimaryPhone").equalsIgnoreCase("")
