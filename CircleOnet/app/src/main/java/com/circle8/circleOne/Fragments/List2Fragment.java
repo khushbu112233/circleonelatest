@@ -70,7 +70,6 @@ public class List2Fragment extends Fragment
 
     public static List<NFCModel> allTags ;
     public static ArrayList<FriendConnection> allTaggs ;
-
     public static ArrayList<FriendConnection> nfcModel ;
 
     LoginSession session;
@@ -176,26 +175,41 @@ public class List2Fragment extends Fragment
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
                     gridAdapter.Filter(text);
                 }*/
-                if (allTags.size() == 0)
-                {
-                    //tvNoCard.setVisibility(View.VISIBLE);
-                }
-                else
+                try
                 {
                     if (s.length() <= 0)
                     {
                         pageno = 1;
+                        nfcModel.clear();
                         allTaggs.clear();
-                        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+                        try
+                        {
+                            gridAdapter.notifyDataSetChanged();
+                        }
+                        catch (Exception e){}
+                        callFirst();
+
+//                        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
 //                    GetData(getContext());
                     }
-                    else if (s.length() >= 2)
+                    else if (s.length() > 0)
                     {
                         String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
 
+                        nfcModel.clear();
                         allTaggs.clear();
+                        try
+                        {
+                            gridAdapter.notifyDataSetChanged();
+                        }
+                        catch (Exception e){}
+//                        allTaggs.clear();
                         new HttpAsyncTaskSearch().execute("http://circle8.asia:8081/Onet.svc/SearchConnect");
                     }
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
                 }
             }
 

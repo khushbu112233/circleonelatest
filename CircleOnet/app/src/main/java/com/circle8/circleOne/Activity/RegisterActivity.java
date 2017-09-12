@@ -171,19 +171,33 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         etEmail.setText(Email);
         etUserName.setText(UserName);
         Uri targetUri = Uri.parse(Image);
-        Glide.with(getApplicationContext())
-                .load(targetUri)
-                .asBitmap()
-                .into(new BitmapImageViewTarget(civProfilePic) {
-                    @Override
-                    protected void setResource(Bitmap resource) {
-                        //Play with bitmap
-                        super.setResource(resource);
-                        final_ImgBase64 = BitMapToString(resource);
-                       // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
+        try
+        {
+            if(!targetUri.equals(""))
+            {
+                Glide.with(getApplicationContext())
+                        .load(targetUri)
+                        .asBitmap()
+                        .into(new BitmapImageViewTarget(civProfilePic) {
+                            @Override
+                            protected void setResource(Bitmap resource) {
+                                //Play with bitmap
+                                super.setResource(resource);
+                                final_ImgBase64 = BitMapToString(resource);
+                                // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
 
-                    }
-                });
+                            }
+                        });
+            }
+            else
+            {
+                civProfilePic.setImageResource(R.drawable.usr);
+            }
+        }
+        catch (Exception e)
+        {
+            civProfilePic.setImageResource(R.drawable.usr);
+        }
 
         ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
             @Override
@@ -575,21 +589,92 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             String photoPath = getPath(targetUri);
 
             ExifInterface ei = null;
-            try
+            Bitmap bitmap = null;
+            Bitmap rotatedBitmap = null;
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            {
+                try
+                {
+                    bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
+
+                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 150, 150, false);
+                    image = ConvertBitmapToString(resizedBitmap);
+                    final_ImgBase64 = BitMapToString(resizedBitmap);
+                    // final_ImgBase64 = resizeBase64Image(s);
+                    Log.d("base64string ", final_ImgBase64);
+//                  Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
+                    Upload();
+                    civProfilePic.setImageBitmap(resizedBitmap);
+                }
+                catch (FileNotFoundException e)
+                {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+            else
+            {
+                try
+                {
+                    ei = new ExifInterface(photoPath);
+                    int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+
+                    bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
+
+                    switch (orientation)
+                    {
+                        case ExifInterface.ORIENTATION_ROTATE_90:
+                            rotatedBitmap = rotateImage(bitmap, 90);
+                            civProfilePic.setImageBitmap(rotatedBitmap);
+                            final_ImgBase64 = BitMapToString(rotatedBitmap);
+                            Upload();
+                            break;
+
+                        case ExifInterface.ORIENTATION_ROTATE_180:
+                            rotatedBitmap = rotateImage(bitmap, 180);
+                            civProfilePic.setImageBitmap(rotatedBitmap);
+                            final_ImgBase64 = BitMapToString(rotatedBitmap);
+                            Upload();
+                            break;
+
+                        case ExifInterface.ORIENTATION_ROTATE_270:
+                            rotatedBitmap = rotateImage(bitmap, 270);
+                            civProfilePic.setImageBitmap(rotatedBitmap);
+                            final_ImgBase64 = BitMapToString(rotatedBitmap);
+                            Upload();
+                            break;
+
+                        case ExifInterface.ORIENTATION_NORMAL:
+                        default:
+                            rotatedBitmap = bitmap;
+                            civProfilePic.setImageBitmap(rotatedBitmap);
+                            final_ImgBase64 = BitMapToString(rotatedBitmap);
+                            Upload();
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+
+           /* try
             {
                 ei = new ExifInterface(photoPath);
             }
             catch (IOException e)
             {
                 e.printStackTrace();
-            }
+            }*/
 
-            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+//            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
 
-            Bitmap bitmap = null;
-            Bitmap rotatedBitmap = null;
+//            Bitmap bitmap = null;
+//            Bitmap rotatedBitmap = null;
 
-            try
+           /* try
             {
                 bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
 
@@ -606,8 +691,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-            }
+            }*/
 
+/*
             switch (orientation)
             {
                 case ExifInterface.ORIENTATION_ROTATE_90:
@@ -638,6 +724,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     final_ImgBase64 = BitMapToString(rotatedBitmap);
                     Upload();
             }
+*/
 
         }
 //        BmToString(bm);
