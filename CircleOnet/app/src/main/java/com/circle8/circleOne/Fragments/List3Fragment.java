@@ -287,7 +287,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("FindBy", "name" );
+            jsonObject.accumulate("FindBy", "NAME" );
             jsonObject.accumulate("Search", searchText.getText().toString() );
             jsonObject.accumulate("UserID", UserId);
             jsonObject.accumulate("numofrecords", "30" );
@@ -353,7 +353,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
             dialog = new ProgressDialog(getActivity());
             dialog.setMessage("Searching Records...");
             //dialog.setTitle("Saving Reminder");
-            dialog.show();
+          //  dialog.show();
             dialog.setCancelable(false);
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
@@ -368,7 +368,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
+           // dialog.dismiss();
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
 
             try
