@@ -27,6 +27,7 @@
     </LinearLayout>
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/txtSkip"
         android:padding="10dp"
         android:layout_alignParentBottom="true"

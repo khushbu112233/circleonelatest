@@ -114,7 +114,8 @@ public class EditProfileActivity extends AppCompatActivity implements
     //String[] languages={"Android ","java","IOS","SQL","JDBC","Web services"};
     ArrayList<String> company, designation, industry;
     String association_ID, association_NAME ;
-    String profileId = "", Card_Front = "", Card_Back = "", FirstName = "", LastName = "", UserPhoto = "", OfficePhone = "", PrimaryPhone = "", Emailid = "",
+    String profileId = "", Card_Front = "", Card_Back = "", FirstName = "", LastName = "", UserPhoto = "", Phone1 = "", Phone2 = "", Mobile1 = "", Mobile2 = "",
+            Fax1 = "", Fax2 = "", Email1 = "", Email2 = "", Youtube = "",
             Facebook = "", Twitter = "", Google = "", LinkedIn = "", IndustryName = "", CompanyName = "", CompanyProfile = "", Designation = "", ProfileDesc = "", Status = "";
     String Address1 = "", Address2 = "", Address3 = "", Address4 = "", City = "", State = "", Country = "", Postalcode = "", Website = "", Attachment_FileName = "";
     EditText edtUserName, edtWork, edtPrimary, edtEmail, edtProfileDesc, edtCompanyDesc;
@@ -167,6 +168,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     private SignInButton btnSignIn;
     private GoogleApiClient mGoogleApiClient;
     private static final int RC_SIGN_IN = 007;
+    EditText edtWork2, edtPrimary2, edtEmail2, edtFax1, edtFax2;
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException
     {
@@ -188,6 +190,11 @@ public class EditProfileActivity extends AppCompatActivity implements
         setContentView(R.layout.fragment_edit_profile);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        edtWork2 = (EditText) findViewById(R.id.edtWork2);
+        edtPrimary2 = (EditText) findViewById(R.id.edtPrimary2);
+        edtEmail2 = (EditText) findViewById(R.id.edtEmail2);
+        edtFax1 = (EditText) findViewById(R.id.edtFax1);
+        edtFax2 = (EditText) findViewById(R.id.edtFax2);
 
         autoCompleteCompany = (AutoCompleteTextView) findViewById(R.id.autoCompleteCompany);
         autoCompleteDesignation = (AutoCompleteTextView) findViewById(R.id.autoCompleteDesignation);
@@ -1170,8 +1177,8 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("Address2", edtAddress2.getText().toString());
             jsonObject.accumulate("Address3", edtAddress3.getText().toString() + " " + edtAddress4.getText().toString());
             jsonObject.accumulate("Address4", edtAddress5.getText().toString() + " " + edtAddress6.getText().toString());
-            jsonObject.accumulate("Address_ID", "1");
-            jsonObject.accumulate("Address_Type", "work");
+            jsonObject.accumulate("Address_ID", "");
+            jsonObject.accumulate("Address_Type", "");
             jsonObject.accumulate("AssociationID", associationID);
             jsonObject.accumulate("Attachment_FileName", etAttachFile.getText().toString());
             jsonObject.accumulate("Card_Back", txtCardBack.getText().toString());
@@ -1183,23 +1190,28 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("Country", edtAddress5.getText().toString());
             jsonObject.accumulate("Designation", autoCompleteDesignation.getText().toString());
             jsonObject.accumulate("DesignationID", designationID);
-            jsonObject.accumulate("Email", edtEmail.getText().toString());
-            jsonObject.accumulate("Email_Type", "work");
+            jsonObject.accumulate("Email1", edtEmail.getText().toString());
+            jsonObject.accumulate("Email2", edtEmail2.getText().toString());
             jsonObject.accumulate("Facebook", strFB);
+            jsonObject.accumulate("Fax1", edtFax1.getText().toString());
+            jsonObject.accumulate("Fax2", edtFax2.getText().toString());
             jsonObject.accumulate("Google", strGoogle);
             jsonObject.accumulate("IndustryID", industryID);
             jsonObject.accumulate("IndustryName", autoCompleteIndustry.getText().toString());
             jsonObject.accumulate("Linkedin", strLinkedin);
-            jsonObject.accumulate("Phone", edtWork.getText().toString());
-            jsonObject.accumulate("Phone_type", "work");
+            jsonObject.accumulate("Mobile1", edtPrimary.getText().toString());
+            jsonObject.accumulate("Mobile2", edtPrimary2.getText().toString());
+            jsonObject.accumulate("Phone1", edtWork.getText().toString());
+            jsonObject.accumulate("Phone2", edtWork2.getText().toString());
             jsonObject.accumulate("Postalcode", edtAddress6.getText().toString());
             jsonObject.accumulate("ProfileID", profileId);
             jsonObject.accumulate("Profile_Desc", ProfileDesc);
-            jsonObject.accumulate("Profile_Type", "work");
+            jsonObject.accumulate("Profile_Type", "");
             jsonObject.accumulate("State", edtAddress4.getText().toString());
             jsonObject.accumulate("Twitter", strTwitter);
             jsonObject.accumulate("UserID", UserID);
             jsonObject.accumulate("Website", edtWebsite.getText().toString());
+            jsonObject.accumulate("Youtube", strYoutube);
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -2100,7 +2112,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         }
     }
 
-    private class   HttpAsyncTaskUserProfile extends AsyncTask<String, Void, String> {
+    private class  HttpAsyncTaskUserProfile extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
@@ -2137,9 +2149,14 @@ public class EditProfileActivity extends AppCompatActivity implements
                     FirstName = jsonObject.getString("FirstName");
                     LastName = jsonObject.getString("LastName");
                     UserPhoto = jsonObject.getString("UserPhoto");
-                    OfficePhone = jsonObject.getString("OfficePhone");
-                    PrimaryPhone = jsonObject.getString("PrimaryPhone");
-                    Emailid = jsonObject.getString("Emailid");
+                    Phone1 = jsonObject.getString("Phone1");
+                    Phone2 = jsonObject.getString("Phone2");
+                    Mobile1 = jsonObject.getString("Mobile1");
+                    Mobile2 = jsonObject.getString("Mobile2");
+                    Fax1 = jsonObject.getString("Fax1");
+                    Fax2 = jsonObject.getString("Fax2");
+                    Email1 = jsonObject.getString("Email1");
+                    Email2 = jsonObject.getString("Email2");
                     Facebook = jsonObject.getString("Facebook");
                     strFB = jsonObject.getString("Facebook");
                     Twitter = jsonObject.getString("Twitter");
@@ -2147,6 +2164,8 @@ public class EditProfileActivity extends AppCompatActivity implements
                     Google = jsonObject.getString("Google");
                     strGoogle = jsonObject.getString("Google");
                     LinkedIn = jsonObject.getString("LinkedIn");
+                    Youtube = jsonObject.getString("Youtube");
+                    strYoutube = jsonObject.getString("Youtube");
                     strLinkedin = jsonObject.getString("LinkedIn");
                     IndustryName = jsonObject.getString("IndustryName");
                     CompanyName = jsonObject.getString("CompanyName");
@@ -2174,9 +2193,14 @@ public class EditProfileActivity extends AppCompatActivity implements
                     edtUserName.setText(FirstName + " " + LastName);
                     edtCompanyDesc.setText(CompanyProfile);
                     edtProfileDesc.setText(ProfileDesc);
-                    edtEmail.setText(Emailid);
-                    edtPrimary.setText(PrimaryPhone);
-                    edtWork.setText(OfficePhone);
+                    edtEmail.setText(Email1);
+                    edtPrimary.setText(Mobile1);
+                    edtWork.setText(Phone1);
+                    edtWork2.setText(Phone2);
+                    edtPrimary2.setText(Mobile2);
+                    edtEmail2.setText(Email2);
+                    edtFax1.setText(Fax1);
+                    edtFax2.setText(Fax2);
                     edtWebsite.setText(Website);
                     edtAddress1.setText(Address1 + " "+ Address2);
                     edtAddress2.setText(Address3 + " "+ Address4);
