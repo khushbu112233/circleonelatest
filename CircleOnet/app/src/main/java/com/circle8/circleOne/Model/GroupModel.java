@@ -9,6 +9,8 @@ public class GroupModel
 
     String group_ID = "";
     String group_Name = "";
+    String group_Photo = "";
+    String group_Desc = "";
 
     public GroupModel() {
     }
@@ -27,5 +29,21 @@ public class GroupModel
 
     public void setGroup_Name(String group_Name) {
         this.group_Name = group_Name;
+    }
+
+    public String getGroup_Photo() {
+        return group_Photo;
+    }
+
+    public void setGroup_Photo(String group_Photo) {
+        this.group_Photo = group_Photo;
+    }
+
+    public String getGroup_Desc() {
+        return group_Desc;
+    }
+
+    public void setGroup_Desc(String group_Desc) {
+        this.group_Desc = group_Desc;
     }
 }

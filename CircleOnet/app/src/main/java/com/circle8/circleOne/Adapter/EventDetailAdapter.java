@@ -47,7 +47,6 @@ public class EventDetailAdapter extends BaseAdapter
     {
         View row = convertView;
 
-
         if (row == null)
         {
             LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

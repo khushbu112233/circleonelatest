@@ -1,6 +1,7 @@
 package com.circle8.circleOne.Activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -12,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Adapter.CardSwipe;
+import com.circle8.circleOne.Adapter.EditGroupAdapter;
 import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.GroupModel;
@@ -78,11 +81,20 @@ public class CardDetail extends NfcActivity
     LoginSession loginSession;
     String strfbUrl = "", strlinkedInUrl = "", strtwitterUrl = "", strgoogleUrl = "", stryoutubeUrl = "";
     AppBarLayout appBarLayout;
+
     String FirstName = "", LastName = "", UserPhoto = "", Phone1 = "", Phone2 = "", Mobile1 = "", Mobile2 = "", Fax1 = "",
             Fax2 = "", Email1 = "", Email2 = "", IndustryName = "", CompanyName = "", CompanyProfile = "", Designation = "",
             ProfileDesc = "";
+
+    ArrayList<GroupModel> groupModelArrayList = new ArrayList<>();
+    ArrayList<String> groupName = new ArrayList<>();
+    ArrayList<String> groupPhoto = new ArrayList<>();
+    ArrayList<String> ID_group = new ArrayList<>();
+    ArrayList<String> groupDesc = new ArrayList<>();
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_detail);
         loginSession = new LoginSession(getApplicationContext());
@@ -137,10 +149,11 @@ public class CardDetail extends NfcActivity
 
         imgAddGroupFriend.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Group", Toast.LENGTH_LONG).show();
+            public void onClick(View v)
+            {
+//                Toast.makeText(getApplicationContext(), "Group", Toast.LENGTH_LONG).show();
                 // Intialize  readable sequence of char values
-                final CharSequence[] dialogList = list.toArray(new CharSequence[list.size()]);
+               /* final CharSequence[] dialogList = list.toArray(new CharSequence[list.size()]);
                 final AlertDialog.Builder builderDialog = new AlertDialog.Builder(CardDetail.this);
                 builderDialog.setTitle("Select Item");
                 int count = dialogList.length;
@@ -171,8 +184,8 @@ public class CardDetail extends NfcActivity
                                     }
                                 }
 
-                        /*Check string builder is empty or not. If string builder is not empty.
-                          It will display on the screen. */
+                        *//*Check string builder is empty or not. If string builder is not empty.
+                          It will display on the screen. *//*
                                 Toast.makeText(getApplicationContext(), stringBuilder.toString(), Toast.LENGTH_LONG).show();
                             }
                         });
@@ -185,7 +198,32 @@ public class CardDetail extends NfcActivity
                             }
                         });
                 AlertDialog alert = builderDialog.create();
-                alert.show();
+                alert.show();*/
+                AlertDialog alertDialog = new AlertDialog.Builder(CardDetail.this).create();
+                LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View dialogView = inflater.inflate(R.layout.edit_groups_popup, null);
+
+                ListView listView1 = (ListView)dialogView.findViewById(R.id.listView);
+                TextView tvGroupInfo = (TextView) dialogView.findViewById(R.id.tvGroupInfo);
+
+                if(groupName.size() == 0)
+                {
+                    tvGroupInfo.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    tvGroupInfo.setVisibility(View.GONE);
+                    ArrayList<GroupModel> groupModelArrayList1 = new ArrayList<GroupModel>();
+                    groupModelArrayList1 = groupModelArrayList ;
+
+//                EditGroupAdapter editGroupAdapter = new EditGroupAdapter(CardDetail.this, groupModelArrayList1);
+                    EditGroupAdapter editGroupAdapter = new EditGroupAdapter(CardDetail.this, groupName, groupPhoto);
+                    listView1.setAdapter(editGroupAdapter);
+                    editGroupAdapter.notifyDataSetChanged();
+                }
+
+                alertDialog.setView(dialogView);
+                alertDialog.show();
             }
         });
 
@@ -829,15 +867,19 @@ public class CardDetail extends NfcActivity
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(String result)
+        {
             dialog.dismiss();
-            try {
-                if (result != null) {
+            try
+            {
+                if (result != null)
+                {
                     JSONObject jsonObject = new JSONObject(result);
                     JSONArray jsonArray = jsonObject.getJSONArray("Groups");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
 
-                    for (int i = 0; i < jsonArray.length(); i++) {
+                    for (int i = 0; i < jsonArray.length(); i++)
+                    {
 
                         JSONObject object = jsonArray.getJSONObject(i);
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
@@ -845,9 +887,15 @@ public class CardDetail extends NfcActivity
                         GroupModel nfcModelTag = new GroupModel();
                         nfcModelTag.setGroup_ID(object.getString("group_ID"));
                         nfcModelTag.setGroup_Name(object.getString("group_Name"));
+                        nfcModelTag.setGroup_Desc(object.getString("group_desc"));
+                        nfcModelTag.setGroup_Photo(object.getString("group_photo"));
+                        groupModelArrayList.add(nfcModelTag);
                         //  Toast.makeText(getContext(), object.getString("Testimonial_Text"), Toast.LENGTH_LONG).show();
                         list.add(object.getString("group_Name"));
                         listGroupId.add(object.getString("group_ID"));
+
+                        groupName.add(object.getString("group_Name"));
+                        groupPhoto.add(object.getString("group_photo"));
                     }
                     // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
                 } else {
