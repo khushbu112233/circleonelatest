@@ -224,6 +224,7 @@ public class CardDetail extends NfcActivity
 
                 alertDialog.setView(dialogView);
                 alertDialog.show();
+
             }
         });
 
