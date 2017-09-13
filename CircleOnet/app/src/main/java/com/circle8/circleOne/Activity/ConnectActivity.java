@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Helper.DatabaseHelper;
+import com.circle8.circleOne.Model.ConnectProfileModel;
 import com.circle8.circleOne.Model.ConnectingModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
@@ -42,6 +44,7 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.circle8.circleOne.R.id.rlConnect;
 import static com.circle8.circleOne.R.id.view;
 
 
@@ -61,7 +64,9 @@ public class ConnectActivity extends AppCompatActivity
     LinearLayout lnrWeb, lnrmail, lnrnum, lnrmob;
     String profileImg = "", friendUserID = "";
 
-    private ArrayList<ConnectingModel> connectingTags = new ArrayList<>();
+    int motionLength = 0;
+
+    private ArrayList<ConnectProfileModel> connectingTags = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -99,6 +104,15 @@ public class ConnectActivity extends AppCompatActivity
         rlAdd = (RelativeLayout)findViewById(R.id.rlAdd);
         rlConnect = (RelativeLayout)findViewById(R.id.rlConnect);
         rlSocial = (RelativeLayout)findViewById(R.id.rlSocial);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+        {
+            motionLength = 265 ;
+        }
+        else
+        {
+            motionLength = 190 ;
+        }
 
         /*Rect loc = new Rect();
         int[] location = new int[2];
@@ -178,6 +192,8 @@ public class ConnectActivity extends AppCompatActivity
         }
         catch (Exception e){  }*/
 
+//        int x_left = rlConnect.getLeft();
+//        Toast.makeText(getApplicationContext(),"From Left: "+x_left, Toast.LENGTH_SHORT).show();
 
         ivConnectImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -195,7 +211,7 @@ public class ConnectActivity extends AppCompatActivity
                     Boolean aBoolean = contactExists(getApplicationContext(), txtMob.getText().toString());
 
                     if (aBoolean == true) {
-                        TranslateAnimation slide1 = new TranslateAnimation(0, -190, 0, 0);
+                        TranslateAnimation slide1 = new TranslateAnimation(0, -(motionLength), 0, 0);
                         slide1.setDuration(1000);
                         ivConnectImg.startAnimation(slide1);
 
@@ -236,7 +252,7 @@ public class ConnectActivity extends AppCompatActivity
 
                     if (aBoolean == true)
                     {
-                        TranslateAnimation slide1 = new TranslateAnimation(0, 190, 0, 0);
+                        TranslateAnimation slide1 = new TranslateAnimation(0, motionLength, 0, 0);
                         slide1.setDuration(1000);
                         ivConnectImg.startAnimation(slide1);
 
@@ -262,7 +278,7 @@ public class ConnectActivity extends AppCompatActivity
                     }
                     else
                     {
-                        TranslateAnimation slide1 = new TranslateAnimation(0, 190, 0, 0);
+                        TranslateAnimation slide1 = new TranslateAnimation(0, motionLength, 0, 0);
                         slide1.setDuration(1000);
                         ivConnectImg.startAnimation(slide1);
 
@@ -481,29 +497,55 @@ public class ConnectActivity extends AppCompatActivity
                         tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
                         tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
                     }
+
                     JSONObject profile = response.getJSONObject("Profile");
 
-                    ConnectingModel connectingModel = new ConnectingModel();
+                    ConnectProfileModel connectingModel = new ConnectProfileModel();
+                    connectingModel.setSuccess(profile.getString("success"));
+                    connectingModel.setMessage(profile.getString("message"));
+                    connectingModel.setCard_Front(profile.getString("Card_Front"));
+                    connectingModel.setCard_Back(profile.getString("Card_Back"));
                     connectingModel.setFirstName(profile.getString("FirstName"));
                     connectingModel.setLastName(profile.getString("LastName"));
-                    connectingModel.setCompanyName(profile.getString("CompanyName"));
-                    connectingModel.setWebsite(profile.getString("Website"));
                     connectingModel.setUserPhoto(profile.getString("UserPhoto"));
-                    connectingModel.setPrimaryPhone(profile.getString("PrimaryPhone"));
-                    connectingModel.setOfficePhone(profile.getString("OfficePhone"));
+                    connectingModel.setPhone1(profile.getString("Phone1"));
+                    connectingModel.setPhone2(profile.getString("Phone2"));
+                    connectingModel.setMobile1(profile.getString("Mobile1"));
+                    connectingModel.setMobile2(profile.getString("Mobile2"));
+                    connectingModel.setFax1(profile.getString("Fax1"));
+                    connectingModel.setFax2(profile.getString("Fax2"));
+                    connectingModel.setEmail1(profile.getString("Email1"));
+                    connectingModel.setEmail2(profile.getString("Email2"));
+                    connectingModel.setFacebook(profile.getString("Facebook"));
+                    connectingModel.setTwitter(profile.getString("Twitter"));
+                    connectingModel.setGoogle(profile.getString("Google"));
+                    connectingModel.setLinkedIn(profile.getString("LinkedIn"));
+                    connectingModel.setYoutube(profile.getString("Youtube"));
+                    connectingModel.setIndustryName(profile.getString("IndustryName"));
+                    connectingModel.setCompanyName(profile.getString("CompanyName"));
+                    connectingModel.setCompanyProfile(profile.getString("CompanyProfile"));
                     connectingModel.setDesignation(profile.getString("Designation"));
                     connectingModel.setProfileDesc(profile.getString("ProfileDesc"));
-                    connectingModel.setCompanyProfile(profile.getString("CompanyProfile"));
-                    connectingModel.setEmailid(profile.getString("Emailid"));
+                    connectingModel.setStatus(profile.getString("Status"));
+                    connectingModel.setAddress1(profile.getString("Address1"));
+                    connectingModel.setAddress2(profile.getString("Address2"));
+                    connectingModel.setAddress3(profile.getString("Address3"));
+                    connectingModel.setAddress4(profile.getString("Address4"));
+                    connectingModel.setCity(profile.getString("City"));
+                    connectingModel.setState(profile.getString("State"));
+                    connectingModel.setCountry(profile.getString("Country"));
+                    connectingModel.setPostalcode(profile.getString("Postalcode"));
+                    connectingModel.setWebsite(profile.getString("Website"));
+                    connectingModel.setAttachment_FileName(profile.getString("Attachment_FileName"));
                     connectingTags.add(connectingModel);
 
                     tvPersonName.setText(profile.getString("FirstName")+" "+profile.getString("LastName"));
                     tvCompanyName.setText(profile.getString("CompanyName"));
                     txtWeb.setText(profile.getString("Website"));
-                    txtMail.setText(profile.getString("Emailid"));
-                    txtNum.setText(profile.getString("OfficePhone"));
+                    txtMail.setText(profile.getString("Email1"));
+                    txtNum.setText(profile.getString("Phone1"));
                     // txtWork.setText(tag1.getWork_no());
-                    txtMob.setText(profile.getString("PrimaryPhone"));
+                    txtMob.setText(profile.getString("Mobile1"));
                     tvPersonDesignation.setText(profile.getString("Designation"));
 
                     profileImg = "http://circle8.asia/App_ImgLib/UserProfile/"+profile.getString("UserPhoto");
