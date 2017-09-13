@@ -98,15 +98,16 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/etUserName"
+            android:id="@+id/etEmail"
+            android:layout_marginTop="3dp"
             android:textColor="@color/colorPrimary"
             android:textSize="15dp"
             android:backgroundTint="@color/colorPrimary"
             android:textColorHint="@color/colorPrimary"
-            android:hint="* Email (Username)"
+            android:hint="* Email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName|text"/>
+            android:inputType="textEmailAddress"/>
         <TextView
             android:visibility="gone"
             android:id="@+id/tvUsernameInfo"
@@ -264,17 +265,6 @@
 
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/etEmail"
-            android:layout_marginTop="3dp"
-            android:textColor="@color/colorPrimary"
-            android:textSize="15dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:textColorHint="@color/colorPrimary"
-            android:hint="* Email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"/>
         <TextView
             android:visibility="gone"
             android:id="@+id/tvEmailInfo"

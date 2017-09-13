@@ -34,38 +34,7 @@ public class EventsActivity extends AppCompatActivity
 
         actionText = (TextView) findViewById(R.id.mytext);
         actionText.setText("Events");
-        ArrayList<Integer> image = new ArrayList<Integer>();
-        image.add(R.drawable.events1);
-        image.add(R.drawable.events2);
-        image.add(R.drawable.events3);
-        image.add(R.drawable.events4);
-        image.add(R.drawable.events5);
 
-        ArrayList<String> title = new ArrayList<>();
-        title.add("Physician Yong");
-        title.add("Justin Yuan fel");
-        title.add("Physician Yong");
-        title.add("Justin Yuan fel");
-        title.add("Physician Yong");
-
-        ArrayList<String> desc = new ArrayList<>();
-        desc.add("Physician Yong");
-        desc.add("Justin Yuan fel");
-        desc.add("Physician Yong");
-        desc.add("Justin Yuan fel");
-        desc.add("Physician Yong");
-
-        listView = (ListView) findViewById(R.id.listEvents);
-        gridAdapter = new EventsAdapter(EventsActivity.this, R.layout.row_events, image, title, desc);
-        listView.setAdapter(gridAdapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), EventDetail.class);
-                startActivity(intent);
-            }
-        });
 
     }
 }

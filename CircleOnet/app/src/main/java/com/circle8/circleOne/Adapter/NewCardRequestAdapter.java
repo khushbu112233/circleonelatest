@@ -7,8 +7,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.circle8.circleOne.Activity.Profile;
 import com.circle8.circleOne.Model.NewCardModel;
+import com.circle8.circleOne.Model.ProfileModel;
 import com.circle8.circleOne.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -21,23 +24,15 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class NewCardRequestAdapter extends BaseAdapter
 {
     Context context ;
-    ArrayList<NewCardModel> newCardModelArrayList ;
+    ArrayList<ProfileModel> newCardModelArrayList ;
 
-    ArrayList<String> name  = new ArrayList<>();
-    ArrayList<String> designation = new ArrayList<>() ;
-    ArrayList<String> company = new ArrayList<>() ;
-    ArrayList<String> email = new ArrayList<>();
-    ArrayList<String> phone = new ArrayList<>();
-    ArrayList<String> profile = new ArrayList<>();
-    ArrayList<String> image = new ArrayList<>();
-
-    public NewCardRequestAdapter(Context applicationContext, ArrayList<NewCardModel> newCardModelArrayList)
+    public NewCardRequestAdapter(Context applicationContext, ArrayList<ProfileModel> newCardModelArrayList)
     {
         this.context = applicationContext;
         this.newCardModelArrayList = newCardModelArrayList;
     }
 
-    public NewCardRequestAdapter(Context applicationContext, ArrayList<String> name,
+    /*public NewCardRequestAdapter(Context applicationContext, ArrayList<String> name,
            ArrayList<String> company, ArrayList<String> designation, ArrayList<String> email,
            ArrayList<String> phone, ArrayList<String> profile, ArrayList<String> image)
     {
@@ -49,11 +44,11 @@ public class NewCardRequestAdapter extends BaseAdapter
         this.phone = phone ;
         this.profile = profile ;
         this.image = image ;
-    }
+    }*/
 
     @Override
     public int getCount() {
-        return name.size();
+        return newCardModelArrayList.size();
     }
 
     @Override
@@ -84,21 +79,21 @@ public class NewCardRequestAdapter extends BaseAdapter
             CircleImageView ivProfile = (CircleImageView)row.findViewById(R.id.imgProfile);
             TextView tvProfile = (TextView)row.findViewById(R.id.tvProfile);
 
-            /*tvPerson.setText(newCardModelArrayList.get(position).getPersonName());
-            tvDesignation.setText(newCardModelArrayList.get(position).getPersonDesignation());
-            tvCompany.setText(newCardModelArrayList.get(position).getPersonCompany());
-            tvEmail.setText(newCardModelArrayList.get(position).getPersonEmail());
-            tvPhone.setText(newCardModelArrayList.get(position).getPersonPhone());
-            tvProfile.setText(newCardModelArrayList.get(position).getPersonProfile());
-            ivProfile.setImageResource(Integer.parseInt(newCardModelArrayList.get(position).getPersonImage()));*/
+            tvPerson.setText(newCardModelArrayList.get(position).getFirstName() + " " + newCardModelArrayList.get(position).getLastName());
+            tvDesignation.setText(newCardModelArrayList.get(position).getDesignation());
+            tvCompany.setText(newCardModelArrayList.get(position).getCompanyName());
+            tvEmail.setText(newCardModelArrayList.get(position).getEmail1());
+            tvPhone.setText(newCardModelArrayList.get(position).getPhone1());
+            int count = position + 1;
+            tvProfile.setText("Profile "+ count);
 
-            tvPerson.setText(name.get(position));
-            tvDesignation.setText(designation.get(position));
-            tvCompany.setText(company.get(position));
-            tvEmail.setText(email.get(position));
-            tvPhone.setText(phone.get(position));
-            tvProfile.setText(profile.get(position));
-            ivProfile.setImageResource(Integer.parseInt(image.get(position)));
+            if (newCardModelArrayList.get(position).getUserPhoto().equals(""))
+            {
+                ivProfile.setImageResource(R.drawable.usr_1);
+            }
+            else {
+                Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/"+newCardModelArrayList.get(position).getUserPhoto()).into(ivProfile);
+            }
 
         }
 

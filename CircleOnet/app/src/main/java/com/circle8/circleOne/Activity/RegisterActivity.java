@@ -88,7 +88,7 @@ import static com.circle8.circleOne.Utils.Validation.validate;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, AsyncRequest.OnAsyncRequestComplete
 {
-    public static EditText etUserName, etFirstName, etLastName, etPassword, etConfirmPass, etPhone, etEmail;
+    public static EditText etFirstName, etLastName, etPassword, etConfirmPass, etPhone, etEmail;
     public static TextView tvUsernameInfo , tvFirstnameInfo, tvLastnameInfo, tvPasswordInfo, tvRePasswordInfo, tvEmailInfo, tvPhoneInfo ;
     private LinearLayout lnrRegister;
     private ImageView ivConnect ;
@@ -129,7 +129,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         txtGender = (TextView) findViewById(R.id.txtGender);
         lnrRegister = (LinearLayout) findViewById(R.id.lnrBottomReg);
-        etUserName = (EditText) findViewById(R.id.etUserName);
         etFirstName = (EditText) findViewById(R.id.etFirstName);
         etLastName = (EditText) findViewById(R.id.etLastName);
         etPassword = (EditText) findViewById(R.id.etPassword);
@@ -169,7 +168,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         Image = intent.getStringExtra("Image");
 
         etEmail.setText(Email);
-        etUserName.setText(UserName);
+        String kept = UserName.substring( 0, UserName.indexOf(" "));
+        String remainder = UserName.substring(UserName.indexOf(" ")+1, UserName.length());
+        //  etUserName.setText(UserName);
+        etFirstName.setText(kept);
+        etLastName.setText(remainder);
         Uri targetUri = Uri.parse(Image);
         try
         {
@@ -320,7 +323,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
         if (v == lnrRegister) {
             company_name = "Ample Arch";
-            user_name = etUserName.getText().toString();
+            user_name = etFirstName.getText().toString() + " " + etLastName.getText().toString();
             first_name = etFirstName.getText().toString();
             last_name = etLastName.getText().toString();
             phone_no = etPhone.getText().toString();
@@ -1070,7 +1073,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String imgString = Base64.encodeToString(byteFormat, Base64.NO_WRAP);
         byte[] encodeValue = Base64.encode(imgString.getBytes(), Base64.DEFAULT);
 
-        Toast.makeText(getApplicationContext(), new String(encodeValue), Toast.LENGTH_LONG).show();
+      //  Toast.makeText(getApplicationContext(), new String(encodeValue), Toast.LENGTH_LONG).show();
         return new String(encodeValue);
     }
     private class HttpAsyncTaskPhotoUpload extends AsyncTask<String, Void, String>
@@ -1110,7 +1113,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(intent);
                         finish();*/
-                        Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
+                     //   Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                         register_img = ImgName;
                         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/Registration");
 

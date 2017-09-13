@@ -7,7 +7,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.circle8.circleOne.Model.GroupModel;
 import com.circle8.circleOne.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -20,22 +22,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class GroupsItemsAdapter extends BaseAdapter
 {
     Context context ;
-    ArrayList<String> groupName ;
-
+    ArrayList<GroupModel> groupName ;
 
     CircleImageView imgGroup, imgProfile1, imgProfile2, imgProfile3 ;
     TextView tvGroupName, tvPersonName1, tvPersonName2, tvPersonName3 ;
     TextView tvDesignation1, tvDesignation2, tvDesignation3 ;
     TextView tvDetail1, tvDetail2, tvDetail3 ;
 
-    String company1, company2, company3;
-    String website1, website2, website3 ;
-    String email1, email2, email3 ;
-    String phone1, phone2, phone3 ;
-    String mobile1, mobile2, mobile3 ;
-    String address1, address2, address3 ;
-
-    public GroupsItemsAdapter(Context applicationContext, ArrayList<String> groupName)
+    public GroupsItemsAdapter(Context applicationContext, ArrayList<GroupModel> groupName)
     {
         this.context = applicationContext ;
         this.groupName = groupName ;
@@ -84,7 +78,14 @@ public class GroupsItemsAdapter extends BaseAdapter
             tvDetail2 = (TextView)row.findViewById(R.id.tvPersonDetail2);
             tvDetail3 = (TextView)row.findViewById(R.id.tvPersonDetail3);
 
-            tvGroupName.setText(groupName.get(position));
+            tvGroupName.setText(groupName.get(position).getGroup_Name());
+            if (groupName.get(position).getGroup_Photo().equals(""))
+            {
+                imgGroup.setImageResource(R.drawable.usr_1);
+            }
+            else {
+                Picasso.with(context).load("http://circle8.asia/App_ImgLib/Group/"+groupName.get(position).getGroup_Photo()).into(imgGroup);
+            }
 
         }
 

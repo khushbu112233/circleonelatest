@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -74,7 +75,14 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
         tvDesignation.setText(i.getStringExtra("designation"));
         tvCompany.setText(i.getStringExtra("company"));
         tvProfile.setText(i.getStringExtra("profile"));
-        imgProfile.setImageResource(Integer.parseInt(i.getStringExtra("image")));
+      //  imgProfile.setImageResource(Integer.parseInt(i.getStringExtra("image")));
+        if (image.equals(""))
+        {
+            imgProfile.setImageResource(R.drawable.usr_1);
+        }
+        else {
+            Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+image).into(imgProfile);
+        }
 
         llDefaultCard.setOnClickListener(new View.OnClickListener() {
             @Override
