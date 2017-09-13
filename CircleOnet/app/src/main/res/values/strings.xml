@@ -9,16 +9,6 @@
     <string name="drawer_close">Close</string>
     <string name="btn_logout_from_google">Logout from Google</string>
     <string name="btn_revoke_access">Revoke Access</string>
-    <string-array name="image_ids">
-        <item>@drawable/card1f</item>
-        <item>@drawable/card2f</item>
-        <item>@drawable/card3f</item>
-        <item>@drawable/card4f</item>
-        <item>@drawable/card5f</item>
-        <item>@drawable/card6f</item>
-        <item>@drawable/card7f</item>
-        <item>@drawable/card8f</item>
-    </string-array>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>

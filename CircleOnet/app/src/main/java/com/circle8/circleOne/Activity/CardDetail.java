@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -68,7 +69,7 @@ public class CardDetail extends NfcActivity
     DatabaseHelper db;
     TextView txtName, txtCompany, txtWebsite, txtEmail, txtPH, txtWork, txtMob, txtAddress, txtRemark, txtDesi;
     CircleImageView imgProfileCard;
-    String user_id = "", profile_id;
+    String user_id = "", profile_id, currentUser_ProfileId = "";
     StickyScrollView scroll;
     ImageView imgCall, imgSMS, imgMail;
     String recycle_image1, recycle_image2;
@@ -100,6 +101,7 @@ public class CardDetail extends NfcActivity
         loginSession = new LoginSession(getApplicationContext());
         HashMap<String, String> user = loginSession.getUserDetails();
         user_id = user.get(LoginSession.KEY_USERID);
+        currentUser_ProfileId = user.get(LoginSession.KEY_PROFILEID);
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager1 = (ViewPager) findViewById(R.id.viewPager1);
         imgCards = (ImageView) findViewById(R.id.imgCards);
@@ -205,6 +207,8 @@ public class CardDetail extends NfcActivity
 
                 ListView listView1 = (ListView)dialogView.findViewById(R.id.listView);
                 TextView tvGroupInfo = (TextView) dialogView.findViewById(R.id.tvGroupInfo);
+                Button btnAddToGroup = (Button) dialogView.findViewById(R.id.btnAddToGroup);
+                Button btnCancelGroup = (Button) dialogView.findViewById(R.id.btnCancelGroup);
 
                 if(groupName.size() == 0)
                 {
@@ -222,7 +226,17 @@ public class CardDetail extends NfcActivity
                     editGroupAdapter.notifyDataSetChanged();
                 }
 
+                btnCancelGroup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+
                 alertDialog.setView(dialogView);
+
+
+
                 alertDialog.show();
 
             }
@@ -747,7 +761,7 @@ public class CardDetail extends NfcActivity
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("ProfileId", profile_id);
+            jsonObject.accumulate("ProfileId", currentUser_ProfileId);
             jsonObject.accumulate("numofrecords", "10");
             jsonObject.accumulate("pageno", "1");
 

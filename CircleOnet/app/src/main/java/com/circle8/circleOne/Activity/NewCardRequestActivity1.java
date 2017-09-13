@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -27,6 +28,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
     private ArrayList<String> swipe_image = new ArrayList<>();
     String recycle_image1, recycle_image2 ;
     ViewPager mViewPager1, mViewPager2;
+    private String image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -72,9 +74,14 @@ public class NewCardRequestActivity1 extends AppCompatActivity
 
 
         Intent i = getIntent();
-
-        imgProfile.setImageResource(Integer.parseInt(i.getStringExtra("image")));
-
+        image = i.getStringExtra("image");
+        if (image.equals(""))
+        {
+            imgProfile.setImageResource(R.drawable.usr_1);
+        }
+        else {
+            Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+image).into(imgProfile);
+        }
         tvPerson.setText(i.getStringExtra("person"));
         tvDesignation.setText(i.getStringExtra("designation"));
         tvCompany.setText(i.getStringExtra("company"));

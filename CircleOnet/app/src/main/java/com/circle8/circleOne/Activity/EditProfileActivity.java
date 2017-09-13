@@ -112,7 +112,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     ImageView imgDone, imgAdd, imgFb, imgLinkedin, imgTwitter, imgGoogle, imgYoutube;
     AutoCompleteTextView autoCompleteCompany, autoCompleteDesignation, autoCompleteIndustry;
     //String[] languages={"Android ","java","IOS","SQL","JDBC","Web services"};
-    ArrayList<String> company, designation, industry;
+    ArrayList<String> company, designation, industry, designation_id;
     String association_ID, association_NAME ;
     String profileId = "", Card_Front = "", Card_Back = "", FirstName = "", LastName = "", UserPhoto = "", Phone1 = "", Phone2 = "", Mobile1 = "", Mobile2 = "",
             Fax1 = "", Fax2 = "", Email1 = "", Email2 = "", Youtube = "",
@@ -448,6 +448,20 @@ public class EditProfileActivity extends AppCompatActivity implements
             new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8081/Onet.svc/Testimonial/Fetch");
         }
 
+
+        autoCompleteDesignation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+                                    long arg3) {
+
+                int selectedPos = designation.indexOf((String) autoCompleteDesignation.getText().toString());
+                designationID = designation_id.get(selectedPos);
+                //s1.get(position) is name selected from autocompletetextview
+                // now you can show the value on textview.
+            }
+        });
+
         imgDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -460,6 +474,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                 }
                 else if (type.equals("edit"))
                 {
+
                     new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/UpdateProfile");
                 }
             }
@@ -1908,6 +1923,14 @@ public class EditProfileActivity extends AppCompatActivity implements
                     if(success.equalsIgnoreCase("1"))
                     {
                         Toast.makeText(getApplicationContext(),"Successfully Added",Toast.LENGTH_SHORT).show();
+                        Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+
+                        // you pass the position you want the viewpager to show in the extra,
+                        // please don't forget to define and initialize the position variable
+                        // properly
+                        go.putExtra("viewpager_position", 3);
+                        startActivity(go);
+                        finish();
                     }
                     else
                     {
@@ -2034,12 +2057,13 @@ public class EditProfileActivity extends AppCompatActivity implements
                     JSONArray jsonArray = jsonObject.getJSONArray("designation");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
                     designation = new ArrayList<>();
+                    designation_id = new ArrayList<>();
                     for (int i = 0; i < jsonArray.length(); i++) {
 
                         JSONObject object = jsonArray.getJSONObject(i);
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
                         designation.add(object.getString("DesignationName"));
-                        designationID = object.getString("DesignationID");
+                        designation_id.add(object.getString("DesignationID"));
                     }
                 } else {
                     // Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
@@ -2343,6 +2367,14 @@ public class EditProfileActivity extends AppCompatActivity implements
                     if(success.equalsIgnoreCase("1"))
                     {
                         Toast.makeText(getApplicationContext(),"Successfully Updated",Toast.LENGTH_SHORT).show();
+                        Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+
+                        // you pass the position you want the viewpager to show in the extra,
+                        // please don't forget to define and initialize the position variable
+                        // properly
+                        go.putExtra("viewpager_position", 3);
+                        startActivity(go);
+                        finish();
                     }
                     else
                     {

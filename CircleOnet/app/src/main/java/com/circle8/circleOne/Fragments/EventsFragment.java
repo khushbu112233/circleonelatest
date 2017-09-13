@@ -74,7 +74,7 @@ public class EventsFragment extends Fragment
 
         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/Events/List");
 
-        ArrayList<Integer> image = new ArrayList<Integer>();
+       /* ArrayList<Integer> image = new ArrayList<Integer>();
         image.add(R.drawable.events1);
         image.add(R.drawable.events2);
         image.add(R.drawable.events3);
@@ -93,7 +93,7 @@ public class EventsFragment extends Fragment
         desc.add("Justin Yuan fel");
         desc.add("Physician Yong");
         desc.add("Justin Yuan fel");
-        desc.add("Physician Yong");
+        desc.add("Physician Yong");*/
 
         lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
         line = view.findViewById(R.id.view);

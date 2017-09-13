@@ -20,13 +20,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.circle8.circleOne.Activity.CardsActivity;
-import com.circle8.circleOne.Adapter.TutorialPagerAdapter;
 import com.circle8.circleOne.R;
-import com.github.paolorotolo.appintro.AppIntro;
-import com.github.paolorotolo.appintro.AppIntroFragment;
-import com.viewpagerindicator.CirclePageIndicator;
 
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class HelpActivity extends AppCompatActivity {
 
