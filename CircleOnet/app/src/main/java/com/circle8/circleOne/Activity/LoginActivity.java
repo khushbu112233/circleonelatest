@@ -726,16 +726,33 @@ public class LoginActivity extends AppCompatActivity implements
                         if (Status.equalsIgnoreCase("Verified")) {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                 // imgFinger.setVisibility(View.VISIBLE);
-                                Gson gson = ((MyApplication) getApplication()).getGsonObject();
-                                UserObject userData = new UserObject(profileid, FirstName + " " + LastName, userName, userPassword, UserID, "", UserPhoto, false);
-                                String userDataString = gson.toJson(userData);
-                                CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
-                                pref.setUserData(userDataString);
+                                if (imgFinger.getVisibility() == View.VISIBLE) {
+                                    Gson gson = ((MyApplication) getApplication()).getGsonObject();
+                                    UserObject userData = new UserObject(profileid, FirstName + " " + LastName, userName, userPassword, UserID, "", UserPhoto, false);
+                                    String userDataString = gson.toJson(userData);
+                                    CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
+                                    pref.setUserData(userDataString);
 
-                                Intent intent = new Intent(getApplicationContext(), FingerPrintLogin.class);
-                                //intent.putExtra("viewpager_position", 0);
-                                startActivity(intent);
-                                finish();
+                                    Intent intent = new Intent(getApplicationContext(), FingerPrintLogin.class);
+                                    //intent.putExtra("viewpager_position", 0);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    // Either gone or invisible
+                                    loginSession.createLoginSession(profileid, UserID, "", userName, "", "");
+                                    if (prefs.getBoolean("firstrun", true)) {
+                                        // Do first run stuff here then set 'firstrun' as false
+                                        // using the following line to edit/commit prefs
+                                        Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                                        startActivity(intent);
+                                        prefs.edit().putBoolean("firstrun", false).commit();
+                                    } else {
+                                        Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                                        userIntent.putExtra("viewpager_position", 0);
+                                        startActivity(userIntent);
+                                        finish();
+                                    }
+                                }
 
                               /*  loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, userName, UserPhoto, "");
                                 // Toast.makeText(getApplicationContext(), getString(R.string.auth_successful), Toast.LENGTH_LONG).show();
@@ -1478,17 +1495,39 @@ public class LoginActivity extends AppCompatActivity implements
 
                         if (Status.equalsIgnoreCase("Verified")) {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                // imgFinger.setVisibility(View.VISIBLE);
-                                Gson gson = ((MyApplication) getApplication()).getGsonObject();
-                                UserObject userData = new UserObject(profileid, FirstName + " " + LastName, userName, userPassword, UserID, "", UserPhoto, false);
-                                String userDataString = gson.toJson(userData);
-                                CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
-                                pref.setUserData(userDataString);
 
-                                Intent intent = new Intent(getApplicationContext(), FingerPrintLogin.class);
-                                //intent.putExtra("viewpager_position", 0);
-                                startActivity(intent);
-                                finish();
+                                if (imgFinger.getVisibility() == View.VISIBLE) {
+                                    Gson gson = ((MyApplication) getApplication()).getGsonObject();
+                                    UserObject userData = new UserObject(profileid, FirstName + " " + LastName, userName, userPassword, UserID, "", UserPhoto, false);
+                                    String userDataString = gson.toJson(userData);
+                                    CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
+                                    pref.setUserData(userDataString);
+
+                                    Intent intent = new Intent(getApplicationContext(), FingerPrintLogin.class);
+                                    //intent.putExtra("viewpager_position", 0);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    // Either gone or invisible
+                                    loginSession.createLoginSession(profileid, UserID, "", userName, "", "");
+                                    if (prefs.getBoolean("firstrun", true)) {
+                                        // Do first run stuff here then set 'firstrun' as false
+                                        // using the following line to edit/commit prefs
+                                        Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                                        startActivity(intent);
+                                        prefs.edit().putBoolean("firstrun", false).commit();
+                                    } else {
+                                        Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                                        userIntent.putExtra("viewpager_position", 0);
+                                        startActivity(userIntent);
+                                        finish();
+                                    }
+                                }
+
+
+
+                                // imgFinger.setVisibility(View.VISIBLE);
+
 
                                /* loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, userName, UserPhoto, "");
                                 // Toast.makeText(getApplicationContext(), getString(R.string.auth_successful), Toast.LENGTH_LONG).show();
