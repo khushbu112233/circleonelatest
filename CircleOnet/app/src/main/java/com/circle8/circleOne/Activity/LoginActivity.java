@@ -770,6 +770,21 @@ public class LoginActivity extends AppCompatActivity implements
                                 }
                             }
                         } else {
+                            try {
+                                signOut();
+                            }catch (Exception e){}
+                            try {
+                                PrefUtils.clearCurrentUser(LoginActivity.this);
+                                // We can logout from facebook by calling following method
+                                LoginManager.getInstance().logOut();
+                            }catch (Exception e){}
+                           try {
+                                mAuth.signOut();
+                                com.twitter.sdk.android.Twitter.logOut();
+                           }catch (Exception e){}
+                            try {
+                                LISessionManager.getInstance(getApplicationContext()).clearSession();
+                            }catch (Exception e){}
                             Toast.makeText(getBaseContext(), "You should verify your Account First..", Toast.LENGTH_LONG).show();
                         }
 

@@ -962,15 +962,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     {
                         Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
 
-                        if (Status.equalsIgnoreCase("Not-Verfied"))
-                        {
-                            new HttpAsyncTaskVerify().execute("http://circle8.asia:8081/Onet.svc/AccVerification/" + UserID);
-                        }
-                        else
+                        if (Status.equalsIgnoreCase("Verified"))
                         {
                             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                             startActivity(intent);
                             finish();
+
+                        }
+                        else
+                        {
+                            new HttpAsyncTaskVerify().execute("http://circle8.asia:8081/Onet.svc/AccVerification/" + UserID);
                         }
                     } else {
                         Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
