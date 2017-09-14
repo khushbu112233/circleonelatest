@@ -190,7 +190,7 @@
         <activity
             android:name=".Activity.GroupsActivity"
             android:theme="@style/NoActionbar" />
-        <activity android:name=".Activity.StripeActivity"></activity>
+        <activity android:name=".Activity.StripeActivity"  android:theme="@style/NoActionbar" ></activity>
     </application>
 
 </manifest>

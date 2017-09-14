@@ -18,8 +18,8 @@ import com.stripe.exception.AuthenticationException;
 
 import java.net.URL;
 
-public class StripeActivity extends AppCompatActivity {
-
+public class StripeActivity extends AppCompatActivity
+{
     Stripe stripe;
    /* Integer amount;
     String name;*/
@@ -29,9 +29,10 @@ public class StripeActivity extends AppCompatActivity {
     String profile;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stripe);
+        setContentView(R.layout.activity_stripe_1);
         Bundle extras = getIntent().getExtras();
        /* amount = extras.getInt("plan_price");
         name = extras.getString("plan_name");*/
@@ -39,12 +40,13 @@ public class StripeActivity extends AppCompatActivity {
         level = intent.getStringExtra("level");
         profile = intent.getStringExtra("profile");
 
-        try {
+        try
+        {
             stripe = new Stripe("pk_test_6fZCC6Gu2kwYLUQxJhGte65l");
-        } catch (AuthenticationException e) {
+        }
+        catch (AuthenticationException e) {
             e.printStackTrace();
         }
-
     }
 
     public void submitCard(View view) {
