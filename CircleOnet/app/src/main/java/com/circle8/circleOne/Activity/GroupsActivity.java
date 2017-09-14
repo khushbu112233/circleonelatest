@@ -84,7 +84,8 @@ public class GroupsActivity extends AppCompatActivity
         });
     }
 
-    private class HttpAsyncTaskGroup extends AsyncTask<String, Void, String> {
+    private class HttpAsyncTaskGroup extends AsyncTask<String, Void, String>
+    {
         ProgressDialog dialog;
 
         @Override
@@ -106,24 +107,30 @@ public class GroupsActivity extends AppCompatActivity
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(String result)
+        {
             dialog.dismiss();
-            try {
-                if (result != null) {
+            try
+            {
+                if (result != null)
+                {
                     JSONObject jsonObject = new JSONObject(result);
                     JSONArray jsonArray = jsonObject.getJSONArray("Groups");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
 
-                    if (jsonArray.length() == 0) {
+                    if (jsonArray.length() == 0)
+                    {
                         listView.setVisibility(View.GONE);
                         //txtGroup.setVisibility(View.VISIBLE);
-                    } else {
+                    }
+                    else
+                    {
                         listView.setVisibility(View.VISIBLE);
                        // txtGroup.setVisibility(View.GONE);
                     }
 
-                    for (int i = 0; i < jsonArray.length(); i++) {
-
+                    for (int i = 0; i < jsonArray.length(); i++)
+                    {
                         JSONObject object = jsonArray.getJSONObject(i);
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
 

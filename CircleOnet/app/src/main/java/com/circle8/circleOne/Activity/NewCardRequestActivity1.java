@@ -130,7 +130,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                 }
                 alertDialog = new AlertDialog.Builder(NewCardRequestActivity1.this).create();
                 LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View dialogView = inflater.inflate(R.layout.activity_stripe, null);
+                View dialogView = inflater.inflate(R.layout.activity_stripe_1, null);
 
                 cardNumberField = (TextView) dialogView.findViewById(R.id.cardNumber);
                 monthField = (TextView) dialogView.findViewById(R.id.month);
