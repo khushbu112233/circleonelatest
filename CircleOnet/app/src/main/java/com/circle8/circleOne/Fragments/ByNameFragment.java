@@ -187,6 +187,14 @@ public class ByNameFragment extends Fragment
                     JSONArray connect = response.getJSONArray("connect");
 
                     connectTags.clear();
+                    try
+                    {
+                        connectListAdapter.notifyDataSetChanged();
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
 
                     if(connect.length() == 0)
                     {

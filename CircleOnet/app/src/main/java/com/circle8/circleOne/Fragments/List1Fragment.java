@@ -36,6 +36,7 @@ import com.circle8.circleOne.R;
 import com.azoft.carousellayoutmanager.CarouselLayoutManager;
 import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
 import com.azoft.carousellayoutmanager.CenterScrollListener;
+import com.daimajia.swipe.util.Attributes;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -99,6 +100,8 @@ public class List1Fragment extends Fragment
     public static Context mContext ;
 
     static String comeAtTime = "FIRST" ;
+
+    static int number_cards = 0 ;
 
     public List1Fragment()
     {
@@ -491,6 +494,20 @@ public class List1Fragment extends Fragment
                     JSONArray jsonArray = jsonObject.getJSONArray("connection");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
 
+                    number_cards = jsonArray.length();
+
+                    nfcModel.clear();
+                    allTags.clear();
+                    try
+                    {
+                        mAdapter.notifyDataSetChanged();
+                        mAdapter1.notifyDataSetChanged();
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+
                     for (int i = 0; i < jsonArray.length(); i++)
                     {
                         JSONObject object = jsonArray.getJSONObject(i);
@@ -507,9 +524,7 @@ public class List1Fragment extends Fragment
                         nfcModelTag.setCard_back(object.getString("Card_Back"));
                         nfcModelTag.setUser_image(object.getString("UserPhoto"));
                         nfcModelTag.setProfile_id(object.getString("ProfileId"));
-
 //                        Toast.makeText(getActivity(),"Profile_id"+object.getString("ProfileId"),Toast.LENGTH_SHORT).show();
-
                         nfcModelTag.setNfc_tag("en000000001");
                         allTags.add(nfcModelTag);
 
@@ -975,6 +990,7 @@ public class List1Fragment extends Fragment
         }
 
         CardsActivity.setActionBarTitle("Cards - "+nfcModel.size());
+//        CardsActivity.setActionBarTitle("Cards - "+number_cards);
         initRecyclerView1(recyclerView1,new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter ) ;
         initRecyclerView2(recyclerView2,new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter1 ) ;
 
