@@ -64,7 +64,7 @@ public class Notification extends AppCompatActivity
         textView.setText("Notifications - 0");
         ImageView drawer = (ImageView) findViewById(R.id.drawer);
         drawer.setVisibility(View.GONE);
-       // imgLogo.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
+        imgLogo.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
 
         listNotification = (ListView) findViewById(R.id.listNotification);
         loginSession = new LoginSession(getApplicationContext());
@@ -78,9 +78,6 @@ public class Notification extends AppCompatActivity
             @Override
             public void onClick(View v) {
 
-                //Toast.makeText(getApplicationContext(), "Hello", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
-                startActivity(intent);
                 finish();
             }
         });

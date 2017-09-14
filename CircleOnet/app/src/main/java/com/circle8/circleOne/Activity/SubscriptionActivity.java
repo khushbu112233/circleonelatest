@@ -48,6 +48,7 @@ public class SubscriptionActivity extends AppCompatActivity
     Card card;
     Token tok;
     AlertDialog alertDialog;
+    ImageView imgBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -57,7 +58,7 @@ public class SubscriptionActivity extends AppCompatActivity
 
         ivBack = (ImageView)findViewById(R.id.imgBack);
         listView = (ListView)findViewById(R.id.listView);
-
+        imgBack = (ImageView) findViewById(R.id.imgBack);
         subscriptionModelArrayList = new ArrayList<>();
 
         packageName.add("Free Package");
@@ -106,6 +107,13 @@ public class SubscriptionActivity extends AppCompatActivity
                 packageName, contact, group, connection, amount, left_connection);
         listView.setAdapter(subscriptionAdapter);
         subscriptionAdapter.notifyDataSetChanged();
+
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
