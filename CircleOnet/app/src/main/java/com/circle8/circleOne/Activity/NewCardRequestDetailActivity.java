@@ -5,6 +5,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,6 +29,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
     private ArrayList<String> swipe_image = new ArrayList<>();
     String recycle_image1, recycle_image2 ;
     ViewPager mViewPager1, mViewPager2;
+    ImageView imgBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -40,7 +42,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
         tvCompany = (TextView)findViewById(R.id.tvCompany);
         tvDesignation = (TextView)findViewById(R.id.tvDesignation);
         tvProfile = (TextView)findViewById(R.id.tvProfile);
-
+        imgBack = (ImageView) findViewById(R.id.imgBack);
         llDefaultCard = (LinearLayout)findViewById(R.id.llDefaultCard);
         llNewCard = (LinearLayout)findViewById(R.id.llNewCard);
 
@@ -83,6 +85,12 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
         else {
             Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+image).into(imgProfile);
         }
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         llDefaultCard.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -47,6 +47,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
     Card card;
     Token tok;
     AlertDialog alertDialog;
+    ImageView imgBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -64,7 +65,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
         tvDesignation = (TextView)findViewById(R.id.tvDesignation);
         tvCompany = (TextView)findViewById(R.id.tvCompany);
         tvProfile = (TextView)findViewById(R.id.tvProfile);
-
+        imgBack = (ImageView) findViewById(R.id.imgBack);
         etPerson = (EditText)findViewById(R.id.etPerson);
         etCompany = (EditText)findViewById(R.id.etCompany);
         etPhone = (EditText)findViewById(R.id.etPhone);
@@ -111,6 +112,13 @@ public class NewCardRequestActivity1 extends AppCompatActivity
         etPhone.setText(i.getStringExtra("profile"));
         etAddress1.setText("Address");
         etAddress2.setText("");
+
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         ivSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
