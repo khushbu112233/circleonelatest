@@ -422,6 +422,7 @@ public class List2Fragment extends Fragment
                     JSONObject jsonObject = new JSONObject(result);
 
                     String count = jsonObject.getString("count");
+
                     if(count.equals("") || count.equals("null"))
                     {
                         numberCount = 0 ;
