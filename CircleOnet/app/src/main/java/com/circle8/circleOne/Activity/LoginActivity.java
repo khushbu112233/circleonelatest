@@ -166,8 +166,6 @@ public class LoginActivity extends AppCompatActivity implements
     String Facebook = "", Twitter = "", Google = "", Linkedin = "", final_name = "", final_email = "", final_image = "";
     private boolean LinkedInFlag = false;
 
-
-
     private FingerprintManager fingerprintManager;
     private KeyguardManager keyguardManager;
     private KeyStore keyStore;
