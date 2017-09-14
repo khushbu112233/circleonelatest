@@ -3,7 +3,9 @@ package com.circle8.circleOne.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 
 import com.circle8.circleOne.Adapter.ExpandableListAdapter;
 import com.circle8.circleOne.R;
@@ -18,6 +20,7 @@ public class Help2Activity extends AppCompatActivity
     private List<String> questionsList;
     private List<String> answersList;
     private Map<String, List<String>> collectionList;
+    ImageView imgBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -26,7 +29,7 @@ public class Help2Activity extends AppCompatActivity
         setContentView(R.layout.activity_help2);
 
         expListView = (ExpandableListView)findViewById(R.id.QA_listview);
-
+        imgBack = (ImageView) findViewById(R.id.imgBack);
         createGroupList();
         createCollection();
 
@@ -35,6 +38,12 @@ public class Help2Activity extends AppCompatActivity
 
         setGroupIndicatorToRight();
 
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void setGroupIndicatorToRight()

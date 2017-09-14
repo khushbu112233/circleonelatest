@@ -1,17 +1,29 @@
 package com.circle8.circleOne.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.R;
 import com.squareup.picasso.Picasso;
+import com.stripe.android.Stripe;
+import com.stripe.android.TokenCallback;
+import com.stripe.android.model.Card;
+import com.stripe.android.model.Token;
+import com.stripe.exception.AuthenticationException;
 
 import java.util.ArrayList;
 
@@ -29,6 +41,13 @@ public class NewCardRequestActivity1 extends AppCompatActivity
     String recycle_image1, recycle_image2 ;
     ViewPager mViewPager1, mViewPager2;
     private String image;
+    LinearLayout llBlueCardSample, llGoldCardSample;
+    TextView cardNumberField, monthField, yearField, cvcField;
+    Stripe stripe;
+    Card card;
+    Token tok;
+    AlertDialog alertDialog;
+    ImageView imgBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -40,12 +59,13 @@ public class NewCardRequestActivity1 extends AppCompatActivity
 
         imgProfile = (CircleImageView)findViewById(R.id.imgProfile);
         ivSubmit = (ImageView)findViewById(R.id.ivSubmit);
-
+        llGoldCardSample = (LinearLayout) findViewById(R.id.llGoldCardSample);
+        llBlueCardSample = (LinearLayout) findViewById(R.id.llBlueCardSample);
         tvPerson = (TextView)findViewById(R.id.tvPersonName);
         tvDesignation = (TextView)findViewById(R.id.tvDesignation);
         tvCompany = (TextView)findViewById(R.id.tvCompany);
         tvProfile = (TextView)findViewById(R.id.tvProfile);
-
+        imgBack = (ImageView) findViewById(R.id.imgBack);
         etPerson = (EditText)findViewById(R.id.etPerson);
         etCompany = (EditText)findViewById(R.id.etCompany);
         etPhone = (EditText)findViewById(R.id.etPhone);
@@ -93,6 +113,56 @@ public class NewCardRequestActivity1 extends AppCompatActivity
         etAddress1.setText("Address");
         etAddress2.setText("");
 
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        ivSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    stripe = new Stripe("pk_test_6fZCC6Gu2kwYLUQxJhGte65l");
+                } catch (AuthenticationException e) {
+                    e.printStackTrace();
+                }
+                alertDialog = new AlertDialog.Builder(NewCardRequestActivity1.this).create();
+                LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View dialogView = inflater.inflate(R.layout.activity_stripe, null);
+
+                cardNumberField = (TextView) dialogView.findViewById(R.id.cardNumber);
+                monthField = (TextView) dialogView.findViewById(R.id.month);
+                yearField = (TextView) dialogView.findViewById(R.id.year);
+                cvcField = (TextView) dialogView.findViewById(R.id.cvc);
+
+
+                alertDialog.setView(dialogView);
+
+                alertDialog.show();
+            }
+        });
+
+        llGoldCardSample.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                llBlueCardSample.setAlpha(0.4f);
+                llGoldCardSample.setAlpha(1.0f);
+                //llBlueCardSample.setEnabled(false);
+            }
+        });
+
+
+        llBlueCardSample.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                llGoldCardSample.setAlpha(0.4f);
+                llBlueCardSample.setAlpha(1.0f);
+                //llGoldCardSample.setEnabled(false);
+            }
+        });
+
         mViewPager2.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             private int mScrollState = ViewPager.SCROLL_STATE_IDLE;
@@ -120,4 +190,44 @@ public class NewCardRequestActivity1 extends AppCompatActivity
         });
 
     }
+
+    public void submitCard(View view) {
+        // TODO: replace with your own test key
+
+        card = new Card(
+                cardNumberField.getText().toString(),
+                Integer.valueOf(monthField.getText().toString()),
+                Integer.valueOf(yearField.getText().toString()),
+                cvcField.getText().toString()
+        );
+
+        card.setCurrency("usd");
+        card.setName("Theodhor Pandeli");
+        card.setAddressZip("1000");
+        /*
+        card.setNumber(4242424242424242);
+        card.setExpMonth(12);
+        card.setExpYear(19);
+        card.setCVC("123");
+        */
+
+
+        stripe.createToken(card, "pk_test_6fZCC6Gu2kwYLUQxJhGte65l", new TokenCallback() {
+            public void onSuccess(Token token) {
+                // TODO: Send Token information to your backend to initiate a charge
+                Toast.makeText(getApplicationContext(), "Token created: " + token.getId(), Toast.LENGTH_LONG).show();
+                tok = token;
+                //  new StripeCharge(token.getId()).execute();
+                alertDialog.cancel();
+                Intent intent = new Intent(getApplicationContext(), NewCardRequestActivity.class);
+                startActivity(intent);
+                finish();
+            }
+
+            public void onError(Exception error) {
+                Log.d("Stripe", error.getLocalizedMessage());
+            }
+        });
+    }
+
 }

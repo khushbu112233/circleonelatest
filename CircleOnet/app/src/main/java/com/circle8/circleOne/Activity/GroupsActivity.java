@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ public class GroupsActivity extends AppCompatActivity
     private LoginSession session;
     private String profile_id ;
     public static ArrayList<GroupModel> allTaggs;
+    ImageView imgBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -54,7 +56,7 @@ public class GroupsActivity extends AppCompatActivity
         profile_id = user.get(LoginSession.KEY_PROFILEID);
         allTaggs = new ArrayList<>();
         listView = (ListView)findViewById(R.id.listView);
-
+        imgBack = (ImageView) findViewById(R.id.imgBack);
         new HttpAsyncTaskGroup().execute("http://circle8.asia:8081/Onet.svc/Group/Fetch");
        /* groupName.add("Group 1");
         groupName.add("Group 2");
@@ -64,6 +66,13 @@ public class GroupsActivity extends AppCompatActivity
         listView.setAdapter(groupsItemsAdapter);
         groupsItemsAdapter.notifyDataSetChanged();
 */
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)

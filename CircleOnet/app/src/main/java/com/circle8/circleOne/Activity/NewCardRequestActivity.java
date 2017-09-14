@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -41,17 +42,10 @@ public class NewCardRequestActivity extends AppCompatActivity
     private ListView listView ;
     private ArrayList<NewCardModel> newCardModelArrayList ;
     private NewCardRequestAdapter newCardRequestAdapter ;
-
-    private ArrayList<String> name = new ArrayList<>();
-    private ArrayList<String> designation = new ArrayList<>();
-    private ArrayList<String> company = new ArrayList<>();
-    private ArrayList<String> email = new ArrayList<>();
-    private ArrayList<String> phone = new ArrayList<>();
-    private ArrayList<String> image = new ArrayList<>();
-    private ArrayList<String> profile = new ArrayList<>();
     public static ArrayList<ProfileModel> allTags ;
     private String UserID = "";
     private LoginSession session;
+    ImageView imgBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -60,81 +54,19 @@ public class NewCardRequestActivity extends AppCompatActivity
         setContentView(R.layout.activity_new_card_request);
         session = new LoginSession(getApplicationContext());
         listView = (ListView)findViewById(R.id.listView);
+        imgBack = (ImageView) findViewById(R.id.imgBack);
         HashMap<String, String> user = session.getUserDetails();
         UserID = user.get(LoginSession.KEY_USERID);
         allTags = new ArrayList<>();
         newCardModelArrayList = new ArrayList<>();
         new HttpAsyncTaskProfiles().execute("http://circle8.asia:8081/Onet.svc/MyProfiles");
 
-
-        NewCardModel newCardModel = new NewCardModel();
-
-        newCardModel.setPersonName("Wesley Wen");
-        newCardModel.setPersonDesignation("Business Development Director");
-        newCardModel.setPersonCompany("UNICO Creative Pvt. Ltd.");
-        newCardModel.setPersonPhone("+65 6842 6188  +65 9735 4641");
-        newCardModel.setPersonEmail("wesley.wan@unico-creative.com");
-        newCardModel.setPersonProfile("Profile 1");
-        newCardModel.setPersonImage(String.valueOf(R.drawable.final_profile5));
-        newCardModelArrayList.add(newCardModel);
-
-        newCardModel.setPersonName("Shani Shah");
-        newCardModel.setPersonDesignation("Business Development Director");
-        newCardModel.setPersonCompany("Ample Arch Pvt. Ltd.");
-        newCardModel.setPersonPhone("+65 6842 6188  +65 9735 4641");
-        newCardModel.setPersonEmail("shani.shah@unico-creative.com");
-        newCardModel.setPersonProfile("Profile 1");
-        newCardModel.setPersonImage(String.valueOf(R.drawable.final_profile14));
-        newCardModelArrayList.add(newCardModel);
-
-        name.add("Wesley Wen");
-        designation.add("Business Development Director");
-        company.add("UNICO Creative Pvt. Ltd.");
-        email.add("wesley.wan@unico-creative.com");
-        phone.add("+65 6842 6188  +65 9735 4641");
-        profile.add("Profile 1");
-        image.add(String.valueOf(R.drawable.final_profile5));
-
-        name.add("Shani Shah");
-        designation.add("Business Development Director");
-        company.add("Ample Arch Pvt. Ltd.");
-        email.add("shani.shah@unico-creative.com");
-        phone.add("+65 6842 6188  +65 9735 4641");
-        profile.add("Profile 2");
-        image.add(String.valueOf(R.drawable.final_profile14));
-
-        name.add("Wesley Wen");
-        designation.add("Business Development Director");
-        company.add("UNICO Creative Pvt. Ltd.");
-        email.add("wesley.wan@unico-creative.com");
-        phone.add("+65 6842 6188  +65 9735 4641");
-        profile.add("Profile 3");
-        image.add(String.valueOf(R.drawable.final_profile5));
-
-        name.add("Shani Shah");
-        designation.add("Business Development Director");
-        company.add("Ample Arch Pvt. Ltd.");
-        email.add("shani.shah@unico-creative.com");
-        phone.add("+65 6842 6188  +65 9735 4641");
-        profile.add("Profile 4");
-        image.add(String.valueOf(R.drawable.final_profile14));
-
-        name.add("Wesley Wen");
-        designation.add("Business Development Director");
-        company.add("UNICO Creative Pvt. Ltd.");
-        email.add("wesley.wan@unico-creative.com");
-        phone.add("+65 6842 6188  +65 9735 4641");
-        profile.add("Profile 5");
-        image.add(String.valueOf(R.drawable.final_profile5));
-
-        name.add("Shani Shah");
-        designation.add("Business Development Director");
-        company.add("Ample Arch Pvt. Ltd.");
-        email.add("shani.shah@unico-creative.com");
-        phone.add("+65 6842 6188  +65 9735 4641");
-        profile.add("Profile 6");
-        image.add(String.valueOf(R.drawable.final_profile14));
-
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 //        newCardRequestAdapter = new NewCardRequestAdapter(getApplicationContext(), newCardModelArrayList);
       /*  newCardRequestAdapter = new NewCardRequestAdapter(getApplicationContext(),

@@ -24,6 +24,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     private View line_view1, line_view2 ;
 
     private String gender ;
+    ImageView imgBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -42,7 +43,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         etDOB = (EditText)findViewById(R.id.etDob);
         etAddress1 = (EditText)findViewById(R.id.etAddress1);
         etAddress2 = (EditText)findViewById(R.id.etAddress2);
-
+        imgBack = (ImageView) findViewById(R.id.imgBack);
         tvSave = (TextView)findViewById(R.id.tvSave);
         tvCancel = (TextView)findViewById(R.id.tvCancel);
 
@@ -62,7 +63,12 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         tvCancel.setOnClickListener(this);
         rlMale.setOnClickListener(this);
         rlFemale.setOnClickListener(this);
-
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override

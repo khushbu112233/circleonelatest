@@ -46,7 +46,7 @@ public class GroupDetailActivity extends AppCompatActivity
     private TextView tvGroupName, tvGroupPartner ;
 
     private GroupDetailAdapter groupDetailAdapter ;
-
+    ImageView imgBack;
     private ArrayList<GroupDetailModel> groupDetailModelArrayList = new ArrayList<>();
     private LoginSession session;
     private String profile_id ;
@@ -69,7 +69,7 @@ public class GroupDetailActivity extends AppCompatActivity
 
         listView = (ListView)findViewById(R.id.listView);
         imgProfile = (CircleImageView)findViewById(R.id.imgProfile);
-
+        imgBack = (ImageView) findViewById(R.id.imgBack);
         tvGroupName = (TextView)findViewById(R.id.tvGroupName);
         tvGroupPartner = (TextView)findViewById(R.id.tvGroupPartner);
 
@@ -129,6 +129,13 @@ public class GroupDetailActivity extends AppCompatActivity
                 name,designation,company,website,email,phone,mobile,address,imgprofile);
         listView.setAdapter(groupDetailAdapter);
         groupDetailAdapter.notifyDataSetChanged();
+
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     public String POST4(String url) {
