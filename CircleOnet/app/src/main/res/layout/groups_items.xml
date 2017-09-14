@@ -22,6 +22,7 @@
             android:layout_weight="0.3">
             <!--for 1st group member view-->
             <LinearLayout
+                android:id="@+id/llOneUser"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -36,8 +37,8 @@
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/usr_1"
                         android:id="@+id/imgProfile1"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" />
+                        android:layout_width="47dp"
+                        android:layout_height="47dp" />
                     <LinearLayout
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="5dp"
@@ -79,6 +80,7 @@
                         android:textSize="10sp" />
                 </LinearLayout>
                 <View
+                    android:id="@+id/Line1"
                     android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -86,6 +88,7 @@
             </LinearLayout>
             <!--for 2nd group member view-->
             <LinearLayout
+                android:id="@+id/llSecondUser"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -100,8 +103,8 @@
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/usr_1"
                         android:id="@+id/imgProfile2"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" />
+                        android:layout_width="47dp"
+                        android:layout_height="47dp" />
                     <LinearLayout
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="5dp"
@@ -143,6 +146,7 @@
                         android:textSize="10sp" />
                 </LinearLayout>
                 <View
+                    android:id="@+id/Line2"
                     android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -150,6 +154,7 @@
             </LinearLayout>
             <!--for 3rd group member view-->
             <LinearLayout
+                android:id="@+id/llThirdUser"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -164,8 +169,8 @@
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/usr_1"
                         android:id="@+id/imgProfile3"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" />
+                        android:layout_width="47dp"
+                        android:layout_height="47dp" />
                     <LinearLayout
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="5dp"
@@ -223,27 +228,27 @@
             android:layout_weight="0.7"
             android:layout_gravity="center_vertical">
             <RelativeLayout
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_gravity="center_horizontal">
                 <de.hdodenhof.circleimageview.CircleImageView
                     app:civ_border_width="1dp"
                     app:civ_border_color="@color/colorPrimary"
                     android:src="@drawable/usr"
                     android:id="@+id/imgGroup"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp" />
+                    android:layout_width="60dp"
+                    android:layout_height="60dp" />
                 <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:src="@drawable/mini_camera_blue"
                     android:layout_alignParentRight="false"
-                    android:layout_marginTop="55dp"
-                    android:layout_marginLeft="50dp"/>
+                    android:layout_marginTop="45dp"
+                    android:layout_marginLeft="40dp"/>
             </RelativeLayout>
             <TextView
                 android:id="@+id/tvGroupName"
-                android:textSize="15dp"
+                android:textSize="13dp"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -41,6 +41,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class GroupDetailActivity extends AppCompatActivity
 {
     private ListView listView ;
+
     private CircleImageView imgProfile ;
     private ImageView ivChangeProf, ivBack, ivMenu, ivShare, ivEdit ;
     private TextView tvGroupName, tvGroupPartner ;
@@ -48,8 +49,10 @@ public class GroupDetailActivity extends AppCompatActivity
     private GroupDetailAdapter groupDetailAdapter ;
     ImageView imgBack;
     private ArrayList<GroupDetailModel> groupDetailModelArrayList = new ArrayList<>();
+
     private LoginSession session;
     private String profile_id ;
+
     private ArrayList<String> name = new ArrayList<>();
     private ArrayList<String> designation = new ArrayList<>();
     private ArrayList<String> company = new ArrayList<>();
@@ -59,6 +62,7 @@ public class GroupDetailActivity extends AppCompatActivity
     private ArrayList<String> mobile = new ArrayList<>();
     private ArrayList<String> address = new ArrayList<>();
     private ArrayList<String> imgprofile = new ArrayList<>();
+
     String group_id = "";
 
     @Override
@@ -78,11 +82,14 @@ public class GroupDetailActivity extends AppCompatActivity
         ivChangeProf = (ImageView)findViewById(R.id.imgCamera);
         ivShare = (ImageView)findViewById(R.id.ivProfileShare);
         ivEdit = (ImageView)findViewById(R.id.ivEdit);
+
         session = new LoginSession(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
         profile_id = user.get(LoginSession.KEY_PROFILEID);
+
         Intent intent = getIntent();
         group_id = intent.getStringExtra("group_id");
+
         new HttpAsyncTaskGroup().execute("http://circle8.asia:8081/Onet.svc/Group/FetchConnection");
         /*name.add("Kajal Patadia");
         designation.add("Software Developer");
@@ -125,10 +132,10 @@ public class GroupDetailActivity extends AppCompatActivity
         imgprofile.add("");
 */
 
-        groupDetailAdapter = new GroupDetailAdapter(getApplicationContext(), R.layout.group_detail_items,
+      /*  groupDetailAdapter = new GroupDetailAdapter(getApplicationContext(), R.layout.group_detail_items,
                 name,designation,company,website,email,phone,mobile,address,imgprofile);
         listView.setAdapter(groupDetailAdapter);
-        groupDetailAdapter.notifyDataSetChanged();
+        groupDetailAdapter.notifyDataSetChanged();*/
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,19 +213,18 @@ public class GroupDetailActivity extends AppCompatActivity
 
     }
 
-    private class HttpAsyncTaskGroup extends AsyncTask<String, Void, String> {
+    private class HttpAsyncTaskGroup extends AsyncTask<String, Void, String>
+    {
         ProgressDialog dialog;
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             super.onPreExecute();
             dialog = new ProgressDialog(GroupDetailActivity.this);
             dialog.setMessage("Fetching Connections...");
-            //dialog.setTitle("Saving Reminder");
             dialog.show();
             dialog.setCancelable(false);
-            //  nfcModel = new ArrayList<>();
-            //   allTags = new ArrayList<>();
         }
 
         @Override
@@ -228,65 +234,52 @@ public class GroupDetailActivity extends AppCompatActivity
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(String result)
+        {
             dialog.dismiss();
-            try {
-                if (result != null) {
+            try
+            {
+                if (result != null)
+                {
                     JSONObject jsonObject = new JSONObject(result);
                     JSONArray jsonArray = jsonObject.getJSONArray("connection");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
-                  /*  for (int i = 0; i < jsonArray.length(); i++)
+                    for (int i = 0; i < jsonArray.length(); i++)
                     {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
-                        ProfileModel nfcModelTag = new ProfileModel();
-                        nfcModelTag.setUserID(object.getString("UserID"));
-                        nfcModelTag.setFirstName(object.getString("FirstName"));
-                        nfcModelTag.setLastName(object.getString("LastName"));
-                        nfcModelTag.setUserName(object.getString("UserName"));
-                        nfcModelTag.setProfileID(object.getString("ProfileID"));
-                        nfcModelTag.setCard_Front(object.getString("Card_Front"));
-                        nfcModelTag.setCard_Back(object.getString("Card_Back"));
-                        nfcModelTag.setUserPhoto(object.getString("UserPhoto"));
-                        nfcModelTag.setDesignation(object.getString("Designation"));
-                        nfcModelTag.setCompanyName(object.getString("CompanyName"));
-                        nfcModelTag.setCompany_Profile(object.getString("Company_Profile"));
-                        nfcModelTag.setPhone1(object.getString("Phone1"));
-                        nfcModelTag.setPhone2(object.getString("Phone2"));
-                        nfcModelTag.setMobile1(object.getString("Mobile1"));
-                        nfcModelTag.setMobile2(object.getString("Mobile2"));
-                        nfcModelTag.setFax1(object.getString("Fax1"));
-                        nfcModelTag.setFax2(object.getString("Fax2"));
-                        nfcModelTag.setEmail1(object.getString("Email1"));
-                        nfcModelTag.setEmail2(object.getString("Email2"));
-                        nfcModelTag.setAddress1(object.getString("Address1"));
-                        nfcModelTag.setAddress2(object.getString("Address2"));
-                        nfcModelTag.setAddress3(object.getString("Address3"));
-                        nfcModelTag.setAddress4(object.getString("Address4"));
-                        nfcModelTag.setCity(object.getString("City"));
-                        nfcModelTag.setState(object.getString("State"));
-                        nfcModelTag.setCountry(object.getString("Country"));
-                        nfcModelTag.setPostalcode(object.getString("Postalcode"));
-                        nfcModelTag.setWebsite(object.getString("Website"));
-                        nfcModelTag.setFacebook(object.getString("Facebook"));
-                        nfcModelTag.setTwitter(object.getString("Twitter"));
-                        nfcModelTag.setGoogle(object.getString("Google"));
-                        nfcModelTag.setLinkedin(object.getString("Linkedin"));
-                        nfcModelTag.setYoutube(object.getString("Youtube"));
-                        nfcModelTag.setAttachment_FileName(object.getString("Attachment_FileName"));
-                        allTags.add(nfcModelTag);
-                        //  GetData(getContext());
+                        GroupDetailModel groupDetailModel = new GroupDetailModel();
+                        groupDetailModel.setFirstname(object.getString("FirstName"));
+                        groupDetailModel.setLastname(object.getString("LastName"));
+                        groupDetailModel.setDesignation(object.getString("Designation"));
+                        groupDetailModel.setCompany(object.getString("CompanyName"));
+                        groupDetailModel.setEmail(object.getString("UserName"));
+                        groupDetailModel.setWebsite(object.getString("Website"));
+                        groupDetailModel.setMobile(object.getString("Phone"));
+                        groupDetailModel.setAddress1(object.getString("Address1"));
+                        groupDetailModel.setAddress2(object.getString("Address2"));
+                        groupDetailModel.setAddress3(object.getString("Address3"));
+                        groupDetailModel.setAddress4(object.getString("Address4"));
+                        groupDetailModel.setCity(object.getString("City"));
+                        groupDetailModel.setState(object.getString("State"));
+                        groupDetailModel.setCountry(object.getString("Country"));
+                        groupDetailModel.setPostalcode(object.getString("Postalcode"));
+                        groupDetailModel.setImgProfile(object.getString("UserPhoto"));
+                        groupDetailModelArrayList.add(groupDetailModel);
                     }
 
-                    groupsItemsAdapter = new GroupsItemsAdapter(getApplicationContext(), allTaggs);
-                    listView.setAdapter(groupsItemsAdapter);
-                    groupsItemsAdapter.notifyDataSetChanged();
-*/
+                    groupDetailAdapter = new GroupDetailAdapter(getApplicationContext(), R.layout.group_detail_items, groupDetailModelArrayList);
+                    listView.setAdapter(groupDetailAdapter);
+                    groupDetailAdapter.notifyDataSetChanged();
+
                     // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
-                } else {
+                }
+                else
+                {
                     Toast.makeText(getApplicationContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
                 }
-            } catch (JSONException e) {
+            }
+            catch (JSONException e)
+            {
                 e.printStackTrace();
             }
         }

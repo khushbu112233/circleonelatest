@@ -44,7 +44,8 @@ public class StripeActivity extends AppCompatActivity
         {
             stripe = new Stripe("pk_test_6fZCC6Gu2kwYLUQxJhGte65l");
         }
-        catch (AuthenticationException e) {
+        catch (AuthenticationException e)
+        {
             e.printStackTrace();
         }
     }
