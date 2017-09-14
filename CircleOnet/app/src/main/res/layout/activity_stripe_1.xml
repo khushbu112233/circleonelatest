@@ -17,8 +17,8 @@
         <ImageView
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:src="@drawable/circle8_symbol"
             android:layout_weight="0.5"
+            android:src="@drawable/circle8_symbol"
             android:layout_gravity="center_vertical|right"/>
         <TextView
             android:layout_width="wrap_content"
@@ -30,6 +30,7 @@
             android:layout_weight="0.5" />
     </LinearLayout>
 
+<!--
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,152 +46,334 @@
          android:layout_width="match_parent"
          android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_marginTop="25dp">
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Enter Card Number"
-            android:textSize="16dp"
-            android:textColor="@color/colorPrimary"/>
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/cardNumber"
-            android:hint="4242 4242 4242 4242"
-            android:inputType="number"
-            android:maxLength="12"
-            android:textColor="@color/colorPrimary"
-            android:textColorHint="@color/colorPrimary"
-            android:backgroundTint="@color/colorPrimary"
-            android:paddingBottom="15dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:layout_marginTop="10dp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="20dp">
+            android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_weight="0.5">
+            android:gravity="center"
+            android:layout_marginTop="25dp">
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Enter Expire Date"
-                android:textColor="@color/colorPrimary"
-                android:textAlignment="center"
-                android:textSize="16dp"/>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="10dp">
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:id="@+id/month"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:text="12"
-                    android:maxLength="2"
-                    android:textColor="@color/colorPrimary"
-                    android:textColorHint="@color/colorPrimary"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="10dp"
-                    android:backgroundTint="@color/colorPrimary"
-                    android:layout_centerVertical="true"/>
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:id="@+id/year"
-                    android:hint="19"
-                    android:maxLength="2"
-                    android:textColor="@color/colorPrimary"
-                    android:textColorHint="@color/colorPrimary"
-                    android:layout_toRightOf="@+id/textView"
-                    android:layout_toEndOf="@+id/textView"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="10dp"
-                    android:backgroundTint="@color/colorPrimary"
-                    android:layout_centerVertical="true"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="/"
-                    android:id="@+id/textView"
-                    android:textColor="@color/colorPrimary"
-                    android:layout_alignBottom="@+id/month"
-                    android:layout_toRightOf="@+id/month"
-                    android:layout_toEndOf="@+id/month"
-                    android:layout_marginLeft="3dp"
-                    android:layout_marginRight="3dp"
-                    android:layout_centerVertical="true"/>
-            </RelativeLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="0.5">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Enter CVV "
+                android:text="Enter Card Number"
                 android:textSize="16dp"
-                android:textColor="@color/colorPrimary"
-                android:textAlignment="center"/>
+                android:textColor="@color/colorPrimary"/>
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/cvc"
-                android:hint="123"
+                android:id="@+id/cardNumber"
+                android:hint="4242 4242 4242 4242"
                 android:inputType="number"
-                android:maxLength="3"
+                android:maxLength="12"
                 android:textColor="@color/colorPrimary"
                 android:textColorHint="@color/colorPrimary"
-                android:layout_below="@+id/cardNumber"
-                android:layout_toRightOf="@+id/year"
-                android:layout_toEndOf="@+id/year"
-                android:layout_gravity="center"
                 android:backgroundTint="@color/colorPrimary"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="10dp"
+                android:paddingBottom="15dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:layout_marginTop="10dp"/>
         </LinearLayout>
-    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="0.5">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Enter Expire Date"
+                    android:textColor="@color/colorPrimary"
+                    android:textAlignment="center"
+                    android:textSize="16dp"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp">
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:id="@+id/month"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:text="12"
+                        android:maxLength="2"
+                        android:textColor="@color/colorPrimary"
+                        android:textColorHint="@color/colorPrimary"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:layout_centerVertical="true"/>
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:id="@+id/year"
+                        android:hint="19"
+                        android:maxLength="2"
+                        android:textColor="@color/colorPrimary"
+                        android:textColorHint="@color/colorPrimary"
+                        android:layout_toRightOf="@+id/textView"
+                        android:layout_toEndOf="@+id/textView"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:layout_centerVertical="true"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="/"
+                        android:id="@+id/textView"
+                        android:textColor="@color/colorPrimary"
+                        android:layout_alignBottom="@+id/month"
+                        android:layout_toRightOf="@+id/month"
+                        android:layout_toEndOf="@+id/month"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="0.5">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Enter CVV "
+                    android:textSize="16dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textAlignment="center"/>
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cvc"
+                    android:hint="123"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:textColor="@color/colorPrimary"
+                    android:textColorHint="@color/colorPrimary"
+                    android:layout_below="@+id/cardNumber"
+                    android:layout_toRightOf="@+id/year"
+                    android:layout_toEndOf="@+id/year"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_marginTop="10dp"/>
+            </LinearLayout>
+        </LinearLayout>
 
        </LinearLayout>
      </FrameLayout>
+
     </android.support.v7.widget.CardView>
+-->
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="0dp"
+        android:paddingBottom="0dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="10dp">
+
+    <FrameLayout
+        android:id="@+id/flCardLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:tag="sticky"
+        app:layout_scrollFlags="scroll|snap">
+
+        <ImageView
+            android:alpha="1"
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="210dp"
+            android:src="@drawable/default_card"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="210dp"
+            android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="25dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enter Card Number"
+                android:textSize="18dp"
+                android:textColor="@color/white"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cardNumber"
+                android:hint="4242 4242 4242 4242"
+                android:inputType="number"
+                android:maxLength="12"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:backgroundTint="@color/white"
+                android:paddingBottom="15dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="0.5">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Enter Expire Date"
+                    android:textColor="@color/white"
+                    android:textAlignment="center"
+                    android:textSize="16dp"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp">
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:id="@+id/month"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:text="12"
+                        android:maxLength="2"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp"
+                        android:backgroundTint="@color/white"
+                        android:layout_centerVertical="true"/>
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:id="@+id/year"
+                        android:hint="19"
+                        android:maxLength="2"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        android:layout_toRightOf="@+id/textView"
+                        android:layout_toEndOf="@+id/textView"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp"
+                        android:backgroundTint="@color/white"
+                        android:layout_centerVertical="true"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="/"
+                        android:id="@+id/textView"
+                        android:textColor="@color/white"
+                        android:layout_alignBottom="@+id/month"
+                        android:layout_toRightOf="@+id/month"
+                        android:layout_toEndOf="@+id/month"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="0.5">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Enter CVV "
+                    android:textSize="16dp"
+                    android:textColor="@color/white"
+                    android:textAlignment="center"/>
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cvc"
+                    android:hint="123"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:layout_below="@+id/cardNumber"
+                    android:layout_toRightOf="@+id/year"
+                    android:layout_toEndOf="@+id/year"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/white"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_marginTop="10dp"/>
+            </LinearLayout>
+        </LinearLayout>
+        </LinearLayout>
+
+    </FrameLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:paddingBottom="0dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        app:cardCornerRadius="3dp"
+        app:cardElevation="5dp">
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:text="Pay"
         android:textSize="20dp"
         android:textColor="@color/white"
@@ -200,10 +383,12 @@
         android:layout_alignParentEnd="true"
         android:onClick="submitCard"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="00dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="0dp"
         android:background="@color/colorPrimary"/>
+
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>
