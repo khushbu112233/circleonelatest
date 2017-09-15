@@ -168,11 +168,20 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         Image = intent.getStringExtra("Image");
 
         etEmail.setText(Email);
-        String kept = UserName.substring( 0, UserName.indexOf(" "));
-        String remainder = UserName.substring(UserName.indexOf(" ")+1, UserName.length());
+        try
+        {
+            String kept = UserName.substring( 0, UserName.indexOf(" "));
+            String remainder = UserName.substring(UserName.indexOf(" ")+1, UserName.length());
+            etFirstName.setText(kept);
+            etLastName.setText(remainder);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
         //  etUserName.setText(UserName);
-        etFirstName.setText(kept);
-        etLastName.setText(remainder);
+
         Uri targetUri = Uri.parse(Image);
         try
         {
