@@ -112,7 +112,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     ImageView imgDone, imgAdd, imgFb, imgLinkedin, imgTwitter, imgGoogle, imgYoutube;
     AutoCompleteTextView autoCompleteCompany, autoCompleteDesignation, autoCompleteIndustry;
     //String[] languages={"Android ","java","IOS","SQL","JDBC","Web services"};
-    ArrayList<String> company, designation, industry, designation_id;
+    ArrayList<String> company, designation, industry, designation_id, company_id, industry_id;
     String association_ID, association_NAME ;
     String profileId = "", Card_Front = "", Card_Back = "", FirstName = "", LastName = "", UserPhoto = "", Phone1 = "", Phone2 = "", Mobile1 = "", Mobile2 = "",
             Fax1 = "", Fax2 = "", Email1 = "", Email2 = "", Youtube = "",
@@ -451,6 +451,32 @@ public class EditProfileActivity extends AppCompatActivity implements
 
                 int selectedPos = designation.indexOf((String) autoCompleteDesignation.getText().toString());
                 designationID = designation_id.get(selectedPos);
+                //s1.get(position) is name selected from autocompletetextview
+                // now you can show the value on textview.
+            }
+        });
+
+        autoCompleteCompany.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+                                    long arg3) {
+
+                int selectedPos = company.indexOf((String) autoCompleteCompany.getText().toString());
+                companyID = company_id.get(selectedPos);
+                //s1.get(position) is name selected from autocompletetextview
+                // now you can show the value on textview.
+            }
+        });
+
+        autoCompleteIndustry.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+                                    long arg3) {
+
+                int selectedPos = industry.indexOf((String) autoCompleteIndustry.getText().toString());
+                industryID = industry_id.get(selectedPos);
                 //s1.get(position) is name selected from autocompletetextview
                 // now you can show the value on textview.
             }
@@ -2015,6 +2041,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                 e.printStackTrace();
             }
         }
+
     }
 
     private class HttpAsyncTaskDesignation extends AsyncTask<String, Void, String> {
@@ -2108,12 +2135,14 @@ public class EditProfileActivity extends AppCompatActivity implements
                     JSONArray jsonArray = jsonObject.getJSONArray("company");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
                     company = new ArrayList<>();
+                    company_id = new ArrayList<>();
                     for (int i = 0; i < jsonArray.length(); i++) {
 
                         JSONObject object = jsonArray.getJSONObject(i);
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
                         company.add(object.getString("CompanyName"));
-                        companyID = object.getString("CompanyID");
+                        company_id.add(object.getString("CompanyID"));
+                       // companyID = object.getString("CompanyID");
                     }
                 } else {
                     // Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
@@ -2298,12 +2327,14 @@ public class EditProfileActivity extends AppCompatActivity implements
                     JSONArray jsonArray = jsonObject.getJSONArray("industry");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
                     industry = new ArrayList<>();
+                    industry_id = new ArrayList<>();
                     for (int i = 0; i < jsonArray.length(); i++)
                     {
                         JSONObject object = jsonArray.getJSONObject(i);
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
                         industry.add(object.getString("IndustryName"));
-                        industryID = object.getString("IndustryID");
+                        industry_id.add(object.getString("IndustryID"));
+                        //industryID = object.getString("IndustryID");
                     }
                 }
                 else
