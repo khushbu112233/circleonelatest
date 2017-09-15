@@ -591,7 +591,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
-    public String BitMapToString(Bitmap bitmap){
+    public static String BitMapToString(Bitmap bitmap){
         ByteArrayOutputStream ByteStream=new  ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG,100, ByteStream);
         byte [] b=ByteStream.toByteArray();
@@ -674,6 +674,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             civProfilePic.setImageBitmap(rotatedBitmap);
                             final_ImgBase64 = BitMapToString(rotatedBitmap);
                             Upload();
+                            break;
                     }
 
                 }

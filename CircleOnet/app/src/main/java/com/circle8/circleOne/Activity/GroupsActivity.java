@@ -1,9 +1,17 @@
 package com.circle8.circleOne.Activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +32,7 @@ import com.circle8.circleOne.Adapter.GroupsItemsAdapter;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.GroupModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -35,6 +44,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -43,6 +54,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.circle8.circleOne.Activity.RegisterActivity.BitMapToString;
+import static com.circle8.circleOne.Activity.RegisterActivity.ConvertBitmapToString;
+import static com.circle8.circleOne.Activity.RegisterActivity.rotateImage;
 
 public class GroupsActivity extends AppCompatActivity
 {
@@ -57,6 +72,12 @@ public class GroupsActivity extends AppCompatActivity
     RelativeLayout llBottom;
     String GroupName, GroupDesc;
     private String GroupImage = "";
+    CharSequence[] items ;
+    private String userChoosenTask ;
+    private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
+    String image;
+    CircleImageView ivGroupImage;
+    String final_ImgBase64 = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -95,12 +116,12 @@ public class GroupsActivity extends AppCompatActivity
                 LinearLayout layout = new LinearLayout(GroupsActivity.this);
                 layout.setOrientation(LinearLayout.VERTICAL);
 
-                final CircleImageView ivGroupImage = new CircleImageView(GroupsActivity.this);
+                ivGroupImage = new CircleImageView(GroupsActivity.this);
                 ivGroupImage.setBorderColor(getResources().getColor(R.color.colorPrimary));
                 ivGroupImage.setBorderWidth(1);
                 ivGroupImage.setImageResource(R.drawable.usr_1);
-                int width=150;
-                int height=150;
+                int width=200;
+                int height=200;
                 LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(width,height);
                 parms.gravity = Gravity.CENTER;
                 ivGroupImage.setLayoutParams(parms);
@@ -114,11 +135,19 @@ public class GroupsActivity extends AppCompatActivity
                 descriptionBox.setHint("Description");
                 layout.addView(descriptionBox);
 
+
+                ivGroupImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        selectImage();
+                    }
+                });
                 //   dialog.setView(layout);
 
 
 //text_entry is an Layout XML file containing two text field to display in alert dialog
                 final AlertDialog.Builder alert = new AlertDialog.Builder(GroupsActivity.this);
+                alert.setCancelable(false);
                 alert.setTitle("Create Group").setView(layout).setPositiveButton("Create",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
@@ -126,13 +155,17 @@ public class GroupsActivity extends AppCompatActivity
                                 GroupDesc = descriptionBox.getText().toString();
 
                                 if (GroupName.equals("")){
-                                    Toast.makeText(getApplicationContext(), "Enetr Group Name", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Enter Group Name", Toast.LENGTH_LONG).show();
                                 }
                                 else if (GroupDesc.equals("")){
-                                    Toast.makeText(getApplicationContext(), "Enetr Group Description", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Enter Group Description", Toast.LENGTH_LONG).show();
+                                }
+                                else if (final_ImgBase64.equals("")){
+                                    Toast.makeText(getApplicationContext(), "Upload Group Image", Toast.LENGTH_LONG).show();
                                 }
                                 else {
-                                    new HttpAsyncTaskGroupCreate().execute("http://circle8.asia:8081/Onet.svc/Group/Create");
+                                    new HttpAsyncTaskPhotoUpload().execute("http://circle8.asia:8081/Onet.svc/ImgUpload");
+                                   // new HttpAsyncTaskGroupCreate().execute("http://circle8.asia:8081/Onet.svc/Group/Create");
                                 }
                             }
                         }).setNegativeButton("Cancel",
@@ -142,7 +175,7 @@ public class GroupsActivity extends AppCompatActivity
      /*
      * User clicked cancel so do some stuff
      */
-                                dialog.cancel();
+                                dialog.dismiss();
 
                             }
                         });
@@ -161,6 +194,353 @@ public class GroupsActivity extends AppCompatActivity
             }
         });
     }
+
+    public  String POST1(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("ImgBase64", final_ImgBase64 );
+            jsonObject.accumulate("classification", "userphoto" );
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    private class HttpAsyncTaskPhotoUpload extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(GroupsActivity.this);
+            dialog.setMessage("Uploading...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            return POST1(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+            dialog.dismiss();
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            try {
+                if (result != null)
+                {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String ImgName = jsonObject.getString("ImgName").toString();
+                    String success = jsonObject.getString("success").toString();
+
+                    if (success.equals("1") && ImgName!=null) {
+                        /*Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(intent);
+                        finish();*/
+                        //   Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
+                        GroupImage = ImgName;
+                        new HttpAsyncTaskGroupCreate().execute("http://circle8.asia:8081/Onet.svc/Group/Create");
+
+                    } else {
+                        Toast.makeText(getBaseContext(), "Error While Uploading Image..", Toast.LENGTH_LONG).show();
+                    }
+                }
+                else {
+                    Toast.makeText(getBaseContext(), "Not able to Register..", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void selectImage()
+    {
+        items = new CharSequence[]{"Take Photo", "Choose from Library", "Cancel"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(GroupsActivity.this);
+        builder.setTitle("Add Photo!");
+        builder.setItems(items, new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                boolean result = Utility.checkStoragePermission(GroupsActivity.this);
+                boolean result1 = Utility.checkCameraPermission(GroupsActivity.this);
+                if (items[item].equals("Take Photo")) {
+                    userChoosenTask ="Take Photo";
+                    if(result1)
+//                        activeTakePhoto();
+                        cameraIntent();
+
+                } else if (items[item].equals("Choose from Library")) {
+                    userChoosenTask ="Choose from Library";
+                    if(result)
+//                        activeGallery();
+                        galleryIntent();
+
+
+                } else if (items[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    private void galleryIntent()
+    {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select File"),SELECT_FILE);
+    }
+
+    private void cameraIntent()
+    {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, REQUEST_CAMERA);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK)
+        {
+            if (requestCode == SELECT_FILE)
+                onSelectFromGalleryResult(data);
+            else if (requestCode == REQUEST_CAMERA)
+                onCaptureImageResult(data);
+        }
+    }
+
+    private void onCaptureImageResult(Intent data) {
+        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+
+        final_ImgBase64 = BitMapToString(thumbnail);
+      //  Upload();
+        ivGroupImage.setImageBitmap(thumbnail);
+    }
+
+    public String getPath(Uri uri)
+    {
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
+
+    private void onSelectFromGalleryResult(Intent data)
+    {
+        Uri selectedImageUri = data.getData();
+//        imagepath = getPath(selectedImageUri);
+
+        Bitmap bm = null;
+        if (data != null)
+        {
+            Uri targetUri = data.getData();
+
+            String photoPath = getPath(targetUri);
+
+            ExifInterface ei = null;
+            Bitmap bitmap = null;
+            Bitmap rotatedBitmap = null;
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            {
+                try
+                {
+                    bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
+
+                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 150, 150, false);
+                    image = ConvertBitmapToString(resizedBitmap);
+                    final_ImgBase64 = BitMapToString(resizedBitmap);
+                    // final_ImgBase64 = resizeBase64Image(s);
+                    Log.d("base64string ", final_ImgBase64);
+//                  Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
+                   // Upload();
+                    ivGroupImage.setImageBitmap(resizedBitmap);
+                }
+                catch (FileNotFoundException e)
+                {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+            else
+            {
+                try
+                {
+                    ei = new ExifInterface(photoPath);
+                    int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+
+                    bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
+
+                    switch (orientation)
+                    {
+                        case ExifInterface.ORIENTATION_ROTATE_90:
+                            rotatedBitmap = rotateImage(bitmap, 90);
+                            ivGroupImage.setImageBitmap(rotatedBitmap);
+                            final_ImgBase64 = BitMapToString(rotatedBitmap);
+                           // Upload();
+                            break;
+
+                        case ExifInterface.ORIENTATION_ROTATE_180:
+                            rotatedBitmap = rotateImage(bitmap, 180);
+                            ivGroupImage.setImageBitmap(rotatedBitmap);
+                            final_ImgBase64 = BitMapToString(rotatedBitmap);
+                           // Upload();
+                            break;
+
+                        case ExifInterface.ORIENTATION_ROTATE_270:
+                            rotatedBitmap = rotateImage(bitmap, 270);
+                            ivGroupImage.setImageBitmap(rotatedBitmap);
+                            final_ImgBase64 = BitMapToString(rotatedBitmap);
+                          //  Upload();
+                            break;
+
+                        case ExifInterface.ORIENTATION_NORMAL:
+                        default:
+                            rotatedBitmap = bitmap;
+                            ivGroupImage.setImageBitmap(rotatedBitmap);
+                            final_ImgBase64 = BitMapToString(rotatedBitmap);
+                          //  Upload();
+                            break;
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+
+           /* try
+            {
+                ei = new ExifInterface(photoPath);
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }*/
+
+//            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+
+//            Bitmap bitmap = null;
+//            Bitmap rotatedBitmap = null;
+
+           /* try
+            {
+                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
+
+                Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 150, 150, false);
+//                image = ConvertBitmapToString(resizedBitmap);
+//                final_ImgBase64 = BitMapToString(resizedBitmap);
+               // final_ImgBase64 = resizeBase64Image(s);
+                Log.d("base64string ", final_ImgBase64);
+//                Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
+//                Upload();
+//                civProfilePic.setImageBitmap(resizedBitmap);
+            }
+            catch (FileNotFoundException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }*/
+
+/*
+            switch (orientation)
+            {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    rotatedBitmap = rotateImage(bitmap, 90);
+                    civProfilePic.setImageBitmap(rotatedBitmap);
+                    final_ImgBase64 = BitMapToString(rotatedBitmap);
+                    Upload();
+                    break;
+
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    rotatedBitmap = rotateImage(bitmap, 180);
+                    civProfilePic.setImageBitmap(rotatedBitmap);
+                    final_ImgBase64 = BitMapToString(rotatedBitmap);
+                    Upload();
+                    break;
+
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    rotatedBitmap = rotateImage(bitmap, 270);
+                    civProfilePic.setImageBitmap(rotatedBitmap);
+                    final_ImgBase64 = BitMapToString(rotatedBitmap);
+                    Upload();
+                    break;
+
+                case ExifInterface.ORIENTATION_NORMAL:
+                default:
+                    rotatedBitmap = bitmap;
+                    civProfilePic.setImageBitmap(rotatedBitmap);
+                    final_ImgBase64 = BitMapToString(rotatedBitmap);
+                    Upload();
+            }
+*/
+
+        }
+//        BmToString(bm);
+    }
+
 
     public String POST(String url) {
         InputStream inputStream = null;
