@@ -111,9 +111,9 @@ public class ContactsImportActivity extends AppCompatActivity {
 
                     //listView.getAdapter().getItem((int)listView.getCheckItemIds()[i]);
                     String num = arrayListPhoneNumber.get(arrayListPhoneName.indexOf(listView.getAdapter().getItem((int)listView.getCheckItemIds()[i]).toString()));
-
-                    Toast.makeText(getApplicationContext(), num, Toast.LENGTH_LONG).show();
-                    Toast.makeText(getApplicationContext(), listView.getAdapter().getItem((int)listView.getCheckItemIds()[i]).toString(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Request has been sent", Toast.LENGTH_LONG).show();
+                  //  Toast.makeText(getApplicationContext(), num, Toast.LENGTH_LONG).show();
+                   // Toast.makeText(getApplicationContext(), listView.getAdapter().getItem((int)listView.getCheckItemIds()[i]).toString(), Toast.LENGTH_LONG).show();
 
                     startActivity(new Intent(ContactsImportActivity.this, CardsActivity.class));
                     finish();

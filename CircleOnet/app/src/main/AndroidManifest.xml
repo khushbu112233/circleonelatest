@@ -126,8 +126,7 @@
         <activity
             android:name=".Walkthrough.HelpActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionbar">
-        </activity>
+            android:theme="@style/NoActionbar"></activity>
         <activity
             android:name=".Activity.AddQRActivity"
             android:screenOrientation="portrait" />
@@ -204,8 +203,12 @@
         <activity
             android:name=".Activity.StripeActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activity.ContactsImportActivity"
-            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".Activity.ContactsImportActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Activity.ManageMyProfile"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionbar"></activity>
     </application>
 
 </manifest>

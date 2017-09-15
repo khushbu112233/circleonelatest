@@ -489,12 +489,32 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         LinearLayout lnrMyAccount = (LinearLayout)dialog.findViewById(R.id.lnrMyAcc);
         LinearLayout lnrLogout = (LinearLayout) dialog.findViewById(R.id.lnrLogout);
         LinearLayout lnrAddQR = (LinearLayout) dialog.findViewById(R.id.lnrAddQR);
+        LinearLayout lnrManageProfile = (LinearLayout) dialog.findViewById(R.id.lnrManageProfile);
         LinearLayout lnrGroup = (LinearLayout) dialog.findViewById(R.id.lnrGroup);
         LinearLayout lnrNotification = (LinearLayout) dialog.findViewById(R.id.lnrNotification);
         LinearLayout lnrRequestNewCard = (LinearLayout)dialog.findViewById(R.id.lnrRequestNewCard);
         LinearLayout lnrContactUs = (LinearLayout)dialog.findViewById(R.id.lnrContactUs);
         LinearLayout lnrSubscription = (LinearLayout)dialog.findViewById(R.id.lnrSubscription);
         LinearLayout lnrHelp = (LinearLayout)dialog.findViewById(R.id.lnrHelp);
+        LinearLayout lnrSyncContacts = (LinearLayout) dialog.findViewById(R.id.lnrSyncContacts);
+
+        lnrSyncContacts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ContactsImportActivity.class);
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        });
+
+        lnrManageProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ManageMyProfile.class);
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        });
 
         lnrMyAccount.setOnClickListener(new View.OnClickListener() {
             @Override

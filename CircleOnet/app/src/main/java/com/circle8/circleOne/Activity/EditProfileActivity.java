@@ -309,13 +309,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
 
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 3);
-                startActivity(go);
                 finish();
             }
         });
