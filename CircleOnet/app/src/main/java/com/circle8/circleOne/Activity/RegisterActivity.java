@@ -119,6 +119,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     String encodedImageData, register_img;
     String UserID = "", Facebook = "", Google = "", Linkedin = "", Twitter = "", UserName = "", Email = "", Image = "";
 
+    int motionLength ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -185,7 +187,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         Uri targetUri = Uri.parse(Image);
         try
         {
-            if(!targetUri.equals(""))
+            if(!Image.equals(""))
             {
                 Glide.with(getApplicationContext())
                         .load(targetUri)
@@ -197,7 +199,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                 super.setResource(resource);
                                 final_ImgBase64 = BitMapToString(resource);
                                 // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
-
                             }
                         });
             }
@@ -245,6 +246,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         ivConnect.setOnClickListener(this);
         lnrRegister.setOnClickListener(this);
         civProfilePic.setOnClickListener(this);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+        {
+            motionLength = 250 ;
+        }
+        else
+        {
+            motionLength = 185 ;
+        }
     }
 
 
@@ -280,7 +290,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View v)
+    {
         if (v == imgBack) {
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
@@ -288,7 +299,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
         if (v == ivMale)
         {
-            TranslateAnimation slide1 = new TranslateAnimation(0, -185, 0, 0);
+            TranslateAnimation slide1 = new TranslateAnimation(0, -(motionLength), 0, 0);
             slide1.setDuration(1000);
             ivConnect.startAnimation(slide1);
 
@@ -309,7 +320,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             txtGender.setText("Gender: Male");
         }
         if (v == ivFemale) {
-            TranslateAnimation slide = new TranslateAnimation(0, 185, 0, 0);
+            TranslateAnimation slide = new TranslateAnimation(0, motionLength, 0, 0);
             slide.setDuration(1000);
             ivConnect.startAnimation(slide);
 
