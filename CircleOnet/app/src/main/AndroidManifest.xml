@@ -126,7 +126,8 @@
         <activity
             android:name=".Walkthrough.HelpActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionbar" />
+            android:theme="@style/NoActionbar">
+        </activity>
         <activity
             android:name=".Activity.AddQRActivity"
             android:screenOrientation="portrait" />
@@ -162,35 +163,49 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.MyAccountActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.WriteTestimonialActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.NewCardRequestActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.NewCardRequestDetailActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.NewCardRequestActivity1"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.ContactUsActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.GroupDetailActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.SubscriptionActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.Help2Activity"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.GroupsActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
-        <activity android:name=".Activity.StripeActivity"  android:theme="@style/NoActionbar" ></activity>
+        <activity
+            android:name=".Activity.StripeActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Activity.ContactsImportActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

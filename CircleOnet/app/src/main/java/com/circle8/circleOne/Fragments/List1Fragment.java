@@ -182,6 +182,7 @@ public class List1Fragment extends Fragment
         // new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 //        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
 
+        pageno = 1;
         callFirst();
 
         recyclerView1.addOnScrollListener(scrollListener);
@@ -387,6 +388,7 @@ public class List1Fragment extends Fragment
     {
        // tvNoCard.setVisibility(View.GONE);
         nfcModel.clear();
+        pageno = 1;
         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
     }
 

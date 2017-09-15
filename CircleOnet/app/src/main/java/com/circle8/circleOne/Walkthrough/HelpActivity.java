@@ -2,14 +2,17 @@ package com.circle8.circleOne.Walkthrough;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Build;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +23,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.circle8.circleOne.Activity.CardsActivity;
+import com.circle8.circleOne.Activity.ContactsImportActivity;
 import com.circle8.circleOne.R;
+
+import java.util.ArrayList;
 
 
 public class HelpActivity extends AppCompatActivity {
@@ -88,45 +94,6 @@ public class HelpActivity extends AppCompatActivity {
             }
         });
 
-       /* addSlide(AppIntroFragment.newInstance("", "", R.drawable.walkthrough_1, R.drawable.walkthrough_1));
-
-        addSlide(AppIntroFragment.newInstance("", "", R.drawable.walkthrough_2, R.drawable.walkthrough_1));
-
-        addSlide(AppIntroFragment.newInstance("", "", R.drawable.walkthrough_3, R.drawable.walkthrough_1));
-
-        addSlide(AppIntroFragment.newInstance("", "", R.drawable.walkthrough_4, R.drawable.walkthrough_1));
-
-        addSlide(AppIntroFragment.newInstance("", "", R.drawable.walkthrough_5, R.drawable.walkthrough_1));
-*/
-
-    /*    Button signup_btn = (Button) findViewById(R.id.sign_up_btn);
-        signup_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), CardsActivity.class);
-                startActivity(i);
-                finish();
-            }
-        });
-        Button login_btn = (Button) findViewById(R.id.login_btn);
-        login_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), CardsActivity.class);
-                startActivity(i);
-                finish();
-            }
-        });
-
-        //Set the pager with an adapter
-        mPager = (ViewPager) findViewById(R.id.tutorial_pager);
-        mPager.setOffscreenPageLimit(3); // Helps to keep fragment alive, otherwise I will have to load again images
-        mPagerAdapter = new TutorialPagerAdapter(getSupportFragmentManager());
-        mPager.setAdapter(mPagerAdapter);
-
-        //Bind the title indicator to the adapter
-        CirclePageIndicator titleIndicator = (CirclePageIndicator) findViewById(R.id.circle_indicator);
-        titleIndicator.setViewPager(mPager);*/
     }
 
     private void changeStatusBarColor() {
@@ -199,7 +166,8 @@ public class HelpActivity extends AppCompatActivity {
     }
 
     private void launchHomeScreen() {
-        startActivity(new Intent(HelpActivity.this, CardsActivity.class));
+
+        startActivity(new Intent(HelpActivity.this, ContactsImportActivity.class));
         finish();
     }
 
