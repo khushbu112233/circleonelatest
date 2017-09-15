@@ -211,7 +211,7 @@ public class GroupsActivity extends AppCompatActivity
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("ImgBase64", final_ImgBase64 );
-            jsonObject.accumulate("classification", "userphoto" );
+            jsonObject.accumulate("classification", "group" );
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
