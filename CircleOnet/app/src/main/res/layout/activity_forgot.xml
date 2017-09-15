@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.circle8.circleOne.Activity.ForgotActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/rlTabBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent" >
+            <ImageView
+                android:id="@+id/imgBack"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+            <TextView
+                android:id="@+id/txtTitle"
+                android:textSize="18dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Forgot Password"
+                android:textColor="@color/white"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/imgLogin"
+            android:layout_width="190dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="120dp"
+            android:layout_weight="1"
+            android:src="@drawable/loginlogo" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="45dp"
+            android:layout_below="@+id/imgLogin">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Enter your email address"
+                android:textSize="20dp"
+                android:layout_marginLeft="45dp"
+                android:layout_marginRight="45dp"
+                android:textColor="@color/colorPrimary"/>
+            <EditText
+                android:imeOptions="actionNext"
+                android:singleLine="true"
+                android:inputType="textWebEmailAddress"
+                android:id="@+id/etEmailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="45dp"
+                android:layout_marginRight="45dp"
+                android:background="@drawable/edit_back"
+                android:hint="circle8@gmail.com"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                android:layout_marginTop="30dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
+
+<!--
+            <EditText
+                android:id="@+id/etEmailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="circle8@gmail.com"
+                android:textColorHint="@color/colorPrimary"
+                android:textColor="@color/colorPrimary"
+                android:backgroundTint="@color/colorPrimary"
+                android:layout_marginTop="30dp"
+                android:paddingBottom="15dp"
+                android:paddingLeft="10dp"/>
+-->
+            <TextView
+                android:id="@+id/tvEmailInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Please input your email"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="45dp"
+                android:layout_marginTop="2dp"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/btnSubmit"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/lnrBottom"
+                android:layout_below="@+id/viewLogin"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="20dp"
+                android:text="Submit"
+                android:textAllCaps="false"
+                android:textSize="16dp" />
+
+<!--
+            <Button
+                android:id="@+id/btnSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:textSize="20dp"
+                android:textColor="@color/white"
+                android:background="@color/colorPrimary"
+                android:layout_marginTop="30dp"/>
+-->
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>
