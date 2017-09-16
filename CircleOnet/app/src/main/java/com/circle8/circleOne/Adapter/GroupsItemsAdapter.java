@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,8 +51,9 @@ public class GroupsItemsAdapter extends BaseAdapter
     TextView tvGroupName, tvPersonName1, tvPersonName2, tvPersonName3 ;
     TextView tvDesignation1, tvDesignation2, tvDesignation3 ;
     TextView tvDetail1, tvDetail2, tvDetail3 ;
-    LinearLayout llOneUser, llSecondUser, llThirdUser ;
+    RelativeLayout llOneUser, llSecondUser, llThirdUser ;
     View Line1, Line2 ;
+    TextView tvMemberInfo ;
 
     LoginSession loginSession;
     String profileId = "", groupID = "";
@@ -93,6 +95,8 @@ public class GroupsItemsAdapter extends BaseAdapter
             HashMap<String, String> user = loginSession.getUserDetails();
             profileId = user.get(LoginSession.KEY_PROFILEID);
 
+            groupID = groupModelsList.get(position).getGroup_ID();
+
             imgGroup = (CircleImageView)row.findViewById(R.id.imgGroup);
             imgProfile1 = (CircleImageView)row.findViewById(R.id.imgProfile1);
             imgProfile2 = (CircleImageView)row.findViewById(R.id.imgProfile2);
@@ -111,12 +115,16 @@ public class GroupsItemsAdapter extends BaseAdapter
             tvDetail2 = (TextView)row.findViewById(R.id.tvPersonDetail2);
             tvDetail3 = (TextView)row.findViewById(R.id.tvPersonDetail3);
 
-            llOneUser = (LinearLayout)row.findViewById(R.id.llOneUser);
-            llSecondUser = (LinearLayout)row.findViewById(R.id.llSecondUser);
-            llThirdUser = (LinearLayout)row.findViewById(R.id.llThirdUser);
+            llOneUser = (RelativeLayout) row.findViewById(R.id.llOneUser);
+            llSecondUser = (RelativeLayout)row.findViewById(R.id.llSecondUser);
+            llThirdUser = (RelativeLayout)row.findViewById(R.id.llThirdUser);
 
             Line1 = (View)row.findViewById(R.id.Line1);
             Line2 = (View)row.findViewById(R.id.Line2);
+
+            tvMemberInfo = (TextView)row.findViewById(R.id.tvMemberInfo);
+
+            //set values here!
 
             tvGroupName.setText(groupModelsList.get(position).getGroup_Name());
 
@@ -129,9 +137,210 @@ public class GroupsItemsAdapter extends BaseAdapter
                 Picasso.with(context).load("http://circle8.asia/App_ImgLib/Group/"+groupModelsList.get(position).getGroup_Photo()).placeholder(R.drawable.usr_1).into(imgGroup);
             }
 
-            groupID = groupModelsList.get(position).getGroup_ID();
+            /*tvPersonName1.setText(groupModelsList.get(position).getFirstName1()+" "+groupModelsList.get(position).getLastName1());
+            tvPersonName2.setText(groupModelsList.get(position).getFirstName2()+" "+groupModelsList.get(position).getLastName2());
+            tvPersonName3.setText(groupModelsList.get(position).getFirstName3()+" "+groupModelsList.get(position).getLastName3());
 
-            new HttpAsyncTaskGroup().execute("http://circle8.asia:8081/Onet.svc/Group/FetchConnection");
+            tvDesignation1.setText(groupModelsList.get(position).getDesignation1());
+            tvDesignation2.setText(groupModelsList.get(position).getDesignation2());
+            tvDesignation3.setText(groupModelsList.get(position).getDesignation3());
+
+            String address1 = groupModelsList.get(position).getAddress1();
+            String company1 = groupModelsList.get(position).getCompanyName1();
+            String website1 = groupModelsList.get(position).getWebsite1();
+            String email1 = groupModelsList.get(position).getEmail1();
+            String phone1 = groupModelsList.get(position).getPhone1();
+            tvDetail1.setText(company1);
+
+            String address2 = groupModelsList.get(position).getAddress2();
+            String company2 = groupModelsList.get(position).getCompanyName2();
+            String website2 = groupModelsList.get(position).getWebsite2();
+            String email2 = groupModelsList.get(position).getEmail2();
+            String phone2 = groupModelsList.get(position).getPhone2();
+            tvDetail2.setText(company2);
+
+            String address3 = groupModelsList.get(position).getAddress3();
+            String company3 = groupModelsList.get(position).getCompanyName3();
+            String website3 = groupModelsList.get(position).getWebsite3();
+            String email3 = groupModelsList.get(position).getEmail3();
+            String phone3 = groupModelsList.get(position).getPhone3();
+            tvDetail3.setText(company3);*/
+
+            if (groupModelsList.get(position).getMemberArrays().equals("3"))
+            {
+                if (groupModelsList.get(position).getProfileId1().isEmpty())
+                {
+                    llOneUser.setVisibility(View.GONE);
+                    Line1.setVisibility(View.GONE);
+                }
+                else
+                {
+                    if (groupModelsList.get(position).getUserPhoto1().isEmpty())
+                    {
+                        imgProfile1.setImageResource(R.drawable.usr_1);
+                    }
+                    else
+                    {
+                        Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/" + groupModelsList.get(position).getUserPhoto1()).into(imgProfile1);
+                    }
+                    tvPersonName1.setText(groupModelsList.get(position).getFirstName1()+" "+groupModelsList.get(position).getLastName1());
+                    tvDesignation1.setText(groupModelsList.get(position).getDesignation1());
+                    String address1 = groupModelsList.get(position).getAddress1();
+                    String company1 = groupModelsList.get(position).getCompanyName1();
+                    String website1 = groupModelsList.get(position).getWebsite1();
+                    String email1 = groupModelsList.get(position).getEmail1();
+                    String phone1 = groupModelsList.get(position).getPhone1();
+                    tvDetail1.setText(company1);
+                }
+                if (groupModelsList.get(position).getProfileId2().isEmpty())
+                {
+                    llSecondUser.setVisibility(View.GONE);
+                    Line2.setVisibility(View.GONE);
+                }
+                else
+                {
+                    if (groupModelsList.get(position).getUserPhoto2().isEmpty())
+                    {
+                        imgProfile2.setImageResource(R.drawable.usr_1);
+                    }
+                    else
+                    {
+                        Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/" + groupModelsList.get(position).getUserPhoto2()).into(imgProfile2);
+                    }
+                    tvPersonName2.setText(groupModelsList.get(position).getFirstName2()+" "+groupModelsList.get(position).getLastName2());
+                    tvDesignation2.setText(groupModelsList.get(position).getDesignation2());
+                    String address2 = groupModelsList.get(position).getAddress2();
+                    String company2 = groupModelsList.get(position).getCompanyName2();
+                    String website2 = groupModelsList.get(position).getWebsite2();
+                    String email2 = groupModelsList.get(position).getEmail2();
+                    String phone2 = groupModelsList.get(position).getPhone2();
+                    tvDetail2.setText(company2);
+                }
+                if (groupModelsList.get(position).getProfileId3().isEmpty())
+                {
+                    llThirdUser.setVisibility(View.GONE);
+                    Line2.setVisibility(View.GONE);
+                }
+                else
+                {
+                    if (groupModelsList.get(position).getUserPhoto3().isEmpty())
+                    {
+                        imgProfile3.setImageResource(R.drawable.usr_1);
+                    }
+                    else
+                    {
+                        Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/" + groupModelsList.get(position).getUserPhoto3()).into(imgProfile3);
+                    }
+                    tvPersonName3.setText(groupModelsList.get(position).getFirstName3()+" "+groupModelsList.get(position).getLastName3());
+                    tvDesignation3.setText(groupModelsList.get(position).getDesignation3());
+                    String address3 = groupModelsList.get(position).getAddress3();
+                    String company3 = groupModelsList.get(position).getCompanyName3();
+                    String website3 = groupModelsList.get(position).getWebsite3();
+                    String email3 = groupModelsList.get(position).getEmail3();
+                    String phone3 = groupModelsList.get(position).getPhone3();
+                    tvDetail3.setText(company3);
+                }
+            }
+            else if (groupModelsList.get(position).getMemberArrays().equals("2"))
+            {
+                if (groupModelsList.get(position).getProfileId1().isEmpty())
+                {
+                    llOneUser.setVisibility(View.GONE);
+                    Line1.setVisibility(View.GONE);
+                }
+                else
+                {
+                    if (groupModelsList.get(position).getUserPhoto1().isEmpty())
+                    {
+                        imgProfile1.setImageResource(R.drawable.usr_1);
+                    }
+                    else
+                    {
+                        Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/" + groupModelsList.get(position).getUserPhoto1()).into(imgProfile1);
+                    }
+                    tvPersonName1.setText(groupModelsList.get(position).getFirstName1()+" "+groupModelsList.get(position).getLastName1());
+                    tvDesignation1.setText(groupModelsList.get(position).getDesignation1());
+                    String address1 = groupModelsList.get(position).getAddress1();
+                    String company1 = groupModelsList.get(position).getCompanyName1();
+                    String website1 = groupModelsList.get(position).getWebsite1();
+                    String email1 = groupModelsList.get(position).getEmail1();
+                    String phone1 = groupModelsList.get(position).getPhone1();
+                    tvDetail1.setText(company1);
+                }
+                if (groupModelsList.get(position).getProfileId2().isEmpty())
+                {
+                    llSecondUser.setVisibility(View.GONE);
+                    Line2.setVisibility(View.GONE);
+                }
+                else
+                {
+                    if (groupModelsList.get(position).getUserPhoto2().isEmpty())
+                    {
+                        imgProfile2.setImageResource(R.drawable.usr_1);
+                    }
+                    else
+                    {
+                        Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/" + groupModelsList.get(position).getUserPhoto2()).into(imgProfile2);
+                    }
+                    tvPersonName2.setText(groupModelsList.get(position).getFirstName2()+" "+groupModelsList.get(position).getLastName2());
+                    tvDesignation2.setText(groupModelsList.get(position).getDesignation2());
+                    String address2 = groupModelsList.get(position).getAddress2();
+                    String company2 = groupModelsList.get(position).getCompanyName2();
+                    String website2 = groupModelsList.get(position).getWebsite2();
+                    String email2 = groupModelsList.get(position).getEmail2();
+                    String phone2 = groupModelsList.get(position).getPhone2();
+                    tvDetail2.setText(company2);
+                }
+
+                llThirdUser.setVisibility(View.GONE);
+            }
+            else if (groupModelsList.get(position).getMemberArrays().equals("1"))
+            {
+                if (groupModelsList.get(position).getProfileId1().isEmpty())
+                {
+                    llOneUser.setVisibility(View.GONE);
+                    Line1.setVisibility(View.GONE);
+                }
+                else
+                {
+                    if (groupModelsList.get(position).getUserPhoto1().isEmpty())
+                    {
+                        imgProfile1.setImageResource(R.drawable.usr_1);
+                    }
+                    else
+                    {
+                        Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/" + groupModelsList.get(position).getUserPhoto1()).into(imgProfile1);
+                    }
+                    tvPersonName1.setText(groupModelsList.get(position).getFirstName1()+" "+groupModelsList.get(position).getLastName1());
+                    tvDesignation1.setText(groupModelsList.get(position).getDesignation1());
+                    String address1 = groupModelsList.get(position).getAddress1();
+                    String company1 = groupModelsList.get(position).getCompanyName1();
+                    String website1 = groupModelsList.get(position).getWebsite1();
+                    String email1 = groupModelsList.get(position).getEmail1();
+                    String phone1 = groupModelsList.get(position).getPhone1();
+                    tvDetail1.setText(company1);
+                }
+
+                Line1.setVisibility(View.GONE);
+                llSecondUser.setVisibility(View.GONE);
+                Line2.setVisibility(View.GONE);
+                llThirdUser.setVisibility(View.GONE);
+            }
+            else if (groupModelsList.get(position).getMemberArrays().equals("0"))
+            {
+                tvMemberInfo.setVisibility(View.VISIBLE);
+                llOneUser.setVisibility(View.GONE);
+                llSecondUser.setVisibility(View.GONE);
+                llThirdUser.setVisibility(View.GONE);
+                Line1.setVisibility(View.GONE);
+                Line2.setVisibility(View.GONE);
+            }
+            else
+            {
+
+            }
+
+//            new HttpAsyncTaskGroup().execute("http://circle8.asia:8081/Onet.svc/Group/FetchConnection");
 
         }
 

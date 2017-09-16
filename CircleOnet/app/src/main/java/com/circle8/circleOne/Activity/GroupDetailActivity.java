@@ -19,6 +19,7 @@ import com.circle8.circleOne.Model.GroupDetailModel;
 import com.circle8.circleOne.Model.GroupModel;
 import com.circle8.circleOne.Model.ProfileModel;
 import com.circle8.circleOne.R;
+import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -44,7 +45,7 @@ public class GroupDetailActivity extends AppCompatActivity
 
     private CircleImageView imgProfile ;
     private ImageView ivChangeProf, ivBack, ivMenu, ivShare, ivEdit ;
-    private TextView tvGroupName, tvGroupPartner ;
+    private TextView tvGroupName, tvGroupDesc ;
 
     private GroupDetailAdapter groupDetailAdapter ;
     ImageView imgBack;
@@ -63,7 +64,7 @@ public class GroupDetailActivity extends AppCompatActivity
     private ArrayList<String> address = new ArrayList<>();
     private ArrayList<String> imgprofile = new ArrayList<>();
 
-    String group_id = "";
+    String group_id = "", group_Name, group_Desc, group_Img ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -75,9 +76,8 @@ public class GroupDetailActivity extends AppCompatActivity
         imgProfile = (CircleImageView)findViewById(R.id.imgProfile);
         imgBack = (ImageView) findViewById(R.id.imgBack);
         tvGroupName = (TextView)findViewById(R.id.tvGroupName);
-        tvGroupPartner = (TextView)findViewById(R.id.tvGroupPartner);
+        tvGroupDesc = (TextView)findViewById(R.id.tvGroupPartner);
 
-        ivBack = (ImageView)findViewById(R.id.imgBack);
         ivMenu = (ImageView)findViewById(R.id.imgProfileMenu);
         ivChangeProf = (ImageView)findViewById(R.id.imgCamera);
         ivShare = (ImageView)findViewById(R.id.ivProfileShare);
@@ -89,6 +89,23 @@ public class GroupDetailActivity extends AppCompatActivity
 
         Intent intent = getIntent();
         group_id = intent.getStringExtra("group_id");
+        group_Name = intent.getStringExtra("groupName");
+        group_Desc = intent.getStringExtra("groupDesc");
+        group_Img = intent.getStringExtra("groupImg");
+
+        tvGroupName.setText(group_Name);
+        tvGroupDesc.setText(group_Desc);
+
+        if (group_Img.equals(""))
+        {
+            imgProfile.setImageResource(R.drawable.usr_1);
+        }
+        else
+        {
+            Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/Group/"+group_Img).placeholder(R.drawable.usr_1).into(imgProfile);
+        }
+
+
 
         new HttpAsyncTaskGroup().execute("http://circle8.asia:8081/Onet.svc/Group/FetchConnection");
         /*name.add("Kajal Patadia");
