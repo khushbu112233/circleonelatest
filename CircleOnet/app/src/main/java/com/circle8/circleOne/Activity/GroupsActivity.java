@@ -67,7 +67,9 @@ public class GroupsActivity extends AppCompatActivity
     ListView listView ;
     private LoginSession session;
     private String user_id ;
-    public static ArrayList<GroupModel> allTaggs;
+
+    public static ArrayList<GroupModel> groupModelArrayList;
+
     ImageView imgBack;
     RelativeLayout llBottom;
     String GroupName, GroupDesc;
@@ -84,13 +86,17 @@ public class GroupsActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_groups);
+
         session = new LoginSession(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
         user_id = user.get(LoginSession.KEY_USERID);
-        allTaggs = new ArrayList<>();
+
+        groupModelArrayList = new ArrayList<>();
+
         listView = (ListView)findViewById(R.id.listView);
         imgBack = (ImageView) findViewById(R.id.imgBack);
         llBottom = (RelativeLayout) findViewById(R.id.llBottom);
+
         new HttpAsyncTaskGroup().execute("http://circle8.asia:8081/Onet.svc/Group/Fetch");
        /* groupName.add("Group 1");
         groupName.add("Group 2");
@@ -189,7 +195,7 @@ public class GroupsActivity extends AppCompatActivity
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 Intent intent = new Intent(getApplicationContext(), GroupDetailActivity.class);
-                intent.putExtra("group_id", allTaggs.get(position).getGroup_ID());
+                intent.putExtra("group_id", groupModelArrayList.get(position).getGroup_ID());
                 startActivity(intent);
             }
         });
@@ -620,21 +626,28 @@ public class GroupsActivity extends AppCompatActivity
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(String result)
+        {
             dialog.dismiss();
-            try {
-                if (result != null) {
+            try
+            {
+                if (result != null)
+                {
                     JSONObject jsonObject = new JSONObject(result);
                     String Success = jsonObject.getString("Success").toString();
-                    if (Success.equals("1")) {
+                    if (Success.equals("1"))
+                    {
                         Toast.makeText(getApplicationContext(), "Group Created..", Toast.LENGTH_LONG).show();
-                        allTaggs.clear();
+                        groupModelArrayList.clear();
                         new HttpAsyncTaskGroup().execute("http://circle8.asia:8081/Onet.svc/Group/Fetch");
                     }
-                    else {
+                    else
+                    {
                         Toast.makeText(getApplicationContext(), "Group not Created..", Toast.LENGTH_LONG).show();
                     }
-                } else {
+                }
+                else
+                {
                     Toast.makeText(getApplicationContext(), "Not able to create Group..", Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
@@ -675,6 +688,7 @@ public class GroupsActivity extends AppCompatActivity
                 if (result != null)
                 {
                     JSONObject jsonObject = new JSONObject(result);
+
                     JSONArray jsonArray = jsonObject.getJSONArray("Groups");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
 
@@ -689,28 +703,109 @@ public class GroupsActivity extends AppCompatActivity
                        // txtGroup.setVisibility(View.GONE);
                     }
 
-                    for (int i = 0; i < jsonArray.length(); i++)
+                    for (int i = 0; i < jsonArray.length() ; i++)
                     {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
 
                         GroupModel nfcModelTag = new GroupModel();
                         nfcModelTag.setGroup_ID(object.getString("group_ID"));
                         nfcModelTag.setGroup_Name(object.getString("group_Name"));
                         nfcModelTag.setGroup_Desc(object.getString("group_desc"));
                         nfcModelTag.setGroup_Photo(object.getString("group_photo"));
-                        //  Toast.makeText(getContext(), object.getString("Testimonial_Text"), Toast.LENGTH_LONG).show();
-                        allTaggs.add(nfcModelTag);
+
+                        JSONArray memberArray = object.getJSONArray("Members");
+
+                        if (memberArray.length() == 3)
+                        {
+                            nfcModelTag.setMemberArrays(String.valueOf(memberArray.length()));
+
+                            //for 1st member details
+                            JSONObject memberObject = memberArray.getJSONObject(0);
+                            nfcModelTag.setProfileId1(memberObject.getString("ProfileId"));
+                            nfcModelTag.setFirstName1(memberObject.getString("FirstName"));
+                            nfcModelTag.setLastName1(memberObject.getString("LastName"));
+                            nfcModelTag.setUserPhoto1(memberObject.getString("UserPhoto"));
+                            nfcModelTag.setCompanyName1(memberObject.getString("CompanyName"));
+                            nfcModelTag.setDesignation1(memberObject.getString("Designation"));
+
+                            //for 2nd member details
+                            JSONObject memberObject1 = memberArray.getJSONObject(1);
+                            nfcModelTag.setProfileId2(memberObject1.getString("ProfileId"));
+                            nfcModelTag.setFirstName2(memberObject1.getString("FirstName"));
+                            nfcModelTag.setLastName2(memberObject1.getString("LastName"));
+                            nfcModelTag.setUserPhoto2(memberObject1.getString("UserPhoto"));
+                            nfcModelTag.setCompanyName2(memberObject1.getString("CompanyName"));
+                            nfcModelTag.setDesignation2(memberObject1.getString("Designation"));
+
+                            //for 3rd member details
+                            JSONObject memberObject2 = memberArray.getJSONObject(2);
+                            nfcModelTag.setProfileId3(memberObject2.getString("ProfileId"));
+                            nfcModelTag.setFirstName3(memberObject2.getString("FirstName"));
+                            nfcModelTag.setLastName3(memberObject2.getString("LastName"));
+                            nfcModelTag.setUserPhoto3(memberObject2.getString("UserPhoto"));
+                            nfcModelTag.setCompanyName3(memberObject2.getString("CompanyName"));
+                            nfcModelTag.setDesignation3(memberObject2.getString("Designation"));
+                        }
+                        else if (memberArray.length() == 2)
+                        {
+                            nfcModelTag.setMemberArrays(String.valueOf(memberArray.length()));
+
+                            //for 1st member details
+                            JSONObject memberObject = memberArray.getJSONObject(0);
+                            nfcModelTag.setProfileId1(memberObject.getString("ProfileId"));
+                            nfcModelTag.setFirstName1(memberObject.getString("FirstName"));
+                            nfcModelTag.setLastName1(memberObject.getString("LastName"));
+                            nfcModelTag.setUserPhoto1(memberObject.getString("UserPhoto"));
+                            nfcModelTag.setCompanyName1(memberObject.getString("CompanyName"));
+                            nfcModelTag.setDesignation1(memberObject.getString("Designation"));
+
+                            //for 2nd member details
+                            JSONObject memberObject1 = memberArray.getJSONObject(1);
+                            nfcModelTag.setProfileId2(memberObject1.getString("ProfileId"));
+                            nfcModelTag.setFirstName2(memberObject1.getString("FirstName"));
+                            nfcModelTag.setLastName2(memberObject1.getString("LastName"));
+                            nfcModelTag.setUserPhoto2(memberObject1.getString("UserPhoto"));
+                            nfcModelTag.setCompanyName2(memberObject1.getString("CompanyName"));
+                            nfcModelTag.setDesignation2(memberObject1.getString("Designation"));
+                        }
+                        else if (memberArray.length() == 1)
+                        {
+                            nfcModelTag.setMemberArrays(String.valueOf(memberArray.length()));
+
+                            //for 1st member details
+                            JSONObject memberObject = memberArray.getJSONObject(0);
+                            nfcModelTag.setProfileId1(memberObject.getString("ProfileId"));
+                            nfcModelTag.setFirstName1(memberObject.getString("FirstName"));
+                            nfcModelTag.setLastName1(memberObject.getString("LastName"));
+                            nfcModelTag.setUserPhoto1(memberObject.getString("UserPhoto"));
+                            nfcModelTag.setCompanyName1(memberObject.getString("CompanyName"));
+                            nfcModelTag.setDesignation1(memberObject.getString("Designation"));
+                        }
+                        else if (memberArray.length() == 0)
+                        {
+                            nfcModelTag.setMemberArrays(String.valueOf(memberArray.length()));
+                        }
+                        else
+                        {
+
+                        }
+
+                        groupModelArrayList.add(nfcModelTag);
                     }
-                    groupsItemsAdapter = new GroupsItemsAdapter(getApplicationContext(), allTaggs);
+
+                    groupsItemsAdapter = new GroupsItemsAdapter(getApplicationContext(), groupModelArrayList);
                     listView.setAdapter(groupsItemsAdapter);
                     groupsItemsAdapter.notifyDataSetChanged();
 
                     // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
-                } else {
+                }
+                else
+                {
                     Toast.makeText(getApplicationContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
                 }
-            } catch (JSONException e) {
+            }
+            catch (JSONException e)
+            {
                 e.printStackTrace();
             }
         }
