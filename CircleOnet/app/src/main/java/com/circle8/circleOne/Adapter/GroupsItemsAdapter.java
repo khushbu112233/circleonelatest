@@ -175,6 +175,14 @@ public class GroupsItemsAdapter extends BaseAdapter
                 }
                 else
                 {
+                    if (groupModelsList.get(position).getUserPhoto1().isEmpty())
+                    {
+                        imgProfile1.setImageResource(R.drawable.usr_1);
+                    }
+                    else
+                    {
+                        Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/" + groupModelsList.get(position).getUserPhoto1()).into(imgProfile1);
+                    }
                     tvPersonName1.setText(groupModelsList.get(position).getFirstName1()+" "+groupModelsList.get(position).getLastName1());
                     tvDesignation1.setText(groupModelsList.get(position).getDesignation1());
                     String address1 = groupModelsList.get(position).getAddress1();
@@ -191,6 +199,14 @@ public class GroupsItemsAdapter extends BaseAdapter
                 }
                 else
                 {
+                    if (groupModelsList.get(position).getUserPhoto2().isEmpty())
+                    {
+                        imgProfile2.setImageResource(R.drawable.usr_1);
+                    }
+                    else
+                    {
+                        Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/" + groupModelsList.get(position).getUserPhoto2()).into(imgProfile2);
+                    }
                     tvPersonName2.setText(groupModelsList.get(position).getFirstName2()+" "+groupModelsList.get(position).getLastName2());
                     tvDesignation2.setText(groupModelsList.get(position).getDesignation2());
                     String address2 = groupModelsList.get(position).getAddress2();
@@ -207,6 +223,14 @@ public class GroupsItemsAdapter extends BaseAdapter
                 }
                 else
                 {
+                    if (groupModelsList.get(position).getUserPhoto3().isEmpty())
+                    {
+                        imgProfile3.setImageResource(R.drawable.usr_1);
+                    }
+                    else
+                    {
+                        Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/" + groupModelsList.get(position).getUserPhoto3()).into(imgProfile3);
+                    }
                     tvPersonName3.setText(groupModelsList.get(position).getFirstName3()+" "+groupModelsList.get(position).getLastName3());
                     tvDesignation3.setText(groupModelsList.get(position).getDesignation3());
                     String address3 = groupModelsList.get(position).getAddress3();
@@ -226,6 +250,14 @@ public class GroupsItemsAdapter extends BaseAdapter
                 }
                 else
                 {
+                    if (groupModelsList.get(position).getUserPhoto1().isEmpty())
+                    {
+                        imgProfile1.setImageResource(R.drawable.usr_1);
+                    }
+                    else
+                    {
+                        Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/" + groupModelsList.get(position).getUserPhoto1()).into(imgProfile1);
+                    }
                     tvPersonName1.setText(groupModelsList.get(position).getFirstName1()+" "+groupModelsList.get(position).getLastName1());
                     tvDesignation1.setText(groupModelsList.get(position).getDesignation1());
                     String address1 = groupModelsList.get(position).getAddress1();
@@ -242,6 +274,14 @@ public class GroupsItemsAdapter extends BaseAdapter
                 }
                 else
                 {
+                    if (groupModelsList.get(position).getUserPhoto2().isEmpty())
+                    {
+                        imgProfile2.setImageResource(R.drawable.usr_1);
+                    }
+                    else
+                    {
+                        Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/" + groupModelsList.get(position).getUserPhoto2()).into(imgProfile2);
+                    }
                     tvPersonName2.setText(groupModelsList.get(position).getFirstName2()+" "+groupModelsList.get(position).getLastName2());
                     tvDesignation2.setText(groupModelsList.get(position).getDesignation2());
                     String address2 = groupModelsList.get(position).getAddress2();
@@ -263,6 +303,14 @@ public class GroupsItemsAdapter extends BaseAdapter
                 }
                 else
                 {
+                    if (groupModelsList.get(position).getUserPhoto1().isEmpty())
+                    {
+                        imgProfile1.setImageResource(R.drawable.usr_1);
+                    }
+                    else
+                    {
+                        Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/" + groupModelsList.get(position).getUserPhoto1()).into(imgProfile1);
+                    }
                     tvPersonName1.setText(groupModelsList.get(position).getFirstName1()+" "+groupModelsList.get(position).getLastName1());
                     tvDesignation1.setText(groupModelsList.get(position).getDesignation1());
                     String address1 = groupModelsList.get(position).getAddress1();

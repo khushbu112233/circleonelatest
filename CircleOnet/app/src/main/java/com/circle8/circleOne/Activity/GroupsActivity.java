@@ -196,6 +196,9 @@ public class GroupsActivity extends AppCompatActivity
             {
                 Intent intent = new Intent(getApplicationContext(), GroupDetailActivity.class);
                 intent.putExtra("group_id", groupModelArrayList.get(position).getGroup_ID());
+                intent.putExtra("groupImg", groupModelArrayList.get(position).getGroup_Photo());
+                intent.putExtra("groupName", groupModelArrayList.get(position).getGroup_Name());
+                intent.putExtra("groupDesc", groupModelArrayList.get(position).getGroup_Desc());
                 startActivity(intent);
             }
         });
