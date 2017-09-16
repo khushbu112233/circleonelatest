@@ -45,7 +45,7 @@ public class GroupDetailActivity extends AppCompatActivity
 
     private CircleImageView imgProfile ;
     private ImageView ivChangeProf, ivBack, ivMenu, ivShare, ivEdit ;
-    private TextView tvGroupName, tvGroupDesc ;
+    private TextView tvGroupName, tvGroupDesc, tvMemberInfo ;
 
     private GroupDetailAdapter groupDetailAdapter ;
     ImageView imgBack;
@@ -77,6 +77,7 @@ public class GroupDetailActivity extends AppCompatActivity
         imgBack = (ImageView) findViewById(R.id.imgBack);
         tvGroupName = (TextView)findViewById(R.id.tvGroupName);
         tvGroupDesc = (TextView)findViewById(R.id.tvGroupPartner);
+        tvMemberInfo = (TextView)findViewById(R.id.tvMemberInfo);
 
         ivMenu = (ImageView)findViewById(R.id.imgProfileMenu);
         ivChangeProf = (ImageView)findViewById(R.id.imgCamera);
@@ -105,9 +106,8 @@ public class GroupDetailActivity extends AppCompatActivity
             Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/Group/"+group_Img).placeholder(R.drawable.usr_1).into(imgProfile);
         }
 
-
-
         new HttpAsyncTaskGroup().execute("http://circle8.asia:8081/Onet.svc/Group/FetchConnection");
+
         /*name.add("Kajal Patadia");
         designation.add("Software Developer");
         company.add("Ample Arch Infotech Pvt. Ltd.");
@@ -261,6 +261,18 @@ public class GroupDetailActivity extends AppCompatActivity
                     JSONObject jsonObject = new JSONObject(result);
                     JSONArray jsonArray = jsonObject.getJSONArray("connection");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
+
+                    if (jsonArray.length() == 0)
+                    {
+                        tvMemberInfo.setVisibility(View.VISIBLE);
+                        listView.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        tvMemberInfo.setVisibility(View.GONE);
+                        listView.setVisibility(View.VISIBLE);
+                    }
+
                     for (int i = 0; i < jsonArray.length(); i++)
                     {
                         JSONObject object = jsonArray.getJSONObject(i);

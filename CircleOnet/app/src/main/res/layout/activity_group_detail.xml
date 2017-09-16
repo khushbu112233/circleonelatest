@@ -144,18 +144,33 @@
         </FrameLayout>
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/listView"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/llProfile"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="3dp"
-        android:layout_marginRight="3dp">
+        android:layout_below="@+id/llProfile">
 
-    </ListView>
+        <TextView
+            android:id="@+id/tvMemberInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="You are not having any members in this group"
+            android:layout_centerInParent="true"
+            android:textAlignment="center"
+            android:visibility="gone"
+            android:textColor="@color/colorPrimary"/>
+
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp">
+
+        </ListView>
 
 
+    </RelativeLayout>
 
 </RelativeLayout>
