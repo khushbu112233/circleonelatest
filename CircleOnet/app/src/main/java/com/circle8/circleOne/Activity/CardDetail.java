@@ -195,8 +195,9 @@ public class CardDetail extends NfcActivity
                 btnAddToGroup.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        alertDialog.cancel();
                         // make selected item in the comma seprated string
-                        Toast.makeText(getApplicationContext(), selectedStrings.toString(), Toast.LENGTH_LONG).show();
+                      //  Toast.makeText(getApplicationContext(), selectedStrings.toString(), Toast.LENGTH_LONG).show();
                         new HttpAsyncTaskGroupAddFriend().execute("http://circle8.asia:8081/Onet.svc/AddMemberToGroups");
                     }
                 });
