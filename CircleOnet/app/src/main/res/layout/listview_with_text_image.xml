@@ -80,6 +80,7 @@
         </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/lnrManageProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -130,6 +131,29 @@
             android:textColor="@android:color/white" />
 
     </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lnrSyncContacts"
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_new_card"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="0dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sync Contacts         "
+                android:textSize="17dp"
+                android:layout_marginLeft="20dp"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/lnrNotification"

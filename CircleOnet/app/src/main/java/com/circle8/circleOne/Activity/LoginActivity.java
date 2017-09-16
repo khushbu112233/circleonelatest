@@ -270,6 +270,16 @@ public class LoginActivity extends AppCompatActivity implements
         }
 
 
+        tvPasswordInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                startActivity(new Intent(LoginActivity.this, ForgotActivity.class));
+                finish();
+            }
+        });
+
+
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

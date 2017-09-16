@@ -27,6 +27,19 @@
             />
 
         <TextView
+            android:layout_marginRight="10dp"
+            android:id="@+id/txtCancel"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/txtSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:textSize="18dp"
+            android:padding="10dp"
+            android:textColor="@color/colorPrimary"
+            />
+
+        <TextView
             android:id="@+id/txtSend"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"

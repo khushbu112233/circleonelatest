@@ -37,7 +37,7 @@ public class ContactsImportActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_CONTACT = 111;
     ArrayList<String> arrayListPhoneNumber;
     ArrayList<String> arrayListPhoneName;
-    TextView txtSend;
+    TextView txtSend, txtCancel;
     ListView listView;
     private TextView textView;
     ImageView imgLogo;
@@ -47,6 +47,7 @@ public class ContactsImportActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts_import);
         txtSend = (TextView) findViewById(R.id.txtSend);
+        txtCancel = (TextView) findViewById(R.id.txtCancel);
         final ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.custom_actionbar);
@@ -100,6 +101,13 @@ public class ContactsImportActivity extends AppCompatActivity {
         /** Setting a click listener for the listitem checkbox **/
         listView.setOnItemClickListener(itemClickListener);
 
+        txtCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ContactsImportActivity.this, CardsActivity.class));
+                finish();
+            }
+        });
 
         txtSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,9 +119,9 @@ public class ContactsImportActivity extends AppCompatActivity {
 
                     //listView.getAdapter().getItem((int)listView.getCheckItemIds()[i]);
                     String num = arrayListPhoneNumber.get(arrayListPhoneName.indexOf(listView.getAdapter().getItem((int)listView.getCheckItemIds()[i]).toString()));
-
-                    Toast.makeText(getApplicationContext(), num, Toast.LENGTH_LONG).show();
-                    Toast.makeText(getApplicationContext(), listView.getAdapter().getItem((int)listView.getCheckItemIds()[i]).toString(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Request has been sent", Toast.LENGTH_LONG).show();
+                  //  Toast.makeText(getApplicationContext(), num, Toast.LENGTH_LONG).show();
+                   // Toast.makeText(getApplicationContext(), listView.getAdapter().getItem((int)listView.getCheckItemIds()[i]).toString(), Toast.LENGTH_LONG).show();
 
                     startActivity(new Intent(ContactsImportActivity.this, CardsActivity.class));
                     finish();
