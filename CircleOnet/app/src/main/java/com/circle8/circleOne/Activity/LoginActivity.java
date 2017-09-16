@@ -25,6 +25,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -134,7 +135,7 @@ public class LoginActivity extends AppCompatActivity implements
     private GoogleApiClient mGoogleApiClient;
     private ProgressDialog mProgressDialog;
 
-    public static TextView tvUsernameInfo , tvPasswordInfo ;
+    public static TextView tvUsernameInfo, tvPasswordInfo;
 
     private SignInButton btnSignIn;
     private Button btnSignOut, btnRevokeAccess;
@@ -184,8 +185,7 @@ public class LoginActivity extends AppCompatActivity implements
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         TwitterAuthConfig authConfig = new TwitterAuthConfig(
@@ -207,8 +207,8 @@ public class LoginActivity extends AppCompatActivity implements
         btnLoginTwitter = (ImageView) findViewById(R.id.btnLoginTwitter);
         login_linkedin_btn = (ImageView) findViewById(R.id.login_button_linkedin);
 
-        tvUsernameInfo = (TextView)findViewById(R.id.tvUserInfo);
-        tvPasswordInfo = (TextView)findViewById(R.id.tvPasswordInfo);
+        tvUsernameInfo = (TextView) findViewById(R.id.tvUserInfo);
+        tvPasswordInfo = (TextView) findViewById(R.id.tvPasswordInfo);
 
         prefs = getSharedPreferences("com.circle8.circleOne", MODE_PRIVATE);
         etLoginPass.setImeOptions(EditorInfo.IME_ACTION_DONE);
@@ -230,12 +230,9 @@ public class LoginActivity extends AppCompatActivity implements
                     userName = etLoginUser.getText().toString();
                     userPassword = etLoginPass.getText().toString();
 
-                    if (!validateLogin(userName, userPassword))
-                    {
+                    if (!validateLogin(userName, userPassword)) {
                         Toast.makeText(getApplicationContext(), "All fields are require!", Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                    {
+                    } else {
                         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/UserLogin");
                     }
                 }
@@ -243,41 +240,62 @@ public class LoginActivity extends AppCompatActivity implements
             }
         });
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-        {
-            imgFinger.setVisibility(View.VISIBLE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             fingerprintHandler = new FingerprintHandler(this);
             fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
-            keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
-            prefs = getSharedPreferences("com.circle8.circleOne", MODE_PRIVATE);
-            // check support for android fingerprint on device
-            checkDeviceFingerprintSupport();
-            //generate fingerprint keystore
-            generateFingerprintKeyStore();
-            //instantiate Cipher class
-            Cipher mCipher = instantiateCipher();
-            if (mCipher != null)
-            {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    cryptoObject = new FingerprintManager.CryptoObject(mCipher);
+            if (!fingerprintManager.hasEnrolledFingerprints()) {
+                //textView.setText("No fingerprint configured. Please register at least one fingerprint in your device's Settings");
+                imgFinger.setVisibility(View.GONE);
+            } else {
+
+                imgFinger.setVisibility(View.VISIBLE);
+                keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
+                prefs = getSharedPreferences("com.circle8.circleOne", MODE_PRIVATE);
+                // check support for android fingerprint on device
+                checkDeviceFingerprintSupport();
+                //generate fingerprint keystore
+                generateFingerprintKeyStore();
+                //instantiate Cipher class
+                Cipher mCipher = instantiateCipher();
+                if (mCipher != null) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        cryptoObject = new FingerprintManager.CryptoObject(mCipher);
+                    }
                 }
+                fingerprintHandler.completeFingerAuthentication(fingerprintManager, cryptoObject);
             }
-            fingerprintHandler.completeFingerAuthentication(fingerprintManager, cryptoObject);
-        }
-        else
-            {
+        } else {
             imgFinger.setVisibility(View.GONE);
         }
 
+        etLoginPass.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_LEFT = 0;
+                final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+                final int DRAWABLE_BOTTOM = 3;
 
-        tvPasswordInfo.setOnClickListener(new View.OnClickListener() {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (event.getRawX() >= (etLoginPass.getRight() - etLoginPass.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        // your action here
+                        startActivity(new Intent(LoginActivity.this, ForgotActivity.class));
+                        finish();
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+
+       /* tvPasswordInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
                 startActivity(new Intent(LoginActivity.this, ForgotActivity.class));
                 finish();
             }
-        });
+        });*/
 
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -426,7 +444,7 @@ public class LoginActivity extends AppCompatActivity implements
                 Configuration.SCREENLAYOUT_SIZE_MASK;
 
         String toastMsg;
-        switch(screenSize) {
+        switch (screenSize) {
             case Configuration.SCREENLAYOUT_SIZE_LARGE:
                 toastMsg = "Large screen";
                 break;
@@ -455,12 +473,12 @@ public class LoginActivity extends AppCompatActivity implements
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (!fingerprintManager.hasEnrolledFingerprints()) {
                     imgFinger.setVisibility(View.GONE);
-                  //  Toast.makeText(FingerPrintLogin.this, "Fingerprint not yet configured", Toast.LENGTH_LONG).show();
+                    //  Toast.makeText(FingerPrintLogin.this, "Fingerprint not yet configured", Toast.LENGTH_LONG).show();
                 }
             }
             if (!keyguardManager.isKeyguardSecure()) {
                 imgFinger.setVisibility(View.GONE);
-               // Toast.makeText(FingerPrintLogin.this, "Screen lock is not secure and enable", Toast.LENGTH_LONG).show();
+                // Toast.makeText(FingerPrintLogin.this, "Screen lock is not secure and enable", Toast.LENGTH_LONG).show();
             }
             return;
         }
@@ -483,11 +501,11 @@ public class LoginActivity extends AppCompatActivity implements
                 }
             } else {
                 imgFinger.setVisibility(View.GONE);
-               // Toast.makeText(this, R.string.permission_refused, Toast.LENGTH_LONG).show();
+                // Toast.makeText(this, R.string.permission_refused, Toast.LENGTH_LONG).show();
             }
         } else {
             imgFinger.setVisibility(View.GONE);
-          //  Toast.makeText(this, getString(R.string.Unknown_permission_request), Toast.LENGTH_LONG).show();
+            //  Toast.makeText(this, getString(R.string.Unknown_permission_request), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -507,14 +525,14 @@ public class LoginActivity extends AppCompatActivity implements
             super.onAuthenticationError(errorCode, errString);
             Log.d(TAG, "Error message " + errorCode + ": " + errString);
             //Toast.makeText(context, context.getString(R.string.authenticate_fingerprint), Toast.LENGTH_LONG).show();
-            imgFinger.setVisibility(View.GONE);
+            // imgFinger.setVisibility(View.GONE);
         }
 
         @Override
         public void onAuthenticationHelp(int helpCode, CharSequence helpString) {
             super.onAuthenticationHelp(helpCode, helpString);
             //Toast.makeText(context, R.string.auth_successful, Toast.LENGTH_LONG).show();
-            imgFinger.setVisibility(View.VISIBLE);
+            //imgFinger.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -570,8 +588,7 @@ public class LoginActivity extends AppCompatActivity implements
 
         try {
             keyGenerator.generateKey();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
         }
     }
 
@@ -584,7 +601,7 @@ public class LoginActivity extends AppCompatActivity implements
             return cipher;
         } catch (Exception e) {
             // throw new RuntimeException("Failed to instantiate Cipher class");
-            imgFinger.setVisibility(View.GONE);
+            // imgFinger.setVisibility(View.GONE);
             return null;
         }
     }
@@ -833,19 +850,23 @@ public class LoginActivity extends AppCompatActivity implements
                         } else {
                             try {
                                 signOut();
-                            }catch (Exception e){}
+                            } catch (Exception e) {
+                            }
                             try {
                                 PrefUtils.clearCurrentUser(LoginActivity.this);
                                 // We can logout from facebook by calling following method
                                 LoginManager.getInstance().logOut();
-                            }catch (Exception e){}
-                           try {
+                            } catch (Exception e) {
+                            }
+                            try {
                                 mAuth.signOut();
                                 com.twitter.sdk.android.Twitter.logOut();
-                           }catch (Exception e){}
+                            } catch (Exception e) {
+                            }
                             try {
                                 LISessionManager.getInstance(getApplicationContext()).clearSession();
-                            }catch (Exception e){}
+                            } catch (Exception e) {
+                            }
                             Toast.makeText(getBaseContext(), "You should verify your Account First..", Toast.LENGTH_LONG).show();
                         }
 
@@ -967,31 +988,31 @@ public class LoginActivity extends AppCompatActivity implements
                 mGoogleApiClient.connect(GoogleApiClient.SIGN_IN_MODE_OPTIONAL);
 
 
-                    Log.e(TAG, "display name: " + acct.getDisplayName());
+                Log.e(TAG, "display name: " + acct.getDisplayName());
 
-                    String personName = acct.getDisplayName();
+                String personName = acct.getDisplayName();
 //            String personPhotoUrl = acct.getPhotoUrl().toString();
-                    String email = acct.getEmail();
-                    String personPhotoUrl = "";
-                    Log.e(TAG, "Name: " + personName + ", email: " + email
-                    );
+                String email = acct.getEmail();
+                String personPhotoUrl = "";
+                Log.e(TAG, "Name: " + personName + ", email: " + email
+                );
 
-                    Facebook = "";
-                    Google = acct.getId();
-                    Linkedin = "";
-                    Twitter = "";
+                Facebook = "";
+                Google = acct.getId();
+                Linkedin = "";
+                Twitter = "";
 
-                    final_name = personName;
-                    final_email = email;
-                    final_image = personPhotoUrl;
-                    SocialMedia_Id = acct.getId();
-                    SocialMedia_Type = "Google";
-                    UserName = email;
+                final_name = personName;
+                final_email = email;
+                final_image = personPhotoUrl;
+                SocialMedia_Id = acct.getId();
+                SocialMedia_Type = "Google";
+                UserName = email;
 
-                    new HttpAsyncTaskSocialMedia().execute("http://circle8.asia:8081/Onet.svc/SocialMediaLogin");
+                new HttpAsyncTaskSocialMedia().execute("http://circle8.asia:8081/Onet.svc/SocialMediaLogin");
 
 
-                    //  loginSession.createLoginSession("", personName, email, personPhotoUrl, "");
+                //  loginSession.createLoginSession("", personName, email, personPhotoUrl, "");
 
              /*   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     // imgFinger.setVisibility(View.VISIBLE);
@@ -1022,7 +1043,7 @@ public class LoginActivity extends AppCompatActivity implements
                     }
                 }
 */
-                    // Toast.makeText(getApplicationContext(), "Name: " + personName + ", email: " + email, Toast.LENGTH_LONG).show();
+                // Toast.makeText(getApplicationContext(), "Name: " + personName + ", email: " + email, Toast.LENGTH_LONG).show();
 
            /* txtName.setText(personName);
             txtEmail.setText(email);
@@ -1032,7 +1053,7 @@ public class LoginActivity extends AppCompatActivity implements
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(imgProfilePic);*/
 
-                    updateUI(true);
+                updateUI(true);
             }
         } else {
             // Signed out, show unauthenticated UI.
@@ -1076,8 +1097,7 @@ public class LoginActivity extends AppCompatActivity implements
         });
     }
 
-    private void handleTwitterSession(TwitterSession session)
-    {
+    private void handleTwitterSession(TwitterSession session) {
         Log.d(TAG, "handleTwitterSession:" + session);
         // [START_EXCLUDE silent]
         showProgressDialog();
@@ -1176,15 +1196,12 @@ public class LoginActivity extends AppCompatActivity implements
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-       // mLoginButton.onActivityResult(requestCode, resultCode, data);
+        // mLoginButton.onActivityResult(requestCode, resultCode, data);
         client.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN)
-        {
+        if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
-        }
-        else if (LinkedInFlag == true)
-        {
+        } else if (LinkedInFlag == true) {
             LISessionManager.getInstance(getApplicationContext()).onActivityResult(this, requestCode, resultCode, data);
             progress = new ProgressDialog(this);
             progress.setMessage("Logging in...");
@@ -1567,7 +1584,6 @@ public class LoginActivity extends AppCompatActivity implements
                                         finish();
                                     }
                                 }
-
 
 
                                 // imgFinger.setVisibility(View.VISIBLE);

@@ -79,13 +79,12 @@
 
 
         <TextView
-            android:visibility="visible"
+            android:visibility="gone"
             android:id="@+id/tvPasswordInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Please! Enter Password"
             android:textSize="11sp"
-            android:textAlignment="viewEnd"
             android:textColor="@color/colorPrimary"
             android:layout_marginLeft="45dp"
             android:layout_marginRight="45dp"
