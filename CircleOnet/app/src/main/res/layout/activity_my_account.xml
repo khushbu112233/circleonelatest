@@ -10,7 +10,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/white">
 
     <LinearLayout
         android:id="@+id/llProfile"
@@ -86,13 +87,14 @@
                         android:layout_width="70dp"
                         android:layout_height="70dp">
                         <de.hdodenhof.circleimageview.CircleImageView
-                            app:civ_border_width="0dp"
-                            app:civ_border_color="@color/colorPrimary"
+                            app:civ_border_width="1dp"
+                            app:civ_border_color="@color/white"
                             android:src="@drawable/usr"
                             android:id="@+id/imgProfile"
                             android:layout_width="70dp"
                             android:layout_height="70dp" />
                         <ImageView
+                            android:id="@+id/ivMiniCamera"
                             android:layout_width="18dp"
                             android:layout_height="18dp"
                             android:src="@drawable/mini_camera_blue"
@@ -179,8 +181,19 @@
                     android:backgroundTint="@color/colorPrimary"
                     android:textColorHint="@color/colorPrimary"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="13sp" />
+                    android:textSize="13sp"
+                    android:enabled="false"/>
             </LinearLayout>
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tvUsernameInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Please! Enter Email(Username)"
+                android:textSize="10sp"
+                android:textColor="@color/unselected"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="15dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -243,6 +256,33 @@
                         android:textSize="13sp" />
                 </LinearLayout>
             </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="20dp">
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/tvFirstNameInfo"
+                    android:layout_weight="1"
+                    android:textColor="@color/unselected"
+                    android:textSize="10sp"
+                    android:text="Enter First Name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"/>
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/tvLastNameInfo"
+                    android:layout_weight="1"
+                    android:textColor="@color/unselected"
+                    android:textSize="10sp"
+                    android:text="Enter Last Name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -271,6 +311,15 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="13sp" />
             </LinearLayout>
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tvPasswordInfo"
+                android:textColor="@color/unselected"
+                android:textSize="10sp"
+                android:text="Enter Password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -299,6 +348,15 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="13sp" />
             </LinearLayout>
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tvAgainPasswordInfo"
+                android:textColor="@color/unselected"
+                android:textSize="10sp"
+                android:text="Enter Re-Password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -327,6 +385,15 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="13sp" />
             </LinearLayout>
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tvPhoneInfo"
+                android:textColor="@color/unselected"
+                android:textSize="10sp"
+                android:text="Enter Phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -335,7 +402,8 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -355,6 +423,15 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="13sp" />
             </LinearLayout>
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tvEmailInfo"
+                android:textColor="@color/unselected"
+                android:textSize="10sp"
+                android:text="Enter Email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -363,7 +440,8 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -391,7 +469,8 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -419,7 +498,8 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -343,7 +343,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             txtGender.setText("Gender: Female");
 
         }
-        if (v == lnrRegister) {
+        if (v == lnrRegister)
+        {
             company_name = "Ample Arch";
             user_name = etFirstName.getText().toString() + " " + etLastName.getText().toString();
             first_name = etFirstName.getText().toString();
@@ -503,14 +504,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    private class UploadFile extends AsyncTask<String, Void, Void> {
-
-
+    private class UploadFile extends AsyncTask<String, Void, Void>
+    {
         private String Content;
         private String Error = null;
         String data = "";
         private BufferedReader reader;
-
 
         protected void onPreExecute() {
 
@@ -1131,7 +1130,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     String ImgName = jsonObject.getString("ImgName").toString();
                     String success = jsonObject.getString("success").toString();
 
-                    if (success.equals("1") && ImgName!=null) {
+                    if (success.equals("1") && ImgName != null)
+                    {
                         /*Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(intent);
@@ -1140,7 +1140,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         register_img = ImgName;
                         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/Registration");
 
-                    } else {
+                    }
+                    else
+                    {
                         Toast.makeText(getBaseContext(), "Error While Uploading Image..", Toast.LENGTH_LONG).show();
                     }
                 }
@@ -1176,7 +1178,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException{
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException
+    {
         BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
         String line = "";
         String result = "";
@@ -1185,7 +1188,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         inputStream.close();
         return result;
-
     }
 
     private File persistImage(Bitmap bitmap, String name) {

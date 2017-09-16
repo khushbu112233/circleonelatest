@@ -4,6 +4,7 @@ import android.text.Html;
 import android.view.View;
 
 import com.circle8.circleOne.Activity.LoginActivity;
+import com.circle8.circleOne.Activity.MyAccountActivity;
 import com.circle8.circleOne.Activity.RegisterActivity;
 
 /**
@@ -115,6 +116,84 @@ public class Validation
 //            RegisterActivity.etConfirmPass.setError("Password does not match");
             RegisterActivity.tvRePasswordInfo.setText("Password does not match");
             RegisterActivity.tvRePasswordInfo.setVisibility(View.VISIBLE);
+            valid = false;
+        }
+
+        return valid;
+    }
+
+    public static boolean updateRegisterValidate(String firstName, String lastName, String password, String rePassword, String contactNo)
+    {
+        boolean valid = true ;
+
+        if(firstName.isEmpty() || firstName.length() < 3 )
+        {
+//            RegisterActivity.etFirstName.setError("Minimum 3 Characters.");
+            MyAccountActivity.tvFirstNameInfo.setText("Mini 3 Characters");
+            MyAccountActivity.tvFirstNameInfo.setVisibility(View.VISIBLE);
+            valid = false ;
+        }
+        else
+        {
+//            RegisterActivity.etFirstName.setError(null);
+            MyAccountActivity.tvFirstNameInfo.setVisibility(View.GONE);
+        }
+
+        if(lastName.isEmpty() || lastName.length() < 3 )
+        {
+//            RegisterActivity.etLastName.setError("Minimum 3 Characters.");
+            MyAccountActivity.tvLastNameInfo.setText("Mini 3 Characters");
+            MyAccountActivity.tvLastNameInfo.setVisibility(View.VISIBLE);
+            valid = false ;
+        }
+        else
+        {
+//            RegisterActivity.etLastName.setError(null);
+            MyAccountActivity.tvLastNameInfo.setVisibility(View.GONE);
+        }
+
+        if(contactNo.isEmpty() || contactNo.length() <= 8  )
+        {
+//            RegisterActivity.etPhone.setError("10 Characters Required");
+            MyAccountActivity.tvPhoneInfo.setText("Mini 8 digit");
+            MyAccountActivity.tvPhoneInfo.setVisibility(View.VISIBLE);
+            valid = false ;
+        }
+        else
+        {
+//            RegisterActivity.etPhone.setError(null);
+            MyAccountActivity.tvPhoneInfo.setVisibility(View.GONE);
+        }
+
+        if (password.isEmpty() || password.length() < 4)
+        {
+//            RegisterActivity.etPassword.setError("Minimum 4 Characters");
+            MyAccountActivity.tvPasswordInfo.setText("Mini 4 Characters");
+            MyAccountActivity.tvPasswordInfo.setVisibility(View.VISIBLE);
+            valid = false;
+        }
+        else
+        {
+//            RegisterActivity.etPassword.setError(null);
+            MyAccountActivity.tvPasswordInfo.setVisibility(View.GONE);
+        }
+
+        if(rePassword.isEmpty())
+        {
+            MyAccountActivity.tvAgainPasswordInfo.setText("Enter Re-Password");
+            MyAccountActivity.tvAgainPasswordInfo.setVisibility(View.VISIBLE);
+            valid = false;
+        }
+        else if (rePassword.equals(password))
+        {
+//            RegisterActivity.etConfirmPass.setError(null);
+            MyAccountActivity.tvAgainPasswordInfo.setVisibility(View.GONE);
+        }
+        else
+        {
+//            RegisterActivity.etConfirmPass.setError("Password does not match");
+            MyAccountActivity.tvAgainPasswordInfo.setText("Password does not match");
+            MyAccountActivity.tvAgainPasswordInfo.setVisibility(View.VISIBLE);
             valid = false;
         }
 

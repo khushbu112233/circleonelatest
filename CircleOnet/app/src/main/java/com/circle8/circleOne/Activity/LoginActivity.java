@@ -230,9 +230,12 @@ public class LoginActivity extends AppCompatActivity implements
                     userName = etLoginUser.getText().toString();
                     userPassword = etLoginPass.getText().toString();
 
-                    if (!validateLogin(userName, userPassword)) {
+                    if (!validateLogin(userName, userPassword))
+                    {
                         Toast.makeText(getApplicationContext(), "All fields are require!", Toast.LENGTH_SHORT).show();
-                    } else {
+                    }
+                    else
+                    {
                         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/UserLogin");
                     }
                 }
@@ -764,14 +767,19 @@ public class LoginActivity extends AppCompatActivity implements
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(String result)
+        {
             dialog.dismiss();
-            try {
-                if (result != null) {
+            try
+            {
+                if (result != null)
+                {
                     JSONObject jsonObject = new JSONObject(result);
                     String success = jsonObject.getString("success").toString();
                     String UserID = "", profileid = "", FirstName = "", LastName = "", UserPhoto = "";
-                    if (success.equals("1")) {
+
+                    if (success.equals("1"))
+                    {
                         //  Toast.makeText(getBaseContext(), "LoggedIn Successfully..", Toast.LENGTH_LONG).show();
                         //   fingerPrintSession.createLoginSession(UserID, "", userName, "", "");
 
@@ -784,10 +792,13 @@ public class LoginActivity extends AppCompatActivity implements
                         UserPhoto = jsonArray.getString("UserPhoto");
                         String Status = jsonArray.getString("Status");
 
-                        if (Status.equalsIgnoreCase("Verified")) {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (Status.equalsIgnoreCase("Verified"))
+                        {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                            {
                                 // imgFinger.setVisibility(View.VISIBLE);
-                                if (imgFinger.getVisibility() == View.VISIBLE) {
+                                if (imgFinger.getVisibility() == View.VISIBLE)
+                                {
                                     Gson gson = ((MyApplication) getApplication()).getGsonObject();
                                     UserObject userData = new UserObject(profileid, FirstName + " " + LastName, userName, userPassword, UserID, "", UserPhoto, false);
                                     String userDataString = gson.toJson(userData);
@@ -798,16 +809,21 @@ public class LoginActivity extends AppCompatActivity implements
                                     //intent.putExtra("viewpager_position", 0);
                                     startActivity(intent);
                                     finish();
-                                } else {
+                                }
+                                else
+                                {
                                     // Either gone or invisible
                                     loginSession.createLoginSession(profileid, UserID, "", userName, "", "");
-                                    if (prefs.getBoolean("firstrun", true)) {
+                                    if (prefs.getBoolean("firstrun", true))
+                                    {
                                         // Do first run stuff here then set 'firstrun' as false
                                         // using the following line to edit/commit prefs
                                         Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
                                         startActivity(intent);
                                         prefs.edit().putBoolean("firstrun", false).commit();
-                                    } else {
+                                    }
+                                    else
+                                    {
                                         Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
                                         userIntent.putExtra("viewpager_position", 0);
                                         startActivity(userIntent);
@@ -831,10 +847,15 @@ public class LoginActivity extends AppCompatActivity implements
                                     startActivity(userIntent);
                                     finish();
                                 }*/
-                            } else {
+                            }
+                            else
+                            {
                                 // imgFinger.setVisibility(View.GONE);
-                                loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, final_email, UserPhoto, "");
-                                if (prefs.getBoolean("firstrun", true)) {
+//                                loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, final_email, UserPhoto, "");
+                                loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, userName, UserPhoto, "");
+
+                                if (prefs.getBoolean("firstrun", true))
+                                {
                                     // Do first run stuff here then set 'firstrun' as false
                                     // using the following line to edit/commit prefs
                                     Intent intent = new Intent(getApplicationContext(), HelpActivity.class);

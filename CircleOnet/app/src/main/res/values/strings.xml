@@ -33,4 +33,7 @@
     <string name="testimonial1">Ask your friends to write a Testimonial for you{100 words or less},</string>
     <string name="testimonial2">Please choose from your <b><font color="#38c0c7">Circle 1 contacts</font></b> and send a request. </string>
 
+    <string name="female">Gender: <strike>Male</strike> / Female </string>
+    <string name="male">Gender: Male / <strike>Female</strike> </string>
+
 </resources>

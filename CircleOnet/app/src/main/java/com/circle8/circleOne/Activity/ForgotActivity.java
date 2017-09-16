@@ -89,7 +89,7 @@ public class ForgotActivity extends AppCompatActivity
         protected void onPreExecute() {
             super.onPreExecute();
             dialog = new ProgressDialog(ForgotActivity.this);
-            dialog.setMessage("Logging In...");
+            dialog.setMessage("Updating...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
             dialog.setCancelable(false);

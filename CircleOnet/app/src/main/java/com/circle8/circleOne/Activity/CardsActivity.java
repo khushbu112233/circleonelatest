@@ -137,7 +137,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         String email = user.get(LoginSession.KEY_EMAIL);    // email
         String image = user.get(LoginSession.KEY_IMAGE);
         String gender = user.get(LoginSession.KEY_GENDER);
-        Toast.makeText(getApplicationContext(), name + " " + email + " " + image + " " + gender, Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), name + " " + email + " " + image + " " + gender, Toast.LENGTH_LONG).show();
 
 
         mGoogleApiClient = new GoogleApiClient.Builder(CardsActivity.this)
