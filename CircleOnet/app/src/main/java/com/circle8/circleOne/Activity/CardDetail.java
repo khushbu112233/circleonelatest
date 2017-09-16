@@ -13,9 +13,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -74,11 +77,11 @@ public class CardDetail extends NfcActivity
     ImageView imgCall, imgSMS, imgMail;
     String recycle_image1, recycle_image2;
     ImageView imgAddGroupFriend;
-
+    public static ArrayList<String> selectedStrings = new ArrayList<String>();
     String userImg, frontCardImg, backCardImg, personName, personAddress;
 
     List<CharSequence> list;
-    List<CharSequence> listGroupId;
+    ArrayList<String> listGroupId;
     LoginSession loginSession;
     String strfbUrl = "", strlinkedInUrl = "", strtwitterUrl = "", strgoogleUrl = "", stryoutubeUrl = "";
     AppBarLayout appBarLayout;
@@ -92,7 +95,7 @@ public class CardDetail extends NfcActivity
     ArrayList<String> groupPhoto = new ArrayList<>();
     ArrayList<String> ID_group = new ArrayList<>();
     ArrayList<String> groupDesc = new ArrayList<>();
-
+    ListView listView1;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -141,7 +144,7 @@ public class CardDetail extends NfcActivity
         twitterUrl = (ImageView) findViewById(R.id.twitterUrl);
         linkedInUrl = (ImageView) findViewById(R.id.linkedInUrl);
         list = new ArrayList<CharSequence>();
-        listGroupId = new ArrayList<CharSequence>();
+        listGroupId = new ArrayList<String>();
         Intent intent = getIntent();
         profile_id = intent.getStringExtra("profile_id");
 
@@ -201,15 +204,19 @@ public class CardDetail extends NfcActivity
                         });
                 AlertDialog alert = builderDialog.create();
                 alert.show();*/
-                AlertDialog alertDialog = new AlertDialog.Builder(CardDetail.this).create();
+                final CharSequence[] dialogList = list.toArray(new CharSequence[list.size()]);
+                final AlertDialog.Builder builderDialog = new AlertDialog.Builder(CardDetail.this);
                 LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View dialogView = inflater.inflate(R.layout.edit_groups_popup, null);
-
-                ListView listView1 = (ListView)dialogView.findViewById(R.id.listView);
+                listView1 = (ListView)dialogView.findViewById(R.id.listView);
                 TextView tvGroupInfo = (TextView) dialogView.findViewById(R.id.tvGroupInfo);
                 Button btnAddToGroup = (Button) dialogView.findViewById(R.id.btnAddToGroup);
                 Button btnCancelGroup = (Button) dialogView.findViewById(R.id.btnCancelGroup);
+                int count = dialogList.length;
+                boolean[] is_checked = new boolean[count];
 
+                final AlertDialog alertDialog = builderDialog.create();
+                alertDialog.setCancelable(false);
                 if(groupName.size() == 0)
                 {
                     tvGroupInfo.setVisibility(View.VISIBLE);
@@ -221,7 +228,7 @@ public class CardDetail extends NfcActivity
                     groupModelArrayList1 = groupModelArrayList ;
 
 //                EditGroupAdapter editGroupAdapter = new EditGroupAdapter(CardDetail.this, groupModelArrayList1);
-                    EditGroupAdapter editGroupAdapter = new EditGroupAdapter(CardDetail.this, groupName, groupPhoto);
+                    EditGroupAdapter editGroupAdapter = new EditGroupAdapter(CardDetail.this, groupName, groupPhoto, listGroupId);
                     listView1.setAdapter(editGroupAdapter);
                     editGroupAdapter.notifyDataSetChanged();
                 }
@@ -229,14 +236,19 @@ public class CardDetail extends NfcActivity
                 btnCancelGroup.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        alertDialog.cancel();
+                    }
+                });
 
+                btnAddToGroup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // make selected item in the comma seprated string
+                        Toast.makeText(getApplicationContext(), selectedStrings.toString(), Toast.LENGTH_LONG).show();
                     }
                 });
 
                 alertDialog.setView(dialogView);
-
-
-
                 alertDialog.show();
 
             }
@@ -748,6 +760,18 @@ public class CardDetail extends NfcActivity
         });
     }
 
+    private int getCheckedItemCount(){
+        int cnt = 0;
+        SparseBooleanArray positions = listView1.getCheckedItemPositions();
+        int itemCount = listView1.getCount();
+
+        for(int i=0;i<itemCount;i++){
+            if(positions.get(i))
+                cnt++;
+        }
+        return cnt;
+    }
+
     public String POST4(String url) {
         InputStream inputStream = null;
         String result = "";
@@ -761,7 +785,7 @@ public class CardDetail extends NfcActivity
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("ProfileId", currentUser_ProfileId);
+            jsonObject.accumulate("UserId", user_id);
             jsonObject.accumulate("numofrecords", "10");
             jsonObject.accumulate("pageno", "1");
 

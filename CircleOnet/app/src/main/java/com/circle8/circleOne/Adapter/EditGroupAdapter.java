@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.circle8.circleOne.Activity.CardDetail;
@@ -15,6 +16,8 @@ import com.circle8.circleOne.R;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.circle8.circleOne.Activity.CardDetail.selectedStrings;
 
 /**
  * Created by ample-arch on 9/12/2017.
@@ -26,18 +29,19 @@ public class EditGroupAdapter extends BaseAdapter
     ArrayList<GroupModel> groupModelArrayList = new ArrayList<>();
     ArrayList<String> groupName = new ArrayList<>();
     ArrayList<String> groupPhoto = new ArrayList<>();
-
+    ArrayList<String> groupId = new ArrayList<>();
     public EditGroupAdapter(Context applicationContext, ArrayList<GroupModel> groupModelArrayList)
     {
         this.context = applicationContext ;
         this.groupModelArrayList = groupModelArrayList ;
     }
 
-    public EditGroupAdapter(CardDetail cardDetail, ArrayList<String> groupName, ArrayList<String> groupPhoto)
+    public EditGroupAdapter(CardDetail cardDetail, ArrayList<String> groupName, ArrayList<String> groupPhoto, ArrayList<String> groupId)
     {
         this.context = cardDetail ;
         this.groupName = groupName ;
         this.groupPhoto = groupPhoto ;
+        this.groupId = groupId;
     }
 
     @Override
@@ -56,7 +60,7 @@ public class EditGroupAdapter extends BaseAdapter
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
+    public View getView(final int position, View convertView, ViewGroup parent)
     {
         View row = convertView;
 
@@ -71,6 +75,18 @@ public class EditGroupAdapter extends BaseAdapter
 
             tvGroupName.setText(groupName.get(position));
 
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        selectedStrings.add(groupId.get(position));
+                    }else{
+                        selectedStrings.remove(groupId.get(position));
+                    }
+
+                }
+            });
         }
 
         return row;

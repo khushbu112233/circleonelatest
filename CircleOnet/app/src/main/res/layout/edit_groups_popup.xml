@@ -37,6 +37,7 @@
     </RelativeLayout>
 
     <ListView
+        android:choiceMode="multipleChoice"
         android:layout_above="@+id/rltBottomGroup"
         android:layout_below="@+id/rlTopView"
         android:id="@+id/listView"

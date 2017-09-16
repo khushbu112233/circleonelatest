@@ -251,7 +251,7 @@ public class FingerPrintLogin extends AppCompatActivity {
         @Override
         public void onAuthenticationHelp(int helpCode, CharSequence helpString) {
             super.onAuthenticationHelp(helpCode, helpString);
-            Toast.makeText(context, R.string.auth_successful, Toast.LENGTH_LONG).show();
+            Toast.makeText(context, helpString, Toast.LENGTH_LONG).show();
         }
 
         @Override
