@@ -13,6 +13,15 @@ public class SubscriptionModel
     String money ;
     String bill ;
     String letf_connection ;
+    String packageID ;
+    String packageName ;
+    String packageDesc ;
+    String price ;
+    String packageType ;
+    String connectionLimit ;
+    String groupLimit ;
+    String monthlyConnectionLimit ;
+
 
     public String getPackage_no() {
         return package_no;
@@ -68,5 +77,69 @@ public class SubscriptionModel
 
     public void setLetf_connection(String letf_connection) {
         this.letf_connection = letf_connection;
+    }
+
+    public String getPackageID() {
+        return packageID;
+    }
+
+    public void setPackageID(String packageID) {
+        this.packageID = packageID;
+    }
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
+    }
+
+    public String getPackageDesc() {
+        return packageDesc;
+    }
+
+    public void setPackageDesc(String packageDesc) {
+        this.packageDesc = packageDesc;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getPackageType() {
+        return packageType;
+    }
+
+    public void setPackageType(String packageType) {
+        this.packageType = packageType;
+    }
+
+    public String getConnectionLimit() {
+        return connectionLimit;
+    }
+
+    public void setConnectionLimit(String connectionLimit) {
+        this.connectionLimit = connectionLimit;
+    }
+
+    public String getGroupLimit() {
+        return groupLimit;
+    }
+
+    public void setGroupLimit(String groupLimit) {
+        this.groupLimit = groupLimit;
+    }
+
+    public String getMonthlyConnectionLimit() {
+        return monthlyConnectionLimit;
+    }
+
+    public void setMonthlyConnectionLimit(String monthlyConnectionLimit) {
+        this.monthlyConnectionLimit = monthlyConnectionLimit;
     }
 }

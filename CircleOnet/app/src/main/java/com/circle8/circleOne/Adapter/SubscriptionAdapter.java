@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.circle8.circleOne.Activity.SubscriptionActivity;
 import com.circle8.circleOne.Model.SubscriptionModel;
 import com.circle8.circleOne.R;
 
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 public class SubscriptionAdapter extends BaseAdapter
 {
     Context context ;
-    private ArrayList<SubscriptionModel> subscriptionModelArrayList ;
+    private ArrayList<SubscriptionModel> subscriptionModelArrayList = new ArrayList<>();
 
     private ArrayList<String> packageName = new ArrayList<>();
     private ArrayList<Integer> contact = new ArrayList<>();
@@ -42,9 +43,15 @@ public class SubscriptionAdapter extends BaseAdapter
         this.left_connection = left_connection;
     }
 
+    public SubscriptionAdapter(SubscriptionActivity subscriptionActivity, ArrayList<SubscriptionModel> subscriptionModelArrayList)
+    {
+        this.context = subscriptionActivity ;
+        this.subscriptionModelArrayList = subscriptionModelArrayList ;
+    }
+
     @Override
     public int getCount() {
-        return packageName.size();
+        return subscriptionModelArrayList.size();
     }
 
     @Override
@@ -74,7 +81,24 @@ public class SubscriptionAdapter extends BaseAdapter
             TextView tvLeftConnection = (TextView)row.findViewById(R.id.tvLeftConnection);
             RelativeLayout rlLeftConnection = (RelativeLayout)row.findViewById(R.id.rlLeftConnection);
 
-            tvPackageName.setText(packageName.get(position));
+            tvPackageName.setText(subscriptionModelArrayList.get(position).getPackageName());
+            tvConnect_Group.setText(subscriptionModelArrayList.get(position).getConnectionLimit()+" contacts, up to " +
+                                    subscriptionModelArrayList.get(position).getGroupLimit()+" groups,");
+            tvConnection.setText("up to "+subscriptionModelArrayList.get(position).getMonthlyConnectionLimit()+" connections per month.");
+            tvAmount.setText("S$"+subscriptionModelArrayList.get(position).getPrice());
+
+            String left_connection = subscriptionModelArrayList.get(position).getLetf_connection();
+
+            if( left_connection.equals(""))
+            {
+                rlLeftConnection.setVisibility(View.GONE);
+            }
+            else
+            {
+                tvLeftConnection.setText(left_connection+" connections left, until the end of month");
+            }
+
+           /* tvPackageName.setText(packageName.get(position));
 
             int group_no = group.get(position);
 
@@ -109,7 +133,7 @@ public class SubscriptionAdapter extends BaseAdapter
             else
             {
                 tvLeftConnection.setText(l_connect+" connections left, until the end of month");
-            }
+            }*/
 
         }
 

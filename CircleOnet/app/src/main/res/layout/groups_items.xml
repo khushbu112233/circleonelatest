@@ -15,13 +15,27 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3">
+
+            <TextView
+                android:id="@+id/tvMemberInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:text="You are not having any members in this group"
+                android:layout_centerInParent="true"
+                android:visibility="gone"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="0.3">
+            android:orientation="vertical">
             <!--for 1st group member view-->
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/llOneUser"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -50,7 +64,8 @@
                             android:textStyle="bold"
                             android:textColor="@android:color/black"
                             android:gravity="left"
-                            android:text="Physician Yong"
+                            android:hint="Physician Yong"
+                            android:textColorHint="@color/black"
                             android:visibility="visible"
                             android:id="@+id/tvPersonName1"
                             android:layout_width="match_parent"
@@ -59,7 +74,7 @@
                         <TextView
                             android:textColor="@color/gray_text"
                             android:gravity="left"
-                            android:text="Physician Yong"
+                            android:hint="Physician Yong"
                             android:visibility="visible"
                             android:id="@+id/tvDesignation1"
                             android:layout_width="match_parent"
@@ -71,7 +86,7 @@
                         android:maxLines="4"
                         android:layout_gravity="center_vertical|right"
                         android:gravity="left|center_vertical"
-                        android:text="Address\n Company Name\n Email\n Website\n Telephone\n Mobile"
+                        android:hint="Address\n Company Name\n Email\n Website\n Telephone\n Mobile"
                         android:visibility="visible"
                         android:textColor="@color/gray_text"
                         android:id="@+id/tvPersonDetail1"
@@ -79,15 +94,15 @@
                         android:layout_height="80dp"
                         android:textSize="10sp" />
                 </LinearLayout>
-                <View
-                    android:id="@+id/Line1"
-                    android:layout_marginTop="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/colorAccent"/>
-            </LinearLayout>
+            </RelativeLayout>
+            <View
+                android:id="@+id/Line1"
+                android:layout_marginTop="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorAccent"/>
             <!--for 2nd group member view-->
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/llSecondUser"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -116,7 +131,8 @@
                             android:textStyle="bold"
                             android:textColor="@android:color/black"
                             android:gravity="left"
-                            android:text="Physician Yong"
+                            android:hint="Physician Yong"
+                            android:textColorHint="@color/black"
                             android:visibility="visible"
                             android:id="@+id/tvPersonName2"
                             android:layout_width="match_parent"
@@ -125,7 +141,7 @@
                         <TextView
                             android:textColor="@color/gray_text"
                             android:gravity="left"
-                            android:text="Physician Yong"
+                            android:hint="Physician Yong"
                             android:visibility="visible"
                             android:id="@+id/tvDesignation2"
                             android:layout_width="match_parent"
@@ -137,7 +153,7 @@
                         android:maxLines="4"
                         android:layout_gravity="center_vertical|right"
                         android:gravity="left|center_vertical"
-                        android:text="Address\n Company Name\n Email\n Website\n Telephone\n Mobile"
+                        android:hint="Address\n Company Name\n Email\n Website\n Telephone\n Mobile"
                         android:visibility="visible"
                         android:textColor="@color/gray_text"
                         android:id="@+id/tvPersonDetail2"
@@ -145,15 +161,15 @@
                         android:layout_height="80dp"
                         android:textSize="10sp" />
                 </LinearLayout>
-                <View
-                    android:id="@+id/Line2"
-                    android:layout_marginTop="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/colorAccent"/>
-            </LinearLayout>
+            </RelativeLayout>
+            <View
+                android:id="@+id/Line2"
+                android:layout_marginTop="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorAccent"/>
             <!--for 3rd group member view-->
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/llThirdUser"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -182,7 +198,8 @@
                             android:textStyle="bold"
                             android:textColor="@android:color/black"
                             android:gravity="left"
-                            android:text="Physician Yong"
+                            android:hint="Physician Yong"
+                            android:textColorHint="@color/black"
                             android:visibility="visible"
                             android:id="@+id/tvPersonName3"
                             android:layout_width="match_parent"
@@ -191,7 +208,7 @@
                         <TextView
                             android:textColor="@color/gray_text"
                             android:gravity="left"
-                            android:text="Physician Yong"
+                            android:hint="Physician Yong"
                             android:visibility="visible"
                             android:id="@+id/tvDesignation3"
                             android:layout_width="match_parent"
@@ -203,7 +220,7 @@
                         android:maxLines="4"
                         android:layout_gravity="center_vertical|right"
                         android:gravity="left|center_vertical"
-                        android:text="Address\n Company Name\n Email\n Website\n Telephone\n Mobile"
+                        android:hint="Address\n Company Name\n Email\n Website\n Telephone\n Mobile"
                         android:visibility="visible"
                         android:textColor="@color/gray_text"
                         android:id="@+id/tvPersonDetail3"
@@ -217,9 +234,11 @@
                     android:layout_height="1dp"
                     android:visibility="gone"
                     android:background="@color/colorAccent"/>
-            </LinearLayout>
+            </RelativeLayout>
 
         </LinearLayout>
+
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
