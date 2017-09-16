@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.Activity.ContactsImportActivity;
+import com.circle8.circleOne.Activity.LoginActivity;
 import com.circle8.circleOne.R;
 
 import java.util.ArrayList;
@@ -201,19 +202,14 @@ public class HelpActivity extends AppCompatActivity {
         }
     };
 
-
-
-   /* @Override
-    public void onSkipPressed(Fragment currentFragment) {
-        super.onSkipPressed(currentFragment);
-        startActivity(new Intent(getApplicationContext(), CardsActivity.class));
-        finish();
-    }
-
     @Override
-    public void onDonePressed(Fragment currentFragment) {
-        super.onDonePressed(currentFragment);
-        startActivity(new Intent(getApplicationContext(), CardsActivity.class));
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        moveTaskToBack(true);
+        android.os.Process.killProcess(android.os.Process.myPid());
         finish();
-    }*/
+
+    }
 }

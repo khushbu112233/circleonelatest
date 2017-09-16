@@ -280,7 +280,6 @@ public class LoginActivity extends AppCompatActivity implements
                     if (event.getRawX() >= (etLoginPass.getRight() - etLoginPass.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
                         // your action here
                         startActivity(new Intent(LoginActivity.this, ForgotActivity.class));
-                        finish();
                         return true;
                     }
                 }
@@ -601,7 +600,7 @@ public class LoginActivity extends AppCompatActivity implements
             return cipher;
         } catch (Exception e) {
             // throw new RuntimeException("Failed to instantiate Cipher class");
-            // imgFinger.setVisibility(View.GONE);
+             imgFinger.setVisibility(View.GONE);
             return null;
         }
     }

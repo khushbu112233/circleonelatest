@@ -77,7 +77,7 @@ public class CardDetail extends NfcActivity
     ImageView imgCall, imgSMS, imgMail;
     String recycle_image1, recycle_image2;
     ImageView imgAddGroupFriend;
-    public static ArrayList<String> selectedStrings = new ArrayList<String>();
+    public static JSONArray selectedStrings = new JSONArray();
     String userImg, frontCardImg, backCardImg, personName, personAddress;
 
     List<CharSequence> list;
@@ -156,54 +156,6 @@ public class CardDetail extends NfcActivity
             @Override
             public void onClick(View v)
             {
-//                Toast.makeText(getApplicationContext(), "Group", Toast.LENGTH_LONG).show();
-                // Intialize  readable sequence of char values
-               /* final CharSequence[] dialogList = list.toArray(new CharSequence[list.size()]);
-                final AlertDialog.Builder builderDialog = new AlertDialog.Builder(CardDetail.this);
-                builderDialog.setTitle("Select Item");
-                int count = dialogList.length;
-                boolean[] is_checked = new boolean[count];
-
-                // Creating multiple selection by using setMutliChoiceItem method
-                builderDialog.setMultiChoiceItems(dialogList, is_checked,
-                        new DialogInterface.OnMultiChoiceClickListener() {
-                            public void onClick(DialogInterface dialog,
-                                                int whichButton, boolean isChecked) {
-                            }
-                        });
-
-                builderDialog.setPositiveButton("Save",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                ListView list = ((AlertDialog) dialog).getListView();
-                                // make selected item in the comma seprated string
-                                StringBuilder stringBuilder = new StringBuilder();
-                                for (int i = 0; i < list.getCount(); i++) {
-                                    boolean checked = list.isItemChecked(i);
-                                    if (checked) {
-                                        if (stringBuilder.length() > 0) stringBuilder.append("");
-                                        stringBuilder.append(listGroupId.get(i));
-
-                                        new HttpAsyncTaskGroupAddFriend().execute("http://circle8.asia:8081/Onet.svc/Group/AddFriend");
-                                    }
-                                }
-
-                        *//*Check string builder is empty or not. If string builder is not empty.
-                          It will display on the screen. *//*
-                                Toast.makeText(getApplicationContext(), stringBuilder.toString(), Toast.LENGTH_LONG).show();
-                            }
-                        });
-
-                builderDialog.setNegativeButton("Cancel",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                AlertDialog alert = builderDialog.create();
-                alert.show();*/
                 final CharSequence[] dialogList = list.toArray(new CharSequence[list.size()]);
                 final AlertDialog.Builder builderDialog = new AlertDialog.Builder(CardDetail.this);
                 LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -245,6 +197,7 @@ public class CardDetail extends NfcActivity
                     public void onClick(View v) {
                         // make selected item in the comma seprated string
                         Toast.makeText(getApplicationContext(), selectedStrings.toString(), Toast.LENGTH_LONG).show();
+                        new HttpAsyncTaskGroupAddFriend().execute("http://circle8.asia:8081/Onet.svc/AddMemberToGroups");
                     }
                 });
 
@@ -837,13 +790,11 @@ public class CardDetail extends NfcActivity
             HttpPost httpPost = new HttpPost(url);
             String json = "";
 
-            int i[] = new int[]{1, 2, 3};
-
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("GroupID", listGroupId.get(0));
-            jsonObject.accumulate("UserID", user_id);
-            jsonObject.accumulate("myFriendProfileIds", i);
+            jsonObject.accumulate("GroupIDs", selectedStrings);
+            jsonObject.accumulate("ProfileId", profile_id);
+            jsonObject.accumulate("UserId", user_id);
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -974,14 +925,15 @@ public class CardDetail extends NfcActivity
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
                     String Success = jsonObject.getString("Success");
+                    String Message = jsonObject.getString("Message");
                     if (Success.equals("1")) {
-                        Toast.makeText(getApplicationContext(), "Friend Added..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), Message, Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(getApplicationContext(), "Friend not Added..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), Message, Toast.LENGTH_LONG).show();
                     }
                     // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
                 } else {
-                    Toast.makeText(getApplicationContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to Add Friend in groups", Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

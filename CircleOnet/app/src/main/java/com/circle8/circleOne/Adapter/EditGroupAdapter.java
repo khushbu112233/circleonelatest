@@ -80,9 +80,9 @@ public class EditGroupAdapter extends BaseAdapter
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-                        selectedStrings.add(groupId.get(position));
+                        selectedStrings.put(groupId.get(position));
                     }else{
-                        selectedStrings.remove(groupId.get(position));
+                        selectedStrings.remove(position);
                     }
 
                 }
