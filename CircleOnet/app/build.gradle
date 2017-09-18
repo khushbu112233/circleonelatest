@@ -26,6 +26,14 @@ android {
         // Prevent OutOfMemory with MultiDex during the build phase
         javaMaxHeapSize "4g"
     }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/DEPENDENCIES'
+    }
 }
 
 repositories {
@@ -76,7 +84,7 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:4.0.0'
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.onesignal:OneSignal:3.+@aar'
-    compile 'com.google.android.gms:play-services:10.2.0'
+    compile 'com.google.android.gms:play-services:11.0.1'
     compile 'com.github.dmytrodanylyk.shadow-layout:library:1.0.3'
     compile 'me.dm7.barcodescanner:zxing:1.8.4'
     compile 'com.google.zxing:core:3.2.1'
@@ -86,6 +94,7 @@ dependencies {
     compile 'com.stripe:stripe-java:1.47.0'
     compile 'com.stripe:stripe-android:1.0.4'
     compile 'com.codinguser.android:contactpicker:3.0.0@aar'
+    compile 'io.scanbot:sdk-package-2:1.25.1'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

@@ -641,6 +641,7 @@ public class GroupsActivity extends AppCompatActivity
                 {
                     JSONObject jsonObject = new JSONObject(result);
                     String Success = jsonObject.getString("Success").toString();
+                    String Message = jsonObject.getString("Message").toString();
                     if (Success.equals("1"))
                     {
                         Toast.makeText(getApplicationContext(), "Group Created..", Toast.LENGTH_LONG).show();
@@ -649,7 +650,7 @@ public class GroupsActivity extends AppCompatActivity
                     }
                     else
                     {
-                        Toast.makeText(getApplicationContext(), "Group not Created..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), Message, Toast.LENGTH_LONG).show();
                     }
                 }
                 else

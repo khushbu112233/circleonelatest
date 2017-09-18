@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.SEND_SMS" />
 
     <uses-feature android:name="android.hardware.nfc" />
+    <uses-feature android:name="android.hardware.camera" />
 
     <application
         android:name=".ApplicationUtils.MyApplication"
@@ -210,7 +211,10 @@
             android:name=".Activity.ManageMyProfile"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
-        <activity android:name=".Activity.ForgotActivity" android:theme="@style/NoActionbar"></activity>
+        <activity
+            android:name=".Activity.ForgotActivity"
+            android:theme="@style/NoActionbar" />
+        <activity android:name=".Activity.ScanbotCamera"></activity>
     </application>
 
 </manifest>
