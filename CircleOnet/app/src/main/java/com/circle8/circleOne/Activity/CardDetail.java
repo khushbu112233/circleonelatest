@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.Adapter.EditGroupAdapter;
+import com.circle8.circleOne.Adapter.GroupsInCardDetailAdapter;
 import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.GroupModel;
@@ -95,16 +96,21 @@ public class CardDetail extends NfcActivity
     ArrayList<String> groupPhoto = new ArrayList<>();
     ArrayList<String> ID_group = new ArrayList<>();
     ArrayList<String> groupDesc = new ArrayList<>();
-    ListView listView1;
+    ListView listView1, groupListView;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_detail);
+
         loginSession = new LoginSession(getApplicationContext());
         HashMap<String, String> user = loginSession.getUserDetails();
         user_id = user.get(LoginSession.KEY_USERID);
         currentUser_ProfileId = user.get(LoginSession.KEY_PROFILEID);
+
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager1 = (ViewPager) findViewById(R.id.viewPager1);
         imgCards = (ImageView) findViewById(R.id.imgCards);
@@ -143,6 +149,8 @@ public class CardDetail extends NfcActivity
         youtubeUrl = (ImageView) findViewById(R.id.youtubeUrl);
         twitterUrl = (ImageView) findViewById(R.id.twitterUrl);
         linkedInUrl = (ImageView) findViewById(R.id.linkedInUrl);
+        groupListView = (ListView)findViewById(R.id.groupListView);
+
         list = new ArrayList<CharSequence>();
         listGroupId = new ArrayList<String>();
         Intent intent = getIntent();
@@ -151,6 +159,8 @@ public class CardDetail extends NfcActivity
         new HttpAsyncTaskGroup().execute("http://circle8.asia:8081/Onet.svc/Group/Fetch");
 
         new CardDetail.HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetUserProfile");
+
+        new HttpAsyncTaskGroupsFetch().execute("http://circle8.asia:8081/Onet.svc/Group/MyGroupsTaggedWithFriendProfile");
 
         imgAddGroupFriend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1412,5 +1422,137 @@ public class CardDetail extends NfcActivity
     public void callData(String id) {
 
     }
+
+    private class HttpAsyncTaskGroupsFetch extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+          /*  dialog = new ProgressDialog(CardDetail.this);
+            dialog.setMessage("Fetching My Account...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            return FetchGroupDataPost(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            try
+            {
+                if (result != null)
+                {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String success = jsonObject.getString("success").toString();
+                    String message = jsonObject.getString("message").toString();
+                    String counts = jsonObject.getString("Count").toString();
+
+                    if (success.equals("1"))
+                    {
+//                        Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+
+                        JSONObject groups = jsonObject.getJSONObject("Groups");
+                        String groupid = groups.getString("group_ID");
+                        String groupname = groups.getString("group_Name");
+                        String groupdesc = groups.getString("group_desc");
+                        String groupphoto = groups.getString("group_photo");
+
+                        ArrayList<String> img = new ArrayList<>();
+                        ArrayList<String> name = new ArrayList<>();
+                        ArrayList<String> desc = new ArrayList<>();
+
+                        img.add(groupphoto);
+                        name.add(groupname);
+                        desc.add(groupdesc);
+
+                        GroupsInCardDetailAdapter groupsInCardDetailAdapter = new GroupsInCardDetailAdapter(CardDetail.this, img,name,desc);
+                        groupListView.setAdapter(groupsInCardDetailAdapter);
+                        groupsInCardDetailAdapter.notifyDataSetChanged();
+
+                    }
+                    else
+                    {
+                        Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+                    }
+                }
+                else
+                {
+                    Toast.makeText(getBaseContext(), "Not able to Update Register..", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public  String FetchGroupDataPost(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("ProfileId", currentUser_ProfileId);
+            jsonObject.accumulate("UserId", user_id );
+            jsonObject.accumulate("numofrecords", "10");
+            jsonObject.accumulate("pageno", "1" );
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
 
 }

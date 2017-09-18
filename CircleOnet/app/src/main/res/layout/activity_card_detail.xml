@@ -403,6 +403,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ListView
+                        android:id="@+id/groupListView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/imgAddGroupFriend"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp">
+
+                    </ListView>
+
+                    <ImageView
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:id="@+id/imgAddGroupFriend"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="right"
+                        android:src="@drawable/ic_edit" />
+
+                </RelativeLayout>
+
+<!--
             <RelativeLayout
                 android:background="@color/white"
                 android:layout_marginLeft="10dp"
@@ -487,6 +515,7 @@
                     android:src="@drawable/ic_edit" />
 
             </RelativeLayout>
+-->
 
             <RelativeLayout
                 android:background="@color/white"
