@@ -12,6 +12,7 @@ import android.content.pm.Signature;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,30 +21,39 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.WindowCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.circle8.circleOne.*;
 import com.circle8.circleOne.Adapter.AddEventAdapter;
 import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.Adapter.CustomAdapter;
+
+import com.circle8.circleOne.Fragments.CameraDialogFragment;
 import com.circle8.circleOne.Helper.LoginSession;
+import com.circle8.circleOne.MainActivity;
 import com.circle8.circleOne.Model.TestimonialModel;
-import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.ExpandableHeightGridView;
 import com.circle8.circleOne.Utils.ExpandableHeightListView;
 import com.circle8.circleOne.Utils.Utility;
@@ -69,6 +79,15 @@ import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 import com.linkedin.platform.utils.Scope;
 import com.squareup.picasso.Picasso;
+
+import net.doo.snap.camera.AutoSnappingController;
+import net.doo.snap.camera.CameraOpenCallback;
+import net.doo.snap.camera.ContourDetectorFrameHandler;
+import net.doo.snap.camera.PictureCallback;
+import net.doo.snap.camera.ScanbotCameraView;
+import net.doo.snap.lib.detector.ContourDetector;
+import net.doo.snap.lib.detector.DetectionResult;
+import net.doo.snap.ui.PolygonView;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -100,7 +119,9 @@ import static junit.framework.Assert.assertEquals;
 
 public class EditProfileActivity extends AppCompatActivity implements
         View.OnClickListener,
-        GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks
+        GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks,
+        PictureCallback,
+        ContourDetectorFrameHandler.ResultHandler
 {
     public static final String PACKAGE = "com.circle8.circleOne";
     private static final int PICKFILE_RESULT_CODE = 1;
@@ -169,6 +190,18 @@ public class EditProfileActivity extends AppCompatActivity implements
     private GoogleApiClient mGoogleApiClient;
     private static final int RC_SIGN_IN = 007;
     EditText edtWork2, edtPrimary2, edtEmail2, edtFax1, edtFax2;
+    private static final int PERMISSIONS_REQUEST_CAMERA = 314;
+    FrameLayout FrameScanBotCamera;
+
+    private ScanbotCameraView cameraView;
+    private PolygonView polygonView;
+    private ImageView resultView;
+    private ContourDetectorFrameHandler contourDetectorFrameHandler;
+    private AutoSnappingController autoSnappingController;
+    private Toast userGuidanceToast;
+
+    private boolean flashEnabled = false;
+    private boolean autoSnappingEnabled = true;
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException
     {
@@ -185,17 +218,36 @@ public class EditProfileActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        supportRequestWindowFeature(WindowCompat.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.fragment_edit_profile);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+        cameraView = (ScanbotCameraView) findViewById(R.id.camera);
+        cameraView.setCameraOpenCallback(new CameraOpenCallback() {
+            @Override
+            public void onCameraOpened() {
+                cameraView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        cameraView.continuousFocus();
+                        cameraView.useFlash(flashEnabled);
+                    }
+                }, 700);
+            }
+        });
+
+        resultView = (ImageView) findViewById(R.id.result);
+
+
         edtWork2 = (EditText) findViewById(R.id.edtWork2);
         edtPrimary2 = (EditText) findViewById(R.id.edtPrimary2);
         edtEmail2 = (EditText) findViewById(R.id.edtEmail2);
         edtFax1 = (EditText) findViewById(R.id.edtFax1);
         edtFax2 = (EditText) findViewById(R.id.edtFax2);
-
+        FrameScanBotCamera = (FrameLayout) findViewById(R.id.FrameScanBotCamera);
         autoCompleteCompany = (AutoCompleteTextView) findViewById(R.id.autoCompleteCompany);
         autoCompleteDesignation = (AutoCompleteTextView) findViewById(R.id.autoCompleteDesignation);
         autoCompleteIndustry = (AutoCompleteTextView) findViewById(R.id.autoCompleteIndustry);
@@ -285,6 +337,29 @@ public class EditProfileActivity extends AppCompatActivity implements
         gridView.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.mytextview, array));
         gridView.setExpanded(true);
 
+        findViewById(R.id.snap).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cameraView.takePicture(false);
+            }
+        });
+
+        findViewById(R.id.flash).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flashEnabled = !flashEnabled;
+                cameraView.useFlash(flashEnabled);
+            }
+        });
+
+        findViewById(R.id.autoSnappingToggle).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                autoSnappingEnabled = !autoSnappingEnabled;
+                setAutoSnapEnabled(autoSnappingEnabled);
+            }
+        });
+
         imgFb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -348,9 +423,8 @@ public class EditProfileActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 cardType = "front";
-                Intent intent1 = new Intent(getApplicationContext(), ScanbotCamera.class);
-                startActivity(intent1);
-               // selectImage();
+
+                selectImage();
             }
         });
 
@@ -556,6 +630,33 @@ public class EditProfileActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_CAMERA: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    openCameraDialog();
+                }
+                return;
+            }
+        }
+    }
+
+    private void openCameraDialog() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        // Create and show the dialog.
+        DialogFragment newFragment = CameraDialogFragment.newInstance();
+        newFragment.show(ft, "dialog");
+    }
+
+    @Override
     public void onConnected(@Nullable Bundle bundle) {
 
     }
@@ -660,7 +761,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-
+        cameraView.onResume();
         callbackManager = CallbackManager.Factory.create();
 
         loginButton = (LoginButton) findViewById(R.id.login_button);
@@ -705,9 +806,32 @@ public class EditProfileActivity extends AppCompatActivity implements
                 boolean result1 = Utility.checkCameraPermission(EditProfileActivity.this);
                 if (items[item].equals("Take Photo")) {
                     userChoosenTask = "Take Photo";
-                    if (result1)
+                    if (result1) {
 //                        activeTakePhoto();
-                        cameraCardIntent();
+                     //   cameraCardIntent();
+                        FrameScanBotCamera.setVisibility(View.VISIBLE);
+                       // getSupportActionBar().hide();
+                        contourDetectorFrameHandler = ContourDetectorFrameHandler.attach(cameraView);
+
+                        // Please note: https://github.com/doo/Scanbot-SDK-Examples/wiki/Detecting-and-drawing-contours#contour-detection-parameters
+                        contourDetectorFrameHandler.setAcceptedAngleScore(60);
+                        contourDetectorFrameHandler.setAcceptedSizeScore(70);
+
+                        polygonView = (PolygonView) findViewById(R.id.polygonView);
+                        contourDetectorFrameHandler.addResultHandler(polygonView);
+                        contourDetectorFrameHandler.addResultHandler(EditProfileActivity.this);
+
+                        autoSnappingController = AutoSnappingController.attach(cameraView, contourDetectorFrameHandler);
+
+                        cameraView.addPictureCallback(EditProfileActivity.this);
+
+                        userGuidanceToast = Toast.makeText(EditProfileActivity.this, "", Toast.LENGTH_SHORT);
+                        userGuidanceToast.setGravity(Gravity.CENTER, 0, 0);
+                        setAutoSnapEnabled(autoSnappingEnabled);
+
+                       /* Intent intent1 = new Intent(getApplicationContext(), ScanbotCamera.class);
+                        startActivity(intent1);*/
+                    }
                 } else if (items[item].equals("Choose from Library")) {
                     userChoosenTask = "Choose from Library";
                     if (result)
@@ -719,6 +843,103 @@ public class EditProfileActivity extends AppCompatActivity implements
             }
         });
         builder.show();
+    }
+
+    @Override
+    public boolean handleResult(final ContourDetectorFrameHandler.DetectedFrame detectedFrame) {
+        // Here you are continuously notified about contour detection results.
+        // For example, you can show a user guidance text depending on the current detection status.
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                showUserGuidance(detectedFrame.detectionResult);
+            }
+        });
+
+        return false; // typically you need to return false
+    }
+
+    private void showUserGuidance(final DetectionResult result) {
+        if (!autoSnappingEnabled) {
+            return;
+        }
+
+        switch (result) {
+            case OK:
+                userGuidanceToast.setText("Don't move");
+                userGuidanceToast.show();
+                break;
+            case OK_BUT_TOO_SMALL:
+                userGuidanceToast.setText("Move closer");
+                userGuidanceToast.show();
+                break;
+            case OK_BUT_BAD_ANGLES:
+                userGuidanceToast.setText("Perspective");
+                userGuidanceToast.show();
+                break;
+            case ERROR_NOTHING_DETECTED:
+                userGuidanceToast.setText("No Document");
+                userGuidanceToast.show();
+                break;
+            case ERROR_TOO_NOISY:
+                userGuidanceToast.setText("Background too noisy");
+                userGuidanceToast.show();
+                break;
+            case ERROR_TOO_DARK:
+                userGuidanceToast.setText("Poor light");
+                userGuidanceToast.show();
+                break;
+            default:
+                userGuidanceToast.cancel();
+                break;
+        }
+    }
+
+    @Override
+    public void onPictureTaken(byte[] image, int imageOrientation) {
+        // Here we get the full image from the camera.
+        // Implement a suitable async(!) detection and image handling here.
+        // This is just a demo showing detected image as downscaled preview image.
+
+        // Decode Bitmap from bytes of original image:
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 8; // use 1 for original size (if you want no downscale)!
+        // in this demo we downscale the image to 1/8 for the preview.
+        Bitmap originalBitmap = BitmapFactory.decodeByteArray(image, 0, image.length, options);
+
+        // rotate original image if required:
+        if (imageOrientation > 0) {
+            final Matrix matrix = new Matrix();
+            matrix.setRotate(imageOrientation, originalBitmap.getWidth() / 2f, originalBitmap.getHeight() / 2f);
+            originalBitmap = Bitmap.createBitmap(originalBitmap, 0, 0, originalBitmap.getWidth(), originalBitmap.getHeight(), matrix, false);
+        }
+
+        // Run document detection on original image:
+        final ContourDetector detector = new ContourDetector();
+        detector.detect(originalBitmap);
+        final Bitmap documentImage = detector.processImageAndRelease(originalBitmap, detector.getPolygonF(), ContourDetector.IMAGE_FILTER_NONE);
+
+        resultView.post(new Runnable() {
+            @Override
+            public void run() {
+                resultView.setImageBitmap(documentImage);
+                cameraView.continuousFocus();
+                cameraView.startPreview();
+            }
+        });
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        cameraView.onPause();
+    }
+
+    private void setAutoSnapEnabled(boolean enabled) {
+        autoSnappingController.setEnabled(enabled);
+        contourDetectorFrameHandler.setEnabled(enabled);
+        polygonView.setVisibility(enabled ? View.VISIBLE : View.GONE);
     }
 
     private void galleryCardIntent() {
@@ -2232,6 +2453,15 @@ public class EditProfileActivity extends AppCompatActivity implements
                     Postalcode = jsonObject.getString("Postalcode");
                     Website = jsonObject.getString("Website");
                     Attachment_FileName = jsonObject.getString("Attachment_FileName");
+
+                    int selectedPos = company.indexOf((String) CompanyName);
+                    companyID = company_id.get(selectedPos);
+
+                    int selectedPos1 = designation.indexOf((String) Designation);
+                    designationID = designation_id.get(selectedPos1);
+
+                    int selectedPos2 = industry.indexOf((String) IndustryName);
+                    industryID = industry_id.get(selectedPos2);
 
                     tvCompany.setText(CompanyName);
                     tvDesignation.setText(Designation);
