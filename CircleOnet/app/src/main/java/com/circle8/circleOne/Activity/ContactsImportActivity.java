@@ -41,6 +41,7 @@ public class ContactsImportActivity extends AppCompatActivity {
     ListView listView;
     private TextView textView;
     ImageView imgLogo;
+    ArrayList<String> arrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class ContactsImportActivity extends AppCompatActivity {
         setContentView(R.layout.activity_contacts_import);
         txtSend = (TextView) findViewById(R.id.txtSend);
         txtCancel = (TextView) findViewById(R.id.txtCancel);
+        arrayList = new ArrayList<>();
         final ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.custom_actionbar);
@@ -119,13 +121,15 @@ public class ContactsImportActivity extends AppCompatActivity {
 
                     //listView.getAdapter().getItem((int)listView.getCheckItemIds()[i]);
                     String num = arrayListPhoneNumber.get(arrayListPhoneName.indexOf(listView.getAdapter().getItem((int)listView.getCheckItemIds()[i]).toString()));
-                    Toast.makeText(getApplicationContext(), "Request has been sent", Toast.LENGTH_LONG).show();
+                    arrayList.add(num);
+
                   //  Toast.makeText(getApplicationContext(), num, Toast.LENGTH_LONG).show();
                    // Toast.makeText(getApplicationContext(), listView.getAdapter().getItem((int)listView.getCheckItemIds()[i]).toString(), Toast.LENGTH_LONG).show();
 
                     startActivity(new Intent(ContactsImportActivity.this, CardsActivity.class));
                     finish();
                 }
+                Toast.makeText(getApplicationContext(), arrayList.toString(), Toast.LENGTH_LONG).show();
             }
         });
     }
