@@ -570,7 +570,6 @@ public class EditProfileActivity extends AppCompatActivity implements
                 }
                 else if (type.equals("edit"))
                 {
-
                     new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/UpdateProfile");
                 }
             }
@@ -1421,7 +1420,8 @@ public class EditProfileActivity extends AppCompatActivity implements
     {
         InputStream inputStream = null;
         String result = "";
-        try {
+        try
+        {
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
 

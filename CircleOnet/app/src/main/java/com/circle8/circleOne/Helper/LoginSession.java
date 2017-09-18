@@ -33,6 +33,7 @@ public class LoginSession {
     // User name (make variable public to access from outside)
     public static final String KEY_NAME = "name";
     public static final String KEY_USERID = "userid";
+    public static final String KEY_PASSWORD = "password" ;
 
     // Email address (make variable public to access from outside)
     public static final String KEY_EMAIL = "email";
@@ -51,7 +52,7 @@ public class LoginSession {
     /**
      * Create login session
      * */
-    public void createLoginSession(String profileid, String userid, String name, String email, String image, String gender){
+    public void createLoginSession(String profileid, String userid, String name, String email, String image, String gender, String password){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
@@ -64,6 +65,7 @@ public class LoginSession {
         editor.putString(KEY_EMAIL, email);
         editor.putString(KEY_IMAGE, image);
         editor.putString(KEY_GENDER, gender);
+        editor.putString(KEY_PASSWORD, password);
         // commit changes
         editor.commit();
     }
@@ -107,6 +109,7 @@ public class LoginSession {
         user.put(KEY_IMAGE, pref.getString(KEY_IMAGE, null));
         user.put(KEY_GENDER, pref.getString(KEY_GENDER, null));
         user.put(KEY_PROFILEID, pref.getString(KEY_PROFILEID, null));
+        user.put(KEY_PASSWORD, pref.getString(KEY_PASSWORD, null));
 
         // return user
         return user;

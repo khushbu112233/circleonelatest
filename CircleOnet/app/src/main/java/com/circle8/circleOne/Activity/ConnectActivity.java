@@ -106,11 +106,11 @@ public class ConnectActivity extends AppCompatActivity
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         {
-            motionLength = 265 ;
+            motionLength = 180 ;
         }
         else
         {
-            motionLength = 190 ;
+            motionLength = 180 ;
         }
 
         /*Rect loc = new Rect();

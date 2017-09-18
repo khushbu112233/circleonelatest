@@ -815,7 +815,7 @@ public class LoginActivity extends AppCompatActivity implements
                                 else
                                 {
                                     // Either gone or invisible
-                                    loginSession.createLoginSession(profileid, UserID, "", userName, "", "");
+                                    loginSession.createLoginSession(profileid, UserID, "", userName, "", "",userPassword);
                                     if (prefs.getBoolean("firstrun", true))
                                     {
                                         // Do first run stuff here then set 'firstrun' as false
@@ -854,7 +854,7 @@ public class LoginActivity extends AppCompatActivity implements
                             {
                                 // imgFinger.setVisibility(View.GONE);
 //                                loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, final_email, UserPhoto, "");
-                                loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, userName, UserPhoto, "");
+                                loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, userName, UserPhoto, "", userPassword);
 
                                 if (prefs.getBoolean("firstrun", true))
                                 {
@@ -1593,7 +1593,7 @@ public class LoginActivity extends AppCompatActivity implements
                                     finish();
                                 } else {
                                     // Either gone or invisible
-                                    loginSession.createLoginSession(profileid, UserID, "", userName, "", "");
+                                    loginSession.createLoginSession(profileid, UserID, "", userName, "", "",userPassword);
                                     if (prefs.getBoolean("firstrun", true)) {
                                         // Do first run stuff here then set 'firstrun' as false
                                         // using the following line to edit/commit prefs
@@ -1630,7 +1630,7 @@ public class LoginActivity extends AppCompatActivity implements
                                 }*/
                             } else {
                                 // imgFinger.setVisibility(View.GONE);
-                                loginSession.createLoginSession(profileid, UserID, "", userName, "", "");
+                                loginSession.createLoginSession(profileid, UserID, "", userName, "", "", userPassword);
                                 if (prefs.getBoolean("firstrun", true)) {
                                     // Do first run stuff here then set 'firstrun' as false
                                     // using the following line to edit/commit prefs
