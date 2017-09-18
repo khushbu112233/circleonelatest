@@ -71,7 +71,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     private CircleImageView imgProfile ;
     private TextView tvSave, tvCancel, txtGender ;
     private ImageView ivFemaleround, ivFemaleImg, iv_ConnectImg, ivMiniCamera,
-            ivMaleRound, ivMaleImg ;
+            ivMaleRound, ivMaleImg, ivEditImg;
     private RelativeLayout rlMale, rlFemale ;
     private View line_view1, line_view2 ;
 
@@ -86,7 +86,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     public static TextView tvFirstNameInfo, tvLastNameInfo, tvPasswordInfo, tvAgainPasswordInfo, tvPhoneInfo ;
 
     private LoginSession session;
-    private String user_id, email_id, user_img ;
+    private String user_id, email_id, user_img, user_pass ;
     private String encodedImageData, register_img;
 
     @Override
@@ -102,6 +102,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         user_id = user.get(LoginSession.KEY_USERID);
         email_id = user.get(LoginSession.KEY_EMAIL);
         user_img = user.get(LoginSession.KEY_IMAGE);
+        user_pass = user.get(LoginSession.KEY_PASSWORD);
 
         imgProfile = (CircleImageView)findViewById(R.id.imgProfile);
         etUserName = (EditText)findViewById(R.id.etUserName);
@@ -131,6 +132,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         ivMaleRound = (ImageView)findViewById(R.id.ivMaleRound);
         ivMaleImg = (ImageView)findViewById(R.id.ivMaleImg);
         ivMiniCamera = (ImageView)findViewById(R.id.ivMiniCamera);
+        ivEditImg = (ImageView)findViewById(R.id.ivEditImg);
 
         tvFirstNameInfo = (TextView)findViewById(R.id.tvFirstNameInfo);
         tvLastNameInfo = (TextView)findViewById(R.id.tvLastNameInfo);
@@ -141,14 +143,16 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         pDialog = new ProgressDialog(this);
         etUserName.setText(email_id);
 
-        if (user_img.equals(""))
+        new HttpAsyncTaskFetchLoginData().execute("http://circle8.asia:8081/Onet.svc/UserLogin");
+
+      /*  if (user_img.equals(""))
         {
             imgProfile.setImageResource(R.drawable.usr_1);
         }
         else
         {
             Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+user_img).placeholder(R.drawable.usr_1).into(imgProfile);
-        }
+        }*/
 
        /* Uri targetUri = Uri.parse(Image);
         try
@@ -184,6 +188,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         rlFemale.setOnClickListener(this);
         ivMiniCamera.setOnClickListener(this);
         imgBack.setOnClickListener(this);
+        ivEditImg.setOnClickListener(this);
     }
 
     @Override
@@ -194,6 +199,14 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v)
     {
+        if ( v == ivEditImg)
+        {
+            etFirstName.setEnabled(true);
+            etLastName.setEnabled(true);
+            etPassword.setEnabled(true);
+            etPasswordAgain.setEnabled(true);
+            etPhone.setEnabled(true);
+        }
         if ( v == imgBack)
         {
             finish();
@@ -693,7 +706,6 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     }
 
 
-
     private class HttpAsyncTaskUpdateRegister extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -808,6 +820,168 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         // 11. return result
         return result;
     }
+
+    private class HttpAsyncTaskFetchLoginData extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(MyAccountActivity.this);
+            dialog.setMessage("Fetching My Account...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            return FetchLoginDataPost(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+            dialog.dismiss();
+            try
+            {
+                if (result != null)
+                {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String success = jsonObject.getString("success").toString();
+                    String message = jsonObject.getString("message").toString();
+
+                    if (success.equals("1"))
+                    {
+//                        Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+
+                        JSONObject profile = jsonObject.getJSONObject("profile");
+                        etUserName.setText(profile.getString("UserName"));
+                        etFirstName.setText(profile.getString("FirstName"));
+                        etLastName.setText(profile.getString("LastName"));
+                        etPhone.setText(profile.getString("Phone"));
+                        etPassword.setText(user_pass);
+                        etPasswordAgain.setText(user_pass);
+                        String user_Gender = profile.getString("Gender");
+                        String user_Photo = profile.getString("UserPhoto");
+
+                        if (user_Photo.equals(""))
+                        {
+                            imgProfile.setImageResource(R.drawable.usr_1);
+                        }
+                        else
+                        {
+                            Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+user_Photo).placeholder(R.drawable.usr_1).into(imgProfile);
+                        }
+
+                        if (user_Gender.equals("M"))
+                        {
+                            //first things
+                            line_view2.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
+                            ivFemaleImg.setImageResource(R.drawable.ic_female_gray);
+                            ivFemaleround.setImageResource(R.drawable.round_gray);
+                            //second things
+                            line_view1.setBackground(getResources().getDrawable(R.drawable.dotted));
+                            ivMaleImg.setImageResource(R.drawable.ic_male);
+                            ivMaleRound.setImageResource(R.drawable.round_blue);
+                            gender = "M";
+                            txtGender.setText(R.string.male);
+                        }
+                        else if (user_Gender.equals("F"))
+                        {
+                            //first things
+                            line_view1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
+                            ivMaleImg.setImageResource(R.drawable.ic_male_gray);
+                            ivMaleRound.setImageResource(R.drawable.round_gray);
+                            //second things
+                            line_view2.setBackground(getResources().getDrawable(R.drawable.dotted));
+                            ivFemaleImg.setImageResource(R.drawable.ic_female);
+                            ivFemaleround.setImageResource(R.drawable.round_blue);
+                            gender = "F";
+                            txtGender.setText(R.string.female);
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                    else
+                    {
+                        Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+                    }
+                }
+                else
+                {
+                    Toast.makeText(getBaseContext(), "Not able to Update Register..", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public  String FetchLoginDataPost(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("Password", user_pass );
+            jsonObject.accumulate("Platform", "Android" );
+            jsonObject.accumulate("Token", "1234567890");
+            jsonObject.accumulate("UserName", email_id );
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException
     {

@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <RelativeLayout
+        android:id="@+id/rlSocial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_toLeftOf="@+id/rlConnectBox"
+            android:layout_height="1dp"
+            android:textStyle="bold"
+            android:background="@color/colorAccent"
+            android:layout_centerVertical="true"/>
+
+        <RelativeLayout
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:id="@+id/rlConnectBox">
+
+            <RelativeLayout
+                android:id="@+id/rlAdd"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/tvConnectLine1">
+                <ImageView
+                    android:id="@+id/ivAddRound"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/round_blue"
+                    android:layout_centerInParent="true" />
+                <TextView
+                    android:id="@+id/tvAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add"
+                    android:textSize="10dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tvConnectLine1"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="- - - - - - -"
+                android:layout_centerVertical="true"
+                android:textColor="@color/colorPrimary"
+                android:textAlignment="center"
+                android:layout_toLeftOf="@+id/iv_ConnectImg"/>
+
+            <ImageView
+                android:id="@+id/iv_ConnectImg"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:padding="0dp"
+                android:src="@drawable/ic_connect"
+                android:background="@android:color/white"
+                android:layout_centerHorizontal="true"
+                android:layout_marginRight="0dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp" />
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="- - - - - - -"
+                android:textColor="@color/colorPrimary"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/tvConnectLine2"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="- - - - - - -"
+                android:layout_centerVertical="true"
+                android:textColor="@color/colorPrimary"
+                android:textAlignment="center"
+                android:layout_toRightOf="@+id/iv_ConnectImg"/>
+
+            <RelativeLayout
+                android:id="@+id/rlConnect"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/tvConnectLine2">
+                <ImageView
+                    android:id="@+id/ivConnectRound"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/round_blue"
+                    android:layout_centerInParent="true" />
+                <TextView
+                    android:id="@+id/tvConnect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Connect"
+                    android:textSize="9dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_toRightOf="@+id/rlConnectBox"
+            android:layout_height="1dp"
+            android:textStyle="bold"
+            android:background="@color/colorAccent"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+
+
+<!--
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_toLeftOf="@+id/rlAdd"
+            android:layout_height="1dp"
+            android:textStyle="bold"
+            android:background="@color/colorAccent"
+            android:layout_centerVertical="true"/>
+
+        <RelativeLayout
+            android:id="@+id/rlAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/rlConnectDrag">
+            <ImageView
+                android:id="@+id/ivAddRound"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/round_blue"
+                android:layout_centerInParent="true" />
+            <TextView
+                android:id="@+id/tvAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add"
+                android:textSize="10dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlConnectDrag"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true">
+            <TextView
+                android:id="@+id/tvConnectLine1"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="- - - - - - -"
+                android:textColor="@color/colorPrimary"
+                android:textAlignment="center"
+                android:layout_toLeftOf="@+id/iv_ConnectImg"/>
+            <ImageView
+                android:id="@+id/iv_ConnectImg"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:padding="0dp"
+                android:src="@drawable/ic_connect"
+                android:background="@android:color/white"
+                android:layout_centerHorizontal="true"
+                android:layout_marginRight="0dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp" />
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="- - - - - - -"
+                android:textColor="@color/colorPrimary"
+                android:textAlignment="center" />
+            <TextView
+                android:id="@+id/tvConnectLine2"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="- - - - - - -"
+                android:textColor="@color/colorPrimary"
+                android:textAlignment="center"
+                android:layout_toRightOf="@+id/iv_ConnectImg"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rlConnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/rlConnectDrag">
+            <ImageView
+                android:id="@+id/ivConnectRound"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/round_blue"
+                android:layout_centerInParent="true" />
+            <TextView
+                android:id="@+id/tvConnect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Connect"
+                android:textSize="9dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_toRightOf="@+id/rlConnect"
+            android:layout_height="1dp"
+            android:textStyle="bold"
+            android:background="@color/colorAccent"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+-->
+
+<!--
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_toLeftOf="@+id/rlAdd"
+            android:layout_height="1dp"
+            android:textStyle="bold"
+            android:background="@color/colorAccent"
+            android:layout_centerVertical="true"/>
+
+        <RelativeLayout
+            android:id="@+id/rlAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/tvCenterDottedLine">
+            <ImageView
+                android:id="@+id/ivAddRound"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/round_blue"
+                android:layout_centerInParent="true" />
+            <TextView
+                android:id="@+id/tvAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add"
+                android:textSize="10dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvCenterDottedLine"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="- - - - - - - - - - - - - - - - - - - -"
+            android:textColor="@color/colorPrimary"/>
+
+        <ImageView
+            android:id="@+id/iv_ConnectImg"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="0dp"
+            android:src="@drawable/ic_connect"
+            android:background="@android:color/white"
+            android:layout_centerHorizontal="true"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp" />
+
+        <RelativeLayout
+            android:id="@+id/rlConnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/tvCenterDottedLine">
+            <ImageView
+                android:id="@+id/ivConnectRoun"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/round_blue"
+                android:layout_centerInParent="true" />
+            <TextView
+                android:id="@+id/tvConnect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Connect"
+                android:textSize="9dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_toRightOf="@+id/rlConnect"
+            android:layout_height="1dp"
+            android:textStyle="bold"
+            android:background="@color/colorAccent"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+-->
+
+<!--
+    <RelativeLayout
+        android:id="@+id/rlSocial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/breakLine"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <RelativeLayout
+            android:id="@+id/rlAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/tvConnectLine1">
+            <ImageView
+                android:id="@+id/ivAddRound"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/round_blue"
+                android:layout_centerInParent="true" />
+            <TextView
+                android:id="@+id/tvAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add"
+                android:textSize="10dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:id="@+id/tvConnectLine1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="- - - - - -"
+            android:textStyle="bold"
+            android:textColor="@color/colorAccent"
+            android:layout_toLeftOf="@+id/iv_ConnectImg" />
+
+        <ImageView
+            android:id="@+id/iv_ConnectImg"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="0dp"
+            android:src="@drawable/ic_connect"
+            android:background="@android:color/white"
+            android:layout_centerHorizontal="true"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/tvConnectLine2"
+            android:layout_width="wrap_content"
+            android:layout_toRightOf="@+id/iv_ConnectImg"
+            android:layout_height="wrap_content"
+            android:text="- - - - - -"
+            android:textStyle="bold"
+            android:textColor="@color/colorAccent"
+            android:layout_centerVertical="true"/>
+
+        <RelativeLayout
+            android:id="@+id/rlConnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/tvConnectLine2">
+            <ImageView
+                android:id="@+id/ivConnectRound"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/round_blue"
+                android:layout_centerInParent="true" />
+            <TextView
+                android:id="@+id/tvConnect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Connect"
+                android:textSize="9dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_toRightOf="@+id/rlConnect"
+            android:layout_height="1dp"
+            android:textStyle="bold"
+            android:background="@color/colorAccent"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_toLeftOf="@+id/rlAdd"
+            android:layout_height="1dp"
+            android:textStyle="bold"
+            android:background="@color/colorAccent"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+-->
+
+
+</LinearLayout>

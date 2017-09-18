@@ -475,7 +475,6 @@ public class GroupsActivity extends AppCompatActivity
                           //  Upload();
                             break;
                     }
-
                 }
                 catch (Exception e)
                 {
