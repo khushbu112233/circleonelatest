@@ -348,7 +348,9 @@ public class EditProfileActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 cardType = "front";
-                selectImage();
+                Intent intent1 = new Intent(getApplicationContext(), ScanbotCamera.class);
+                startActivity(intent1);
+               // selectImage();
             }
         });
 
