@@ -341,10 +341,14 @@ public class CardDetail extends NfcActivity
             public void onClick(View v) {
 
                 boolean result = Utility.checkSMSPermission(CardDetail.this);
-                if (result) {
-                    if (txtMob.getText().toString().equals("")) {
+                if (result)
+                {
+                    if (txtMob.getText().toString().equals(""))
+                    {
                         Toast.makeText(getApplicationContext(), "You are not having contact to SMS..", Toast.LENGTH_LONG).show();
-                    } else {
+                    }
+                    else
+                    {
                         Intent smsIntent = new Intent(Intent.ACTION_VIEW);
                         smsIntent.setType("vnd.android-dir/mms-sms");
                         smsIntent.putExtra("address", txtMob.getText().toString());
@@ -1317,10 +1321,13 @@ public class CardDetail extends NfcActivity
 
 
         Tag tag = paramIntent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-        if (tag == null) {
-            Toast.makeText(getApplicationContext(), "tag == null", Toast.LENGTH_LONG).show();
+        if (tag == null)
+        {
+//            Toast.makeText(getApplicationContext(), "tag == null", Toast.LENGTH_LONG).show();
             //textViewInfo.setText("tag == null");
-        } else {
+        }
+        else
+        {
             String tagInfo = tag.toString() + "\n";
             String id = "";
             tagInfo += "\nTag Id: \n";
@@ -1348,8 +1355,9 @@ public class CardDetail extends NfcActivity
 
             //  Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
             // callData(id);
-            for (String data : mNfcReadUtility.readFromTagWithMap(paramIntent).values()) {
-                Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
+            for (String data : mNfcReadUtility.readFromTagWithMap(paramIntent).values())
+            {
+//                Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
                 List<NFCModel> modelList = db.getNFCbyTag(data);
 
                 try {

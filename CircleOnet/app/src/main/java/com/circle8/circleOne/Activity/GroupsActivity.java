@@ -113,10 +113,11 @@ public class GroupsActivity extends AppCompatActivity
             }
         });
 
-        llBottom.setOnClickListener(new View.OnClickListener() {
+        llBottom.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
-
+            public void onClick(View v)
+            {
                 LayoutInflater factory = LayoutInflater.from(GroupsActivity.this);
 
                 LinearLayout layout = new LinearLayout(GroupsActivity.this);
@@ -328,20 +329,22 @@ public class GroupsActivity extends AppCompatActivity
             public void onClick(DialogInterface dialog, int item) {
                 boolean result = Utility.checkStoragePermission(GroupsActivity.this);
                 boolean result1 = Utility.checkCameraPermission(GroupsActivity.this);
-                if (items[item].equals("Take Photo")) {
+                if (items[item].equals("Take Photo"))
+                {
                     userChoosenTask ="Take Photo";
                     if(result1)
 //                        activeTakePhoto();
                         cameraIntent();
-
-                } else if (items[item].equals("Choose from Library")) {
+                }
+                else if (items[item].equals("Choose from Library"))
+                {
                     userChoosenTask ="Choose from Library";
                     if(result)
 //                        activeGallery();
                         galleryIntent();
-
-
-                } else if (items[item].equals("Cancel")) {
+                }
+                else if (items[item].equals("Cancel"))
+                {
                     dialog.dismiss();
                 }
             }

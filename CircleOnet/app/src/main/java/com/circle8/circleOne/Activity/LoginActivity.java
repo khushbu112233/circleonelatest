@@ -385,9 +385,12 @@ public class LoginActivity extends AppCompatActivity implements
                 userName = etLoginUser.getText().toString();
                 userPassword = etLoginPass.getText().toString();
 
-                if (!validateLogin(userName, userPassword)) {
-                    Toast.makeText(getApplicationContext(), "Form Fill Invalid!", Toast.LENGTH_SHORT).show();
-                } else {
+                if (!validateLogin(userName, userPassword))
+                {
+//                    Toast.makeText(getApplicationContext(), "Form Fill Invalid!", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
                     new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/UserLogin");
                 }
             /* Create an Intent that will start the Menu-Activity. */
@@ -1265,7 +1268,7 @@ public class LoginActivity extends AppCompatActivity implements
         try {
             Log.d("response link ", response.toString());
 
-            Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
             Facebook = "";
             Google = "";
             Linkedin = "";

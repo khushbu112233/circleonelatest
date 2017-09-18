@@ -17,7 +17,8 @@ import com.circle8.circleOne.Walkthrough.HelpActivity;
  * Created by admin on 09/12/2017.
  */
 
-public class TutorialScreenFragment extends Fragment {
+public class TutorialScreenFragment extends Fragment
+{
     private static String IMG_ID = "imgId";
     private static String TIT_ID = "titId";
 

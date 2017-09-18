@@ -114,10 +114,10 @@ public class GroupTag extends AppCompatActivity
                                 GroupDesc = descriptionBox.getText().toString();
 
                                 if (GroupName.equals("")){
-                                    Toast.makeText(getApplicationContext(), "Enetr Group Name", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Enter Group Name", Toast.LENGTH_LONG).show();
                                 }
                                 else if (GroupDesc.equals("")){
-                                    Toast.makeText(getApplicationContext(), "Enetr Group Description", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Enter Group Description", Toast.LENGTH_LONG).show();
                                 }
                                 else {
                                     new HttpAsyncTaskGroupCreate().execute("http://circle8.asia:8081/Onet.svc/Group/Create");

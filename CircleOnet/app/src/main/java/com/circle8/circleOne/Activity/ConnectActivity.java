@@ -47,7 +47,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static com.circle8.circleOne.R.id.rlConnect;
 import static com.circle8.circleOne.R.id.view;
 
-
 public class ConnectActivity extends AppCompatActivity
 {
     private ImageView imgBack, imgCards, imgConnect, imgEvents, imgProfile, imgConnecting;

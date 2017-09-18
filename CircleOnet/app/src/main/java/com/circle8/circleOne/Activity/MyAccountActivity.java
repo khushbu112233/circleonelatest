@@ -737,7 +737,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                     }
                 }
                 else {
-                    Toast.makeText(getBaseContext(), "Not able to Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Not able to Update Register..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {

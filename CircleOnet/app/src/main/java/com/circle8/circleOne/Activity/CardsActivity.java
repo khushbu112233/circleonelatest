@@ -822,11 +822,14 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         if (!done) {
             NdefMessage[] msgs = null;
 
-            if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
+            if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction()))
+            {
                 Parcelable[] rawMsgs = getIntent().getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
-                if (rawMsgs != null) {
+                if (rawMsgs != null)
+                {
                     msgs = new NdefMessage[rawMsgs.length];
-                    for (int i = 0; i < rawMsgs.length; i++) {
+                    for (int i = 0; i < rawMsgs.length; i++)
+                    {
                         msgs[i] = (NdefMessage) rawMsgs[i];
                     }
 
@@ -836,13 +839,16 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                 /* 把tag的資訊放到textview裡面 */
                     // mEtMessage.setText(new String(payload));
                     done = true;
-                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     message = message.substring(1, message.length());
 
                     nfcProfileId = message;
-                    try {
+                    try
+                    {
                         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/FriendConnection_Operation");
-                    }catch (Exception e){
+                    }
+                    catch (Exception e)
+                    {
                         Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                     }
 
@@ -922,15 +928,19 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
      *         containing found data
      */
     @Override
-    public void onNewIntent(final Intent paramIntent) {
+    public void onNewIntent(final Intent paramIntent)
+    {
         super.onNewIntent(paramIntent);
 
         getSupportActionBar().setShowHideAnimationEnabled(false);
         Tag tag = paramIntent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-        if(tag == null){
-            Toast.makeText(getApplicationContext(), "tag == null", Toast.LENGTH_LONG).show();
+        if(tag == null)
+        {
+//            Toast.makeText(getApplicationContext(), "tag == null", Toast.LENGTH_LONG).show();
             //textViewInfo.setText("tag == null");
-        }else {
+        }
+        else
+        {
             String tagInfo = tag.toString() + "\n";
             String id = "";
             tagInfo += "\nTag Id: \n";

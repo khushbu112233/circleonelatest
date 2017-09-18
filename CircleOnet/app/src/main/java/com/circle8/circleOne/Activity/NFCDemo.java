@@ -248,10 +248,13 @@ public class NFCDemo extends NfcActivity {
         } else {
 
             Tag tag = paramIntent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            if(tag == null){
-                Toast.makeText(getApplicationContext(), "tag == null", Toast.LENGTH_LONG).show();
+            if(tag == null)
+            {
+//                Toast.makeText(getApplicationContext(), "tag == null", Toast.LENGTH_LONG).show();
                 //textViewInfo.setText("tag == null");
-            }else {
+            }
+            else
+            {
                 String tagInfo = tag.toString() + "\n";
                 String id = "";
                 tagInfo += "\nTag Id: \n";
@@ -262,9 +265,11 @@ public class NFCDemo extends NfcActivity {
                     // id += Integer.toHexString(tagId[i] & 0xFF) + " ";
                 }
                 id = bytesToHex(tagId);
-                Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
-                for (String data : mNfcReadUtility.readFromTagWithMap(paramIntent).values()) {
-                    Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
+
+                for (String data : mNfcReadUtility.readFromTagWithMap(paramIntent).values())
+                {
+//                    Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
                 }
             }
         }
