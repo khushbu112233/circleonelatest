@@ -42,6 +42,8 @@ public class ScanbotCamera extends AppCompatActivity implements PictureCallback,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanbot_camera);
 
+        getSupportActionBar().hide();
+
         cameraView = (ScanbotCameraView) findViewById(R.id.camera);
         cameraView.setCameraOpenCallback(new CameraOpenCallback() {
             @Override
