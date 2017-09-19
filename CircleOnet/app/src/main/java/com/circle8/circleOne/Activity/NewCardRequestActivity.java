@@ -87,6 +87,7 @@ public class NewCardRequestActivity extends AppCompatActivity
                 i.putExtra("profile", allTags.get(position).getProfile());
                 i.putExtra("image", allTags.get(position).getUserPhoto());
                 i.putExtra("phone", allTags.get(position).getPhone1());
+                i.putExtra("profileID", allTags.get(position).getProfileID());
                 startActivity(i);
             }
         });
@@ -240,9 +241,9 @@ public class NewCardRequestActivity extends AppCompatActivity
                         //  GetData(getContext());
                     }
 
-                    newCardRequestAdapter = new NewCardRequestAdapter(getApplicationContext(), allTags);
+                    newCardRequestAdapter = new NewCardRequestAdapter(NewCardRequestActivity.this, allTags);
                     listView.setAdapter(newCardRequestAdapter);
-                    newCardRequestAdapter.notifyDataSetChanged();
+
                 }
                 else
                 {

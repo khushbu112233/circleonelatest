@@ -71,6 +71,8 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
     public static String CardFront = "";
     public static String CardBack = "";
     public static Activity activity;
+    private String profileID ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -112,11 +114,13 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
         phone = i.getStringExtra("phone") ;
         profile = i.getStringExtra("profile");
         image = i.getStringExtra("image") ;
+        profileID = i.getStringExtra("profileID");
 
         tvPerson.setText(i.getStringExtra("person"));
         tvDesignation.setText(i.getStringExtra("designation"));
         tvCompany.setText(i.getStringExtra("company"));
         tvProfile.setText(i.getStringExtra("profile"));
+
       //  imgProfile.setImageResource(Integer.parseInt(i.getStringExtra("image")));
         if (image.equals(""))
         {
@@ -143,6 +147,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                 i.putExtra("profile", profile);
                 i.putExtra("image", image);
                 i.putExtra("phone",profile);
+                i.putExtra("profileID",profileID);
                 startActivity(i);
             }
         });
@@ -225,6 +230,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                         i.putExtra("phone",profile);
                         i.putExtra("card_front", CardFront);
                         i.putExtra("card_back", CardBack);
+                        i.putExtra("profileID",profileID);
                         startActivity(i);
                     }
                 }

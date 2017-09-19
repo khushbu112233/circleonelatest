@@ -78,7 +78,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         session = new LoginSession(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
-        profileId = user.get(LoginSession.KEY_PROFILEID);
+
         userID = user.get(LoginSession.KEY_USERID);
 
         imgProfile = (CircleImageView) findViewById(R.id.imgProfile);
@@ -124,7 +124,8 @@ public class NewCardRequestActivity1 extends AppCompatActivity {
         image = i.getStringExtra("image");
         card_front = i.getStringExtra("card_front");
         card_back = i.getStringExtra("card_back");
-
+        profileId = i.getStringExtra("profileID");
+        
         if (image.equals("")) {
             imgProfile.setImageResource(R.drawable.usr_1);
         } else {

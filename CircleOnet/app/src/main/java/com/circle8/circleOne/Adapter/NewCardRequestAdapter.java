@@ -24,7 +24,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class NewCardRequestAdapter extends BaseAdapter
 {
     Context context ;
-    ArrayList<ProfileModel> newCardModelArrayList ;
+    ArrayList<ProfileModel> newCardModelArrayList = new ArrayList<>();
 
     public NewCardRequestAdapter(Context applicationContext, ArrayList<ProfileModel> newCardModelArrayList)
     {
@@ -53,7 +53,7 @@ public class NewCardRequestAdapter extends BaseAdapter
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return newCardModelArrayList.get(position);
     }
 
     @Override
@@ -91,7 +91,8 @@ public class NewCardRequestAdapter extends BaseAdapter
             {
                 ivProfile.setImageResource(R.drawable.usr_1);
             }
-            else {
+            else
+            {
                 Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/"+newCardModelArrayList.get(position).getUserPhoto()).into(ivProfile);
             }
 
