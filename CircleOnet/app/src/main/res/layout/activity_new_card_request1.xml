@@ -357,6 +357,7 @@
                         android:layout_marginTop="10dp"/>
 
                     <LinearLayout
+                        android:weightSum="2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -367,12 +368,15 @@
                         android:gravity="center_horizontal">
 
                         <LinearLayout
+                            android:gravity="center"
+                            android:layout_weight="1"
                             android:id="@+id/llGoldCardSample"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:layout_marginRight="5dp">
                             <TextView
+                                android:id="@+id/txtLaserCost"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="$ 65.00/PCE"
@@ -383,6 +387,7 @@
                                 android:layout_height="120dp"
                                 android:src="@drawable/card_sample_gold"/>
                             <TextView
+                                android:id="@+id/txtLaserDesc"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Special offset printing"
@@ -390,12 +395,15 @@
                                 android:layout_gravity="center_horizontal"/>
                         </LinearLayout>
                         <LinearLayout
+                            android:gravity="center"
+                            android:layout_weight="1"
                             android:id="@+id/llBlueCardSample"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:layout_marginLeft="5dp">
                             <TextView
+                                android:id="@+id/txtNormalCost"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="$ 25.00/PCE"
@@ -406,6 +414,7 @@
                                 android:layout_height="120dp"
                                 android:src="@drawable/card_sample_blue"/>
                             <TextView
+                                android:id="@+id/txtNormalDesc"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Normal digital printing"

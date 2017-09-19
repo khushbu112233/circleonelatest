@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.circle8.circleOne.Activity.EditProfileActivity;
+import com.circle8.circleOne.Activity.NewCardRequestDetailActivity;
 import com.circle8.circleOne.R;
 
 import net.doo.snap.lib.detector.ContourDetector;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private Button cropButton;
     private Button backButton;
     Bitmap documentImage;
+    String from = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         supportRequestWindowFeature(WindowCompat.FEATURE_ACTION_BAR_OVERLAY);
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         originalBitmap = (Bitmap) intent.getParcelableExtra("bitmap");
+        from = intent.getStringExtra("from");
         getSupportActionBar().hide();
 
         editPolygonView = (EditPolygonImageView) findViewById(R.id.polygonView);
@@ -76,7 +79,11 @@ public class MainActivity extends AppCompatActivity {
                 cropButton.setVisibility(View.VISIBLE);
 
                 finish();
-                EditProfileActivity.crop(documentImage);
+                if (from.equalsIgnoreCase("edit")) {
+                    EditProfileActivity.crop(documentImage);
+                }else if (from.equalsIgnoreCase("newcard")){
+                    NewCardRequestDetailActivity.crop(documentImage);
+                }
             }
         });
 
@@ -109,16 +116,19 @@ public class MainActivity extends AppCompatActivity {
             final DetectionResult detectionResult = detector.detect(image);
             Pair<List<Line2D>, List<Line2D>> linesPair = null;
             List<PointF> polygon = new ArrayList<>(EditPolygonImageView.DEFAULT_POLYGON);
-            switch (detectionResult) {
-                case OK:
-                case OK_BUT_BAD_ANGLES:
-                case OK_BUT_TOO_SMALL:
-                case OK_BUT_BAD_ASPECT_RATIO:
-                    linesPair = new Pair<>(detector.getHorizontalLines(), detector.getVerticalLines());
-                    polygon = detector.getPolygonF();
-                    break;
-            }
+            try {
 
+                switch (detectionResult) {
+                    case OK:
+                    case OK_BUT_BAD_ANGLES:
+                    case OK_BUT_TOO_SMALL:
+                    case OK_BUT_BAD_ASPECT_RATIO:
+                        linesPair = new Pair<>(detector.getHorizontalLines(), detector.getVerticalLines());
+                        polygon = detector.getPolygonF();
+                        break;
+                }
+            }
+            catch (Exception e){}
             return new InitImageResult(linesPair, polygon);
         }
 
