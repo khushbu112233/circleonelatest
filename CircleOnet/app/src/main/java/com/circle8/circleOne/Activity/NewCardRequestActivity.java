@@ -84,7 +84,7 @@ public class NewCardRequestActivity extends AppCompatActivity
                 i.putExtra("person", allTags.get(position).getFirstName() + " " + allTags.get(position).getLastName());
                 i.putExtra("designation", allTags.get(position).getDesignation());
                 i.putExtra("company", allTags.get(position).getCompanyName());
-                i.putExtra("profile", "Profile "+count);
+                i.putExtra("profile", allTags.get(position).getProfile());
                 i.putExtra("image", allTags.get(position).getUserPhoto());
                 i.putExtra("phone", allTags.get(position).getPhone1());
                 startActivity(i);
@@ -107,7 +107,7 @@ public class NewCardRequestActivity extends AppCompatActivity
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("numofrecords", "10" );
+            jsonObject.accumulate("numofrecords", "100" );
             jsonObject.accumulate("pageno", "1" );
             jsonObject.accumulate("userid", UserID);
 
@@ -195,6 +195,7 @@ public class NewCardRequestActivity extends AppCompatActivity
                     JSONObject jsonObject = new JSONObject(result);
                     JSONArray jsonArray = jsonObject.getJSONArray("Profiles");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
+
                     for (int i = 0; i < jsonArray.length(); i++)
                     {
                         JSONObject object = jsonArray.getJSONObject(i);
@@ -234,17 +235,14 @@ public class NewCardRequestActivity extends AppCompatActivity
                         nfcModelTag.setLinkedin(object.getString("Linkedin"));
                         nfcModelTag.setYoutube(object.getString("Youtube"));
                         nfcModelTag.setAttachment_FileName(object.getString("Attachment_FileName"));
+                        nfcModelTag.setProfile("Profile "+(i+1));
                         allTags.add(nfcModelTag);
                         //  GetData(getContext());
                     }
 
-                    newCardRequestAdapter = new NewCardRequestAdapter(getApplicationContext(),
-                            allTags);
+                    newCardRequestAdapter = new NewCardRequestAdapter(getApplicationContext(), allTags);
                     listView.setAdapter(newCardRequestAdapter);
                     newCardRequestAdapter.notifyDataSetChanged();
-
-
-
                 }
                 else
                 {

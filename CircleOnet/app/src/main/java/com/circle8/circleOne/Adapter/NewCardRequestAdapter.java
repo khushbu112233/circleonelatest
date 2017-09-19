@@ -85,7 +85,7 @@ public class NewCardRequestAdapter extends BaseAdapter
             tvEmail.setText(newCardModelArrayList.get(position).getEmail1());
             tvPhone.setText(newCardModelArrayList.get(position).getPhone1());
             int count = position + 1;
-            tvProfile.setText("Profile "+ count);
+            tvProfile.setText(newCardModelArrayList.get(position).getProfile());
 
             if (newCardModelArrayList.get(position).getUserPhoto().equals(""))
             {
