@@ -121,7 +121,7 @@ public class ConnectListAdapter extends BaseAdapter
         }
         else
         {
-            Picasso.with(context).load("http://circle8.asia/App_ImgLib/Cards/"+connectLists.get(position).getUserphoto()).into(circleImageView);
+            Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/"+connectLists.get(position).getUserphoto()).into(circleImageView);
         }
 
         return convertView;

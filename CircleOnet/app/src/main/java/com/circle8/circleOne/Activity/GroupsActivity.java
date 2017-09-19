@@ -439,7 +439,7 @@ public class GroupsActivity extends AppCompatActivity
             {
                 try
                 {
-                    ei = new ExifInterface(photoPath);
+                    ei = new ExifInterface(String.valueOf(targetUri));
                     int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
 
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));

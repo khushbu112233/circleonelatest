@@ -420,7 +420,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             {
                 try
                 {
-                    ei = new ExifInterface(photoPath);
+                    ei = new ExifInterface(String.valueOf(targetUri));
                     int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
 
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
@@ -449,6 +449,12 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                             break;
 
                         case ExifInterface.ORIENTATION_NORMAL:
+                            rotatedBitmap = bitmap ;
+                            imgProfile.setImageBitmap(rotatedBitmap);
+                            final_ImgBase64 = BitMapToString(rotatedBitmap);
+                            Upload();
+                            break;
+
                         default:
                             rotatedBitmap = bitmap;
                             imgProfile.setImageBitmap(rotatedBitmap);

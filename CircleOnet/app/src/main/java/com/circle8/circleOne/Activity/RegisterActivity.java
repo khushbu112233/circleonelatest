@@ -641,7 +641,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             {
                 try
                 {
-                    ei = new ExifInterface(photoPath);
+                    ei = new ExifInterface(String.valueOf(targetUri));
                     int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
 
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
@@ -670,6 +670,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             break;
 
                         case ExifInterface.ORIENTATION_NORMAL:
+                            rotatedBitmap = bitmap ;
+                            civProfilePic.setImageBitmap(rotatedBitmap);
+                            final_ImgBase64 = BitMapToString(rotatedBitmap);
+                            Upload();
+                            break;
+
                         default:
                             rotatedBitmap = bitmap;
                             civProfilePic.setImageBitmap(rotatedBitmap);
@@ -677,7 +683,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             Upload();
                             break;
                     }
-
                 }
                 catch (Exception e)
                 {

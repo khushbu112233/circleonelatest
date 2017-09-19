@@ -198,7 +198,8 @@ public class ByCompanyFragment  extends Fragment
                     {
                         tvDataInfo.setVisibility(View.VISIBLE);
                         connectTags.clear();
-                        connectListAdapter.notifyDataSetChanged();
+                        try {connectListAdapter.notifyDataSetChanged();}
+                        catch (Exception e) { e.printStackTrace();}
                     }
                     else
                     {

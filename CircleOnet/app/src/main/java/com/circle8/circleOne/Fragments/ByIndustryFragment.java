@@ -199,7 +199,8 @@ public class ByIndustryFragment extends Fragment
                         tvDataInfo.setVisibility(View.VISIBLE);
 //                        connectLists.clear();
                         connectTags.clear();
-                        connectListAdapter.notifyDataSetChanged();
+                        try {connectListAdapter.notifyDataSetChanged();}
+                        catch (Exception e) { e.printStackTrace();}
                     }
                     else
                     {
