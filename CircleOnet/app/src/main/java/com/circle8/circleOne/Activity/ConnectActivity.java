@@ -487,6 +487,68 @@ public class ConnectActivity extends AppCompatActivity
                     JSONObject response = new JSONObject(result);
                     String Matched = response.getString("Matched");
 
+                    JSONObject profile = response.getJSONObject("Profile");
+
+                    ConnectProfileModel connectingModel = new ConnectProfileModel();
+                    connectingModel.setSuccess(profile.getString("success"));
+                    connectingModel.setMessage(profile.getString("message"));
+                    connectingModel.setCard_Front(profile.getString("Card_Front"));
+                    connectingModel.setCard_Back(profile.getString("Card_Back"));
+                    connectingModel.setFirstName(profile.getString("FirstName"));
+                    connectingModel.setLastName(profile.getString("LastName"));
+                    connectingModel.setUserPhoto(profile.getString("UserPhoto"));
+                    connectingModel.setPhone1(profile.getString("Phone1"));
+                    connectingModel.setPhone2(profile.getString("Phone2"));
+                    connectingModel.setMobile1(profile.getString("Mobile1"));
+                    connectingModel.setMobile2(profile.getString("Mobile2"));
+                    connectingModel.setFax1(profile.getString("Fax1"));
+                    connectingModel.setFax2(profile.getString("Fax2"));
+                    connectingModel.setEmail1(profile.getString("Email1"));
+                    connectingModel.setEmail2(profile.getString("Email2"));
+                    connectingModel.setFacebook(profile.getString("Facebook"));
+                    connectingModel.setTwitter(profile.getString("Twitter"));
+                    connectingModel.setGoogle(profile.getString("Google"));
+                    connectingModel.setLinkedIn(profile.getString("LinkedIn"));
+                    connectingModel.setYoutube(profile.getString("Youtube"));
+                    connectingModel.setIndustryName(profile.getString("IndustryName"));
+                    connectingModel.setCompanyName(profile.getString("CompanyName"));
+                    connectingModel.setCompanyProfile(profile.getString("CompanyProfile"));
+                    connectingModel.setDesignation(profile.getString("Designation"));
+                    connectingModel.setProfileDesc(profile.getString("ProfileDesc"));
+                    connectingModel.setStatus(profile.getString("Status"));
+                    connectingModel.setAddress1(profile.getString("Address1"));
+                    connectingModel.setAddress2(profile.getString("Address2"));
+                    connectingModel.setAddress3(profile.getString("Address3"));
+                    connectingModel.setAddress4(profile.getString("Address4"));
+                    connectingModel.setCity(profile.getString("City"));
+                    connectingModel.setState(profile.getString("State"));
+                    connectingModel.setCountry(profile.getString("Country"));
+                    connectingModel.setPostalcode(profile.getString("Postalcode"));
+                    connectingModel.setWebsite(profile.getString("Website"));
+                    connectingModel.setAttachment_FileName(profile.getString("Attachment_FileName"));
+                    connectingTags.add(connectingModel);
+
+                    tvPersonName.setText(profile.getString("FirstName")+" "+profile.getString("LastName"));
+                    tvCompanyName.setText(profile.getString("CompanyName"));
+                    txtWeb.setText(profile.getString("Website"));
+                    txtMail.setText(profile.getString("Email1"));
+                    txtNum.setText(profile.getString("Phone1"));
+                    // txtWork.setText(tag1.getWork_no());
+                    txtMob.setText(profile.getString("Mobile1"));
+                    Mobile1 = profile.getString("Mobile1");
+                    Mobile2 = profile.getString("Mobile2");
+                    tvPersonDesignation.setText(profile.getString("Designation"));
+
+                    profileImg = "http://circle8.asia/App_ImgLib/UserProfile/"+profile.getString("UserPhoto");
+                    if(profile.getString("UserPhoto").equalsIgnoreCase(""))
+                    {
+                        ivProfileImage.setImageResource(R.drawable.usr);
+                    }
+                    else
+                    {
+                        Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+profile.getString("UserPhoto")).into(ivProfileImage);
+                    }
+
                     if (Matched.equals("1"))
                     {
                         ivAddRound.setImageResource(R.drawable.round_blue);
@@ -569,68 +631,6 @@ public class ConnectActivity extends AppCompatActivity
                         builder.setMessage("You are already Connected with this Friend to other Profile. Do you want to connect with this Profile?")
                                 .setPositiveButton("Yes", dialogClickListener)
                                 .setNegativeButton("No", dialogClickListener).show();
-                    }
-
-                    JSONObject profile = response.getJSONObject("Profile");
-
-                    ConnectProfileModel connectingModel = new ConnectProfileModel();
-                    connectingModel.setSuccess(profile.getString("success"));
-                    connectingModel.setMessage(profile.getString("message"));
-                    connectingModel.setCard_Front(profile.getString("Card_Front"));
-                    connectingModel.setCard_Back(profile.getString("Card_Back"));
-                    connectingModel.setFirstName(profile.getString("FirstName"));
-                    connectingModel.setLastName(profile.getString("LastName"));
-                    connectingModel.setUserPhoto(profile.getString("UserPhoto"));
-                    connectingModel.setPhone1(profile.getString("Phone1"));
-                    connectingModel.setPhone2(profile.getString("Phone2"));
-                    connectingModel.setMobile1(profile.getString("Mobile1"));
-                    connectingModel.setMobile2(profile.getString("Mobile2"));
-                    connectingModel.setFax1(profile.getString("Fax1"));
-                    connectingModel.setFax2(profile.getString("Fax2"));
-                    connectingModel.setEmail1(profile.getString("Email1"));
-                    connectingModel.setEmail2(profile.getString("Email2"));
-                    connectingModel.setFacebook(profile.getString("Facebook"));
-                    connectingModel.setTwitter(profile.getString("Twitter"));
-                    connectingModel.setGoogle(profile.getString("Google"));
-                    connectingModel.setLinkedIn(profile.getString("LinkedIn"));
-                    connectingModel.setYoutube(profile.getString("Youtube"));
-                    connectingModel.setIndustryName(profile.getString("IndustryName"));
-                    connectingModel.setCompanyName(profile.getString("CompanyName"));
-                    connectingModel.setCompanyProfile(profile.getString("CompanyProfile"));
-                    connectingModel.setDesignation(profile.getString("Designation"));
-                    connectingModel.setProfileDesc(profile.getString("ProfileDesc"));
-                    connectingModel.setStatus(profile.getString("Status"));
-                    connectingModel.setAddress1(profile.getString("Address1"));
-                    connectingModel.setAddress2(profile.getString("Address2"));
-                    connectingModel.setAddress3(profile.getString("Address3"));
-                    connectingModel.setAddress4(profile.getString("Address4"));
-                    connectingModel.setCity(profile.getString("City"));
-                    connectingModel.setState(profile.getString("State"));
-                    connectingModel.setCountry(profile.getString("Country"));
-                    connectingModel.setPostalcode(profile.getString("Postalcode"));
-                    connectingModel.setWebsite(profile.getString("Website"));
-                    connectingModel.setAttachment_FileName(profile.getString("Attachment_FileName"));
-                    connectingTags.add(connectingModel);
-
-                    tvPersonName.setText(profile.getString("FirstName")+" "+profile.getString("LastName"));
-                    tvCompanyName.setText(profile.getString("CompanyName"));
-                    txtWeb.setText(profile.getString("Website"));
-                    txtMail.setText(profile.getString("Email1"));
-                    txtNum.setText(profile.getString("Phone1"));
-                    // txtWork.setText(tag1.getWork_no());
-                    txtMob.setText(profile.getString("Mobile1"));
-                    Mobile1 = profile.getString("Mobile1");
-                    Mobile2 = profile.getString("Mobile2");
-                    tvPersonDesignation.setText(profile.getString("Designation"));
-
-                    profileImg = "http://circle8.asia/App_ImgLib/UserProfile/"+profile.getString("UserPhoto");
-                    if(profile.getString("UserPhoto").equalsIgnoreCase(""))
-                    {
-                        ivProfileImage.setImageResource(R.drawable.usr);
-                    }
-                    else
-                    {
-                        Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+profile.getString("UserPhoto")).into(ivProfileImage);
                     }
 
                 }
