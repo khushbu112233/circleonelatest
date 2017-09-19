@@ -845,7 +845,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                     nfcProfileId = message;
                     try
                     {
-                        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/FriendConnection_Operation");
+                        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
                     }
                     catch (Exception e)
                     {
@@ -1045,7 +1045,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                 Toast.makeText(getApplicationContext(), data, Toast.LENGTH_LONG).show();
                 nfcProfileId = data;
                 try {
-                    new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/FriendConnection_Operation");
+                    new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
                 }catch (Exception e){
                     Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                 }

@@ -59,7 +59,7 @@ public class TestimonialRequest extends AppCompatActivity {
         allTaggs = new ArrayList<>();
         lstTestimonial = (ListView) findViewById(R.id.lstTestimonial);
 
-        new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8081/Onet.svc/GetFriends_Profile");
+        new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8999/Onet.svc/GetFriends_Profile");
     }
 
     private static class HttpAsyncTaskTestimonial extends AsyncTask<String, Void, String>

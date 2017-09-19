@@ -131,7 +131,7 @@ public class SubscriptionActivity extends AppCompatActivity
             }
         });
 
-        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/Subscription/GetPackageList");
+        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/Subscription/GetPackageList");
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

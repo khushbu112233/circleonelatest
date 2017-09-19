@@ -80,7 +80,7 @@ public class GroupTag extends AppCompatActivity
         imgLogo.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
         allTaggs = new ArrayList<>();
         //cardCount = db.getActiveNFCCount();
-        new HttpAsyncTaskGroup().execute("http://circle8.asia:8081/Onet.svc/Group/Fetch");
+        new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/Fetch");
 
         session = new LoginSession(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
@@ -120,7 +120,7 @@ public class GroupTag extends AppCompatActivity
                                     Toast.makeText(getApplicationContext(), "Enter Group Description", Toast.LENGTH_LONG).show();
                                 }
                                 else {
-                                    new HttpAsyncTaskGroupCreate().execute("http://circle8.asia:8081/Onet.svc/Group/Create");
+                                    new HttpAsyncTaskGroupCreate().execute("http://circle8.asia:8999/Onet.svc/Group/Create");
                                 }
                             }
                         }).setNegativeButton("Cancel",
@@ -288,7 +288,7 @@ public class GroupTag extends AppCompatActivity
                     if (Success.equals("1")) {
                         Toast.makeText(getApplicationContext(), "Group Created..", Toast.LENGTH_LONG).show();
                         allTaggs.clear();
-                        new HttpAsyncTaskGroup().execute("http://circle8.asia:8081/Onet.svc/Group/Fetch");
+                        new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/Fetch");
                     }
                     else {
                         Toast.makeText(getApplicationContext(), "Group not Created..", Toast.LENGTH_LONG).show();

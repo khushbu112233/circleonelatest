@@ -98,7 +98,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     TextView txtGender;
     String final_ImgBase64 = "";
     CountryCodePicker ccp;
-    private String UrlRegister = "http://circle8.asia:8081/Onet.svc/Registration";
+    private String UrlRegister = "http://circle8.asia:8999/Onet.svc/Registration";
     private ArrayList<NameValuePair> params ;
 
     private CircleImageView civProfilePic ;
@@ -372,7 +372,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
             else
             {
-                new HttpAsyncTaskPhotoUpload().execute("http://circle8.asia:8081/Onet.svc/ImgUpload");
+                new HttpAsyncTaskPhotoUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
             }
         }
         if (v == civProfilePic) {
@@ -493,9 +493,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private void Upload() {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                new UploadFile().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "http://circle8.asia:8081/Onet.svc/ImgUpload");
+                new UploadFile().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "http://circle8.asia:8999/Onet.svc/ImgUpload");
             } else {
-                new UploadFile().execute("http://circle8.asia:8081/Onet.svc/ImgUpload");
+                new UploadFile().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -1001,7 +1001,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         }
                         else
                         {
-                            new HttpAsyncTaskVerify().execute("http://circle8.asia:8081/Onet.svc/AccVerification/" + UserID);
+                            new HttpAsyncTaskVerify().execute("http://circle8.asia:8999/Onet.svc/AccVerification/" + UserID);
                         }
                     }
                     else
@@ -1145,7 +1145,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         finish();*/
                      //   Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                         register_img = ImgName;
-                        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/Registration");
+                        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/Registration");
 
                     }
                     else
@@ -1258,7 +1258,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
 
                 HttpClient httpClient = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost("http://circle8.asia:8081/Onet.svc/Registration");
+                HttpPost httpPost = new HttpPost("http://circle8.asia:8999/Onet.svc/Registration");
                 httpPost.setHeader("Accept", "application/json");
                 httpPost.setHeader("Content-type", "application/json");
 //                httpPost.setHeader(HTTP.CONTENT_TYPE, "application/json");
@@ -1410,7 +1410,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             HttpConnectionParams.setSoTimeout(httpParameters, 9000);
             HttpClient httpClient = new DefaultHttpClient(httpParameters);
 
-            String urlString = "http://circle8.asia:8081/Onet.svc/Registration";
+            String urlString = "http://circle8.asia:8999/Onet.svc/Registration";
 
             HttpPost httpPost = new HttpPost(urlString);
 

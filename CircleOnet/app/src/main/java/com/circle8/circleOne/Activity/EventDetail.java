@@ -91,7 +91,7 @@ public class EventDetail extends AppCompatActivity
         Intent i = getIntent();
         event_ID = i.getStringExtra("Event_ID");
 
-        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/Events/GetDetails");
+        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/Events/GetDetails");
 
         imgLogo.setOnClickListener(new View.OnClickListener() {
             @Override

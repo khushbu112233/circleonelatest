@@ -86,7 +86,7 @@ public class Connect3Activity extends AppCompatActivity
             }, i);
         }*/
 
-        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/Connection7Level");
+        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/Connection7Level");
 
         /*Handler h = new Handler();
         h.postDelayed(new Runnable(){

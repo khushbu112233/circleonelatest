@@ -178,8 +178,8 @@ public class ProfileFragment extends Fragment
         loginButton = (LoginButton) view.findViewById(R.id.login_button);
         session = new LoginSession(getContext());
 
-//        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetUserProfile");
-        new HttpAsyncTaskProfiles().execute("http://circle8.asia:8081/Onet.svc/MyProfiles");
+//        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetUserProfile");
+        new HttpAsyncTaskProfiles().execute("http://circle8.asia:8999/Onet.svc/MyProfiles");
 
         HashMap<String, String> user = session.getUserDetails();
         UserID = user.get(LoginSession.KEY_USERID);
@@ -499,7 +499,7 @@ public class ProfileFragment extends Fragment
 
                         if (item.getTitle().toString().equals("Add New Profile"))
                         {
-                           // new HttpAsyncTaskAddProfile().execute("http://circle8.asia:8081/Onet.svc/AddProfile");
+                           // new HttpAsyncTaskAddProfile().execute("http://circle8.asia:8999/Onet.svc/AddProfile");
                             Intent intent = new Intent(getContext(), EditProfileActivity.class);
                             intent.putExtra("profile_id", TestimonialProfileId);
                             intent.putExtra("type", "add");
@@ -579,7 +579,7 @@ public class ProfileFragment extends Fragment
                                         strlinkedInUrl = allTags.get(i).getLinkedin().toString();
                                     }
 
-                                    new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8081/Onet.svc/Testimonial/Fetch");
+                                    new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Fetch");
 
                                     try
                                     {
@@ -1114,7 +1114,7 @@ public class ProfileFragment extends Fragment
                         Picasso.with(getContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+allTags.get(0).getUserPhoto()).into(imgProfile);
                     }
 
-                    new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8081/Onet.svc/Testimonial/Fetch");
+                    new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Fetch");
 
                     try
                     {

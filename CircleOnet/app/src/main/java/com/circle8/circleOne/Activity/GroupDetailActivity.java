@@ -106,7 +106,7 @@ public class GroupDetailActivity extends AppCompatActivity
             Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/Group/"+group_Img).placeholder(R.drawable.usr_1).into(imgProfile);
         }
 
-        new HttpAsyncTaskGroup().execute("http://circle8.asia:8081/Onet.svc/Group/FetchConnection");
+        new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/FetchConnection");
 
         /*name.add("Kajal Patadia");
         designation.add("Software Developer");

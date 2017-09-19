@@ -189,7 +189,7 @@ public class List2Fragment extends Fragment
                         catch (Exception e){}
                         callFirst();
 
-//                        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+//                        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
 //                    GetData(getContext());
                     }
                     else if (s.length() > 0)
@@ -204,7 +204,7 @@ public class List2Fragment extends Fragment
                         }
                         catch (Exception e){}
 //                        allTaggs.clear();
-                        new HttpAsyncTaskSearch().execute("http://circle8.asia:8081/Onet.svc/SearchConnect");
+                        new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
                     }
                 }
                 catch (Exception e)
@@ -219,7 +219,7 @@ public class List2Fragment extends Fragment
             }
         });
 
-//        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+//        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
 
         return view;
     }
@@ -324,14 +324,14 @@ public class List2Fragment extends Fragment
 
     private void callFirst()
     {
-        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
     }
 
     public static void webCall()
     {
         allTaggs.clear();
         gridAdapter.notifyDataSetChanged();
-        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
     }
 
 
@@ -480,7 +480,7 @@ public class List2Fragment extends Fragment
                                     {
                                         rlLoadMore.setVisibility(View.VISIBLE);
                                         // Execute LoadMoreDataTask AsyncTask
-                                        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+                                        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
                                     }
                                 }
                                 else

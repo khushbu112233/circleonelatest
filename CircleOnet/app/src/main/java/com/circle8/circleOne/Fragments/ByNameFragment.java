@@ -105,7 +105,7 @@ public class ByNameFragment extends Fragment
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
                     listView.setVisibility(View.VISIBLE);
                     connectTags.clear();
-                    new ByNameFragment.HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/SearchConnect");
+                    new ByNameFragment.HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
                 }
             }
 

@@ -160,7 +160,7 @@ public class ContactsImportActivity extends AppCompatActivity
                 }
 //                Toast.makeText(getApplicationContext(), arrayList.toString(), Toast.LENGTH_LONG).show();
 
-                new HttpAsyncTaskImportContacts().execute("http://circle8.asia:8081/Onet.svc/ImportContacts");
+                new HttpAsyncTaskImportContacts().execute("http://circle8.asia:8999/Onet.svc/ImportContacts");
             }
         });
     }

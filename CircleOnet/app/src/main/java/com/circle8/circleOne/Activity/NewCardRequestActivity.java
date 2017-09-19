@@ -59,7 +59,7 @@ public class NewCardRequestActivity extends AppCompatActivity
         UserID = user.get(LoginSession.KEY_USERID);
         allTags = new ArrayList<>();
         newCardModelArrayList = new ArrayList<>();
-        new HttpAsyncTaskProfiles().execute("http://circle8.asia:8081/Onet.svc/MyProfiles");
+        new HttpAsyncTaskProfiles().execute("http://circle8.asia:8999/Onet.svc/MyProfiles");
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override

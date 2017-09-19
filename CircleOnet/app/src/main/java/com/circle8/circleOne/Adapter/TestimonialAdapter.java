@@ -107,7 +107,7 @@ public class TestimonialAdapter extends BaseSwipeAdapter
 //                Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_SHORT).show();
                 swipeLayout.close();
                 posi  = position ;
-                new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/Testimonial/Delete");
+                new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Delete");
             }
         });
 

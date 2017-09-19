@@ -160,7 +160,7 @@ public class List3Adapter extends BaseSwipeAdapter
 
                 posi  = position ;
 
-                new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/FriendConnection_Operation");
+                new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
 
               /*  try
                 {

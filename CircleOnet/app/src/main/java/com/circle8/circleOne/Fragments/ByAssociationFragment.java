@@ -109,7 +109,7 @@ public class ByAssociationFragment  extends Fragment
 
                     listView.setVisibility(View.VISIBLE);
                     connectTags.clear();
-                    new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/SearchConnect");
+                    new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
                 }
             }
 

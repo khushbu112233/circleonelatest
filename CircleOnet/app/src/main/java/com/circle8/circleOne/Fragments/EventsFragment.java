@@ -72,7 +72,7 @@ public class EventsFragment extends Fragment
         HashMap<String, String> user = session.getUserDetails();
         user_id = user.get(LoginSession.KEY_USERID);
 
-        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/Events/List");
+        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/Events/List");
 
        /* ArrayList<Integer> image = new ArrayList<Integer>();
         image.add(R.drawable.events1);

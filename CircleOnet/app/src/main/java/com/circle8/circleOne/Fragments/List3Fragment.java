@@ -250,7 +250,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                         pageno = 1;
                         allTaggs.clear();
                         searchTags.clear();
-                        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+                        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
 //                    GetData(getContext());
                     }
                     else if (s.length() > 0)
@@ -259,7 +259,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
 
                         allTaggs.clear();
                         searchTags.clear();
-                        new HttpAsyncTaskSearch().execute("http://circle8.asia:8081/Onet.svc/SearchConnect");
+                        new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
                     }
                 }
 
@@ -443,14 +443,14 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
 
     public static void callFirst()
     {
-        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
     }
 
     public static void webCall()
     {
         allTaggs.clear();
         gridAdapter.notifyDataSetChanged();
-        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
     }
 
     private static class HttpAsyncTask extends AsyncTask<String, Void, String>
@@ -556,7 +556,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                                     if (listView.getLastVisiblePosition() >= count - threshold)
                                     {
                                         rlLoadMore.setVisibility(View.VISIBLE);
-                                        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+                                        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
                                     }
                                 }
                             }

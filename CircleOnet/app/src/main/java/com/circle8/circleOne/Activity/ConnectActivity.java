@@ -133,7 +133,7 @@ public class ConnectActivity extends AppCompatActivity
         profile_id = intent.getStringExtra("ProfileID");
         friendUserID = intent.getStringExtra("friendUserID");
 
-        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/ConnectProfile");
+        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/ConnectProfile");
 
 //        Toast.makeText(getApplicationContext(),"ProfileID & FriendID "+profile_id+" "+friendProfile_id,Toast.LENGTH_LONG).show();
 
@@ -442,7 +442,7 @@ public class ConnectActivity extends AppCompatActivity
     protected void onResume()
     {
         super.onResume();
-        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/ConnectProfile");
+        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/ConnectProfile");
     }
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String>

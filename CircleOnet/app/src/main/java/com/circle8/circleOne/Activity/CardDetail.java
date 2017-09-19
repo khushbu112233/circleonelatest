@@ -163,11 +163,11 @@ public class CardDetail extends NfcActivity
         Intent intent = getIntent();
         profile_id = intent.getStringExtra("profile_id");
 
-        new HttpAsyncTaskGroup().execute("http://circle8.asia:8081/Onet.svc/Group/Fetch");
+        new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/Fetch");
 
-        new CardDetail.HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetUserProfile");
+        new CardDetail.HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetUserProfile");
 
-        new HttpAsyncTaskGroupsFetch().execute("http://circle8.asia:8081/Onet.svc/Group/MyGroupsTaggedWithFriendProfile");
+        new HttpAsyncTaskGroupsFetch().execute("http://circle8.asia:8999/Onet.svc/Group/MyGroupsTaggedWithFriendProfile");
 
         imgAddGroupFriend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -215,7 +215,7 @@ public class CardDetail extends NfcActivity
                         alertDialog.cancel();
                         // make selected item in the comma seprated string
                       //  Toast.makeText(getApplicationContext(), selectedStrings.toString(), Toast.LENGTH_LONG).show();
-                        new HttpAsyncTaskGroupAddFriend().execute("http://circle8.asia:8081/Onet.svc/AddMemberToGroups");
+                        new HttpAsyncTaskGroupAddFriend().execute("http://circle8.asia:8999/Onet.svc/AddMemberToGroups");
                     }
                 });
 

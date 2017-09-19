@@ -97,7 +97,7 @@ public class GroupsActivity extends AppCompatActivity
         imgBack = (ImageView) findViewById(R.id.imgBack);
         llBottom = (RelativeLayout) findViewById(R.id.llBottom);
 
-        new HttpAsyncTaskGroup().execute("http://circle8.asia:8081/Onet.svc/Group/Fetch");
+        new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/Fetch");
        /* groupName.add("Group 1");
         groupName.add("Group 2");
         groupName.add("Group 3");
@@ -171,8 +171,8 @@ public class GroupsActivity extends AppCompatActivity
                                     Toast.makeText(getApplicationContext(), "Upload Group Image", Toast.LENGTH_LONG).show();
                                 }
                                 else {
-                                    new HttpAsyncTaskPhotoUpload().execute("http://circle8.asia:8081/Onet.svc/ImgUpload");
-                                   // new HttpAsyncTaskGroupCreate().execute("http://circle8.asia:8081/Onet.svc/Group/Create");
+                                    new HttpAsyncTaskPhotoUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                                   // new HttpAsyncTaskGroupCreate().execute("http://circle8.asia:8999/Onet.svc/Group/Create");
                                 }
                             }
                         }).setNegativeButton("Cancel",
@@ -300,7 +300,7 @@ public class GroupsActivity extends AppCompatActivity
                         finish();*/
                         //   Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                         GroupImage = ImgName;
-                        new HttpAsyncTaskGroupCreate().execute("http://circle8.asia:8081/Onet.svc/Group/Create");
+                        new HttpAsyncTaskGroupCreate().execute("http://circle8.asia:8999/Onet.svc/Group/Create");
 
                     } else {
                         Toast.makeText(getBaseContext(), "Error While Uploading Image..", Toast.LENGTH_LONG).show();
@@ -645,7 +645,7 @@ public class GroupsActivity extends AppCompatActivity
                     {
                         Toast.makeText(getApplicationContext(), "Group Created..", Toast.LENGTH_LONG).show();
                         groupModelArrayList.clear();
-                        new HttpAsyncTaskGroup().execute("http://circle8.asia:8081/Onet.svc/Group/Fetch");
+                        new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/Fetch");
                     }
                     else
                     {

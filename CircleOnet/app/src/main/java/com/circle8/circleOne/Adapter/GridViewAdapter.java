@@ -134,7 +134,7 @@ public class GridViewAdapter extends BaseSwipeAdapter
                 posi  = position ;
 //                Toast.makeText(context, "Friend Profile ID: "+ nfcModelList1.get(posi).getProfile_id(), Toast.LENGTH_SHORT).show();
 
-                new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/FriendConnection_Operation");
+                new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
 
                /* List2Fragment.gridAdapter.notifyDataSetChanged();
                 try {

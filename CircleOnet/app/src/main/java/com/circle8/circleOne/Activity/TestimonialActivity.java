@@ -105,14 +105,14 @@ public class TestimonialActivity extends AppCompatActivity
 
     private void callFirst()
     {
-        new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8081/Onet.svc/Testimonial/Fetch");
+        new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Fetch");
     }
 
     public static void webCall()
     {
         allTaggs.clear();
         adapter.notifyDataSetChanged();
-        new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8081/Onet.svc/Testimonial/Fetch");
+        new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Fetch");
     }
 
     private static class HttpAsyncTaskTestimonial extends AsyncTask<String, Void, String>

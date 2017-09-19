@@ -75,7 +75,7 @@ public class ForgotActivity extends AppCompatActivity
                 }
                 else
                 {
-                    new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/ForgotPassword");
+                    new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/ForgotPassword");
                 }
             }
         });

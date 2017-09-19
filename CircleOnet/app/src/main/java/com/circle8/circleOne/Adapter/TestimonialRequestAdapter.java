@@ -109,7 +109,7 @@ public class TestimonialRequestAdapter extends BaseSwipeAdapter
 //                Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_SHORT).show();
                 swipeLayout.close();
                 posi  = position ;
-               // new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/Testimonial/Delete");
+               // new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Delete");
             }
         });
 
@@ -171,7 +171,7 @@ public class TestimonialRequestAdapter extends BaseSwipeAdapter
         holder.txtRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new HttpAsyncTaskTestimonialRequest().execute("http://circle8.asia:8081/Onet.svc/Testimonial/Request");
+                new HttpAsyncTaskTestimonialRequest().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Request");
             }
         });
 

@@ -180,7 +180,7 @@ public class List1Fragment extends Fragment
         allTags = new ArrayList<>();
 
         // new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-//        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+//        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
 
         pageno = 1;
         callFirst();
@@ -370,7 +370,7 @@ public class List1Fragment extends Fragment
                             mAdapter1.notifyDataSetChanged();
                         }
                         catch (Exception e){}
-                        new HttpAsyncTaskSearch().execute("http://circle8.asia:8081/Onet.svc/SearchConnect");
+                        new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
                     }
                 }
 
@@ -389,7 +389,7 @@ public class List1Fragment extends Fragment
        // tvNoCard.setVisibility(View.GONE);
         nfcModel.clear();
         pageno = 1;
-        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
     }
 
     public static void webCall()
@@ -398,7 +398,7 @@ public class List1Fragment extends Fragment
         allTags.clear();
         mAdapter.notifyDataSetChanged();
         mAdapter1.notifyDataSetChanged();
-        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
     }
 
     public static String POST(String url)
@@ -589,7 +589,7 @@ public class List1Fragment extends Fragment
                                     {
                                         rlLoadMore1.setVisibility(View.VISIBLE);
                                         rlLoadMore2.setVisibility(View.VISIBLE);
-                                        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/GetFriendConnection");
+                                        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
                                     }
                                 }
                             }

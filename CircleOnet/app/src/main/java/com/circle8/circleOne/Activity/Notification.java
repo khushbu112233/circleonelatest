@@ -85,14 +85,14 @@ public class Notification extends AppCompatActivity
 
     private void callFirst()
     {
-        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/Notification");
+        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/Notification");
     }
 
     public static void webCall()
     {
         allTags.clear();
         notificationAdapter.notifyDataSetChanged();
-        new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/Notification");
+        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/Notification");
     }
 
     public static String POST(String url)

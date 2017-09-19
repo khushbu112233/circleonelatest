@@ -148,7 +148,7 @@ public class GroupsItemsAdapter1 extends BaseAdapter
 
             for (int i = 1; i <= groupID.length() ; i++)
             {
-                new HttpAsyncTaskGroup().execute("http://circle8.asia:8081/Onet.svc/Group/FetchConnection");
+                new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/FetchConnection");
             }
 
         }

@@ -161,14 +161,14 @@ public class ConnectListFragment extends Fragment
 
                     listView.setVisibility(View.VISIBLE);
 //                    connectWithHttpPost(Findby, Search, rc_no, page_no);
-                    new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/SearchConnect");
+                    new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
                 }
                /* else
                 {
                     listView.setVisibility(View.VISIBLE);
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
                     gridAdapter.Filter(text);
-//                    new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/SearchConnect");
+//                    new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
                 }*/
             }
 
@@ -214,7 +214,7 @@ public class ConnectListFragment extends Fragment
                 //    System.out.println("paramUsername is :" + paramUsername + " paramPassword is :" + paramPassword);
                 // Create an intermediate to connect with the Internet
                 HttpClient httpClient = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost("http://circle8.asia:8081/Onet.svc/SearchConnect");
+                HttpPost httpPost = new HttpPost("http://circle8.asia:8999/Onet.svc/SearchConnect");
                 httpPost.setHeader(HTTP.CONTENT_TYPE, "application/json");
                 //Post Data
                 List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(4);
