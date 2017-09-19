@@ -981,10 +981,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         protected void onPostExecute(String result)
         {
             dialog.dismiss();
-            try
-            {
-                if (result != null)
-                {
+           // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            try {
+                if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
                     String success = jsonObject.getString("success").toString();
                     String message = jsonObject.getString("message").toString();
@@ -1147,6 +1146,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                      //   Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                         register_img = ImgName;
                         new HttpAsyncTask().execute("http://circle8.asia:8081/Onet.svc/Registration");
+
                     }
                     else
                     {

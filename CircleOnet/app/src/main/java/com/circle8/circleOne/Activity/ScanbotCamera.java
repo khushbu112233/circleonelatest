@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.R;
 
 import net.doo.snap.camera.AutoSnappingController;
@@ -34,7 +35,7 @@ public class ScanbotCamera extends AppCompatActivity implements PictureCallback,
 
     private boolean flashEnabled = false;
     private boolean autoSnappingEnabled = true;
-
+    Bitmap documentImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +77,28 @@ public class ScanbotCamera extends AppCompatActivity implements PictureCallback,
 
         userGuidanceToast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
         userGuidanceToast.setGravity(Gravity.CENTER, 0, 0);
+
+        findViewById(R.id.done).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+             //   FrameScanBotCamera.setVisibility(View.GONE);
+
+                try {
+
+                    if (documentImage == null) {
+                        Toast.makeText(getApplicationContext(), "First snap the Image, then Click Done", Toast.LENGTH_LONG).show();
+                    } else {
+                        cameraView.stopPreview();
+                        finish();
+                        EditProfileActivity.crop(documentImage);
+                    }
+                }
+                catch (Exception e){
+                    cameraView.startPreview();
+                }
+            }
+        });
+
 
         findViewById(R.id.snap).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,7 +210,7 @@ public class ScanbotCamera extends AppCompatActivity implements PictureCallback,
         // Run document detection on original image:
         final ContourDetector detector = new ContourDetector();
         detector.detect(originalBitmap);
-        final Bitmap documentImage = detector.processImageAndRelease(originalBitmap, detector.getPolygonF(), ContourDetector.IMAGE_FILTER_NONE);
+        documentImage = detector.processImageAndRelease(originalBitmap, detector.getPolygonF(), ContourDetector.IMAGE_FILTER_NONE);
 
         resultView.post(new Runnable() {
             @Override

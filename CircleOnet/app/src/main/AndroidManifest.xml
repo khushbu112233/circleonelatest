@@ -220,6 +220,8 @@
             android:name=".Activity.ForgotActivity"
             android:theme="@style/NoActionbar" />
         <activity android:name=".Activity.ScanbotCamera"></activity>
+        <activity android:name=".ScanBotGallery.MainActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
