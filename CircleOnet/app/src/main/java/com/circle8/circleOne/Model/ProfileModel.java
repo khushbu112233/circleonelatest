@@ -21,9 +21,18 @@ public class ProfileModel {
     String Address1 = "", Address2 = "", Address3 = "", Address4 = "", City = "", State = "", Country = "", Postalcode = "", Website = "", Attachment_FileName = "";
     String Association = "" ;
     String Industry = "";
+    String Profile = "";
 
 
     public ProfileModel() {
+    }
+
+    public String getProfile() {
+        return Profile;
+    }
+
+    public void setProfile(String profile) {
+        Profile = profile;
     }
 
     public String getCompany_Profile() {
