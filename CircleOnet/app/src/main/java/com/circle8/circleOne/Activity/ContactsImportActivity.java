@@ -300,10 +300,25 @@ public class ContactsImportActivity extends AppCompatActivity
                                 String number = pCursor.getString(pCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                                 String name = pCursor.getString(pCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
 
-                                if (number.startsWith("+65") || number.startsWith("065") || number.startsWith("65") )
+                                if (number.startsWith("+65") || number.startsWith("065") || number.startsWith("65") || number.length() == 8 )
                                 {
+                                    if (number.contains("+") || number.contains("-") || number.contains(" ")) {
+                                       number.replace("+", "");
+                                    }
+                                    if (number.contains("-"))
+                                    {
+                                        number.replace("-", "");
+                                    }
+                                    if (number.contains(" "))
+                                    {
+                                        number.replace(" ", "");
+                                    }
+                                    if (number.length() == 8){
+                                        number = "65"+number;
+                                    }
+                                    number = number.trim();
                                     arrayListPhoneName.add(pCursor.getString(pCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)));
-                                    arrayListPhoneNumber.add(pCursor.getString(pCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
+                                    arrayListPhoneNumber.add(number);
                                 }
                                 break;
                            /* case ContactsContract.CommonDataKinds.Phone.TYPE_HOME:
