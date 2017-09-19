@@ -12,6 +12,9 @@ import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -28,6 +31,7 @@ import android.widget.Toast;
 import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.Adapter.EditGroupAdapter;
 import com.circle8.circleOne.Adapter.GroupsInCardDetailAdapter;
+import com.circle8.circleOne.Adapter.GroupsRecyclerAdapter;
 import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.GroupModel;
@@ -96,9 +100,10 @@ public class CardDetail extends NfcActivity
     ArrayList<String> groupPhoto = new ArrayList<>();
     ArrayList<String> ID_group = new ArrayList<>();
     ArrayList<String> groupDesc = new ArrayList<>();
+
     ListView listView1, groupListView;
-
-
+    RecyclerView recycler_view ;
+    TextView tvAddedGroupInfo ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -150,6 +155,8 @@ public class CardDetail extends NfcActivity
         twitterUrl = (ImageView) findViewById(R.id.twitterUrl);
         linkedInUrl = (ImageView) findViewById(R.id.linkedInUrl);
         groupListView = (ListView)findViewById(R.id.groupListView);
+        recycler_view = (RecyclerView)findViewById(R.id.recycler_view);
+        tvAddedGroupInfo = (TextView)findViewById(R.id.tvAddedGroupInfo);
 
         list = new ArrayList<CharSequence>();
         listGroupId = new ArrayList<String>();
@@ -1456,33 +1463,49 @@ public class CardDetail extends NfcActivity
                     String message = jsonObject.getString("message").toString();
                     String counts = jsonObject.getString("Count").toString();
 
-                    if (success.equals("1"))
-                    {
 //                        Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
 
-                        JSONObject groups = jsonObject.getJSONObject("Groups");
-                        String groupid = groups.getString("group_ID");
-                        String groupname = groups.getString("group_Name");
-                        String groupdesc = groups.getString("group_desc");
-                        String groupphoto = groups.getString("group_photo");
+                        JSONArray groupsArray = jsonObject.getJSONArray("Groups");
 
-                        ArrayList<String> img = new ArrayList<>();
-                        ArrayList<String> name = new ArrayList<>();
-                        ArrayList<String> desc = new ArrayList<>();
+                        ArrayList<String> img = null;
+                        ArrayList<String> name = null;
+                        ArrayList<String> desc = null;
 
-                        img.add(groupphoto);
-                        name.add(groupname);
-                        desc.add(groupdesc);
+                        if (groupsArray.length() == 0)
+                        {
+                            tvAddedGroupInfo.setVisibility(View.VISIBLE);
+                        }
+                        else
+                        {
 
-                        GroupsInCardDetailAdapter groupsInCardDetailAdapter = new GroupsInCardDetailAdapter(CardDetail.this, img,name,desc);
-                        groupListView.setAdapter(groupsInCardDetailAdapter);
-                        groupsInCardDetailAdapter.notifyDataSetChanged();
+                            for (int i = 0; i < groupsArray.length(); i++) {
+                                JSONObject groupsObj = groupsArray.getJSONObject(i);
 
-                    }
-                    else
-                    {
-                        Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
-                    }
+                                String groupid = groupsObj.getString("group_ID");
+                                String groupname = groupsObj.getString("group_Name");
+                                String groupdesc = groupsObj.getString("group_desc");
+                                String groupphoto = groupsObj.getString("group_photo");
+
+                                img = new ArrayList<>();
+                                name = new ArrayList<>();
+                                desc = new ArrayList<>();
+
+                                img.add(groupphoto);
+                                name.add(groupname);
+                                desc.add(groupdesc);
+                            }
+
+                            /*GroupsInCardDetailAdapter groupsInCardDetailAdapter = new GroupsInCardDetailAdapter(CardDetail.this, img,name,desc);
+                            groupListView.setAdapter(groupsInCardDetailAdapter);
+                            groupsInCardDetailAdapter.notifyDataSetChanged();*/
+
+                            GroupsRecyclerAdapter groupsRecyclerAdapter = new GroupsRecyclerAdapter(CardDetail.this, img, name, desc);
+                            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                            recycler_view.setLayoutManager(new LinearLayoutManager(CardDetail.this, LinearLayoutManager.HORIZONTAL, true));
+//                             recycler_view.setLayoutManager(mLayoutManager);
+                            recycler_view.setItemAnimator(new DefaultItemAnimator());
+                            recycler_view.setAdapter(groupsRecyclerAdapter);
+                        }
                 }
                 else
                 {
@@ -1511,7 +1534,7 @@ public class CardDetail extends NfcActivity
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("ProfileId", currentUser_ProfileId);
+            jsonObject.accumulate("ProfileId", profile_id);
             jsonObject.accumulate("UserId", user_id );
             jsonObject.accumulate("numofrecords", "10");
             jsonObject.accumulate("pageno", "1" );
