@@ -899,6 +899,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                         setAutoSnapEnabled(true);*/
 
                         Intent intent1 = new Intent(getApplicationContext(), ScanbotCamera.class);
+                        intent1.putExtra("from", "edit");
                         startActivity(intent1);
                     }
                 } else if (items[item].equals("Choose from Library")) {
@@ -1835,6 +1836,7 @@ public class EditProfileActivity extends AppCompatActivity implements
 
                 Intent intent = new Intent(getApplicationContext(), com.circle8.circleOne.ScanBotGallery.MainActivity.class);
                 intent.putExtra("bitmap", originalBitmap);
+                intent.putExtra("from", "edit");
                 startActivity(intent);
              /*   editPolygonView.setImageBitmap(originalBitmap);
 

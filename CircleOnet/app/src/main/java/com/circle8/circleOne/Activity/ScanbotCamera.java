@@ -1,5 +1,6 @@
 package com.circle8.circleOne.Activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -36,13 +37,15 @@ public class ScanbotCamera extends AppCompatActivity implements PictureCallback,
     private boolean flashEnabled = false;
     private boolean autoSnappingEnabled = true;
     Bitmap documentImage;
+    String from = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         supportRequestWindowFeature(WindowCompat.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanbot_camera);
-
+        Intent intent = getIntent();
+        from = intent.getStringExtra("from");
         getSupportActionBar().hide();
 
         cameraView = (ScanbotCameraView) findViewById(R.id.camera);
@@ -90,7 +93,11 @@ public class ScanbotCamera extends AppCompatActivity implements PictureCallback,
                     } else {
                         cameraView.stopPreview();
                         finish();
-                        EditProfileActivity.crop(documentImage);
+                        if (from.equalsIgnoreCase("edit")) {
+                            EditProfileActivity.crop(documentImage);
+                        }else if (from.equalsIgnoreCase("newcard")){
+                            NewCardRequestDetailActivity.crop(documentImage);
+                        }
                     }
                 }
                 catch (Exception e){
