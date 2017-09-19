@@ -151,8 +151,7 @@ public class GroupsActivity extends AppCompatActivity
                 });
                 //   dialog.setView(layout);
 
-
-//text_entry is an Layout XML file containing two text field to display in alert dialog
+                //text_entry is an Layout XML file containing two text field to display in alert dialog
                 final AlertDialog.Builder alert = new AlertDialog.Builder(GroupsActivity.this);
                 alert.setCancelable(false);
                 alert.setTitle("Create Group").setView(layout).setPositiveButton("Create",
@@ -179,15 +178,14 @@ public class GroupsActivity extends AppCompatActivity
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,
                                                 int whichButton) {
-     /*
-     * User clicked cancel so do some stuff
-     */
+                                 /*
+                                 * User clicked cancel so do some stuff
+                                 */
                                 dialog.dismiss();
 
                             }
                         });
                 alert.show();
-
             }
         });
 
