@@ -976,6 +976,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         protected void onPostExecute(String result)
         {
             dialog.dismiss();
+            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);

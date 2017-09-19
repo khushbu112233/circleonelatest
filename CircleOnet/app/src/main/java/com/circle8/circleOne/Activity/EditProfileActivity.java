@@ -13,6 +13,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.PointF;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -31,16 +33,19 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -87,6 +92,9 @@ import net.doo.snap.camera.PictureCallback;
 import net.doo.snap.camera.ScanbotCameraView;
 import net.doo.snap.lib.detector.ContourDetector;
 import net.doo.snap.lib.detector.DetectionResult;
+import net.doo.snap.lib.detector.Line2D;
+import net.doo.snap.ui.EditPolygonImageView;
+import net.doo.snap.ui.MagnifierView;
 import net.doo.snap.ui.PolygonView;
 
 import org.apache.http.HttpResponse;
@@ -112,6 +120,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.Executors;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -172,11 +182,12 @@ public class EditProfileActivity extends AppCompatActivity implements
     private LoginSession session;
     private int SELECT_GALLERY_CARD = 500;
     private int REQUEST_CAMERA_CARD = 501;
-    private String final_ImgBase64 = "";
+    private static String final_ImgBase64 = "";
     private int cardposition = 0;
     ImageView ivAttachBackImage, ivAttachFrontImage, ivAddAssociate;
-    TextView txtCardFront, txtCardBack;
-    String cardType = "";
+    static TextView txtCardFront;
+    static TextView txtCardBack;
+    static String cardType = "";
     String Attach_String = "";
     String companyID, designationID, industryID, associationID, addressID ;
     private ProgressDialog mProgressDialog;
@@ -202,7 +213,16 @@ public class EditProfileActivity extends AppCompatActivity implements
 
     private boolean flashEnabled = false;
     private boolean autoSnappingEnabled = true;
+    private Bitmap documentImage;
 
+    private static EditPolygonImageView editPolygonView;
+    private MagnifierView magnifierView;
+    private Bitmap originalBitmap;
+    private ImageView resultImageView;
+    private Button cropButton;
+    private Button backButton;
+    RelativeLayout rltGallery;
+    public static Activity activity;
     private static String convertInputStreamToString(InputStream inputStream) throws IOException
     {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -222,7 +242,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.fragment_edit_profile);
-
+        activity = EditProfileActivity.this;
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         cameraView = (ScanbotCameraView) findViewById(R.id.camera);
@@ -240,6 +260,38 @@ public class EditProfileActivity extends AppCompatActivity implements
         });
 
         resultView = (ImageView) findViewById(R.id.result);
+        rltGallery = (RelativeLayout) findViewById(R.id.rltGallery);
+
+        editPolygonView = (EditPolygonImageView) findViewById(R.id.polygonView1);
+       // editPolygonView.setImageResource(R.drawable.test_receipt);
+    //    originalBitmap = ((BitmapDrawable) editPolygonView.getDrawable()).getBitmap();
+
+        magnifierView = (MagnifierView) findViewById(R.id.magnifier);
+        // MagifierView should be set up every time when editPolygonView is set with new image
+        magnifierView.setupMagnifier(editPolygonView);
+
+        resultImageView = (ImageView) findViewById(R.id.resultImageView);
+        resultImageView.setVisibility(View.GONE);
+
+        cropButton = (Button) findViewById(R.id.cropButton);
+       /* cropButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                crop();
+            }
+        });
+*/
+        backButton = (Button) findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                backButton.setVisibility(View.GONE);
+                resultImageView.setVisibility(View.GONE);
+
+                editPolygonView.setVisibility(View.VISIBLE);
+                cropButton.setVisibility(View.VISIBLE);
+            }
+        });
 
 
         edtWork2 = (EditText) findViewById(R.id.edtWork2);
@@ -341,6 +393,22 @@ public class EditProfileActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 cameraView.takePicture(false);
+            }
+        });
+
+        findViewById(R.id.done).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FrameScanBotCamera.setVisibility(View.GONE);
+                cameraView.stopPreview();
+                final_ImgBase64 = BitMapToString(documentImage);
+                //   Upload();
+                CardSwipe.imageView.setImageBitmap(documentImage);
+                if (cardType.equals("front"))
+                    new HttpAsyncTaskFrontUpload().execute("http://circle8.asia:8081/Onet.svc/ImgUpload");
+                else if (cardType.equals("back"))
+                    new HttpAsyncTaskBackUpload().execute("http://circle8.asia:8081/Onet.svc/ImgUpload");
+
             }
         });
 
@@ -809,7 +877,8 @@ public class EditProfileActivity extends AppCompatActivity implements
                     if (result1) {
 //                        activeTakePhoto();
                      //   cameraCardIntent();
-                        FrameScanBotCamera.setVisibility(View.VISIBLE);
+                      /*  FrameScanBotCamera.setVisibility(View.VISIBLE);
+                        cameraView.startPreview();
                        // getSupportActionBar().hide();
                         contourDetectorFrameHandler = ContourDetectorFrameHandler.attach(cameraView);
 
@@ -827,16 +896,17 @@ public class EditProfileActivity extends AppCompatActivity implements
 
                         userGuidanceToast = Toast.makeText(EditProfileActivity.this, "", Toast.LENGTH_SHORT);
                         userGuidanceToast.setGravity(Gravity.CENTER, 0, 0);
-                        setAutoSnapEnabled(autoSnappingEnabled);
+                        setAutoSnapEnabled(true);*/
 
-                       /* Intent intent1 = new Intent(getApplicationContext(), ScanbotCamera.class);
-                        startActivity(intent1);*/
+                        Intent intent1 = new Intent(getApplicationContext(), ScanbotCamera.class);
+                        startActivity(intent1);
                     }
                 } else if (items[item].equals("Choose from Library")) {
                     userChoosenTask = "Choose from Library";
-                    if (result)
+                    if (result) {
 //                        activeGallery();
                         galleryCardIntent();
+                    }
                 } else if (items[item].equals("Cancel")) {
                     dialog.dismiss();
                 }
@@ -860,10 +930,10 @@ public class EditProfileActivity extends AppCompatActivity implements
     }
 
     private void showUserGuidance(final DetectionResult result) {
-        if (!autoSnappingEnabled) {
+      /*  if (!autoSnappingEnabled) {
             return;
         }
-
+*/
         switch (result) {
             case OK:
                 userGuidanceToast.setText("Don't move");
@@ -917,8 +987,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         // Run document detection on original image:
         final ContourDetector detector = new ContourDetector();
         detector.detect(originalBitmap);
-        final Bitmap documentImage = detector.processImageAndRelease(originalBitmap, detector.getPolygonF(), ContourDetector.IMAGE_FILTER_NONE);
-
+        documentImage = detector.processImageAndRelease(originalBitmap, detector.getPolygonF(), ContourDetector.IMAGE_FILTER_NONE);
         resultView.post(new Runnable() {
             @Override
             public void run() {
@@ -943,6 +1012,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     }
 
     private void galleryCardIntent() {
+      //  rltGallery.setVisibility(View.VISIBLE);
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -1134,7 +1204,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         return result;
     }
 
-    public  String POST7(String url)
+    public static String POST7(String url)
     {
         InputStream inputStream = null;
         String result = "";
@@ -1743,7 +1813,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             new HttpAsyncTaskBackUpload().execute("http://circle8.asia:8081/Onet.svc/ImgUpload");
     }
 
-    public String BitMapToString(Bitmap bitmap) {
+    public static String BitMapToString(Bitmap bitmap) {
         ByteArrayOutputStream ByteStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, ByteStream);
         byte[] b = ByteStream.toByteArray();
@@ -1761,9 +1831,19 @@ public class EditProfileActivity extends AppCompatActivity implements
             Bitmap bitmap;
             try {
                 bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
-                Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 150, 150, false);
+                originalBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
+
+                Intent intent = new Intent(getApplicationContext(), com.circle8.circleOne.ScanBotGallery.MainActivity.class);
+                intent.putExtra("bitmap", originalBitmap);
+                startActivity(intent);
+             /*   editPolygonView.setImageBitmap(originalBitmap);
+
+
+                new InitImageViewTask().executeOnExecutor(Executors.newSingleThreadExecutor(), originalBitmap);
+*/
+
                 // image = ConvertBitmapToString(resizedBitmap);
-                final_ImgBase64 = BitMapToString(resizedBitmap);
+                /*final_ImgBase64 = BitMapToString(resizedBitmap);
                 // final_ImgBase64 = resizeBase64Image(s);
                 Log.d("base64string ", final_ImgBase64);
 //                Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
@@ -1772,7 +1852,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                 if (cardType.equals("front"))
                     new HttpAsyncTaskFrontUpload().execute("http://circle8.asia:8081/Onet.svc/ImgUpload");
                 else if (cardType.equals("back"))
-                    new HttpAsyncTaskBackUpload().execute("http://circle8.asia:8081/Onet.svc/ImgUpload");
+                    new HttpAsyncTaskBackUpload().execute("http://circle8.asia:8081/Onet.svc/ImgUpload");*/
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -1780,6 +1860,72 @@ public class EditProfileActivity extends AppCompatActivity implements
         }
 
 //        BmToString(bm);
+    }
+
+    public static void crop(Bitmap bitmap) {
+        // crop & warp image by selected polygon (editPolygonView.getPolygon())
+       /* final Bitmap documentImage = new ContourDetector().processImageF(
+                originalBitmap, editPolygonView.getPolygon(), ContourDetector.IMAGE_FILTER_NONE);
+
+        editPolygonView.setVisibility(View.GONE);
+        cropButton.setVisibility(View.GONE);
+
+        resultImageView.setImageBitmap(documentImage);
+        resultImageView.setVisibility(View.VISIBLE);
+        backButton.setVisibility(View.VISIBLE);
+        rltGallery.setVisibility(View.GONE);*/
+        final_ImgBase64 = BitMapToString(bitmap);
+        // final_ImgBase64 = resizeBase64Image(s);
+        Log.d("base64string ", final_ImgBase64);
+//                Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
+        // Upload();
+        CardSwipe.imageView.setImageBitmap(bitmap);
+        if (cardType.equals("front"))
+            new HttpAsyncTaskFrontUpload().execute("http://circle8.asia:8081/Onet.svc/ImgUpload");
+        else if (cardType.equals("back"))
+            new HttpAsyncTaskBackUpload().execute("http://circle8.asia:8081/Onet.svc/ImgUpload");
+    }
+
+    public static class InitImageViewTask extends AsyncTask<Bitmap, Void, InitImageResult> {
+
+        @Override
+        protected InitImageResult doInBackground(Bitmap... params) {
+            Bitmap image = params[0];
+            ContourDetector detector = new ContourDetector();
+            final DetectionResult detectionResult = detector.detect(image);
+            Pair<List<Line2D>, List<Line2D>> linesPair = null;
+            List<PointF> polygon = new ArrayList<>(EditPolygonImageView.DEFAULT_POLYGON);
+            switch (detectionResult) {
+                case OK:
+                case OK_BUT_BAD_ANGLES:
+                case OK_BUT_TOO_SMALL:
+                case OK_BUT_BAD_ASPECT_RATIO:
+                    linesPair = new Pair<>(detector.getHorizontalLines(), detector.getVerticalLines());
+                    polygon = detector.getPolygonF();
+                    break;
+            }
+
+            return new InitImageResult(linesPair, polygon);
+        }
+
+        @Override
+        protected void onPostExecute(final InitImageResult initImageResult) {
+            // set detected polygon and lines into EditPolygonImageView
+            editPolygonView.setPolygon(initImageResult.polygon);
+            if (initImageResult.linesPair != null) {
+                editPolygonView.setLines(initImageResult.linesPair.first, initImageResult.linesPair.second);
+            }
+        }
+    }
+
+    static class InitImageResult {
+        final Pair<List<Line2D>, List<Line2D>> linesPair;
+        final List<PointF> polygon;
+
+        InitImageResult(final Pair<List<Line2D>, List<Line2D>> linesPair, final List<PointF> polygon) {
+            this.linesPair = linesPair;
+            this.polygon = polygon;
+        }
     }
 
     public String POSTImage(String url) {
@@ -2649,13 +2795,13 @@ public class EditProfileActivity extends AppCompatActivity implements
         }
     }
 
-    private class HttpAsyncTaskFrontUpload extends AsyncTask<String, Void, String> {
+    private static class HttpAsyncTaskFrontUpload extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(EditProfileActivity.this);
+            dialog = new ProgressDialog(activity);
             dialog.setMessage("Uploading...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
@@ -2686,10 +2832,10 @@ public class EditProfileActivity extends AppCompatActivity implements
                         // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                         txtCardFront.setText(ImgName);
                     } else {
-                        Toast.makeText(getBaseContext(), "Error While Uploading Image..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(activity, "Error While Uploading Image..", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(getBaseContext(), "Not able to Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, "Not able to Register..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -2750,13 +2896,13 @@ public class EditProfileActivity extends AppCompatActivity implements
     }
 
 
-    private class HttpAsyncTaskBackUpload extends AsyncTask<String, Void, String> {
+    private static class HttpAsyncTaskBackUpload extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(EditProfileActivity.this);
+            dialog = new ProgressDialog(activity);
             dialog.setMessage("Uploading...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
@@ -2787,10 +2933,10 @@ public class EditProfileActivity extends AppCompatActivity implements
                         // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                         txtCardBack.setText(ImgName);
                     } else {
-                        Toast.makeText(getBaseContext(), "Error While Uploading Image..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(activity, "Error While Uploading Image..", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(getBaseContext(), "Not able to Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, "Not able to Register..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
