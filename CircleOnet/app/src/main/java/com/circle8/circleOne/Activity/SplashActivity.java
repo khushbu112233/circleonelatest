@@ -37,7 +37,7 @@ public class SplashActivity extends AppCompatActivity
                 imageView2.setVisibility(View.GONE);
 
                 TranslateAnimation slide = new TranslateAnimation(0, 0, 250,0 );
-                slide.setDuration(3000);
+                slide.setDuration(1000);
                 imageView1.startAnimation(slide);
 
                 new Handler().postDelayed(new Runnable() {
@@ -47,7 +47,7 @@ public class SplashActivity extends AppCompatActivity
                         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                         finish();
                     }
-                },3000);
+                },1500);
 
 //                Animation anim = AnimationUtils.loadAnimation(SplashActivity.this, R.anim.img_anim);
 //                imageView1.startAnimation(anim);
