@@ -146,7 +146,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                 i.putExtra("company", company);
                 i.putExtra("profile", profile);
                 i.putExtra("image", image);
-                i.putExtra("phone",profile);
+                i.putExtra("phone",phone);
                 i.putExtra("profileID",profileID);
                 startActivity(i);
             }

@@ -2,6 +2,7 @@ package com.circle8.circleOne.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Rect;
@@ -10,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
 import android.provider.ContactsContract;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -66,6 +68,7 @@ public class ConnectActivity extends AppCompatActivity
     int motionLength = 0;
 
     private ArrayList<ConnectProfileModel> connectingTags = new ArrayList<>();
+    private String Mobile1 = "", Mobile2 = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -484,19 +487,6 @@ public class ConnectActivity extends AppCompatActivity
                     JSONObject response = new JSONObject(result);
                     String Matched = response.getString("Matched");
 
-                    if (Matched.equals("1"))
-                    {
-                        ivAddRound.setImageResource(R.drawable.round_gray);
-                        tvAdd.setTextColor(getResources().getColor(R.color.unselected));
-                        tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
-                    }
-                    else
-                    {
-                        ivAddRound.setImageResource(R.drawable.round_blue);
-                        tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
-                        tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
-                    }
-
                     JSONObject profile = response.getJSONObject("Profile");
 
                     ConnectProfileModel connectingModel = new ConnectProfileModel();
@@ -545,6 +535,8 @@ public class ConnectActivity extends AppCompatActivity
                     txtNum.setText(profile.getString("Phone1"));
                     // txtWork.setText(tag1.getWork_no());
                     txtMob.setText(profile.getString("Mobile1"));
+                    Mobile1 = profile.getString("Mobile1");
+                    Mobile2 = profile.getString("Mobile2");
                     tvPersonDesignation.setText(profile.getString("Designation"));
 
                     profileImg = "http://circle8.asia/App_ImgLib/UserProfile/"+profile.getString("UserPhoto");
@@ -555,6 +547,90 @@ public class ConnectActivity extends AppCompatActivity
                     else
                     {
                         Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+profile.getString("UserPhoto")).into(ivProfileImage);
+                    }
+
+                    if (Matched.equals("1"))
+                    {
+                        ivAddRound.setImageResource(R.drawable.round_blue);
+                        tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        rlAdd.setEnabled(true);
+                    }
+                    else if (Matched.equals("0"))
+                    {
+                        ivAddRound.setImageResource(R.drawable.round_gray);
+                        tvAdd.setTextColor(getResources().getColor(R.color.unselected));
+                        tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
+                        rlAdd.setEnabled(false);
+                    }
+                    else if (Matched.equals("-1"))
+                    {
+
+                        if (Mobile1.equalsIgnoreCase("") && Mobile2.equalsIgnoreCase("")){
+                            ivAddRound.setImageResource(R.drawable.round_gray);
+                            tvAdd.setTextColor(getResources().getColor(R.color.unselected));
+                            tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
+                            rlAdd.setEnabled(false);
+                        }
+                        else if (!Mobile1.equalsIgnoreCase("")){
+                            Boolean aBoolean = contactExists(getApplicationContext(), Mobile1.toString());
+                            if (aBoolean == true) {
+                                ivAddRound.setImageResource(R.drawable.round_blue);
+                                tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                rlAdd.setEnabled(true);
+                            }
+                            else {
+                                ivAddRound.setImageResource(R.drawable.round_gray);
+                                tvAdd.setTextColor(getResources().getColor(R.color.unselected));
+                                tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
+                                rlAdd.setEnabled(false);
+                            }
+                        }
+                        else if (!Mobile2.equalsIgnoreCase("")){
+                            Boolean aBoolean = contactExists(getApplicationContext(), Mobile2.toString());
+                            if (aBoolean == true) {
+                                ivAddRound.setImageResource(R.drawable.round_blue);
+                                tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                rlAdd.setEnabled(true);
+                            }else {
+                                ivAddRound.setImageResource(R.drawable.round_gray);
+                                tvAdd.setTextColor(getResources().getColor(R.color.unselected));
+                                tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
+                                rlAdd.setEnabled(false);
+                            }
+                        }
+
+                    }
+                    else if (Matched.equalsIgnoreCase("2")){
+                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which){
+                                    case DialogInterface.BUTTON_POSITIVE:
+                                        //Yes button clicked
+                                        ivAddRound.setImageResource(R.drawable.round_blue);
+                                        tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                        tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                        rlAdd.setEnabled(true);
+                                        break;
+
+                                    case DialogInterface.BUTTON_NEGATIVE:
+                                        //No button clicked
+                                        ivAddRound.setImageResource(R.drawable.round_gray);
+                                        tvAdd.setTextColor(getResources().getColor(R.color.unselected));
+                                        tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
+                                        rlAdd.setEnabled(false);
+                                        break;
+                                }
+                            }
+                        };
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ConnectActivity.this);
+                        builder.setMessage("You are already Connected with this Friend to other Profile. Do you want to connect with this Profile?")
+                                .setPositiveButton("Yes", dialogClickListener)
+                                .setNegativeButton("No", dialogClickListener).show();
                     }
 
                 }
