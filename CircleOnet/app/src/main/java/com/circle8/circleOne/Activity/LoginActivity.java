@@ -123,13 +123,13 @@ import io.fabric.sdk.android.Fabric;
 
 import static com.circle8.circleOne.Utils.Validation.validateLogin;
 
-
 public class LoginActivity extends AppCompatActivity implements
         View.OnClickListener,
         GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks,
         TextWatcher,
         CompoundButton.OnCheckedChangeListener{
 
+    public static String ReferrenceCode = "";
     Button btnSimpleLogin, btnRegister;
     //Boolean isConnected = false;
     private CallbackManager callbackManager;
@@ -859,7 +859,9 @@ public class LoginActivity extends AppCompatActivity implements
                         LastName = jsonArray.getString("LastName");
                         UserPhoto = jsonArray.getString("UserPhoto");
                         String Status = jsonArray.getString("Status");
-
+                        try {
+                            ReferrenceCode = jsonArray.getString("ReferrenceCode");
+                        }catch (Exception e) {}
                         if (Status.equalsIgnoreCase("Verified"))
                         {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)

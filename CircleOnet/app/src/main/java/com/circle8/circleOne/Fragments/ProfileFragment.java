@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.Activity.EditProfileActivity;
+import com.circle8.circleOne.Activity.LoginActivity;
 import com.circle8.circleOne.Activity.TestimonialActivity;
 import com.circle8.circleOne.Activity.TestimonialRequest;
 import com.circle8.circleOne.Adapter.CardSwipe;
@@ -468,7 +469,8 @@ public class ProfileFragment extends Fragment
         imgProfileShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String shareBody = "Hello, This is " +tvPersonName.getText().toString()+ " working as " + tvDesignation.getText().toString() + " at "+ tvCompany.getText().toString()+".";
+                String shareBody = "I'm giving you a free redemption points on the Circle app (up to ₹25). To accept, use code '"+ LoginActivity.ReferrenceCode+"' to sign up. Enjoy!"
+                        +System.lineSeparator() + "Details: https://www.circle8.asia/invite/"+LoginActivity.ReferrenceCode;
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, tvPersonName.getText().toString());

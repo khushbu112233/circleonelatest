@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.Typeface;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -100,14 +101,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     CountryCodePicker ccp;
     private String UrlRegister = "http://circle8.asia:8999/Onet.svc/Registration";
     private ArrayList<NameValuePair> params ;
-
+    TextView txtprofile;
     private CircleImageView civProfilePic ;
     private String userChoosenTask ;
     CharSequence[] items ;
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     private String imagepath = null;
     private File file ;
-
+    String refferelCode =  "";
     private String company_name, first_name, last_name, phone_no, password, c_password, user_name, gender = "", email ;
 
     private int mYear, mMonth, mDay, mHour, mMinute;
@@ -118,7 +119,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     ProgressDialog pDialog;
     String encodedImageData, register_img;
     String UserID = "", Facebook = "", Google = "", Linkedin = "", Twitter = "", UserName = "", Email = "", Image = "";
-
+    EditText etReferrelCode;
+    TextView tvReferrelInfo;
     int motionLength ;
 
     @Override
@@ -128,7 +130,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_register);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
+        txtprofile = (TextView) findViewById(R.id.txtprofile);
+        etReferrelCode = (EditText) findViewById(R.id.etReferrelCode);
+        tvReferrelInfo = (TextView) findViewById(R.id.tvReferrelInfo);
         txtGender = (TextView) findViewById(R.id.txtGender);
         lnrRegister = (LinearLayout) findViewById(R.id.lnrBottomReg);
         etFirstName = (EditText) findViewById(R.id.etFirstName);
@@ -169,6 +173,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         Email = intent.getStringExtra("Email");
         Image = intent.getStringExtra("Image");
 
+        Typeface font = Typeface.createFromAsset(getAssets(), "century-gothic-1361531616.ttf");
+        txtprofile.setTypeface(font);
         etEmail.setText(Email);
         try
         {
@@ -346,6 +352,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         if (v == lnrRegister)
         {
             company_name = "Ample Arch";
+            refferelCode = etReferrelCode.getText().toString();
             user_name = etFirstName.getText().toString() + " " + etLastName.getText().toString();
             first_name = etFirstName.getText().toString();
             last_name = etLastName.getText().toString();
@@ -361,6 +368,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             if (!validate(user_name, first_name, last_name, password, c_password, phone_no, email))
             {
 //                Toast.makeText(getApplicationContext(), "Something Wrong!", Toast.LENGTH_SHORT).show();
+            }
+            else if (refferelCode.equals("")){
+                Toast.makeText(getApplicationContext(), "Enter Referral Code", Toast.LENGTH_SHORT).show();
             }
             else if (gender.equals(""))
             {
@@ -858,6 +868,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             jsonObject.accumulate("Phone", phone_no);
             jsonObject.accumulate("Photo_String", register_img);
             jsonObject.accumulate("Platform", "Android");
+            jsonObject.accumulate("ReferralCode", refferelCode);
             jsonObject.accumulate("Token", LoginActivity.pushToken);
             jsonObject.accumulate("Twitter", Twitter);
             jsonObject.accumulate("UserName", email);

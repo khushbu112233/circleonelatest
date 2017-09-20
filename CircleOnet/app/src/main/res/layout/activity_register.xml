@@ -275,7 +275,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"/>
-        
+
+
+        <EditText
+            android:id="@+id/etReferrelCode"
+            android:layout_marginTop="3dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="15dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:textColorHint="@color/colorPrimary"
+            android:hint="* Referral Code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"/>
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tvReferrelInfo"
+            android:textColor="@color/unselected"
+            android:textSize="10sp"
+            android:text="Enter Referral Code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"/>
+
         <TextView
             android:id="@+id/txtGender"
             android:layout_marginTop="5dp"
