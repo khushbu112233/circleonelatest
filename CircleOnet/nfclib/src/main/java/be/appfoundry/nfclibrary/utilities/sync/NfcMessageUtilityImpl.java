@@ -166,8 +166,8 @@ public class NfcMessageUtilityImpl implements NfcMessageUtility {
         byte[] payload = new byte[text.getBytes().length+1];
         System.arraycopy(text.getBytes(),0,payload,1,text.length());
 
-        return createNdefMessage(NdefRecord.TNF_WELL_KNOWN,
-                NdefRecord.RTD_TEXT,payload);
+        return createNdefMessage(NdefRecord.TNF_MIME_MEDIA,
+                NfcType.MIME_TEXT,payload);
     }
 
     /**

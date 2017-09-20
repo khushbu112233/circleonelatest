@@ -33,4 +33,5 @@ public class NfcType {
      * Type for the Bluetooth Application Record
      */
     public static final byte[] BLUETOOTH_AAR = "application/vnd.bluetooth.ep.oob".getBytes();
+    public static final byte[] MIME_TEXT = "application/com.amplearch.circleonet".getBytes();
 }

@@ -93,7 +93,7 @@ public class NFCDemo extends NfcActivity {
                         mAsyncOperationCallback = new AsyncOperationCallback() {
                             @Override
                             public boolean performWrite(NfcWriteUtility writeUtility) throws ReadOnlyTagException, InsufficientCapacityException, TagNotPresentException, FormatException {
-                                return writeUtility.writeEmailToTagFromIntent(text, null, null, getIntent());
+                                return writeUtility.writeTextToTagFromIntent(text, getIntent());
                             }
                         };
                         showDialog();

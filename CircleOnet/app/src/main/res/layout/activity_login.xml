@@ -93,7 +93,7 @@
             android:layout_marginTop="10dp"/>
 
         <LinearLayout
-            android:layout_gravity="end"
+            android:layout_gravity="left"
             android:layout_marginLeft="45dp"
             android:layout_marginRight="45dp"
             android:layout_marginTop="5dp"
@@ -104,7 +104,7 @@
             <CheckBox
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
-                android:textSize="18sp"
+                android:textSize="13sp"
                 android:textColor="@color/colorPrimary"
                 android:text="Remember Me   "
                 android:id="@+id/switchRemember"
@@ -118,14 +118,14 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="8dp"
             android:text="Login"
             android:textAllCaps="false"
             android:textSize="15sp" />
 
         <RelativeLayout
             android:id="@+id/rltFinger"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="8dp"
             android:layout_below="@+id/lnrLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -154,7 +154,7 @@
             android:layout_below="@+id/viewLogin"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="8dp"
             android:text="Register"
             android:textAllCaps="false"
             android:textSize="15sp" />
