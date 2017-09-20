@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.circle8.circleOne.Activity.CardDetail;
 import com.circle8.circleOne.Model.GroupModel;
 import com.circle8.circleOne.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -30,6 +31,7 @@ public class EditGroupAdapter extends BaseAdapter
     ArrayList<String> groupName = new ArrayList<>();
     ArrayList<String> groupPhoto = new ArrayList<>();
     ArrayList<String> groupId = new ArrayList<>();
+
     public EditGroupAdapter(Context applicationContext, ArrayList<GroupModel> groupModelArrayList)
     {
         this.context = applicationContext ;
@@ -59,34 +61,58 @@ public class EditGroupAdapter extends BaseAdapter
         return 0;
     }
 
+    static class ViewHolder
+    {
+        TextView tvGroupName ;
+        CircleImageView imgGroup ;
+        CheckBox checkBox ;
+    }
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent)
     {
         View row = convertView;
+        ViewHolder holder = null;
 
         if (row == null)
         {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = inflater.inflate(R.layout.edit_groups_details_popup, null);
+            holder = new ViewHolder();
 
-            CircleImageView imgGroup = (CircleImageView)row.findViewById(R.id.imgGroup);
-            TextView tvGroupName = (TextView)row.findViewById(R.id.tvGroupName);
-            CheckBox checkBox = (CheckBox)row.findViewById(R.id.chCheckBox);
+            holder.imgGroup = (CircleImageView)row.findViewById(R.id.imgGroup);
+            holder.tvGroupName = (TextView)row.findViewById(R.id.tvGroupName);
+            holder.checkBox = (CheckBox)row.findViewById(R.id.chCheckBox);
 
-            tvGroupName.setText(groupName.get(position));
+            row.setTag(holder);
+        }
+        else
+        {
+            holder = (ViewHolder)row.getTag();
+        }
 
-            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        holder.tvGroupName.setText(groupName.get(position));
 
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        selectedStrings.put(groupId.get(position));
-                    }else{
-                        selectedStrings.remove(position);
-                    }
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    selectedStrings.put(groupId.get(position));
+                }else{
+                    selectedStrings.remove(position);
                 }
-            });
+
+            }
+        });
+
+        if (groupPhoto.get(position).equals(""))
+        {
+            holder.imgGroup.setImageResource(R.drawable.usr_1);
+        }
+        else
+        {
+            Picasso.with(context).load("http://circle8.asia/App_ImgLib/Group/"+groupPhoto.get(position)).into(holder.imgGroup);
         }
 
         return row;

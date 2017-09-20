@@ -13,6 +13,8 @@ import com.circle8.circleOne.R;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by ample-arch on 8/24/2017.
  */
@@ -44,19 +46,37 @@ public class AddEventAdapter extends BaseAdapter
         return 0;
     }
 
+    static class ViewHolder
+    {
+        TextView tvEventName ;
+        ImageView ivCancel ;
+    }
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent)
     {
         View view = convertView ;
-        inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(R.layout.event_list, null);
+        ViewHolder holder = null;
 
-        TextView tvEventName = (TextView)view.findViewById(R.id.tvEventName);
-        ImageView ivCancel = (ImageView)view.findViewById(R.id.ivCancelEvent);
+        if( view == null)
+        {
+            inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.event_list, null);
+            holder = new ViewHolder();
 
-        tvEventName.setText(addEvent.get(position));
+            holder.tvEventName = (TextView)view.findViewById(R.id.tvEventName);
+            holder.ivCancel = (ImageView)view.findViewById(R.id.ivCancelEvent);
 
-        ivCancel.setOnClickListener(new View.OnClickListener() {
+            view.setTag(holder);
+        }
+        else
+        {
+            holder = (ViewHolder)view.getTag();
+        }
+
+        holder.tvEventName.setText(addEvent.get(position));
+
+        holder.ivCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {

@@ -64,7 +64,7 @@ public class AssociationAdapter extends BaseAdapter
 
         if (row == null)
         {
-            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+            LayoutInflater inflater = ((Activity)context).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
             holder = new ViewHolder();
             holder.txtAssoName = (TextView) row.findViewById(R.id.tvAssociationName);
@@ -75,9 +75,6 @@ public class AssociationAdapter extends BaseAdapter
         {
             holder = (ViewHolder) row.getTag();
         }
-
-
-
 
         holder.txtAssoName.setText(associationName.get(position));
 

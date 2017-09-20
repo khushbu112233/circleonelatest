@@ -125,7 +125,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity {
         card_front = i.getStringExtra("card_front");
         card_back = i.getStringExtra("card_back");
         profileId = i.getStringExtra("profileID");
-        
+
         if (image.equals("")) {
             imgProfile.setImageResource(R.drawable.usr_1);
         } else {

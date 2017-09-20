@@ -12,6 +12,8 @@ import com.circle8.circleOne.R;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
 * Created by ample-arch on 9/7/2017.
 */
@@ -42,27 +44,38 @@ public class EventDetailAdapter extends BaseAdapter
         return 0;
     }
 
+    static class ViewHolder
+    {
+        TextView tvDate, tvStTime, tvEnTime ;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
         View row = convertView;
+        ViewHolder holder = null;
 
         if (row == null)
         {
             LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = inflater.inflate(R.layout.showing_time, null);
-            TextView tvDate = (TextView)row.findViewById(R.id.tvEventDate);
-            TextView tvStTime = (TextView)row.findViewById(R.id.tvStartTime);
-            TextView tvEnTime = (TextView)row.findViewById(R.id.tvEndTime);
+            holder = new ViewHolder();
 
-            tvDate.setText(eventModelArrayList.get(position).getEventDate());
-            tvStTime.setText(eventModelArrayList.get(position).getStartDate());
-            tvEnTime.setText(eventModelArrayList.get(position).getEndDate());
+            holder.tvDate = (TextView)row.findViewById(R.id.tvEventDate);
+            holder.tvStTime = (TextView)row.findViewById(R.id.tvStartTime);
+            holder.tvEnTime = (TextView)row.findViewById(R.id.tvEndTime);
 
+            row.setTag(holder);
         }
+        else
+        {
+            holder = (ViewHolder)row.getTag();
+        }
+
+        holder.tvDate.setText(eventModelArrayList.get(position).getEventDate());
+        holder.tvStTime.setText(eventModelArrayList.get(position).getStartDate());
+        holder.tvEnTime.setText(eventModelArrayList.get(position).getEndDate());
 
         return row;
     }
-
-
 }

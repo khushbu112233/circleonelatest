@@ -47,6 +47,13 @@ public class EventsAdapter extends ArrayAdapter
         this.eventModelArrayList = eventModelArrayList ;
     }
 
+    static class ViewHolder
+    {
+        TextView txtTitle;
+        TextView txtDesc;
+        ImageView image;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
@@ -88,10 +95,5 @@ public class EventsAdapter extends ArrayAdapter
         return row;
     }
 
-    static class ViewHolder
-    {
-        TextView txtTitle;
-        TextView txtDesc;
-        ImageView image;
-    }
+
 }

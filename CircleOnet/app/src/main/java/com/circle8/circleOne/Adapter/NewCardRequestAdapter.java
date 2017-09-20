@@ -1,5 +1,6 @@
 package com.circle8.circleOne.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.circle8.circleOne.Activity.NewCardRequestActivity;
 import com.circle8.circleOne.Activity.Profile;
 import com.circle8.circleOne.Model.NewCardModel;
 import com.circle8.circleOne.Model.ProfileModel;
@@ -24,12 +26,20 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class NewCardRequestAdapter extends BaseAdapter
 {
     Context context ;
+    private int layoutResourceId;
     ArrayList<ProfileModel> newCardModelArrayList = new ArrayList<>();
 
     public NewCardRequestAdapter(Context applicationContext, ArrayList<ProfileModel> newCardModelArrayList)
     {
         this.context = applicationContext;
         this.newCardModelArrayList = newCardModelArrayList;
+    }
+
+    public NewCardRequestAdapter(Context activity, int new_card_request_parameter, ArrayList<ProfileModel> allTags)
+    {
+        this.context = activity ;
+        this.layoutResourceId = new_card_request_parameter ;
+        this.newCardModelArrayList = allTags ;
     }
 
     /*public NewCardRequestAdapter(Context applicationContext, ArrayList<String> name,
@@ -61,42 +71,56 @@ public class NewCardRequestAdapter extends BaseAdapter
         return 0;
     }
 
+    static class ViewHolder
+    {
+        TextView tvPerson, tvDesignation, tvCompany, tvEmail, tvPhone, tvProfile ;
+        CircleImageView ivProfile ;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
         View row = convertView;
+        ViewHolder holder = null;
 
         if( row == null)
         {
-            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = inflater.inflate(R.layout.new_card_request_parameter, null);
+            /*LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            row = inflater.inflate(R.layout.new_card_request_parameter, null);*/
+            LayoutInflater inflater = ((Activity)context).getLayoutInflater();
+            row = inflater.inflate(layoutResourceId, parent, false);
+            holder = new ViewHolder();
 
-            TextView tvPerson = (TextView)row.findViewById(R.id.tvPerson);
-            TextView tvDesignation = (TextView)row.findViewById(R.id.tvDesignation);
-            TextView tvCompany = (TextView)row.findViewById(R.id.tvCompany);
-            TextView tvEmail = (TextView)row.findViewById(R.id.tvEmail);
-            TextView tvPhone = (TextView)row.findViewById(R.id.tvPhone);
-            CircleImageView ivProfile = (CircleImageView)row.findViewById(R.id.imgProfile);
-            TextView tvProfile = (TextView)row.findViewById(R.id.tvProfile);
+            holder.tvPerson = (TextView)row.findViewById(R.id.tvPerson);
+            holder.tvDesignation = (TextView)row.findViewById(R.id.tvDesignation);
+            holder.tvCompany = (TextView)row.findViewById(R.id.tvCompany);
+            holder.tvEmail = (TextView)row.findViewById(R.id.tvEmail);
+            holder.tvPhone = (TextView)row.findViewById(R.id.tvPhone);
+            holder.ivProfile = (CircleImageView)row.findViewById(R.id.imgProfile);
+            holder.tvProfile = (TextView)row.findViewById(R.id.tvProfile);
 
-            tvPerson.setText(newCardModelArrayList.get(position).getFirstName() + " " + newCardModelArrayList.get(position).getLastName());
-            tvDesignation.setText(newCardModelArrayList.get(position).getDesignation());
-            tvCompany.setText(newCardModelArrayList.get(position).getCompanyName());
-            tvEmail.setText(newCardModelArrayList.get(position).getEmail1());
-            tvPhone.setText(newCardModelArrayList.get(position).getPhone1());
-            int count = position + 1;
-            tvProfile.setText(newCardModelArrayList.get(position).getProfile());
+            row.setTag(holder);
+        }
+        else
+        {
+            holder = (ViewHolder)row.getTag();
+        }
+
+            holder.tvPerson.setText(newCardModelArrayList.get(position).getFirstName() + " " + newCardModelArrayList.get(position).getLastName());
+            holder.tvDesignation.setText(newCardModelArrayList.get(position).getDesignation());
+            holder.tvCompany.setText(newCardModelArrayList.get(position).getCompanyName());
+            holder.tvEmail.setText(newCardModelArrayList.get(position).getEmail1());
+            holder.tvPhone.setText(newCardModelArrayList.get(position).getPhone1());
+            holder.tvProfile.setText(newCardModelArrayList.get(position).getProfile());
 
             if (newCardModelArrayList.get(position).getUserPhoto().equals(""))
             {
-                ivProfile.setImageResource(R.drawable.usr_1);
+                holder.ivProfile.setImageResource(R.drawable.usr_1);
             }
             else
             {
-                Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/"+newCardModelArrayList.get(position).getUserPhoto()).into(ivProfile);
+                Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/"+newCardModelArrayList.get(position).getUserPhoto()).into(holder.ivProfile);
             }
-
-        }
 
         return row;
     }
