@@ -223,6 +223,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     private Button backButton;
     RelativeLayout rltGallery;
     public static Activity activity;
+    ImageView imgProfileShare;
     private static String convertInputStreamToString(InputStream inputStream) throws IOException
     {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -259,6 +260,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             }
         });
 
+        imgProfileShare = (ImageView) findViewById(R.id.imgProfileShare);
         resultView = (ImageView) findViewById(R.id.result);
         rltGallery = (RelativeLayout) findViewById(R.id.rltGallery);
 
@@ -272,6 +274,19 @@ public class EditProfileActivity extends AppCompatActivity implements
 
         resultImageView = (ImageView) findViewById(R.id.resultImageView);
         resultImageView.setVisibility(View.GONE);
+
+        imgProfileShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String shareBody = "I'm giving you a free redemption points on the Circle app (up to ₹25). To accept, use code '"+ LoginActivity.ReferrenceCode+"' to sign up. Enjoy!"
+                        +System.lineSeparator() + "Details: https://www.circle8.asia/invite/"+LoginActivity.ReferrenceCode;
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, tvPersonName.getText().toString());
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(sharingIntent, "Share Profile Via"));
+            }
+        });
 
         cropButton = (Button) findViewById(R.id.cropButton);
        /* cropButton.setOnClickListener(new View.OnClickListener() {

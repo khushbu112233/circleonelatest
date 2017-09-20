@@ -15,6 +15,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CancellationSignal;
+import android.provider.Settings;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 import android.support.annotation.NonNull;
@@ -66,6 +67,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.internal.pu;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
@@ -247,7 +249,11 @@ public class LoginActivity extends AppCompatActivity implements
         boolean isSubscribed = status.getSubscriptionStatus().getSubscribed();
         boolean subscriptionSetting = status.getSubscriptionStatus().getUserSubscriptionSetting();
         String oneSignaluserID = status.getSubscriptionStatus().getUserId();
-        pushToken = status.getSubscriptionStatus().getPushToken();
+
+        pushToken = Settings.Secure.getString(getApplicationContext().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+
+       // pushToken = status.getSubscriptionStatus().getPushToken();
         System.out.println("pushtoken " + pushToken);
        // Toast.makeText(getApplicationContext(), pushToken, Toast.LENGTH_LONG).show();
 

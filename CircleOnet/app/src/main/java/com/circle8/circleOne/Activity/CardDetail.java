@@ -84,7 +84,7 @@ public class CardDetail extends NfcActivity
     ImageView imgAddGroupFriend;
     public static JSONArray selectedStrings = new JSONArray();
     String userImg, frontCardImg, backCardImg, personName, personAddress;
-
+    ImageView imgProfileShare;
     List<CharSequence> list;
     ArrayList<String> listGroupId;
     LoginSession loginSession;
@@ -115,7 +115,7 @@ public class CardDetail extends NfcActivity
         HashMap<String, String> user = loginSession.getUserDetails();
         user_id = user.get(LoginSession.KEY_USERID);
         currentUser_ProfileId = user.get(LoginSession.KEY_PROFILEID);
-
+        imgProfileShare = (ImageView) findViewById(R.id.imgProfileShare);
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager1 = (ViewPager) findViewById(R.id.viewPager1);
         imgCards = (ImageView) findViewById(R.id.imgCards);
@@ -176,6 +176,19 @@ public class CardDetail extends NfcActivity
         new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/Fetch");
 
         new HttpAsyncTaskGroupsFetch().execute("http://circle8.asia:8999/Onet.svc/Group/MyGroupsTaggedWithFriendProfile");
+
+        imgProfileShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String shareBody = "I'm giving you a free redemption points on the Circle app (up to ₹25). To accept, use code '"+ LoginActivity.ReferrenceCode+"' to sign up. Enjoy!"
+                        +System.lineSeparator() + "Details: https://www.circle8.asia/invite/"+LoginActivity.ReferrenceCode;
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, txtName.getText().toString());
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(sharingIntent, "Share Profile Via"));
+            }
+        });
 
         imgAddGroupFriend.setOnClickListener(new View.OnClickListener() {
             @Override
