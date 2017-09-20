@@ -36,4 +36,9 @@
     <string name="female">Gender: <strike>Male</strike> / Female </string>
     <string name="male">Gender: Male / <strike>Female</strike> </string>
 
+    <string name="earn_point_detail">Are you an active sharer on social media, with a highly engaged
+                                        network of friends and/or family? If so, By sharing CIRCLE1 APP to
+                                        your 100 contacts, you will earn 100 CIRCLE Points, which can be
+                                        used to any CIRCLE Merchant and more discount than others.</string>
+
 </resources>

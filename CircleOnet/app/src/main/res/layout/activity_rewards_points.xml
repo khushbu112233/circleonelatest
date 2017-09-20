@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.circle8.circleOne.Activity.RewardsPointsActivity">
+
+    <RelativeLayout
+        android:id="@+id/rlTabBar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/colorAccent" >
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="35dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+        <TextView
+            android:id="@+id/txtTitle"
+            android:textSize="18dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CIRCLE1 Rewards Card"
+            android:textColor="@color/white"/>
+        <ImageView
+            android:id="@+id/imgProfileMenu"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="22dp"
+            android:layout_height="30dp"
+            android:visibility="gone"
+            android:src="@drawable/ic_dehaze_black_24dp"/>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/flCardLayout"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:tag="sticky"
+        app:layout_scrollFlags="scroll|snap"
+        android:layout_below="@+id/rlTabBar">
+
+        <ImageView
+            android:alpha="1"
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/default_card_1"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="5dp">
+                <TextView
+                    android:id="@+id/tvRewardName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="CIRCLE1 REWARDS POINTS"
+                    android:textAlignment="textEnd"
+                    android:textSize="13dp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"/>
+                <TextView
+                    android:id="@+id/tvLine"
+                    android:layout_width="180dp"
+                    android:layout_height="1dp"
+                    android:background="@android:color/white"
+                    android:layout_below="@+id/tvRewardName"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="0dp"/>
+                <TextView
+                    android:id="@+id/tvRewardType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TYPE THE CARD FOR DETAILS"
+                    android:layout_below="@+id/tvLine"
+                    android:textAlignment="textEnd"
+                    android:textSize="09dp"
+                    android:textColor="@android:color/white"
+                    android:layout_marginTop="5dp" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tvRewardPoint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5,450"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:textColor="@android:color/white"/>
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="70dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_chip_blue"
+                android:visibility="visible"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:weightSum="2"
+                android:gravity="center"
+                android:layout_marginBottom="10dp">
+                <LinearLayout
+                    android:id="@+id/llEarnPointBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical|left"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:id="@+id/ivCirclePlus"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/ic_circle_plus"/>
+                    <TextView
+                        android:id="@+id/tvPoints"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="EARN POINTS"
+                        android:textSize="10dp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/white"
+                        android:layout_marginLeft="10dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/llMerchantBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical|right"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:id="@+id/ivHouse"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/ic_house"/>
+                    <TextView
+                        android:id="@+id/tvMerchant"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="MERCHANTS"
+                        android:textSize="10dp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/white"
+                        android:layout_marginLeft="10dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlRewardHistory"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/flCardLayout">
+        <LinearLayout
+            android:layout_alignParentLeft="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Balance:"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"/>
+            <TextView
+                android:id="@+id/tvRewardPoints"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5,450"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvHistory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="History"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_below="@+id/rlRewardHistory"
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimary"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/view1"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="10dp">
+
+            <include
+                android:id="@+id/icdRewardHistoryLayout"
+                layout="@layout/reward_history_layout"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:visibility="gone"/>
+
+            <include
+                android:id="@+id/icdHistoryListviewLayout"
+                layout="@layout/history_listview_layout"
+                android:visibility="gone"/>
+
+            <include
+                android:id="@+id/icdEarnPointLayout"
+                layout="@layout/earn_points_layout"
+                android:visibility="gone"/>
+
+            <include
+                android:id="@+id/icdMerchantLayout"
+                layout="@layout/merchant_layout"
+                android:visibility="gone"
+                android:layout_height="fill_parent"
+                android:layout_width="fill_parent" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+
+
+
+
+
+</RelativeLayout>

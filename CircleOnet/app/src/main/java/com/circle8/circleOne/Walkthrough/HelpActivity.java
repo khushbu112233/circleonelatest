@@ -30,8 +30,8 @@ import com.circle8.circleOne.R;
 import java.util.ArrayList;
 
 
-public class HelpActivity extends AppCompatActivity {
-
+public class HelpActivity extends AppCompatActivity
+{
     private ViewPager viewPager;
     private MyViewPagerAdapter myViewPagerAdapter;
     private LinearLayout dotsLayout;
@@ -40,9 +40,12 @@ public class HelpActivity extends AppCompatActivity {
     private Button btnSkip, btnNext;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= 21) {
+
+        if (Build.VERSION.SDK_INT >= 21)
+        {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         }
         setContentView(R.layout.activity_help);
