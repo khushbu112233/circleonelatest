@@ -430,7 +430,16 @@
                         android:scrollbars="horizontal"
                         android:layout_toLeftOf="@+id/imgAddGroupFriend"
                         android:layout_marginRight="10dp"
-                        android:layout_marginLeft="10dp"/>
+                        android:layout_marginLeft="10dp" />
+
+                    <ImageView
+                        android:layout_alignParentRight="true"
+                        android:id="@+id/imgAddGroupFriend"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/ic_edit" />
 
                     <ListView
                         android:visibility="gone"
@@ -444,15 +453,7 @@
 
                     </ListView>
 
-                    <ImageView
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:id="@+id/imgAddGroupFriend"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="right"
-                        android:layout_marginRight="10dp"
-                        android:src="@drawable/ic_edit" />
+
 
                 </RelativeLayout>
 

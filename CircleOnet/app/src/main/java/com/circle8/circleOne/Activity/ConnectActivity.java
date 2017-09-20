@@ -136,7 +136,16 @@ public class ConnectActivity extends AppCompatActivity
         profile_id = intent.getStringExtra("ProfileID");
         friendUserID = intent.getStringExtra("friendUserID");
 
-        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/ConnectProfile");
+        if (friendProfile_id.equals(""))
+        {
+            Toast.makeText(ConnectActivity.this, "Having no friend profile ID",Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/ConnectProfile");
+        }
+
+
 
 //        Toast.makeText(getApplicationContext(),"ProfileID & FriendID "+profile_id+" "+friendProfile_id,Toast.LENGTH_LONG).show();
 

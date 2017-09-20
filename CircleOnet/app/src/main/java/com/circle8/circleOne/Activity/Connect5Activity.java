@@ -13,9 +13,8 @@ import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Connect5Activity extends AppCompatActivity
+public class Connect5Activity extends AppCompatActivity implements View.OnClickListener
 {
-
     private ImageView imgBack, imgCards, imgConnect, imgEvents, imgProfile, imgConnecting;
 
     String level = "0";
@@ -499,5 +498,76 @@ public class Connect5Activity extends AppCompatActivity
                 finish();
             }
         });
+
+        ivProfile1.setOnClickListener(this);
+        ivProfile2.setOnClickListener(this);
+        ivProfile3.setOnClickListener(this);
+        ivProfile4.setOnClickListener(this);
+        ivProfile5.setOnClickListener(this);
+        ivProfile6.setOnClickListener(this);
+        ivProfile7.setOnClickListener(this);
+
+        txtName1.setOnClickListener(this);
+        txtName2.setOnClickListener(this);
+        txtName3.setOnClickListener(this);
+        txtName4.setOnClickListener(this);
+        txtName5.setOnClickListener(this);
+        txtName6.setOnClickListener(this);
+        txtName7.setOnClickListener(this);
     }
+
+    @Override
+    public void onClick(View v)
+    {
+        if ( v == ivProfile1)
+        {
+            Intent in = new Intent(Connect5Activity.this, CardDetail.class);
+            in.putExtra("profile_id", userProfileId1);
+            startActivity(in);
+            finish();
+        }
+        if ( v == ivProfile2)
+        {
+            Intent in = new Intent(Connect5Activity.this, CardDetail.class);
+            in.putExtra("profile_id", userProfileId2);
+            startActivity(in);
+            finish();
+        }
+        if ( v == ivProfile3)
+        {
+            Intent in = new Intent(Connect5Activity.this, CardDetail.class);
+            in.putExtra("profile_id", userProfileId3);
+            startActivity(in);
+            finish();
+        }
+        if ( v == ivProfile4)
+        {
+            Intent in = new Intent(Connect5Activity.this, CardDetail.class);
+            in.putExtra("profile_id", userProfileId4);
+            startActivity(in);
+            finish();
+        }
+        if ( v == ivProfile5)
+        {
+            Intent in = new Intent(Connect5Activity.this, CardDetail.class);
+            in.putExtra("profile_id", userProfileId5);
+            startActivity(in);
+            finish();
+        }
+        if ( v == ivProfile6)
+        {
+            Intent in = new Intent(Connect5Activity.this, CardDetail.class);
+            in.putExtra("profile_id", userProfileId6);
+            startActivity(in);
+            finish();
+        }
+        if ( v == ivProfile7)
+        {
+            Intent in = new Intent(Connect5Activity.this, CardDetail.class);
+            in.putExtra("profile_id", userProfileId7);
+            startActivity(in);
+            finish();
+        }
+    }
+
 }
