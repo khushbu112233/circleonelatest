@@ -22,6 +22,8 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -29,6 +31,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -122,7 +126,9 @@ import static com.circle8.circleOne.Utils.Validation.validateLogin;
 
 public class LoginActivity extends AppCompatActivity implements
         View.OnClickListener,
-        GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
+        GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks,
+        TextWatcher,
+        CompoundButton.OnCheckedChangeListener{
 
     Button btnSimpleLogin, btnRegister;
     //Boolean isConnected = false;
@@ -183,6 +189,14 @@ public class LoginActivity extends AppCompatActivity implements
     private TwitterAuthClient client;
     public static String pushToken = "";
 
+    private CheckBox rem_userpass;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    private static final String PREF_NAME = "prefs";
+    private static final String KEY_REMEMBER = "remember";
+    private static final String KEY_USERNAME = "username";
+    private static final String KEY_PASS = "password";
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,6 +224,19 @@ public class LoginActivity extends AppCompatActivity implements
         tvUsernameInfo = (TextView) findViewById(R.id.tvUserInfo);
         tvPasswordInfo = (TextView) findViewById(R.id.tvPasswordInfo);
 
+
+        sharedPreferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        rem_userpass = (CheckBox)findViewById(R.id.switchRemember);
+
+        if(sharedPreferences.getBoolean(KEY_REMEMBER, false))
+            rem_userpass.setChecked(true);
+        else
+            rem_userpass.setChecked(false);
+
+        etLoginUser.setText(sharedPreferences.getString(KEY_USERNAME,""));
+        etLoginPass.setText(sharedPreferences.getString(KEY_PASS,""));
+
         prefs = getSharedPreferences("com.circle8.circleOne", MODE_PRIVATE);
         etLoginPass.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
@@ -222,6 +249,10 @@ public class LoginActivity extends AppCompatActivity implements
         String oneSignaluserID = status.getSubscriptionStatus().getUserId();
         pushToken = status.getSubscriptionStatus().getPushToken();
         //Toast.makeText(getApplicationContext(), pushToken, Toast.LENGTH_LONG).show();
+
+        etLoginPass.addTextChangedListener(this);
+        etLoginUser.addTextChangedListener(this);
+        rem_userpass.setOnCheckedChangeListener(this);
 
         etLoginPass.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -464,6 +495,40 @@ public class LoginActivity extends AppCompatActivity implements
         }
 //        Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
 
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        managePrefs();
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        managePrefs();
+    }
+
+    private void managePrefs(){
+        if(rem_userpass.isChecked()){
+            editor.putString(KEY_USERNAME, etLoginUser.getText().toString().trim());
+            editor.putString(KEY_PASS, etLoginPass.getText().toString().trim());
+            editor.putBoolean(KEY_REMEMBER, true);
+            editor.apply();
+        }else{
+            editor.putBoolean(KEY_REMEMBER, false);
+            editor.remove(KEY_PASS);//editor.putString(KEY_PASS,"");
+            editor.remove(KEY_USERNAME);//editor.putString(KEY_USERNAME, "");
+            editor.apply();
+        }
     }
 
     private void checkDeviceFingerprintSupport() {
@@ -798,8 +863,31 @@ public class LoginActivity extends AppCompatActivity implements
                         {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
                             {
+                                Gson gson = ((MyApplication) getApplication()).getGsonObject();
+                                UserObject userData = new UserObject(profileid, FirstName + " " + LastName, userName, userPassword, UserID, "", UserPhoto, false);
+                                String userDataString = gson.toJson(userData);
+                                CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
+                                pref.setUserData(userDataString);
+
+                                loginSession.createLoginSession(profileid, UserID, "", userName, "", "",userPassword);
+                                if (prefs.getBoolean("firstrun", true))
+                                {
+                                    // Do first run stuff here then set 'firstrun' as false
+                                    // using the following line to edit/commit prefs
+                                    Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                                    startActivity(intent);
+                                    prefs.edit().putBoolean("firstrun", false).commit();
+                                }
+                                else
+                                {
+                                    Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                                    userIntent.putExtra("viewpager_position", 0);
+                                    startActivity(userIntent);
+                                    finish();
+                                }
+
                                 // imgFinger.setVisibility(View.VISIBLE);
-                                if (imgFinger.getVisibility() == View.VISIBLE)
+                               /* if (imgFinger.getVisibility() == View.VISIBLE)
                                 {
                                     Gson gson = ((MyApplication) getApplication()).getGsonObject();
                                     UserObject userData = new UserObject(profileid, FirstName + " " + LastName, userName, userPassword, UserID, "", UserPhoto, false);
@@ -831,7 +919,7 @@ public class LoginActivity extends AppCompatActivity implements
                                         startActivity(userIntent);
                                         finish();
                                     }
-                                }
+                                }*/
 
                               /*  loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, userName, UserPhoto, "");
                                 // Toast.makeText(getApplicationContext(), getString(R.string.auth_successful), Toast.LENGTH_LONG).show();
@@ -1580,7 +1668,31 @@ public class LoginActivity extends AppCompatActivity implements
                         if (Status.equalsIgnoreCase("Verified")) {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-                                if (imgFinger.getVisibility() == View.VISIBLE) {
+
+                                Gson gson = ((MyApplication) getApplication()).getGsonObject();
+                                UserObject userData = new UserObject(profileid, FirstName + " " + LastName, userName, userPassword, UserID, "", UserPhoto, false);
+                                String userDataString = gson.toJson(userData);
+                                CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
+                                pref.setUserData(userDataString);
+
+                                loginSession.createLoginSession(profileid, UserID, "", userName, "", "",userPassword);
+                                if (prefs.getBoolean("firstrun", true))
+                                {
+                                    // Do first run stuff here then set 'firstrun' as false
+                                    // using the following line to edit/commit prefs
+                                    Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                                    startActivity(intent);
+                                    prefs.edit().putBoolean("firstrun", false).commit();
+                                }
+                                else
+                                {
+                                    Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                                    userIntent.putExtra("viewpager_position", 0);
+                                    startActivity(userIntent);
+                                    finish();
+                                }
+
+                               /* if (imgFinger.getVisibility() == View.VISIBLE) {
                                     Gson gson = ((MyApplication) getApplication()).getGsonObject();
                                     UserObject userData = new UserObject(profileid, FirstName + " " + LastName, userName, userPassword, UserID, "", UserPhoto, false);
                                     String userDataString = gson.toJson(userData);
@@ -1606,7 +1718,7 @@ public class LoginActivity extends AppCompatActivity implements
                                         startActivity(userIntent);
                                         finish();
                                     }
-                                }
+                                }*/
 
 
                                 // imgFinger.setVisibility(View.VISIBLE);

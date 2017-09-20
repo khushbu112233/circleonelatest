@@ -31,6 +31,7 @@
         android:weightSum="3">
 
         <EditText
+            android:textSize="15sp"
             android:imeOptions="actionNext"
             android:singleLine="true"
             android:inputType="textWebEmailAddress"
@@ -59,6 +60,7 @@
             android:layout_marginRight="45dp" />
 
         <EditText
+            android:textSize="15sp"
             android:singleLine="true"
             android:inputType="textPassword"
             android:id="@+id/etLoginPass"
@@ -90,6 +92,25 @@
             android:layout_marginRight="45dp"
             android:layout_marginTop="10dp"/>
 
+        <LinearLayout
+            android:layout_gravity="end"
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="45dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@color/colorPrimary"
+                android:text="Remember Me   "
+                android:id="@+id/switchRemember"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
         <Button
             android:id="@+id/btnLogin"
             style="@style/Widget.AppCompat.Button.Colored"
@@ -100,7 +121,7 @@
             android:layout_marginTop="15dp"
             android:text="Login"
             android:textAllCaps="false"
-            android:textSize="16dp" />
+            android:textSize="15sp" />
 
         <RelativeLayout
             android:id="@+id/rltFinger"
@@ -136,7 +157,7 @@
             android:layout_marginTop="15dp"
             android:text="Register"
             android:textAllCaps="false"
-            android:textSize="16dp" />
+            android:textSize="15sp" />
 
 
         <LinearLayout
