@@ -321,6 +321,7 @@
                         android:src="@drawable/ic_mail" />
 
                     <ImageView
+                        android:id="@+id/imgProfileShare"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_marginRight="25dp"
