@@ -34,7 +34,6 @@ import com.circle8.circleOne.Adapter.GroupsRecyclerAdapter;
 import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.ConnectProfileModel;
-import com.circle8.circleOne.Model.ConnectingModel;
 import com.circle8.circleOne.Model.GroupModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
@@ -90,7 +89,7 @@ public class ConnectActivity extends AppCompatActivity
 
     LoginSession loginSession;
     String profileImg = "", friendUserID = "", user_id = "";
-    public static JSONArray selectedStrings = new JSONArray();
+    public static JSONArray selectedStrings1 = new JSONArray();
 
     int motionLength = 0;
 
@@ -868,7 +867,7 @@ public class ConnectActivity extends AppCompatActivity
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("GroupIDs", selectedStrings);
+            jsonObject.accumulate("GroupIDs", selectedStrings1);
             jsonObject.accumulate("ProfileId", friendProfile_id);
             jsonObject.accumulate("UserId", user_id);
 
