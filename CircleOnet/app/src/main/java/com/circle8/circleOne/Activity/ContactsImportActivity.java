@@ -50,8 +50,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static com.circle8.circleOne.Activity.CardDetail.selectedStrings;
-
 public class ContactsImportActivity extends AppCompatActivity
 {
     private static final int PERMISSION_REQUEST_CONTACT = 111;

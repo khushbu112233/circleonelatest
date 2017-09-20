@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.circle8.circleOne.Activity.CardDetail.selectedStrings;
+import static com.circle8.circleOne.Activity.ConnectActivity.selectedStrings1;
+
 
 /**
  * Created by ample-arch on 9/12/2017.
@@ -98,12 +100,16 @@ public class EditGroupAdapter extends BaseAdapter
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
+                if (isChecked)
+                {
                     selectedStrings.put(groupId.get(position));
-                }else{
-                    selectedStrings.remove(position);
+                    selectedStrings1.put(groupId.get(position));
                 }
-
+                else
+                {
+                    selectedStrings.remove(position);
+                    selectedStrings1.remove(position);
+                }
             }
         });
 
