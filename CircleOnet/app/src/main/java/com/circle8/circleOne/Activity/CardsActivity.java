@@ -13,6 +13,7 @@ import android.nfc.NfcAdapter;
 import android.nfc.NfcManager;
 import android.nfc.Tag;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -21,7 +22,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -39,8 +40,8 @@ import com.circle8.circleOne.Fragments.EventsFragment;
 import com.circle8.circleOne.Fragments.ProfileFragment;
 import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
-import com.circle8.circleOne.Utils.CustomViewPager;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.CustomViewPager;
 import com.circle8.circleOne.Utils.PrefUtils;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
@@ -71,16 +72,27 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.HashMap;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 import be.appfoundry.nfclibrary.activities.NfcActivity;
 import be.appfoundry.nfclibrary.utilities.interfaces.NfcReadUtility;
 import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
 import io.fabric.sdk.android.Fabric;
 
-public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConnectionFailedListener
-{
+public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConnectionFailedListener {
     public static CustomViewPager mViewPager;
     TabLayout tabLayout;
     ImageView imgDrawer, imgLogo;
@@ -91,7 +103,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
     NfcReadUtility mNfcReadUtility = new NfcReadUtilityImpl();
     private Date location;
     private int currentPage;
-    int cardCount = 0 ;
+    int cardCount = 0;
     private NfcAdapter mNfcAdapter;
     Tag tag;
     boolean done = false;
@@ -99,13 +111,13 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
     LoginSession session;
     private FirebaseAuth mAuth;
     String profileId = "", nfcProfileId = "";
+    private String secretKey = "1234567890234561";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        TwitterAuthConfig authConfig =  new TwitterAuthConfig(getString(R.string.twitter_consumer_key),
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(getString(R.string.twitter_consumer_key),
                 getString(R.string.twitter_consumer_secret));
         Fabric.with(this, new Twitter(authConfig));
 
@@ -116,10 +128,10 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         Toast.makeText(getApplicationContext(), "Time: " + date1, Toast.LENGTH_LONG).show();   */
 
         mAuth = FirebaseAuth.getInstance();
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         Bundle extras = getIntent().getExtras();
 
-        if(extras != null) {
+        if (extras != null) {
             position = extras.getInt("viewpager_position");
             nested_position = extras.getInt("nested_viewpager_position");
         }
@@ -149,16 +161,15 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         NfcManager manager = (NfcManager) getSystemService(Context.NFC_SERVICE);
 
-        if (mNfcAdapter == null || mNfcAdapter.isEnabled()== false) {
+        if (mNfcAdapter == null || mNfcAdapter.isEnabled() == false) {
             // adapter exists and is enabled.
             //txtMessage.setVisibility(View.VISIBLE);
-        }
-        else {
-           // txtMessage.setVisibility(View.GONE);
+        } else {
+            // txtMessage.setVisibility(View.GONE);
             // handleIntent(getIntent());
         }
         new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-       // mViewPager.setOverScrollMode(View.OVER_SCROLL_NEVER);
+        // mViewPager.setOverScrollMode(View.OVER_SCROLL_NEVER);
        /* mViewPager.setPageTransformer(true, new ViewPager.PageTransformer() {
             @Override
             public void transformPage(View page, float position) {
@@ -168,25 +179,22 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         getSupportActionBar().setShowHideAnimationEnabled(false);
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab)
-            {
+            public void onTabSelected(TabLayout.Tab tab) {
                 mViewPager.setCurrentItem(tab.getPosition(), false);
                 getSupportActionBar().setShowHideAnimationEnabled(false);
-                if (tab.getPosition() == 3){
+                if (tab.getPosition() == 3) {
                     getSupportActionBar().hide();
                 }
-                int  i = tab.getPosition();
-                if ( i == 0 )
-                {
+                int i = tab.getPosition();
+                if (i == 0) {
                     View view = tab.getCustomView();
                     ImageView imageView = (ImageView) view.findViewById(R.id.icon);
                     imageView.setImageResource(R.drawable.ic_icon1b);
                     TextView textView = (TextView) view.findViewById(R.id.txtTab);
                     textView.setText("Cards");
                     textView.setTextColor(getResources().getColor(R.color.colorPrimary));
-                }
-                else if ( i == 1 ){
-                 //   View view1 = getLayoutInflater().inflate(R.layout.tab_view, null);
+                } else if (i == 1) {
+                    //   View view1 = getLayoutInflater().inflate(R.layout.tab_view, null);
                     // view1.findViewById(R.id.icon).set(R.drawable.ic_icon1);
                     View view = tab.getCustomView();
                     ImageView imageView = (ImageView) view.findViewById(R.id.icon);
@@ -195,16 +203,14 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                     textView.setText("Connect");
                     textView.setTextColor(getResources().getColor(R.color.colorPrimary));
 
-                }
-                else if ( i == 2 ){
+                } else if (i == 2) {
                     View view = tab.getCustomView();
                     ImageView imageView = (ImageView) view.findViewById(R.id.icon);
                     imageView.setImageResource(R.drawable.ic_icon3b);
                     TextView textView = (TextView) view.findViewById(R.id.txtTab);
                     textView.setText("Events");
                     textView.setTextColor(getResources().getColor(R.color.colorPrimary));
-                }
-                else if ( i == 3 ){
+                } else if (i == 3) {
                     View view = tab.getCustomView();
                     ImageView imageView = (ImageView) view.findViewById(R.id.icon);
                     imageView.setImageResource(R.drawable.ic_icon4b);
@@ -216,16 +222,15 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                int  i = tab.getPosition();
-                if ( i == 0 ){
+                int i = tab.getPosition();
+                if (i == 0) {
                     View view = tab.getCustomView();
                     ImageView imageView = (ImageView) view.findViewById(R.id.icon);
                     imageView.setImageResource(R.drawable.ic_icon1);
                     TextView textView = (TextView) view.findViewById(R.id.txtTab);
                     textView.setText("Cards");
                     textView.setTextColor(getResources().getColor(R.color.unselected));
-                }
-                else if ( i == 1 ){
+                } else if (i == 1) {
                     //   View view1 = getLayoutInflater().inflate(R.layout.tab_view, null);
                     // view1.findViewById(R.id.icon).set(R.drawable.ic_icon1);
 
@@ -236,16 +241,14 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                     textView.setText("Connect");
                     textView.setTextColor(getResources().getColor(R.color.unselected));
 
-                }
-                else if ( i == 2 ){
+                } else if (i == 2) {
                     View view = tab.getCustomView();
                     ImageView imageView = (ImageView) view.findViewById(R.id.icon);
                     imageView.setImageResource(R.drawable.ic_icon3);
                     TextView textView = (TextView) view.findViewById(R.id.txtTab);
                     textView.setText("Events");
                     textView.setTextColor(getResources().getColor(R.color.unselected));
-                }
-                else if ( i == 3 ){
+                } else if (i == 3) {
                     View view = tab.getCustomView();
                     ImageView imageView = (ImageView) view.findViewById(R.id.icon);
                     imageView.setImageResource(R.drawable.ic_icon4);
@@ -261,9 +264,8 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
             }
         });
 
-               // createTabIcons();
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener()
-        {
+        // createTabIcons();
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -275,7 +277,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                 if (position == 0) {
                     CardsFragment.mViewPager.setCurrentItem(nested_position);
                     getSupportActionBar().show();
-                    setActionBarTitle("Cards - "+cardCount);
+                    setActionBarTitle("Cards - " + cardCount);
                     setActionBarRightImage(R.drawable.ic_drawer);
                 } else if (position == 1) {
                     getSupportActionBar().show();
@@ -304,7 +306,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
 
                 TypedValue tv = new TypedValue();
                 if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
-                    actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
+                    actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
                 }
 
                 showDialog(CardsActivity.this, 0, actionBarHeight);
@@ -319,8 +321,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                     Intent intent = new Intent(getApplicationContext(), SortAndFilterOption.class);
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in_down, R.anim.slide_out_down);
-                }
-                else if (pos == 2) {
+                } else if (pos == 2) {
                     Intent intent = new Intent(getApplicationContext(), EventsSelectOption.class);
                     startActivity(intent);
                 }
@@ -332,6 +333,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -380,16 +382,13 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
     }
 
 
-
-    private class LoadDataForActivity extends AsyncTask<Void, Void, Void>
-    {
+    private class LoadDataForActivity extends AsyncTask<Void, Void, Void> {
         String data1;
         String data2;
         Bitmap data3;
 
         @Override
-        protected void onPreExecute()
-        {
+        protected void onPreExecute() {
             db = new DatabaseHelper(getApplicationContext());
            /* List<NFCModel> allTags = db.getAllNFC();
             for (NFCModel tag : allTags) {
@@ -398,7 +397,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
 
             }*/
 
-           // db.getAllNFC();
+            // db.getAllNFC();
             //SQLiteDatabase sqLiteDatabase = db.getReadableDatabase();
             //- db.onCreate(sqLiteDatabase);
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -407,7 +406,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
             getSupportActionBar().setCustomView(R.layout.custom_actionbar);
             getSupportActionBar().setShowHideAnimationEnabled(false);
             textView = (TextView) findViewById(R.id.mytext);
-           // cardCount = db.getActiveNFCCount();
+            // cardCount = db.getActiveNFCCount();
             SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
             // textView.setText("Cards 256");
@@ -418,12 +417,13 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
             imgLogo = (ImageView) findViewById(R.id.imgLogo);
             mViewPager.setAdapter(mSectionsPagerAdapter);
             mViewPager.setPagingEnabled(false);
-          //  mViewPager.setPageTransformer(false, new ZoomOutPageTransformer());
+            //  mViewPager.setPageTransformer(false, new ZoomOutPageTransformer());
             tabLayout = (TabLayout) findViewById(R.id.tabs);
             tabLayout.setupWithViewPager(mViewPager);
             tabLayout.setSelectedTabIndicatorColor(getResources().getColor(android.R.color.white));
 
         }
+
         @Override
         protected Void doInBackground(Void... params) {
             setupTabIcons();
@@ -436,7 +436,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
             getSupportActionBar().setShowHideAnimationEnabled(false);
             if (position == 0) {
                 getSupportActionBar().show();
-              //  setActionBarTitle("Cards - "+cardCount);
+                //  setActionBarTitle("Cards - "+cardCount);
                 setActionBarRightImage(R.drawable.ic_drawer);
             } else if (position == 1) {
                 getSupportActionBar().show();
@@ -447,7 +447,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                 setActionBarTitle("Events");
                 setActionBarRightImage(R.drawable.ic_drawer);
             } else if (position == 3) {
-               // getSupportActionBar().hide();
+                // getSupportActionBar().hide();
             }
             mViewPager.setCurrentItem(position, false);
             if (nested_position != 0) {
@@ -476,26 +476,25 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         tabLayout.getTabAt(3).setCustomView(tabThree1);
     }*/
 
-    public void showDialog(Context context, int x, int y)
-    {
+    public void showDialog(Context context, int x, int y) {
         // x -->  X-Cordinate
         // y -->  Y-Cordinate
-        final Dialog dialog  = new Dialog(context, R.style.PauseDialog);
+        final Dialog dialog = new Dialog(context, R.style.PauseDialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.setContentView(R.layout.listview_with_text_image);
         dialog.setCanceledOnTouchOutside(true);
 
-        LinearLayout lnrMyAccount = (LinearLayout)dialog.findViewById(R.id.lnrMyAcc);
+        LinearLayout lnrMyAccount = (LinearLayout) dialog.findViewById(R.id.lnrMyAcc);
         LinearLayout lnrLogout = (LinearLayout) dialog.findViewById(R.id.lnrLogout);
         LinearLayout lnrAddQR = (LinearLayout) dialog.findViewById(R.id.lnrAddQR);
         LinearLayout lnrManageProfile = (LinearLayout) dialog.findViewById(R.id.lnrManageProfile);
         LinearLayout lnrGroup = (LinearLayout) dialog.findViewById(R.id.lnrGroup);
         LinearLayout lnrNotification = (LinearLayout) dialog.findViewById(R.id.lnrNotification);
-        LinearLayout lnrRequestNewCard = (LinearLayout)dialog.findViewById(R.id.lnrRequestNewCard);
-        LinearLayout lnrContactUs = (LinearLayout)dialog.findViewById(R.id.lnrContactUs);
-        LinearLayout lnrSubscription = (LinearLayout)dialog.findViewById(R.id.lnrSubscription);
-        LinearLayout lnrHelp = (LinearLayout)dialog.findViewById(R.id.lnrHelp);
+        LinearLayout lnrRequestNewCard = (LinearLayout) dialog.findViewById(R.id.lnrRequestNewCard);
+        LinearLayout lnrContactUs = (LinearLayout) dialog.findViewById(R.id.lnrContactUs);
+        LinearLayout lnrSubscription = (LinearLayout) dialog.findViewById(R.id.lnrSubscription);
+        LinearLayout lnrHelp = (LinearLayout) dialog.findViewById(R.id.lnrHelp);
         LinearLayout lnrSyncContacts = (LinearLayout) dialog.findViewById(R.id.lnrSyncContacts);
 
         lnrSyncContacts.setOnClickListener(new View.OnClickListener() {
@@ -600,18 +599,19 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                                 @Override
                                 public void onResult(Status status) {
                                     session.logoutUser();
-                                   // dialog.dismiss();
+                                    // dialog.dismiss();
                                 }
                             });
+                } catch (Exception e) {
                 }
-                catch (Exception e){}
 
 
                 try {
                     mAuth.signOut();
                     Twitter.logOut();
                     session.logoutUser();
-                }catch (Exception e){}
+                } catch (Exception e) {
+                }
 
                 try {
 
@@ -619,7 +619,8 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                     // We can logout from facebook by calling following method
                     LoginManager.getInstance().logOut();
                     session.logoutUser();
-                }catch (Exception e){}
+                } catch (Exception e) {
+                }
 
                 LISessionManager.getInstance(getApplicationContext()).clearSession();
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -644,11 +645,11 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
 
     }
 
-    public static void setActionBarTitle(String title){
+    public static void setActionBarTitle(String title) {
         textView.setText(title);
     }
 
-    public void setActionBarRightImage(int image){
+    public void setActionBarRightImage(int image) {
         imgDrawer.setImageResource(image);
     }
 
@@ -662,27 +663,24 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-               // getSupportActionBar().show();
-               // setActionBarTitle("Connect");
+                // getSupportActionBar().show();
+                // setActionBarTitle("Connect");
                 return new CardsFragment();
             } else if (position == 1) {
-              //  getSupportActionBar().show();
-               // setActionBarTitle("Cards");
+                //  getSupportActionBar().show();
+                // setActionBarTitle("Cards");
                 return new ConnectFragment();
-            }
-            else if (position == 2) {
-               // getSupportActionBar().show();
+            } else if (position == 2) {
+                // getSupportActionBar().show();
                 //setActionBarTitle("Connect");
                 return new EventsFragment();
-            }
-            else if (position == 3) {
-              //  getSupportActionBar().hide();
-              //  setActionBarTitle("Events");
+            } else if (position == 3) {
+                //  getSupportActionBar().hide();
+                //  setActionBarTitle("Events");
                 return new ProfileFragment();
-            }
-            else {
-              //  getSupportActionBar().show();
-              //  setActionBarTitle("Cards");
+            } else {
+                //  getSupportActionBar().show();
+                //  setActionBarTitle("Cards");
                 return new CardsFragment();
             }
         }
@@ -710,7 +708,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                 R.drawable.tab2,
                 R.drawable.tab3,
                 R.drawable.tab4
-               // R.drawable.ic_tab_contacts
+                // R.drawable.ic_tab_contacts
         };
 
         /*View view = getLayoutInflater().inflate(R.layout.tab_view, null);
@@ -726,13 +724,13 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
 
 
         View view1 = getLayoutInflater().inflate(R.layout.tab_view, null);
-       // view1.findViewById(R.id.icon).set(R.drawable.ic_icon1);
+        // view1.findViewById(R.id.icon).set(R.drawable.ic_icon1);
         ImageView imageView = (ImageView) view1.findViewById(R.id.icon);
         imageView.setImageResource(R.drawable.ic_icon1b);
         TextView textView = (TextView) view1.findViewById(R.id.txtTab);
         textView.setText("Cards");
         textView.setTextColor(getResources().getColor(R.color.colorPrimary));
-       // tabLayout.addTab(tabLayout.newTab().setCustomView(view1));
+        // tabLayout.addTab(tabLayout.newTab().setCustomView(view1));
 
 
         View view2 = getLayoutInflater().inflate(R.layout.tab_view, null);
@@ -745,20 +743,20 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
 
 
         View view3 = getLayoutInflater().inflate(R.layout.tab_view, null);
-       // view3.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_icon3);
+        // view3.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_icon3);
         ImageView imageView2 = (ImageView) view3.findViewById(R.id.icon);
         imageView2.setImageResource(R.drawable.ic_icon3);
         TextView textView2 = (TextView) view3.findViewById(R.id.txtTab);
         textView2.setText("Events");
-       // tabLayout.addTab(tabLayout.newTab().setCustomView(view3));
+        // tabLayout.addTab(tabLayout.newTab().setCustomView(view3));
 
         View view4 = getLayoutInflater().inflate(R.layout.tab_view, null);
-      //  view4.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_icon4);
+        //  view4.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_icon4);
         ImageView imageView3 = (ImageView) view4.findViewById(R.id.icon);
         imageView3.setImageResource(R.drawable.ic_icon4);
         TextView textView3 = (TextView) view4.findViewById(R.id.txtTab);
         textView3.setText("Profile");
-       // tabLayout.addTab(tabLayout.newTab().setCustomView(view4));
+        // tabLayout.addTab(tabLayout.newTab().setCustomView(view4));
         tabLayout.getTabAt(0).setCustomView(view1);
         tabLayout.getTabAt(1).setCustomView(view2);
         tabLayout.getTabAt(2).setCustomView(view3);
@@ -805,9 +803,10 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
     }
 
     private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
+
     public static String bytesToHex(byte[] bytes) {
         char[] hexChars = new char[bytes.length * 2];
-        for ( int j = 0; j < bytes.length; j++ ) {
+        for (int j = 0; j < bytes.length; j++) {
             int v = bytes[j] & 0xFF;
             hexChars[j * 2] = hexArray[v >>> 4];
             hexChars[j * 2 + 1] = hexArray[v & 0x0F];
@@ -822,14 +821,11 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         if (!done) {
             NdefMessage[] msgs = null;
 
-            if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction()))
-            {
+            if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
                 Parcelable[] rawMsgs = getIntent().getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
-                if (rawMsgs != null)
-                {
+                if (rawMsgs != null) {
                     msgs = new NdefMessage[rawMsgs.length];
-                    for (int i = 0; i < rawMsgs.length; i++)
-                    {
+                    for (int i = 0; i < rawMsgs.length; i++) {
                         msgs[i] = (NdefMessage) rawMsgs[i];
                     }
 
@@ -841,106 +837,52 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                     done = true;
 //                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     message = message.substring(1, message.length());
+                  //  Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                    try {
 
-                    nfcProfileId = message;
-                    try
-                    {
-                        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
-                    }
-                    catch (Exception e)
-                    {
-                        Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
-                    }
-
-                    /*Boolean aBoolean = db.verification(message);
-                    if (aBoolean == true) {
-                        Toast.makeText(getApplicationContext(), "Already Activated", Toast.LENGTH_LONG).show();
-                    } else {
-                        Date date = new Date();
-                        String stringDate = DateFormat.getDateTimeInstance().format(date);
-                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                        String date1 = format.format(Date.parse(stringDate));
-
-                        int i = db.makeCardActive(message, date1);
-                        if (i == 1) {
-                            Toast.makeText(getApplicationContext(), "Contact Added", Toast.LENGTH_LONG).show();
-                            try {
-                                List2Fragment.gridAdapter.notifyDataSetChanged();
-                                List2Fragment.allTags = db.getActiveNFC();
-                                List2Fragment.nfcModel.clear();
-                                //  nfcModelList.clear();
-                                List2Fragment.GetData(getApplicationContext());
-                            } catch (Exception e) {
-
-                            }
-
-                            try {
-                                List3Fragment.gridAdapter.notifyDataSetChanged();
-                                List3Fragment.allTags = db.getActiveNFC();
-                                List3Fragment.nfcModel.clear();
-                                //  nfcModelList.clear();
-                                List3Fragment.GetData(getApplicationContext());
-                            } catch (Exception e) {
-
-                            }
-                            try {
-                                List4Fragment.gridAdapter.notifyDataSetChanged();
-                                List4Fragment.allTags = db.getActiveNFC();
-                                List4Fragment.nfcModel.clear();
-                                //  nfcModelList.clear();
-                                List4Fragment.GetData(getApplicationContext());
-                            } catch (Exception e) {
-
-                            }
-
-                            try {
-                                //List1Fragment.myPager.notifyDataSetChanged();
-                              //  List1Fragment.allTags = db.getActiveNFC();
-                                List1Fragment.nfcModel.clear();
-                                //  nfcModelList.clear();
-                                List1Fragment.GetData(getApplicationContext());
-                            } catch (Exception e) {
-
-                            }
-                        } else if (i == 11) {
-                            Toast.makeText(getApplicationContext(), "Data Does not exists in Database..", Toast.LENGTH_LONG).show();
-                        }*/
+                        nfcProfileId = decrypt(message, secretKey);
+                     //   Toast.makeText(getApplicationContext(), nfcProfileId, Toast.LENGTH_LONG).show();
+                        try {
+                            new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                        }
+                    } catch (GeneralSecurityException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
             }
-
-            IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
-            IntentFilter ndefDetected = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
-            IntentFilter techDetected = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
-            IntentFilter[] nfcIntentFilter = new IntentFilter[]{techDetected, tagDetected, ndefDetected};
-
-            PendingIntent pendingIntent = PendingIntent.getActivity(
-                    this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-            if (mNfcAdapter != null)
-                mNfcAdapter.enableForegroundDispatch(this, pendingIntent, nfcIntentFilter, null);
-
         }
+
+        IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
+        IntentFilter ndefDetected = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
+        IntentFilter techDetected = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
+        IntentFilter[] nfcIntentFilter = new IntentFilter[]{techDetected, tagDetected, ndefDetected};
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+        if (mNfcAdapter != null)
+            mNfcAdapter.enableForegroundDispatch(this, pendingIntent, nfcIntentFilter, null);
+
+    }
 
     /**
      * Launched when in foreground dispatch mode
      *
-     * @param paramIntent
-     *         containing found data
+     * @param paramIntent containing found data
      */
     @Override
-    public void onNewIntent(final Intent paramIntent)
-    {
+    public void onNewIntent(final Intent paramIntent) {
         super.onNewIntent(paramIntent);
 
         getSupportActionBar().setShowHideAnimationEnabled(false);
         Tag tag = paramIntent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-        if(tag == null)
-        {
+        if (tag == null) {
 //            Toast.makeText(getApplicationContext(), "tag == null", Toast.LENGTH_LONG).show();
             //textViewInfo.setText("tag == null");
-        }
-        else
-        {
+        } else {
             String tagInfo = tag.toString() + "\n";
             String id = "";
             tagInfo += "\nTag Id: \n";
@@ -951,193 +893,55 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                 // id += Integer.toHexString(tagId[i] & 0xFF) + " ";
             }
             id = bytesToHex(tagId);
-            /*Boolean aBoolean = db.verification(id);
-            if (aBoolean == true)
-            {
-                Toast.makeText(getApplicationContext(), "already exists in database", Toast.LENGTH_LONG).show();
-            }else {
-
-                int i = db.makeCardActive(id);
-                if (i == 1){
-                    Toast.makeText(getApplicationContext(), "added", Toast.LENGTH_LONG).show();
-                }
-              //  Toast.makeText(getApplicationContext(), String.valueOf(i), Toast.LENGTH_LONG).show();
-               // notifyAll();
-
-                if (mViewPager.getCurrentItem() == 0){
-                    Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-
-                    // you pass the position you want the viewpager to show in the extra,
-                    // please don't forget to define and initialize the position variable
-                    // properly
-                    go.putExtra("viewpager_position", 0);
-                    go.putExtra("nested_viewpager_position", CardsFragment.mViewPager.getCurrentItem());
-
-                    startActivity(go);
-                    finish();
-                    //Toast.makeText(getApplicationContext(), String.valueOf(CardsFragment.mViewPager.getCurrentItem()), Toast.LENGTH_LONG).show();
-                }
-                else {
-                    Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-                    startActivity(go);
-                    finish();
-                }
-            }*/
-
-               /* try {
-
-                    if (allTags != null){
-                        Bitmap bmp = BitmapFactory.decodeByteArray(allTags.getCard_front(), 0, allTags.getCard_front().length);
-                        imgCard.setImageBitmap(bmp);
-
-                        Bitmap bmp1 = BitmapFactory.decodeByteArray(allTags.getUser_image(), 0, allTags.getUser_image().length);
-                        imgProfileCard.setImageBitmap(bmp1);
-                    }
-
-                }catch (Exception e){
-
-                }*/
-
-
-           /* List<NFCModel> modelList = db.getNFCbyTag(id);
-            image = new ArrayList<>();
-            try {
-
-                if (modelList != null){
-
-                    for (NFCModel tag1 : modelList) {
-                        // Toast.makeText(getApplicationContext(), tag1.getName(), Toast.LENGTH_LONG).show();
-
-                        Bitmap bmp = BitmapFactory.decodeByteArray(tag1.getCard_front(), 0, tag1.getCard_front().length);
-                        imgCard.setImageBitmap(bmp);
-
-                        Bitmap bmp1 = BitmapFactory.decodeByteArray(tag1.getUser_image(), 0, tag1.getUser_image().length);
-                        imgProfileCard.setImageBitmap(bmp1);
-                        txtName.setText(tag1.getName());
-                        txtCompany.setText(tag1.getCompany());
-                        txtWebsite.setText(tag1.getWebsite());
-                        txtEmail.setText(tag1.getEmail());
-                        txtPH.setText(tag1.getPh_no());
-                        txtWork.setText(tag1.getWork_no());
-                        txtMob.setText(tag1.getMob_no());
-                        txtAddress.setText(tag1.getAddress());
-                        txtRemark.setText(tag1.getRemark());
-                        image.add(tag1.getCard_front());
-                        image.add(tag1.getCard_back());
-                        myPager = new CardSwipe(getApplicationContext(), image);
-                        mViewPager.setClipChildren(false);
-                        mViewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
-                        mViewPager.setOffscreenPageLimit(3);
-                        mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
-
-
-                        mViewPager.setAdapter(myPager);
-                    }
-                }
-
-            }catch (Exception e){
-
-            }*/
-
-         //   Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
-            // callData(id);
             for (String data : mNfcReadUtility.readFromTagWithMap(paramIntent).values()) {
-                Toast.makeText(getApplicationContext(), data, Toast.LENGTH_LONG).show();
-                nfcProfileId = data;
+                // Toast.makeText(getApplicationContext(), data, Toast.LENGTH_LONG).show();
                 try {
-                    new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
-                }catch (Exception e){
-                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                    nfcProfileId = decrypt(data, secretKey);
+                 //   Toast.makeText(getApplicationContext(), nfcProfileId, Toast.LENGTH_LONG).show();
+                    try {
+                        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                    }
+                } catch (GeneralSecurityException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                /*Boolean aBoolean = db.verification(data);
-                if (aBoolean == true)
-                {
-                    Toast.makeText(getApplicationContext(), "Already Activated", Toast.LENGTH_LONG).show();
-                }else {
-                    Date date = new Date();
-                    String stringDate = DateFormat.getDateTimeInstance().format(date);
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    String date1 = format.format(Date.parse(stringDate));
-
-                    int i = db.makeCardActive(data, date1);
-                    if (i == 1){
-                        Toast.makeText(getApplicationContext(), "Contact Added", Toast.LENGTH_LONG).show();
-                        try {
-                            List2Fragment.gridAdapter.notifyDataSetChanged();
-                            List2Fragment.allTags = db.getActiveNFC();
-                            List2Fragment.nfcModel.clear();
-                            //  nfcModelList.clear();
-                            List2Fragment.GetData(getApplicationContext());
-                        } catch (Exception e){
-
-                        }
-
-                        try {
-                            List3Fragment.gridAdapter.notifyDataSetChanged();
-                            List3Fragment.allTags = db.getActiveNFC();
-                            List3Fragment.nfcModel.clear();
-                            //  nfcModelList.clear();
-//                            List3Fragment.GetData(getApplicationContext());
-                        } catch (Exception e){
-
-                        }
-                        try {
-                            List4Fragment.gridAdapter.notifyDataSetChanged();
-                            List4Fragment.allTags = db.getActiveNFC();
-                            List4Fragment.nfcModel.clear();
-                            //  nfcModelList.clear();
-                            List4Fragment.GetData(getApplicationContext());
-                        } catch (Exception e){
-
-                        }
-
-                        try {
-                            //List1Fragment.myPager.notifyDataSetChanged();
-                          //  List1Fragment.allTags = db.getActiveNFC();
-                            List1Fragment.nfcModel.clear();
-                            //  nfcModelList.clear();
-                            List1Fragment.GetData(getApplicationContext());
-                        } catch (Exception e){
-
-                        }
-                    }
-                    else if (i == 11){
-                        Toast.makeText(getApplicationContext(), "Data Does not exists in Database..", Toast.LENGTH_LONG).show();
-                    }
-                    //  Toast.makeText(getApplicationContext(), String.valueOf(i), Toast.LENGTH_LONG).show();
-                    // notifyAll();
-
-                    *//*if (mViewPager.getCurrentItem() == 0){
-                        Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-
-                        // you pass the position you want the viewpager to show in the extra,
-                        // please don't forget to define and initialize the position variable
-                        // properly
-                        go.putExtra("viewpager_position", 0);
-                        go.putExtra("nested_viewpager_position", CardsFragment.mViewPager.getCurrentItem());
-
-                        startActivity(go);
-                        finish();
-                        //Toast.makeText(getApplicationContext(), String.valueOf(CardsFragment.mViewPager.getCurrentItem()), Toast.LENGTH_LONG).show();
-                    }
-                    else {
-                        Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-                        startActivity(go);
-                        finish();
-                    }*//*
-                }*/
-              //  Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    private class HttpAsyncTask extends AsyncTask<String, Void, String>
-    {
+    public String decrypt(String value, String key)
+            throws GeneralSecurityException, IOException {
+        byte[] value_bytes = Base64.decode(value, 0);
+        byte[] key_bytes = getKeyBytes(key);
+        return new String(decrypt(value_bytes, key_bytes, key_bytes), "UTF-8");
+    }
+
+    public byte[] decrypt(byte[] ArrayOfByte1, byte[] ArrayOfByte2, byte[] ArrayOfByte3)
+            throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
+        // setup AES cipher in CBC mode with PKCS #5 padding
+        Cipher localCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+
+        // decrypt
+        localCipher.init(2, new SecretKeySpec(ArrayOfByte2, "AES"), new IvParameterSpec(ArrayOfByte3));
+        return localCipher.doFinal(ArrayOfByte1);
+    }
+
+    private byte[] getKeyBytes(String paramString)
+            throws UnsupportedEncodingException {
+        byte[] arrayOfByte1 = new byte[16];
+        byte[] arrayOfByte2 = paramString.getBytes("UTF-8");
+        System.arraycopy(arrayOfByte2, 0, arrayOfByte1, 0, Math.min(arrayOfByte2.length, arrayOfByte1.length));
+        return arrayOfByte1;
+    }
+
+    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
-        protected void onPreExecute()
-        {
+        protected void onPreExecute() {
             super.onPreExecute();
             dialog = new ProgressDialog(CardsActivity.this);
             dialog.setMessage("Adding Records...");
@@ -1149,30 +953,24 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         }
 
         @Override
-        protected String doInBackground(String... urls)
-        {
+        protected String doInBackground(String... urls) {
             return POST(urls[0]);
         }
+
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result)
-        {
+        protected void onPostExecute(String result) {
             dialog.dismiss();
             Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-            try
-            {
-                if(result == "")
-                {
+            try {
+                if (result == "") {
                     Toast.makeText(getApplicationContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
-                }
-                else
-                {
+                } else {
                     JSONObject response = new JSONObject(result);
                     String message = response.getString("message");
                     String success = response.getString("success");
 
-                    if(success.equals("1"))
-                    {
+                    if (success.equals("1")) {
                         Toast.makeText(getApplicationContext(), "Added Successfully", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
                         intent.putExtra("viewpager_position", CardsActivity.mViewPager.getCurrentItem());
@@ -1184,9 +982,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                         List2Fragment.webCall();
                         List3Fragment.webCall();
                         List4Fragment.webCall();*/
-                    }
-                    else
-                    {
+                    } else {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     }
 
@@ -1232,20 +1028,16 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
 
                 }
 
-            }
-            catch (JSONException e)
-            {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public  String POST(String url)
-    {
+    public String POST(String url) {
         InputStream inputStream = null;
         String result = "";
-        try
-        {
+        try {
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
 
@@ -1255,9 +1047,9 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("Operation", "Request" );
+            jsonObject.accumulate("Operation", "Request");
             jsonObject.accumulate("friendProfileId", nfcProfileId);
-            jsonObject.accumulate("myProfileId", profileId );
+            jsonObject.accumulate("myProfileId", profileId);
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -1284,7 +1076,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
 
 
             // 10. convert inputstream to string
-            if(inputStream != null)
+            if (inputStream != null)
                 result = convertInputStreamToString(inputStream);
             else
                 result = "Did not work!";
@@ -1298,10 +1090,10 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
     }
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line = "";
         String result = "";
-        while((line = bufferedReader.readLine()) != null)
+        while ((line = bufferedReader.readLine()) != null)
             result += line;
 
         inputStream.close();
