@@ -538,7 +538,48 @@
 
             </RelativeLayout>
 -->
+            <RelativeLayout
+                android:id="@+id/lnrTag"
+                android:layout_below="@+id/rlSocial"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="2dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical">
 
+                <TextView
+                    android:id="@+id/tvAddedGroupInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="This friend is not added in any group"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="gone"
+                    android:textSize="12sp"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="horizontal"
+                    android:layout_toLeftOf="@+id/imgAddGroupFriend"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp" />
+
+                <ImageView
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/imgAddGroupFriend"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_edit" />
+
+            </RelativeLayout>
+
+
+<!--
             <RelativeLayout
                 android:background="@color/white"
                 android:layout_marginLeft="10dp"
@@ -624,6 +665,7 @@
                     android:src="@drawable/ic_edit" />
 
             </RelativeLayout>
+-->
 
             <!--<TextView-->
             <!--android:id="@+id/breakLine1"-->

@@ -1,5 +1,6 @@
 package com.circle8.circleOne.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,9 +39,9 @@ public class EditGroupAdapter extends BaseAdapter
         this.groupModelArrayList = groupModelArrayList ;
     }
 
-    public EditGroupAdapter(CardDetail cardDetail, ArrayList<String> groupName, ArrayList<String> groupPhoto, ArrayList<String> groupId)
+    public EditGroupAdapter(Activity activity, ArrayList<String> groupName, ArrayList<String> groupPhoto, ArrayList<String> groupId)
     {
-        this.context = cardDetail ;
+        this.context = activity ;
         this.groupName = groupName ;
         this.groupPhoto = groupPhoto ;
         this.groupId = groupId;

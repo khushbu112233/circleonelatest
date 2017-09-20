@@ -418,7 +418,6 @@
                         android:layout_height="wrap_content"
                         android:text="This friend is not added in any group"
                         android:textColor="@color/colorPrimary"
-                        android:layout_centerVertical="true"
                         android:layout_centerHorizontal="true"
                         android:visibility="gone"
                         android:textSize="12sp"/>

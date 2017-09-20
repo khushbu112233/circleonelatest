@@ -226,10 +226,8 @@ public class CardDetail extends NfcActivity
                         new HttpAsyncTaskGroupAddFriend().execute("http://circle8.asia:8999/Onet.svc/AddMemberToGroups");
                     }
                 });
-
                 alertDialog.setView(dialogView);
                 alertDialog.show();
-
             }
         });
 
@@ -865,19 +863,18 @@ public class CardDetail extends NfcActivity
     }
 
 
-    private class HttpAsyncTaskGroup extends AsyncTask<String, Void, String> {
+    private class HttpAsyncTaskGroup extends AsyncTask<String, Void, String>
+    {
         ProgressDialog dialog;
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             super.onPreExecute();
             dialog = new ProgressDialog(CardDetail.this);
             dialog.setMessage("Fetching Groups...");
-            //dialog.setTitle("Saving Reminder");
             dialog.show();
             dialog.setCancelable(false);
-            //  nfcModel = new ArrayList<>();
-            //   allTags = new ArrayList<>();
         }
 
         @Override
@@ -918,7 +915,9 @@ public class CardDetail extends NfcActivity
                         groupPhoto.add(object.getString("group_photo"));
                     }
                     // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
-                } else {
+                }
+                else
+                {
                     Toast.makeText(getApplicationContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
@@ -997,8 +996,10 @@ public class CardDetail extends NfcActivity
         @Override
         protected void onPostExecute(String result) {
             dialog.dismiss();
-            try {
-                if (result != null) {
+            try
+            {
+                if (result != null)
+                {
                     JSONObject jsonObject = new JSONObject(result);
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
 
@@ -1483,11 +1484,12 @@ public class CardDetail extends NfcActivity
                         if (groupsArray.length() == 0)
                         {
                             tvAddedGroupInfo.setVisibility(View.VISIBLE);
+                            recycler_view.setVisibility(View.GONE);
                         }
                         else
                         {
-
-                            for (int i = 0; i < groupsArray.length(); i++) {
+                            for (int i = 0; i < groupsArray.length(); i++)
+                            {
                                 JSONObject groupsObj = groupsArray.getJSONObject(i);
 
                                 String groupid = groupsObj.getString("group_ID");
@@ -1504,6 +1506,14 @@ public class CardDetail extends NfcActivity
                                 desc.add(groupdesc);
                             }
 
+                            if (name.size() == 0)
+                            {
+                                tvAddedGroupInfo.setVisibility(View.VISIBLE);
+                            }
+                            else
+                            {
+                                tvAddedGroupInfo.setVisibility(View.GONE);
+                            }
                             /*GroupsInCardDetailAdapter groupsInCardDetailAdapter = new GroupsInCardDetailAdapter(CardDetail.this, img,name,desc);
                             groupListView.setAdapter(groupsInCardDetailAdapter);
                             groupsInCardDetailAdapter.notifyDataSetChanged();*/
