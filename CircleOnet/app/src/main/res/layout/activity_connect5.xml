@@ -15,7 +15,6 @@
             android:layout_height="match_parent"
             android:background="@color/colorAccent" />
 
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -312,8 +311,9 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="0dp"
                     android:text=""
+                    android:textSize="10sp"
                     android:textColor="@color/white" />
 
                 <TextView
@@ -323,6 +323,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_marginTop="150dp"
+                    android:textSize="10sp"
                     android:textColor="@color/white" />
 
                 <TextView
@@ -332,7 +333,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_marginTop="200dp"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textSize="10sp"/>
 
                 <TextView
                     android:id="@+id/txtName4"
@@ -341,7 +343,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="275dp"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textSize="10sp"/>
 
                 <TextView
                     android:id="@+id/txtName5"
@@ -350,7 +353,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="80dp"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textSize="10sp"/>
 
                 <TextView
                     android:id="@+id/txtName6"
@@ -359,7 +363,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_marginTop="60dp"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textSize="10sp"/>
 
                 <TextView
                     android:id="@+id/txtName7"

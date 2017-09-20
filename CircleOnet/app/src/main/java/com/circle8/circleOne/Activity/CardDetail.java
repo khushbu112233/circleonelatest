@@ -160,12 +160,20 @@ public class CardDetail extends NfcActivity
 
         list = new ArrayList<CharSequence>();
         listGroupId = new ArrayList<String>();
+
         Intent intent = getIntent();
         profile_id = intent.getStringExtra("profile_id");
 
-        new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/Fetch");
+        if (profile_id.equals(""))
+        {
+            Toast.makeText(CardDetail.this, "Having no profile ID",Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            new CardDetail.HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetUserProfile");
+        }
 
-        new CardDetail.HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetUserProfile");
+        new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/Fetch");
 
         new HttpAsyncTaskGroupsFetch().execute("http://circle8.asia:8999/Onet.svc/Group/MyGroupsTaggedWithFriendProfile");
 
@@ -964,7 +972,8 @@ public class CardDetail extends NfcActivity
     }
 
 
-    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
+    private class HttpAsyncTask extends AsyncTask<String, Void, String>
+    {
         ProgressDialog dialog;
 
         @Override
