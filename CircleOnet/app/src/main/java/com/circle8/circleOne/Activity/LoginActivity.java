@@ -248,7 +248,8 @@ public class LoginActivity extends AppCompatActivity implements
         boolean subscriptionSetting = status.getSubscriptionStatus().getUserSubscriptionSetting();
         String oneSignaluserID = status.getSubscriptionStatus().getUserId();
         pushToken = status.getSubscriptionStatus().getPushToken();
-        //Toast.makeText(getApplicationContext(), pushToken, Toast.LENGTH_LONG).show();
+        System.out.println("pushtoken " + pushToken);
+       // Toast.makeText(getApplicationContext(), pushToken, Toast.LENGTH_LONG).show();
 
         etLoginPass.addTextChangedListener(this);
         etLoginUser.addTextChangedListener(this);
