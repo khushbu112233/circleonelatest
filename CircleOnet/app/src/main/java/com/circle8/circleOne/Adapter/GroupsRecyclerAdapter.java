@@ -1,5 +1,6 @@
 package com.circle8.circleOne.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,9 +27,9 @@ public class GroupsRecyclerAdapter extends RecyclerView.Adapter<GroupsRecyclerAd
     ArrayList<String> name = new ArrayList<>();
     ArrayList<String> desc = new ArrayList<>();
 
-    public GroupsRecyclerAdapter(CardDetail cardDetail, ArrayList<String> img, ArrayList<String> name, ArrayList<String> desc)
+    public GroupsRecyclerAdapter(Activity activity, ArrayList<String> img, ArrayList<String> name, ArrayList<String> desc)
     {
-        this.context = cardDetail ;
+        this.context = activity ;
         this.img = img ;
         this.name = name ;
         this.desc = desc ;

@@ -14,18 +14,28 @@ import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.circle8.circleOne.Adapter.EditGroupAdapter;
+import com.circle8.circleOne.Adapter.GroupsRecyclerAdapter;
 import com.circle8.circleOne.Helper.DatabaseHelper;
+import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.ConnectProfileModel;
 import com.circle8.circleOne.Model.ConnectingModel;
+import com.circle8.circleOne.Model.GroupModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
 import com.squareup.picasso.Picasso;
@@ -35,6 +45,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -43,6 +54,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -60,10 +73,24 @@ public class ConnectActivity extends AppCompatActivity
     private TextView tvAdd, tvConnect, tvConnectLine1, tvConnectLine2, txtWeb, txtMail, txtNum, txtMob ;
     private RelativeLayout rlAdd, rlConnect ;
     private String tag_id, profile_id, friendProfile_id;
+
+    ImageView imgAddGroupFriend;
+    TextView tvAddedGroupInfo ;
+    RecyclerView recycler_view ;
+    ListView listView1, groupListView;
+    List<CharSequence> list = new ArrayList<CharSequence>();
+    ArrayList<GroupModel> groupModelArrayList = new ArrayList<>();
+    ArrayList<String> groupName = new ArrayList<>();
+    ArrayList<String> groupPhoto = new ArrayList<>();
+    ArrayList<String> listGroupId = new ArrayList<>();
+
     DatabaseHelper db;
     TextView tvPersonName, tvPersonDesignation, tvCompanyName;
     LinearLayout lnrWeb, lnrmail, lnrnum, lnrmob;
-    String profileImg = "", friendUserID = "";
+
+    LoginSession loginSession;
+    String profileImg = "", friendUserID = "", user_id = "";
+    public static JSONArray selectedStrings = new JSONArray();
 
     int motionLength = 0;
 
@@ -107,6 +134,10 @@ public class ConnectActivity extends AppCompatActivity
         rlConnect = (RelativeLayout)findViewById(R.id.rlConnect);
         rlSocial = (RelativeLayout)findViewById(R.id.rlSocial);
 
+        recycler_view = (RecyclerView)findViewById(R.id.recycler_view);
+        tvAddedGroupInfo = (TextView)findViewById(R.id.tvAddedGroupInfo);
+        imgAddGroupFriend = (ImageView) findViewById(R.id.imgAddGroupFriend);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         {
             motionLength = 180 ;
@@ -115,6 +146,7 @@ public class ConnectActivity extends AppCompatActivity
         {
             motionLength = 180 ;
         }
+
 
         /*Rect loc = new Rect();
         int[] location = new int[2];
@@ -128,13 +160,16 @@ public class ConnectActivity extends AppCompatActivity
 //        Rect r_connect =
 //        Toast.makeText(getApplicationContext(),"Connect pos: "+rlConnect.getX() +","+rlConnect.getY() ,Toast.LENGTH_LONG).show();
 
-
         Intent intent = getIntent();
 //        tag_id = intent.getStringExtra("tag_id");
         tag_id = "en100000001";
         friendProfile_id = intent.getStringExtra("friendProfileID");
         profile_id = intent.getStringExtra("ProfileID");
         friendUserID = intent.getStringExtra("friendUserID");
+
+        loginSession = new LoginSession(getApplicationContext());
+        HashMap<String, String> user = loginSession.getUserDetails();
+        user_id = user.get(LoginSession.KEY_USERID);
 
         if (friendProfile_id.equals(""))
         {
@@ -145,6 +180,8 @@ public class ConnectActivity extends AppCompatActivity
             new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/ConnectProfile");
         }
 
+        new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/Fetch");
+        new HttpAsyncTaskGroupsFetch().execute("http://circle8.asia:8999/Onet.svc/Group/MyGroupsTaggedWithFriendProfile");
 
 
 //        Toast.makeText(getApplicationContext(),"ProfileID & FriendID "+profile_id+" "+friendProfile_id,Toast.LENGTH_LONG).show();
@@ -402,6 +439,61 @@ public class ConnectActivity extends AppCompatActivity
                 finish();
             }
         });
+
+        imgAddGroupFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                final CharSequence[] dialogList = list.toArray(new CharSequence[list.size()]);
+                final AlertDialog.Builder builderDialog = new AlertDialog.Builder(ConnectActivity.this);
+                LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View dialogView = inflater.inflate(R.layout.edit_groups_popup, null);
+                listView1 = (ListView)dialogView.findViewById(R.id.listView);
+                TextView tvGroupInfo = (TextView) dialogView.findViewById(R.id.tvGroupInfo);
+                Button btnAddToGroup = (Button) dialogView.findViewById(R.id.btnAddToGroup);
+                Button btnCancelGroup = (Button) dialogView.findViewById(R.id.btnCancelGroup);
+                int count = dialogList.length;
+                boolean[] is_checked = new boolean[count];
+
+                final AlertDialog alertDialog = builderDialog.create();
+                alertDialog.setCancelable(false);
+                if(groupName.size() == 0)
+                {
+                    tvGroupInfo.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    tvGroupInfo.setVisibility(View.GONE);
+                    ArrayList<GroupModel> groupModelArrayList1 = new ArrayList<GroupModel>();
+                    groupModelArrayList1 = groupModelArrayList ;
+
+//                EditGroupAdapter editGroupAdapter = new EditGroupAdapter(CardDetail.this, groupModelArrayList1);
+                    EditGroupAdapter editGroupAdapter = new EditGroupAdapter(ConnectActivity.this, groupName, groupPhoto, listGroupId);
+                    listView1.setAdapter(editGroupAdapter);
+                    editGroupAdapter.notifyDataSetChanged();
+                }
+
+                btnCancelGroup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.cancel();
+                    }
+                });
+
+                btnAddToGroup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.cancel();
+                        // make selected item in the comma seprated string
+                        //  Toast.makeText(getApplicationContext(), selectedStrings.toString(), Toast.LENGTH_LONG).show();
+                        new HttpAsyncTaskGroupAddFriend().execute("http://circle8.asia:8999/Onet.svc/AddMemberToGroups");
+                    }
+                });
+                alertDialog.setView(dialogView);
+                alertDialog.show();
+            }
+        });
+
 
     }
 
@@ -717,6 +809,383 @@ public class ConnectActivity extends AppCompatActivity
 
         inputStream.close();
         return result;
-
     }
+
+    private class HttpAsyncTaskGroupAddFriend extends AsyncTask<String, Void, String> {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(ConnectActivity.this);
+            dialog.setMessage("Adding Friend...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return GroupAddFriendPost(urls[0]);
+        }
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+            dialog.dismiss();
+            try {
+                if (result != null) {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String Success = jsonObject.getString("Success");
+                    String Message = jsonObject.getString("Message");
+                    if (Success.equals("1")) {
+                        Toast.makeText(getApplicationContext(), Message, Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), Message, Toast.LENGTH_LONG).show();
+                    }
+                    // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
+                } else {
+                    Toast.makeText(getApplicationContext(), "Not able to Add Friend in groups", Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public String GroupAddFriendPost(String url) {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("GroupIDs", selectedStrings);
+            jsonObject.accumulate("ProfileId", friendProfile_id);
+            jsonObject.accumulate("UserId", user_id);
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    private class HttpAsyncTaskGroup extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            dialog = new ProgressDialog(ConnectActivity.this);
+            dialog.setMessage("Fetching Groups...");
+            dialog.show();
+            dialog.setCancelable(false);
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return GroupFetchPost(urls[0]);
+        }
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+            dialog.dismiss();
+            try
+            {
+                if (result != null)
+                {
+                    JSONObject jsonObject = new JSONObject(result);
+                    JSONArray jsonArray = jsonObject.getJSONArray("Groups");
+                    //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
+
+                    for (int i = 0; i < jsonArray.length(); i++)
+                    {
+
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
+
+                        GroupModel nfcModelTag = new GroupModel();
+                        nfcModelTag.setGroup_ID(object.getString("group_ID"));
+                        nfcModelTag.setGroup_Name(object.getString("group_Name"));
+                        nfcModelTag.setGroup_Desc(object.getString("group_desc"));
+                        nfcModelTag.setGroup_Photo(object.getString("group_photo"));
+                        groupModelArrayList.add(nfcModelTag);
+                        //  Toast.makeText(getContext(), object.getString("Testimonial_Text"), Toast.LENGTH_LONG).show();
+                        list.add(object.getString("group_Name"));
+                        listGroupId.add(object.getString("group_ID"));
+
+                        groupName.add(object.getString("group_Name"));
+                        groupPhoto.add(object.getString("group_photo"));
+                    }
+                    // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public String GroupFetchPost(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("UserId", user_id);
+            jsonObject.accumulate("numofrecords", "10");
+            jsonObject.accumulate("pageno", "1");
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    private class HttpAsyncTaskGroupsFetch extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+          /*  dialog = new ProgressDialog(CardDetail.this);
+            dialog.setMessage("Fetching My Account...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            return FetchGroupDataPost(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            try
+            {
+                if (result != null)
+                {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String success = jsonObject.getString("success").toString();
+                    String message = jsonObject.getString("message").toString();
+                    String counts = jsonObject.getString("Count").toString();
+
+//                        Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+
+                    JSONArray groupsArray = jsonObject.getJSONArray("Groups");
+
+                    ArrayList<String> img = null;
+                    ArrayList<String> name = null;
+                    ArrayList<String> desc = null;
+
+                    if (groupsArray.length() == 0)
+                    {
+                        tvAddedGroupInfo.setVisibility(View.VISIBLE);
+                        recycler_view.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        for (int i = 0; i < groupsArray.length(); i++)
+                        {
+                            JSONObject groupsObj = groupsArray.getJSONObject(i);
+
+                            String groupid = groupsObj.getString("group_ID");
+                            String groupname = groupsObj.getString("group_Name");
+                            String groupdesc = groupsObj.getString("group_desc");
+                            String groupphoto = groupsObj.getString("group_photo");
+
+                            img = new ArrayList<>();
+                            name = new ArrayList<>();
+                            desc = new ArrayList<>();
+
+                            img.add(groupphoto);
+                            name.add(groupname);
+                            desc.add(groupdesc);
+                        }
+
+                        if (name.size() == 0)
+                        {
+                            tvAddedGroupInfo.setVisibility(View.VISIBLE);
+                        }
+                        else
+                        {
+                            tvAddedGroupInfo.setVisibility(View.GONE);
+                        }
+                            /*GroupsInCardDetailAdapter groupsInCardDetailAdapter = new GroupsInCardDetailAdapter(CardDetail.this, img,name,desc);
+                            groupListView.setAdapter(groupsInCardDetailAdapter);
+                            groupsInCardDetailAdapter.notifyDataSetChanged();*/
+
+                        GroupsRecyclerAdapter groupsRecyclerAdapter = new GroupsRecyclerAdapter(ConnectActivity.this, img, name, desc);
+                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                        recycler_view.setLayoutManager(new LinearLayoutManager(ConnectActivity.this, LinearLayoutManager.HORIZONTAL, true));
+//                             recycler_view.setLayoutManager(mLayoutManager);
+                        recycler_view.setItemAnimator(new DefaultItemAnimator());
+                        recycler_view.setAdapter(groupsRecyclerAdapter);
+                    }
+                }
+                else
+                {
+                    Toast.makeText(getBaseContext(), "Not able to Update Register..", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public  String FetchGroupDataPost(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("ProfileId", friendProfile_id);
+            jsonObject.accumulate("UserId", user_id );
+            jsonObject.accumulate("numofrecords", "10");
+            jsonObject.accumulate("pageno", "1" );
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+
+
+
 }
