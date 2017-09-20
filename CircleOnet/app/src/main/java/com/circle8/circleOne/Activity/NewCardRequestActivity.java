@@ -241,7 +241,7 @@ public class NewCardRequestActivity extends AppCompatActivity
                         //  GetData(getContext());
                     }
 
-                    newCardRequestAdapter = new NewCardRequestAdapter(NewCardRequestActivity.this, allTags);
+                    newCardRequestAdapter = new NewCardRequestAdapter(NewCardRequestActivity.this, R.layout.new_card_request_parameter, allTags);
                     listView.setAdapter(newCardRequestAdapter);
 
                 }

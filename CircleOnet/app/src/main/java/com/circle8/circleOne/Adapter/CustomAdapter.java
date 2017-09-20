@@ -45,24 +45,46 @@ public class CustomAdapter extends BaseAdapter
         return position;
     }
 
+    static class ViewHolder
+    {
+        TextView txtName, txtTestimonial ;
+        CircleImageView circleImageView ;
+    }
+
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        View vi = convertView;
+        View row = convertView;
+        ViewHolder holder = null;
+
         if (convertView == null)
-            vi = inflater.inflate(R.layout.testimonial_row, null);
+        {
+            row = inflater.inflate(R.layout.testimonial_row, null);
+            holder = new ViewHolder();
 
-        CircleImageView circleImageView = (CircleImageView) vi.findViewById(R.id.imgUser);
-        TextView txtName = (TextView) vi.findViewById(R.id.txtName);
-        TextView txtTestimonial = (TextView) vi.findViewById(R.id.txtTestimonial);
+            holder.circleImageView = (CircleImageView) row.findViewById(R.id.imgUser);
+            holder.txtName = (TextView) row.findViewById(R.id.txtName);
+            holder.txtTestimonial = (TextView) row.findViewById(R.id.txtTestimonial);
 
-        if (testimonialModels.get(position).getUserPhoto().equals("")){
-            circleImageView.setImageResource(R.drawable.usr);
-        }else {
-            Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(circleImageView);
+            row.setTag(holder);
         }
-        txtName.setText(testimonialModels.get(position).getFirstName() + " " + testimonialModels.get(position).getLastName());
-        txtTestimonial.setText(testimonialModels.get(position).getTestimonial_Text());
-        return vi;
+        else
+        {
+            holder = (ViewHolder)row.getTag();
+        }
 
+        if (testimonialModels.get(position).getUserPhoto().equals(""))
+        {
+            holder.circleImageView.setImageResource(R.drawable.usr);
+        }
+        else
+        {
+            Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.circleImageView);
+        }
+
+        holder.txtName.setText(testimonialModels.get(position).getFirstName() + " " + testimonialModels.get(position).getLastName());
+        holder.txtTestimonial.setText(testimonialModels.get(position).getTestimonial_Text());
+
+
+        return row;
     }
 }

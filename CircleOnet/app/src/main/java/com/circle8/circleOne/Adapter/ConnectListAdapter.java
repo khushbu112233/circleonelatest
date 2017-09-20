@@ -53,18 +53,37 @@ public class ConnectListAdapter extends BaseAdapter
         return position;
     }
 
+    static class ViewHolder
+    {
+        TextView nameText, descText, detailText ;
+        CircleImageView circleImageView ;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(R.layout.grid_list5_layout, parent, false);
+        View row = convertView;
+        ViewHolder holder = null;
 
-        CircleImageView circleImageView = (CircleImageView)convertView.findViewById(R.id.imageList4);
-        TextView nameText = (TextView)convertView.findViewById(R.id.textNameList3);
-        TextView descText = (TextView)convertView.findViewById(R.id.textDescList3);
-        TextView detailText = (TextView)convertView.findViewById(R.id.textList3);
+        if( row == null)
+        {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            row = inflater.inflate(R.layout.grid_list5_layout, parent, false);
+            holder = new ViewHolder();
 
-        nameText.setText(connectLists.get(position).getFirstname()+" "+connectLists.get(position).getLastname());
+            holder.circleImageView = (CircleImageView)row.findViewById(R.id.imageList4);
+            holder.nameText = (TextView)row.findViewById(R.id.textNameList3);
+            holder.descText = (TextView)row.findViewById(R.id.textDescList3);
+            holder.detailText = (TextView)row.findViewById(R.id.textList3);
+
+            row.setTag(holder);
+        }
+        else
+        {
+            holder = (ViewHolder)row.getTag();
+        }
+
+        holder.nameText.setText(connectLists.get(position).getFirstname()+" "+connectLists.get(position).getLastname());
 //        descText.setText(connectLists.get(position).getDesignation());
 //        detailText.setText(connectLists.get(position).getCompanyname()+"\n"+connectLists.get(position).getUsername()+"\n"
 //                +connectLists.get(position).getWebsite());
@@ -102,29 +121,29 @@ public class ConnectListAdapter extends BaseAdapter
         if(connectLists.get(position).getDesignation().equalsIgnoreCase("")
                 || connectLists.get(position).getDesignation().equalsIgnoreCase("null"))
         {
-            descText.setText("");
+            holder.descText.setText("");
 //            descText.setVisibility(View.GONE);
         }
         else
         {
-            descText.setText(connectLists.get(position).getDesignation());
+            holder.descText.setText(connectLists.get(position).getDesignation());
         }
 
         designation = company+"\n"+email+"\n"+website ;
 
-        detailText.setText(company+"\n"+email+"\n"+website);
+        holder.detailText.setText(company+"\n"+email+"\n"+website);
 
 
         if(connectLists.get(position).getUserphoto().equalsIgnoreCase(""))
         {
-            circleImageView.setImageResource(R.drawable.usr);
+            holder.circleImageView.setImageResource(R.drawable.usr);
         }
         else
         {
-            Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/"+connectLists.get(position).getUserphoto()).into(circleImageView);
+            Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/"+connectLists.get(position).getUserphoto()).into(holder.circleImageView);
         }
 
-        return convertView;
+        return row;
     }
 
 }

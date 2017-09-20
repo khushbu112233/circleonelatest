@@ -51,10 +51,7 @@ public class CardSwipe extends PagerAdapter
         View view = LayoutInflater.from(context).inflate(R.layout.card_swipe, null);
         try
         {
-
-
             imageView = (ImageView)view.findViewById(R.id.ivImages);
-
 //            imageView.setImageResource(image.get(position));
            // Bitmap bmp = BitmapFactory.decodeByteArray(image.get(position), 0, image.get(position).length);
             // ImageView image = (ImageView) findViewById(R.id.imageView1);

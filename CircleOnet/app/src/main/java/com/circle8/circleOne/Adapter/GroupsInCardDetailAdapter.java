@@ -50,29 +50,47 @@ public class GroupsInCardDetailAdapter extends BaseAdapter
         return 0;
     }
 
+
+    static class ViewHolder
+    {
+        TextView groupName, groupDesc ;
+        CircleImageView groupImg ;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
         View vi = convertView;
-        LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ViewHolder holder = null;
+
         if (convertView == null)
-
-            vi = inflater.inflate(R.layout.groups_display_in_card_details, null);
-
-        CircleImageView groupImg = (CircleImageView)vi.findViewById(R.id.imgProfile1);
-        TextView groupName = (TextView)vi.findViewById(R.id.tvPersonName1);
-        TextView groupDesc = (TextView)vi.findViewById(R.id.tvDesignation1);
-
-        groupName.setText(name.get(position));
-        groupDesc.setText(desc.get(position));
-
-        if (img.get(position).equals(""))
         {
-            groupImg.setImageResource(R.drawable.usr_1);
+            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            vi = inflater.inflate(R.layout.groups_display_in_card_details, null);
+            holder = new ViewHolder();
+
+            holder.groupImg = (CircleImageView)vi.findViewById(R.id.imgProfile1);
+            holder.groupName = (TextView)vi.findViewById(R.id.tvPersonName1);
+            holder.groupDesc = (TextView)vi.findViewById(R.id.tvDesignation1);
+
+            vi.setTag(holder);
         }
         else
         {
-            Picasso.with(context).load("http://circle8.asia/App_ImgLib/Group/"+img.get(position)).placeholder(R.drawable.usr_1).into(groupImg);
+            holder = (ViewHolder)vi.getTag();
+        }
+
+
+        holder.groupName.setText(name.get(position));
+        holder.groupDesc.setText(desc.get(position));
+
+        if (img.get(position).equals(""))
+        {
+            holder.groupImg.setImageResource(R.drawable.usr_1);
+        }
+        else
+        {
+            Picasso.with(context).load("http://circle8.asia/App_ImgLib/Group/"+img.get(position)).placeholder(R.drawable.usr_1).into(holder.groupImg);
         }
 
         return vi;

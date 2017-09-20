@@ -11,7 +11,8 @@ import com.circle8.circleOne.R;
  * Created by admin on 09/12/2017.
  */
 
-public class TutorialPagerAdapter extends FragmentStatePagerAdapter {
+public class TutorialPagerAdapter extends FragmentStatePagerAdapter
+{
     private static final int COUNT = 4;
 
     // Images resources

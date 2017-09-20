@@ -2,25 +2,20 @@ package com.circle8.circleOne.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.circle8.circleOne.Adapter.EditGroupAdapter;
-import com.circle8.circleOne.Adapter.GroupsItemsAdapter1;
 import com.circle8.circleOne.Adapter.SubscriptionAdapter;
-import com.circle8.circleOne.Model.GroupModel;
 import com.circle8.circleOne.Model.SubscriptionModel;
 import com.circle8.circleOne.R;
 import com.stripe.android.Stripe;

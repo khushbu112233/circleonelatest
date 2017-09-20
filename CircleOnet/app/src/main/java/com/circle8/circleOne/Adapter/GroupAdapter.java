@@ -47,25 +47,42 @@ public class GroupAdapter extends BaseAdapter
         return position;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
+    static class ViewHolder
+    {
+        TextView title2, title22, tvCompany, tvEmail, tvPhone, tvProfile ;
+        CircleImageView circleImageView ;
+    }
+
+    public View getView(int position, View convertView, ViewGroup parent)
+    {
         View vi = convertView;
+        ViewHolder holder = null;
+
         if (convertView == null)
+        {
             vi = inflater.inflate(R.layout.testimonial_row, null);
+            holder = new ViewHolder();
 
-        TextView title2 = (TextView) vi.findViewById(R.id.txtTestimonial); // title
+            holder.title2 = (TextView) vi.findViewById(R.id.txtTestimonial); // title
+            holder.title22 = (TextView) vi.findViewById(R.id.txtName); // notice
+            holder.circleImageView = (CircleImageView) vi.findViewById(R.id.imgUser);
+
+            vi.setTag(holder);
+        }
+        else
+        {
+            holder = (ViewHolder)vi.getTag();
+        }
+
         String song = groupModels.get(position).getGroup_Name();
-        title2.setText(song);
+        holder.title2.setText(song);
 
-
-        TextView title22 = (TextView) vi.findViewById(R.id.txtName); // notice
         String pos = String.valueOf(position+1);
         String song2 = "Testimonial "+pos+" : ";
-        title22.setVisibility(View.GONE);
+        holder.title22.setVisibility(View.GONE);
 
-        CircleImageView circleImageView = (CircleImageView) vi.findViewById(R.id.imgUser);
-        circleImageView.setVisibility(View.GONE);
+        holder.circleImageView.setVisibility(View.GONE);
 
         return vi;
-
     }
 }

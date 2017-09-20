@@ -14,6 +14,8 @@ import com.circle8.circleOne.R;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by ample-arch on 9/9/2017.
  */
@@ -64,39 +66,54 @@ public class SubscriptionAdapter extends BaseAdapter
         return 0;
     }
 
+    static class ViewHolder
+    {
+        TextView tvPackageName, tvConnect_Group, tvConnection, tvAmount, tvLeftConnection ;
+        RelativeLayout rlLeftConnection ;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
         View row = convertView;
+        ViewHolder holder = null;
 
         if( row == null)
         {
             LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = inflater.inflate(R.layout.subscription_details, null);
+            holder = new ViewHolder();
 
-            TextView tvPackageName = (TextView)row.findViewById(R.id.tvPackageName);
-            TextView tvConnect_Group = (TextView)row.findViewById(R.id.tvContact_Group);
-            TextView tvConnection = (TextView)row.findViewById(R.id.tvConnection);
-            TextView tvAmount = (TextView)row.findViewById(R.id.tvAmount);
-            TextView tvLeftConnection = (TextView)row.findViewById(R.id.tvLeftConnection);
-            RelativeLayout rlLeftConnection = (RelativeLayout)row.findViewById(R.id.rlLeftConnection);
+            holder.tvPackageName = (TextView)row.findViewById(R.id.tvPackageName);
+            holder.tvConnect_Group = (TextView)row.findViewById(R.id.tvContact_Group);
+            holder.tvConnection = (TextView)row.findViewById(R.id.tvConnection);
+            holder.tvAmount = (TextView)row.findViewById(R.id.tvAmount);
+            holder.tvLeftConnection = (TextView)row.findViewById(R.id.tvLeftConnection);
+            holder.rlLeftConnection = (RelativeLayout)row.findViewById(R.id.rlLeftConnection);
 
-            tvPackageName.setText(subscriptionModelArrayList.get(position).getPackageName());
-            tvConnect_Group.setText(subscriptionModelArrayList.get(position).getConnectionLimit()+" contacts, up to " +
-                                    subscriptionModelArrayList.get(position).getGroupLimit()+" groups,");
-            tvConnection.setText("up to "+subscriptionModelArrayList.get(position).getMonthlyConnectionLimit()+" connections per month.");
-            tvAmount.setText("S$"+subscriptionModelArrayList.get(position).getPrice());
+            row.setTag(holder);
+        }
+        else
+        {
+            holder = (ViewHolder)row.getTag();
+        }
 
-            String left_connection = subscriptionModelArrayList.get(position).getLetf_connection();
+        holder.tvPackageName.setText(subscriptionModelArrayList.get(position).getPackageName());
+        holder.tvConnect_Group.setText(subscriptionModelArrayList.get(position).getConnectionLimit()+" contacts, up to " +
+                                subscriptionModelArrayList.get(position).getGroupLimit()+" groups,");
+        holder.tvConnection.setText("up to "+subscriptionModelArrayList.get(position).getMonthlyConnectionLimit()+" connections per month.");
+        holder.tvAmount.setText("S$"+subscriptionModelArrayList.get(position).getPrice());
 
-            if( left_connection.equals(""))
-            {
-                rlLeftConnection.setVisibility(View.GONE);
-            }
-            else
-            {
-                tvLeftConnection.setText(left_connection+" connections left, until the end of month");
-            }
+        String left_connection = subscriptionModelArrayList.get(position).getLetf_connection();
+
+        if( left_connection.equals(""))
+        {
+            holder.rlLeftConnection.setVisibility(View.GONE);
+        }
+        else
+        {
+            holder.tvLeftConnection.setText(left_connection+" connections left, until the end of month");
+        }
 
            /* tvPackageName.setText(packageName.get(position));
 
@@ -121,7 +138,6 @@ public class SubscriptionAdapter extends BaseAdapter
                 tvConnection.setText("up to "+connection.get(position)+" connections per month.");
             }
 
-
             tvAmount.setText("S$"+amount.get(position));
 
             int l_connect = left_connection.get(position);
@@ -134,8 +150,6 @@ public class SubscriptionAdapter extends BaseAdapter
             {
                 tvLeftConnection.setText(l_connect+" connections left, until the end of month");
             }*/
-
-        }
 
         return row;
     }

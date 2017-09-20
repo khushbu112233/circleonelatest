@@ -37,7 +37,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ManageMyProfile extends AppCompatActivity {
+public class ManageMyProfile extends AppCompatActivity
+{
 
     private ListView listView ;
     private ArrayList<NewCardModel> newCardModelArrayList ;
@@ -50,7 +51,8 @@ public class ManageMyProfile extends AppCompatActivity {
     RelativeLayout llBottomAdd;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_my_profile);
 
@@ -131,7 +133,7 @@ public class ManageMyProfile extends AppCompatActivity {
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("numofrecords", "10" );
+            jsonObject.accumulate("numofrecords", "100" );
             jsonObject.accumulate("pageno", "1" );
             jsonObject.accumulate("userid", UserID);
 
@@ -258,19 +260,21 @@ public class ManageMyProfile extends AppCompatActivity {
                         nfcModelTag.setLinkedin(object.getString("Linkedin"));
                         nfcModelTag.setYoutube(object.getString("Youtube"));
                         nfcModelTag.setAttachment_FileName(object.getString("Attachment_FileName"));
+                        nfcModelTag.setProfile("Profile "+(i+1));
                         allTags.add(nfcModelTag);
                         //  GetData(getContext());
                     }
 
                     profile_id = allTags.get(0).getProfileID();
 
-                    newCardRequestAdapter = new NewCardRequestAdapter(getApplicationContext(),
-                            allTags);
+//                    newCardRequestAdapter = new NewCardRequestAdapter(getApplicationContext(), allTags);
+                    newCardRequestAdapter = new NewCardRequestAdapter(ManageMyProfile.this, R.layout.new_card_request_parameter, allTags);
                     listView.setAdapter(newCardRequestAdapter);
                     newCardRequestAdapter.notifyDataSetChanged();
 
-
-
+                   /* ManageMyProfileAdapter manageMyProfileAdapter = new ManageMyProfileAdapter(ManageMyProfile.this, R.layout.new_card_request_parameter, allTags);
+                    listView.setAdapter(manageMyProfileAdapter);
+                    manageMyProfileAdapter.notifyDataSetChanged();*/
                 }
                 else
                 {

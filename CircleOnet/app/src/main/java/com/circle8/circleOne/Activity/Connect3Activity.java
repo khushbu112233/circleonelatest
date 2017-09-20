@@ -42,6 +42,12 @@ public class Connect3Activity extends AppCompatActivity
     String UserId = "", friendUserID = "";
     ArrayList<Level7thConnectionModel> allTags;
 
+    String connectLevel = "";
+    String userName1 = "", userName2 = "", userName3 = "", userName4 = "", userName5 = "", userName6 = "", userName7 = "";
+    String userPhoto1 = "", userPhoto2 = "", userPhoto3 = "", userPhoto4 = "", userPhoto5 = "", userPhoto6 = "", userPhoto7 = "" ;
+    String userProfileId1 = "", userProfileId2 = "", userProfileId3 = "", userProfileId4 = "", userProfileId5 = "",
+            userProfileId6 = "", userProfileId7 = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -298,7 +304,186 @@ public class Connect3Activity extends AppCompatActivity
                     JSONArray jsonArray = jsonObject.getJSONArray("connection");
 //                    Toast.makeText(getApplicationContext(), jsonArray.length()+"", Toast.LENGTH_LONG).show();
 
-                    for (int i = 0; i < jsonArray.length(); i++)
+                    String level = jsonArray.length()+"";
+
+                    if(jsonArray.length() == 7)
+                    {
+                        connectLevel = "7" ;
+                        //for 1st user
+                        JSONObject object1 = jsonArray.getJSONObject(0);
+                        userName1 = object1.getString("FirstName")+" "+object1.getString("LastName");
+                        userPhoto1 = object1.getString("UserPhoto");
+                        userProfileId1 = object1.getString("ProfileId") ;
+                        //for 2nd user
+                        JSONObject object2 = jsonArray.getJSONObject(1);
+                        userName2 = object2.getString("FirstName")+" "+object2.getString("LastName");
+                        userPhoto2 = object2.getString("UserPhoto");
+                        userProfileId2 = object2.getString("ProfileId") ;
+                        //for 3rd user
+                        JSONObject object3 = jsonArray.getJSONObject(2);
+                        userName3 = object3.getString("FirstName")+" "+object3.getString("LastName");
+                        userPhoto3 = object3.getString("UserPhoto");
+                        userProfileId3 = object3.getString("ProfileId") ;
+                        //for 4th user
+                        JSONObject object4 = jsonArray.getJSONObject(3);
+                        userName4 = object4.getString("FirstName")+" "+object4.getString("LastName");
+                        userPhoto4 = object4.getString("UserPhoto");
+                        userProfileId4 = object4.getString("ProfileId") ;
+                        //for 5th user
+                        JSONObject object5 = jsonArray.getJSONObject(4);
+                        userName5 = object5.getString("FirstName")+" "+object5.getString("LastName");
+                        userPhoto5 = object5.getString("UserPhoto");
+                        userProfileId5 = object5.getString("ProfileId") ;
+                        //for 6th user
+                        JSONObject object6 = jsonArray.getJSONObject(5);
+                        userName6 = object6.getString("FirstName")+" "+object6.getString("LastName");
+                        userPhoto6 = object6.getString("UserPhoto");
+                        userProfileId6 = object6.getString("ProfileId") ;
+                        //for 7th user
+                        JSONObject object7 = jsonArray.getJSONObject(6);
+                        userName7 = object7.getString("FirstName")+" "+object7.getString("LastName");
+                        userPhoto7 = object7.getString("UserPhoto");
+                        userProfileId7 = object7.getString("ProfileId") ;
+                    }
+                    else if (jsonArray.length() == 6)
+                    {
+                        connectLevel = "6" ;
+                        //for 1st user
+                        JSONObject object1 = jsonArray.getJSONObject(0);
+                        userName1 = object1.getString("FirstName")+" "+object1.getString("LastName");
+                        userPhoto1 = object1.getString("UserPhoto");
+                        userProfileId1 = object1.getString("ProfileId") ;
+                        //for 2nd user
+                        JSONObject object2 = jsonArray.getJSONObject(1);
+                        userName2 = object2.getString("FirstName")+" "+object2.getString("LastName");
+                        userPhoto2 = object2.getString("UserPhoto");
+                        userProfileId2 = object2.getString("ProfileId") ;
+                        //for 3rd user
+                        JSONObject object3 = jsonArray.getJSONObject(2);
+                        userName3 = object3.getString("FirstName")+" "+object3.getString("LastName");
+                        userPhoto3 = object3.getString("UserPhoto");
+                        userProfileId3 = object3.getString("ProfileId") ;
+                        //for 4th user
+                        JSONObject object4 = jsonArray.getJSONObject(3);
+                        userName4 = object4.getString("FirstName")+" "+object4.getString("LastName");
+                        userPhoto4 = object4.getString("UserPhoto");
+                        userProfileId4 = object4.getString("ProfileId") ;
+                        //for 5th user
+                        JSONObject object5 = jsonArray.getJSONObject(4);
+                        userName5 = object5.getString("FirstName")+" "+object5.getString("LastName");
+                        userPhoto5 = object5.getString("UserPhoto");
+                        userProfileId5 = object5.getString("ProfileId") ;
+                        //for 6th user
+                        JSONObject object6 = jsonArray.getJSONObject(5);
+                        userName6 = object6.getString("FirstName")+" "+object6.getString("LastName");
+                        userPhoto6 = object6.getString("UserPhoto");
+                        userProfileId6 = object6.getString("ProfileId") ;
+                    }
+                    else if (jsonArray.length() == 5)
+                    {
+                        connectLevel = "5" ;
+                        //for 1st user
+                        JSONObject object1 = jsonArray.getJSONObject(0);
+                        userName1 = object1.getString("FirstName")+" "+object1.getString("LastName");
+                        userPhoto1 = object1.getString("UserPhoto");
+                        userProfileId1 = object1.getString("ProfileId") ;
+                        //for 2nd user
+                        JSONObject object2 = jsonArray.getJSONObject(1);
+                        userName2 = object2.getString("FirstName")+" "+object2.getString("LastName");
+                        userPhoto2 = object2.getString("UserPhoto");
+                        userProfileId2 = object2.getString("ProfileId") ;
+                        //for 3rd user
+                        JSONObject object3 = jsonArray.getJSONObject(2);
+                        userName3 = object3.getString("FirstName")+" "+object3.getString("LastName");
+                        userPhoto3 = object3.getString("UserPhoto");
+                        userProfileId3 = object3.getString("ProfileId") ;
+                        //for 4th user
+                        JSONObject object4 = jsonArray.getJSONObject(3);
+                        userName4 = object4.getString("FirstName")+" "+object4.getString("LastName");
+                        userPhoto4 = object4.getString("UserPhoto");
+                        userProfileId4 = object4.getString("ProfileId") ;
+                        //for 5th user
+                        JSONObject object5 = jsonArray.getJSONObject(4);
+                        userName5 = object5.getString("FirstName")+" "+object5.getString("LastName");
+                        userPhoto5 = object5.getString("UserPhoto");
+                        userProfileId5 = object5.getString("ProfileId") ;
+                    }
+                    else if (jsonArray.length() == 4)
+                    {
+                        connectLevel = "4" ;
+                        //for 1st user
+                        JSONObject object1 = jsonArray.getJSONObject(0);
+                        userName1 = object1.getString("FirstName")+" "+object1.getString("LastName");
+                        userPhoto1 = object1.getString("UserPhoto");
+                        userProfileId1 = object1.getString("ProfileId") ;
+                        //for 2nd user
+                        JSONObject object2 = jsonArray.getJSONObject(1);
+                        userName2 = object2.getString("FirstName")+" "+object2.getString("LastName");
+                        userPhoto2 = object2.getString("UserPhoto");
+                        userProfileId2 = object2.getString("ProfileId") ;
+                        //for 3rd user
+                        JSONObject object3 = jsonArray.getJSONObject(2);
+                        userName3 = object3.getString("FirstName")+" "+object3.getString("LastName");
+                        userPhoto3 = object3.getString("UserPhoto");
+                        userProfileId3 = object3.getString("ProfileId") ;
+                        //for 4th user
+                        JSONObject object4 = jsonArray.getJSONObject(3);
+                        userName4 = object4.getString("FirstName")+" "+object4.getString("LastName");
+                        userPhoto4 = object4.getString("UserPhoto");
+                        userProfileId4 = object4.getString("ProfileId") ;
+                    }
+                    else if (jsonArray.length() == 3)
+                    {
+                        connectLevel = "3" ;
+                        //for 1st user
+                        JSONObject object1 = jsonArray.getJSONObject(0);
+                        userName1 = object1.getString("FirstName")+" "+object1.getString("LastName");
+                        userPhoto1 = object1.getString("UserPhoto");
+                        userProfileId1 = object1.getString("ProfileId") ;
+                        //for 2nd user
+                        JSONObject object2 = jsonArray.getJSONObject(1);
+                        userName2 = object2.getString("FirstName")+" "+object2.getString("LastName");
+                        userPhoto2 = object2.getString("UserPhoto");
+                        userProfileId2 = object2.getString("ProfileId") ;
+                        //for 3rd user
+                        JSONObject object3 = jsonArray.getJSONObject(2);
+                        userName3 = object3.getString("FirstName")+" "+object3.getString("LastName");
+                        userPhoto3 = object3.getString("UserPhoto");
+                        userProfileId3 = object3.getString("ProfileId") ;
+                    }
+                    else if (jsonArray.length() == 2)
+                    {
+                        connectLevel = "2" ;
+                        //for 1st user
+                        JSONObject object1 = jsonArray.getJSONObject(0);
+                        userName1 = object1.getString("FirstName")+" "+object1.getString("LastName");
+                        userPhoto1 = object1.getString("UserPhoto");
+                        userProfileId1 = object1.getString("ProfileId") ;
+                        //for 2nd user
+                        JSONObject object2 = jsonArray.getJSONObject(1);
+                        userName2 = object2.getString("FirstName")+" "+object2.getString("LastName");
+                        userPhoto2 = object2.getString("UserPhoto");
+                        userProfileId2 = object2.getString("ProfileId") ;
+                    }
+                    else if (jsonArray.length() == 1)
+                    {
+                        connectLevel = "1" ;
+                        //for 1st user
+                        JSONObject object1 = jsonArray.getJSONObject(0);
+                        userName1 = object1.getString("FirstName")+" "+object1.getString("LastName");
+                        userPhoto1 = object1.getString("UserPhoto");
+                        userProfileId1 = object1.getString("ProfileId") ;
+                    }
+                    else if (jsonArray.length() == 0)
+                    {
+                        connectLevel = "0" ;
+                    }
+                    else
+                    {
+
+                    }
+
+                   /* for (int i = 0; i < jsonArray.length(); i++)
                     {
                         JSONObject object = jsonArray.getJSONObject(i);
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
@@ -310,19 +495,38 @@ public class Connect3Activity extends AppCompatActivity
                         nfcModelTag.setUserPhoto(object.getString("UserPhoto"));
                         nfcModelTag.setConnection_Status(object.getString("Connection_Status"));
                         allTags.add(nfcModelTag);
-                    }
+                    }*/
 
-                    String level = jsonArray.length()+"";
+
 
 //                    notificationAdapter = new NotificationAdapter(Notification.this, allTags);
 //                    listNotification.setAdapter(notificationAdapter);
 
                     Intent go = new Intent(getApplicationContext(),Connect4Activity.class);
-                    // you pass the position you want the viewpager to show in the extra,
-                    // please don't forget to define and initialize the position variable
-                    // properly
                     go.putExtra("level", level);
                     go.putExtra("profile", profile);
+                    go.putExtra("connectLevel", connectLevel);
+                    go.putExtra("userName1",userName1);
+                    go.putExtra("userPhoto1",userPhoto1);
+                    go.putExtra("userProfileId1",userProfileId1);
+                    go.putExtra("userName2",userName2);
+                    go.putExtra("userPhoto2",userPhoto2);
+                    go.putExtra("userProfileId2",userProfileId2);
+                    go.putExtra("userName3",userName3);
+                    go.putExtra("userPhoto3",userPhoto3);
+                    go.putExtra("userProfileId3",userProfileId3);
+                    go.putExtra("userName4",userName4);
+                    go.putExtra("userPhoto4",userPhoto4);
+                    go.putExtra("userProfileId4",userProfileId4);
+                    go.putExtra("userName5",userName5);
+                    go.putExtra("userPhoto5",userPhoto5);
+                    go.putExtra("userProfileId5",userProfileId5);
+                    go.putExtra("userName6",userName6);
+                    go.putExtra("userPhoto6",userPhoto6);
+                    go.putExtra("userProfileId6",userProfileId6);
+                    go.putExtra("userName7",userName7);
+                    go.putExtra("userPhoto7",userPhoto7);
+                    go.putExtra("userProfileId7",userProfileId7);
                     startActivity(go);
                     finish();
                 }

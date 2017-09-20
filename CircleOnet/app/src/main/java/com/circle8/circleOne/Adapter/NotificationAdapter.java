@@ -75,12 +75,47 @@ public class NotificationAdapter extends BaseAdapter
         return position;
     }
 
+    static class ViewHolder
+    {
+        CircleImageView imgTestReq, imgTestRec, imgFriend;
+        TextView txtTestPurpose, txtTestName, txtTestPurposeRec, txtTestNameRec, txtFriendPurpose, txtFriendName;
+        Button btnTestWrite, btnTestReject, btnTestAcceptRec, btnTestRejectRec, btnAcceptFriend, btnRejectFriend;
+    }
+
     public View getView(int position, View convertView, ViewGroup parent)
     {
         View vi = convertView;
+        ViewHolder holder = null;
 
         if (convertView == null)
+        {
             vi = inflater.inflate(R.layout.notification_item, null);
+            holder = new ViewHolder();
+
+            holder.imgTestReq = (CircleImageView) vi.findViewById(R.id.imgTestReq);
+            holder.imgTestRec = (CircleImageView) vi.findViewById(R.id.imgTestRec);
+            holder.imgFriend = (CircleImageView) vi.findViewById(R.id.imgFriend);
+
+            holder.txtTestPurpose = (TextView) vi.findViewById(R.id.txtTestPurpose);
+            holder.txtTestName = (TextView) vi.findViewById(R.id.txtTestName);
+            holder.txtTestPurposeRec = (TextView) vi.findViewById(R.id.txtTestPurposeRec);
+            holder.txtTestNameRec = (TextView) vi.findViewById(R.id.txtTestNameRec);
+            holder.txtFriendPurpose = (TextView) vi.findViewById(R.id.txtFriendPurpose);
+            holder.txtFriendName = (TextView) vi.findViewById(R.id.txtFriendName);
+
+            holder.btnTestWrite = (Button) vi.findViewById(R.id.btnTestWrite);
+            holder.btnTestReject = (Button) vi.findViewById(R.id.btnTestReject);
+            holder.btnTestAcceptRec = (Button) vi.findViewById(R.id.btnTestAcceptRec);
+            holder.btnTestRejectRec = (Button) vi.findViewById(R.id.btnTestRejectRec);
+            holder.btnAcceptFriend = (Button) vi.findViewById(R.id.btnAcceptFriend);
+            holder.btnRejectFriend = (Button) vi.findViewById(R.id.btnRejectFriend);
+
+            vi.setTag(holder);
+        }
+        else
+        {
+            holder = (ViewHolder)vi.getTag();
+        }
 
         loginSession = new LoginSession(activity);
         HashMap<String, String> user = loginSession.getUserDetails();
@@ -90,28 +125,6 @@ public class NotificationAdapter extends BaseAdapter
         lnrFriend = (LinearLayout) vi.findViewById(R.id.lnrFriend);
         lnrTestReq = (LinearLayout) vi.findViewById(R.id.lnrTestReq);
         lnrTestRec = (LinearLayout) vi.findViewById(R.id.lnrTestRec);
-
-        CircleImageView imgTestReq, imgTestRec, imgFriend;
-        TextView txtTestPurpose, txtTestName, txtTestPurposeRec, txtTestNameRec, txtFriendPurpose, txtFriendName;
-        Button btnTestWrite, btnTestReject, btnTestAcceptRec, btnTestRejectRec, btnAcceptFriend, btnRejectFriend;
-
-        imgTestReq = (CircleImageView) vi.findViewById(R.id.imgTestReq);
-        imgTestRec = (CircleImageView) vi.findViewById(R.id.imgTestRec);
-        imgFriend = (CircleImageView) vi.findViewById(R.id.imgFriend);
-
-        txtTestPurpose = (TextView) vi.findViewById(R.id.txtTestPurpose);
-        txtTestName = (TextView) vi.findViewById(R.id.txtTestName);
-        txtTestPurposeRec = (TextView) vi.findViewById(R.id.txtTestPurposeRec);
-        txtTestNameRec = (TextView) vi.findViewById(R.id.txtTestNameRec);
-        txtFriendPurpose = (TextView) vi.findViewById(R.id.txtFriendPurpose);
-        txtFriendName = (TextView) vi.findViewById(R.id.txtFriendName);
-
-        btnTestWrite = (Button) vi.findViewById(R.id.btnTestWrite);
-        btnTestReject = (Button) vi.findViewById(R.id.btnTestReject);
-        btnTestAcceptRec = (Button) vi.findViewById(R.id.btnTestAcceptRec);
-        btnTestRejectRec = (Button) vi.findViewById(R.id.btnTestRejectRec);
-        btnAcceptFriend = (Button) vi.findViewById(R.id.btnAcceptFriend);
-        btnRejectFriend = (Button) vi.findViewById(R.id.btnRejectFriend);
 
         posi = position;
         String purpose = testimonialModels.get(position).getPurpose();
@@ -124,14 +137,14 @@ public class NotificationAdapter extends BaseAdapter
 
             if (testimonialModels.get(position).getUserPhoto().equals(""))
             {
-                imgTestRec.setImageResource(R.drawable.usr);
+                holder.imgTestRec.setImageResource(R.drawable.usr);
             }
             else
             {
-                Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(imgTestRec);
+                Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgTestRec);
             }
-            txtTestPurposeRec.setText(purpose);
-            txtTestNameRec.setText(testimonialModels.get(position).getFirstName());
+            holder.txtTestPurposeRec.setText(purpose);
+            holder.txtTestNameRec.setText(testimonialModels.get(position).getFirstName());
         }
         else if (purpose.equalsIgnoreCase("Connection Requested"))
         {
@@ -140,14 +153,14 @@ public class NotificationAdapter extends BaseAdapter
             lnrTestRec.setVisibility(View.GONE);
             if (testimonialModels.get(position).getUserPhoto().equals(""))
             {
-                imgFriend.setImageResource(R.drawable.usr);
+                holder.imgFriend.setImageResource(R.drawable.usr);
             }
             else
             {
-                Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(imgFriend);
+                Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgFriend);
             }
-            txtFriendPurpose.setText(purpose);
-            txtFriendName.setText(testimonialModels.get(position).getFirstName());
+            holder.txtFriendPurpose.setText(purpose);
+            holder.txtFriendName.setText(testimonialModels.get(position).getFirstName());
         }
         else if (purpose.equalsIgnoreCase("Recieved Testimonial Request"))
         {
@@ -156,17 +169,17 @@ public class NotificationAdapter extends BaseAdapter
             lnrTestRec.setVisibility(View.GONE);
             if (testimonialModels.get(position).getUserPhoto().equals(""))
             {
-                imgTestReq.setImageResource(R.drawable.usr);
+                holder.imgTestReq.setImageResource(R.drawable.usr);
             }
             else
             {
-                Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(imgTestReq);
+                Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgTestReq);
             }
-            txtTestPurpose.setText(purpose);
-            txtTestName.setText(testimonialModels.get(position).getFirstName());
+            holder.txtTestPurpose.setText(purpose);
+            holder.txtTestName.setText(testimonialModels.get(position).getFirstName());
         }
 
-        btnTestWrite.setOnClickListener(new View.OnClickListener() {
+        holder.btnTestWrite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -208,21 +221,21 @@ public class NotificationAdapter extends BaseAdapter
             }
         });
 
-        btnAcceptFriend.setOnClickListener(new View.OnClickListener() {
+        holder.btnAcceptFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new HttpAsyncTaskAcceptFriend().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
             }
         });
 
-        btnRejectFriend.setOnClickListener(new View.OnClickListener() {
+        holder.btnRejectFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new HttpAsyncTaskRejectFriend().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
             }
         });
 
-        btnTestAcceptRec.setOnClickListener(new View.OnClickListener() {
+        holder.btnTestAcceptRec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 accept = "1";
@@ -230,7 +243,7 @@ public class NotificationAdapter extends BaseAdapter
             }
         });
 
-        btnTestRejectRec.setOnClickListener(new View.OnClickListener() {
+        holder.btnTestRejectRec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 accept = "0";
@@ -238,16 +251,16 @@ public class NotificationAdapter extends BaseAdapter
             }
         });
 
-        btnTestReject.setOnClickListener(new View.OnClickListener() {
+        holder.btnTestReject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 accept = "0";
                 new HttpAsyncTaskAcceptTestimonial().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Accept_Reject");
             }
         });
+
 
         return vi;
-
     }
 
     private class HttpAsyncTaskAcceptTestimonial extends AsyncTask<String, Void, String> {
