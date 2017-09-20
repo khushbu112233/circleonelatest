@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,7 +13,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorAccent"/>
+            android:background="@color/colorAccent" />
 
 
         <RelativeLayout
@@ -24,144 +23,381 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@android:color/transparent"
                 android:layout_alignParentLeft="true"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="5dp"
+                android:background="@android:color/transparent">
+
                 <ImageView
                     android:id="@+id/imgBack"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
-                    android:layout_centerInParent="true"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/ic_keyboard_arrow_left_black_24dp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
                     android:text="Connect"
-                    android:textSize="15dp"
                     android:textColor="@android:color/white"
-                    android:layout_centerInParent="true"/>
+                    android:textSize="15dp" />
+
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/ic_dehaze_black_24dp"
-                    android:layout_centerInParent="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="20dp"/>
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/ic_dehaze_black_24dp" />
             </RelativeLayout>
 
             <TextView
                 android:id="@+id/txtCongratulations"
-                android:textSize="18dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Congratulations!"
-                android:textColor="@android:color/white"
-                android:textAlignment="center"
-                android:textStyle="bold"
                 android:layout_above="@+id/rltConnect"
-                android:layout_marginBottom="45dp"/>
+                android:layout_marginBottom="45dp"
+                android:text="Congratulations!"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="18dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtLink"
-                android:textSize="18dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="You got the 2nd level link!"
-                android:textColor="@android:color/white"
-                android:textAlignment="center"
                 android:layout_above="@+id/rltConnect"
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginBottom="10dp"
+                android:text="You got the 2nd level link!"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="18dp" />
 
             <RelativeLayout
                 android:id="@+id/rltConnect"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true">
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true">
 
-                <ImageView
-                    android:id="@+id/imgLevel6"
-                    android:layout_centerInParent="true"
-                    android:layout_width="230dp"
-                    android:layout_height="230dp"
-                    android:src="@drawable/level6"
-                    />
+                <!--  <de.hdodenhof.circleimageview.CircleImageView
+                      android:id="@+id/imgLevel6"
+                      android:layout_centerInParent="true"
+                      android:layout_width="230dp"
+                      android:layout_height="230dp"
+                      android:src="@drawable/level6"
+                      />
 
-                <ImageView
-                    android:id="@+id/imgLevel5"
-                    android:layout_centerInParent="true"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:src="@drawable/level5"
-                    />
+                  <de.hdodenhof.circleimageview.CircleImageView
+                      android:id="@+id/imgLevel5"
+                      android:layout_centerInParent="true"
+                      android:layout_width="200dp"
+                      android:layout_height="200dp"
+                      android:src="@drawable/level5"
+                      />
 
-                <ImageView
-                    android:id="@+id/imgLevel4"
+                  <de.hdodenhof.circleimageview.CircleImageView
+                      android:id="@+id/imgLevel4"
+                      android:layout_centerInParent="true"
+                      android:layout_width="170dp"
+                      android:layout_height="170dp"
+                      android:src="@drawable/level4"
+                      />
+
+                  <de.hdodenhof.circleimageview.CircleImageView
+                      android:id="@+id/imgLevel3"
+                      android:layout_centerInParent="true"
+                      android:layout_width="145dp"
+                      android:layout_height="145dp"
+                      android:src="@drawable/level3"
+                      />
+
+                  <de.hdodenhof.circleimageview.CircleImageView
+                      android:id="@+id/imgLevel2"
+                      android:layout_centerInParent="true"
+                      android:layout_width="125dp"
+                      android:layout_height="125dp"
+                      android:src="@drawable/level2"
+                      />
+  -->
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ivImage1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_centerInParent="true"
+                    android:src="@drawable/usr" />
+
+                <RelativeLayout
+                    android:id="@+id/rltLevel1"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerInParent="true">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imgLevel1"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/round" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/ivProfile1"
+                        android:layout_width="23dp"
+                        android:layout_height="23dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="3dp"
+                        android:src="@drawable/connect_user"
+                        app:civ_border_color="@color/black" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rltLevel2"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_centerInParent="true">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imgLevel2"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:src="@drawable/round" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/ivProfile2"
+                        android:layout_width="23dp"
+                        android:layout_height="23dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginTop="15dp"
+                        android:src="@drawable/connect_user"
+                        app:civ_border_color="@color/black" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rltLevel3"
                     android:layout_width="170dp"
                     android:layout_height="170dp"
-                    android:src="@drawable/level4"
-                    />
+                    android:layout_centerInParent="true">
 
-                <ImageView
-                    android:id="@+id/imgLevel3"
-                    android:layout_centerInParent="true"
-                    android:layout_width="145dp"
-                    android:layout_height="145dp"
-                    android:src="@drawable/level3"
-                    />
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imgLevel3"
+                        android:layout_width="170dp"
+                        android:layout_height="170dp"
+                        android:src="@drawable/round" />
 
-                <ImageView
-                    android:id="@+id/imgLevel2"
-                    android:layout_centerInParent="true"
-                    android:layout_width="125dp"
-                    android:layout_height="125dp"
-                    android:src="@drawable/level2"
-                    />
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/ivProfile3"
+                        android:layout_marginLeft="30dp"
+                        android:layout_width="23dp"
+                        android:layout_height="23dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginTop="15dp"
+                        android:src="@drawable/connect_user"
+                        app:civ_border_color="@color/black" />
 
-                <ImageView
-                    android:id="@+id/imgLevel1"
-                    android:layout_centerInParent="true"
-                    android:layout_width="85dp"
-                    android:layout_height="85dp"
-                    android:src="@drawable/level1"
-                    />
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_centerInParent="true"
-                    android:id="@+id/ivImage1"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/usr"
-                    />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rltLevel4"
+                    android:layout_width="210dp"
+                    android:layout_height="210dp"
+                    android:layout_centerInParent="true">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imgLevel4"
+                        android:layout_width="210dp"
+                        android:layout_height="210dp"
+                        android:src="@drawable/round" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/ivProfile4"
+                        android:layout_marginRight="50dp"
+                        android:layout_width="23dp"
+                        android:layout_height="23dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginTop="15dp"
+                        android:src="@drawable/connect_user"
+                        app:civ_border_color="@color/black" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rltLevel5"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
+                    android:layout_centerInParent="true">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imgLevel5"
+                        android:layout_width="250dp"
+                        android:layout_height="250dp"
+                        android:src="@drawable/round" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/ivProfile5"
+                        android:layout_width="23dp"
+                        android:layout_height="23dp"
+                        android:layout_marginRight="40dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="15dp"
+                        android:src="@drawable/connect_user"
+                        app:civ_border_color="@color/black" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rltLevel6"
+                    android:layout_width="290dp"
+                    android:layout_height="290dp"
+                    android:layout_centerInParent="true">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imgLevel6"
+                        android:layout_width="290dp"
+                        android:layout_height="290dp"
+                        android:src="@drawable/round" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/ivProfile6"
+                        android:layout_width="23dp"
+                        android:layout_height="23dp"
+                        android:layout_marginLeft="50dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="15dp"
+                        android:src="@drawable/connect_user"
+                        app:civ_border_color="@color/black" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rltLevel7"
+                    android:layout_width="330dp"
+                    android:layout_height="330dp"
+                    android:layout_centerInParent="true">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imgLevel7"
+                        android:layout_width="330dp"
+                        android:layout_height="330dp"
+                        android:src="@drawable/round" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/ivProfile7"
+                        android:layout_width="23dp"
+                        android:layout_height="23dp"
+                        android:layout_marginLeft="50dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginBottom="22dp"
+                        android:src="@drawable/connect_user"
+                        app:civ_border_color="@color/black" />
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/txtName1"
+                    android:layout_marginRight="120dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:text=""
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/txtName2"
+                    android:layout_marginLeft="90dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="150dp"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/txtName3"
+                    android:layout_marginLeft="120dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="200dp"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/txtName4"
+                    android:layout_marginRight="120dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="275dp"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/txtName5"
+                    android:layout_marginRight="90dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="80dp"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/txtName6"
+                    android:layout_marginLeft="90dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="60dp"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/txtName7"
+                    android:layout_marginLeft="70dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="260dp"
+                    android:textColor="@color/white" />
+
 
             </RelativeLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Please click the icon to \n check the files and companies."
-                android:textColor="@android:color/white"
-                android:textAlignment="center"
-                android:textStyle="normal"
                 android:layout_below="@+id/rltConnect"
-                android:layout_marginTop="30dp"/>
+                android:layout_marginTop="30dp"
+                android:text="Please click the icon to \n check the files and companies."
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textStyle="normal" />
 
 
             <LinearLayout
-                android:layout_alignParentBottom="true"
-                android:background="@color/white"
                 android:id="@+id/lnrBottomTab"
-                android:layout_gravity="bottom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom"
+                android:background="@color/white"
                 android:orientation="vertical">
+
                 <View
-                    android:layout_above="@+id/lnrBottomTab"
                     android:id="@+id/view1"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:layout_above="@+id/lnrBottomTab"
                     android:background="@color/colorPrimary"></View>
 
                 <LinearLayout
@@ -171,15 +407,16 @@
                     android:paddingTop="4dp">
 
                     <LinearLayout
-                        android:gravity="center"
-                        android:layout_marginTop="2dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="10dp"
+                        android:layout_marginTop="2dp"
                         android:layout_weight="1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:orientation="vertical">
+
                         <ImageView
                             android:id="@+id/imgCards"
                             android:layout_width="55dp"
@@ -187,23 +424,24 @@
                             android:src="@drawable/ic_icon1" />
 
                         <TextView
-                            android:layout_marginTop="-2dp"
-                            android:textColor="@color/unselected"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="-2dp"
                             android:text="Cards"
-                            android:textSize="9sp"/>
+                            android:textColor="@color/unselected"
+                            android:textSize="9sp" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:gravity="center"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginBottom="2dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:orientation="vertical">
+
                         <ImageView
                             android:id="@+id/imgConnect"
                             android:layout_width="55dp"
@@ -211,22 +449,24 @@
                             android:src="@drawable/ic_icon2b" />
 
                         <TextView
-                            android:layout_marginTop="-2dp"
-                            android:textColor="@color/colorPrimary"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="-2dp"
                             android:text="Connect"
-                            android:textSize="9sp"/>
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="9sp" />
                     </LinearLayout>
+
                     <LinearLayout
-                        android:gravity="center"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginBottom="2dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:orientation="vertical">
+
                         <ImageView
                             android:id="@+id/imgEvents"
                             android:layout_width="55dp"
@@ -234,22 +474,24 @@
                             android:src="@drawable/ic_icon3" />
 
                         <TextView
-                            android:layout_marginTop="-2dp"
-                            android:textColor="@color/unselected"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="-2dp"
                             android:text="Events"
-                            android:textSize="9sp"/>
+                            android:textColor="@color/unselected"
+                            android:textSize="9sp" />
                     </LinearLayout>
+
                     <LinearLayout
-                        android:gravity="center"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginBottom="2dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:orientation="vertical">
+
                         <ImageView
                             android:id="@+id/imgProfile"
                             android:layout_width="55dp"
@@ -257,20 +499,18 @@
                             android:src="@drawable/ic_icon4" />
 
                         <TextView
-                            android:layout_marginTop="-2dp"
-                            android:textColor="@color/unselected"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="-2dp"
                             android:text="Profile"
-                            android:textSize="9sp"/>
+                            android:textColor="@color/unselected"
+                            android:textSize="9sp" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
 
         </RelativeLayout>
-
-
 
 
     </FrameLayout>

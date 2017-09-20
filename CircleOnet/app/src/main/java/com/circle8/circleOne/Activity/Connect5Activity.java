@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.circle8.circleOne.R;
@@ -21,7 +22,10 @@ public class Connect5Activity extends AppCompatActivity
     String profile;
     TextView txtCongratulations, txtLink;
     CircleImageView ivImage1;
-    ImageView level1, level2, level3, level4, level5, level6;
+    CircleImageView level1, level2, level3, level4, level5, level6, level7;
+    CircleImageView ivProfile1, ivProfile2, ivProfile3, ivProfile4, ivProfile5, ivProfile6, ivProfile7;
+    TextView txtName1, txtName2, txtName3, txtName4, txtName5, txtName6, txtName7;
+    RelativeLayout rltLevel1, rltLevel2, rltLevel3, rltLevel4, rltLevel5, rltLevel6, rltLevel7;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,12 +39,38 @@ public class Connect5Activity extends AppCompatActivity
         imgConnect = (ImageView) findViewById(R.id.imgConnect);
         imgEvents = (ImageView) findViewById(R.id.imgEvents);
         imgProfile = (ImageView) findViewById(R.id.imgProfile);
-        level1 = (ImageView) findViewById(R.id.imgLevel1);
-        level2 = (ImageView) findViewById(R.id.imgLevel2);
-        level3 = (ImageView) findViewById(R.id.imgLevel3);
-        level4 = (ImageView) findViewById(R.id.imgLevel4);
-        level5 = (ImageView) findViewById(R.id.imgLevel5);
-        level6 = (ImageView) findViewById(R.id.imgLevel6);
+        level1 = (CircleImageView) findViewById(R.id.imgLevel1);
+        level2 = (CircleImageView) findViewById(R.id.imgLevel2);
+        level3 = (CircleImageView) findViewById(R.id.imgLevel3);
+        level4 = (CircleImageView) findViewById(R.id.imgLevel4);
+        level5 = (CircleImageView) findViewById(R.id.imgLevel5);
+        level6 = (CircleImageView) findViewById(R.id.imgLevel6);
+        level7 = (CircleImageView) findViewById(R.id.imgLevel7);
+
+        ivProfile1 = (CircleImageView) findViewById(R.id.ivProfile1);
+        ivProfile2 = (CircleImageView) findViewById(R.id.ivProfile2);
+        ivProfile3 = (CircleImageView) findViewById(R.id.ivProfile3);
+        ivProfile4 = (CircleImageView) findViewById(R.id.ivProfile4);
+        ivProfile5 = (CircleImageView) findViewById(R.id.ivProfile5);
+        ivProfile6 = (CircleImageView) findViewById(R.id.ivProfile6);
+        ivProfile7 = (CircleImageView) findViewById(R.id.ivProfile7);
+
+        txtName1 = (TextView) findViewById(R.id.txtName1);
+        txtName2 = (TextView) findViewById(R.id.txtName2);
+        txtName3 = (TextView) findViewById(R.id.txtName3);
+        txtName4 = (TextView) findViewById(R.id.txtName4);
+        txtName5 = (TextView) findViewById(R.id.txtName5);
+        txtName6 = (TextView) findViewById(R.id.txtName6);
+        txtName7 = (TextView) findViewById(R.id.txtName7);
+
+        rltLevel1 = (RelativeLayout) findViewById(R.id.rltLevel1);
+        rltLevel2 = (RelativeLayout) findViewById(R.id.rltLevel2);
+        rltLevel3 = (RelativeLayout) findViewById(R.id.rltLevel3);
+        rltLevel4 = (RelativeLayout) findViewById(R.id.rltLevel4);
+        rltLevel5 = (RelativeLayout) findViewById(R.id.rltLevel5);
+        rltLevel6 = (RelativeLayout) findViewById(R.id.rltLevel6);
+        rltLevel7 = (RelativeLayout) findViewById(R.id.rltLevel7);
+
         txtLink = (TextView) findViewById(R.id.txtLink);
         txtCongratulations = (TextView) findViewById(R.id.txtCongratulations);
 
@@ -78,78 +108,161 @@ public class Connect5Activity extends AppCompatActivity
         {
             txtCongratulations.setVisibility(View.GONE);
             txtLink.setText("You are not having any Connection.");
-            level1.setVisibility(View.GONE);
-            level2.setVisibility(View.GONE);
-            level3.setVisibility(View.GONE);
-            level4.setVisibility(View.GONE);
-            level5.setVisibility(View.GONE);
-            level6.setVisibility(View.GONE);
+            rltLevel1.setVisibility(View.INVISIBLE);
+            rltLevel2.setVisibility(View.INVISIBLE);
+            rltLevel3.setVisibility(View.INVISIBLE);
+            rltLevel4.setVisibility(View.INVISIBLE);
+            rltLevel5.setVisibility(View.INVISIBLE);
+            rltLevel6.setVisibility(View.INVISIBLE);
+            rltLevel7.setVisibility(View.INVISIBLE);
+
+            txtName1.setVisibility(View.INVISIBLE);
+            txtName2.setVisibility(View.INVISIBLE);
+            txtName3.setVisibility(View.INVISIBLE);
+            txtName4.setVisibility(View.INVISIBLE);
+            txtName5.setVisibility(View.INVISIBLE);
+            txtName6.setVisibility(View.INVISIBLE);
+            txtName7.setVisibility(View.INVISIBLE);
         }
         if (level.equals("1"))
         {
             txtCongratulations.setVisibility(View.VISIBLE);
             txtLink.setText("You have a 1st level connection.");
-            level1.setVisibility(View.VISIBLE);
-            level2.setVisibility(View.GONE);
-            level3.setVisibility(View.GONE);
-            level4.setVisibility(View.GONE);
-            level5.setVisibility(View.GONE);
-            level6.setVisibility(View.GONE);
+            rltLevel1.setVisibility(View.VISIBLE);
+            rltLevel2.setVisibility(View.INVISIBLE);
+            rltLevel3.setVisibility(View.INVISIBLE);
+            rltLevel4.setVisibility(View.INVISIBLE);
+            rltLevel5.setVisibility(View.INVISIBLE);
+            rltLevel6.setVisibility(View.INVISIBLE);
+            rltLevel7.setVisibility(View.INVISIBLE);
+
+            txtName1.setVisibility(View.VISIBLE);
+            txtName2.setVisibility(View.INVISIBLE);
+            txtName3.setVisibility(View.INVISIBLE);
+            txtName4.setVisibility(View.INVISIBLE);
+            txtName5.setVisibility(View.INVISIBLE);
+            txtName6.setVisibility(View.INVISIBLE);
+            txtName7.setVisibility(View.INVISIBLE);
         }
         else if (level.equals("2"))
         {
             txtCongratulations.setVisibility(View.VISIBLE);
             txtLink.setText("You have a 2nd level connection.");
-            level1.setVisibility(View.VISIBLE);
-            level2.setVisibility(View.VISIBLE);
-            level3.setVisibility(View.GONE);
-            level4.setVisibility(View.GONE);
-            level5.setVisibility(View.GONE);
-            level6.setVisibility(View.GONE);
+            rltLevel1.setVisibility(View.VISIBLE);
+            rltLevel2.setVisibility(View.VISIBLE);
+            rltLevel3.setVisibility(View.INVISIBLE);
+            rltLevel4.setVisibility(View.INVISIBLE);
+            rltLevel5.setVisibility(View.INVISIBLE);
+            rltLevel6.setVisibility(View.INVISIBLE);
+            rltLevel7.setVisibility(View.INVISIBLE);
+
+            txtName1.setVisibility(View.VISIBLE);
+            txtName2.setVisibility(View.VISIBLE);
+            txtName3.setVisibility(View.INVISIBLE);
+            txtName4.setVisibility(View.INVISIBLE);
+            txtName5.setVisibility(View.INVISIBLE);
+            txtName6.setVisibility(View.INVISIBLE);
+            txtName7.setVisibility(View.INVISIBLE);
         }
         else if (level.equals("3"))
         {
             txtCongratulations.setVisibility(View.VISIBLE);
             txtLink.setText("You have a 3rd level connection.");
-            level1.setVisibility(View.VISIBLE);
-            level2.setVisibility(View.VISIBLE);
-            level3.setVisibility(View.VISIBLE);
-            level4.setVisibility(View.GONE);
-            level5.setVisibility(View.GONE);
-            level6.setVisibility(View.GONE);
+            rltLevel1.setVisibility(View.VISIBLE);
+            rltLevel2.setVisibility(View.VISIBLE);
+            rltLevel3.setVisibility(View.VISIBLE);
+            rltLevel4.setVisibility(View.INVISIBLE);
+            rltLevel5.setVisibility(View.INVISIBLE);
+            rltLevel6.setVisibility(View.INVISIBLE);
+            rltLevel7.setVisibility(View.INVISIBLE);
+
+            txtName1.setVisibility(View.VISIBLE);
+            txtName2.setVisibility(View.VISIBLE);
+            txtName3.setVisibility(View.VISIBLE);
+            txtName4.setVisibility(View.INVISIBLE);
+            txtName5.setVisibility(View.INVISIBLE);
+            txtName6.setVisibility(View.INVISIBLE);
+            txtName7.setVisibility(View.INVISIBLE);
         }
         else if (level.equals("4"))
         {
             txtCongratulations.setVisibility(View.VISIBLE);
             txtLink.setText("You have a 4th level connection.");
-            level1.setVisibility(View.VISIBLE);
-            level2.setVisibility(View.VISIBLE);
-            level3.setVisibility(View.VISIBLE);
-            level4.setVisibility(View.VISIBLE);
-            level5.setVisibility(View.GONE);
-            level6.setVisibility(View.GONE);
+            rltLevel1.setVisibility(View.VISIBLE);
+            rltLevel2.setVisibility(View.VISIBLE);
+            rltLevel3.setVisibility(View.VISIBLE);
+            rltLevel4.setVisibility(View.VISIBLE);
+            rltLevel5.setVisibility(View.INVISIBLE);
+            rltLevel6.setVisibility(View.INVISIBLE);
+            rltLevel7.setVisibility(View.INVISIBLE);
+
+            txtName1.setVisibility(View.VISIBLE);
+            txtName2.setVisibility(View.VISIBLE);
+            txtName3.setVisibility(View.VISIBLE);
+            txtName4.setVisibility(View.VISIBLE);
+            txtName5.setVisibility(View.INVISIBLE);
+            txtName6.setVisibility(View.INVISIBLE);
+            txtName7.setVisibility(View.INVISIBLE);
         }
         else if (level.equals("5"))
         {
             txtCongratulations.setVisibility(View.VISIBLE);
             txtLink.setText("You have a 5th level connection.");
-            level1.setVisibility(View.VISIBLE);
-            level2.setVisibility(View.VISIBLE);
-            level3.setVisibility(View.VISIBLE);
-            level4.setVisibility(View.VISIBLE);
-            level5.setVisibility(View.VISIBLE);
-            level6.setVisibility(View.GONE);
+            rltLevel1.setVisibility(View.VISIBLE);
+            rltLevel2.setVisibility(View.VISIBLE);
+            rltLevel3.setVisibility(View.VISIBLE);
+            rltLevel4.setVisibility(View.VISIBLE);
+            rltLevel5.setVisibility(View.VISIBLE);
+            rltLevel6.setVisibility(View.INVISIBLE);
+            rltLevel7.setVisibility(View.INVISIBLE);
+
+            txtName1.setVisibility(View.VISIBLE);
+            txtName2.setVisibility(View.VISIBLE);
+            txtName3.setVisibility(View.VISIBLE);
+            txtName4.setVisibility(View.VISIBLE);
+            txtName5.setVisibility(View.VISIBLE);
+            txtName6.setVisibility(View.INVISIBLE);
+            txtName7.setVisibility(View.INVISIBLE);
         }
         else if (level.equals("6"))
         {
             txtCongratulations.setVisibility(View.VISIBLE);
             txtLink.setText("You have a 6th level connection.");
-            level1.setVisibility(View.VISIBLE);
-            level2.setVisibility(View.VISIBLE);
-            level3.setVisibility(View.VISIBLE);
-            level4.setVisibility(View.VISIBLE);
-            level5.setVisibility(View.VISIBLE);
-            level6.setVisibility(View.VISIBLE);
+            rltLevel1.setVisibility(View.VISIBLE);
+            rltLevel2.setVisibility(View.VISIBLE);
+            rltLevel3.setVisibility(View.VISIBLE);
+            rltLevel4.setVisibility(View.VISIBLE);
+            rltLevel5.setVisibility(View.VISIBLE);
+            rltLevel6.setVisibility(View.VISIBLE);
+            rltLevel7.setVisibility(View.INVISIBLE);
+
+            txtName1.setVisibility(View.VISIBLE);
+            txtName2.setVisibility(View.VISIBLE);
+            txtName3.setVisibility(View.VISIBLE);
+            txtName4.setVisibility(View.VISIBLE);
+            txtName5.setVisibility(View.VISIBLE);
+            txtName6.setVisibility(View.VISIBLE);
+            txtName7.setVisibility(View.INVISIBLE);
+        }
+        else if (level.equals("7"))
+        {
+            txtCongratulations.setVisibility(View.VISIBLE);
+            txtLink.setText("You have a 7th level connection.");
+            rltLevel1.setVisibility(View.VISIBLE);
+            rltLevel2.setVisibility(View.VISIBLE);
+            rltLevel3.setVisibility(View.VISIBLE);
+            rltLevel4.setVisibility(View.VISIBLE);
+            rltLevel5.setVisibility(View.VISIBLE);
+            rltLevel6.setVisibility(View.VISIBLE);
+            rltLevel7.setVisibility(View.VISIBLE);
+
+            txtName1.setVisibility(View.VISIBLE);
+            txtName2.setVisibility(View.VISIBLE);
+            txtName3.setVisibility(View.VISIBLE);
+            txtName4.setVisibility(View.VISIBLE);
+            txtName5.setVisibility(View.VISIBLE);
+            txtName6.setVisibility(View.VISIBLE);
+            txtName7.setVisibility(View.VISIBLE);
         }
 
 
