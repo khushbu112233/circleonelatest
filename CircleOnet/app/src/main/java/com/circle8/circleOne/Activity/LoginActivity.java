@@ -821,7 +821,8 @@ public class LoginActivity extends AppCompatActivity implements
 
     }
 
-    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
+    private class HttpAsyncTask extends AsyncTask<String, Void, String>
+    {
         ProgressDialog dialog;
 
         @Override
@@ -865,9 +866,12 @@ public class LoginActivity extends AppCompatActivity implements
                         LastName = jsonArray.getString("LastName");
                         UserPhoto = jsonArray.getString("UserPhoto");
                         String Status = jsonArray.getString("Status");
-                        try {
+
+                        try
+                        {
                             ReferrenceCode = jsonArray.getString("ReferrenceCode");
                         }catch (Exception e) {}
+
                         if (Status.equalsIgnoreCase("Verified"))
                         {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
@@ -1476,7 +1480,7 @@ public class LoginActivity extends AppCompatActivity implements
 
     private void showProgressDialog() {
         if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog = new ProgressDialog(LoginActivity.this);
             mProgressDialog.setMessage("Google Login..");
             mProgressDialog.setIndeterminate(true);
         }

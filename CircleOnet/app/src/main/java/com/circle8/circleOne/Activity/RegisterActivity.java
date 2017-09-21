@@ -21,7 +21,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
@@ -262,7 +264,31 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             motionLength = 185 ;
         }
 
+        ivConnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
 
+            }
+        });
+
+        ivConnect.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
+        {
+            public void onGlobalLayout()
+            {
+                int height = ivConnect.getHeight();
+                int width = ivConnect.getWidth();
+                int L = ivConnect.getLeft();
+                int T = ivConnect.getTop();
+                int R = ivConnect.getRight();
+                int B = ivConnect.getBottom();
+
+                Toast.makeText(RegisterActivity.this, height+" "+width+" "+L+" "+R+" "+T+" "+B,Toast.LENGTH_LONG).show();
+
+                //don't forget to remove the listener to prevent being called again by future layout events:
+                ivConnect.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
     }
 
 
