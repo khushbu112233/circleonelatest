@@ -2,9 +2,11 @@ package com.circle8.circleOne.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Activity.CardsActivity;
+import com.circle8.circleOne.Activity.LoginActivity;
 import com.circle8.circleOne.Activity.SortAndFilterOption;
 import com.circle8.circleOne.Adapter.GalleryAdapter;
 import com.circle8.circleOne.Adapter.GalleryAdapter1;
@@ -326,20 +329,40 @@ public class List1Fragment extends Fragment
         //myPager = new MyPager(getContext(), imgf, imgb, tag_id);
         //viewPager.setAdapter(myPager);
 
-        searchText.addTextChangedListener(new TextWatcher() {
+        searchText.addTextChangedListener(new TextWatcher()
+        {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after)
             {
+               /* if(s.length() == 0)
+                {
+                    // allTags = db.getActiveNFC();
+//                    GetData(getContext());
+                    nfcModel.clear();
+                    pageno = 1;
+                    allTags.clear();
+                    try
+                    {
+                        mAdapter.notifyDataSetChanged();
+                    }
+                    catch (Exception e){}
+                    try
+                    {
+                        mAdapter1.notifyDataSetChanged();
+                    }
+                    catch (Exception e){}
+                    callFirst();
+                }*/
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
+            public void onTextChanged(final CharSequence s, int start, int before, int count)
             {
-                    if(s.length() <= 0)
+                    if(s.length() == 0)
                     {
                         // allTags = db.getActiveNFC();
 //                    GetData(getContext());
-//                        nfcModel.clear();
+                        nfcModel.clear();
                         pageno = 1;
                         allTags.clear();
                         try
@@ -372,12 +395,31 @@ public class List1Fragment extends Fragment
                         catch (Exception e){}
                         new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
                     }
+                    else
+                    {
+
+                    }
                 }
 
-
             @Override
-            public void afterTextChanged(Editable s) {
-
+            public void afterTextChanged(Editable s)
+            {
+                if (s.length() == 0)
+                {
+                    pageno = 1;
+                    allTags.clear();
+                    try
+                    {
+                        mAdapter.notifyDataSetChanged();
+                    }
+                    catch (Exception e){}
+                    try
+                    {
+                        mAdapter1.notifyDataSetChanged();
+                    }
+                    catch (Exception e){}
+                    callFirst();
+                }
             }
         });
 
@@ -394,7 +436,6 @@ public class List1Fragment extends Fragment
 
     public static void webCall()
     {
-
         allTags.clear();
         mAdapter.notifyDataSetChanged();
         mAdapter1.notifyDataSetChanged();
