@@ -56,6 +56,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         ivHouse = (ImageView)findViewById(R.id.ivHouse);
         tvPoints = (TextView)findViewById(R.id.tvPoints);
         tvMerchant = (TextView)findViewById(R.id.tvMerchant);
+        imgBack = (ImageView)findViewById(R.id.imgBack);
 
         init();
         init1();
@@ -63,6 +64,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         llEarnPointBox.setOnClickListener(this);
         llMerchantBox.setOnClickListener(this);
         tvHistory.setOnClickListener(this);
+        imgBack.setOnClickListener(this);
     }
 
     private void init()
@@ -303,6 +305,14 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
             tvPoints.setTextColor(getResources().getColor(R.color.white));
             tvMerchant.setTextColor(getResources().getColor(R.color.white));
         }
+        if ( v == imgBack)
+        {
+            finish();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
 
     }
 }
