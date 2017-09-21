@@ -133,6 +133,7 @@ public class Connect3Activity extends AppCompatActivity
                 // properly
                 startActivity(go);
                 finish();*/
+              finish();
             }
         });
 

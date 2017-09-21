@@ -55,39 +55,37 @@ import java.util.Locale;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class List2Fragment extends Fragment
-{
+public class List2Fragment extends Fragment {
     private static GridView gridView;
     public static GridViewAdapter gridAdapter;
     ArrayList<byte[]> imgf;
-    DatabaseHelper db ;
-    float x1,x2;
+    DatabaseHelper db;
+    float x1, x2;
     float y1, y2;
     RelativeLayout lnrSearch;
     View line;
     private static final String TAG = "TestGesture";
     private GestureDetector gestureDetector1;
 
-    public static List<NFCModel> allTags ;
-    public static ArrayList<FriendConnection> allTaggs ;
-    public static ArrayList<FriendConnection> nfcModel ;
+    public static List<NFCModel> allTags;
+    public static ArrayList<FriendConnection> allTaggs;
+    public static ArrayList<FriendConnection> nfcModel;
 
     LoginSession session;
     static String UserId = "";
 
-    public static Context mContext ;
+    public static Context mContext;
 
     //new asign value
-    AutoCompleteTextView searchText ;
-//    public static ArrayList<NFCModel> nfcModel ;
+    AutoCompleteTextView searchText;
+    //    public static ArrayList<NFCModel> nfcModel ;
     public static int pageno = 1;
 
-    static RelativeLayout rlLoadMore ;
+    static RelativeLayout rlLoadMore;
 
-    static String comeAtTime = "FIRST" ;
+    static String comeAtTime = "FIRST";
 
-    static int numberCount, gridSize ;
-
+    static int numberCount, gridSize;
 
 
     public List2Fragment() {
@@ -95,12 +93,11 @@ public class List2Fragment extends Fragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list2, container, false);
 
-        mContext = List2Fragment.this.getContext() ;
+        mContext = List2Fragment.this.getContext();
         pageno = 1;
         /*db = new DatabaseHelper(getContext());
         imgf = new ArrayList<byte[]>();
@@ -113,8 +110,8 @@ public class List2Fragment extends Fragment
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
         db = new DatabaseHelper(getContext());
         gridView = (GridView) view.findViewById(R.id.gridView);
-        searchText = (AutoCompleteTextView)view.findViewById(R.id.searchView);
-        rlLoadMore = (RelativeLayout)view.findViewById(R.id.rlLoadMore);
+        searchText = (AutoCompleteTextView) view.findViewById(R.id.searchView);
+        rlLoadMore = (RelativeLayout) view.findViewById(R.id.rlLoadMore);
 
         nfcModel = new ArrayList<>();
 
@@ -129,8 +126,8 @@ public class List2Fragment extends Fragment
         this.gestureDetector1 = new GestureDetector(getContext(), gestureListener);
         this.gestureDetector1.setOnDoubleTapListener(doubleTapListener);*/
 
-       // gridAdapter = new GridViewAdapter(getContext(), R.layout.grid_list2_layout, getData());
-       // gridView.setAdapter(gridAdapter);
+        // gridAdapter = new GridViewAdapter(getContext(), R.layout.grid_list2_layout, getData());
+        // gridView.setAdapter(gridAdapter);
         lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
         line = view.findViewById(R.id.view);
         /*lnrSearch.setVisibility(View.GONE);
@@ -155,16 +152,13 @@ public class List2Fragment extends Fragment
             }
         });*/
 
-        searchText.addTextChangedListener(new TextWatcher()
-        {
+        searchText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after)
-            {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
                /* if(s.length() <= 0)
                 {
                     nfcModel.clear();
@@ -175,40 +169,32 @@ public class List2Fragment extends Fragment
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
                     gridAdapter.Filter(text);
                 }*/
-                try
-                {
-                    if (s.length() <= 0)
-                    {
+                try {
+                    if (s.length() <= 0) {
                         pageno = 1;
                         nfcModel.clear();
                         allTaggs.clear();
-                        try
-                        {
+                        try {
                             gridAdapter.notifyDataSetChanged();
+                        } catch (Exception e) {
                         }
-                        catch (Exception e){}
                         callFirst();
 
 //                        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
 //                    GetData(getContext());
-                    }
-                    else if (s.length() > 0)
-                    {
+                    } else if (s.length() > 0) {
                         String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
 
                         nfcModel.clear();
                         allTaggs.clear();
-                        try
-                        {
+                        try {
                             gridAdapter.notifyDataSetChanged();
+                        } catch (Exception e) {
                         }
-                        catch (Exception e){}
 //                        allTaggs.clear();
                         new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
                     }
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -224,8 +210,7 @@ public class List2Fragment extends Fragment
         return view;
     }
 
-    private class HttpAsyncTaskSearch extends AsyncTask<String, Void, String>
-    {
+    private class HttpAsyncTaskSearch extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
@@ -234,32 +219,27 @@ public class List2Fragment extends Fragment
             dialog = new ProgressDialog(getActivity());
             dialog.setMessage("Searching Records...");
             //dialog.setTitle("Saving Reminder");
-         //   dialog.show();
+            //   dialog.show();
             dialog.setCancelable(false);
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
         }
 
         @Override
-        protected String doInBackground(String... urls)
-        {
+        protected String doInBackground(String... urls) {
             return POSTSearch(urls[0]);
         }
+
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result)
-        {
-          //  dialog.dismiss();
+        protected void onPostExecute(String result) {
+            //  dialog.dismiss();
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
 
-            try
-            {
-                if(result == "")
-                {
+            try {
+                if (result == "") {
                     Toast.makeText(getContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
-                }
-                else
-                {
+                } else {
                     JSONObject response = new JSONObject(result);
                     String message = response.getString("message");
                     String success = response.getString("success");
@@ -272,20 +252,18 @@ public class List2Fragment extends Fragment
                     JSONArray connect = response.getJSONArray("connect");
 
                     allTaggs.clear();
-                    gridAdapter.notifyDataSetChanged();
-
-                    if(connect.length() == 0)
-                    {
+                    try {
+                        gridAdapter.notifyDataSetChanged();
+                    } catch (Exception e) {
+                    }
+                    if (connect.length() == 0) {
                         //tvDataInfo.setVisibility(View.VISIBLE);
                         allTaggs.clear();
                         gridAdapter.notifyDataSetChanged();
-                    }
-                    else
-                    {
-                      //  tvDataInfo.setVisibility(View.GONE);
+                    } else {
+                        //  tvDataInfo.setVisibility(View.GONE);
 
-                        for(int i = 0 ; i <= connect.length() ; i++ )
-                        {
+                        for (int i = 0; i <= connect.length(); i++) {
                             JSONObject iCon = connect.getJSONObject(i);
                             FriendConnection connectModel = new FriendConnection();
                             connectModel.setUserID(iCon.getString("UserID"));
@@ -314,21 +292,17 @@ public class List2Fragment extends Fragment
                         }
                     }
                 }
-            }
-            catch (JSONException e)
-            {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void callFirst()
-    {
+    private void callFirst() {
         new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
     }
 
-    public static void webCall()
-    {
+    public static void webCall() {
         allTaggs.clear();
         gridAdapter.notifyDataSetChanged();
         new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
@@ -345,6 +319,7 @@ public class List2Fragment extends Fragment
         protected void onPreExecute() {
 
         }
+
         @Override
         protected Void doInBackground(Void... params) {
             db = new DatabaseHelper(getContext());
@@ -360,14 +335,12 @@ public class List2Fragment extends Fragment
 
     }
 
-    private ArrayList<ImageItem> getData()
-    {
+    private ArrayList<ImageItem> getData() {
         final ArrayList<ImageItem> imageItems = new ArrayList<>();
-        for (int i = 0; i < imgf.size(); i++)
-        {
+        for (int i = 0; i < imgf.size(); i++) {
             Bitmap bmp = BitmapFactory.decodeByteArray(imgf.get(i), 0, imgf.get(i).length);
             // ImageView image = (ImageView) findViewById(R.id.imageView1);
-          //  imageView.setImageBitmap(bmp);
+            //  imageView.setImageBitmap(bmp);
 
             /*Bitmap bitmap = BitmapFactory.decodeResource(getResources(), imgs.getResourceId(i, -1));
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -379,25 +352,20 @@ public class List2Fragment extends Fragment
         return imageItems;
     }
 
-    private static class HttpAsyncTask extends AsyncTask<String, Void, String>
-    {
+    private static class HttpAsyncTask extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
-        protected void onPreExecute()
-        {
+        protected void onPreExecute() {
             super.onPreExecute();
             dialog = new ProgressDialog(mContext);
             dialog.setMessage("Fetching Cards...");
             //dialog.setTitle("Saving Reminder");
             dialog.setCancelable(false);
-            if(comeAtTime.equalsIgnoreCase("FIRST"))
-            {
+            if (comeAtTime.equalsIgnoreCase("FIRST")) {
                 dialog.show();
                 comeAtTime = "SECOND";
-            }
-            else
-            {
+            } else {
                 dialog.dismiss();
             }
 
@@ -406,29 +374,23 @@ public class List2Fragment extends Fragment
         }
 
         @Override
-        protected String doInBackground(String... urls)
-        {
+        protected String doInBackground(String... urls) {
             return POST(urls[0]);
         }
+
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result)
-        {
+        protected void onPostExecute(String result) {
             dialog.dismiss();
-            try
-            {
-                if (result != null)
-                {
+            try {
+                if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
 
                     String count = jsonObject.getString("count");
 
-                    if(count.equals("") || count.equals("null"))
-                    {
-                        numberCount = 0 ;
-                    }
-                    else
-                    {
+                    if (count.equals("") || count.equals("null")) {
+                        numberCount = 0;
+                    } else {
                         numberCount = Integer.parseInt(count);
                     }
 
@@ -438,8 +400,7 @@ public class List2Fragment extends Fragment
 
                     rlLoadMore.setVisibility(View.GONE);
 
-                    for (int i = 0; i < jsonArray.length(); i++)
-                    {
+                    for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
 
@@ -454,37 +415,30 @@ public class List2Fragment extends Fragment
                         nfcModelTag.setCard_back(object.getString("Card_Back"));
                         nfcModelTag.setProfile_id(object.getString("ProfileId"));
                         nfcModelTag.setAddress(object.getString("Address1") + " " + object.getString("Address2") + " "
-                        + object.getString("Address3") + object.getString("Address4"));
+                                + object.getString("Address3") + object.getString("Address4"));
 
                         nfcModelTag.setNfc_tag("en000000001");
                         allTaggs.add(nfcModelTag);
                         GetData(mContext);
                     }
 
-                    gridSize = allTaggs.size() ;
+                    gridSize = allTaggs.size();
 
-                    gridView.setOnScrollListener(new AbsListView.OnScrollListener()
-                    {
+                    gridView.setOnScrollListener(new AbsListView.OnScrollListener() {
                         @Override
-                        public void onScrollStateChanged(AbsListView view, int scrollState)
-                        {
+                        public void onScrollStateChanged(AbsListView view, int scrollState) {
                             // TODO Auto-generated method stub
                             int threshold = 1;
                             int count = gridView.getCount();
 
-                            if (scrollState == SCROLL_STATE_IDLE)
-                            {
-                                if(gridSize <= numberCount)
-                                {
-                                    if (gridView.getLastVisiblePosition() >= count - threshold)
-                                    {
+                            if (scrollState == SCROLL_STATE_IDLE) {
+                                if (gridSize <= numberCount) {
+                                    if (gridView.getLastVisiblePosition() >= count - threshold) {
                                         rlLoadMore.setVisibility(View.VISIBLE);
                                         // Execute LoadMoreDataTask AsyncTask
                                         new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
                                     }
-                                }
-                                else
-                                {
+                                } else {
 
                                 }
                             }
@@ -499,24 +453,19 @@ public class List2Fragment extends Fragment
 
                     });
 
-                }
-                else
-                {
+                } else {
                     Toast.makeText(mContext, "Not able to load Cards..", Toast.LENGTH_LONG).show();
                 }
-            }
-            catch (JSONException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public  String POSTSearch(String url)
-    {
+    public String POSTSearch(String url) {
         InputStream inputStream = null;
         String result = "";
-        try
-        {
+        try {
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
 
@@ -526,11 +475,11 @@ public class List2Fragment extends Fragment
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("FindBy", "NAME" );
-            jsonObject.accumulate("Search", searchText.getText().toString() );
+            jsonObject.accumulate("FindBy", "NAME");
+            jsonObject.accumulate("Search", searchText.getText().toString());
             jsonObject.accumulate("UserID", UserId);
-            jsonObject.accumulate("numofrecords", "30" );
-            jsonObject.accumulate("pageno", "1" );
+            jsonObject.accumulate("numofrecords", "30");
+            jsonObject.accumulate("pageno", "1");
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -557,7 +506,7 @@ public class List2Fragment extends Fragment
 
 
             // 10. convert inputstream to string
-            if(inputStream != null)
+            if (inputStream != null)
                 result = convertInputStreamToString(inputStream);
             else
                 result = "Did not work!";
@@ -570,12 +519,10 @@ public class List2Fragment extends Fragment
         return result;
     }
 
-    public static String POST(String url)
-    {
+    public static String POST(String url) {
         InputStream inputStream = null;
         String result = "";
-        try
-        {
+        try {
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
 
@@ -585,10 +532,10 @@ public class List2Fragment extends Fragment
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("Type", SortAndFilterOption.SortType );
-            jsonObject.accumulate("numofrecords", "3" );
-            jsonObject.accumulate("pageno", pageno );
-            jsonObject.accumulate("userid", UserId );
+            jsonObject.accumulate("Type", SortAndFilterOption.SortType);
+            jsonObject.accumulate("numofrecords", "3");
+            jsonObject.accumulate("pageno", pageno);
+            jsonObject.accumulate("userid", UserId);
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -615,7 +562,7 @@ public class List2Fragment extends Fragment
 
 
             // 10. convert inputstream to string
-            if(inputStream != null)
+            if (inputStream != null)
                 result = convertInputStreamToString(inputStream);
             else
                 result = "Did not work!";
@@ -629,10 +576,10 @@ public class List2Fragment extends Fragment
     }
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line = "";
         String result = "";
-        while((line = bufferedReader.readLine()) != null)
+        while ((line = bufferedReader.readLine()) != null)
             result += line;
 
         inputStream.close();
@@ -831,13 +778,11 @@ public class List2Fragment extends Fragment
     }
 */
 
-    public static void GetData(Context context)
-    {
+    public static void GetData(Context context) {
         //newly added
         nfcModel.clear();
 
-        for(FriendConnection reTag : allTaggs)
-        {
+        for (FriendConnection reTag : allTaggs) {
             FriendConnection nfcModelTag = new FriendConnection();
 //            nfcModelTag.setId(reTag.getId());
             nfcModelTag.setName(reTag.getName());
@@ -863,18 +808,15 @@ public class List2Fragment extends Fragment
             }
         });*/
 
-        Collections.sort(nfcModel, new Comparator<FriendConnection>()
-        {
+        Collections.sort(nfcModel, new Comparator<FriendConnection>() {
             @Override
-            public int compare(FriendConnection o1, FriendConnection o2)
-            {
+            public int compare(FriendConnection o1, FriendConnection o2) {
                 if (o1.getDate() == null || o2.getDate() == null)
                     return 0;
                 return o1.getDate().compareTo(o2.getDate());
             }
 
-            public int compare(NFCModel o1, NFCModel o2)
-            {
+            public int compare(NFCModel o1, NFCModel o2) {
                 if (o1.getDate() == null || o2.getDate() == null)
                     return 0;
                 return o1.getDate().compareTo(o2.getDate());
@@ -885,7 +827,7 @@ public class List2Fragment extends Fragment
         gridAdapter = new GridViewAdapter(context, R.layout.grid_list2_layout, nfcModel);
         gridView.setAdapter(gridAdapter);
         gridAdapter.notifyDataSetChanged();
-        CardsActivity.setActionBarTitle("Cards - "+nfcModel.size());
+        CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
         gridAdapter.setMode(Attributes.Mode.Single);
     }
 
