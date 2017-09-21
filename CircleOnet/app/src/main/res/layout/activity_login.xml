@@ -30,7 +30,7 @@
         android:orientation="vertical"
         android:weightSum="3">
 
-        <EditText
+        <com.circle8.circleOne.Utils.HelveticaLightEditText
             android:textSize="15sp"
             android:imeOptions="actionNext"
             android:singleLine="true"
@@ -59,7 +59,7 @@
             android:layout_marginLeft="45dp"
             android:layout_marginRight="45dp" />
 
-        <EditText
+        <com.circle8.circleOne.Utils.HelveticaLightEditText
             android:textSize="15sp"
             android:singleLine="true"
             android:inputType="textPassword"
@@ -111,7 +111,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
-        <Button
+        <com.circle8.circleOne.Utils.HelveticaLightButton
             android:id="@+id/btnLogin"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
@@ -145,7 +145,7 @@
                 android:layout_height="50dp" />
 
         </RelativeLayout>
-        <Button
+        <com.circle8.circleOne.Utils.HelveticaLightButton
             android:id="@+id/btnRegister"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"

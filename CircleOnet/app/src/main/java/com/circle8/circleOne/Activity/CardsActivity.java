@@ -837,11 +837,11 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                     done = true;
 //                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     message = message.substring(1, message.length());
-                  //  Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                   Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     try {
 
                         nfcProfileId = decrypt(message, secretKey);
-                     //   Toast.makeText(getApplicationContext(), nfcProfileId, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), nfcProfileId, Toast.LENGTH_LONG).show();
                         try {
                             new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
                         } catch (Exception e) {
@@ -897,7 +897,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                 // Toast.makeText(getApplicationContext(), data, Toast.LENGTH_LONG).show();
                 try {
                     nfcProfileId = decrypt(data, secretKey);
-                 //   Toast.makeText(getApplicationContext(), nfcProfileId, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), nfcProfileId, Toast.LENGTH_LONG).show();
                     try {
                         new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
                     } catch (Exception e) {
