@@ -1041,6 +1041,17 @@ public class EditProfileActivity extends AppCompatActivity implements
             HttpPost httpPost = new HttpPost(url);
             String json = "";
 
+            if (companyID == null){
+                companyID = "";
+            }
+
+            if (industryID == null){
+                industryID = "";
+            }
+
+            if (designationID == null){
+                designationID = "";
+            }
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Address1", edtAddress1.getText().toString());
@@ -1495,7 +1506,17 @@ public class EditProfileActivity extends AppCompatActivity implements
             // 2. make POST request to the given URL
             HttpPost httpPost = new HttpPost(url);
             String json = "";
+            if (companyID == null){
+                companyID = "";
+            }
 
+            if (industryID == null){
+                industryID = "";
+            }
+
+            if (designationID == null){
+                designationID = "";
+            }
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Address1", edtAddress1.getText().toString());
