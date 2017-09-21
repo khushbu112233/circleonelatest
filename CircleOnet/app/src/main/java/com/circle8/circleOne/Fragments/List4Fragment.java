@@ -48,7 +48,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class List4Fragment extends Fragment {
+public class List4Fragment extends Fragment
+{
     public static ListView listView;
     public static List4Adapter gridAdapter;
     ArrayList<byte[]> imgf;
