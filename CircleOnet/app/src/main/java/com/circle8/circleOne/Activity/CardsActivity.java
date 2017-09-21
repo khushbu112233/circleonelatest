@@ -278,7 +278,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                 if (position == 0) {
                     CardsFragment.mViewPager.setCurrentItem(nested_position);
                     getSupportActionBar().show();
-                    setActionBarTitle("Cards - " + cardCount);
+                   // setActionBarTitle("Cards - " + cardCount);
                     setActionBarRightImage(R.drawable.ic_drawer);
                 } else if (position == 1) {
                     getSupportActionBar().show();
