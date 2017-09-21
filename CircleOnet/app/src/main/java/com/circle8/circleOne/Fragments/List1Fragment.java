@@ -957,9 +957,11 @@ public class List1Fragment extends Fragment
                     JSONArray connect = response.getJSONArray("connect");
 
                     allTags.clear();
-                    mAdapter.notifyDataSetChanged();
-                    mAdapter1.notifyDataSetChanged();
+                    try {
 
+                        mAdapter.notifyDataSetChanged();
+                        mAdapter1.notifyDataSetChanged();
+                    }catch (Exception e){}
                     if(connect.length() == 0)
                     {
                       //  tvNoCard.setVisibility(View.VISIBLE);

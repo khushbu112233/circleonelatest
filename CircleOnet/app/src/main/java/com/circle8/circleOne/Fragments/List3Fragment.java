@@ -391,8 +391,9 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                     JSONArray connect = response.getJSONArray("connect");
 
                     allTaggs.clear();
-                    gridAdapter.notifyDataSetChanged();
-
+                    try {
+                        gridAdapter.notifyDataSetChanged();
+                    }catch (Exception e){}
                     if(connect.length() == 0)
                     {
                         //tvDataInfo.setVisibility(View.VISIBLE);
