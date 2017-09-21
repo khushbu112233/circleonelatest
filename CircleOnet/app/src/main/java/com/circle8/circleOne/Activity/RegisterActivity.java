@@ -272,6 +272,43 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
+        ivFemaleround.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
+        {
+            public void onGlobalLayout()
+            {
+                int height = ivFemaleround.getHeight();
+                int width = ivFemaleround.getWidth();
+                int L = ivFemaleround.getLeft();
+                int T = ivFemaleround.getTop();
+                int R = ivFemaleround.getRight();
+                int B = ivFemaleround.getBottom();
+
+                System.out.print("ivFemale"+ height+" "+width+" "+L+" "+R+" "+T+" "+B);
+//                Toast.makeText(RegisterActivity.this, height+" "+width+" "+L+" "+R+" "+T+" "+B,Toast.LENGTH_LONG).show();
+                //don't forget to remove the listener to prevent being called again by future layout events:
+                ivFemaleround.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
+
+        ivMaleRound.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
+        {
+            public void onGlobalLayout()
+            {
+                int height = ivMaleRound.getHeight();
+                int width = ivMaleRound.getWidth();
+                int L = ivMaleRound.getLeft();
+                int T = ivMaleRound.getTop();
+                int R = ivMaleRound.getRight();
+                int B = ivMaleRound.getBottom();
+
+                System.out.print("ivMale"+ height+" "+width+" "+L+" "+R+" "+T+" "+B);
+//                Toast.makeText(RegisterActivity.this, height+" "+width+" "+L+" "+R+" "+T+" "+B,Toast.LENGTH_LONG).show();
+                //don't forget to remove the listener to prevent being called again by future layout events:
+                ivMaleRound.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
+
+
         ivConnect.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
         {
             public void onGlobalLayout()
@@ -282,9 +319,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 int T = ivConnect.getTop();
                 int R = ivConnect.getRight();
                 int B = ivConnect.getBottom();
-
-                Toast.makeText(RegisterActivity.this, height+" "+width+" "+L+" "+R+" "+T+" "+B,Toast.LENGTH_LONG).show();
-
+                System.out.print("ivConnect"+ height+" "+width+" "+L+" "+R+" "+T+" "+B);
+//                Toast.makeText(RegisterActivity.this, height+" "+width+" "+L+" "+R+" "+T+" "+B,Toast.LENGTH_LONG).show();
                 //don't forget to remove the listener to prevent being called again by future layout events:
                 ivConnect.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
