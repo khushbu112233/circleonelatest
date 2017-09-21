@@ -92,7 +92,8 @@ import be.appfoundry.nfclibrary.utilities.interfaces.NfcReadUtility;
 import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
 import io.fabric.sdk.android.Fabric;
 
-public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConnectionFailedListener {
+public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConnectionFailedListener
+{
     public static CustomViewPager mViewPager;
     TabLayout tabLayout;
     ImageView imgDrawer, imgLogo;
@@ -496,6 +497,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         LinearLayout lnrSubscription = (LinearLayout) dialog.findViewById(R.id.lnrSubscription);
         LinearLayout lnrHelp = (LinearLayout) dialog.findViewById(R.id.lnrHelp);
         LinearLayout lnrSyncContacts = (LinearLayout) dialog.findViewById(R.id.lnrSyncContacts);
+        LinearLayout lnrRewardsPoints = (LinearLayout)dialog.findViewById(R.id.lnrRewardsPoints);
 
         lnrSyncContacts.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -583,6 +585,16 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Help2Activity.class);
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        });
+
+        lnrRewardsPoints.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(getApplicationContext(), RewardsPointsActivity.class);
                 startActivity(intent);
                 dialog.dismiss();
             }
