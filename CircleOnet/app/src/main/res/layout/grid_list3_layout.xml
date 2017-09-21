@@ -71,7 +71,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                    <TextView
+                    <com.circle8.circleOne.Utils.cgTextView
                         android:id="@+id/tvPersonName"
                         android:layout_marginLeft="5dp"
                         android:layout_marginBottom="2dp"
@@ -82,7 +82,7 @@
                         android:textColor="@color/white"
                         android:text="CHRIS LIAO"/>
 
-                    <TextView
+                    <com.circle8.circleOne.Utils.cgTextView
                         android:id="@+id/tvPersonProfile"
                         android:layout_marginLeft="5dp"
                         android:layout_marginBottom="3dp"
@@ -93,7 +93,7 @@
                         android:textColor="@color/white"
                         android:text="CEO"/>
 
-                    <TextView
+                    <com.circle8.circleOne.Utils.cgTextView
                         android:id="@+id/tvPersonWebsite"
                         android:layout_marginLeft="5dp"
                         android:layout_marginBottom="2dp"
@@ -103,7 +103,7 @@
                         android:textColor="@color/white"
                         android:text="www.circlesone.com  chris.liao@circle8.asia"/>
 
-                    <TextView
+                    <com.circle8.circleOne.Utils.cgTextView
                         android:id="@+id/tvPersonAddress"
                         android:layout_marginLeft="5dp"
                         android:layout_marginBottom="2dp"
@@ -113,7 +113,7 @@
                         android:textColor="@color/white"
                         android:text="65 Ubi Road | #03-90 Oxley Bizhub"/>
 
-                    <TextView
+                    <com.circle8.circleOne.Utils.cgTextView
                         android:id="@+id/tvPersonContact"
                         android:layout_marginLeft="5dp"
                         android:layout_marginBottom="5dp"
@@ -128,7 +128,7 @@
 
         </android.support.v7.widget.CardView>
 
-    <TextView
+    <com.circle8.circleOne.Utils.cgTextView
         android:ellipsize="end"
         android:maxLines="5"
         android:layout_gravity="center_vertical"
@@ -149,7 +149,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    <TextView
+    <com.circle8.circleOne.Utils.cgTextView
         android:textStyle="bold"
         android:textColor="@android:color/black"
         android:gravity="right"
@@ -161,7 +161,7 @@
         android:layout_height="wrap_content"
         android:textSize="12sp" />
 
-    <TextView
+    <com.circle8.circleOne.Utils.cgTextView
         android:textColor="@android:color/black"
         android:gravity="right"
         android:text="Physician Yong"

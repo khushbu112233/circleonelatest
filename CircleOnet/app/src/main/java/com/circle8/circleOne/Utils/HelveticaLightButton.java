@@ -29,7 +29,7 @@ public class HelveticaLightButton extends AppCompatButton
 
     private void init()
     {
-        Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "HelveticaNeue.dfont");
+        Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "HelveticaNeueLt.ttf");
         setTypeface(tf);
     }
 }

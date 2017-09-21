@@ -29,7 +29,7 @@ public class HelveticaLightEditText extends AppCompatEditText
 
     private void init() {
         Typeface tf = Typeface.createFromAsset(getContext().getAssets(),
-                "HelveticaNeue.dfont");
+                "HelveticaNeueLt.ttf");
         setTypeface(tf);
     }
 }

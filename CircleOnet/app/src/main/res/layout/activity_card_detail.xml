@@ -239,7 +239,7 @@
                                 app:civ_border_color="@color/colorPrimary"
                                 app:civ_border_width="2dp" />
 
-                            <TextView
+                            <com.circle8.circleOne.Utils.cgTextView
                                 android:id="@+id/txtName"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -250,7 +250,7 @@
                                 android:textSize="19dp"
                                 android:textStyle="bold" />
 
-                            <TextView
+                            <com.circle8.circleOne.Utils.cgTextView
                                 android:id="@+id/txtDesi"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -260,7 +260,7 @@
                                 android:textColor="@color/white"
                                 android:textSize="19dp" />
 
-                            <TextView
+                            <com.circle8.circleOne.Utils.cgTextView
                                 android:id="@+id/txtCompany"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -578,7 +578,7 @@
                     android:layout_marginRight="20dp"
                     android:src="@drawable/ic_web" />
 
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:id="@+id/txtWebsite"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -604,7 +604,7 @@
                     android:layout_marginRight="20dp"
                     android:src="@drawable/ic_mail_gray" />
 
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:id="@+id/txtEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -630,7 +630,7 @@
                     android:layout_marginRight="20dp"
                     android:src="@drawable/ic_phone" />
 
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:id="@+id/txtPH"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -654,7 +654,7 @@
                     android:layout_height="20dp"
                     android:layout_marginRight="20dp"
                     android:src="@drawable/ic_phone2" />
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:id="@+id/txtWork"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -680,7 +680,7 @@
                     android:layout_marginRight="20dp"
                     android:src="@drawable/ic_mob" />
 
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:id="@+id/txtMob"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -706,7 +706,7 @@
                     android:layout_marginRight="20dp"
                     android:src="@drawable/ic_location" />
 
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:id="@+id/txtAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -739,7 +739,7 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:id="@+id/txtTime"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -758,7 +758,7 @@
 
             </RelativeLayout>
 
-            <TextView
+            <com.circle8.circleOne.Utils.cgTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
@@ -773,7 +773,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-            <TextView
+            <com.circle8.circleOne.Utils.cgTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
@@ -782,7 +782,7 @@
                 android:textColor="#6b6c6e"
                 android:textSize="13sp" />
 
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:id="@+id/txtRemark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

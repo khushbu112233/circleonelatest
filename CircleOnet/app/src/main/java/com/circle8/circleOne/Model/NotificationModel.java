@@ -13,8 +13,26 @@ public class NotificationModel {
     String UserPhoto = "";
     String Purpose = "";
     String Testimonial_ID = "";
+    String NotificationID = "";
+    String Status = "";
 
     public NotificationModel() {
+    }
+
+    public String getNotificationID() {
+        return NotificationID;
+    }
+
+    public void setNotificationID(String notificationID) {
+        NotificationID = notificationID;
+    }
+
+    public String getStatus() {
+        return Status;
+    }
+
+    public void setStatus(String status) {
+        Status = status;
     }
 
     public String getTestimonial_ID() {

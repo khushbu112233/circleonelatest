@@ -17,20 +17,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <AutoCompleteTextView
+        <com.circle8.circleOne.Utils.MyRiadProAutoComplete
             android:layout_centerVertical="true"
             android:background="@drawable/txt_back"
             android:paddingRight="10dp"
             android:layout_toLeftOf="@+id/imgSearch"
             android:paddingLeft="10dp"
+            android:textSize="12dp"
             android:hint="Search in your contacts"
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:focusableInTouchMode="true"
             android:imeOptions="actionSearch"
             android:inputType="textAutoComplete|textAutoCorrect"
-            android:textColor="@android:color/black" />
+            android:textColor="#dbdada" />
 
         <ImageView
             android:layout_marginRight="10dp"

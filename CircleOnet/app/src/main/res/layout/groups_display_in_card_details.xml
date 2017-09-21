@@ -31,7 +31,7 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:textStyle="normal"
                     android:textColor="@color/colorPrimary"
                     android:gravity="left"
@@ -42,7 +42,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="12sp" />
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:textColor="@color/gray_text"
                     android:gravity="left"
                     android:hint="Physician Yong"

@@ -208,7 +208,8 @@ public class Notification extends AppCompatActivity
                         nfcModelTag.setLastName(object.getString("LastName"));
                         nfcModelTag.setUserPhoto(object.getString("UserPhoto"));
                         nfcModelTag.setPurpose(object.getString("Purpose"));
-//                        nfcModelTag.setTestimonial_ID(object.getString("Testimonial_ID"));
+                        nfcModelTag.setNotificationID(object.getString("NotificationID"));
+                        nfcModelTag.setStatus(object.getString("Status"));
                         allTags.add(nfcModelTag);
                     }
 

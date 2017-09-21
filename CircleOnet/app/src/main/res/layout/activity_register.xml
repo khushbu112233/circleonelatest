@@ -101,7 +101,7 @@
         <com.circle8.circleOne.Utils.HelveticaLightEditText
             android:id="@+id/etEmail"
             android:layout_marginTop="3dp"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/textColor"
             android:textSize="15dp"
             android:backgroundTint="@color/colorPrimary"
             android:textColorHint="@color/colorPrimary"
@@ -129,7 +129,7 @@
             <com.circle8.circleOne.Utils.HelveticaLightEditText
                 android:id="@+id/etFirstName"
                 android:layout_weight="1"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/textColor"
                 android:textSize="15dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:textColorHint="@color/colorPrimary"
@@ -141,7 +141,7 @@
             <com.circle8.circleOne.Utils.HelveticaLightEditText
                 android:id="@+id/etLastName"
                 android:layout_weight="1"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/textColor"
                 android:textSize="15dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:textColorHint="@color/colorPrimary"
@@ -181,7 +181,7 @@
         <com.circle8.circleOne.Utils.HelveticaLightEditText
             android:id="@+id/etPassword"
             android:layout_marginTop="3dp"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/textColor"
             android:textSize="15dp"
             android:backgroundTint="@color/colorPrimary"
             android:textColorHint="@color/colorPrimary"
@@ -202,7 +202,7 @@
         <com.circle8.circleOne.Utils.HelveticaLightEditText
             android:id="@+id/etConfirmPass"
             android:layout_marginTop="3dp"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/textColor"
             android:textSize="15dp"
             android:backgroundTint="@color/colorPrimary"
             android:textColorHint="@color/colorPrimary"
@@ -244,7 +244,7 @@
                 <com.circle8.circleOne.Utils.HelveticaLightEditText
                     android:id="@+id/etPhone"
                     android:layout_marginTop="3dp"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/textColor"
                     android:textSize="15dp"
                     android:backgroundTint="@color/colorPrimary"
                     android:textColorHint="@color/colorPrimary"
@@ -282,7 +282,7 @@
             android:layout_marginTop="3dp"
             android:textColor="@color/colorPrimary"
             android:textSize="15dp"
-            android:backgroundTint="@color/colorPrimary"
+            android:backgroundTint="@color/textColor"
             android:textColorHint="@color/colorPrimary"
             android:hint="* Referral Code"
             android:layout_width="match_parent"

@@ -9,27 +9,28 @@ import android.util.AttributeSet;
  * Created by admin on 09/21/2017.
  */
 
-public class HelveticaLightTextView extends AppCompatTextView
+public class cgTextView extends AppCompatTextView
 {
-    public HelveticaLightTextView(Context context, AttributeSet attrs, int defStyle) {
+    public cgTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init();
     }
 
-    public HelveticaLightTextView(Context context, AttributeSet attrs) {
+    public cgTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public HelveticaLightTextView(Context context) {
+    public cgTextView(Context context) {
         super(context);
         init();
     }
 
     private void init() {
         Typeface tf = Typeface.createFromAsset(getContext().getAssets(),
-                "HelveticaNeueLt.ttf");
+                "century-gothic-1361531616.ttf");
         setTypeface(tf);
     }
 
 }
+

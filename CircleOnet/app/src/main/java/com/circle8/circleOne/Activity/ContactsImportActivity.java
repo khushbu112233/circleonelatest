@@ -265,6 +265,7 @@ public class ContactsImportActivity extends AppCompatActivity
 
     public void ReadPhoneContacts(Context cntx) //This Context parameter is nothing but your Activity class's Context
     {
+        ProgressDialog progressDialog;
         arrayListPhoneName = new ArrayList<>();
         arrayListPhoneNumber = new ArrayList<>();
 
@@ -273,6 +274,11 @@ public class ContactsImportActivity extends AppCompatActivity
 
         if (contactsCount > 0)
         {
+            progressDialog = new ProgressDialog(ContactsImportActivity.this);
+            progressDialog.setMessage("Loading Contacts..");
+            progressDialog.setCancelable(false);
+            progressDialog.setIndeterminate(true);
+            progressDialog.show();
             while(cursor.moveToNext())
             {
                 String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
@@ -339,6 +345,7 @@ public class ContactsImportActivity extends AppCompatActivity
                 }
             }
             cursor.close();
+            progressDialog.dismiss();
         }
     }
 

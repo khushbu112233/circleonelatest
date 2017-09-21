@@ -78,7 +78,7 @@ public class NotificationAdapter extends BaseAdapter
     static class ViewHolder
     {
         CircleImageView imgTestReq, imgTestRec, imgFriend;
-        TextView txtTestPurpose, txtTestName, txtTestPurposeRec, txtTestNameRec, txtFriendPurpose, txtFriendName;
+        TextView txtTestPurpose, txtTestName, txtTestPurposeRec, txtTestNameRec, txtFriendPurpose, txtFriendName, txtRequested, txtRequestedTestReq, txtRequestedTestRec;
         Button btnTestWrite, btnTestReject, btnTestAcceptRec, btnTestRejectRec, btnAcceptFriend, btnRejectFriend;
     }
 
@@ -95,14 +95,15 @@ public class NotificationAdapter extends BaseAdapter
             holder.imgTestReq = (CircleImageView) vi.findViewById(R.id.imgTestReq);
             holder.imgTestRec = (CircleImageView) vi.findViewById(R.id.imgTestRec);
             holder.imgFriend = (CircleImageView) vi.findViewById(R.id.imgFriend);
-
+            holder.txtRequested = (TextView) vi.findViewById(R.id.txtRequested);
             holder.txtTestPurpose = (TextView) vi.findViewById(R.id.txtTestPurpose);
             holder.txtTestName = (TextView) vi.findViewById(R.id.txtTestName);
             holder.txtTestPurposeRec = (TextView) vi.findViewById(R.id.txtTestPurposeRec);
             holder.txtTestNameRec = (TextView) vi.findViewById(R.id.txtTestNameRec);
             holder.txtFriendPurpose = (TextView) vi.findViewById(R.id.txtFriendPurpose);
             holder.txtFriendName = (TextView) vi.findViewById(R.id.txtFriendName);
-
+            holder.txtRequestedTestReq = (TextView) vi.findViewById(R.id.txtRequestedTestReq);
+            holder.txtRequestedTestRec = (TextView) vi.findViewById(R.id.txtRequestedTestRec);
             holder.btnTestWrite = (Button) vi.findViewById(R.id.btnTestWrite);
             holder.btnTestReject = (Button) vi.findViewById(R.id.btnTestReject);
             holder.btnTestAcceptRec = (Button) vi.findViewById(R.id.btnTestAcceptRec);
@@ -143,6 +144,12 @@ public class NotificationAdapter extends BaseAdapter
             {
                 Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgTestRec);
             }
+            if (testimonialModels.get(position).getStatus().equalsIgnoreCase("Requested"))
+            {
+                holder.btnTestAcceptRec.setVisibility(View.GONE);
+                holder.btnTestRejectRec.setVisibility(View.GONE);
+                holder.txtRequestedTestRec.setVisibility(View.VISIBLE);
+            }
             holder.txtTestPurposeRec.setText(purpose);
             holder.txtTestNameRec.setText(testimonialModels.get(position).getFirstName());
         }
@@ -158,6 +165,12 @@ public class NotificationAdapter extends BaseAdapter
             else
             {
                 Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgFriend);
+            }
+            if (testimonialModels.get(position).getStatus().equalsIgnoreCase("Requested"))
+            {
+                holder.btnAcceptFriend.setVisibility(View.GONE);
+                holder.btnRejectFriend.setVisibility(View.GONE);
+                holder.txtRequested.setVisibility(View.VISIBLE);
             }
             holder.txtFriendPurpose.setText(purpose);
             holder.txtFriendName.setText(testimonialModels.get(position).getFirstName());
@@ -175,6 +188,13 @@ public class NotificationAdapter extends BaseAdapter
             {
                 Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgTestReq);
             }
+
+            if (testimonialModels.get(position).getStatus().equals("Requested")){
+                holder.btnTestReject.setVisibility(View.GONE);
+                holder.btnTestWrite.setVisibility(View.GONE);
+                holder.txtRequestedTestReq.setVisibility(View.VISIBLE);
+            }
+
             holder.txtTestPurpose.setText(purpose);
             holder.txtTestName.setText(testimonialModels.get(position).getFirstName());
         }
