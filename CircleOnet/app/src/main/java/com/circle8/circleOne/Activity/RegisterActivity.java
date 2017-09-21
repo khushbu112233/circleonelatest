@@ -92,7 +92,7 @@ import static com.circle8.circleOne.Utils.Validation.validate;
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, AsyncRequest.OnAsyncRequestComplete
 {
     public static EditText etFirstName, etLastName, etPassword, etConfirmPass, etPhone, etEmail;
-    public static TextView tvUsernameInfo , tvFirstnameInfo, tvLastnameInfo, tvPasswordInfo, tvRePasswordInfo, tvEmailInfo, tvPhoneInfo ;
+    public static TextView tvCountryCode, tvUsernameInfo , tvFirstnameInfo, tvLastnameInfo, tvPasswordInfo, tvRePasswordInfo, tvEmailInfo, tvPhoneInfo ;
     private LinearLayout lnrRegister;
     private ImageView ivConnect ;
     RelativeLayout ivMale, ivFemale;
@@ -132,6 +132,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_register);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+        tvCountryCode = (TextView)findViewById(R.id.tvCountryCode);
         txtprofile = (TextView) findViewById(R.id.txtprofile);
         etReferrelCode = (EditText) findViewById(R.id.etReferrelCode);
         tvReferrelInfo = (TextView) findViewById(R.id.tvReferrelInfo);
@@ -423,9 +425,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             c_password = etConfirmPass.getText().toString();
             email = etEmail.getText().toString();
 
-            String code = ccp.getSelectedCountryCode().toString();
+//            String code = ccp.getSelectedCountryCode().toString();
+            String code = tvCountryCode.getText().toString();
             String contact = phone_no;
-            phone_no = "+"+code+contact ;
+            phone_no = code+contact ;
 
             if (!validate(user_name, first_name, last_name, password, c_password, phone_no, email))
             {
