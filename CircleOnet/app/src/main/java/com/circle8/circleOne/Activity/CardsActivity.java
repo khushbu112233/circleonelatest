@@ -603,7 +603,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         lnrLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                session.logoutUser();
                 try {
 
                     Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
@@ -633,7 +633,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                     session.logoutUser();
                 } catch (Exception e) {
                 }
-
+                session.logoutUser();
                 LISessionManager.getInstance(getApplicationContext()).clearSession();
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);

@@ -128,9 +128,9 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
                 go.putExtra("profile", profile);
                 startActivity(go);
                 finish();*/
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+               /* Intent go = new Intent(getApplicationContext(),CardsActivity.class);
                 go.putExtra("viewpager_position", 1);
-                startActivity(go);
+                startActivity(go);*/
                 finish();
             }
         });

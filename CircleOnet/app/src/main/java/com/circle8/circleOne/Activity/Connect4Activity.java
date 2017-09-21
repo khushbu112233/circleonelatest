@@ -217,13 +217,7 @@ public class Connect4Activity extends AppCompatActivity
                 @Override
                 public void onClick(View v)
                 {
-                    Intent go = new Intent(getApplicationContext(), ConnectActivity.class);
-                    go.putExtra("level", level);
-                    go.putExtra("profile", profile);
-                    // you pass the position you want the viewpager to show in the extra,
-                    // please don't forget to define and initialize the position variable
-                    // properly
-                    startActivity(go);
+
                     finish();
                 }
             });

@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.circle8.circleOne.Adapter.EditGroupAdapter;
 import com.circle8.circleOne.Adapter.GroupsRecyclerAdapter;
+import com.circle8.circleOne.Fragments.CardsFragment;
 import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.ConnectProfileModel;
@@ -269,6 +270,8 @@ public class ConnectActivity extends AppCompatActivity
                                 ivConnectRound.setImageResource(R.drawable.round_gray);
                                 tvConnect.setTextColor(getResources().getColor(R.color.unselected));
                                 tvConnectLine2.setTextColor(getResources().getColor(R.color.unselected));
+                                new HttpAsyncAddFriendTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
+
                             }
                         }, 1600);
                         // Second Things
@@ -355,12 +358,12 @@ public class ConnectActivity extends AppCompatActivity
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+               /* Intent go = new Intent(getApplicationContext(),CardsActivity.class);
                 // you pass the position you want the viewpager to show in the extra,
                 // please don't forget to define and initialize the position variable
                 // properly
                 go.putExtra("viewpager_position", 1);
-                startActivity(go);
+                startActivity(go);*/
                 finish();
             }
         });
@@ -512,6 +515,108 @@ public class ConnectActivity extends AppCompatActivity
         loc.bottom = loc.top + view.getHeight();
 
         return loc;
+    }
+
+    public String POSTRequest(String url) {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("Operation", "Request");
+            jsonObject.accumulate("friendProfileId", friendProfile_id);
+            jsonObject.accumulate("myProfileId", profile_id);
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+
+    private class HttpAsyncAddFriendTask extends AsyncTask<String, Void, String> {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(ConnectActivity.this);
+            dialog.setMessage("Requesting Friend...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return POSTRequest(urls[0]);
+        }
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+            dialog.dismiss();
+            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            try {
+                if (result == "") {
+                    Toast.makeText(getApplicationContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
+                } else {
+                    JSONObject response = new JSONObject(result);
+                    String message = response.getString("message");
+                    String success = response.getString("success");
+
+                    if (success.equals("1")) {
+                        Toast.makeText(getApplicationContext(), "Request has been sent..", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                    }
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
