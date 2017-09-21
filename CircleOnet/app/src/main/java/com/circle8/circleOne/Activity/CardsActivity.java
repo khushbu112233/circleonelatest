@@ -37,6 +37,7 @@ import android.widget.Toast;
 import com.circle8.circleOne.Fragments.CardsFragment;
 import com.circle8.circleOne.Fragments.ConnectFragment;
 import com.circle8.circleOne.Fragments.EventsFragment;
+import com.circle8.circleOne.Fragments.List1Fragment;
 import com.circle8.circleOne.Fragments.ProfileFragment;
 import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
@@ -602,7 +603,10 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
 
         lnrLogout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
+                List1Fragment.allTags.clear();
+                List1Fragment.nfcModel.clear();
                 session.logoutUser();
                 try {
 
