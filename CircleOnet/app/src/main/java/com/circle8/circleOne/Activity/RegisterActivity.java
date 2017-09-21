@@ -14,14 +14,13 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
@@ -33,11 +32,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.AsyncRequest;
 import com.circle8.circleOne.Utils.Utility;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.hbb20.CountryCodePicker;
 
 import org.apache.http.HttpResponse;
@@ -89,51 +88,49 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.circle8.circleOne.Utils.Validation.validate;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, AsyncRequest.OnAsyncRequestComplete
-{
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, AsyncRequest.OnAsyncRequestComplete {
     public static EditText etFirstName, etLastName, etPassword, etConfirmPass, etPhone, etEmail;
-    public static TextView tvCountryCode, tvUsernameInfo , tvFirstnameInfo, tvLastnameInfo, tvPasswordInfo, tvRePasswordInfo, tvEmailInfo, tvPhoneInfo ;
+    public static TextView tvCountryCode, tvUsernameInfo, tvFirstnameInfo, tvLastnameInfo, tvPasswordInfo, tvRePasswordInfo, tvEmailInfo, tvPhoneInfo;
     private LinearLayout lnrRegister;
-    private ImageView ivConnect ;
+    private ImageView ivConnect;
     RelativeLayout ivMale, ivFemale;
-    private View line_view1, line_view2 ;
+    private View line_view1, line_view2;
     ImageView ivMaleRound, ivMaleImg, ivFemaleround, ivFemaleImg, imgBack;
     TextView txtGender;
     String final_ImgBase64 = "";
     CountryCodePicker ccp;
     private String UrlRegister = "http://circle8.asia:8999/Onet.svc/Registration";
-    private ArrayList<NameValuePair> params ;
+    private ArrayList<NameValuePair> params;
     TextView txtprofile;
-    private CircleImageView civProfilePic ;
-    private String userChoosenTask ;
-    CharSequence[] items ;
+    private CircleImageView civProfilePic;
+    private String userChoosenTask;
+    CharSequence[] items;
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     private String imagepath = null;
-    private File file ;
-    String refferelCode =  "";
-    private String company_name, first_name, last_name, phone_no, password, c_password, user_name, gender = "", email ;
+    private File file;
+    String refferelCode = "";
+    private String company_name, first_name, last_name, phone_no, password, c_password, user_name, gender = "", email;
 
     private int mYear, mMonth, mDay, mHour, mMinute;
-    private Calendar calendar ;
-    private DatePickerDialog datePickerDialog ;
+    private Calendar calendar;
+    private DatePickerDialog datePickerDialog;
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
     String image;
     ProgressDialog pDialog;
-    String encodedImageData, register_img;
+    String encodedImageData, register_img = "";
     String UserID = "", Facebook = "", Google = "", Linkedin = "", Twitter = "", UserName = "", Email = "", Image = "";
     EditText etReferrelCode;
     TextView tvReferrelInfo;
-    int motionLength ;
+    int motionLength;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-        tvCountryCode = (TextView)findViewById(R.id.tvCountryCode);
+        tvCountryCode = (TextView) findViewById(R.id.tvCountryCode);
         txtprofile = (TextView) findViewById(R.id.txtprofile);
         etReferrelCode = (EditText) findViewById(R.id.etReferrelCode);
         tvReferrelInfo = (TextView) findViewById(R.id.tvReferrelInfo);
@@ -152,21 +149,21 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         ivFemaleImg = (ImageView) findViewById(R.id.ivFemaleImg);
         ivMale = (RelativeLayout) findViewById(R.id.ivMale);
         ivFemale = (RelativeLayout) findViewById(R.id.ivFemale);
-        ivConnect = (ImageView)findViewById(R.id.iv_ConnectImg);
-        line_view1 = (View)findViewById(R.id.vwDrag1);
-        line_view2 = (View)findViewById(R.id.vwDrag2);
+        ivConnect = (ImageView) findViewById(R.id.iv_ConnectImg);
+        line_view1 = (View) findViewById(R.id.vwDrag1);
+        line_view2 = (View) findViewById(R.id.vwDrag2);
         imgBack = (ImageView) findViewById(R.id.imgBack);
         imgBack.setOnClickListener(this);
         pDialog = new ProgressDialog(this);
-        civProfilePic =(CircleImageView)findViewById(R.id.imgProfileCard);
+        civProfilePic = (CircleImageView) findViewById(R.id.imgProfileCard);
 
-        tvUsernameInfo = (TextView)findViewById(R.id.tvUsernameInfo);
-        tvFirstnameInfo = (TextView)findViewById(R.id.tvFirstNameInfo);
-        tvLastnameInfo = (TextView)findViewById(R.id.tvLastNameInfo);
-        tvPasswordInfo = (TextView)findViewById(R.id.tvPasswordInfo);
-        tvRePasswordInfo = (TextView)findViewById(R.id.tvAgainPasswordInfo);
-        tvEmailInfo = (TextView)findViewById(R.id.tvEmailInfo);
-        tvPhoneInfo = (TextView)findViewById(R.id.tvPhoneInfo);
+        tvUsernameInfo = (TextView) findViewById(R.id.tvUsernameInfo);
+        tvFirstnameInfo = (TextView) findViewById(R.id.tvFirstNameInfo);
+        tvLastnameInfo = (TextView) findViewById(R.id.tvLastNameInfo);
+        tvPasswordInfo = (TextView) findViewById(R.id.tvPasswordInfo);
+        tvRePasswordInfo = (TextView) findViewById(R.id.tvAgainPasswordInfo);
+        tvEmailInfo = (TextView) findViewById(R.id.tvEmailInfo);
+        tvPhoneInfo = (TextView) findViewById(R.id.tvPhoneInfo);
 
         Intent intent = getIntent();
         Twitter = intent.getStringExtra("Twitter");
@@ -180,25 +177,20 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         Typeface font = Typeface.createFromAsset(getAssets(), "century-gothic-1361531616.ttf");
         txtprofile.setTypeface(font);
         etEmail.setText(Email);
-        try
-        {
-            String kept = UserName.substring( 0, UserName.indexOf(" "));
-            String remainder = UserName.substring(UserName.indexOf(" ")+1, UserName.length());
+        try {
+            String kept = UserName.substring(0, UserName.indexOf(" "));
+            String remainder = UserName.substring(UserName.indexOf(" ") + 1, UserName.length());
             etFirstName.setText(kept);
             etLastName.setText(remainder);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         //  etUserName.setText(UserName);
 
         Uri targetUri = Uri.parse(Image);
-        try
-        {
-            if(!Image.equals(""))
-            {
+        try {
+            if (!Image.equals("")) {
                 Glide.with(getApplicationContext())
                         .load(targetUri)
                         .asBitmap()
@@ -211,14 +203,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                 // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                             }
                         });
-            }
-            else
-            {
+            } else {
                 civProfilePic.setImageResource(R.drawable.usr);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             civProfilePic.setImageResource(R.drawable.usr);
         }
 
@@ -257,27 +245,21 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         lnrRegister.setOnClickListener(this);
         civProfilePic.setOnClickListener(this);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-        {
-            motionLength = 250 ;
-        }
-        else
-        {
-            motionLength = 185 ;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            motionLength = 250;
+        } else {
+            motionLength = 185;
         }
 
         ivConnect.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
 
             }
         });
 
-        ivFemaleround.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
-        {
-            public void onGlobalLayout()
-            {
+        ivFemaleround.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            public void onGlobalLayout() {
                 int height = ivFemaleround.getHeight();
                 int width = ivFemaleround.getWidth();
                 int L = ivFemaleround.getLeft();
@@ -285,17 +267,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 int R = ivFemaleround.getRight();
                 int B = ivFemaleround.getBottom();
 
-                System.out.print("ivFemale"+ height+" "+width+" "+L+" "+R+" "+T+" "+B);
+                System.out.print("ivFemale" + height + " " + width + " " + L + " " + R + " " + T + " " + B);
 //                Toast.makeText(RegisterActivity.this, height+" "+width+" "+L+" "+R+" "+T+" "+B,Toast.LENGTH_LONG).show();
                 //don't forget to remove the listener to prevent being called again by future layout events:
                 ivFemaleround.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
 
-        ivMaleRound.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
-        {
-            public void onGlobalLayout()
-            {
+        ivMaleRound.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            public void onGlobalLayout() {
                 int height = ivMaleRound.getHeight();
                 int width = ivMaleRound.getWidth();
                 int L = ivMaleRound.getLeft();
@@ -303,7 +283,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 int R = ivMaleRound.getRight();
                 int B = ivMaleRound.getBottom();
 
-                System.out.print("ivMale"+ height+" "+width+" "+L+" "+R+" "+T+" "+B);
+                System.out.print("ivMale" + height + " " + width + " " + L + " " + R + " " + T + " " + B);
 //                Toast.makeText(RegisterActivity.this, height+" "+width+" "+L+" "+R+" "+T+" "+B,Toast.LENGTH_LONG).show();
                 //don't forget to remove the listener to prevent being called again by future layout events:
                 ivMaleRound.getViewTreeObserver().removeOnGlobalLayoutListener(this);
@@ -311,17 +291,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         });
 
 
-        ivConnect.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
-        {
-            public void onGlobalLayout()
-            {
+        ivConnect.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            public void onGlobalLayout() {
                 int height = ivConnect.getHeight();
                 int width = ivConnect.getWidth();
                 int L = ivConnect.getLeft();
                 int T = ivConnect.getTop();
                 int R = ivConnect.getRight();
                 int B = ivConnect.getBottom();
-                System.out.print("ivConnect"+ height+" "+width+" "+L+" "+R+" "+T+" "+B);
+                System.out.print("ivConnect" + height + " " + width + " " + L + " " + R + " " + T + " " + B);
 //                Toast.makeText(RegisterActivity.this, height+" "+width+" "+L+" "+R+" "+T+" "+B,Toast.LENGTH_LONG).show();
                 //don't forget to remove the listener to prevent being called again by future layout events:
                 ivConnect.getViewTreeObserver().removeOnGlobalLayoutListener(this);
@@ -362,15 +340,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
-    public void onClick(View v)
-    {
+    public void onClick(View v) {
         if (v == imgBack) {
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
             finish();
         }
-        if (v == ivMale)
-        {
+        if (v == ivMale) {
             TranslateAnimation slide1 = new TranslateAnimation(0, -(motionLength), 0, 0);
             slide1.setDuration(1000);
             ivConnect.startAnimation(slide1);
@@ -413,8 +389,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             txtGender.setText("Gender: Female");
 
         }
-        if (v == lnrRegister)
-        {
+        if (v == lnrRegister) {
             company_name = "Ample Arch";
             refferelCode = etReferrelCode.getText().toString();
             user_name = etFirstName.getText().toString() + " " + etLastName.getText().toString();
@@ -428,26 +403,25 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 //            String code = ccp.getSelectedCountryCode().toString();
             String code = tvCountryCode.getText().toString();
             String contact = phone_no;
-            phone_no = code+contact ;
+            phone_no = code + contact;
 
-            if (!validate(user_name, first_name, last_name, password, c_password, phone_no, email))
-            {
+            if (!validate(user_name, first_name, last_name, password, c_password, phone_no, email)) {
 //                Toast.makeText(getApplicationContext(), "Something Wrong!", Toast.LENGTH_SHORT).show();
             }
            /* else if (refferelCode.equals("")){
                 Toast.makeText(getApplicationContext(), "Enter Referral Code", Toast.LENGTH_SHORT).show();
             }*/
-            else if (gender.equals(""))
-            {
+            else if (gender.equals("")) {
                 Toast.makeText(getApplicationContext(), "Select Gender", Toast.LENGTH_SHORT).show();
-            }
-            else if (final_ImgBase64.equals(""))
-            {
+            } else if (final_ImgBase64.equals("")) {
                 Toast.makeText(getApplicationContext(), "Upload Image", Toast.LENGTH_SHORT).show();
-            }
-            else
-            {
-                new HttpAsyncTaskPhotoUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+            } else {
+                if (final_ImgBase64.equals("")) {
+                    new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/Registration");
+
+                }else {
+                    new HttpAsyncTaskPhotoUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                }
             }
         }
         if (v == civProfilePic) {
@@ -455,19 +429,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    public boolean date_validation(String d1,String d2)
-    {
-        boolean valid = true ;
-        try
-        {
+    public boolean date_validation(String d1, String d2) {
+        boolean valid = true;
+        try {
             // If you already have date objects then skip 1
             // Create 2 dates starts
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             Date date1 = sdf.parse(d1);
             Date date2 = sdf.parse(d2);
 
-            System.out.println("Date1"+sdf.format(date1));
-            System.out.println("Date2"+sdf.format(date2));
+            System.out.println("Date1" + sdf.format(date1));
+            System.out.println("Date2" + sdf.format(date2));
 
 //            Toast.makeText(getApplicationContext(), "S date: "+date1, Toast.LENGTH_LONG).show();
 //            Toast.makeText(getApplicationContext(), "C date: "+date2, Toast.LENGTH_LONG).show();
@@ -475,57 +447,54 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             // Create 2 dates ends
             // Date object is having 3 methods namely after,before and equals for comparing
             // after() will return true if and only if date1 is after date 2
-            if(date1.after(date2)){
+            if (date1.after(date2)) {
                 System.out.println("Date1 is after Date2");
-                valid = false ;
+                valid = false;
 //                Toast.makeText(getApplicationContext(), "Selected date is AFTER current date.", Toast.LENGTH_LONG).show();
             }
 
             // before() will return true if and only if date1 is before date2
-            if(date1.before(date2)){
+            if (date1.before(date2)) {
                 System.out.println("Date1 is before Date2");
-                valid = true ;
+                valid = true;
 //                Toast.makeText(getApplicationContext(), "Selected date is BEFORE current Date.", Toast.LENGTH_LONG).show();
             }
 
             //equals() returns true if both the dates are equal
-            if(date1.equals(date2)){
+            if (date1.equals(date2)) {
                 System.out.println("Date1 is equal Date2");
-                valid = false ;
+                valid = false;
 //                Toast.makeText(getApplicationContext(), "Selected date is EQUAL current date.", Toast.LENGTH_LONG).show();
             }
 
             System.out.println();
-        }
-        catch(ParseException ex){
+        } catch (ParseException ex) {
             ex.printStackTrace();
         }
 
-        return valid ;
+        return valid;
     }
 
 
-    private void selectImage()
-    {
+    private void selectImage() {
         items = new CharSequence[]{"Take Photo", "Choose from Library", "Cancel"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
         builder.setTitle("Add Photo!");
-        builder.setItems(items, new DialogInterface.OnClickListener()
-        {
+        builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
                 boolean result = Utility.checkStoragePermission(RegisterActivity.this);
                 boolean result1 = Utility.checkCameraPermission(RegisterActivity.this);
                 if (items[item].equals("Take Photo")) {
-                    userChoosenTask ="Take Photo";
-                    if(result1)
+                    userChoosenTask = "Take Photo";
+                    if (result1)
 //                        activeTakePhoto();
                         cameraIntent();
 
                 } else if (items[item].equals("Choose from Library")) {
-                    userChoosenTask ="Choose from Library";
-                    if(result)
+                    userChoosenTask = "Choose from Library";
+                    if (result)
 //                        activeGallery();
                         galleryIntent();
 
@@ -538,26 +507,22 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         builder.show();
     }
 
-    private void galleryIntent()
-    {
+    private void galleryIntent() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select File"),SELECT_FILE);
+        startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
     }
 
-    private void cameraIntent()
-    {
+    private void cameraIntent() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, REQUEST_CAMERA);
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK)
-        {
+        if (resultCode == Activity.RESULT_OK) {
             if (requestCode == SELECT_FILE)
                 onSelectFromGalleryResult(data);
             else if (requestCode == REQUEST_CAMERA)
@@ -579,8 +544,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    private class UploadFile extends AsyncTask<String, Void, Void>
-    {
+    private class UploadFile extends AsyncTask<String, Void, Void> {
         private String Content;
         private String Error = null;
         String data = "";
@@ -667,22 +631,20 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
-    public static String BitMapToString(Bitmap bitmap){
-        ByteArrayOutputStream ByteStream=new  ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100, ByteStream);
-        byte [] b=ByteStream.toByteArray();
-        String temp=Base64.encodeToString(b, Base64.DEFAULT);
+    public static String BitMapToString(Bitmap bitmap) {
+        ByteArrayOutputStream ByteStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, ByteStream);
+        byte[] b = ByteStream.toByteArray();
+        String temp = Base64.encodeToString(b, Base64.DEFAULT);
         return temp;
     }
 
-    private void onSelectFromGalleryResult(Intent data)
-    {
+    private void onSelectFromGalleryResult(Intent data) {
         Uri selectedImageUri = data.getData();
 //        imagepath = getPath(selectedImageUri);
 
         Bitmap bm = null;
-        if (data != null)
-        {
+        if (data != null) {
             Uri targetUri = data.getData();
 
             String photoPath = getPath(targetUri);
@@ -691,10 +653,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             Bitmap bitmap = null;
             Bitmap rotatedBitmap = null;
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            {
-                try
-                {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                try {
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
 
                     Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 150, 150, false);
@@ -705,24 +665,18 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 //                  Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                     Upload();
                     civProfilePic.setImageBitmap(resizedBitmap);
-                }
-                catch (FileNotFoundException e)
-                {
+                } catch (FileNotFoundException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-            }
-            else
-            {
-                try
-                {
+            } else {
+                try {
                     ei = new ExifInterface(String.valueOf(targetUri));
                     int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
 
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
 
-                    switch (orientation)
-                    {
+                    switch (orientation) {
                         case ExifInterface.ORIENTATION_ROTATE_90:
                             rotatedBitmap = rotateImage(bitmap, 90);
                             civProfilePic.setImageBitmap(rotatedBitmap);
@@ -745,7 +699,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             break;
 
                         case ExifInterface.ORIENTATION_NORMAL:
-                            rotatedBitmap = bitmap ;
+                            rotatedBitmap = bitmap;
                             civProfilePic.setImageBitmap(rotatedBitmap);
                             final_ImgBase64 = BitMapToString(rotatedBitmap);
                             Upload();
@@ -758,9 +712,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             Upload();
                             break;
                     }
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -835,8 +787,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 //        BmToString(bm);
     }
 
-    public static Bitmap rotateImage(Bitmap source, float angle)
-    {
+    public static Bitmap rotateImage(Bitmap source, float angle) {
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
@@ -876,20 +827,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
-    public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality)
-    {
+    public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality) {
         ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
         image.compress(compressFormat, quality, byteArrayOS);
         return Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
     }
 
-    public static String ConvertBitmapToString(Bitmap bitmap){
+    public static String ConvertBitmapToString(Bitmap bitmap) {
         String encodedImage = "";
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
         try {
-            encodedImage= URLEncoder.encode(Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT), "UTF-8");
+            encodedImage = URLEncoder.encode(Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -903,17 +853,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
 
-                final_ImgBase64 = BitMapToString(thumbnail);
-                Upload();
-                civProfilePic.setImageBitmap(thumbnail);
+        final_ImgBase64 = BitMapToString(thumbnail);
+        Upload();
+        civProfilePic.setImageBitmap(thumbnail);
     }
 
-    public  String POST(String url)
-    {
+    public String POST(String url) {
         InputStream inputStream = null;
         String result = "";
-        try
-        {
+        try {
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
 
@@ -923,9 +871,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("Facebook", Facebook );
-            jsonObject.accumulate("FirstName", first_name );
-            jsonObject.accumulate("Gender", gender );
+            jsonObject.accumulate("Facebook", Facebook);
+            jsonObject.accumulate("FirstName", first_name);
+            jsonObject.accumulate("Gender", gender);
             jsonObject.accumulate("Google", Google);
             jsonObject.accumulate("LastName", last_name);
             jsonObject.accumulate("Linkedin", Linkedin);
@@ -963,7 +911,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
 
             // 10. convert inputstream to string
-            if(inputStream != null)
+            if (inputStream != null)
                 result = convertInputStreamToString(inputStream);
             else
                 result = "Did not work!";
@@ -976,12 +924,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         return result;
     }
 
-    public  String POST1(String url)
-    {
+    public String POST1(String url) {
         InputStream inputStream = null;
         String result = "";
-        try
-        {
+        try {
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
 
@@ -991,8 +937,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("ImgBase64", final_ImgBase64 );
-            jsonObject.accumulate("classification", "userphoto" );
+            jsonObject.accumulate("ImgBase64", final_ImgBase64);
+            jsonObject.accumulate("classification", "userphoto");
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -1019,7 +965,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
 
             // 10. convert inputstream to string
-            if(inputStream != null)
+            if (inputStream != null)
                 result = convertInputStreamToString(inputStream);
             else
                 result = "Did not work!";
@@ -1033,8 +979,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
-    private class HttpAsyncTask extends AsyncTask<String, Void, String>
-    {
+    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
@@ -1048,16 +993,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
 
         @Override
-        protected String doInBackground(String... urls)
-        {
+        protected String doInBackground(String... urls) {
             return POST(urls[0]);
         }
+
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result)
-        {
+        protected void onPostExecute(String result) {
             dialog.dismiss();
-           // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
@@ -1065,27 +1009,20 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     String message = jsonObject.getString("message").toString();
                     String Status = jsonObject.getString("Status").toString();
                     UserID = jsonObject.getString("userId").toString();
-                    if (success.equals("1") && message.equalsIgnoreCase("Successfully Registered."))
-                    {
+                    if (success.equals("1") && message.equalsIgnoreCase("Successfully Registered.")) {
                         Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
 
-                        if (Status.equalsIgnoreCase("Verified"))
-                        {
+                        if (Status.equalsIgnoreCase("Verified")) {
                             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                             startActivity(intent);
                             finish();
-                        }
-                        else
-                        {
+                        } else {
                             new HttpAsyncTaskVerify().execute("http://circle8.asia:8999/Onet.svc/AccVerification/" + UserID);
                         }
-                    }
-                    else
-                    {
+                    } else {
                         Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
                     }
-                }
-                else {
+                } else {
                     Toast.makeText(getBaseContext(), "Not able to Register..", Toast.LENGTH_LONG).show();
                 }
 
@@ -1096,8 +1033,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    private class HttpAsyncTaskVerify extends AsyncTask<String, Void, String>
-    {
+    private class HttpAsyncTaskVerify extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
@@ -1114,28 +1050,25 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
 
         @Override
-        protected String doInBackground(String... urls)
-        {
+        protected String doInBackground(String... urls) {
             return POST2(urls[0]);
         }
+
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result)
-        {
+        protected void onPostExecute(String result) {
             dialog.dismiss();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
             finish();
-           // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
         }
     }
 
-    public  String POST2(String url)
-    {
+    public String POST2(String url) {
         InputStream inputStream = null;
         String result = "";
-        try
-        {
+        try {
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
 
@@ -1157,7 +1090,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
 
             // 10. convert inputstream to string
-            if(inputStream != null)
+            if (inputStream != null)
                 result = convertInputStreamToString(inputStream);
             else
                 result = "Did not work!";
@@ -1178,11 +1111,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String imgString = Base64.encodeToString(byteFormat, Base64.NO_WRAP);
         byte[] encodeValue = Base64.encode(imgString.getBytes(), Base64.DEFAULT);
 
-      //  Toast.makeText(getApplicationContext(), new String(encodeValue), Toast.LENGTH_LONG).show();
+        //  Toast.makeText(getApplicationContext(), new String(encodeValue), Toast.LENGTH_LONG).show();
         return new String(encodeValue);
     }
-    private class HttpAsyncTaskPhotoUpload extends AsyncTask<String, Void, String>
-    {
+
+    private class HttpAsyncTaskPhotoUpload extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
@@ -1196,40 +1129,34 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
 
         @Override
-        protected String doInBackground(String... urls)
-        {
+        protected String doInBackground(String... urls) {
             return POST1(urls[0]);
         }
+
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result)
-        {
+        protected void onPostExecute(String result) {
             dialog.dismiss();
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
-                if (result != null)
-                {
+                if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
                     String ImgName = jsonObject.getString("ImgName").toString();
                     String success = jsonObject.getString("success").toString();
 
-                    if (success.equals("1") && ImgName != null)
-                    {
+                    if (success.equals("1") && ImgName != null) {
                         /*Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(intent);
                         finish();*/
-                     //   Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
+                        //   Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                         register_img = ImgName;
                         new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/Registration");
 
-                    }
-                    else
-                    {
+                    } else {
                         Toast.makeText(getBaseContext(), "Error While Uploading Image..", Toast.LENGTH_LONG).show();
                     }
-                }
-                else {
+                } else {
                     Toast.makeText(getBaseContext(), "Not able to Register..", Toast.LENGTH_LONG).show();
                 }
 
@@ -1240,33 +1167,32 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    public String resizeBase64Image(String base64image){
-        byte [] encodeByte=Base64.decode(base64image.getBytes(),Base64.DEFAULT);
-        BitmapFactory.Options options=new BitmapFactory.Options();
+    public String resizeBase64Image(String base64image) {
+        byte[] encodeByte = Base64.decode(base64image.getBytes(), Base64.DEFAULT);
+        BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPurgeable = true;
-        Bitmap image = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length,options);
+        Bitmap image = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length, options);
 
 
-        if(image.getHeight() <= 400 && image.getWidth() <= 400){
+        if (image.getHeight() <= 400 && image.getWidth() <= 400) {
             return base64image;
         }
         image = Bitmap.createScaledBitmap(image, 200, 200, false);
 
-        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.PNG,100, baos);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.PNG, 100, baos);
 
-        byte [] b=baos.toByteArray();
+        byte[] b = baos.toByteArray();
         System.gc();
         return Base64.encodeToString(b, Base64.NO_WRAP);
 
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException
-    {
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line = "";
         String result = "";
-        while((line = bufferedReader.readLine()) != null)
+        while ((line = bufferedReader.readLine()) != null)
             result += line;
 
         inputStream.close();
@@ -1278,33 +1204,29 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         File imageFile = new File(filesDir, name + ".jpg");
 
         OutputStream os;
-        try
-        {
+        try {
             os = new FileOutputStream(imageFile);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 80, os);
             os.flush();
             os.close();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
         }
         return imageFile;
     }
 
-    public String getPath(Uri uri)
-    {
-        String[] projection = { MediaStore.Images.Media.DATA };
+    public String getPath(Uri uri) {
+        String[] projection = {MediaStore.Images.Media.DATA};
         Cursor cursor = managedQuery(uri, projection, null, null, null);
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
         return cursor.getString(column_index);
     }
 
-    private void BmToString(Bitmap bitmap)
-    {
-        ByteArrayOutputStream baos = new  ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
-        byte [] b = baos.toByteArray();
+    private void BmToString(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] b = baos.toByteArray();
         String image = Base64.encodeToString(b, Base64.DEFAULT);
 
 //        file = persistImage(bitmap,"ImageName");
@@ -1318,13 +1240,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void connectWithHttpPost(String company_name, String user_name, String first_name, String last_name,
-                                     String phone_no, String password )
-    {
-        class HttpGetAsyncTask extends AsyncTask<String, Void, String>
-        {
+                                     String phone_no, String password) {
+        class HttpGetAsyncTask extends AsyncTask<String, Void, String> {
             @Override
-            protected String doInBackground(String... params)
-            {
+            protected String doInBackground(String... params) {
                 String company_name = params[0];
                 String user_name = params[1];
                 String first_name = params[2];
@@ -1343,8 +1262,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(5);
                 nameValuePair.add(new BasicNameValuePair("CompanyName", company_name));
                 nameValuePair.add(new BasicNameValuePair("FName", first_name));
-                nameValuePair.add(new BasicNameValuePair("LName", last_name ));
-                nameValuePair.add(new BasicNameValuePair("Phone", phone_no ));
+                nameValuePair.add(new BasicNameValuePair("LName", last_name));
+                nameValuePair.add(new BasicNameValuePair("Phone", phone_no));
                 nameValuePair.add(new BasicNameValuePair("Pwd", password));
                 nameValuePair.add(new BasicNameValuePair("UserName", user_name));
 
@@ -1378,7 +1297,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     String bufferedStrChunk = null;
 
                     //and append that value one by one to the stringBuilder
-                    while((bufferedStrChunk = bufferedReader.readLine()) != null){
+                    while ((bufferedStrChunk = bufferedReader.readLine()) != null) {
                         stringBuilder.append(bufferedStrChunk);
                     }
                     //We return that value then the onPostExecute() can handle the content
@@ -1399,28 +1318,21 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
             //it is the third generic type of the AsyncTask
             @Override
-            protected void onPostExecute(String result)
-            {
+            protected void onPostExecute(String result) {
                 super.onPostExecute(result);
 
 //                Toast.makeText(getApplicationContext(), result , Toast.LENGTH_LONG).show();
 
-                if (result.equals(""))
-                {
+                if (result.equals("")) {
                     Toast.makeText(getApplicationContext(), "Check For Data Connection..", Toast.LENGTH_LONG).show();
-                }
-                else
-                {
+                } else {
                     //   Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
                     try {
                         JSONObject jsonObject = new JSONObject(result);
                         String res = jsonObject.getString("user");
-                        if (res.equals(""))
-                        {
+                        if (res.equals("")) {
                             Toast.makeText(getApplicationContext(), "User does not exists..", Toast.LENGTH_LONG).show();
-                        }
-                        else
-                        {
+                        } else {
                             JSONArray jsonArrayChanged = jsonObject.getJSONArray("user");
                         }
                     } catch (JSONException e) {
@@ -1434,38 +1346,34 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         HttpGetAsyncTask httpGetAsyncTask = new HttpGetAsyncTask();
         // Parameter we pass in the execute() method is relate to the first generic type of the AsyncTask
         // We are passing the connectWithHttpGet() method arguments to that
-        httpGetAsyncTask.execute(company_name,user_name,first_name,last_name,phone_no,password);
+        httpGetAsyncTask.execute(company_name, user_name, first_name, last_name, phone_no, password);
     }
 
-    private ArrayList<NameValuePair> getParams()
-    {
+    private ArrayList<NameValuePair> getParams() {
         // define and ArrayList whose elements are of type NameValuePair
         ArrayList<NameValuePair> nameValuePair = new ArrayList<NameValuePair>();
         nameValuePair.add(new BasicNameValuePair("CompanyName", "Ample arch"));
         nameValuePair.add(new BasicNameValuePair("FName", "Ample"));
-        nameValuePair.add(new BasicNameValuePair("LName", "Arch" ));
-        nameValuePair.add(new BasicNameValuePair("Phone", "9876543210" ));
+        nameValuePair.add(new BasicNameValuePair("LName", "Arch"));
+        nameValuePair.add(new BasicNameValuePair("Phone", "9876543210"));
         nameValuePair.add(new BasicNameValuePair("Pwd", "ample123"));
         nameValuePair.add(new BasicNameValuePair("UserName", "circle8"));
         return nameValuePair;
     }
 
     @Override
-    public void asyncResponse(String response)
-    {
+    public void asyncResponse(String response) {
 //        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
 
         Log.i("SignIn response: ", response);
 
-        if (response.equals(""))
-        {
+        if (response.equals("")) {
             Toast.makeText(getApplicationContext(), "Attempt Failed..", Toast.LENGTH_LONG).show();
         }
 
     }
 
-    private class AsyncDataClass extends AsyncTask<Void, Void, String>
-    {
+    private class AsyncDataClass extends AsyncTask<Void, Void, String> {
         ProgressDialog dialog;
 
         @Override
@@ -1479,8 +1387,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
 
         @Override
-        protected String doInBackground(Void... params)
-        {
+        protected String doInBackground(Void... params) {
             HttpParams httpParameters = new BasicHttpParams();
             HttpConnectionParams.setConnectionTimeout(httpParameters, 9000);
             HttpConnectionParams.setSoTimeout(httpParameters, 9000);
@@ -1492,8 +1399,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
             String jsonResult = "";
 
-            try
-            {
+            try {
 //                FileBody bin1 = new FileBody(file);
                 MultipartEntity reqEntity = new MultipartEntity();
                 reqEntity.addPart("CompanyName", new StringBody(company_name));
@@ -1507,26 +1413,22 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 httpPost.setEntity(reqEntity);
                 HttpResponse response = httpClient.execute(httpPost);
                 jsonResult = inputStreamToString(response.getEntity().getContent()).toString();
-            }
-            catch (ClientProtocolException e) {
+            } catch (ClientProtocolException e) {
                 e.printStackTrace();
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
             return jsonResult;
         }
 
         @Override
-        protected void onPostExecute(String result)
-        {
+        protected void onPostExecute(String result) {
             super.onPostExecute(result);
             dialog.dismiss();
             System.out.println("Resulted Value: " + result);
 //            Toast.makeText(getApplicationContext(), "Resulted value" + result, Toast.LENGTH_LONG).show();
 
-            if (result.equals("") || result == null)
-            {
+            if (result.equals("") || result == null) {
                 Toast.makeText(getApplicationContext(), "Server connection failed...", Toast.LENGTH_LONG).show();
                 return;
             }
@@ -1596,8 +1498,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
         return answer;
     }
-
-
 
 
 }

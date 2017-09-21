@@ -186,6 +186,8 @@ public class List1Fragment extends Fragment
 //        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
 
         pageno = 1;
+        allTags.clear();
+        nfcModel.clear();
         callFirst();
 
         recyclerView1.addOnScrollListener(scrollListener);
