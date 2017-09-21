@@ -14,7 +14,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.PointF;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -34,7 +33,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.util.Pair;
-import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -50,15 +48,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.circle8.circleOne.*;
 import com.circle8.circleOne.Adapter.AddEventAdapter;
 import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.Adapter.CustomAdapter;
-
 import com.circle8.circleOne.Fragments.CameraDialogFragment;
 import com.circle8.circleOne.Helper.LoginSession;
-import com.circle8.circleOne.MainActivity;
 import com.circle8.circleOne.Model.TestimonialModel;
+import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.ExpandableHeightGridView;
 import com.circle8.circleOne.Utils.ExpandableHeightListView;
 import com.circle8.circleOne.Utils.Utility;
@@ -121,7 +117,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.Executors;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -131,8 +126,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         View.OnClickListener,
         GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks,
         PictureCallback,
-        ContourDetectorFrameHandler.ResultHandler
-{
+        ContourDetectorFrameHandler.ResultHandler {
     public static final String PACKAGE = "com.circle8.circleOne";
     private static final int PICKFILE_RESULT_CODE = 1;
     public static ArrayList<TestimonialModel> allTaggs;
@@ -144,7 +138,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     AutoCompleteTextView autoCompleteCompany, autoCompleteDesignation, autoCompleteIndustry;
     //String[] languages={"Android ","java","IOS","SQL","JDBC","Web services"};
     ArrayList<String> company, designation, industry, designation_id, company_id, industry_id;
-    String association_ID, association_NAME ;
+    String association_ID, association_NAME;
     String profileId = "", Card_Front = "", Card_Back = "", FirstName = "", LastName = "", UserPhoto = "", Phone1 = "", Phone2 = "", Mobile1 = "", Mobile2 = "",
             Fax1 = "", Fax2 = "", Email1 = "", Email2 = "", Youtube = "",
             Facebook = "", Twitter = "", Google = "", LinkedIn = "", IndustryName = "", CompanyName = "", CompanyProfile = "", Designation = "", ProfileDesc = "", Status = "";
@@ -189,7 +183,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     static TextView txtCardBack;
     static String cardType = "";
     String Attach_String = "";
-    String companyID, designationID, industryID, associationID, addressID ;
+    String companyID, designationID, industryID, associationID, addressID;
     private ProgressDialog mProgressDialog;
     ArrayList<String> AssoNameList = new ArrayList<>();
     ArrayList<String> AssoIdList = new ArrayList<>();
@@ -224,8 +218,8 @@ public class EditProfileActivity extends AppCompatActivity implements
     RelativeLayout rltGallery;
     public static Activity activity;
     ImageView imgProfileShare;
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException
-    {
+
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line = "";
         String result = "";
@@ -237,8 +231,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         supportRequestWindowFeature(WindowCompat.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
@@ -265,8 +258,8 @@ public class EditProfileActivity extends AppCompatActivity implements
         rltGallery = (RelativeLayout) findViewById(R.id.rltGallery);
 
         editPolygonView = (EditPolygonImageView) findViewById(R.id.polygonView1);
-       // editPolygonView.setImageResource(R.drawable.test_receipt);
-    //    originalBitmap = ((BitmapDrawable) editPolygonView.getDrawable()).getBitmap();
+        // editPolygonView.setImageResource(R.drawable.test_receipt);
+        //    originalBitmap = ((BitmapDrawable) editPolygonView.getDrawable()).getBitmap();
 
         magnifierView = (MagnifierView) findViewById(R.id.magnifier);
         // MagifierView should be set up every time when editPolygonView is set with new image
@@ -278,8 +271,8 @@ public class EditProfileActivity extends AppCompatActivity implements
         imgProfileShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String shareBody = "I'm giving you a free redemption points on the Circle app (up to ₹25). To accept, use code '"+ LoginActivity.ReferrenceCode+"' to sign up. Enjoy!"
-                        +System.lineSeparator() + "Details: https://www.circle8.asia/invite/"+LoginActivity.ReferrenceCode;
+                String shareBody = "I'm giving you a free redemption points on the Circle app (up to ₹25). To accept, use code '" + LoginActivity.ReferrenceCode + "' to sign up. Enjoy!"
+                        + System.lineSeparator() + "Details: https://www.circle8.asia/invite/" + LoginActivity.ReferrenceCode;
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, tvPersonName.getText().toString());
@@ -357,8 +350,8 @@ public class EditProfileActivity extends AppCompatActivity implements
         ivAttachFrontImage = (ImageView) findViewById(R.id.ivAttachFrontImage);
         txtCardFront = (TextView) findViewById(R.id.txtCardFront);
         txtCardBack = (TextView) findViewById(R.id.txtCardBack);
-        ivAddAssociate = (ImageView)findViewById(R.id.ivAddAssociate);
-      //  etAssociationName = (EditText)findViewById(R.id.etAssociationName);
+        ivAddAssociate = (ImageView) findViewById(R.id.ivAddAssociate);
+        //  etAssociationName = (EditText)findViewById(R.id.etAssociationName);
         spnAssociation = (Spinner) findViewById(R.id.spnAssociation);
         imgYoutube = (ImageView) findViewById(R.id.imgYoutube);
         imgGoogle = (ImageView) findViewById(R.id.imgGoogle);
@@ -482,8 +475,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         });
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                Toast.makeText(getApplicationContext(), array[position].toString(), Toast.LENGTH_SHORT).show();
 
                 addEventString = array[position].toString();
@@ -643,16 +635,14 @@ public class EditProfileActivity extends AppCompatActivity implements
 
         imgDone.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
 
-                associationID = AssoIdList.get(spnAssociation.getSelectedItemPosition()).toString();
-                if (type.equals("add"))
-                {
+                try {
+                    associationID = AssoIdList.get(spnAssociation.getSelectedItemPosition()).toString();
+                }catch (Exception e){}
+                if (type.equals("add")) {
                     new HttpAsyncTaskAddProfile().execute("http://circle8.asia:8999/Onet.svc/AddProfile");
-                }
-                else if (type.equals("edit"))
-                {
+                } else if (type.equals("edit")) {
                     new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/UpdateProfile");
                 }
             }
@@ -777,7 +767,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                         String personPhotoUrl = currentPerson.getImage().getUrl();
                         Log.e("TAG", "Name: " + personName + ", email: " + email
                         );
-                        strGoogle = "https://plus.google.com/"+acct.getId();
+                        strGoogle = "https://plus.google.com/" + acct.getId();
                         imgGoogle.setImageResource(R.drawable.icon_google);
                     }
                 }
@@ -851,7 +841,7 @@ public class EditProfileActivity extends AppCompatActivity implements
 
         loginButton.setReadPermissions("public_profile", "email");
 
-        imgFb= (ImageView) findViewById(R.id.imgFb);
+        imgFb = (ImageView) findViewById(R.id.imgFb);
         imgFb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -891,7 +881,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                     userChoosenTask = "Take Photo";
                     if (result1) {
 //                        activeTakePhoto();
-                     //   cameraCardIntent();
+                        //   cameraCardIntent();
                       /*  FrameScanBotCamera.setVisibility(View.VISIBLE);
                         cameraView.startPreview();
                        // getSupportActionBar().hide();
@@ -1028,7 +1018,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     }
 
     private void galleryCardIntent() {
-      //  rltGallery.setVisibility(View.VISIBLE);
+        //  rltGallery.setVisibility(View.VISIBLE);
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -1220,12 +1210,10 @@ public class EditProfileActivity extends AppCompatActivity implements
         return result;
     }
 
-    public static String POST7(String url)
-    {
+    public static String POST7(String url) {
         InputStream inputStream = null;
         String result = "";
-        try
-        {
+        try {
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
 
@@ -1235,8 +1223,8 @@ public class EditProfileActivity extends AppCompatActivity implements
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("ImgBase64", final_ImgBase64 );
-            jsonObject.accumulate("classification", "card" );
+            jsonObject.accumulate("ImgBase64", final_ImgBase64);
+            jsonObject.accumulate("classification", "card");
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -1263,7 +1251,7 @@ public class EditProfileActivity extends AppCompatActivity implements
 
 
             // 10. convert inputstream to string
-            if(inputStream != null)
+            if (inputStream != null)
                 result = convertInputStreamToString(inputStream);
             else
                 result = "Did not work!";
@@ -1276,12 +1264,10 @@ public class EditProfileActivity extends AppCompatActivity implements
         return result;
     }
 
-    public  String POST8(String url)
-    {
+    public String POST8(String url) {
         InputStream inputStream = null;
         String result = "";
-        try
-        {
+        try {
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
 
@@ -1291,9 +1277,9 @@ public class EditProfileActivity extends AppCompatActivity implements
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("FileName", etAttachFile.getText().toString() );
-            jsonObject.accumulate("ImgBase64", Attach_String );
-            jsonObject.accumulate("classification", "others" );
+            jsonObject.accumulate("FileName", etAttachFile.getText().toString());
+            jsonObject.accumulate("ImgBase64", Attach_String);
+            jsonObject.accumulate("classification", "others");
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -1320,7 +1306,7 @@ public class EditProfileActivity extends AppCompatActivity implements
 
 
             // 10. convert inputstream to string
-            if(inputStream != null)
+            if (inputStream != null)
                 result = convertInputStreamToString(inputStream);
             else
                 result = "Did not work!";
@@ -1371,8 +1357,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         return result;
     }
 
-    public String POST5(String url)
-    {
+    public String POST5(String url) {
         InputStream inputStream = null;
         String result = "";
         try {
@@ -1424,8 +1409,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         return result;
     }
 
-    public String POST2(String url)
-    {
+    public String POST2(String url) {
         InputStream inputStream = null;
         String result = "";
         try {
@@ -1463,8 +1447,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         return result;
     }
 
-    public String PostAssociate(String url)
-    {
+    public String PostAssociate(String url) {
         InputStream inputStream = null;
         String result = "";
         try {
@@ -1502,12 +1485,10 @@ public class EditProfileActivity extends AppCompatActivity implements
         return result;
     }
 
-    public String POST(String url)
-    {
+    public String POST(String url) {
         InputStream inputStream = null;
         String result = "";
-        try
-        {
+        try {
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
 
@@ -1692,9 +1673,11 @@ public class EditProfileActivity extends AppCompatActivity implements
             Log.d("TAG", e.getMessage(), e);
         }
     }
+
     private static Scope buildScope() {
         return Scope.build(Scope.R_BASICPROFILE, Scope.R_EMAILADDRESS);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
@@ -1736,6 +1719,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                 onCaptureImageResultCard(data);
         }
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -1777,6 +1761,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             mProgressDialog.hide();
         }
     }
+
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -2182,7 +2167,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         }
 
         if (mb_size > 3.00) {
-            Toast.makeText(getApplicationContext(),"File is greater than 3MB"+mb_size,Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "File is greater than 3MB" + mb_size, Toast.LENGTH_LONG).show();
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(EditProfileActivity.this);
             alertDialogBuilder.setTitle("Warning!");
             alertDialogBuilder.setMessage("Please select file less than 3MB.");
@@ -2231,12 +2216,11 @@ public class EditProfileActivity extends AppCompatActivity implements
 
     }
 
-    private class HttpAsyncTaskAssociation extends AsyncTask<String, Void, String>
-    {
+    private class HttpAsyncTaskAssociation extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
+
         @Override
-        protected void onPreExecute()
-        {
+        protected void onPreExecute() {
             super.onPreExecute();
             dialog = new ProgressDialog(EditProfileActivity.this);
             dialog.setMessage("Get Association..");
@@ -2245,25 +2229,20 @@ public class EditProfileActivity extends AppCompatActivity implements
         }
 
         @Override
-        protected String doInBackground(String... urls)
-        {
+        protected String doInBackground(String... urls) {
             return PostAssociate(urls[0]);
         }
 
         @Override
-        protected void onPostExecute(String result)
-        {
+        protected void onPostExecute(String result) {
             dialog.dismiss();
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-            try
-            {
-                if (result != null)
-                {
+            try {
+                if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
                     JSONArray jsonArray = jsonObject.getJSONArray("association");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
-                    for (int i = 0; i < jsonArray.length(); i++)
-                    {
+                    for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
                         association_NAME = object.getString("AssociationName");
                         association_ID = object.getString("AssociationID");
@@ -2275,9 +2254,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spnAssociation.setAdapter(dataAdapter);
                     }
-                }
-                else
-                {
+                } else {
                     // Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
                 }
 
@@ -2287,13 +2264,12 @@ public class EditProfileActivity extends AppCompatActivity implements
         }
 
     }
-    private class HttpAsyncTaskAddProfile extends AsyncTask<String, Void, String>
-    {
+
+    private class HttpAsyncTaskAddProfile extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
-        protected void onPreExecute()
-        {
+        protected void onPreExecute() {
             super.onPreExecute();
             dialog = new ProgressDialog(EditProfileActivity.this);
             dialog.setMessage("Creating Profile..");
@@ -2305,31 +2281,26 @@ public class EditProfileActivity extends AppCompatActivity implements
         }
 
         @Override
-        protected String doInBackground(String... urls)
-        {
+        protected String doInBackground(String... urls) {
             return POST6(urls[0]);
         }
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result)
-        {
+        protected void onPostExecute(String result) {
             dialog.dismiss();
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-           try
-           {
-                if (result != null)
-                {
+            try {
+                if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
                     String success = jsonObject.getString("success");
                     String message = jsonObject.getString("message");
                     String UserID = jsonObject.getString("UserID");
                     String ProfileID = jsonObject.getString("ProfileID");
 
-                    if(success.equalsIgnoreCase("1"))
-                    {
-                        Toast.makeText(getApplicationContext(),"Successfully Added",Toast.LENGTH_SHORT).show();
-                        Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+                    if (success.equalsIgnoreCase("1")) {
+                        Toast.makeText(getApplicationContext(), "Successfully Added", Toast.LENGTH_SHORT).show();
+                        Intent go = new Intent(getApplicationContext(), CardsActivity.class);
 
                         // you pass the position you want the viewpager to show in the extra,
                         // please don't forget to define and initialize the position variable
@@ -2337,19 +2308,15 @@ public class EditProfileActivity extends AppCompatActivity implements
                         go.putExtra("viewpager_position", 3);
                         startActivity(go);
                         finish();
-                    }
-                    else
-                    {
-                        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     }
 
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
                 }
-           }
-           catch (JSONException e1)
-           {
-               e1.printStackTrace();
-           }
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+            }
         }
     }
 
@@ -2387,16 +2354,14 @@ public class EditProfileActivity extends AppCompatActivity implements
                         lstTestimonial.setVisibility(View.GONE);
                         txtMore.setVisibility(View.GONE);
                         txtTestimonial.setVisibility(View.VISIBLE);
-                    } else  {
+                    } else {
                         lstTestimonial.setVisibility(View.VISIBLE);
                         txtMore.setVisibility(View.VISIBLE);
                         txtTestimonial.setVisibility(View.GONE);
                     }
                     allTaggs.clear();
-                    for (int i = 0; i < jsonArray.length(); i++)
-                    {
-                        if (i < 3)
-                        {
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        if (i < 3) {
                             JSONObject object = jsonArray.getJSONObject(i);
                             //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
                             TestimonialModel nfcModelTag = new TestimonialModel();
@@ -2528,7 +2493,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
                         company.add(object.getString("CompanyName"));
                         company_id.add(object.getString("CompanyID"));
-                       // companyID = object.getString("CompanyID");
+                        // companyID = object.getString("CompanyID");
                     }
                 } else {
                     // Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
@@ -2545,7 +2510,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         }
     }
 
-    private class  HttpAsyncTaskUserProfile extends AsyncTask<String, Void, String> {
+    private class HttpAsyncTaskUserProfile extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
@@ -2617,15 +2582,28 @@ public class EditProfileActivity extends AppCompatActivity implements
                     Website = jsonObject.getString("Website");
                     Attachment_FileName = jsonObject.getString("Attachment_FileName");
 
-                    int selectedPos = company.indexOf((String) CompanyName);
-                    companyID = company_id.get(selectedPos);
+                    try {
 
-                    int selectedPos1 = designation.indexOf((String) Designation);
-                    designationID = designation_id.get(selectedPos1);
+                        int selectedPos = company.indexOf((String) CompanyName);
+                        companyID = company_id.get(selectedPos);
+                    } catch (Exception e) {
 
-                    int selectedPos2 = industry.indexOf((String) IndustryName);
-                    industryID = industry_id.get(selectedPos2);
+                    }
+                    try {
 
+                        int selectedPos1 = designation.indexOf((String) Designation);
+                        designationID = designation_id.get(selectedPos1);
+                    } catch (Exception e) {
+
+                    }
+
+                    try {
+
+                        int selectedPos2 = industry.indexOf((String) IndustryName);
+                        industryID = industry_id.get(selectedPos2);
+                    } catch (Exception e) {
+
+                    }
                     tvCompany.setText(CompanyName);
                     tvDesignation.setText(Designation);
                     tvPersonName.setText(FirstName + " " + LastName);
@@ -2644,8 +2622,8 @@ public class EditProfileActivity extends AppCompatActivity implements
                     edtFax1.setText(Fax1);
                     edtFax2.setText(Fax2);
                     edtWebsite.setText(Website);
-                    edtAddress1.setText(Address1 + " "+ Address2);
-                    edtAddress2.setText(Address3 + " "+ Address4);
+                    edtAddress1.setText(Address1 + " " + Address2);
+                    edtAddress2.setText(Address3 + " " + Address4);
                     edtAddress3.setText(City);
                     edtAddress4.setText(State);
                     edtAddress5.setText(Country);
@@ -2710,30 +2688,24 @@ public class EditProfileActivity extends AppCompatActivity implements
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result)
-        {
+        protected void onPostExecute(String result) {
             dialog.dismiss();
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-            try
-            {
-                if (result != null)
-                {
+            try {
+                if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
                     JSONArray jsonArray = jsonObject.getJSONArray("industry");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
                     industry = new ArrayList<>();
                     industry_id = new ArrayList<>();
-                    for (int i = 0; i < jsonArray.length(); i++)
-                    {
+                    for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
                         industry.add(object.getString("IndustryName"));
                         industry_id.add(object.getString("IndustryID"));
                         //industryID = object.getString("IndustryID");
                     }
-                }
-                else
-                {
+                } else {
                     // Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
                 }
 
@@ -2746,13 +2718,11 @@ public class EditProfileActivity extends AppCompatActivity implements
         }
     }
 
-    private class HttpAsyncTask extends AsyncTask<String, Void, String>
-    {
+    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
-        protected void onPreExecute()
-        {
+        protected void onPreExecute() {
             super.onPreExecute();
             dialog = new ProgressDialog(EditProfileActivity.this);
             dialog.setMessage("Updating Profile..");
@@ -2770,24 +2740,20 @@ public class EditProfileActivity extends AppCompatActivity implements
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result)
-        {
+        protected void onPostExecute(String result) {
             dialog.dismiss();
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-            try
-            {
-                if (result != null)
-                {
+            try {
+                if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
                     String success = jsonObject.getString("success");
                     String message = jsonObject.getString("message");
                     String UserID = jsonObject.getString("UserID");
                     String ProfileID = jsonObject.getString("ProfileID");
 
-                    if(success.equalsIgnoreCase("1"))
-                    {
-                        Toast.makeText(getApplicationContext(),"Successfully Updated",Toast.LENGTH_SHORT).show();
-                        Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+                    if (success.equalsIgnoreCase("1")) {
+                        Toast.makeText(getApplicationContext(), "Successfully Updated", Toast.LENGTH_SHORT).show();
+                        Intent go = new Intent(getApplicationContext(), CardsActivity.class);
 
                         // you pass the position you want the viewpager to show in the extra,
                         // please don't forget to define and initialize the position variable
@@ -2795,17 +2761,13 @@ public class EditProfileActivity extends AppCompatActivity implements
                         go.putExtra("viewpager_position", 3);
                         startActivity(go);
                         finish();
-                    }
-                    else
-                    {
-                        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     }
 
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
                 }
-            }
-            catch (JSONException e1)
-            {
+            } catch (JSONException e1) {
                 e1.printStackTrace();
             }
 

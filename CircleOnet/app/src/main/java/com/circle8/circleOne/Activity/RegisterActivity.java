@@ -431,9 +431,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             {
 //                Toast.makeText(getApplicationContext(), "Something Wrong!", Toast.LENGTH_SHORT).show();
             }
-            else if (refferelCode.equals("")){
+           /* else if (refferelCode.equals("")){
                 Toast.makeText(getApplicationContext(), "Enter Referral Code", Toast.LENGTH_SHORT).show();
-            }
+            }*/
             else if (gender.equals(""))
             {
                 Toast.makeText(getApplicationContext(), "Select Gender", Toast.LENGTH_SHORT).show();
