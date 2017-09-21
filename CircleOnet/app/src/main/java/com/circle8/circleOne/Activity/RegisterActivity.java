@@ -124,7 +124,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     int motionLength;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
@@ -476,7 +477,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
-    private void selectImage() {
+    private void selectImage()
+    {
         items = new CharSequence[]{"Take Photo", "Choose from Library", "Cancel"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
@@ -486,7 +488,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             public void onClick(DialogInterface dialog, int item) {
                 boolean result = Utility.checkStoragePermission(RegisterActivity.this);
                 boolean result1 = Utility.checkCameraPermission(RegisterActivity.this);
-                if (items[item].equals("Take Photo")) {
+                if (items[item].equals("Take Photo"))
+                {
                     userChoosenTask = "Take Photo";
                     if (result1)
 //                        activeTakePhoto();
@@ -514,7 +517,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
     }
 
-    private void cameraIntent() {
+    private void cameraIntent()
+    {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, REQUEST_CAMERA);
     }
@@ -639,22 +643,24 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         return temp;
     }
 
-    private void onSelectFromGalleryResult(Intent data) {
+    private void onSelectFromGalleryResult(Intent data)
+    {
         Uri selectedImageUri = data.getData();
 //        imagepath = getPath(selectedImageUri);
 
         Bitmap bm = null;
-        if (data != null) {
+        if (data != null)
+        {
             Uri targetUri = data.getData();
-
-            String photoPath = getPath(targetUri);
 
             ExifInterface ei = null;
             Bitmap bitmap = null;
             Bitmap rotatedBitmap = null;
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            {
+                try
+                {
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
 
                     Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 150, 150, false);
@@ -669,8 +675,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-            } else {
-                try {
+            }
+            else
+            {
+                try
+                {
                     ei = new ExifInterface(String.valueOf(targetUri));
                     int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
 
@@ -848,14 +857,72 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
-    private void onCaptureImageResult(Intent data) {
-        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+    private void onCaptureImageResult(Intent data)
+    {
+        /*Uri targetUri = data.getData();
+
+        String imagePath = getPath(targetUri);
+*/
+
+        Bitmap thumbnail = (Bitmap)data.getExtras().get("data");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+
+//        ExifInterface ei = null;
+//        Bitmap rotatedBitmap = null;
 
         final_ImgBase64 = BitMapToString(thumbnail);
         Upload();
         civProfilePic.setImageBitmap(thumbnail);
+
+/*
+        try
+        {
+            ei = new ExifInterface(String.valueOf(targetUri));
+            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+
+            switch (orientation)
+            {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    rotatedBitmap = rotateImage(thumbnail, 90);
+                    civProfilePic.setImageBitmap(rotatedBitmap);
+                    final_ImgBase64 = BitMapToString(rotatedBitmap);
+                    Upload();
+                    break;
+
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    rotatedBitmap = rotateImage(thumbnail, 180);
+                    civProfilePic.setImageBitmap(rotatedBitmap);
+                    final_ImgBase64 = BitMapToString(rotatedBitmap);
+                    Upload();
+                    break;
+
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    rotatedBitmap = rotateImage(thumbnail, 270);
+                    civProfilePic.setImageBitmap(rotatedBitmap);
+                    final_ImgBase64 = BitMapToString(rotatedBitmap);
+                    Upload();
+                    break;
+
+                case ExifInterface.ORIENTATION_NORMAL:
+                    rotatedBitmap = thumbnail;
+                    civProfilePic.setImageBitmap(rotatedBitmap);
+                    final_ImgBase64 = BitMapToString(rotatedBitmap);
+                    Upload();
+                    break;
+
+                default:
+                    rotatedBitmap = thumbnail;
+                    civProfilePic.setImageBitmap(rotatedBitmap);
+                    final_ImgBase64 = BitMapToString(rotatedBitmap);
+                    Upload();
+                    break;
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+*/
     }
 
     public String POST(String url) {
@@ -1215,7 +1282,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         return imageFile;
     }
 
-    public String getPath(Uri uri) {
+    public String getPath(Uri uri)
+    {
         String[] projection = {MediaStore.Images.Media.DATA};
         Cursor cursor = managedQuery(uri, projection, null, null, null);
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
