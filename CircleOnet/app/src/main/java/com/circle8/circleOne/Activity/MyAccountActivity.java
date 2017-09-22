@@ -2,6 +2,7 @@ package com.circle8.circleOne.Activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -19,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.TranslateAnimation;
@@ -88,6 +90,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     private LoginSession session;
     private String user_id, email_id, user_img, user_pass ;
     private String encodedImageData, register_img;
+    private String user_Photo ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -189,6 +192,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         ivMiniCamera.setOnClickListener(this);
         imgBack.setOnClickListener(this);
         ivEditImg.setOnClickListener(this);
+        imgProfile.setOnClickListener(this);
     }
 
     @Override
@@ -199,6 +203,26 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v)
     {
+        if ( v == imgProfile)
+        {
+            final AlertDialog alertDialog = new AlertDialog.Builder(MyAccountActivity.this).create();
+            LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            final View dialogView = inflater.inflate(R.layout.imageview_popup, null);
+
+            ImageView ivViewImage = (ImageView)dialogView.findViewById(R.id.ivViewImage);
+
+            if (user_Photo.equals(""))
+            {
+                ivViewImage.setImageResource(R.drawable.usr_1);
+            }
+            else
+            {
+                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+user_Photo).placeholder(R.drawable.usr_1).into(ivViewImage);
+            }
+
+            alertDialog.setView(dialogView);
+            alertDialog.show();
+        }
         if ( v == ivEditImg)
         {
             etFirstName.setEnabled(true);
@@ -578,12 +602,12 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                     JSONObject jsonResponse = new JSONObject(Content);
 //                    Toast.makeText(getApplicationContext(), Content, Toast.LENGTH_LONG).show();
                     String status = jsonResponse.getString("status");
-                    if ("200".equals(status)) {
-
+                    if ("200".equals(status))
+                    {
                         Toast.makeText(getApplicationContext(), "File uploaded successfully", Toast.LENGTH_SHORT).show();
-
-                    } else {
-
+                    }
+                    else
+                    {
                         Toast.makeText(getApplicationContext(), "Something is wrong ! Please try again.", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -871,7 +895,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                         etPassword.setText(user_pass);
                         etPasswordAgain.setText(user_pass);
                         String user_Gender = profile.getString("Gender");
-                        String user_Photo = profile.getString("UserPhoto");
+                         user_Photo = profile.getString("UserPhoto");
 
                         if (user_Photo.equals(""))
                         {
