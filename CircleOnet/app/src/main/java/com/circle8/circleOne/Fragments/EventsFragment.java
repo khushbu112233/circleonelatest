@@ -97,21 +97,18 @@ public class EventsFragment extends Fragment
 
         lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
         line = view.findViewById(R.id.view);
-        lnrSearch.setVisibility(View.GONE);
-        line.setVisibility(View.GONE);
-
         listView = (ListView)view.findViewById(R.id.listEvents);
        /* gridAdapter = new EventsAdapter(getContext(), R.layout.row_events, image, title, desc);
         listView.setAdapter(gridAdapter);*/
 
-        listView.setOnTouchListener(new View.OnTouchListener() {
+       /* listView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
                 return gestureDetector.onTouchEvent(event);
 
             }
-        });
+        });*/
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
