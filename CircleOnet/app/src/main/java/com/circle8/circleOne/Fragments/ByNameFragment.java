@@ -75,6 +75,8 @@ public class ByNameFragment extends Fragment
         searchText = (AutoCompleteTextView)view.findViewById(R.id.searchView);
         listView = (ListView) view.findViewById(R.id.listViewType4);
 
+        searchText.setHint("Search by name");
+
         listView.setVisibility(View.GONE);
 //        tvDataInfo.setVisibility(View.VISIBLE);
 

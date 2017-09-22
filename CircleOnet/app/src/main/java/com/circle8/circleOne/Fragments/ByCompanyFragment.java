@@ -74,6 +74,8 @@ public class ByCompanyFragment  extends Fragment
         searchText = (AutoCompleteTextView)view.findViewById(R.id.searchView);
         listView = (ListView) view.findViewById(R.id.listViewType4);
 
+        searchText.setHint("Search by company");
+
         listView.setVisibility(View.GONE);
 
         session = new LoginSession(getContext());

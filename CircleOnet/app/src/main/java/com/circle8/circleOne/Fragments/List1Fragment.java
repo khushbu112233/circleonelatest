@@ -906,7 +906,7 @@ public class List1Fragment extends Fragment
     public void onResume()
     {
         super.onResume();
-        CardsActivity.setActionBarTitle("Cards - "+nfcModel.size());
+//        CardsActivity.setActionBarTitle("Cards - "+nfcModel.size());
 //        callFirst();
 //        nfcModel.clear();
 //        GetData(getContext());
