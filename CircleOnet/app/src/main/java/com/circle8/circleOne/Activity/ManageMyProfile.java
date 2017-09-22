@@ -83,13 +83,23 @@ public class ManageMyProfile extends AppCompatActivity
             }
         });
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), EditProfileActivity.class);
+                intent.putExtra("type", "edit");
+                intent.putExtra("profile_id", allTags.get(position).getProfileID());
+                startActivity(intent);
+            }
+        });
+
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(
                         ManageMyProfile.this);
-                alert.setMessage("What you want to do this Profile?");
-                alert.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                alert.setMessage("Do you want to Delete this Profile?");
+                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -98,15 +108,11 @@ public class ManageMyProfile extends AppCompatActivity
 
                     }
                 });
-                alert.setNegativeButton("Edit", new DialogInterface.OnClickListener() {
+                alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        Intent intent = new Intent(getApplicationContext(), EditProfileActivity.class);
-                        intent.putExtra("type", "edit");
-                        intent.putExtra("profile_id", allTags.get(position).getProfileID());
-                        startActivity(intent);
                     }
                 });
 
