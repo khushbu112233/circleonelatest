@@ -33,4 +33,8 @@
         <item>@color/QRCodeWhiteColor</item>
     </array>
 
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="viewfinder_laser">#3cc1c8</color>
+    <color name="viewfinder_border">#3cc1c8</color>
+
 </resources>

@@ -140,7 +140,8 @@
             android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.AddQRActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionbar"/>
         <activity
             android:name=".Activity.EditProfileActivity"
             android:screenOrientation="portrait"
