@@ -20,6 +20,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -67,10 +68,12 @@ public class ConnectActivity extends AppCompatActivity
     private ImageView imgBack, imgCards, imgConnect, imgEvents, imgProfile, imgConnecting;
     private static final int PERMISSION_REQUEST_CODE = 200;
     CircleImageView ivProfileImage;
-
+    int left;
+    int right;
     private  RelativeLayout rlSocial ;
     private ImageView ivConnectImg, ivAddRound, ivConnectRound ;
-    private TextView tvAdd, tvConnect, tvConnectLine1, tvConnectLine2, txtWeb, txtMail, txtNum, txtMob ;
+    private TextView tvAdd, tvConnect, txtWeb, txtMail, txtNum, txtMob ;
+    View tvConnectLine2, tvConnectLine1;
     private RelativeLayout rlAdd, rlConnect ;
     private String tag_id, profile_id, friendProfile_id;
 
@@ -123,8 +126,8 @@ public class ConnectActivity extends AppCompatActivity
 
         tvAdd = (TextView)findViewById(R.id.tvAdd);
         tvConnect = (TextView)findViewById(R.id.tvConnect);
-        tvConnectLine1 = (TextView)findViewById(R.id.tvConnectLine1);
-        tvConnectLine2 = (TextView)findViewById(R.id.tvConnectLine2);
+        tvConnectLine1 = findViewById(R.id.tvConnectLine1);
+        tvConnectLine2 = findViewById(R.id.tvConnectLine2);
 
         tvPersonName = (TextView)findViewById(R.id.tvPersonName);
         tvPersonDesignation = (TextView)findViewById(R.id.tvPersonDesignation);
@@ -137,6 +140,22 @@ public class ConnectActivity extends AppCompatActivity
         recycler_view = (RecyclerView)findViewById(R.id.recycler_view);
         tvAddedGroupInfo = (TextView)findViewById(R.id.tvAddedGroupInfo);
         imgAddGroupFriend = (ImageView) findViewById(R.id.imgAddGroupFriend);
+
+
+
+        rlConnect.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+
+            public void onGlobalLayout() {
+                int height = rlConnect.getHeight();
+                int width = rlConnect.getWidth();
+                left = rlConnect.getLeft();
+                right = rlConnect.getTop();
+
+                //don't forget to remove the listener to prevent being called again by future layout events:
+                rlConnect.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         {
@@ -269,7 +288,8 @@ public class ConnectActivity extends AppCompatActivity
                             public void run() {
                                 ivConnectRound.setImageResource(R.drawable.round_gray);
                                 tvConnect.setTextColor(getResources().getColor(R.color.unselected));
-                                tvConnectLine2.setTextColor(getResources().getColor(R.color.unselected));
+                               // tvConnectLine2.setTextColor(getResources().getColor(R.color.unselected));
+                                tvConnectLine2.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
                                 new HttpAsyncAddFriendTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
 
                             }
@@ -277,7 +297,8 @@ public class ConnectActivity extends AppCompatActivity
                         // Second Things
                         ivAddRound.setImageResource(R.drawable.round_blue);
                         tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
-                        tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
+                       // tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted));
                     }
                     else {
 
@@ -312,7 +333,8 @@ public class ConnectActivity extends AppCompatActivity
                             public void run() {
                                 ivAddRound.setImageResource(R.drawable.round_gray);
                                 tvAdd.setTextColor(getResources().getColor(R.color.unselected));
-                                tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
+                                tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
+                                //tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
                                 Intent go = new Intent(getApplicationContext(),Connect3Activity.class);
                                 go.putExtra("profile", profileImg);
                                 go.putExtra("friendUserID", friendUserID);
@@ -323,8 +345,8 @@ public class ConnectActivity extends AppCompatActivity
                         // Second Things
                         ivConnectRound.setImageResource(R.drawable.round_blue);
                         tvConnect.setTextColor(getResources().getColor(R.color.colorPrimary));
-                        tvConnectLine2.setTextColor(getResources().getColor(R.color.colorPrimary));
-
+                     //   tvConnectLine2.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        tvConnectLine2.setBackground(getResources().getDrawable(R.drawable.dotted));
                     }
                     else
                     {
@@ -338,7 +360,8 @@ public class ConnectActivity extends AppCompatActivity
                             public void run() {
                                 ivAddRound.setImageResource(R.drawable.round_gray);
                                 tvAdd.setTextColor(getResources().getColor(R.color.unselected));
-                                tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
+                                //tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
+                                tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
                                 Intent go = new Intent(getApplicationContext(),Connect3Activity.class);
                                 go.putExtra("profile", profileImg);
                                 go.putExtra("friendUserID", friendUserID);
@@ -349,7 +372,8 @@ public class ConnectActivity extends AppCompatActivity
                         // Second Things
                         ivConnectRound.setImageResource(R.drawable.round_blue);
                         tvConnect.setTextColor(getResources().getColor(R.color.colorPrimary));
-                        tvConnectLine2.setTextColor(getResources().getColor(R.color.colorPrimary));
+                      //  tvConnectLine2.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted));
                     }
                 }
             }
@@ -632,7 +656,8 @@ public class ConnectActivity extends AppCompatActivity
                 //Toast.makeText(getApplicationContext(), "Contact Exists", Toast.LENGTH_LONG).show();
                 ivAddRound.setImageResource(R.drawable.round_blue);
                 tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
-                tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
+                //tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
+                tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted));
                 return true;
             }
         } finally {
@@ -642,7 +667,8 @@ public class ConnectActivity extends AppCompatActivity
         //Toast.makeText(getApplicationContext(), "Contact doesn't Exists", Toast.LENGTH_LONG).show();
         ivAddRound.setImageResource(R.drawable.round_gray);
         tvAdd.setTextColor(getResources().getColor(R.color.unselected));
-        tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
+        //tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
+        tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
         return false;
     }
 
@@ -758,14 +784,16 @@ public class ConnectActivity extends AppCompatActivity
                     {
                         ivAddRound.setImageResource(R.drawable.round_blue);
                         tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
-                        tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
+                      //  tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted));
                         rlAdd.setEnabled(true);
                     }
                     else if (Matched.equals("0"))
                     {
                         ivAddRound.setImageResource(R.drawable.round_gray);
                         tvAdd.setTextColor(getResources().getColor(R.color.unselected));
-                        tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
+                       // tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
+                        tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
                         rlAdd.setEnabled(false);
                     }
                     else if (Matched.equals("-1"))
@@ -774,7 +802,8 @@ public class ConnectActivity extends AppCompatActivity
                         if (Mobile1.equalsIgnoreCase("") && Mobile2.equalsIgnoreCase("")){
                             ivAddRound.setImageResource(R.drawable.round_gray);
                             tvAdd.setTextColor(getResources().getColor(R.color.unselected));
-                            tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
+                          //  tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
+                            tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
                             rlAdd.setEnabled(false);
                         }
                         else if (!Mobile1.equalsIgnoreCase("")){
@@ -782,13 +811,15 @@ public class ConnectActivity extends AppCompatActivity
                             if (aBoolean == true) {
                                 ivAddRound.setImageResource(R.drawable.round_blue);
                                 tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
-                                tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
+                             //   tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted));
                                 rlAdd.setEnabled(true);
                             }
                             else {
                                 ivAddRound.setImageResource(R.drawable.round_gray);
                                 tvAdd.setTextColor(getResources().getColor(R.color.unselected));
-                                tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
+                              //  tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
+                                tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
                                 rlAdd.setEnabled(false);
                             }
                         }
@@ -797,12 +828,14 @@ public class ConnectActivity extends AppCompatActivity
                             if (aBoolean == true) {
                                 ivAddRound.setImageResource(R.drawable.round_blue);
                                 tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
-                                tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
+                               // tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted));
                                 rlAdd.setEnabled(true);
                             }else {
                                 ivAddRound.setImageResource(R.drawable.round_gray);
                                 tvAdd.setTextColor(getResources().getColor(R.color.unselected));
-                                tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
+                              //  tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
+                                tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
                                 rlAdd.setEnabled(false);
                             }
                         }
@@ -817,7 +850,8 @@ public class ConnectActivity extends AppCompatActivity
                                         //Yes button clicked
                                         ivAddRound.setImageResource(R.drawable.round_blue);
                                         tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
-                                        tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                       // tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                        tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted));
                                         rlAdd.setEnabled(true);
                                         break;
 
@@ -825,7 +859,8 @@ public class ConnectActivity extends AppCompatActivity
                                         //No button clicked
                                         ivAddRound.setImageResource(R.drawable.round_gray);
                                         tvAdd.setTextColor(getResources().getColor(R.color.unselected));
-                                        tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
+                                        //tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
+                                        tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
                                         rlAdd.setEnabled(false);
                                         break;
                                 }

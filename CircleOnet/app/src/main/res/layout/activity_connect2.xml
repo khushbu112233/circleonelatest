@@ -246,15 +246,13 @@
                             android:layout_centerInParent="true" />
                     </RelativeLayout>
 
-                    <TextView
-                        android:gravity="center"
+                    <View
                         android:id="@+id/tvConnectLine1"
                         android:layout_width="50dp"
-                        android:layout_height="match_parent"
-                        android:text="- - - - - - -"
+                        android:layout_height="5dp"
                         android:layout_centerVertical="true"
-                        android:textColor="@color/colorPrimary"
-                        android:textAlignment="center"
+                        android:background="@drawable/dotted"
+                        android:layerType="software"
                         android:layout_toLeftOf="@+id/iv_ConnectImg"/>
 
                     <ImageView
@@ -268,25 +266,23 @@
                         android:layout_marginRight="0dp"
                         android:layout_marginBottom="10dp"
                         android:layout_marginTop="10dp" />
-                    <TextView
-                        android:gravity="center"
-                        android:layout_width="50dp"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        android:text="- - - - - - -"
-                        android:textColor="@color/colorPrimary"
-                        android:textAlignment="center" />
 
-                    <TextView
-                        android:gravity="center"
+                    <View
+                        android:layout_centerInParent="true"
+                        android:layout_width="50dp"
+                        android:layout_height="5dp"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/dotted"
+                        android:layerType="software" />
+
+                    <View
                         android:id="@+id/tvConnectLine2"
                         android:layout_width="50dp"
-                        android:layout_height="match_parent"
-                        android:text="- - - - - - -"
+                        android:layout_height="5dp"
                         android:layout_centerVertical="true"
-                        android:textColor="@color/colorPrimary"
-                        android:textAlignment="center"
-                        android:layout_toRightOf="@+id/iv_ConnectImg"/>
+                        android:background="@drawable/dotted"
+                        android:layerType="software"
+                        android:layout_toRightOf="@+id/iv_ConnectImg" />
 
                     <RelativeLayout
                         android:id="@+id/rlConnect"

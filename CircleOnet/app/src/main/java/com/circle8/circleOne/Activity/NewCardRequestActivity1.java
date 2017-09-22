@@ -301,21 +301,14 @@ public class NewCardRequestActivity1 extends AppCompatActivity {
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("City", "" );
-            jsonObject.accumulate("Country", "" );
-            jsonObject.accumulate("Delivery_Addr1", etAddress1.getText().toString() );
-            jsonObject.accumulate("Delivery_Addr2", etAddress2.getText().toString() );
-            jsonObject.accumulate("Delivery_Addr3", "" );
-            jsonObject.accumulate("Delivery_Addr4", "" );
+            jsonObject.accumulate("Delivery_Addr", etAddress1.getText().toString() + " " + etAddress2.getText().toString() );
             jsonObject.accumulate("Name", etPerson.getText().toString() );
             jsonObject.accumulate("NumOfCards", "1" );
             jsonObject.accumulate("Phone", etPhone.getText().toString() );
             jsonObject.accumulate("PhysicalCard_Type_Id", PhysicalCardTypeID );
             jsonObject.accumulate("PhysicalCard_back_image", card_back );
             jsonObject.accumulate("PhysicalCard_front_image", card_front );
-            jsonObject.accumulate("PostalCode", "1" );
             jsonObject.accumulate("ProfileId", profileId );
-            jsonObject.accumulate("State", "" );
             jsonObject.accumulate("UserId", userID );
 
 

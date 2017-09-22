@@ -152,11 +152,18 @@ public class ContactsImportActivity extends AppCompatActivity
                     //listView.getAdapter().getItem((int)listView.getCheckItemIds()[i]);
                     String num = arrayListPhoneNumber.get(arrayListPhoneName.indexOf(listView.getAdapter().getItem((int)listView.getCheckItemIds()[i]).toString()));
                     //arrayList.add(num);
+                    if (num.contains("+")){
+                        num = num.replaceAll("\\+", "");
+                    }
+
+                    if (num.contains(" ")){
+                        num = num.replaceAll(" ", "");
+                    }
                     selectedStrings.put(num);
                   //  Toast.makeText(getApplicationContext(), num, Toast.LENGTH_LONG).show();
                    // Toast.makeText(getApplicationContext(), listView.getAdapter().getItem((int)listView.getCheckItemIds()[i]).toString(), Toast.LENGTH_LONG).show();
                 }
-//                Toast.makeText(getApplicationContext(), arrayList.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), selectedStrings.toString(), Toast.LENGTH_LONG).show();
 
                 new HttpAsyncTaskImportContacts().execute("http://circle8.asia:8999/Onet.svc/ImportContacts");
             }
@@ -306,19 +313,19 @@ public class ContactsImportActivity extends AppCompatActivity
 
                                 if (number.startsWith("+65") || number.startsWith("065") || number.startsWith("65") || number.length() == 8 )
                                 {
-                                    if (number.contains("+") || number.contains("-") || number.contains(" ")) {
-                                       number.replace("+", "");
+                                    if (number.contains("\\+") || number.contains("-") || number.contains(" ")) {
+                                       number = number.replaceAll("\\+", "");
                                     }
                                     if (number.contains("-"))
                                     {
-                                        number.replace("-", "");
+                                        number = number.replaceAll("-", "");
                                     }
                                     if (number.contains(" "))
                                     {
-                                        number.replace(" ", "");
+                                        number = number.replaceAll(" ", "");
                                     }
                                     if (number.length() == 8){
-                                        number = "65"+number;
+                                        number = number = "65"+number;
                                     }
                                     number = number.trim();
                                     arrayListPhoneName.add(pCursor.getString(pCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)));

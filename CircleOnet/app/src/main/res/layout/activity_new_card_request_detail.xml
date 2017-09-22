@@ -180,6 +180,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:background="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
@@ -191,10 +192,12 @@
                         android:orientation="vertical"
                         android:gravity="center">
                         <ImageView
+                            android:id="@+id/imgUse"
                             android:layout_width="70dp"
                             android:layout_height="40dp"
                             android:src="@drawable/default_design_card"/>
                         <TextView
+                            android:id="@+id/txtUse"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Use"
@@ -203,6 +206,7 @@
                             android:layout_marginTop="15dp"
                             android:textColor="@color/colorPrimary"/>
                         <TextView
+                            android:id="@+id/txtUse1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="your previously uploaded"

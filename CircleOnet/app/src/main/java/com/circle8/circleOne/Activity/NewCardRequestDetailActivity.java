@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -71,7 +73,9 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
     public static String CardFront = "";
     public static String CardBack = "";
     public static Activity activity;
-    private String profileID ;
+    private String profileID , Card_Front = "", Card_Back = "";
+    ImageView imgUse;
+    TextView txtUse, txtUse1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -87,7 +91,9 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
         imgBack = (ImageView) findViewById(R.id.imgBack);
         llDefaultCard = (LinearLayout)findViewById(R.id.llDefaultCard);
         llNewCard = (LinearLayout)findViewById(R.id.llNewCard);
-
+        imgUse = (ImageView) findViewById(R.id.imgUse);
+        txtUse = (TextView) findViewById(R.id.txtUse);
+        txtUse1 = (TextView) findViewById(R.id.txtUse1);
         mViewPager1 = (ViewPager)findViewById(R.id.viewPager);
         mViewPager2 = (ViewPager)findViewById(R.id.viewPager1);
 
@@ -115,11 +121,29 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
         profile = i.getStringExtra("profile");
         image = i.getStringExtra("image") ;
         profileID = i.getStringExtra("profileID");
+        Card_Front = i.getStringExtra("Card_Front");
+        Card_Back = i.getStringExtra("Card_Back");
+
+       // Toast.makeText(getApplicationContext(), Card_Back, Toast.LENGTH_LONG).show();
 
         tvPerson.setText(i.getStringExtra("person"));
         tvDesignation.setText(i.getStringExtra("designation"));
         tvCompany.setText(i.getStringExtra("company"));
         tvProfile.setText(i.getStringExtra("profile"));
+
+        if (Card_Back.equals("") || Card_Front.equals("")){
+            llDefaultCard.setAlpha(0.4f);
+            llDefaultCard.setEnabled(false);
+            //imgUse.setColorFilter(getApplicationContext().getResources().getColor(R.color.unselected));
+            imgUse.setImageResource(R.drawable.unselected_card);
+            txtUse.setTextColor(getResources().getColor(R.color.unselected));
+            txtUse1.setTextColor(getResources().getColor(R.color.unselected));
+        }
+        else {
+            llDefaultCard.setAlpha(1.0f);
+            llDefaultCard.setEnabled(true);
+
+        }
 
       //  imgProfile.setImageResource(Integer.parseInt(i.getStringExtra("image")));
         if (image.equals(""))

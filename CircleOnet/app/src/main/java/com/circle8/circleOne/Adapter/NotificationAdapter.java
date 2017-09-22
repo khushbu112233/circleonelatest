@@ -130,6 +130,8 @@ public class NotificationAdapter extends BaseAdapter
         posi = position;
         String purpose = testimonialModels.get(position).getPurpose();
 
+
+
         if (purpose.equalsIgnoreCase("Recieved Testimonial"))
         {
             lnrTestRec.setVisibility(View.VISIBLE);
@@ -153,6 +155,31 @@ public class NotificationAdapter extends BaseAdapter
             holder.txtTestPurposeRec.setText(purpose);
             holder.txtTestNameRec.setText(testimonialModels.get(position).getFirstName());
         }
+
+        else if (purpose.equalsIgnoreCase("Connection Accepted"))
+        {
+            lnrFriend.setVisibility(View.VISIBLE);
+            lnrTestReq.setVisibility(View.GONE);
+            lnrTestRec.setVisibility(View.GONE);
+            if (testimonialModels.get(position).getUserPhoto().equals(""))
+            {
+                holder.imgFriend.setImageResource(R.drawable.usr);
+            }
+            else
+            {
+                Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgFriend);
+            }
+            if (testimonialModels.get(position).getStatus().equalsIgnoreCase("Accepted"))
+            {
+                holder.btnAcceptFriend.setVisibility(View.GONE);
+                holder.btnRejectFriend.setVisibility(View.GONE);
+                holder.txtRequested.setVisibility(View.VISIBLE);
+                holder.txtRequested.setText("Accepted");
+            }
+            holder.txtFriendPurpose.setText(purpose);
+            holder.txtFriendName.setText(testimonialModels.get(position).getFirstName());
+        }
+
         else if (purpose.equalsIgnoreCase("Connection Requested"))
         {
             lnrFriend.setVisibility(View.VISIBLE);
