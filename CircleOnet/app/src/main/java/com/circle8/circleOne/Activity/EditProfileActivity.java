@@ -134,7 +134,8 @@ public class EditProfileActivity extends AppCompatActivity implements
     public static ArrayList<String> addEventList = new ArrayList<>();
     public static AddEventAdapter addEventAdapter;
     public static TextView tvEventInfo;
-    ImageView imgDone, imgAdd, imgFb, imgLinkedin, imgTwitter, imgGoogle, imgYoutube;
+    ImageView imgAdd, imgFb, imgLinkedin, imgTwitter, imgGoogle, imgYoutube;
+    TextView imgDone;
     AutoCompleteTextView autoCompleteCompany, autoCompleteDesignation, autoCompleteIndustry;
     //String[] languages={"Android ","java","IOS","SQL","JDBC","Web services"};
     ArrayList<String> company, designation, industry, designation_id, company_id, industry_id;
@@ -316,7 +317,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         etAttachFile = (EditText) findViewById(R.id.etAttachFile);
         ivAttachFile = (ImageView) findViewById(R.id.ivAttachFile);
         session = new LoginSession(getApplicationContext());
-        imgDone = (ImageView) findViewById(R.id.imgDone);
+        imgDone = (TextView) findViewById(R.id.imgDone);
         imgBack = (ImageView) findViewById(R.id.imgBack);
         edtUserName = (EditText) findViewById(R.id.edtUserName);
         edtAddress1 = (EditText) findViewById(R.id.edtAddress1);
