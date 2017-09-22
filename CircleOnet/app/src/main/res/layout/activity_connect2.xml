@@ -552,7 +552,7 @@
                     android:id="@+id/tvAddedGroupInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="This friend is not added in any group"
+                    android:text="This friend is not added in any Circle"
                     android:textColor="@color/colorPrimary"
                     android:layout_centerHorizontal="true"
                     android:visibility="gone"

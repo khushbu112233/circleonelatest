@@ -42,10 +42,11 @@
             android:layout_marginBottom="3dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Please touch the '+' to add new profile"
+            android:text="Please touch the '+' button to add a new profile"
             android:textColor="@color/white"/>
 
         <TextView
+            android:id="@+id/txtdemo2"
             android:layout_below="@+id/txtdemo1"
             android:textSize="12dp"
             android:layout_centerHorizontal="true"
@@ -53,7 +54,18 @@
             android:layout_marginBottom="3dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Long Press on profile to edit profile"
+            android:text="@string/msg_edit_profile"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:layout_below="@+id/txtdemo2"
+            android:textSize="12dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/msg_delete_profile"
             android:textColor="@color/white"/>
 
         <ImageView

@@ -96,7 +96,7 @@ public class FingerPrintLogin extends AppCompatActivity {
                 mUser = mGson.fromJson(userString, UserObject.class);
                 if (mUser != null) {
                     loginSession.createLoginSession(mUser.getProfileid(), mUser.getUserId(), mUser.getUsername(), mUser.getEmail(), mUser.getImage(), mUser.getGender(), mUser.getPassword());
-                    Toast.makeText(getApplicationContext(), "LoggedIn Successfully..", Toast.LENGTH_LONG).show();
+                 //   Toast.makeText(getApplicationContext(), "LoggedIn Successfully..", Toast.LENGTH_LONG).show();
 
                     // login with only fingerprint
                     if (prefs.getBoolean("firstrun", true)) {
@@ -261,7 +261,7 @@ public class FingerPrintLogin extends AppCompatActivity {
             mUser = mGson.fromJson(userString, UserObject.class);
             if (mUser != null) {
                 loginSession.createLoginSession(mUser.getProfileid(), mUser.getUserId(), mUser.getUsername(), mUser.getEmail(), mUser.getImage(), mUser.getGender(), mUser.getPassword());
-                Toast.makeText(context, "LoggedIn Successfully..", Toast.LENGTH_LONG).show();
+               // Toast.makeText(context, "LoggedIn Successfully..", Toast.LENGTH_LONG).show();
 
                 // login with only fingerprint
                 if (prefs.getBoolean("firstrun", true)) {

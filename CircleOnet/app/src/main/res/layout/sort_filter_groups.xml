@@ -24,7 +24,7 @@
         <com.circle8.circleOne.Utils.cgTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Group Name"
+            android:text="Circle Name"
             android:id="@+id/tvPersonName1"
             android:textSize="16dp"
             android:layout_marginLeft="20dp"

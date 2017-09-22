@@ -391,7 +391,7 @@ public class ContactsImportActivity extends AppCompatActivity
 
                     if (success.equals("1"))
                     {
-                        Toast.makeText(getBaseContext(), "Request has been sent", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), getString(R.string.successful_request_sent), Toast.LENGTH_LONG).show();
                         startActivity(new Intent(ContactsImportActivity.this, CardsActivity.class));
                         finish();
                     }

@@ -100,7 +100,7 @@ public class SubscriptionAdapter extends BaseAdapter
 
         holder.tvPackageName.setText(subscriptionModelArrayList.get(position).getPackageName());
         holder.tvConnect_Group.setText(subscriptionModelArrayList.get(position).getConnectionLimit()+" contacts, up to " +
-                                subscriptionModelArrayList.get(position).getGroupLimit()+" groups,");
+                                subscriptionModelArrayList.get(position).getGroupLimit()+" circles,");
         holder.tvConnection.setText("up to "+subscriptionModelArrayList.get(position).getMonthlyConnectionLimit()+" connections per month.");
         holder.tvAmount.setText("S$"+subscriptionModelArrayList.get(position).getPrice());
 

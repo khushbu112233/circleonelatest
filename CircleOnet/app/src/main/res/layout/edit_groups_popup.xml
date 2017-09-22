@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Please select the group(s)"
+            android:text="Please select the circle(s)"
             android:textColor="@color/colorPrimary"
             android:textSize="18dp"
             android:layout_marginLeft="10dp"

@@ -44,4 +44,20 @@
     <integer name="viewfinder_border_width">4</integer>
     <integer name="viewfinder_border_length">60</integer>
 
+    <string name="registration_success">Registration successful! Please check your email to activate your account</string>
+    <string name="no_friend_connection">No CircleOne name cards collected, Start Tapping</string>
+    <string name="successful_request_sent">Notification has been sent to your selected contact group</string>
+    <string name="no_connection">You do not have any connections</string>
+    <string name="btn_add_profile_text">Please touch the plus button to add new profile</string>
+    <string name="msg_edit_profile">Click on profile to edit</string>
+    <string name="msg_delete_profile">Tap and Hold on the profile to delete</string>
+    <string name="upload_doc">Upload Document</string>
+    <string name="front_card">Front Card</string>
+    <string name="back_card">Back Card</string>
+    <string name="attch_file">Attach file</string>
+    <string name="take_photo">Take Photo!</string>
+    <string name="larger_file">Sorry! : Please select a file not more than 3MB</string>
+    <string name="msg_create_group">Please touch the plus "+" button to create a new circle</string>
+    <string name="take_photo_group">Take Photo!</string>
+    <string name="add_group_member">Please add members</string>
 </resources>

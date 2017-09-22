@@ -39,7 +39,7 @@
             android:layout_marginBottom="3dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Please touch the '+' to add a new group"
+            android:text="@string/msg_create_group"
             android:textColor="@color/white"/>
         <ImageView
             android:id="@+id/imgProfileMenu"
