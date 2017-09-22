@@ -606,8 +606,8 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
             @Override
             public void onClick(View v)
             {
-                List1Fragment.allTags.clear();
-                List1Fragment.nfcModel.clear();
+               // List1Fragment.allTags.clear();
+              //  List1Fragment.nfcModel.clear();
                 session.logoutUser();
                 try {
 
