@@ -631,7 +631,7 @@ public class ConnectActivity extends AppCompatActivity
                     String success = response.getString("success");
 
                     if (success.equals("1")) {
-                        Toast.makeText(getApplicationContext(), "Request has been sent..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.successful_request_sent), Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     }
@@ -986,7 +986,7 @@ public class ConnectActivity extends AppCompatActivity
                     }
                     // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
                 } else {
-                    Toast.makeText(getApplicationContext(), "Not able to Add Friend in groups", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to Add Friend in circle", Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -1058,7 +1058,7 @@ public class ConnectActivity extends AppCompatActivity
         {
             super.onPreExecute();
             dialog = new ProgressDialog(ConnectActivity.this);
-            dialog.setMessage("Fetching Groups...");
+            dialog.setMessage("Fetching Circles...");
             dialog.show();
             dialog.setCancelable(false);
         }

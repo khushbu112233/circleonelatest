@@ -885,7 +885,7 @@ public class CardDetail extends NfcActivity
         {
             super.onPreExecute();
             dialog = new ProgressDialog(CardDetail.this);
-            dialog.setMessage("Fetching Groups...");
+            dialog.setMessage("Fetching Circles...");
             dialog.show();
             dialog.setCancelable(false);
         }
@@ -975,7 +975,7 @@ public class CardDetail extends NfcActivity
                     }
                     // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
                 } else {
-                    Toast.makeText(getApplicationContext(), "Not able to Add Friend in groups", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to Add Friend in circle", Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

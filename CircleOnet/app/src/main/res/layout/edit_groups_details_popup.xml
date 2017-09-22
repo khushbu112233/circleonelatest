@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:text="Group 1"
+            android:text="Circle 1"
             android:textStyle="bold"
             android:layout_gravity="center_horizontal"
             android:layout_centerVertical="true"

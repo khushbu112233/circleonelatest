@@ -1603,17 +1603,17 @@ public class EditProfileActivity extends AppCompatActivity implements
     }
 
     private void selectFile() {
-        items = new CharSequence[]{"Take Document", "Take Picture", "Choose from Media", "Take Audio", "Cancel"};
+        items = new CharSequence[]{"Upload Document", "Take Photo!", "Choose from Media", "Take Audio", "Cancel"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(EditProfileActivity.this);
-        builder.setTitle("Attach File!");
+        builder.setTitle("Attach File");
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
                 boolean result = Utility.checkPermission(EditProfileActivity.this);
 
-                if (items[item].equals("Take Picture")) {
-                    userChoosenTask = "Take Picture";
+                if (items[item].equals("Take Photo!")) {
+                    userChoosenTask = "Take Photo!";
                     if (result) {
                         cameraIntent();
                     }
@@ -1624,8 +1624,8 @@ public class EditProfileActivity extends AppCompatActivity implements
                     }
                 } else if (items[item].equals("Cancel")) {
                     dialog.dismiss();
-                } else if (items[item].equals("Take Document")) {
-                    userChoosenTask = "Take Document";
+                } else if (items[item].equals("Upload Document")) {
+                    userChoosenTask = "Upload Document";
                     if (result) {
                         documentIntent();
                     }
@@ -2191,8 +2191,8 @@ public class EditProfileActivity extends AppCompatActivity implements
         if (mb_size > 3.00) {
             Toast.makeText(getApplicationContext(), "File is greater than 3MB" + mb_size, Toast.LENGTH_LONG).show();
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(EditProfileActivity.this);
-            alertDialogBuilder.setTitle("Warning!");
-            alertDialogBuilder.setMessage("Please select file less than 3MB.");
+            alertDialogBuilder.setTitle("Sorry! :");
+            alertDialogBuilder.setMessage("Please select a file not more than 3MB.");
             alertDialogBuilder.setCancelable(false)
                     .setPositiveButton("Okay",
                             new DialogInterface.OnClickListener() {

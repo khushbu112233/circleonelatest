@@ -228,7 +228,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:text="Groups"
+            android:text="Circles"
             android:textColor="@android:color/white"
             android:textSize="17dp" />
 

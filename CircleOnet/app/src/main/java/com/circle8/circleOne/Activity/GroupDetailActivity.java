@@ -230,7 +230,7 @@ public class GroupDetailActivity extends AppCompatActivity
                 //text_entry is an Layout XML file containing two text field to display in alert dialog
                 final AlertDialog.Builder alert = new AlertDialog.Builder(GroupDetailActivity.this);
                 alert.setCancelable(false);
-                alert.setTitle("Update Group").setView(layout).setPositiveButton("Update",
+                alert.setTitle("Update Circle").setView(layout).setPositiveButton("Update",
                         new DialogInterface.OnClickListener()
                         {
                             public void onClick(DialogInterface dialog, int whichButton)
@@ -239,13 +239,13 @@ public class GroupDetailActivity extends AppCompatActivity
                                 GroupDesc = descriptionBox.getText().toString();
 
                                 if (GroupName.equals("")){
-                                    Toast.makeText(getApplicationContext(), "Enter Group Name", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Enter Circle Name", Toast.LENGTH_LONG).show();
                                 }
                                 else if (GroupDesc.equals("")){
-                                    Toast.makeText(getApplicationContext(), "Enter Group Description", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Enter Circle Description", Toast.LENGTH_LONG).show();
                                 }
                                 else if (final_ImgBase64.equals("")){
-                                    Toast.makeText(getApplicationContext(), "Upload Group Image", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Upload Circle Image", Toast.LENGTH_LONG).show();
                                 }
                                 else {
                                     new HttpAsyncTaskPhotoUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
@@ -391,7 +391,7 @@ public class GroupDetailActivity extends AppCompatActivity
         protected void onPreExecute() {
             super.onPreExecute();
             dialog = new ProgressDialog(GroupDetailActivity.this);
-            dialog.setMessage("Creating Group...");
+            dialog.setMessage("Creating Circle...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
             dialog.setCancelable(false);
@@ -418,7 +418,7 @@ public class GroupDetailActivity extends AppCompatActivity
                     String Message = jsonObject.getString("Message").toString();
                     if (Success.equals("1"))
                     {
-                        Toast.makeText(getApplicationContext(), "Group Updated..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Circle Updated..", Toast.LENGTH_LONG).show();
 
                         tvGroupName.setText(GroupName);
                         tvGroupDesc.setText(GroupDesc);
@@ -440,7 +440,7 @@ public class GroupDetailActivity extends AppCompatActivity
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "Not able to create Group..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to create Circle..", Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

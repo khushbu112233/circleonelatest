@@ -978,7 +978,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         @Override
         protected void onPostExecute(String result) {
             dialog.dismiss();
-            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+          //  Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result == "") {
                     Toast.makeText(getApplicationContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
@@ -988,7 +988,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                     String success = response.getString("success");
 
                     if (success.equals("1")) {
-                        Toast.makeText(getApplicationContext(), "Added Successfully", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.successful_request_sent), Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
                         intent.putExtra("viewpager_position", CardsActivity.mViewPager.getCurrentItem());
                         intent.putExtra("nested_viewpager_position", CardsFragment.mViewPager.getCurrentItem());

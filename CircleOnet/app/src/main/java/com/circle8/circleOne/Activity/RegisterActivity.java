@@ -606,33 +606,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             return null;
 
         }
-
-
-        protected void onPostExecute(Void unused) {
-            // NOTE: You can call UI Element here.
-
-            pDialog.dismiss();
-            try {
-
-                if (Content != null) {
-                    JSONObject jsonResponse = new JSONObject(Content);
-//                    Toast.makeText(getApplicationContext(), Content, Toast.LENGTH_LONG).show();
-                    String status = jsonResponse.getString("status");
-                    if ("200".equals(status)) {
-
-                        Toast.makeText(getApplicationContext(), "File uploaded successfully", Toast.LENGTH_SHORT).show();
-
-                    } else {
-
-                        Toast.makeText(getApplicationContext(), "Something is wrong ! Please try again.", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-
     }
 
     public static String BitMapToString(Bitmap bitmap) {
