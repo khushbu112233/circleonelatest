@@ -24,7 +24,6 @@ public class ContactUsActivity extends AppCompatActivity
         tvCompany = (TextView)findViewById(R.id.tvCompanyName);
         tvPartner = (TextView)findViewById(R.id.tvPartner);
         tvAddress1 = (TextView)findViewById(R.id.tvAddress1);
-        tvAddress2 = (TextView)findViewById(R.id.tvAddress2);
         tvWebsite = (TextView)findViewById(R.id.tvWebsite);
         tvEmail = (TextView)findViewById(R.id.tvMail);
         tvPhone = (TextView)findViewById(R.id.tvPhone);

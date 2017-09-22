@@ -9,6 +9,7 @@
     tools:context="com.circle8.circleOne.Activity.NewCardRequestActivity">
 
     <RelativeLayout
+        android:elevation="15dp"
         android:id="@+id/rlActionBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

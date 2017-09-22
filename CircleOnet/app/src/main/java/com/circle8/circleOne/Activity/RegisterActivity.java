@@ -2,6 +2,7 @@ package com.circle8.circleOne.Activity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -1047,18 +1048,44 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     JSONObject jsonObject = new JSONObject(result);
                     String success = jsonObject.getString("success").toString();
                     String message = jsonObject.getString("message").toString();
-                    String Status = jsonObject.getString("Status").toString();
+                    final String Status = jsonObject.getString("Status").toString();
                     UserID = jsonObject.getString("userId").toString();
                     if (success.equals("1") && message.equalsIgnoreCase("Successfully Registered.")) {
-                        Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+                       // Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
 
-                        if (Status.equalsIgnoreCase("Verified")) {
-                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            new HttpAsyncTaskVerify().execute("http://circle8.asia:8999/Onet.svc/AccVerification/" + UserID);
-                        }
+                        new Handler().postDelayed(new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+
+                                final Dialog dialog = new Dialog(RegisterActivity.this);
+                                dialog.setContentView(R.layout.register_custom_popup);
+
+                                dialog.show();
+
+                                if (Status.equalsIgnoreCase("Verified")) {
+                                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    new HttpAsyncTaskVerify().execute("http://circle8.asia:8999/Onet.svc/AccVerification/" + UserID);
+                                }
+
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run()
+                                    {
+                                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                        finish();
+                                    }
+                                },2500);
+
+//                Animation anim = AnimationUtils.loadAnimation(SplashActivity.this, R.anim.img_anim);
+//                imageView1.startAnimation(anim);
+                            }
+                        }, 2500);
+
                     } else {
                         Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
                     }
@@ -1082,7 +1109,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             dialog = new ProgressDialog(RegisterActivity.this);
             dialog.setMessage("Verifying..please Check your Mail..");
             //dialog.setTitle("Saving Reminder");
-            dialog.show();
+           // dialog.show();
             dialog.setCancelable(false);
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
@@ -1097,7 +1124,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
-            dialog.dismiss();
+          //  dialog.dismiss();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
             finish();

@@ -9,6 +9,7 @@
     tools:context="com.circle8.circleOne.Activity.Help2Activity">
 
     <RelativeLayout
+        android:elevation="15dp"
         android:id="@+id/rlTabBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
