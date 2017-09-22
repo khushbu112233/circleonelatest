@@ -54,7 +54,7 @@ public class EventsSelectOption extends AppCompatActivity {
         imgDrawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+              /*  Intent go = new Intent(getApplicationContext(),CardsActivity.class);
 
                 // you pass the position you want the viewpager to show in the extra,
                 // please don't forget to define and initialize the position variable
@@ -62,7 +62,10 @@ public class EventsSelectOption extends AppCompatActivity {
                 go.putExtra("viewpager_position", 2);
 
                 startActivity(go);
+                finish();*/
+
                 finish();
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
             }
         });
 

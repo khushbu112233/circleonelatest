@@ -326,6 +326,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                 } else if (pos == 2) {
                     Intent intent = new Intent(getApplicationContext(), EventsSelectOption.class);
                     startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_down, R.anim.slide_out_down);
                 }
             }
         });
