@@ -28,6 +28,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Adapter.GroupAdapter;
+import com.circle8.circleOne.Adapter.GroupDisplayAdapter;
 import com.circle8.circleOne.Adapter.GroupsItemsAdapter;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.GroupModel;
@@ -716,6 +717,7 @@ public class GroupsActivity extends AppCompatActivity
                         nfcModelTag.setGroup_Name(object.getString("group_Name"));
                         nfcModelTag.setGroup_Desc(object.getString("group_desc"));
                         nfcModelTag.setGroup_Photo(object.getString("group_photo"));
+                        nfcModelTag.setGroup_member_count(object.getString("MemberCount"));
 
                         JSONArray memberArray = object.getJSONArray("Members");
 
@@ -797,9 +799,15 @@ public class GroupsActivity extends AppCompatActivity
                         groupModelArrayList.add(nfcModelTag);
                     }
 
-                    groupsItemsAdapter = new GroupsItemsAdapter(getApplicationContext(), groupModelArrayList);
+                    // for displaying groups with members
+                  /*  groupsItemsAdapter = new GroupsItemsAdapter(getApplicationContext(), groupModelArrayList);
                     listView.setAdapter(groupsItemsAdapter);
-                    groupsItemsAdapter.notifyDataSetChanged();
+                    groupsItemsAdapter.notifyDataSetChanged();*/
+
+                    // for displaying only groups
+                    GroupDisplayAdapter groupDisplayAdapter = new GroupDisplayAdapter(GroupsActivity.this, groupModelArrayList);
+                    listView.setAdapter(groupDisplayAdapter);
+                    groupDisplayAdapter.notifyDataSetChanged();
 
                     // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
                 }

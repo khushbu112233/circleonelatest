@@ -1,9 +1,16 @@
 package com.circle8.circleOne.Adapter;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.circle8.circleOne.Model.GroupDetailModel;
@@ -28,6 +35,7 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
     private Context context;
     private int layoutResourceId;
     private ArrayList<GroupDetailModel> groupDetailModelArrayList = new ArrayList<>();
+    String profileImg ;
 
     private ArrayList<String> name = new ArrayList<>();
     private ArrayList<String> designation = new ArrayList<>();
@@ -57,7 +65,7 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
         this.imgprofile = imgprofile ;
     }
 
-    public GroupDetailAdapter(Context applicationContext, int group_detail_items,
+    public GroupDetailAdapter(Activity applicationContext, int group_detail_items,
                               ArrayList<GroupDetailModel> groupDetailModelArrayList)
     {
         this.context = applicationContext ;
@@ -135,16 +143,43 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
 
         holder.personDetail.setText(Address+"\n"+Company+"\n"+Website+"\n"+Email+"\n"+Phone);
 
-        String profile = groupDetailModelArrayList.get(position).getImgProfile() ;
+         profileImg = groupDetailModelArrayList.get(position).getImgProfile() ;
 
-        if (profile.equals(""))
+        if (profileImg.equals(""))
         {
             holder.personImage.setImageResource(R.drawable.usr_1);
         }
         else
         {
-            Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/"+profile).placeholder(R.drawable.usr_1).into(holder.personImage);
+            Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/"+profileImg).placeholder(R.drawable.usr_1).into(holder.personImage);
         }
+
+        holder.personImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.imageview_popup);
+
+                ImageView ivViewImage = (ImageView)dialog.findViewById(R.id.ivViewImage);
+                if (profileImg.equals(""))
+                {
+                    ivViewImage.setImageResource(R.drawable.usr_1);
+                }
+                else
+                {
+                    Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/"+profileImg).placeholder(R.drawable.usr_1).into(ivViewImage);
+                }
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                /*WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
+                wmlp.gravity = Gravity.TOP | Gravity.LEFT ;
+                wmlp.x = 50;
+                wmlp.y = 150;   //y position*/
+                dialog.show();
+            }
+        });
+
     }
 
     static class ViewHolder

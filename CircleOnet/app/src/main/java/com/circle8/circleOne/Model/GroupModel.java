@@ -11,6 +11,7 @@ public class GroupModel
     String group_Name = "";
     String group_Photo = "";
     String group_Desc = "";
+    String group_member_count = "";
 
     String profileId1 ;
     String profileId2 ;
@@ -46,6 +47,14 @@ public class GroupModel
     String memberArrays ;
 
     public GroupModel() {
+    }
+
+    public String getGroup_member_count() {
+        return group_member_count;
+    }
+
+    public void setGroup_member_count(String group_member_count) {
+        this.group_member_count = group_member_count;
     }
 
     public String getGroup_ID() {

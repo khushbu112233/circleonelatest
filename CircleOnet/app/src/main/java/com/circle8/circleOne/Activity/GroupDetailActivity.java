@@ -1,12 +1,15 @@
 package com.circle8.circleOne.Activity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -138,6 +141,31 @@ public class GroupDetailActivity extends AppCompatActivity
 
         new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/FetchConnection");
 
+        imgProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Dialog dialog = new Dialog(GroupDetailActivity.this);
+                dialog.setContentView(R.layout.imageview_popup);
+
+                ImageView ivViewImage = (ImageView)dialog.findViewById(R.id.ivViewImage);
+                if (group_Img.equals(""))
+                {
+                    ivViewImage.setImageResource(R.drawable.usr_1);
+                }
+                else
+                {
+                    Picasso.with(GroupDetailActivity.this).load("http://circle8.asia/App_ImgLib/Group/"+group_Img).placeholder(R.drawable.usr_1).into(ivViewImage);
+                }
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                /*WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
+                wmlp.gravity = Gravity.TOP | Gravity.LEFT ;
+                wmlp.x = 50;
+                wmlp.y = 150;   //y position*/
+                dialog.show();
+            }
+        });
         /*name.add("Kajal Patadia");
         designation.add("Software Developer");
         company.add("Ample Arch Infotech Pvt. Ltd.");
@@ -645,7 +673,7 @@ public class GroupDetailActivity extends AppCompatActivity
                         groupDetailModelArrayList.add(groupDetailModel);
                     }
 
-                    groupDetailAdapter = new GroupDetailAdapter(getApplicationContext(), R.layout.group_detail_items, groupDetailModelArrayList);
+                    groupDetailAdapter = new GroupDetailAdapter(GroupDetailActivity.this, R.layout.group_detail_items, groupDetailModelArrayList);
                     listView.setAdapter(groupDetailAdapter);
                     groupDetailAdapter.notifyDataSetChanged();
 

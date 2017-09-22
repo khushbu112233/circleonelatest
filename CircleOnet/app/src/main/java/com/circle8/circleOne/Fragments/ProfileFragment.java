@@ -1,9 +1,12 @@
 package com.circle8.circleOne.Fragments;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,10 +17,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,6 +31,7 @@ import android.widget.Toast;
 import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.Activity.EditProfileActivity;
 import com.circle8.circleOne.Activity.LoginActivity;
+import com.circle8.circleOne.Activity.MyAccountActivity;
 import com.circle8.circleOne.Activity.TestimonialActivity;
 import com.circle8.circleOne.Activity.TestimonialRequest;
 import com.circle8.circleOne.Adapter.CardSwipe;
@@ -114,6 +120,7 @@ public class ProfileFragment extends Fragment
     public ProfileFragment() {
         // Required empty public constructor
     }
+    private String displayProfile ;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -185,6 +192,32 @@ public class ProfileFragment extends Fragment
         HashMap<String, String> user = session.getUserDetails();
         UserID = user.get(LoginSession.KEY_USERID);
         profileId = user.get(LoginSession.KEY_PROFILEID);
+
+
+        imgProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Dialog dialog = new Dialog(getActivity());
+                dialog.setContentView(R.layout.imageview_popup);
+
+                ImageView ivViewImage = (ImageView)dialog.findViewById(R.id.ivViewImage);
+                if (displayProfile.equals(""))
+                {
+                    ivViewImage.setImageResource(R.drawable.usr_1);
+                }
+                else
+                {
+                    Picasso.with(getActivity()).load("http://circle8.asia/App_ImgLib/UserProfile/"+displayProfile).placeholder(R.drawable.usr_1).into(ivViewImage);
+                }
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+               /* WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
+                wmlp.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
+                wmlp.y = 300;*/   //y position
+                dialog.show();
+            }
+        });
 
         fbUrl.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -478,9 +511,6 @@ public class ProfileFragment extends Fragment
                 startActivity(Intent.createChooser(sharingIntent, "Share Profile Via"));
             }
         });
-
-
-
 
         imgProfileMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -935,6 +965,8 @@ public class ProfileFragment extends Fragment
                         nfcModelTag.setAttachment_FileName(object.getString("Attachment_FileName"));
                         allTags.add(nfcModelTag);
                       //  GetData(getContext());
+
+                        displayProfile = object.getString("UserPhoto");
                     }
 
                     TestimonialProfileId = allTags.get(0).getProfileID();

@@ -1,6 +1,7 @@
 package com.circle8.circleOne.Activity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,7 +9,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.drawable.ColorDrawable;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -20,8 +23,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
@@ -205,7 +210,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     {
         if ( v == imgProfile)
         {
-            final AlertDialog alertDialog = new AlertDialog.Builder(MyAccountActivity.this).create();
+          /*  final AlertDialog alertDialog = new AlertDialog.Builder(MyAccountActivity.this).create();
             LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             final View dialogView = inflater.inflate(R.layout.imageview_popup, null);
 
@@ -221,7 +226,27 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             }
 
             alertDialog.setView(dialogView);
-            alertDialog.show();
+            alertDialog.show();*/
+
+            Dialog dialog = new Dialog(MyAccountActivity.this);
+            dialog.setContentView(R.layout.imageview_popup);
+
+            ImageView ivViewImage = (ImageView)dialog.findViewById(R.id.ivViewImage);
+            if (user_Photo.equals(""))
+            {
+                ivViewImage.setImageResource(R.drawable.usr_1);
+            }
+            else
+            {
+                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+user_Photo).placeholder(R.drawable.usr_1).into(ivViewImage);
+            }
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+            WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
+            wmlp.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
+            wmlp.y = 400;   //y position
+            dialog.show();
+
         }
         if ( v == ivEditImg)
         {

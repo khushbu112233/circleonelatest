@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/llThirdUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <RelativeLayout
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="0.4"
+                android:gravity="center">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    app:civ_border_width="1dp"
+                    app:civ_border_color="@color/colorPrimary"
+                    android:src="@drawable/usr"
+                    android:id="@+id/imgGroup"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp" />
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@drawable/mini_camera_blue"
+                    android:layout_alignParentRight="false"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginLeft="40dp"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="center|left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="0.2">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimary"
+                        android:gravity="left"
+                        android:hint="Group Name"
+                        android:textColorHint="@color/colorPrimary"
+                        android:visibility="visible"
+                        android:id="@+id/tvGroupName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimary"
+                        android:gravity="left"
+                        android:hint="(15)"
+                        android:textColorHint="@color/colorPrimary"
+                        android:visibility="visible"
+                        android:id="@+id/tvMemberCount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:layout_marginLeft="0dp"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:textColor="@color/gray_text"
+                    android:gravity="left"
+                    android:hint="Group Description"
+                    android:visibility="visible"
+                    android:id="@+id/tvGroupDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:layout_marginTop="5dp"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_weight="0.4"
+                android:ellipsize="end"
+                android:maxLines="4"
+                android:layout_gravity="center_vertical|right"
+                android:gravity="center|center_vertical"
+                android:text="Edit"
+                android:visibility="visible"
+                android:textColor="@color/colorPrimary"
+                android:id="@+id/tvPersonDetail3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:visibility="gone"
+            android:background="@color/colorAccent"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
