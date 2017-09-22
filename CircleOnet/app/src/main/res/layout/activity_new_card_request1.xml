@@ -257,7 +257,8 @@
                                 android:id="@+id/etPerson"
                                 android:textColor="#6b6c6e"
                                 android:textSize="13sp"
-                                android:text="Person"
+                                android:hint="Person"
+                                android:textColorHint="#6b6c6e"
                                 android:backgroundTint="@color/colorPrimary"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" />
@@ -277,7 +278,8 @@
                                 android:id="@+id/etCompany"
                                 android:textColor="#6b6c6e"
                                 android:textSize="13sp"
-                                android:text="Company"
+                                android:hint="Company"
+                                android:textColorHint="#6b6c6e"
                                 android:backgroundTint="@color/colorPrimary"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" />
@@ -297,7 +299,8 @@
                                 android:id="@+id/etPhone"
                                 android:textColor="#6b6c6e"
                                 android:textSize="13sp"
-                                android:text="Phone No."
+                                android:hint="Phone No."
+                                android:textColorHint="#6b6c6e"
                                 android:backgroundTint="@color/colorPrimary"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" />
@@ -316,7 +319,8 @@
                                 android:id="@+id/etAddress1"
                                 android:textColor="#6b6c6e"
                                 android:textSize="13sp"
-                                android:text="Address"
+                                android:hint="Address"
+                                android:textColorHint="#6b6c6e"
                                 android:backgroundTint="@color/colorPrimary"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" />

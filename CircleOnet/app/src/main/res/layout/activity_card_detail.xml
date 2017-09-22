@@ -763,7 +763,7 @@
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
-                android:text="time: 04/04/2017   10:25am"
+                android:hint="time: 04/04/2017   10:25am"
                 android:textColor="#6b6c6e"
                 android:textSize="13sp" />
 
@@ -786,7 +786,7 @@
                     android:id="@+id/txtRemark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="246 Macpherson Road.Betime Building #03-04.Singapore 348578"
+                    android:hint="246 Macpherson Road.Betime Building #03-04.Singapore 348578"
                     android:textColor="#6b6c6e"
                     android:textSize="13sp" />
             </LinearLayout>

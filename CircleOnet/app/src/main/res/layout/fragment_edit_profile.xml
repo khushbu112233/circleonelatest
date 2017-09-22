@@ -887,7 +887,7 @@
                             android:background="@drawable/txt_box_blue"
                             android:gravity="start"
                             android:padding="10dp"
-                            android:text="100 words or less"
+                            android:hint="100 words or less"
                             android:textSize="13sp" />
 
                         <RelativeLayout
@@ -904,7 +904,7 @@
                                 android:background="@drawable/txt_box_blue"
                                 android:gravity="start"
                                 android:padding="10dp"
-                                android:text="link name"
+                                android:hint="link name"
                                 android:textSize="13sp" />
 
                             <ImageView
@@ -923,7 +923,7 @@
                                 android:background="@drawable/txt_box_blue"
                                 android:gravity="start"
                                 android:padding="10dp"
-                                android:text="link address"
+                                android:hint="link address"
                                 android:textSize="13sp" />
                         </RelativeLayout>
 
@@ -954,7 +954,7 @@
                             android:background="@drawable/txt_box_blue"
                             android:gravity="start"
                             android:padding="10dp"
-                            android:text="100 words or less"
+                            android:hint="100 words or less"
                             android:textSize="13sp" />
 
                         <RelativeLayout
@@ -971,7 +971,7 @@
                                 android:background="@drawable/txt_box_blue"
                                 android:gravity="start"
                                 android:padding="10dp"
-                                android:text="link name"
+                                android:hint="link name"
                                 android:textSize="13sp" />
 
                             <ImageView
@@ -990,7 +990,7 @@
                                 android:background="@drawable/txt_box_blue"
                                 android:gravity="start"
                                 android:padding="10dp"
-                                android:text="link address"
+                                android:hint="link address"
                                 android:textSize="13sp" />
                         </RelativeLayout>
 
@@ -1026,7 +1026,7 @@
                                 android:background="@drawable/txt_box_blue"
                                 android:gravity="start"
                                 android:padding="10dp"
-                                android:text="Attachment Name"
+                                android:hint="Attachment Name"
                                 android:textSize="13sp" />
 
                             <LinearLayout
