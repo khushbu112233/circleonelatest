@@ -8,6 +8,7 @@
     tools:context="com.circle8.circleOne.Activity.GroupsActivity">
 
     <RelativeLayout
+        android:elevation="15dp"
         android:id="@+id/rlTabBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,7 +30,7 @@
             android:layout_marginTop="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Groups"
+            android:text="Circles"
             android:textColor="@color/white"/>
         <TextView
             android:layout_below="@+id/txtTitle"

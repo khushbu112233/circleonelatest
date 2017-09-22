@@ -55,6 +55,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:elevation="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -189,7 +190,8 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_marginTop="10dp"
+                        android:elevation="15dp"
+                        android:layout_marginTop="0dp"
                         android:layout_marginBottom="5dp"
                         android:gravity="center"
                         android:background="@color/white"
@@ -257,7 +259,7 @@
                             android:id="@+id/lnrAddress1"
                             android:layout_marginRight="15dp"
                             android:layout_marginLeft="20dp"
-                            android:layout_marginTop="15dp"
+                            android:layout_marginTop="5dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
@@ -270,28 +272,7 @@
                                 android:id="@+id/tvAddress1"
                                 android:textColor="@color/colorPrimary"
                                 android:textSize="15sp"
-                                android:text="65 Ubi Road 1 #03--90 Oxley Biz Hub 1,"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/lnrAddress2"
-                            android:layout_marginRight="15dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="15dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-                            <ImageView
-                                android:layout_marginRight="20dp"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp" />
-                            <TextView
-                                android:id="@+id/tvAddress2"
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="15sp"
-                                android:text="Singapore 408729"
+                                android:text="65 Ubi Road 1 #03--90 Oxley Biz Hub 1, \nSingapore 408729"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
                         </LinearLayout>
@@ -300,7 +281,7 @@
                             android:id="@+id/lnrWebsite"
                             android:layout_marginRight="15dp"
                             android:layout_marginLeft="20dp"
-                            android:layout_marginTop="15dp"
+                            android:layout_marginTop="10dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
@@ -324,7 +305,7 @@
                             android:id="@+id/llMailBox"
                             android:layout_marginRight="15dp"
                             android:layout_marginLeft="20dp"
-                            android:layout_marginTop="15dp"
+                            android:layout_marginTop="10dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
@@ -348,7 +329,7 @@
                             android:id="@+id/lnrPhone"
                             android:layout_marginRight="15dp"
                             android:layout_marginLeft="20dp"
-                            android:layout_marginTop="15dp"
+                            android:layout_marginTop="10dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
@@ -370,7 +351,7 @@
 
                         <LinearLayout
                             android:id="@+id/lnrWork"
-                            android:layout_marginRight="15dp"
+                            android:layout_marginRight="10dp"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="15dp"
                             android:layout_width="match_parent"
