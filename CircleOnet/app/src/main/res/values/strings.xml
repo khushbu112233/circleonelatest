@@ -60,4 +60,7 @@
     <string name="msg_create_group">Please touch the plus "+" button to create a new circle</string>
     <string name="take_photo_group">Take Photo!</string>
     <string name="add_group_member">Please add members</string>
+
+    <string name="delete">Delete</string>
+
 </resources>

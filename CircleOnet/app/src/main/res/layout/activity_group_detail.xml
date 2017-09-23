@@ -124,9 +124,9 @@
                     android:id="@+id/ivProfileShare"
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="15dp"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:src="@drawable/ic_profile_white"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/list_selecting"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentBottom="true"/>
 
@@ -136,9 +136,19 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="10dp"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/ic_edit_white"/>
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/list_adding"/>
+
+                <ImageView
+                    android:id="@+id/ivUpload"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/list_uploading"/>
 
             </RelativeLayout>
         </FrameLayout>

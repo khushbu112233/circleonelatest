@@ -1,40 +1,30 @@
-package com.circle8.circleOne.Adapter;
+package com.circle8.circleOne.Activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.BaseAdapter;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.circle8.circleOne.Activity.GroupDetailActivity;
-import com.circle8.circleOne.Activity.GroupsActivity;
-import com.circle8.circleOne.Activity.MyAccountActivity;
-import com.circle8.circleOne.Activity.UpdateGroupActivity;
+import com.circle8.circleOne.Adapter.GroupDisplayAdapter;
 import com.circle8.circleOne.Helper.LoginSession;
-import com.circle8.circleOne.Model.GroupModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
 import com.squareup.picasso.Picasso;
@@ -53,7 +43,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -62,211 +51,113 @@ import static com.circle8.circleOne.Activity.RegisterActivity.BitMapToString;
 import static com.circle8.circleOne.Activity.RegisterActivity.ConvertBitmapToString;
 import static com.circle8.circleOne.Activity.RegisterActivity.rotateImage;
 
-/**
- * Created by ample-arch on 9/22/2017.
- */
-
-public class GroupDisplayAdapter extends BaseAdapter
+public class UpdateGroupActivity extends AppCompatActivity
 {
-    Context context ;
-    ArrayList<GroupModel> groupModelsList ;
-    String groupPhoto ;
-    String GroupName, GroupDesc, GroupImage = "", final_ImgBase64 = "";;
     CircleImageView ivGroupImage ;
+    ImageView ivMiniCamera ;
+    EditText etCircleName, etCircleDesc ;
+    TextView tvCreateOrUpdate, tvCancel, tvCircleNameInfo, tvCircleDescInfo, tvProfileInfo ;
+
     LoginSession session;
     String profile_id, user_id, group_id ;
+    String GroupName, GroupDesc, GroupImage = "", final_ImgBase64 = "";
+
 
     CharSequence[] items ;
     private String userChoosenTask ;
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     String image;
 
-    public GroupDisplayAdapter(Activity activity, ArrayList<GroupModel> groupModelArrayList)
-    {
-        this.context = activity ;
-        this.groupModelsList = groupModelArrayList ;
 
-        session = new LoginSession(context);
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_update_group);
+
+        session = new LoginSession(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
         profile_id = user.get(LoginSession.KEY_PROFILEID);
         user_id = user.get(LoginSession.KEY_USERID);
-    }
 
-    @Override
-    public int getCount() {
-        return groupModelsList.size();
-    }
+        ivGroupImage = (CircleImageView)findViewById(R.id.imgProfile);
+        ivMiniCamera = (ImageView)findViewById(R.id.imgCamera);
+        etCircleName = (EditText)findViewById(R.id.etCircleName);
+        etCircleDesc = (EditText)findViewById(R.id.etCircleDesc);
+        tvCreateOrUpdate = (TextView)findViewById(R.id.tvCreateOrUpdate);
+        tvCancel = (TextView)findViewById(R.id.tvCancel);
+        tvCircleNameInfo = (TextView)findViewById(R.id.tvCircleNameInfo);
+        tvCircleDescInfo = (TextView)findViewById(R.id.tvCircleDescInfo);
+        tvProfileInfo = (TextView)findViewById(R.id.tvProfileInfo);
+        tvCreateOrUpdate.setText("Update");
 
-    @Override
-    public Object getItem(int position) {
-        return null;
-    }
+        Intent iget = getIntent();
+        etCircleName.setText(iget.getStringExtra("GroupName"));
+        etCircleDesc.setText(iget.getStringExtra("GroupDesc"));
+        group_id = iget.getStringExtra("GroupID");
 
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
+//        Toast.makeText(getApplicationContext(),"GroupID: "+group_id, Toast.LENGTH_SHORT).show();
 
-    static class ViewHolder
-    {
-        CircleImageView imgGroup ;
-        TextView tvGroupName, tvGroupDesc, tvMemberCount, tvEditGroup ;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent)
-    {
-        View row = convertView;
-        ViewHolder holder = null;
-
-        if( row == null)
-        {
-            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = inflater.inflate(R.layout.groups_displaying, null);
-            holder = new ViewHolder();
-
-            holder.imgGroup = (CircleImageView)row.findViewById(R.id.imgGroup);
-            holder.tvGroupName = (TextView)row.findViewById(R.id.tvGroupName);
-            holder.tvGroupDesc = (TextView)row.findViewById(R.id.tvGroupDesc);
-            holder.tvMemberCount = (TextView)row.findViewById(R.id.tvMemberCount);
-            holder.tvEditGroup = (TextView)row.findViewById(R.id.tvEditGroup);
-
-            row.setTag(holder);
-        }
-        else
-        {
-            holder = (ViewHolder)row.getTag();
-        }
-
-        holder.tvGroupName.setText(groupModelsList.get(position).getGroup_Name());
-        holder.tvGroupDesc.setText(groupModelsList.get(position).getGroup_Desc());
-        holder.tvMemberCount.setText("("+groupModelsList.get(position).getGroup_member_count()+")");
-
-        groupPhoto = groupModelsList.get(position).getGroup_Photo() ;
-
-        group_id = groupModelsList.get(position).getGroup_ID();
-        GroupImage = groupModelsList.get(position).getGroup_Photo() ;
-        GroupName = groupModelsList.get(position).getGroup_Name();
-        GroupDesc = groupModelsList.get(position).getGroup_Desc() ;
+        String groupPhoto = iget.getStringExtra("GroupImage");
 
         if (groupPhoto.equals(""))
         {
-            holder.imgGroup.setImageResource(R.drawable.usr_1);
+            ivGroupImage.setImageResource(R.drawable.usr_1);
         }
         else
         {
-            Picasso.with(context).load("http://circle8.asia/App_ImgLib/Group/"+groupPhoto).placeholder(R.drawable.usr_1).into(holder.imgGroup);
+            Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/Group/"+groupPhoto).placeholder(R.drawable.usr_1).into(ivGroupImage);
         }
 
-        holder.imgGroup.setOnClickListener(new View.OnClickListener() {
+        ivMiniCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.imageview_popup);
+                selectImage();
+            }
+        });
 
-                ImageView ivViewImage = (ImageView)dialog.findViewById(R.id.ivViewImage);
-                if (groupPhoto.equals(""))
+        tvCreateOrUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                GroupName = etCircleName.getText().toString();
+                GroupDesc = etCircleDesc.getText().toString();
+
+                if (GroupName.equals(""))
                 {
-                    ivViewImage.setImageResource(R.drawable.usr_1);
+                    Toast.makeText(getApplicationContext(), "Enter Circle Name", Toast.LENGTH_LONG).show();
+//                            tvCircleNameInfo.setVisibility(View.VISIBLE);
+                }
+                else if (GroupDesc.equals(""))
+                {
+                    Toast.makeText(getApplicationContext(), "Enter Circle Description", Toast.LENGTH_LONG).show();
+//                            tvCircleDescInfo.setVisibility(View.VISIBLE);
+                }
+                else if (final_ImgBase64.equals(""))
+                {
+                    Toast.makeText(getApplicationContext(), "Upload Circle Image", Toast.LENGTH_LONG).show();
+//                            tvProfileInfo.setVisibility(View.VISIBLE);
                 }
                 else
                 {
-                    Picasso.with(context).load("http://circle8.asia/App_ImgLib/Group/"+groupPhoto).placeholder(R.drawable.usr_1).into(ivViewImage);
+                    new HttpAsyncTaskPhotoUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                    // new HttpAsyncTaskGroupCreate().execute("http://circle8.asia:8999/Onet.svc/Group/Create");
                 }
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
-                wmlp.gravity = Gravity.TOP | Gravity.LEFT ;
-                wmlp.x = 50;
-                wmlp.y = 150;   //y position
-                dialog.show();
             }
         });
 
-        holder.tvEditGroup.setOnClickListener(new View.OnClickListener() {
+        tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                Intent in = new Intent(context, UpdateGroupActivity.class);
-                in.putExtra("GroupImage", GroupImage);
-                in.putExtra("GroupName", GroupName);
-                in.putExtra("GroupDesc", GroupDesc);
-                in.putExtra("GroupID",group_id);
-                context.startActivity(in);
-               /* final AlertDialog dialog = new AlertDialog.Builder(context).create();
-                LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                final View dialogView = inflater.inflate(R.layout.create_or_update_popup, null);
-                dialog.setCancelable(false);
 
-                ivGroupImage = (CircleImageView)dialogView.findViewById(R.id.imgProfile);
-                ImageView ivMiniCamera = (ImageView)dialogView.findViewById(R.id.imgCamera);
-                final EditText etCircleName = (EditText)dialogView.findViewById(R.id.etCircleName);
-                final EditText etCircleDesc = (EditText)dialogView.findViewById(R.id.etCircleDesc);
-                TextView tvCreateOrUpdate = (TextView)dialogView.findViewById(R.id.tvCreateOrUpdate);
-                TextView tvCancel = (TextView)dialogView.findViewById(R.id.tvCancel);
-                final TextView tvCircleNameInfo = (TextView)dialogView.findViewById(R.id.tvCircleNameInfo);
-                final TextView tvCircleDescInfo = (TextView)dialogView.findViewById(R.id.tvCircleDescInfo);
-                final TextView tvProfileInfo = (TextView)dialogView.findViewById(R.id.tvProfileInfo);
-                tvCreateOrUpdate.setText("Update");
-
-                ivMiniCamera.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        selectImage();
-                    }
-                });
-
-                tvCreateOrUpdate.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        GroupName = etCircleName.getText().toString();
-                        GroupDesc = etCircleDesc.getText().toString();
-
-                        if (GroupName.equals(""))
-                        {
-                            Toast.makeText(context, "Enter Circle Name", Toast.LENGTH_LONG).show();
-//                            tvCircleNameInfo.setVisibility(View.VISIBLE);
-                        }
-                        else if (GroupDesc.equals(""))
-                        {
-                            Toast.makeText(context, "Enter Circle Description", Toast.LENGTH_LONG).show();
-//                            tvCircleDescInfo.setVisibility(View.VISIBLE);
-                        }
-                        else if (final_ImgBase64.equals(""))
-                        {
-                            Toast.makeText(context, "Upload Circle Image", Toast.LENGTH_LONG).show();
-//                            tvProfileInfo.setVisibility(View.VISIBLE);
-                        }
-                        else
-                        {
-                            dialog.dismiss();
-                            new HttpAsyncTaskPhotoUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
-                            // new HttpAsyncTaskGroupCreate().execute("http://circle8.asia:8999/Onet.svc/Group/Create");
-                        }
-                    }
-                });
-
-                tvCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        dialog.dismiss();
-                    }
-                });
-
-                dialog.setView(dialogView);
-//                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorAccent)));
-                dialog.show();*/
             }
         });
 
-        return row;
     }
 
-   /* private class HttpAsyncTaskPhotoUpload extends AsyncTask<String, Void, String>
+    private class HttpAsyncTaskPhotoUpload extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
 
@@ -274,7 +165,7 @@ public class GroupDisplayAdapter extends BaseAdapter
         protected void onPreExecute()
         {
             super.onPreExecute();
-            dialog = new ProgressDialog(context);
+            dialog = new ProgressDialog(UpdateGroupActivity.this);
             dialog.setMessage("Uploading...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
@@ -301,10 +192,10 @@ public class GroupDisplayAdapter extends BaseAdapter
 
                     if (success.equals("1") && ImgName!=null)
                     {
-                        *//*Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+                        /*Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(intent);
-                        finish();*//*
+                        finish();*/
                         //   Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                         GroupImage = ImgName;
                         new HttpAsyncTaskGroupUpdate().execute("http://circle8.asia:8999/Onet.svc/Group/Update");
@@ -312,11 +203,11 @@ public class GroupDisplayAdapter extends BaseAdapter
                     }
                     else
                     {
-                        Toast.makeText(context, "Error While Uploading Image..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Error While Uploading Image..", Toast.LENGTH_LONG).show();
                     }
                 }
                 else {
-                    Toast.makeText(context, "Not able to Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to Register..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -400,7 +291,7 @@ public class GroupDisplayAdapter extends BaseAdapter
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(context);
+            dialog = new ProgressDialog(UpdateGroupActivity.this);
             dialog.setMessage("Creating Circle...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
@@ -428,8 +319,8 @@ public class GroupDisplayAdapter extends BaseAdapter
                     String Message = jsonObject.getString("Message").toString();
                     if (Success.equals("1"))
                     {
-                        Toast.makeText(context, "Circle Updated..", Toast.LENGTH_LONG).show();
-                       *//* tvGroupName.setText(GroupName);
+                        Toast.makeText(getApplicationContext(), "Circle Updated..", Toast.LENGTH_LONG).show();
+                       /* tvGroupName.setText(GroupName);
                         tvGroupDesc.setText(GroupDesc);
 
                         if (GroupImage.equals(""))
@@ -439,16 +330,16 @@ public class GroupDisplayAdapter extends BaseAdapter
                         else
                         {
                             Picasso.with(context).load("http://circle8.asia/App_ImgLib/Group/"+GroupImage).placeholder(R.drawable.usr_1).into(imgProfile);
-                        }*//*
+                        }*/
                     }
                     else
                     {
-                        Toast.makeText(context, Message, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), Message, Toast.LENGTH_LONG).show();
                     }
                 }
                 else
                 {
-                    Toast.makeText(context, "Not able to create Circle..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to create Circle..", Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -519,14 +410,14 @@ public class GroupDisplayAdapter extends BaseAdapter
     {
         items = new CharSequence[]{"Take Photo", "Choose from Library", "Cancel"};
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(UpdateGroupActivity.this);
         builder.setTitle("Add Photo!");
         builder.setItems(items, new DialogInterface.OnClickListener()
         {
             @Override
             public void onClick(DialogInterface dialog, int item) {
-                boolean result = Utility.checkStoragePermission(context);
-                boolean result1 = Utility.checkCameraPermission(context);
+                boolean result = Utility.checkStoragePermission(getApplicationContext());
+                boolean result1 = Utility.checkCameraPermission(getApplicationContext());
                 if (items[item].equals("Take Photo"))
                 {
                     userChoosenTask ="Take Photo";
@@ -551,15 +442,15 @@ public class GroupDisplayAdapter extends BaseAdapter
     private void galleryIntent()
     {
         Intent intent = new Intent();
-        intent.setType("image*//*");
+        intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        ((Activity) context).startActivityForResult(Intent.createChooser(intent, "Select File"),SELECT_FILE);
+        startActivityForResult(Intent.createChooser(intent, "Select File"),SELECT_FILE);
     }
 
     private void cameraIntent()
     {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        ((Activity) context).startActivityForResult(intent, REQUEST_CAMERA);
+        startActivityForResult(intent, REQUEST_CAMERA);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data)
@@ -600,7 +491,7 @@ public class GroupDisplayAdapter extends BaseAdapter
             {
                 try
                 {
-                    bitmap = BitmapFactory.decodeStream(context.getContentResolver().openInputStream(targetUri));
+                    bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
 
                     Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 150, 150, false);
                     image = ConvertBitmapToString(resizedBitmap);
@@ -624,7 +515,7 @@ public class GroupDisplayAdapter extends BaseAdapter
                     ei = new ExifInterface(String.valueOf(targetUri));
                     int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
 
-                    bitmap = BitmapFactory.decodeStream(context.getContentResolver().openInputStream(targetUri));
+                    bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
 
                     switch (orientation)
                     {
@@ -666,6 +557,5 @@ public class GroupDisplayAdapter extends BaseAdapter
 
         }
 //        BmToString(bm);
-    }*/
-
+    }
 }

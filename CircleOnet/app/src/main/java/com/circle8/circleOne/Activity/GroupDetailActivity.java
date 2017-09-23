@@ -19,8 +19,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseBooleanArray;
+import android.view.ActionMode;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -57,6 +62,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import android.widget.AbsListView.MultiChoiceModeListener;
 
 import static com.circle8.circleOne.Activity.RegisterActivity.BitMapToString;
 import static com.circle8.circleOne.Activity.RegisterActivity.ConvertBitmapToString;
@@ -294,6 +301,70 @@ public class GroupDetailActivity extends AppCompatActivity
                 alert.show();
             }
         });
+
+        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        listView.setItemsCanFocus(true);
+
+/*
+        listView.setMultiChoiceModeListener(new MultiChoiceModeListener()
+        {
+            @Override
+            public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked)
+            {
+                // Capture total checked items
+                final int checkedCount = listView.getCheckedItemCount();
+                // Set the CAB title according to total checked items
+                mode.setTitle(checkedCount + " Selected");
+                // Calls toggleSelection method from ListViewAdapter Class
+//                groupDetailAdapter.toggleSelection(position);
+            }
+
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu)
+            {
+                mode.getMenuInflater().inflate(R.menu.activity_main, menu);
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                return false;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item)
+            {
+                switch (item.getItemId())
+                {
+                    case R.id.delete:
+                        // Calls getSelectedIds method from ListViewAdapter Class
+                     */
+/*   SparseBooleanArray selected = groupDetailAdapter.getSelectedIds();
+                        // Captures all selected ids with a loop
+                        for (int i = (selected.size() - 1); i >= 0; i--)
+                        {
+                            if (selected.valueAt(i)) {
+                                WorldPopulation selecteditem = listviewadapter.getItem(selected.keyAt(i));
+                                // Remove selected items following the ids
+                                listviewadapter.remove(selecteditem);
+                            }
+                        }
+                        // Close CAB*//*
+
+                        mode.finish();
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+//                groupDetailAdapter.removeSelection();
+            }
+        });
+*/
+
     }
 
     private class HttpAsyncTaskPhotoUpload extends AsyncTask<String, Void, String>
@@ -676,6 +747,7 @@ public class GroupDetailActivity extends AppCompatActivity
                     groupDetailAdapter = new GroupDetailAdapter(GroupDetailActivity.this, R.layout.group_detail_items, groupDetailModelArrayList);
                     listView.setAdapter(groupDetailAdapter);
                     groupDetailAdapter.notifyDataSetChanged();
+
 
                     // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
                 }

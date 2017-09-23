@@ -1,12 +1,16 @@
 package com.circle8.circleOne.Activity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -25,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Adapter.GroupAdapter;
@@ -119,8 +124,7 @@ public class GroupsActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                LayoutInflater factory = LayoutInflater.from(GroupsActivity.this);
-
+                /*LayoutInflater factory = LayoutInflater.from(GroupsActivity.this);
                 LinearLayout layout = new LinearLayout(GroupsActivity.this);
                 layout.setOrientation(LinearLayout.VERTICAL);
 
@@ -179,14 +183,83 @@ public class GroupsActivity extends AppCompatActivity
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,
                                                 int whichButton) {
-                                 /*
+                                 *//*
                                  * User clicked cancel so do some stuff
-                                 */
+                                 *//*
                                 dialog.dismiss();
 
                             }
                         });
-                alert.show();
+                alert.show();*/
+
+//                final Dialog dialog = new Dialog(GroupsActivity.this);
+//                dialog.setContentView(R.layout.create_or_update_popup);
+                final AlertDialog dialog = new AlertDialog.Builder(GroupsActivity.this).create();
+                LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final View dialogView = inflater.inflate(R.layout.create_or_update_popup, null);
+                dialog.setCancelable(false);
+
+                ivGroupImage = (CircleImageView)dialogView.findViewById(R.id.imgProfile);
+                ImageView ivMiniCamera = (ImageView)dialogView.findViewById(R.id.imgCamera);
+                final EditText etCircleName = (EditText)dialogView.findViewById(R.id.etCircleName);
+                final EditText etCircleDesc = (EditText)dialogView.findViewById(R.id.etCircleDesc);
+                TextView tvCreateOrUpdate = (TextView)dialogView.findViewById(R.id.tvCreateOrUpdate);
+                TextView tvCancel = (TextView)dialogView.findViewById(R.id.tvCancel);
+                final TextView tvCircleNameInfo = (TextView)dialogView.findViewById(R.id.tvCircleNameInfo);
+                final TextView tvCircleDescInfo = (TextView)dialogView.findViewById(R.id.tvCircleDescInfo);
+                final TextView tvProfileInfo = (TextView)dialogView.findViewById(R.id.tvProfileInfo);
+                tvCreateOrUpdate.setText("Create");
+
+                ivMiniCamera.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        selectImage();
+                    }
+                });
+
+                tvCreateOrUpdate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        GroupName = etCircleName.getText().toString();
+                        GroupDesc = etCircleDesc.getText().toString();
+
+                        if (GroupName.equals(""))
+                        {
+                            Toast.makeText(getApplicationContext(), "Enter Circle Name", Toast.LENGTH_LONG).show();
+//                            tvCircleNameInfo.setVisibility(View.VISIBLE);
+                        }
+                        else if (GroupDesc.equals(""))
+                        {
+                            Toast.makeText(getApplicationContext(), "Enter Circle Description", Toast.LENGTH_LONG).show();
+//                            tvCircleDescInfo.setVisibility(View.VISIBLE);
+                        }
+                        else if (final_ImgBase64.equals(""))
+                        {
+                            Toast.makeText(getApplicationContext(), "Upload Circle Image", Toast.LENGTH_LONG).show();
+//                            tvProfileInfo.setVisibility(View.VISIBLE);
+                        }
+                        else
+                        {
+                            dialog.dismiss();
+                            new HttpAsyncTaskPhotoUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                            // new HttpAsyncTaskGroupCreate().execute("http://circle8.asia:8999/Onet.svc/Group/Create");
+                        }
+                    }
+                });
+
+                tvCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.setView(dialogView);
+//                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorAccent)));
+                dialog.show();
             }
         });
 
@@ -376,6 +449,7 @@ public class GroupsActivity extends AppCompatActivity
             else if (requestCode == REQUEST_CAMERA)
                 onCaptureImageResult(data);
         }
+
     }
 
     private void onCaptureImageResult(Intent data) {
