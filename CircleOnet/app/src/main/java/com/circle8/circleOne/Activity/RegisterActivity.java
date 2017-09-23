@@ -1448,9 +1448,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         protected void onPreExecute() {
             super.onPreExecute();
             dialog = new ProgressDialog(RegisterActivity.this);
-            dialog.setMessage("Registering...");
+           // dialog.setMessage("Registering...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
+            dialog.setContentView(R.layout.custom_progress);
             dialog.setCancelable(false);
         }
 
