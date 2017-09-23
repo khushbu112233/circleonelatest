@@ -228,7 +228,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             alertDialog.setView(dialogView);
             alertDialog.show();*/
 
-            Dialog dialog = new Dialog(MyAccountActivity.this);
+            final Dialog dialog = new Dialog(MyAccountActivity.this);
             dialog.setContentView(R.layout.imageview_popup);
 
             ImageView ivViewImage = (ImageView)dialog.findViewById(R.id.ivViewImage);
@@ -241,6 +241,17 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                 Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+user_Photo).placeholder(R.drawable.usr_1).into(ivViewImage);
             }
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+
+            ivViewImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    Intent intent = new Intent(getApplicationContext(), ImageZoom.class);
+                    intent.putExtra("displayProfile", user_Photo);
+                    startActivity(intent);
+                }
+            });
 
             WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
             wmlp.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
