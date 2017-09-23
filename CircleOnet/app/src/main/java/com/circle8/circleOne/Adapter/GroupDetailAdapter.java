@@ -3,6 +3,7 @@ package com.circle8.circleOne.Adapter;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
@@ -13,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.circle8.circleOne.Activity.ImageZoom;
 import com.circle8.circleOne.Model.GroupDetailModel;
 import com.circle8.circleOne.R;
 import com.daimajia.androidanimations.library.Techniques;
@@ -25,6 +27,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by ample-arch on 9/9/2017.
@@ -158,7 +162,7 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
             @Override
             public void onClick(View v)
             {
-                Dialog dialog = new Dialog(context);
+                final Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.imageview_popup);
 
                 ImageView ivViewImage = (ImageView)dialog.findViewById(R.id.ivViewImage);
@@ -171,6 +175,16 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
                     Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/"+profileImg).placeholder(R.drawable.usr_1).into(ivViewImage);
                 }
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                ivViewImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(context, ImageZoom.class);
+                        intent.putExtra("displayProfile", profileImg);
+                        context.startActivity(intent);
+                    }
+                });
 
                 /*WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
                 wmlp.gravity = Gravity.TOP | Gravity.LEFT ;

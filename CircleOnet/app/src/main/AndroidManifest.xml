@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.circle8.circleOne">
 
@@ -53,7 +52,7 @@
             </intent-filter>
             -->
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".Activity.EventsActivity"
             android:screenOrientation="portrait" />
@@ -113,7 +112,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.NFCDemo"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.VolleyDemo"
             android:screenOrientation="portrait" />
@@ -141,7 +140,7 @@
         <activity
             android:name=".Activity.AddQRActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionbar"/>
+            android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.EditProfileActivity"
             android:screenOrientation="portrait"
@@ -157,7 +156,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ExternalNFC.NFCExternal"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.TestimonialActivity"
             android:screenOrientation="portrait" />
@@ -215,14 +214,20 @@
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         <activity
-            android:screenOrientation="portrait"
             android:name=".Activity.ForgotActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         <activity android:name=".Activity.ScanbotCamera" />
         <activity
             android:name=".ScanBotGallery.MainActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activity.RewardsPointsActivity" android:theme="@style/NoActionbar" android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".Activity.RewardsPointsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionbar" />
+        <activity android:name=".Activity.ImageZoom"
+            android:theme="@style/NoActionbar"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

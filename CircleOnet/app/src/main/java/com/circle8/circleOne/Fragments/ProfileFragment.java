@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.Activity.EditProfileActivity;
+import com.circle8.circleOne.Activity.ImageZoom;
 import com.circle8.circleOne.Activity.LoginActivity;
 import com.circle8.circleOne.Activity.MyAccountActivity;
 import com.circle8.circleOne.Activity.TestimonialActivity;
@@ -198,7 +199,7 @@ public class ProfileFragment extends Fragment
             @Override
             public void onClick(View v)
             {
-                Dialog dialog = new Dialog(getActivity());
+                final Dialog dialog = new Dialog(getActivity());
                 dialog.setContentView(R.layout.imageview_popup);
 
                 ImageView ivViewImage = (ImageView)dialog.findViewById(R.id.ivViewImage);
@@ -211,6 +212,16 @@ public class ProfileFragment extends Fragment
                     Picasso.with(getActivity()).load("http://circle8.asia/App_ImgLib/UserProfile/"+displayProfile).placeholder(R.drawable.usr_1).into(ivViewImage);
                 }
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                ivViewImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(getContext(), ImageZoom.class);
+                        intent.putExtra("displayProfile", displayProfile);
+                        startActivity(intent);
+                    }
+                });
 
                /* WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
                 wmlp.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
