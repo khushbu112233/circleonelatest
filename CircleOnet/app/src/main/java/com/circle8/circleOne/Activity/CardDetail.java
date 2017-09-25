@@ -1239,10 +1239,10 @@ public class CardDetail extends NfcActivity
                         displayProfile = userImg;
                     }
 
-                    if (frontCardImg.equalsIgnoreCase("") && backCardImg.equalsIgnoreCase("")) {
+                    if (frontCardImg.equalsIgnoreCase("") || backCardImg.equalsIgnoreCase("")) {
                         appBarLayout.setVisibility(View.GONE);
                     } else {
-//                        appBarLayout.setVisibility(View.VISIBLE);
+                        appBarLayout.setVisibility(View.VISIBLE);
                     }
 
                     if (frontCardImg.equalsIgnoreCase("")) {

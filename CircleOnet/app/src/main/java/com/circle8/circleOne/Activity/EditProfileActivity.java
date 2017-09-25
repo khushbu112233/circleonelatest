@@ -21,6 +21,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -219,6 +220,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     RelativeLayout rltGallery;
     public static Activity activity;
     ImageView imgProfileShare;
+    AppBarLayout appbar;
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -261,7 +263,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         editPolygonView = (EditPolygonImageView) findViewById(R.id.polygonView1);
         // editPolygonView.setImageResource(R.drawable.test_receipt);
         //    originalBitmap = ((BitmapDrawable) editPolygonView.getDrawable()).getBitmap();
-
+        appbar = (AppBarLayout) findViewById(R.id.appbar);
         magnifierView = (MagnifierView) findViewById(R.id.magnifier);
         // MagifierView should be set up every time when editPolygonView is set with new image
         magnifierView.setupMagnifier(editPolygonView);
@@ -2651,6 +2653,12 @@ public class EditProfileActivity extends AppCompatActivity implements
                     edtAddress5.setText(Country);
                     edtAddress6.setText(Postalcode);
                     etAttachFile.setText(Attachment_FileName);
+
+                    if (Card_Front.equalsIgnoreCase("") || Card_Back.equalsIgnoreCase("")) {
+                        appbar.setVisibility(View.GONE);
+                    } else {
+                        appbar.setVisibility(View.VISIBLE);
+                    }
 
                     txtCardFront.setText(Card_Front);
                     txtCardBack.setText(Card_Back);

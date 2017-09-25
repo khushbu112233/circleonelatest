@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -76,6 +77,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
     private String profileID , Card_Front = "", Card_Back = "";
     ImageView imgUse;
     TextView txtUse, txtUse1;
+    AppBarLayout appbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -96,6 +98,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
         txtUse1 = (TextView) findViewById(R.id.txtUse1);
         mViewPager1 = (ViewPager)findViewById(R.id.viewPager);
         mViewPager2 = (ViewPager)findViewById(R.id.viewPager1);
+        appbar = (AppBarLayout) findViewById(R.id.appbar);
 
         recycle_image1 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
         recycle_image2 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
@@ -138,11 +141,12 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
             imgUse.setImageResource(R.drawable.unselected_card);
             txtUse.setTextColor(getResources().getColor(R.color.unselected));
             txtUse1.setTextColor(getResources().getColor(R.color.unselected));
+            appbar.setVisibility(View.GONE);
         }
         else {
             llDefaultCard.setAlpha(1.0f);
             llDefaultCard.setEnabled(true);
-
+            appbar.setVisibility(View.VISIBLE);
         }
 
       //  imgProfile.setImageResource(Integer.parseInt(i.getStringExtra("image")));

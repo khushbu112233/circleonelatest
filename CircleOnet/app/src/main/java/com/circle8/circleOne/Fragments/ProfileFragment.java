@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -118,6 +119,7 @@ public class ProfileFragment extends Fragment
     String personName , personAddress ;
     private CallbackManager callbackManager;
     View view;
+    AppBarLayout appbar;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -186,7 +188,7 @@ public class ProfileFragment extends Fragment
         ivEditProfile = (ImageView)view.findViewById(R.id.ivEditProfile);
         loginButton = (LoginButton) view.findViewById(R.id.login_button);
         session = new LoginSession(getContext());
-
+        appbar = (AppBarLayout) view.findViewById(R.id.appbar);
 //        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetUserProfile");
         new HttpAsyncTaskProfiles().execute("http://circle8.asia:8999/Onet.svc/MyProfiles");
 
@@ -578,6 +580,13 @@ public class ProfileFragment extends Fragment
                                     else {
                                         Picasso.with(getContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+allTags.get(i).getUserPhoto()).into(imgProfile);
                                     }
+
+                                    if (allTags.get(i).getCard_Front().equalsIgnoreCase("") && allTags.get(i).getCard_Back().equalsIgnoreCase("")) {
+                                        appbar.setVisibility(View.GONE);
+                                    } else {
+                                        appbar.setVisibility(View.VISIBLE);
+                                    }
+
                                     if (allTags.get(i).getFacebook().equals("") || allTags.get(i).getFacebook().equals(null))
                                     {
                                         fbUrl.setImageResource(R.drawable.ic_fb_gray);
@@ -994,6 +1003,12 @@ public class ProfileFragment extends Fragment
                     {
                         tvName.setText(personName);
                         tvPersonName.setText(personName);
+                    }
+
+                    if (allTags.get(0).getCard_Front().equalsIgnoreCase("") || allTags.get(0).getCard_Back().equalsIgnoreCase("")) {
+                        appbar.setVisibility(View.GONE);
+                    } else {
+                        appbar.setVisibility(View.VISIBLE);
                     }
 
                     if (allTags.get(0).getFacebook().equals("") || allTags.get(0).getFacebook().equals(null))
