@@ -1,7 +1,11 @@
 package com.circle8.circleOne.Adapter;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -11,10 +15,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.circle8.circleOne.Activity.ImageZoom;
 import com.circle8.circleOne.Activity.Notification;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.NotificationModel;
@@ -37,6 +43,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.circle8.circleOne.Adapter.TestimonialRequestAdapter.context;
 
 /**
  * Created by admin on 08/29/2017.
@@ -82,7 +90,7 @@ public class NotificationAdapter extends BaseAdapter
         Button btnTestWrite, btnTestReject, btnTestAcceptRec, btnTestRejectRec, btnAcceptFriend, btnRejectFriend;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent)
+    public View getView(final int position, View convertView, ViewGroup parent)
     {
         View vi = convertView;
         ViewHolder holder = null;
@@ -306,6 +314,109 @@ public class NotificationAdapter extends BaseAdapter
             }
         });
 
+        holder.imgFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(activity);
+                dialog.setContentView(R.layout.imageview_popup);
+
+                ImageView ivViewImage = (ImageView)dialog.findViewById(R.id.ivViewImage);
+                if (testimonialModels.get(position).getUserPhoto().equals(""))
+                {
+                    ivViewImage.setImageResource(R.drawable.usr_1);
+                }
+                else
+                {
+                    Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/"+testimonialModels.get(position).getUserPhoto()).placeholder(R.drawable.usr_1).into(ivViewImage);
+                }
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+
+                ivViewImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(activity, ImageZoom.class);
+                        intent.putExtra("displayProfile", "http://circle8.asia/App_ImgLib/UserProfile/"+testimonialModels.get(position).getUserPhoto());
+                        activity.startActivity(intent);
+                    }
+                });
+                /*WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
+                wmlp.gravity = Gravity.TOP | Gravity.LEFT ;
+                wmlp.x = 50;
+                wmlp.y = 150;   //y position*/
+                dialog.show();
+            }
+        });
+
+        holder.imgTestRec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(activity);
+                dialog.setContentView(R.layout.imageview_popup);
+
+                ImageView ivViewImage = (ImageView)dialog.findViewById(R.id.ivViewImage);
+                if (testimonialModels.get(position).getUserPhoto().equals(""))
+                {
+                    ivViewImage.setImageResource(R.drawable.usr_1);
+                }
+                else
+                {
+                    Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/"+testimonialModels.get(position).getUserPhoto()).placeholder(R.drawable.usr_1).into(ivViewImage);
+                }
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                ivViewImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(activity, ImageZoom.class);
+                        intent.putExtra("displayProfile", "http://circle8.asia/App_ImgLib/UserProfile/"+testimonialModels.get(position).getUserPhoto());
+                        activity.startActivity(intent);
+                    }
+                });
+                /*WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
+                wmlp.gravity = Gravity.TOP | Gravity.LEFT ;
+                wmlp.x = 50;
+                wmlp.y = 150;   //y position*/
+                dialog.show();
+            }
+        });
+
+        holder.imgTestReq.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(activity);
+                dialog.setContentView(R.layout.imageview_popup);
+
+                ImageView ivViewImage = (ImageView)dialog.findViewById(R.id.ivViewImage);
+                if (testimonialModels.get(position).getUserPhoto().equals(""))
+                {
+                    ivViewImage.setImageResource(R.drawable.usr_1);
+                }
+                else
+                {
+                    Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/"+testimonialModels.get(position).getUserPhoto()).placeholder(R.drawable.usr_1).into(ivViewImage);
+                }
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+
+                ivViewImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(activity, ImageZoom.class);
+                        intent.putExtra("displayProfile", "http://circle8.asia/App_ImgLib/UserProfile/"+testimonialModels.get(position).getUserPhoto());
+                        activity.startActivity(intent);
+                    }
+                });
+                /*WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
+                wmlp.gravity = Gravity.TOP | Gravity.LEFT ;
+                wmlp.x = 50;
+                wmlp.y = 150;   //y position*/
+                dialog.show();
+            }
+        });
 
         return vi;
     }

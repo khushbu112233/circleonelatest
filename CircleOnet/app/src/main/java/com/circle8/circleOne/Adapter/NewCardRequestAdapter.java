@@ -1,13 +1,19 @@
 package com.circle8.circleOne.Adapter;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.circle8.circleOne.Activity.ImageZoom;
 import com.circle8.circleOne.Activity.NewCardRequestActivity;
 import com.circle8.circleOne.Activity.Profile;
 import com.circle8.circleOne.Model.NewCardModel;
@@ -78,7 +84,7 @@ public class NewCardRequestAdapter extends BaseAdapter
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
+    public View getView(final int position, View convertView, ViewGroup parent)
     {
         View row = convertView;
         ViewHolder holder = null;
@@ -121,6 +127,41 @@ public class NewCardRequestAdapter extends BaseAdapter
             {
                 Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/"+newCardModelArrayList.get(position).getUserPhoto()).into(holder.ivProfile);
             }
+
+            holder.ivProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final Dialog dialog = new Dialog(context);
+                    dialog.setContentView(R.layout.imageview_popup);
+
+                    ImageView ivViewImage = (ImageView)dialog.findViewById(R.id.ivViewImage);
+                    if (newCardModelArrayList.get(position).getUserPhoto().equals(""))
+                    {
+                        ivViewImage.setImageResource(R.drawable.usr_1);
+                    }
+                    else
+                    {
+                        Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/"+newCardModelArrayList.get(position).getUserPhoto()).placeholder(R.drawable.usr_1).into(ivViewImage);
+                    }
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+
+                    ivViewImage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                            Intent intent = new Intent(context, ImageZoom.class);
+                            intent.putExtra("displayProfile", "http://circle8.asia/App_ImgLib/UserProfile/"+newCardModelArrayList.get(position).getUserPhoto());
+                            context.startActivity(intent);
+                        }
+                    });
+                /*WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
+                wmlp.gravity = Gravity.TOP | Gravity.LEFT ;
+                wmlp.x = 50;
+                wmlp.y = 150;   //y position*/
+                    dialog.show();
+                }
+            });
 
         return row;
     }
