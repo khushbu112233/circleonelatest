@@ -1,0 +1,73 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#ffffff">
+
+    <RelativeLayout
+        android:layout_marginTop="5dp"
+        android:id="@+id/lnrSearch"
+        android:layout_below="@+id/appbar2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <com.circle8.circleOne.Utils.MyRiadProAutoComplete
+            android:layout_centerVertical="true"
+            android:background="@drawable/txt_back"
+            android:paddingRight="10dp"
+            android:layout_toLeftOf="@+id/imgSearch"
+            android:paddingLeft="10dp"
+            android:hint="Search in your contacts"
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:textSize="12dp"
+            android:focusableInTouchMode="true"
+            android:imeOptions="actionSearch"
+            android:inputType="textAutoComplete|textAutoCorrect"
+            android:textColor="#dbdada" />
+
+        <ImageView
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:backgroundTint="@color/colorAccent"
+            android:background="@drawable/search"
+            android:id="@+id/imgSearch"
+            android:layout_alignParentRight="true"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+    </RelativeLayout>
+
+    <View
+        android:layout_marginTop="3dp"
+        android:id="@+id/view"
+        android:layout_below="@+id/lnrSearch"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimary"/>
+
+    <ListView
+        android:layout_below="@+id/view"
+        android:layout_marginTop="5dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        tools:listitem="@layout/grid_list4_layout"
+        android:id="@+id/listViewType4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="fill" />
+
+    <TextView
+        android:id="@+id/tvDataInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_connection"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:visibility="gone"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>

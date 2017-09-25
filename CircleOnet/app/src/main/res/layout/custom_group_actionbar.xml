@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPrimary">
+
+    <com.circle8.circleOne.Utils.cgTextView
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Select User to add into Circle"
+        android:textColor="#ffffff"
+        android:id="@+id/mytext"
+        android:textSize="14sp" />
+
+    <com.circle8.circleOne.Utils.cgTextView
+        android:padding="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Add"
+        android:textColor="#ffffff"
+        android:id="@+id/mytext1"
+        android:textSize="14sp" />
+
+</RelativeLayout>

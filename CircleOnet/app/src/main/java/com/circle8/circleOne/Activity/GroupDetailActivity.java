@@ -68,10 +68,11 @@ import android.widget.AbsListView.MultiChoiceModeListener;
 import static com.circle8.circleOne.Activity.RegisterActivity.BitMapToString;
 import static com.circle8.circleOne.Activity.RegisterActivity.ConvertBitmapToString;
 import static com.circle8.circleOne.Activity.RegisterActivity.rotateImage;
+import static java.security.AccessController.getContext;
 
 public class GroupDetailActivity extends AppCompatActivity
 {
-    private ListView listView ;
+    public static ListView listView ;
 
     private CircleImageView imgProfile ;
     private ImageView ivChangeProfImg, ivBackImg, ivMenuImg, ivShareImg, ivEditImg ;
@@ -83,7 +84,7 @@ public class GroupDetailActivity extends AppCompatActivity
 
     private LoginSession session;
     private String profile_id, user_id ;
-
+    boolean isPressed = false;
     private ArrayList<String> name = new ArrayList<>();
     private ArrayList<String> designation = new ArrayList<>();
     private ArrayList<String> company = new ArrayList<>();
@@ -104,7 +105,8 @@ public class GroupDetailActivity extends AppCompatActivity
     private String userChoosenTask ;
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     String image;
-
+    public static JSONArray selectedStrings = new JSONArray();
+    ImageView ivDelete;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -117,7 +119,7 @@ public class GroupDetailActivity extends AppCompatActivity
         tvGroupName = (TextView)findViewById(R.id.tvGroupName);
         tvGroupDesc = (TextView)findViewById(R.id.tvGroupPartner);
         tvMemberInfo = (TextView)findViewById(R.id.tvMemberInfo);
-
+        ivDelete = (ImageView) findViewById(R.id.ivDelete);
         ivMenuImg = (ImageView)findViewById(R.id.imgProfileMenu);
         ivChangeProfImg = (ImageView)findViewById(R.id.imgCamera);
         ivShareImg = (ImageView)findViewById(R.id.ivProfileShare);
@@ -146,13 +148,36 @@ public class GroupDetailActivity extends AppCompatActivity
             Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/Group/"+group_Img).placeholder(R.drawable.usr_1).into(imgProfile);
         }
 
+        ivShareImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(isPressed) {
+                    listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+                    GroupDetailAdapter.holder.chCheckBox.setVisibility(View.VISIBLE);
+                }
+                else {
+                    listView.setChoiceMode(ListView.CHOICE_MODE_NONE);
+                    GroupDetailAdapter.holder.chCheckBox.setVisibility(View.GONE);
+                }
+                isPressed = !isPressed;
+            }
+        });
+
         new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/FetchConnection");
+
+        ivDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), selectedStrings.toString(), Toast.LENGTH_LONG).show();
+            }
+        });
 
         imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                Dialog dialog = new Dialog(GroupDetailActivity.this);
+                final Dialog dialog = new Dialog(GroupDetailActivity.this);
                 dialog.setContentView(R.layout.imageview_popup);
 
                 ImageView ivViewImage = (ImageView)dialog.findViewById(R.id.ivViewImage);
@@ -165,6 +190,16 @@ public class GroupDetailActivity extends AppCompatActivity
                     Picasso.with(GroupDetailActivity.this).load("http://circle8.asia/App_ImgLib/Group/"+group_Img).placeholder(R.drawable.usr_1).into(ivViewImage);
                 }
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                ivViewImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(getApplicationContext(), ImageZoom.class);
+                        intent.putExtra("displayProfile" ,group_Img);
+                        startActivity(intent);
+                    }
+                });
 
                 /*WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
                 wmlp.gravity = Gravity.TOP | Gravity.LEFT ;
@@ -230,80 +265,11 @@ public class GroupDetailActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                LinearLayout layout = new LinearLayout(GroupDetailActivity.this);
-                layout.setOrientation(LinearLayout.VERTICAL);
-
-                ivGroupImage = new CircleImageView(GroupDetailActivity.this);
-                ivGroupImage.setBorderColor(getResources().getColor(R.color.colorPrimary));
-                ivGroupImage.setBorderWidth(1);
-                ivGroupImage.setImageResource(R.drawable.usr_1);
-                int width=200;
-                int height=200;
-                LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(width,height);
-                parms.gravity = Gravity.CENTER;
-                ivGroupImage.setLayoutParams(parms);
-                layout.addView(ivGroupImage);
-
-                final EditText titleBox = new EditText(GroupDetailActivity.this);
-                titleBox.setText(group_Name);
-                layout.addView(titleBox);
-
-                final EditText descriptionBox = new EditText(GroupDetailActivity.this);
-                descriptionBox.setText(group_Desc);
-                layout.addView(descriptionBox);
-
-
-                ivGroupImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        selectImage();
-                    }
-                });
-                //   dialog.setView(layout);
-
-                //text_entry is an Layout XML file containing two text field to display in alert dialog
-                final AlertDialog.Builder alert = new AlertDialog.Builder(GroupDetailActivity.this);
-                alert.setCancelable(false);
-                alert.setTitle("Update Circle").setView(layout).setPositiveButton("Update",
-                        new DialogInterface.OnClickListener()
-                        {
-                            public void onClick(DialogInterface dialog, int whichButton)
-                            {
-                                GroupName = titleBox.getText().toString();
-                                GroupDesc = descriptionBox.getText().toString();
-
-                                if (GroupName.equals("")){
-                                    Toast.makeText(getApplicationContext(), "Enter Circle Name", Toast.LENGTH_LONG).show();
-                                }
-                                else if (GroupDesc.equals("")){
-                                    Toast.makeText(getApplicationContext(), "Enter Circle Description", Toast.LENGTH_LONG).show();
-                                }
-                                else if (final_ImgBase64.equals("")){
-                                    Toast.makeText(getApplicationContext(), "Upload Circle Image", Toast.LENGTH_LONG).show();
-                                }
-                                else {
-                                    new HttpAsyncTaskPhotoUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
-                                    // new HttpAsyncTaskGroupCreate().execute("http://circle8.asia:8999/Onet.svc/Group/Create");
-                                }
-                            }
-                        }).setNegativeButton("Cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,
-                                                int whichButton) {
-                                 /*
-                                 * User clicked cancel so do some stuff
-                                 */
-                                dialog.dismiss();
-
-                            }
-                        });
-                alert.show();
+                Intent intent1 = new Intent(getApplicationContext(), SearchGroupMembers.class);
+                intent1.putExtra("GroupId", group_id);
+                startActivity(intent1);
             }
         });
-
-        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        listView.setItemsCanFocus(true);
 
 /*
         listView.setMultiChoiceModeListener(new MultiChoiceModeListener()
@@ -741,6 +707,7 @@ public class GroupDetailActivity extends AppCompatActivity
                         groupDetailModel.setCountry(object.getString("Country"));
                         groupDetailModel.setPostalcode(object.getString("Postalcode"));
                         groupDetailModel.setImgProfile(object.getString("UserPhoto"));
+                        groupDetailModel.setProfileid(object.getString("ProfileId"));
                         groupDetailModelArrayList.add(groupDetailModel);
                     }
 

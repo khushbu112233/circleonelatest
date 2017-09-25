@@ -58,6 +58,7 @@ public class SubscriptionActivity extends AppCompatActivity
     Stripe stripe;
     Card card;
     Token tok;
+    String strToken;
     AlertDialog alertDialog;
     ImageView imgBack;
 
@@ -180,7 +181,9 @@ public class SubscriptionActivity extends AppCompatActivity
                 // TODO: Send Token information to your backend to initiate a charge
                 Toast.makeText(getApplicationContext(), "Token created: " + token.getId(), Toast.LENGTH_LONG).show();
                 tok = token;
+                strToken = token.getId();
                 //  new StripeCharge(token.getId()).execute();
+                new HttpAsyncTokenTask().execute("https://circle8.asia/Checkout/pay");
                 alertDialog.cancel();
             }
 
@@ -329,5 +332,171 @@ public class SubscriptionActivity extends AppCompatActivity
         return result;
 
     }
+
+
+    private class HttpAsyncTokenTask extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(SubscriptionActivity.this);
+            dialog.setMessage("Loading...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            return POST1(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+            dialog.dismiss();
+            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+
+           /* try
+            {
+                if(result == "")
+                {
+                    Toast.makeText(getApplicationContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    JSONObject response = new JSONObject(result);
+                    String message = response.getString("message");
+                    String success = response.getString("success");
+                    String findBy = response.getString("FindBy");
+                    String search = response.getString("Search");
+                    String count = response.getString("count");
+                    String pageno = response.getString("pageno");
+                    String recordno = response.getString("numofrecords");
+
+                    JSONArray connect = response.getJSONArray("connect");
+
+                    connectTags.clear();
+                    try
+                    {
+                        connectListAdapter.notifyDataSetChanged();
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+
+                    if(connect.length() == 0)
+                    {
+                        tvDataInfo.setVisibility(View.VISIBLE);
+                        connectTags.clear();
+                        try {connectListAdapter.notifyDataSetChanged();}
+                        catch (Exception e) { e.printStackTrace();}
+                    }
+                    else
+                    {
+                        tvDataInfo.setVisibility(View.GONE);
+
+                        for(int i = 0 ; i <= connect.length() ; i++ )
+                        {
+                            JSONObject iCon = connect.getJSONObject(i);
+                            ConnectList connectModel = new ConnectList();
+                            connectModel.setUserID(iCon.getString("UserID"));
+                            connectModel.setFirstname(iCon.getString("FirstName"));
+                            connectModel.setLastname(iCon.getString("LastName"));
+                            connectModel.setUsername(iCon.getString("UserName"));
+                            connectModel.setUserphoto(iCon.getString("UserPhoto"));
+                            connectModel.setCard_front(iCon.getString("Card_Front"));
+                            connectModel.setCard_back(iCon.getString("Card_Back"));
+                            connectModel.setProfile_id(iCon.getString("ProfileId"));
+                            connectModel.setPhone(iCon.getString("Phone"));
+                            connectModel.setCompanyname(iCon.getString("CompanyName"));
+                            connectModel.setDesignation(iCon.getString("Designation"));
+                            connectModel.setFacebook(iCon.getString("Facebook"));
+                            connectModel.setTwitter(iCon.getString("Twitter"));
+                            connectModel.setGoogle(iCon.getString("Google"));
+                            connectModel.setLinkedin(iCon.getString("LinkedIn"));
+                            connectModel.setWebsite(iCon.getString("Website"));
+                            connectTags.add(connectModel);
+
+                            connectListAdapter = new ConnectListAdapter(getContext(),R.layout.grid_list5_layout, connectTags);
+                            listView.setAdapter(connectListAdapter);
+                            connectListAdapter.notifyDataSetChanged();
+
+//                            GetData(getContext());
+                        }
+                    }
+                }
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }*/
+        }
+    }
+
+    public  String POST1(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("amt", 100 );
+            jsonObject.accumulate("currency", "usd" );
+            jsonObject.accumulate("source", strToken );
+            jsonObject.accumulate("Description", "test" );
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
 
 }

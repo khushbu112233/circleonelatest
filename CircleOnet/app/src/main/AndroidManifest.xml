@@ -225,13 +225,14 @@
             android:name=".Activity.RewardsPointsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
-        
-        <activity android:name=".Activity.UpdateGroupActivity"
-            android:theme="@style/ThemeDialog"></activity>
-
-        <activity android:name=".Activity.ImageZoom"
-            android:theme="@style/NoActionbar"
-            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".Activity.UpdateGroupActivity"
+            android:theme="@style/ThemeDialog" />
+        <activity
+            android:name=".Activity.ImageZoom"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionbar" />
+        <activity android:name=".Activity.SearchGroupMembers"></activity>
     </application>
 
 </manifest>
