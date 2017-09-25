@@ -1065,6 +1065,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Operation", "Request");
+            jsonObject.accumulate("RequestType", "NFC");
             jsonObject.accumulate("friendProfileId", nfcProfileId);
             jsonObject.accumulate("myProfileId", profileId);
 
