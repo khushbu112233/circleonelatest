@@ -22,10 +22,12 @@ import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -147,6 +149,15 @@ public class GroupDetailActivity extends AppCompatActivity
         {
             Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/Group/"+group_Img).placeholder(R.drawable.usr_1).into(imgProfile);
         }
+
+        View v = LayoutInflater.from(getApplicationContext()).inflate(R.layout.group_detail_items, null);
+        CheckBox checkBox = (CheckBox) v.findViewById(R.id.chCheckBox);
+       /* if (GroupDetailActivity.listView.getChoiceMode() == ListView.CHOICE_MODE_MULTIPLE){
+            checkBox.setVisibility(View.VISIBLE);
+        }
+        else {
+            checkBox.setVisibility(View.GONE);
+        }*/
 
         ivShareImg.setOnClickListener(new View.OnClickListener() {
             @Override

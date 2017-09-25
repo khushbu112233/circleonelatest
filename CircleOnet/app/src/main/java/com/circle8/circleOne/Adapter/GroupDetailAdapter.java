@@ -138,9 +138,11 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
 
         if (GroupDetailActivity.listView.getChoiceMode() == ListView.CHOICE_MODE_MULTIPLE){
             holder.chCheckBox.setVisibility(View.VISIBLE);
+            notifyDataSetChanged();
         }
         else {
             holder.chCheckBox.setVisibility(View.GONE);
+            notifyDataSetChanged();
         }
 
         holder.chCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -174,7 +176,7 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
 
         holder.personDetail.setText(Address+"\n"+Company+"\n"+Website+"\n"+Email+"\n"+Phone);
 
-          groupDetailModelArrayList.get(position).getImgProfile() ;
+        groupDetailModelArrayList.get(position).getImgProfile() ;
 
         if (groupDetailModelArrayList.get(position).getImgProfile().equals(""))
         {
