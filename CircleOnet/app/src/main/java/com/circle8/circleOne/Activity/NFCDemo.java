@@ -42,7 +42,7 @@ public class NFCDemo extends NfcActivity {
                 mProgressDialog.dismiss();
             }
             if (result) {
-                Toast.makeText(NFCDemo.this, "Write has been done!", Toast.LENGTH_LONG).show();
+                Toast.makeText(NFCDemo.this, "Write has been done", Toast.LENGTH_LONG).show();
             }
 
             Log.d(TAG,"Received our result : " + result);

@@ -872,7 +872,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         items = new CharSequence[]{"Take Photo", "Choose from Library", "Cancel"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(EditProfileActivity.this);
-        builder.setTitle("Add Photo!");
+        builder.setTitle("Add Photo");
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
@@ -1603,7 +1603,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     }
 
     private void selectFile() {
-        items = new CharSequence[]{"Upload Document", "Take Photo!", "Choose from Media", "Take Audio", "Cancel"};
+        items = new CharSequence[]{"Upload Document", "Take Photo", "Choose from Media", "Take Audio", "Cancel"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(EditProfileActivity.this);
         builder.setTitle("Attach File");
@@ -1612,8 +1612,8 @@ public class EditProfileActivity extends AppCompatActivity implements
             public void onClick(DialogInterface dialog, int item) {
                 boolean result = Utility.checkPermission(EditProfileActivity.this);
 
-                if (items[item].equals("Take Photo!")) {
-                    userChoosenTask = "Take Photo!";
+                if (items[item].equals("Take Photo")) {
+                    userChoosenTask = "Take Photo";
                     if (result) {
                         cameraIntent();
                     }
@@ -2191,7 +2191,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         if (mb_size > 3.00) {
             Toast.makeText(getApplicationContext(), "File is greater than 3MB" + mb_size, Toast.LENGTH_LONG).show();
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(EditProfileActivity.this);
-            alertDialogBuilder.setTitle("Sorry! :");
+            alertDialogBuilder.setTitle("Sorry :");
             alertDialogBuilder.setMessage("Please select a file not more than 3MB.");
             alertDialogBuilder.setCancelable(false)
                     .setPositiveButton("Okay",

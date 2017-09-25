@@ -259,7 +259,9 @@ public class List2Fragment extends Fragment {
                     if (connect.length() == 0) {
                         //tvDataInfo.setVisibility(View.VISIBLE);
                         allTaggs.clear();
-                        gridAdapter.notifyDataSetChanged();
+                        try {
+                            gridAdapter.notifyDataSetChanged();
+                        }catch (Exception e){}
                     } else {
                         //  tvDataInfo.setVisibility(View.GONE);
 

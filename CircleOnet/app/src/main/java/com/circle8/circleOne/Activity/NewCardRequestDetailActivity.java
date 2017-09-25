@@ -224,7 +224,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
         type = new CharSequence[]{"Add Front Card", "Add Back Card", "Done"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(NewCardRequestDetailActivity.this);
-        builder.setTitle("Add Card!");
+        builder.setTitle("Add Card");
         builder.setCancelable(false);
         builder.setItems(type, new DialogInterface.OnClickListener() {
             @Override
@@ -267,7 +267,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
         items = new CharSequence[]{"Take Photo", "Choose from Library", "Cancel"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(NewCardRequestDetailActivity.this);
-        builder.setTitle("Add Photo!");
+        builder.setTitle("Add Photo");
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {

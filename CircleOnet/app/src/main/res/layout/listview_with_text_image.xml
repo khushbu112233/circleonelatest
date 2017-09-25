@@ -43,7 +43,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="My account"
+            android:text="My Account"
             android:id="@+id/textDrawer1"
             android:textSize="17dp"
             android:layout_marginLeft="20dp"
@@ -171,7 +171,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rewards Points         "
+                android:text="Reward Points         "
                 android:textSize="17dp"
                 android:layout_marginLeft="20dp"
                 android:textColor="@android:color/white" />

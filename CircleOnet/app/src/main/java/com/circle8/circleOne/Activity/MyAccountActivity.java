@@ -356,7 +356,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         items = new CharSequence[]{"Take Photo", "Choose from Library", "Cancel"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MyAccountActivity.this);
-        builder.setTitle("Add Photo!");
+        builder.setTitle("Add Photo");
         builder.setItems(items, new DialogInterface.OnClickListener()
         {
             @Override
@@ -644,7 +644,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                     }
                     else
                     {
-                        Toast.makeText(getApplicationContext(), "Something is wrong ! Please try again.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Something is wrong. Please try again.", Toast.LENGTH_SHORT).show();
                     }
                 }
             } catch (Exception e) {

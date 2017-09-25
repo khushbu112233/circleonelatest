@@ -391,19 +391,19 @@ public class GroupsActivity extends AppCompatActivity
 
     private void selectImage()
     {
-        items = new CharSequence[]{"Take Photo!", "Choose from Library", "Cancel"};
+        items = new CharSequence[]{"Take Photo", "Choose from Library", "Cancel"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(GroupsActivity.this);
-        builder.setTitle("Add Photo!");
+        builder.setTitle("Add Photo");
         builder.setItems(items, new DialogInterface.OnClickListener()
         {
             @Override
             public void onClick(DialogInterface dialog, int item) {
                 boolean result = Utility.checkStoragePermission(GroupsActivity.this);
                 boolean result1 = Utility.checkCameraPermission(GroupsActivity.this);
-                if (items[item].equals("Take Photo1"))
+                if (items[item].equals("Take Photo"))
                 {
-                    userChoosenTask ="Take Photo!";
+                    userChoosenTask ="Take Photo";
                     if(result1)
 //                        activeTakePhoto();
                         cameraIntent();

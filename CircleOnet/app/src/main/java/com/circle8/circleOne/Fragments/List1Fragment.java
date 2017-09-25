@@ -2,14 +2,11 @@ package com.circle8.circleOne.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,7 +18,6 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AbsListView;
 import android.widget.AutoCompleteTextView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -30,8 +26,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.azoft.carousellayoutmanager.CarouselLayoutManager;
+import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
+import com.azoft.carousellayoutmanager.CenterScrollListener;
 import com.circle8.circleOne.Activity.CardsActivity;
-import com.circle8.circleOne.Activity.LoginActivity;
 import com.circle8.circleOne.Activity.SortAndFilterOption;
 import com.circle8.circleOne.Adapter.GalleryAdapter;
 import com.circle8.circleOne.Adapter.GalleryAdapter1;
@@ -39,10 +37,6 @@ import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.FriendConnection;
 import com.circle8.circleOne.R;
-import com.azoft.carousellayoutmanager.CarouselLayoutManager;
-import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
-import com.azoft.carousellayoutmanager.CenterScrollListener;
-import com.daimajia.swipe.util.Attributes;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -64,12 +58,11 @@ import java.util.Locale;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
 
-public class List1Fragment extends Fragment
-{
+public class List1Fragment extends Fragment {
     // private ArrayList<Integer> imageFront = new ArrayList<>();
     // private ArrayList<Integer> imageBack = new ArrayList<>();
     //  public static MyPager myPager ;
-    DatabaseHelper db ;
+    DatabaseHelper db;
     private GestureDetector gestureDetector1;
     FrameLayout frameList1;
     LinearLayout lnrList;
@@ -81,10 +74,10 @@ public class List1Fragment extends Fragment
     private String DEBUG_TAG = "gesture";
     //  private GestureDetector gestureDetector;
     //  private View.OnTouchListener gestureListener;
-    public static List<FriendConnection> allTags ;
+    public static List<FriendConnection> allTags;
     //new asign value
-    AutoCompleteTextView searchText ;
-    public static ArrayList<FriendConnection> nfcModel ;
+    AutoCompleteTextView searchText;
+    public static ArrayList<FriendConnection> nfcModel;
     ViewConfiguration vc;
     private int mTouchSlop;
     FrameLayout frame, frame1;
@@ -105,21 +98,20 @@ public class List1Fragment extends Fragment
     public static TextView txtNoCard1;
     LoginSession session;
 
-    private static ProgressBar progressBar1, progressBar2  ;
-    private static RelativeLayout rlLoadMore1, rlLoadMore2  ;
+    private static ProgressBar progressBar1, progressBar2;
+    private static RelativeLayout rlLoadMore1, rlLoadMore2;
 
     static String UserId = "";
 
-    public static Context mContext ;
+    public static Context mContext;
 
-    static String comeAtTime = "FIRST" ;
+    static String comeAtTime = "FIRST";
 
-    static int number_cards = 0 ;
+    static int number_cards = 0;
 
-    static int numberCount, recycleSize  ;
+    static int numberCount, recycleSize;
 
-    public List1Fragment()
-    {
+    public List1Fragment() {
         // Required empty public constructor
     }
 
@@ -129,18 +121,17 @@ public class List1Fragment extends Fragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
         view = inflater.inflate(R.layout.fragment_list1, container, false);
         vc = ViewConfiguration.get(view.getContext());
 
-       ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
         // frameList1 = (FrameLayout) view.findViewById(R.id.frameList1);
         mTouchSlop = vc.getScaledTouchSlop();
 
-        mContext = List1Fragment.this.getContext() ;
+        mContext = List1Fragment.this.getContext();
         pageno = 1;
 
         recyclerView1 = (RecyclerView) view.findViewById(R.id.list_horizontal1);
@@ -149,10 +140,10 @@ public class List1Fragment extends Fragment
         lnrList = (LinearLayout) view.findViewById(R.id.lnrList);
         frame = (FrameLayout) view.findViewById(R.id.frame);
         frame1 = (FrameLayout) view.findViewById(R.id.frame1);
-        progressBar1 = (ProgressBar)view.findViewById(R.id.more_progress1);
-        rlLoadMore1 = (RelativeLayout)view.findViewById(R.id.rlLoadMore1);
-        progressBar2 = (ProgressBar)view.findViewById(R.id.more_progress2);
-        rlLoadMore2 = (RelativeLayout)view.findViewById(R.id.rlLoadMore2);
+        progressBar1 = (ProgressBar) view.findViewById(R.id.more_progress1);
+        rlLoadMore1 = (RelativeLayout) view.findViewById(R.id.rlLoadMore1);
+        progressBar2 = (ProgressBar) view.findViewById(R.id.more_progress2);
+        rlLoadMore2 = (RelativeLayout) view.findViewById(R.id.rlLoadMore2);
 
         session = new LoginSession(getContext());
         HashMap<String, String> user = session.getUserDetails();
@@ -163,10 +154,10 @@ public class List1Fragment extends Fragment
         //viewPager = (ViewPager)view.findViewById(R.id.viewPager);
         lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
         line = view.findViewById(R.id.view);
-        initRecyclerView1(recyclerView1,new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter ) ;
-        initRecyclerView2(recyclerView2,new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter1 ) ;
+        initRecyclerView1(recyclerView1, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter);
+        initRecyclerView2(recyclerView2, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter1);
 
-        searchText = (AutoCompleteTextView)view.findViewById(R.id.searchView);
+        searchText = (AutoCompleteTextView) view.findViewById(R.id.searchView);
         InputMethodManager keyboard = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         keyboard.hideSoftInputFromWindow(searchText.getWindowToken(), 0);
 
@@ -196,24 +187,23 @@ public class List1Fragment extends Fragment
 
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
-            public void onGlobalLayout()
-            {
+            public void onGlobalLayout() {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
                     lnrList.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 } else {
                     lnrList.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 }
-                int width  = lnrList.getMeasuredWidth();
+                int width = lnrList.getMeasuredWidth();
                 int height = lnrList.getMeasuredHeight();
 
-                View view_instance = (View)view.findViewById(R.id.list_horizontal1);
-                ViewGroup.LayoutParams params=view_instance.getLayoutParams();
-                params.height=(height/(29/10))-10;
+                View view_instance = (View) view.findViewById(R.id.list_horizontal1);
+                ViewGroup.LayoutParams params = view_instance.getLayoutParams();
+                params.height = (height / (29 / 10)) - 10;
                 view_instance.setLayoutParams(params);
 
-                View view_instance1 = (View)view.findViewById(R.id.list_horizontal2);
-                ViewGroup.LayoutParams params1=view_instance1.getLayoutParams();
-                params1.height=(height/(29/10))-10;
+                View view_instance1 = (View) view.findViewById(R.id.list_horizontal2);
+                ViewGroup.LayoutParams params1 = view_instance1.getLayoutParams();
+                params1.height = (height / (29 / 10)) - 10;
                 view_instance1.setLayoutParams(params1);
             }
         });
@@ -331,11 +321,9 @@ public class List1Fragment extends Fragment
         //myPager = new MyPager(getContext(), imgf, imgb, tag_id);
         //viewPager.setAdapter(myPager);
 
-        searchText.addTextChangedListener(new TextWatcher()
-        {
+        searchText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after)
-            {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                /* if(s.length() == 0)
                 {
                     // allTags = db.getActiveNFC();
@@ -358,68 +346,54 @@ public class List1Fragment extends Fragment
             }
 
             @Override
-            public void onTextChanged(final CharSequence s, int start, int before, int count)
-            {
-                    if(s.length() == 0)
-                    {
-                        // allTags = db.getActiveNFC();
+            public void onTextChanged(final CharSequence s, int start, int before, int count) {
+                if (s.length() == 0) {
+                    // allTags = db.getActiveNFC();
 //                    GetData(getContext());
-                        nfcModel.clear();
-                        pageno = 1;
-                        allTags.clear();
-                        try
-                        {
-                            mAdapter.notifyDataSetChanged();
-                        }
-                        catch (Exception e){}
-                        try
-                        {
-                            mAdapter1.notifyDataSetChanged();
-                        }
-                        catch (Exception e){}
-                        callFirst();
-                    }
-                    else if( s.length() > 0 )
-                    {
-                        String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
-
-//                        nfcModel.clear();
-                        allTags.clear();
-                        try
-                        {
-                            mAdapter.notifyDataSetChanged();
-                        }
-                        catch (Exception e){}
-                        try
-                        {
-                            mAdapter1.notifyDataSetChanged();
-                        }
-                        catch (Exception e){}
-                        new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
-                    }
-                    else
-                    {
-
-                    }
-                }
-
-            @Override
-            public void afterTextChanged(Editable s)
-            {
-                if (s.length() == 0)
-                {
+                    nfcModel.clear();
                     pageno = 1;
                     allTags.clear();
-                    try
-                    {
+                    try {
                         mAdapter.notifyDataSetChanged();
+                    } catch (Exception e) {
                     }
-                    catch (Exception e){}
-                    try
-                    {
+                    try {
                         mAdapter1.notifyDataSetChanged();
+                    } catch (Exception e) {
                     }
-                    catch (Exception e){}
+                    callFirst();
+                } else if (s.length() > 0) {
+                    String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
+
+//                        nfcModel.clear();
+                    allTags.clear();
+                    try {
+                        mAdapter.notifyDataSetChanged();
+                    } catch (Exception e) {
+                    }
+                    try {
+                        mAdapter1.notifyDataSetChanged();
+                    } catch (Exception e) {
+                    }
+                    new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
+                } else {
+
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 0) {
+                    pageno = 1;
+                    allTags.clear();
+                    try {
+                        mAdapter.notifyDataSetChanged();
+                    } catch (Exception e) {
+                    }
+                    try {
+                        mAdapter1.notifyDataSetChanged();
+                    } catch (Exception e) {
+                    }
                     callFirst();
                 }
             }
@@ -428,28 +402,24 @@ public class List1Fragment extends Fragment
         return view;
     }
 
-    private void callFirst()
-    {
-       // tvNoCard.setVisibility(View.GONE);
+    private void callFirst() {
+        // tvNoCard.setVisibility(View.GONE);
         nfcModel.clear();
         pageno = 1;
         new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
     }
 
-    public static void webCall()
-    {
+    public static void webCall() {
         allTags.clear();
         mAdapter.notifyDataSetChanged();
         mAdapter1.notifyDataSetChanged();
         new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
     }
 
-    public static String POST(String url)
-    {
+    public static String POST(String url) {
         InputStream inputStream = null;
         String result = "";
-        try
-        {
+        try {
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
 
@@ -460,9 +430,9 @@ public class List1Fragment extends Fragment
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Type", SortAndFilterOption.SortType);
-            jsonObject.accumulate("numofrecords", "3" );
-            jsonObject.accumulate("pageno", pageno );
-            jsonObject.accumulate("userid", UserId );
+            jsonObject.accumulate("numofrecords", "3");
+            jsonObject.accumulate("pageno", pageno);
+            jsonObject.accumulate("userid", UserId);
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -489,7 +459,7 @@ public class List1Fragment extends Fragment
 
 
             // 10. convert inputstream to string
-            if(inputStream != null)
+            if (inputStream != null)
                 result = convertInputStreamToString(inputStream);
             else
                 result = "Did not work!";
@@ -504,10 +474,10 @@ public class List1Fragment extends Fragment
     }
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line = "";
         String result = "";
-        while((line = bufferedReader.readLine()) != null)
+        while ((line = bufferedReader.readLine()) != null)
             result += line;
 
         inputStream.close();
@@ -515,8 +485,7 @@ public class List1Fragment extends Fragment
 
     }
 
-    private static class HttpAsyncTask extends AsyncTask<String, Void, String>
-    {
+    private static class HttpAsyncTask extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
@@ -541,41 +510,32 @@ public class List1Fragment extends Fragment
         }
 
         @Override
-        protected String doInBackground(String... urls)
-        {
+        protected String doInBackground(String... urls) {
             return POST(urls[0]);
         }
+
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result)
-        {
+        protected void onPostExecute(String result) {
             dialog.dismiss();
-            try
-            {
-                if (result != null)
-                {
+            try {
+                if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
 
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
                     String count = jsonObject.getString("count");
-                    if(count.equals("") || count.equals("null"))
-                    {
-                        numberCount = 0 ;
-                    }
-                    else
-                    {
+                    if (count.equals("") || count.equals("null")) {
+                        numberCount = 0;
+                    } else {
                         numberCount = Integer.parseInt(count);
                     }
 
 //                    nfcModel.clear();
 //                    allTags.clear();
-                    try
-                    {
+                    try {
                         mAdapter.notifyDataSetChanged();
                         mAdapter1.notifyDataSetChanged();
-                    }
-                    catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
@@ -585,8 +545,7 @@ public class List1Fragment extends Fragment
                     rlLoadMore1.setVisibility(View.GONE);
                     rlLoadMore2.setVisibility(View.GONE);
 
-                    for (int i = 0; i < jsonArray.length(); i++)
-                    {
+                    for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
 
@@ -608,14 +567,13 @@ public class List1Fragment extends Fragment
                         GetData(mContext);
                     }
 
-                    recycleSize = allTags.size() ;
+                    recycleSize = allTags.size();
 
                     final CarouselLayoutManager linearLayoutManager1 = (CarouselLayoutManager) recyclerView1.getLayoutManager();
 
                     recyclerView1.setOnScrollListener(new RecyclerView.OnScrollListener() {
                         @Override
-                        public void onScrollStateChanged(RecyclerView recyclerView, int scrollState)
-                        {
+                        public void onScrollStateChanged(RecyclerView recyclerView, int scrollState) {
                             super.onScrollStateChanged(recyclerView, scrollState);
                             int threshold = 1;
                             int count = linearLayoutManager1.getItemCount();
@@ -624,12 +582,9 @@ public class List1Fragment extends Fragment
                             totalItemCount = linearLayoutManager1.getItemCount();
                             lastVisibleItem = linearLayoutManager1.getMaxVisibleItems();
 
-                            if (scrollState == SCROLL_STATE_IDLE)
-                            {
-                                if(recycleSize <= numberCount)
-                                {
-                                    if(lastVisibleItem >= (count - threshold))
-                                    {
+                            if (scrollState == SCROLL_STATE_IDLE) {
+                                if (recycleSize <= numberCount) {
+                                    if (lastVisibleItem >= (count - threshold)) {
                                         rlLoadMore1.setVisibility(View.VISIBLE);
                                         rlLoadMore2.setVisibility(View.VISIBLE);
                                         new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
@@ -644,14 +599,11 @@ public class List1Fragment extends Fragment
                         }
                     });
 
-                }
-                else
-                {
+                } else {
                     Toast.makeText(mContext, "Not able to load Cards..", Toast.LENGTH_LONG).show();
                 }
 
-            }
-            catch (JSONException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
@@ -660,6 +612,7 @@ public class List1Fragment extends Fragment
     private class LoadDataForActivity extends AsyncTask<Void, Void, Void> {
 
         ProgressDialog progressBar;
+
         @Override
         protected void onPreExecute() {
 
@@ -670,6 +623,7 @@ public class List1Fragment extends Fragment
             progressBar.setCancelable(false);
             progressBar.show();
         }
+
         @Override
         protected Void doInBackground(Void... params) {
             db = new DatabaseHelper(getContext());
@@ -688,8 +642,7 @@ public class List1Fragment extends Fragment
 
     }
 
-    public static void initRecyclerView1(final RecyclerView recyclerView, final CarouselLayoutManager layoutManager, GalleryAdapter mAdapter)
-    {
+    public static void initRecyclerView1(final RecyclerView recyclerView, final CarouselLayoutManager layoutManager, GalleryAdapter mAdapter) {
         // enable zoom effect. this line can be customized
         layoutManager.setPostLayoutListener(new CarouselZoomPostLayoutListener());
         layoutManager.setMaxVisibleItems(3);
@@ -700,8 +653,7 @@ public class List1Fragment extends Fragment
         recyclerView.addOnScrollListener(new CenterScrollListener());
     }
 
-    public static void initRecyclerView2(final RecyclerView recyclerView, final CarouselLayoutManager layoutManager, GalleryAdapter1 mAdapter)
-    {
+    public static void initRecyclerView2(final RecyclerView recyclerView, final CarouselLayoutManager layoutManager, GalleryAdapter1 mAdapter) {
         // enable zoom effect. this line can be customized
         layoutManager.setPostLayoutListener(new CarouselZoomPostLayoutListener());
         layoutManager.setMaxVisibleItems(3);
@@ -830,7 +782,7 @@ public class List1Fragment extends Fragment
     }*/
 
     private RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
-        public int y=0;
+        public int y = 0;
 
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -903,8 +855,7 @@ public class List1Fragment extends Fragment
     /*GestureDetector gestureDetector = new GestureDetector(simpleOnGestureListener);*/
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
 //        CardsActivity.setActionBarTitle("Cards - "+nfcModel.size());
 //        callFirst();
@@ -912,8 +863,7 @@ public class List1Fragment extends Fragment
 //        GetData(getContext());
     }
 
-    private class HttpAsyncTaskSearch extends AsyncTask<String, Void, String>
-    {
+    private class HttpAsyncTaskSearch extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
@@ -922,32 +872,27 @@ public class List1Fragment extends Fragment
             dialog = new ProgressDialog(getActivity());
             dialog.setMessage("Searching Records...");
             //dialog.setTitle("Saving Reminder");
-          //  dialog.show();
-          //  dialog.setCancelable(false);
+            //  dialog.show();
+            //  dialog.setCancelable(false);
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
         }
 
         @Override
-        protected String doInBackground(String... urls)
-        {
+        protected String doInBackground(String... urls) {
             return POSTSearch(urls[0]);
         }
+
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result)
-        {
-           // dialog.dismiss();
+        protected void onPostExecute(String result) {
+            // dialog.dismiss();
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
 
-            try
-            {
-                if(result == "")
-                {
+            try {
+                if (result == "") {
                     Toast.makeText(getContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
-                }
-                else
-                {
+                } else {
                     JSONObject response = new JSONObject(result);
                     String message = response.getString("message");
                     String success = response.getString("success");
@@ -964,20 +909,23 @@ public class List1Fragment extends Fragment
 
                         mAdapter.notifyDataSetChanged();
                         mAdapter1.notifyDataSetChanged();
-                    }catch (Exception e){}
-                    if(connect.length() == 0)
-                    {
-                      //  tvNoCard.setVisibility(View.VISIBLE);
-                        allTags.clear();
-                        mAdapter.notifyDataSetChanged();
-                        mAdapter1.notifyDataSetChanged();
+                    } catch (Exception e) {
                     }
-                    else
-                    {
+                    if (connect.length() == 0) {
+                        //  tvNoCard.setVisibility(View.VISIBLE);
+                        allTags.clear();
+                        try {
+                            mAdapter.notifyDataSetChanged();
+                        } catch (Exception e) {
+                        }
+                        try {
+                            mAdapter1.notifyDataSetChanged();
+                        } catch (Exception e) {
+                        }
+                    } else {
                         //  tvNoCard.setVisibility(View.GONE);
 
-                        for(int i = 0 ; i <= connect.length() ; i++ )
-                        {
+                        for (int i = 0; i <= connect.length(); i++) {
                             JSONObject iCon = connect.getJSONObject(i);
                             FriendConnection connectModel = new FriendConnection();
                             connectModel.setUserID(iCon.getString("UserID"));
@@ -1002,20 +950,16 @@ public class List1Fragment extends Fragment
                         }
                     }
                 }
-            }
-            catch (JSONException e)
-            {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public  String POSTSearch(String url)
-    {
+    public String POSTSearch(String url) {
         InputStream inputStream = null;
         String result = "";
-        try
-        {
+        try {
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
 
@@ -1025,11 +969,11 @@ public class List1Fragment extends Fragment
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("FindBy", "NAME" );
-            jsonObject.accumulate("Search", searchText.getText().toString() );
+            jsonObject.accumulate("FindBy", "NAME");
+            jsonObject.accumulate("Search", searchText.getText().toString());
             jsonObject.accumulate("UserID", UserId);
-            jsonObject.accumulate("numofrecords", "30" );
-            jsonObject.accumulate("pageno", "1" );
+            jsonObject.accumulate("numofrecords", "30");
+            jsonObject.accumulate("pageno", "1");
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -1056,7 +1000,7 @@ public class List1Fragment extends Fragment
 
 
             // 10. convert inputstream to string
-            if(inputStream != null)
+            if (inputStream != null)
                 result = convertInputStreamToString(inputStream);
             else
                 result = "Did not work!";
@@ -1069,14 +1013,12 @@ public class List1Fragment extends Fragment
         return result;
     }
 
-    public static void GetData(Context context)
-    {
+    public static void GetData(Context context) {
         images = new ArrayList<>();
         images1 = new ArrayList<>();
         //newly added
         nfcModel.clear();
-        for(FriendConnection reTag : allTags)
-        {
+        for (FriendConnection reTag : allTags) {
             FriendConnection nfcModelTag = new FriendConnection();
             // nfcModelTag.setId(reTag.getId());
             nfcModelTag.setName(reTag.getName());
@@ -1097,19 +1039,16 @@ public class List1Fragment extends Fragment
         mAdapter.notifyDataSetChanged();
         mAdapter1.notifyDataSetChanged();
 
-        if (nfcModel.size() == 0)
-        {
+        if (nfcModel.size() == 0) {
             txtNoCard1.setVisibility(View.VISIBLE);
-        }
-        else
-        {
+        } else {
             txtNoCard1.setVisibility(View.GONE);
         }
 
-        CardsActivity.setActionBarTitle("Cards - "+nfcModel.size());
+        CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
 //        CardsActivity.setActionBarTitle("Cards - "+number_cards);
-        initRecyclerView1(recyclerView1,new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter ) ;
-        initRecyclerView2(recyclerView2,new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter1 ) ;
+        initRecyclerView1(recyclerView1, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter);
+        initRecyclerView2(recyclerView2, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter1);
 
         // myPager = new MyPager(context, R.layout.cardview_list, nfcModel);
         //viewPager.setAdapter(myPager);

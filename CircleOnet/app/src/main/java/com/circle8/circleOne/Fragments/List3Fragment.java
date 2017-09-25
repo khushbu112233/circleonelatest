@@ -399,7 +399,9 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                         //tvDataInfo.setVisibility(View.VISIBLE);
                         allTaggs.clear();
                         searchTags.clear();
-                        gridAdapter.notifyDataSetChanged();
+                        try {
+                            gridAdapter.notifyDataSetChanged();
+                        }catch (Exception e){}
                     }
                     else
                     {

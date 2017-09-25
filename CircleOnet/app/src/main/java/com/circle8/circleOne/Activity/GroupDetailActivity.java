@@ -768,7 +768,7 @@ public class GroupDetailActivity extends AppCompatActivity
         items = new CharSequence[]{"Take Photo", "Choose from Library", "Cancel"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(GroupDetailActivity.this);
-        builder.setTitle("Add Photo!");
+        builder.setTitle("Add Photo");
         builder.setItems(items, new DialogInterface.OnClickListener()
         {
             @Override
