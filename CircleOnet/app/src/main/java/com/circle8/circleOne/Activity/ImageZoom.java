@@ -29,7 +29,7 @@ public class ImageZoom extends AppCompatActivity {
         }
         else
         {
-            Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+displayProfile).placeholder(R.drawable.usr_1).into(img);
+            Picasso.with(getApplicationContext()).load(displayProfile).placeholder(R.drawable.usr_1).into(img);
         }
 
 

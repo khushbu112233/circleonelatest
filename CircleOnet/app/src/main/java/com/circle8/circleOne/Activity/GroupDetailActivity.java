@@ -196,7 +196,7 @@ public class GroupDetailActivity extends AppCompatActivity
                     public void onClick(View v) {
                         dialog.dismiss();
                         Intent intent = new Intent(getApplicationContext(), ImageZoom.class);
-                        intent.putExtra("displayProfile" ,group_Img);
+                        intent.putExtra("displayProfile", "http://circle8.asia/App_ImgLib/Group/"+group_Img);
                         startActivity(intent);
                     }
                 });

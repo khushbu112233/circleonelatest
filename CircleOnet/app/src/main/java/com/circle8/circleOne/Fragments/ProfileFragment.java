@@ -218,7 +218,7 @@ public class ProfileFragment extends Fragment
                     public void onClick(View v) {
                         dialog.dismiss();
                         Intent intent = new Intent(getContext(), ImageZoom.class);
-                        intent.putExtra("displayProfile", displayProfile);
+                        intent.putExtra("displayProfile", "http://circle8.asia/App_ImgLib/UserProfile/"+displayProfile);
                         startActivity(intent);
                     }
                 });

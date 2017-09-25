@@ -1,9 +1,12 @@
 package com.circle8.circleOne.Activity;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
@@ -104,6 +107,7 @@ public class CardDetail extends NfcActivity
     ListView listView1, groupListView;
     RecyclerView recycler_view ;
     TextView tvAddedGroupInfo ;
+    private String displayProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -187,6 +191,41 @@ public class CardDetail extends NfcActivity
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, txtName.getText().toString());
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Share Profile Via"));
+            }
+        });
+
+        imgProfileCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                final Dialog dialog = new Dialog(CardDetail.this);
+                dialog.setContentView(R.layout.imageview_popup);
+
+                ImageView ivViewImage = (ImageView)dialog.findViewById(R.id.ivViewImage);
+                if (displayProfile.equals(""))
+                {
+                    ivViewImage.setImageResource(R.drawable.usr_1);
+                }
+                else
+                {
+                    Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+displayProfile).placeholder(R.drawable.usr_1).into(ivViewImage);
+                }
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                ivViewImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(getApplicationContext(), ImageZoom.class);
+                        intent.putExtra("displayProfile", "http://circle8.asia/App_ImgLib/UserProfile/"+displayProfile);
+                        startActivity(intent);
+                    }
+                });
+
+               /* WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
+                wmlp.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
+                wmlp.y = 300;*/   //y position
+                dialog.show();
             }
         });
 
@@ -1197,6 +1236,7 @@ public class CardDetail extends NfcActivity
                         imgProfileCard.setImageResource(R.drawable.usr);
                     } else {
                         Picasso.with(CardDetail.this).load("http://circle8.asia/App_ImgLib/UserProfile/" + userImg).into(imgProfileCard);
+                        displayProfile = userImg;
                     }
 
                     if (frontCardImg.equalsIgnoreCase("") && backCardImg.equalsIgnoreCase("")) {

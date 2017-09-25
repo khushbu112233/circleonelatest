@@ -1,11 +1,14 @@
 package com.circle8.circleOne.Activity;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -99,6 +102,7 @@ public class ConnectActivity extends AppCompatActivity
 
     private ArrayList<ConnectProfileModel> connectingTags = new ArrayList<>();
     private String Mobile1 = "", Mobile2 = "";
+    private String displayProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -266,6 +270,41 @@ public class ConnectActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
 
+            }
+        });
+
+        ivProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                final Dialog dialog = new Dialog(ConnectActivity.this);
+                dialog.setContentView(R.layout.imageview_popup);
+
+                ImageView ivViewImage = (ImageView)dialog.findViewById(R.id.ivViewImage);
+                if (displayProfile.equals(""))
+                {
+                    ivViewImage.setImageResource(R.drawable.usr_1);
+                }
+                else
+                {
+                    Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+displayProfile).placeholder(R.drawable.usr_1).into(ivViewImage);
+                }
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                ivViewImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(getApplicationContext(), ImageZoom.class);
+                        intent.putExtra("displayProfile", "http://circle8.asia/App_ImgLib/UserProfile/"+displayProfile);
+                        startActivity(intent);
+                    }
+                });
+
+               /* WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
+                wmlp.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
+                wmlp.y = 300;*/   //y position
+                dialog.show();
             }
         });
 
@@ -771,6 +810,7 @@ public class ConnectActivity extends AppCompatActivity
                     tvPersonDesignation.setText(profile.getString("Designation"));
 
                     profileImg = "http://circle8.asia/App_ImgLib/UserProfile/"+profile.getString("UserPhoto");
+                    displayProfile = profile.getString("UserPhoto");
                     if(profile.getString("UserPhoto").equalsIgnoreCase(""))
                     {
                         ivProfileImage.setImageResource(R.drawable.usr);

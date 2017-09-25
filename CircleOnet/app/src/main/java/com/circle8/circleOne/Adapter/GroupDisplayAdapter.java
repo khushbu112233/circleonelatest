@@ -179,7 +179,7 @@ public class GroupDisplayAdapter extends BaseAdapter
                     public void onClick(View v) {
                         dialog.dismiss();
                         Intent intent = new Intent(context, ImageZoom.class);
-                        intent.putExtra("displayProfile", groupModelsList.get(position).getGroup_Photo());
+                        intent.putExtra("displayProfile", "http://circle8.asia/App_ImgLib/Group/"+groupModelsList.get(position).getGroup_Photo());
                         context.startActivity(intent);
                     }
                 });

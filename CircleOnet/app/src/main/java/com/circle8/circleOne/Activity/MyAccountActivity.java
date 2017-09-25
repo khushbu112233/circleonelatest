@@ -248,7 +248,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                 public void onClick(View v) {
                     dialog.dismiss();
                     Intent intent = new Intent(getApplicationContext(), ImageZoom.class);
-                    intent.putExtra("displayProfile", user_Photo);
+                    intent.putExtra("displayProfile", "http://circle8.asia/App_ImgLib/UserProfile/"+user_Photo);
                     startActivity(intent);
                 }
             });

@@ -209,7 +209,7 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
                     public void onClick(View v) {
                         dialog.dismiss();
                         Intent intent = new Intent(context, ImageZoom.class);
-                        intent.putExtra("displayProfile", groupDetailModelArrayList.get(position).getImgProfile());
+                        intent.putExtra("displayProfile", "http://circle8.asia/App_ImgLib/UserProfile/"+groupDetailModelArrayList.get(position).getImgProfile());
                         context.startActivity(intent);
                     }
                 });
