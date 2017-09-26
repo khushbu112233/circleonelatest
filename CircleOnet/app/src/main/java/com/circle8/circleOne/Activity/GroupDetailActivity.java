@@ -165,12 +165,23 @@ public class GroupDetailActivity extends AppCompatActivity
 
                 if(isPressed) {
                     listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-                    GroupDetailAdapter.holder.chCheckBox.setVisibility(View.VISIBLE);
+                    GroupDetailAdapter.chCheckBox.setVisibility(View.VISIBLE);
                 }
                 else {
                     listView.setChoiceMode(ListView.CHOICE_MODE_NONE);
-                    GroupDetailAdapter.holder.chCheckBox.setVisibility(View.GONE);
+                    GroupDetailAdapter.chCheckBox.setVisibility(View.GONE);
                 }
+
+
+                if (GroupDetailActivity.listView.getChoiceMode() == ListView.CHOICE_MODE_MULTIPLE){
+                 //   GroupDetailAdapter.holder.chCheckBox.setVisibility(View.VISIBLE);
+                   // notifyDataSetChanged();
+                }
+                else {
+                  //  GroupDetailAdapter.holder.chCheckBox.setVisibility(View.GONE);
+                    //notifyDataSetChanged();
+                }
+
                 isPressed = !isPressed;
             }
         });

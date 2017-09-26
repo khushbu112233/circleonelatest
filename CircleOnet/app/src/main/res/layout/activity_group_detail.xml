@@ -92,7 +92,6 @@
                             android:id="@+id/imgCamera"
                             android:layout_width="16dp"
                             android:layout_height="16dp"
-                            android:src="@drawable/mini_camera_blue"
                             android:layout_alignParentRight="false"
                             android:layout_marginTop="53dp"
                             android:layout_marginLeft="47dp"/>

@@ -146,7 +146,7 @@ public class ContactsImportActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 System.out.println("check"+ listView.getCheckItemIds().length);
-
+                selectedStrings = new JSONArray();
                 for (int i = 0; i < listView.getCheckItemIds().length; i++)
                 {
                     //listView.getAdapter().getItem((int)listView.getCheckItemIds()[i]);

@@ -54,7 +54,7 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
     private ArrayList<String> address = new ArrayList<>();
     private ArrayList<String> imgprofile = new ArrayList<>();
     public static ViewHolder holder;
-
+    public static CheckBox chCheckBox;
     public GroupDetailAdapter(Context applicationContext, int group_detail_items,
            ArrayList<String> name, ArrayList<String> designation, ArrayList<String> company,
            ArrayList<String> website, ArrayList<String> email, ArrayList<String> phone,
@@ -87,7 +87,7 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
     }
 
     @Override
-    public View generateView(int position, ViewGroup parent)
+    public View generateView(final int position, ViewGroup parent)
     {
         View v = LayoutInflater.from(context).inflate(R.layout.group_detail_items, null);
 
@@ -117,12 +117,12 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
         holder = null;
 
         holder = new ViewHolder();
-
+        chCheckBox = (CheckBox) row.findViewById(R.id.chCheckBox);
         holder.personName = (TextView) row.findViewById(R.id.tvPersonName);
         holder.personDesignation = (TextView) row.findViewById(R.id.tvDesignation);
         holder.personDetail = (TextView) row.findViewById(R.id.tvPersonDetail);
         holder.personImage = (CircleImageView) row.findViewById(R.id.imgProfile);
-        holder.chCheckBox = (CheckBox) row.findViewById(R.id.chCheckBox);
+       // holder.chCheckBox = (CheckBox) row.findViewById(R.id.chCheckBox);
         row.setTag(holder);
 
         holder.personName.setText(groupDetailModelArrayList.get(position).getFirstname()+" "+
@@ -137,15 +137,15 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
         String Address = address.get(position);*/
 
         if (GroupDetailActivity.listView.getChoiceMode() == ListView.CHOICE_MODE_MULTIPLE){
-            holder.chCheckBox.setVisibility(View.VISIBLE);
+            chCheckBox.setVisibility(View.VISIBLE);
             notifyDataSetChanged();
         }
         else {
-            holder.chCheckBox.setVisibility(View.GONE);
+            chCheckBox.setVisibility(View.GONE);
             notifyDataSetChanged();
         }
 
-        holder.chCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        chCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

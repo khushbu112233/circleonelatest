@@ -79,7 +79,9 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+import com.hbb20.CountryCodePicker;
 import com.linkedin.platform.utils.Scope;
+import com.neovisionaries.i18n.CountryCode;
 import com.squareup.picasso.Picasso;
 
 import net.doo.snap.camera.AutoSnappingController;
@@ -156,9 +158,10 @@ public class EditProfileActivity extends AppCompatActivity implements
     ArrayList<String> notice_array = new ArrayList<String>();
     String type = "";
     private ProgressDialog progressDialog;
-    EditText edtAddress1, edtAddress2, edtAddress3, edtAddress4, edtAddress5, edtAddress6, edtWebsite, etAssociationName;
+    EditText edtAddress1, edtAddress2, edtAddress3, edtAddress4, edtAddress6, edtWebsite, etAssociationName;
     String UserID = "";
     ImageView imgBack;
+    CountryCodePicker ccpCountry;
     private ExpandableHeightGridView gridView, gridViewAdded;
     private String[] array;
     private EditText etAttachFile;
@@ -267,7 +270,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         magnifierView = (MagnifierView) findViewById(R.id.magnifier);
         // MagifierView should be set up every time when editPolygonView is set with new image
         magnifierView.setupMagnifier(editPolygonView);
-
+        ccpCountry = (CountryCodePicker) findViewById(R.id.ccpAddress5);
         resultImageView = (ImageView) findViewById(R.id.resultImageView);
         resultImageView.setVisibility(View.GONE);
 
@@ -326,7 +329,6 @@ public class EditProfileActivity extends AppCompatActivity implements
         edtAddress2 = (EditText) findViewById(R.id.edtAddress2);
         edtAddress3 = (EditText) findViewById(R.id.edtAddress3);
         edtAddress4 = (EditText) findViewById(R.id.edtAddress4);
-        edtAddress5 = (EditText) findViewById(R.id.edtAddress5);
         edtAddress6 = (EditText) findViewById(R.id.edtAddress6);
         edtWork = (EditText) findViewById(R.id.edtWork);
         btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
@@ -1060,7 +1062,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("Address1", edtAddress1.getText().toString());
             jsonObject.accumulate("Address2", edtAddress2.getText().toString());
             jsonObject.accumulate("Address3", edtAddress3.getText().toString() + " " + edtAddress4.getText().toString());
-            jsonObject.accumulate("Address4", edtAddress5.getText().toString() + " " + edtAddress6.getText().toString());
+            jsonObject.accumulate("Address4", ccpCountry.getSelectedCountryName().toString() + " " + edtAddress6.getText().toString());
             jsonObject.accumulate("Address_ID", "1");
             jsonObject.accumulate("Address_Type", "work");
             jsonObject.accumulate("AssociationID", associationID);
@@ -1071,7 +1073,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("CompanyDesc", edtCompanyDesc.getText().toString());
             jsonObject.accumulate("CompanyID", companyID);
             jsonObject.accumulate("CompanyName", autoCompleteCompany.getText().toString());
-            jsonObject.accumulate("Country", edtAddress5.getText().toString());
+            jsonObject.accumulate("Country", ccpCountry.getSelectedCountryName().toString());
             jsonObject.accumulate("Designation", autoCompleteDesignation.getText().toString());
             jsonObject.accumulate("DesignationID", designationID);
             jsonObject.accumulate("Email", edtEmail.getText().toString());
@@ -1525,7 +1527,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("Address1", edtAddress1.getText().toString());
             jsonObject.accumulate("Address2", edtAddress2.getText().toString());
             jsonObject.accumulate("Address3", edtAddress3.getText().toString() + " " + edtAddress4.getText().toString());
-            jsonObject.accumulate("Address4", edtAddress5.getText().toString() + " " + edtAddress6.getText().toString());
+            jsonObject.accumulate("Address4", ccpCountry.getSelectedCountryName().toString() + " " + edtAddress6.getText().toString());
             jsonObject.accumulate("Address_ID", "");
             jsonObject.accumulate("Address_Type", "");
             jsonObject.accumulate("AssociationID", associationID);
@@ -1536,7 +1538,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("CompanyDesc", edtCompanyDesc.getText().toString());
             jsonObject.accumulate("CompanyID", companyID);
             jsonObject.accumulate("CompanyName", autoCompleteCompany.getText().toString());
-            jsonObject.accumulate("Country", edtAddress5.getText().toString());
+            jsonObject.accumulate("Country", ccpCountry.getSelectedCountryName().toString());
             jsonObject.accumulate("Designation", autoCompleteDesignation.getText().toString());
             jsonObject.accumulate("DesignationID", designationID);
             jsonObject.accumulate("Email1", edtEmail.getText().toString());
@@ -2650,7 +2652,9 @@ public class EditProfileActivity extends AppCompatActivity implements
                     edtAddress2.setText(Address3 + " " + Address4);
                     edtAddress3.setText(City);
                     edtAddress4.setText(State);
-                    edtAddress5.setText(Country);
+                    String code =  CountryCode.findByName(Country).get(0).name();
+                    ccpCountry.setCountryForNameCode(code);
+                 //   edtAddress5.setText(Country);
                     edtAddress6.setText(Postalcode);
                     etAttachFile.setText(Attachment_FileName);
 

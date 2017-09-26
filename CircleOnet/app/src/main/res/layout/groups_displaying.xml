@@ -35,7 +35,6 @@
                 <ImageView
                     android:layout_width="14dp"
                     android:layout_height="14dp"
-                    android:src="@drawable/mini_camera_blue"
                     android:layout_alignParentRight="false"
                     android:layout_marginTop="40dp"
                     android:layout_marginLeft="40dp"/>

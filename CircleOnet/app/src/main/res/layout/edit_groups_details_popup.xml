@@ -30,7 +30,6 @@
             <ImageView
                 android:layout_width="18dp"
                 android:layout_height="18dp"
-                android:src="@drawable/mini_camera_blue"
                 android:layout_alignParentRight="false"
                 android:layout_marginTop="55dp"
                 android:layout_marginLeft="50dp"/>
