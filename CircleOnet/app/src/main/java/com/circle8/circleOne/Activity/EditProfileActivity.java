@@ -83,6 +83,8 @@ import com.hbb20.CountryCodePicker;
 import com.linkedin.platform.utils.Scope;
 import com.neovisionaries.i18n.CountryCode;
 import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import net.doo.snap.camera.AutoSnappingController;
 import net.doo.snap.camera.CameraOpenCallback;
@@ -504,7 +506,11 @@ public class EditProfileActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 cardType = "front";
 
-                selectImage();
+                CropImage.activity(null)
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .start(EditProfileActivity.this);
+
+               // selectImage();
             }
         });
 
@@ -512,7 +518,10 @@ public class EditProfileActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 cardType = "back";
-                selectImage();
+                CropImage.activity(null)
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .start(EditProfileActivity.this);
+              //  selectImage();
             }
         });
 
@@ -1744,6 +1753,33 @@ public class EditProfileActivity extends AppCompatActivity implements
             else if (requestCode == REQUEST_CAMERA_CARD)
                 onCaptureImageResultCard(data);
         }
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Bitmap bitmap;
+
+                try {
+                    bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(result.getUri()));
+                   // originalBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
+
+                    final_ImgBase64 = BitMapToString(bitmap);
+                    //   Upload();
+                    CardSwipe.imageView.setImageBitmap(bitmap);
+                    if (cardType.equals("front"))
+                        new HttpAsyncTaskFrontUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                    else if (cardType.equals("back"))
+                        new HttpAsyncTaskBackUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                } catch (FileNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+               // ((ImageView) findViewById(R.id.quick_start_cropped_image)).setImageURI(result.getUri());
+                //Toast.makeText(this, "Cropping successful, Sample: " + result.getSampleSize(), Toast.LENGTH_LONG).show();
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Toast.makeText(this, "Cropping failed: " + result.getError(), Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     @Override
@@ -2652,8 +2688,10 @@ public class EditProfileActivity extends AppCompatActivity implements
                     edtAddress2.setText(Address3 + " " + Address4);
                     edtAddress3.setText(City);
                     edtAddress4.setText(State);
-                    String code =  CountryCode.findByName(Country).get(0).name();
-                    ccpCountry.setCountryForNameCode(code);
+                    try {
+                        String code = CountryCode.findByName(Country).get(0).name();
+                        ccpCountry.setCountryForNameCode(code);
+                    }catch (Exception e){}
                  //   edtAddress5.setText(Country);
                     edtAddress6.setText(Postalcode);
                     etAttachFile.setText(Attachment_FileName);

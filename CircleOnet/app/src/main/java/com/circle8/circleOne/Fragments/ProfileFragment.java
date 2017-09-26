@@ -1318,7 +1318,7 @@ public class ProfileFragment extends Fragment
             dialog = new ProgressDialog(getActivity());
             dialog.setMessage("Fetching Testimonials...");
             //dialog.setTitle("Saving Reminder");
-            dialog.show();
+          // dialog.show();
             dialog.setCancelable(false);
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
@@ -1333,7 +1333,7 @@ public class ProfileFragment extends Fragment
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
+           // dialog.dismiss();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);

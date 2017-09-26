@@ -29,6 +29,8 @@ import com.circle8.circleOne.Utils.Utility;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -237,10 +239,17 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                 boolean result1 = Utility.checkCameraPermission(NewCardRequestDetailActivity.this);
                 if (type[item].equals("Add Front Card")) {
                     cardType = "front";
-                    selectImage();
+                    CropImage.activity(null)
+                            .setGuidelines(CropImageView.Guidelines.ON)
+                            .start(NewCardRequestDetailActivity.this);
+                   // selectImage();
                 } else if (type[item].equals("Add Back Card")) {
                     cardType = "back";
-                    selectImage();
+
+                    CropImage.activity(null)
+                            .setGuidelines(CropImageView.Guidelines.ON)
+                            .start(NewCardRequestDetailActivity.this);
+                   // selectImage();
                 } else if (type[item].equals("Done")) {
                     if (CardFront.equals("")){
                         Toast.makeText(getApplicationContext(), "Please Upload Front Card Image.", Toast.LENGTH_LONG).show();
@@ -317,6 +326,33 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                 onSelectFromGalleryResultCard(data);
            /* else if (requestCode == REQUEST_CAMERA_CARD)
                 onCaptureImageResultCard(data);*/
+        }
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Bitmap bitmap;
+
+                try {
+                    bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(result.getUri()));
+                    // originalBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
+
+                    final_ImgBase64 = BitMapToString(bitmap);
+                    //   Upload();
+                    CardSwipe.imageView.setImageBitmap(bitmap);
+                    if (cardType.equals("front"))
+                        new HttpAsyncTaskFrontUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                    else if (cardType.equals("back"))
+                        new HttpAsyncTaskBackUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                } catch (FileNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+                // ((ImageView) findViewById(R.id.quick_start_cropped_image)).setImageURI(result.getUri());
+                // Toast.makeText(this, "Cropping successful, Sample: " + result.getSampleSize(), Toast.LENGTH_LONG).show();
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Toast.makeText(this, "Cropping failed: " + result.getError(), Toast.LENGTH_LONG).show();
+            }
         }
     }
 
