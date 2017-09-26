@@ -39,6 +39,8 @@ import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.AsyncRequest;
 import com.circle8.circleOne.Utils.Utility;
 import com.hbb20.CountryCodePicker;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -91,12 +93,12 @@ import static com.circle8.circleOne.Utils.Validation.validate;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, AsyncRequest.OnAsyncRequestComplete {
     public static EditText etFirstName, etLastName, etPassword, etConfirmPass, etPhone, etEmail;
-    public static TextView tvCountryCode, tvUsernameInfo, tvFirstnameInfo, tvLastnameInfo, tvPasswordInfo, tvRePasswordInfo, tvEmailInfo, tvPhoneInfo;
+    public static TextView tvUsernameInfo, tvFirstnameInfo, tvLastnameInfo, tvPasswordInfo, tvRePasswordInfo, tvEmailInfo, tvPhoneInfo;
     private LinearLayout lnrRegister;
     private ImageView ivConnect;
     RelativeLayout ivMale, ivFemale;
     private View line_view1, line_view2;
-    ImageView ivMaleRound, ivMaleImg, ivFemaleround, ivFemaleImg, imgBack;
+    ImageView ivMaleRound, ivFemaleround, imgBack;
     TextView txtGender;
     String final_ImgBase64 = "iVBORw0KGgoAAAANSUhEUgAAAGYAAABmCAYAAAA53+RiAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAADpBJREFUeNrsXX1QFOcZXw6Egzvh+BL8RvCjmkZAjU7qF7Y10zh1pJ2Y6bR/iCbNZJJonEnbVJ026FTTzrRNjOk/SSbBqU1bzXS048S2NhMEnUYn6iGKCmq4+AEqCAd3KMJB39+xe+699y63x+2+uwc8Mzuwe3u3u+/vfX7Px/u878b19/cLJhcH2Yr+2XSnrLe/f8rX9x/kd/t8thv3u7PCfdGeEC/kWJNc+D8/Jbky15p0fmF62pdkt9LsDx1nQmAcp9rcz9d1ekobvfcLXV337Ve8XZpeoCgtVSiwp7gyE8d8scCRum/2WPvhUWAUwPi0+e6ms+6OF5zuzonND7q5XvzJDEfPlJRkZ2Ha2A+WZqa/N+KB+fftlh8RMH55ur2jUC0Y6O2QYsfYoOPF5Hhzd7fQJPsdT69PaPB0kb+9glqtW5Th6CK0d/Sl/CmbyW7jiAJm3/Vbv73i6Xr5s7ut9nAgAIAZdpsww5YiEBsR1XUB0hWvVzjb3iH+rwyWjdinkqyMmpXjsjbOd6RWD2tgAMiJ1rZXz3d4rEqNsSwzXVialSEQStH9fqClRGOFqpY24Xhrm+J5SzLTb38nO/Op747LPDesgPnz17eer25te+tip4epIU/nZHEDQ0lAe9Wt94T9N5qZmiRpUGZi4pqf5k1yxTQw7zfemEq8qiPHWu7NZj3osxNzyTbe79aaSUB1R27fJVtLyGfjkhL7VuVkVzyXN+m5mATmDw1fvXn0TuvrXp8vLlYAYVHdh64bTIBm2m3tT6SnrX5x2uTjMQEMtKS2o/MI6XWzYxUQFkA7L18TnMQeBT1TfHz/ynGZv3ttxrQtpgZmx6Urqy53ej8h0Xky7V1tm5UftVdltBA7Kbxz1SXQrn2xI/Ui6Yjfql62qN10wLxSU/dr4gKXy6kLWrJtVoGhRl0PJwH0duBmc9DxSclWz7ezM7+plWOgCTCv1V46eKrNvYbWkjcfmxlztBWJ9uy8fFXwEqAkSY6P9+WlJK94r/ixasOBWX+69jhxLxcHHZs6UdgwdZIw3AWUtuVCfZB7DbuzODP9hV99o+ADw4ChQQF1vVowlcQl2cJIkl1Ec2jPrTBt7BvvFs7ZwR0YFih75s4RZthThJEosDsfuW4GHcu3Jf987/y5v+cGzCgobEFQuou41XKZmpK8et+CuYd1B2btKedfCLf+eBQUdeDAIbjv8y0grrRTN2DWfHHmpXsPe/5kNChwWZF8bPB4xbS+L+jz8dZEf8xU7M9OpxoOTpLF8rC7ry8nkjhHNTBLq04WIY1kJCh44HCZYFqkjDUcEp4gIRCVxzppYxKuH35y/hRNgSGgOMYmJDR29vamBTwREqPwChwByIfEsEY7sonYagNx5XkBRHtrRIs/PrCw6CeaAfP9/53+3N3TWyLtbyQuMfJeegtoCg+n9Zj/WnLviLP0Dn5BsRtr6uj7/wGhtINRA0O0BUOsb0n7S4iWIKLnoSW7CR14KftBC2xJblJwDq7B6w37vem2FGHrrALdqRhaXnamNnA/iRZL98O+vtxw9mZQYAgoeeSHLpEfSpIa4aN5j+ve01hup1zQOZZlpRMqzVC8FzRIFbFF4HklCuRlJ5G+2XqhXp4dOPqvxQueGjIw3zvx5X+8Pt/KgEGbO1t3fh4MFACCzEKkWWoMfO2qv8YEiBc4SN1QTssKojWVEQNDtAU25XM5L28ijaKnoAE3nbvIbDwtstSs6JwXE8DePHPqbIDSiAt9+79LnlA01BalD8gX/yZvGL2TkrjxLXX1zEZDj9bCA8QzbJ2Vz6Q9ZIr1FLuYR5QEcQ3p/OURAUO+UIYvSvv4Qb3tyjtXG0MM9gDNzNaUZhDPsMABzVRHEB8N9dpSXRxkTFzcLxCKqAYmPi7uN/Ieq3e2GG4xa1wdmqLHqCeeZyODlhEU6i2IoyTp6e/HSO9mVcBAW3z9/YFv621XIAduNoUcw5iOngYZcZi890qUBudDT4HztERGy0QJfsbSGgvjwA65tugd3Q80RkuIXeEx0LaNQWmoK9Nfax49G1ECG/lTNigw8MT6BGEyS+30kioGr/O47iOaDp7NgShd76J2MIFcW6E14TSmjKdt8QdfLW0hBh+BIy9BBaiazqKnrYHpEMOTUGBEnlv3yEBmcWkYulYLqXqeBRygaht1PcRTegtsDeXYlClpTKn8g1UctIVFGUaMn8yw2cLelx6yVpYIJkD8UO4EMIEB//EozmtiNACmW/AWeq6N1tlsJVkmc6yIbcdNlAQBIyIVqAtblZsljAof52N6cEcspTWmhOZ5o8QIKjNSns7NVgfMdA1mbkUjPAyvmYRSgjRxCD8UmJHWY40WxDSUV1giB6bQCGAwtzJEY9wdBmhpZ9B+EWcqp7RmABg6sOFpXxCv0DEEEpq8hY6lUP7EW2tkkidpTJHcS+BdnU93BKTfPWHG67UUVtKSN51TbVAoAZMXACaJv9HH2D0t+xnZZr3k0+aWsJ2FN6WDxYI0hg60+KREMkLobP/NZi5aAw+QpjGk5Hl7pSyWshjtldjFSkm5eMVZW3oKgEeBBi2rco2ZQkI5HH6NWW50YMkae0HZkZ6DVhjKpnNiaByzTEu0mOEmQB3rGWMwKPjTw0vb7we9hdFBJhrWBpRn5jAFMJLWUHkjP6VtPFenaZEExvX3MMb2kek1Mrim7EyRJdh/N3a6N0pWaUcA4KCKMVqbM1BHfDFktjEEHYJHbcOQqczoefhQZ1TG2BheCgr11p5yRmx3pOnfKLZzMrIKAGVP4RzTpWoSzHZDEjigMLrODMYa5bOYkgEjjQ0xAO1u4rwGb5dQ3XLPP0ysVGAugWLGKe8J9AOZYfUKCZytdfXM0UQcAyXJaQmN7PH5VI8+Il5B2a1Z1yEIorImzksehgMH9cRrVc7DUVvdAppEsZ/ZF4dIEEwsaDgYZVAW6MsZZeYZBSabCvJMCQiV6Wg0NTCPUkWpwh6yQSMQg8B9VktZoDiMEqK4xMwaQsVrfmBqBDGjibEQMw+Uwf5Bg7BJBh4zl5lgkiie5RjEigCY9li8cf8UPw4lvLyEomknjH9gYQB6JG9UDLEvkHaLXGOwbvGoGGFfgukYUwABTKU8PuA5ejgqIlMF05hLsjFO+iSjeVtaXZyHjBdtlYk8Mj8eCZhvvrTqJFCaOmBn+AIjTfvGdXlMgRjMrYZHio13x6RKcivlASZ21knAcFFfch3EJMc5THlQ2zjYkObhueIttIXqjGxgcHOwM3rdEG4EYyJOt3krLpH0RDYbHedZcXkTTvbFLS2fJeXKgtY2wVLqegjS7xvO1JoaFBZA60/X6lbvdqT5boi2BIAR1zWpkQ5WtWhLL/45/BfqmYsfxIKARTAMoXUNAiiMsi8H5ZG/JBWCuJjPcTEXpYW3orACUYhI68NMt9m4L0wHewdKwbRDpfuE9khLqWg1BZIxpTAATGDJEnGOTOBMLZa+CgeKGZeVB0jhMtlYwEELcDAiKzP8hwhzhUzDkOjskLTPGhuPVHYOstYYSoUq5j3OZd2wSMSfyS6c7V8oz6ZwX9CcaL1XfJ/yxirkO3SVTIWc/6KpThnMFcbgFx7ezGv9I5b5ZGFxSOWOJFj3JposCWWvXPTichYqR3NQSgn4G3eIixFIr/dQogGzVaQoCTQZNQEscGBzUDQ41Pah6toq6HNYdWXlgdwA4dmhqCxAYRVAQFNibRVzCRyWdqNxh9o+lLytBhhojfvRj9yMtjcEUh6xoikscHbNmanQyFG3z17WMowhwIgnvS3XmkhsjTKFFQixLHDhWWW8aJ9I8nu7Q6tAy1nnMUtkCTjlcluDFIpaQ8da7gNFEMNhJXO49SxPbb9KDxa0RzlE20lbN6oGhkZyoAiiSdWFWbZluLyyBJTGWjFEDaMwpn24WbYlLDAESXgKx6R9pFPC5YvOKpSgxvorsIK1P5tpN8LRGTo2dc7mwZb4DVftvzk4sLoaRmNCawaWZg2f12BJtoZFZw2DpJzAJFSe8JjY8YUhASOmoLdL+4jiB1uekFUzwJoyHvPg2EKfSamMSoHCysJdI+z8GNERqJGnapSyrCx1tscPv3eURTJXFWkpql3KlQx+RMCIUiqPbXZfcfWrHZ8YySttIHSgvDAkKt9W811VwIgIB9QPr1TE+MRIrahRQ89gFcquuNRQWKQaI+XRtstzRUjpj0RwwtGzf8n6yyF2pTSSF/tENAdTtDd75c7ASAVHSUDxr1+opxtkc6Svwop4ciy5QJncGRiJ4ChVrAKUl2vq8E4yuUqtD+caawKMKCU0OLihkQIMa4KXlqAMGRiRK4PAuebtihdGsMD70gqUaDSGCc6oaANKVMBI4JCtSO4QjEr0oEQNDOUQbFcyiMPO+LMTlnCJi7UABaLJa+MlWVp1EhkC3Fia/Divt+jxcIX/eOWrB+c7PFbqo2ORxilcgRHByRMGhqcL5cczEsc8eHHaZGssvrkcocD7jde7/3HrNmv8YrsY32kqmgMjAwg3+wZ9fKbd1v5K/hRHLOTQAAjGUT6+3oRX8tILZbpELXHqcW3dgJFpD6htOQugZybmOMyoQQDkrzeauv9+oymOAYhuWsINGMr2IKsaUiaTNibBs2Z8zpjVudlJRo90Isd1qOmO57O7rXaFUw6J6ZVGve+FCzAygOC9lbMAgkywJrlLJ+QkrcjKsPICCWAQIDorW+4J7p5epYEWGPfywd5bGdPAqAUIMjYhwb040+GZ50idWKzh2zkAxCWP98GJ1rb2uk6vo6evzzrI6YjPKngCYigwMoCQOQBI69ScPynZ6pqcbLVMSLb2WS0Wx6L0tDRFO+HzCafbO1wDYLitHT0+oeXhwxwVl3GJdrGCB2WZEhgZQJgCUipuawy4BZfo4lfo5WXFJDAKmiRty3UCAgCAoirNAobpgWEAhXwcXG/pb574URGdZZAJkqtSJF4p/g8AnFpG6HrJ/wUYALvelFWtQ2xSAAAAAElFTkSuQmCC";
     CountryCodePicker ccp;
@@ -123,6 +125,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     EditText etReferrelCode;
     TextView tvReferrelInfo;
     int motionLength;
+    int roundWidth = 0, lineWidth = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -132,7 +135,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-        tvCountryCode = (TextView) findViewById(R.id.tvCountryCode);
         txtprofile = (TextView) findViewById(R.id.txtprofile);
         etReferrelCode = (EditText) findViewById(R.id.etReferrelCode);
         tvReferrelInfo = (TextView) findViewById(R.id.tvReferrelInfo);
@@ -146,9 +148,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         etEmail = (EditText) findViewById(R.id.etEmail);
         ccp = (CountryCodePicker) findViewById(R.id.ccp);
         ivMaleRound = (ImageView) findViewById(R.id.ivMaleRound);
-        ivMaleImg = (ImageView) findViewById(R.id.ivMaleImg);
         ivFemaleround = (ImageView) findViewById(R.id.ivFemaleround);
-        ivFemaleImg = (ImageView) findViewById(R.id.ivFemaleImg);
         ivMale = (RelativeLayout) findViewById(R.id.ivMale);
         ivFemale = (RelativeLayout) findViewById(R.id.ivFemale);
         ivConnect = (ImageView) findViewById(R.id.iv_ConnectImg);
@@ -247,12 +247,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         lnrRegister.setOnClickListener(this);
         civProfilePic.setOnClickListener(this);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            motionLength = 250;
-        } else {
-            motionLength = 185;
-        }
-
         ivConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -269,12 +263,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 int R = ivFemaleround.getRight();
                 int B = ivFemaleround.getBottom();
 
+                roundWidth = width / 2;
+                motionLength = motionLength + roundWidth;
                 System.out.print("ivFemale" + height + " " + width + " " + L + " " + R + " " + T + " " + B);
-//                Toast.makeText(RegisterActivity.this, height+" "+width+" "+L+" "+R+" "+T+" "+B,Toast.LENGTH_LONG).show();
+                Toast.makeText(RegisterActivity.this, height+" "+width+" "+L+" "+R+" "+T+" "+B,Toast.LENGTH_LONG).show();
                 //don't forget to remove the listener to prevent being called again by future layout events:
                 ivFemaleround.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
+
 
         ivMaleRound.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             public void onGlobalLayout() {
@@ -301,12 +298,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 int T = ivConnect.getTop();
                 int R = ivConnect.getRight();
                 int B = ivConnect.getBottom();
+                lineWidth = width;
+                motionLength = motionLength + lineWidth;
                 System.out.print("ivConnect" + height + " " + width + " " + L + " " + R + " " + T + " " + B);
 //                Toast.makeText(RegisterActivity.this, height+" "+width+" "+L+" "+R+" "+T+" "+B,Toast.LENGTH_LONG).show();
                 //don't forget to remove the listener to prevent being called again by future layout events:
                 ivConnect.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
+       // motionLength = lineWidth+roundWidth;
+
     }
 
 
@@ -349,6 +350,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             finish();
         }
         if (v == ivMale) {
+            Toast.makeText(getApplicationContext(), String.valueOf(motionLength), Toast.LENGTH_LONG).show();
             TranslateAnimation slide1 = new TranslateAnimation(0, -(motionLength), 0, 0);
             slide1.setDuration(1000);
             ivConnect.startAnimation(slide1);
@@ -357,19 +359,20 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    line_view2.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
-                    ivFemaleImg.setImageResource(R.drawable.ic_female_gray);
-                    ivFemaleround.setImageResource(R.drawable.round_gray);
+                    line_view2.setBackgroundColor(getResources().getColor(R.color.unselected));
+                   // ivFemaleImg.setImageResource(R.drawable.ic_female_gray);
+                    ivFemaleround.setImageResource(R.drawable.ic_girl_gray);
                 }
             }, 1300);
             //second things
-            line_view1.setBackground(getResources().getDrawable(R.drawable.dotted));
-            ivMaleImg.setImageResource(R.drawable.ic_male);
-            ivMaleRound.setImageResource(R.drawable.round_blue);
+            line_view1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+         //   ivMaleImg.setImageResource(R.drawable.ic_male);
+            ivMaleRound.setImageResource(R.drawable.ic_man_gray);
             gender = "M";
             txtGender.setText("Gender: Male");
         }
         if (v == ivFemale) {
+            Toast.makeText(getApplicationContext(), String.valueOf(motionLength), Toast.LENGTH_LONG).show();
             TranslateAnimation slide = new TranslateAnimation(0, motionLength, 0, 0);
             slide.setDuration(1000);
             ivConnect.startAnimation(slide);
@@ -378,15 +381,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    line_view1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
-                    ivMaleImg.setImageResource(R.drawable.ic_male_gray);
-                    ivMaleRound.setImageResource(R.drawable.round_gray);
+                    line_view1.setBackgroundColor(getResources().getColor(R.color.unselected));
+                 //   ivMaleImg.setImageResource(R.drawable.ic_male_gray);
+                    ivMaleRound.setImageResource(R.drawable.ic_man_gray);
                 }
             }, 1300);
             //second things
-            line_view2.setBackground(getResources().getDrawable(R.drawable.dotted));
-            ivFemaleImg.setImageResource(R.drawable.ic_female);
-            ivFemaleround.setImageResource(R.drawable.round_blue);
+            line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+         //   line_view2.setBackground(getResources().getDrawable(R.drawable.dotted));
+          //  ivFemaleImg.setImageResource(R.drawable.ic_female);
+            ivFemaleround.setImageResource(R.drawable.ic_girl_blue);
             gender = "F";
             txtGender.setText("Gender: Female");
 
@@ -402,8 +406,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             c_password = etConfirmPass.getText().toString();
             email = etEmail.getText().toString();
 
-//            String code = ccp.getSelectedCountryCode().toString();
-            String code = tvCountryCode.getText().toString();
+            String code = ccp.getSelectedCountryCode().toString();
+           // String code = tvCountryCode.getText().toString();
             String contact = phone_no;
             phone_no = code + contact;
 
@@ -415,9 +419,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }*/
             else if (gender.equals("")) {
                 Toast.makeText(getApplicationContext(), "Select Gender", Toast.LENGTH_SHORT).show();
-            } else if (final_ImgBase64.equals("")) {
-                Toast.makeText(getApplicationContext(), "Upload Image", Toast.LENGTH_SHORT).show();
-            } else {
+            }
+            else {
                 if (final_ImgBase64.equals("")) {
                     new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/Registration");
 
@@ -427,7 +430,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
         }
         if (v == civProfilePic) {
-            selectImage();
+           // selectImage();
+
+            CropImage.activity(null)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .start(RegisterActivity.this);
         }
     }
 
@@ -532,6 +539,33 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 onSelectFromGalleryResult(data);
             else if (requestCode == REQUEST_CAMERA)
                 onCaptureImageResult(data);
+        }
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Bitmap bitmap;
+
+                try {
+                    bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(result.getUri()));
+                    // originalBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
+
+                    image = ConvertBitmapToString(bitmap);
+                    final_ImgBase64 = BitMapToString(bitmap);
+                    // final_ImgBase64 = resizeBase64Image(s);
+                    Log.d("base64string ", final_ImgBase64);
+//                  Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
+                    civProfilePic.setImageBitmap(bitmap);
+
+                } catch (FileNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+                // ((ImageView) findViewById(R.id.quick_start_cropped_image)).setImageURI(result.getUri());
+                //Toast.makeText(this, "Cropping successful, Sample: " + result.getSampleSize(), Toast.LENGTH_LONG).show();
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Toast.makeText(this, "Cropping failed: " + result.getError(), Toast.LENGTH_LONG).show();
+            }
         }
     }
 

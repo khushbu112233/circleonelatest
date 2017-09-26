@@ -25,6 +25,8 @@ import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
 import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -102,7 +104,10 @@ public class UpdateGroupActivity extends AppCompatActivity {
         ivMiniCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectImage();
+               // selectImage();
+                CropImage.activity(null)
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .start(UpdateGroupActivity.this);
             }
         });
 
@@ -415,6 +420,33 @@ public class UpdateGroupActivity extends AppCompatActivity {
                 onSelectFromGalleryResult(data);
             else if (requestCode == REQUEST_CAMERA)
                 onCaptureImageResult(data);
+        }
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Bitmap bitmap;
+
+                try {
+                    bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(result.getUri()));
+                    // originalBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
+
+                    image = ConvertBitmapToString(bitmap);
+                    final_ImgBase64 = BitMapToString(bitmap);
+                    // final_ImgBase64 = resizeBase64Image(s);
+                    Log.d("base64string ", final_ImgBase64);
+//                  Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
+                    ivGroupImage.setImageBitmap(bitmap);
+
+                } catch (FileNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+                // ((ImageView) findViewById(R.id.quick_start_cropped_image)).setImageURI(result.getUri());
+                //Toast.makeText(this, "Cropping successful, Sample: " + result.getSampleSize(), Toast.LENGTH_LONG).show();
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Toast.makeText(this, "Cropping failed: " + result.getError(), Toast.LENGTH_LONG).show();
+            }
         }
     }
 
