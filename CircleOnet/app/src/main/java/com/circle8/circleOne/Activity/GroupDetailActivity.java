@@ -18,6 +18,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
@@ -35,8 +36,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.Adapter.GroupDetailAdapter;
 import com.circle8.circleOne.Adapter.GroupsItemsAdapter;
+import com.circle8.circleOne.Fragments.ProfileFragment;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.GroupDetailModel;
 import com.circle8.circleOne.Model.GroupModel;
@@ -75,7 +78,6 @@ import static java.security.AccessController.getContext;
 public class GroupDetailActivity extends AppCompatActivity
 {
     public static ListView listView ;
-
     private CircleImageView imgProfile ;
     private ImageView ivChangeProfImg, ivBackImg, ivMenuImg, ivShareImg, ivEditImg ;
     private  TextView tvGroupName, tvGroupDesc, tvMemberInfo ;
@@ -159,6 +161,33 @@ public class GroupDetailActivity extends AppCompatActivity
             checkBox.setVisibility(View.GONE);
         }*/
 
+       ivMenuImg.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+
+               PopupMenu popup = new PopupMenu(GroupDetailActivity.this, ivMenuImg);
+               //Inflating the Popup using xml file
+
+               popup.getMenu().add("Delete Circle");
+               //registering popup with OnMenuItemClickListener
+               popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                   public boolean onMenuItemClick(MenuItem item) {
+                       //Toast.makeText(getContext(),"You Clicked : " + item.getTitle(),Toast.LENGTH_SHORT).show();
+
+                       if (item.getTitle().toString().equals("Delete Circle"))
+                       {
+                           new HttpAsyncTaskGroupDelete().execute("http://circle8.asia:8999/Onet.svc/Group/Delete");
+                       }
+                       return true;
+                   }
+               });
+
+               popup.show();//showing popup men
+
+
+           }
+       });
+
         ivShareImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -230,51 +259,6 @@ public class GroupDetailActivity extends AppCompatActivity
                 dialog.show();
             }
         });
-        /*name.add("Kajal Patadia");
-        designation.add("Software Developer");
-        company.add("Ample Arch Infotech Pvt. Ltd.");
-        phone.add("+79 9876 54321");
-        mobile.add("+91 9876543210");
-        website.add("www.circle8.com");
-        email.add("ample@arch.org");
-        address.add("F-507, Titanium City Center, Ahmedabad, India.");
-        imgprofile.add("");
-
-        name.add("Jay Nagar");
-        designation.add("Software Developer");
-        company.add("Ample Arch Infotech Pvt. Ltd.");
-        phone.add("+79 9876 54321");
-        mobile.add("+91 9876543210");
-        website.add("www.circle8.com");
-        email.add("ample@arch.org");
-        address.add("F-507, Titanium City Center, Ahmedabad, India.");
-        imgprofile.add("");
-
-        name.add("Sameer Desai");
-        designation.add("Software Developer");
-        company.add("Ample Arch Infotech Pvt. Ltd.");
-        phone.add("+79 9876 54321");
-        mobile.add("+91 9876543210");
-        website.add("www.circle8.com");
-        email.add("ample@arch.org");
-        address.add("F-507, Titanium City Center, Ahmedabad, India.");
-        imgprofile.add("");
-
-        name.add("Nagar Joy");
-        designation.add("Software Developer");
-        company.add("Ample Arch Infotech Pvt. Ltd.");
-        phone.add("+79 9876 54321");
-        mobile.add("+91 9876543210");
-        website.add("www.circle8.com");
-        email.add("ample@arch.org");
-        address.add("F-507, Titanium City Center, Ahmedabad, India.");
-        imgprofile.add("");
-*/
-
-      /*  groupDetailAdapter = new GroupDetailAdapter(getApplicationContext(), R.layout.group_detail_items,
-                name,designation,company,website,email,phone,mobile,address,imgprofile);
-        listView.setAdapter(groupDetailAdapter);
-        groupDetailAdapter.notifyDataSetChanged();*/
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -292,67 +276,112 @@ public class GroupDetailActivity extends AppCompatActivity
                 startActivity(intent1);
             }
         });
+    }
 
-/*
-        listView.setMultiChoiceModeListener(new MultiChoiceModeListener()
+    public  String POST1(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
         {
-            @Override
-            public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked)
-            {
-                // Capture total checked items
-                final int checkedCount = listView.getCheckedItemCount();
-                // Set the CAB title according to total checked items
-                mode.setTitle(checkedCount + " Selected");
-                // Calls toggleSelection method from ListViewAdapter Class
-//                groupDetailAdapter.toggleSelection(position);
-            }
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
 
-            @Override
-            public boolean onCreateActionMode(ActionMode mode, Menu menu)
-            {
-                mode.getMenuInflater().inflate(R.menu.activity_main, menu);
-                return true;
-            }
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
 
-            @Override
-            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                return false;
-            }
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("GroupID", group_id );
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
 
-            @Override
-            public boolean onActionItemClicked(ActionMode mode, MenuItem item)
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    private class HttpAsyncTaskGroupDelete extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(GroupDetailActivity.this);
+            dialog.setMessage("Deleting Group...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            return POST1(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+            dialog.dismiss();
+            try
             {
-                switch (item.getItemId())
+
+                if (result != null)
                 {
-                    case R.id.delete:
-                        // Calls getSelectedIds method from ListViewAdapter Class
-                     */
-/*   SparseBooleanArray selected = groupDetailAdapter.getSelectedIds();
-                        // Captures all selected ids with a loop
-                        for (int i = (selected.size() - 1); i >= 0; i--)
-                        {
-                            if (selected.valueAt(i)) {
-                                WorldPopulation selecteditem = listviewadapter.getItem(selected.keyAt(i));
-                                // Remove selected items following the ids
-                                listviewadapter.remove(selecteditem);
-                            }
-                        }
-                        // Close CAB*//*
-
-                        mode.finish();
-                        return true;
-                    default:
-                        return false;
+                    JSONObject jsonObject = new JSONObject(result);
+                    String success = jsonObject.getString("success");
+                    String message = jsonObject.getString("message");
+                    if (success.equalsIgnoreCase("1")){
+                        finish();
+                        Toast.makeText(getApplicationContext(), "Group Deleted Successfully..", Toast.LENGTH_LONG).show();
+                    }else {
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                    }
                 }
-            }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "Not able to delete Profile..", Toast.LENGTH_LONG).show();
+                }
 
-            @Override
-            public void onDestroyActionMode(ActionMode mode) {
-//                groupDetailAdapter.removeSelection();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        });
-*/
-
+        }
     }
 
     private class HttpAsyncTaskPhotoUpload extends AsyncTask<String, Void, String>
