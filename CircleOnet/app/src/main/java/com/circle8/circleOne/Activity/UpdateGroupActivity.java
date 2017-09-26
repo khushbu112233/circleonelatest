@@ -135,7 +135,7 @@ public class UpdateGroupActivity extends AppCompatActivity {
         tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                finish();
             }
         });
 
