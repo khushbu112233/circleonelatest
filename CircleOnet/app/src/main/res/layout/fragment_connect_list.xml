@@ -13,6 +13,7 @@
         android:orientation="horizontal">
         <com.circle8.circleOne.Utils.MyRiadProAutoComplete
             android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
             android:background="@drawable/txt_back"
             android:paddingRight="10dp"
             android:layout_toLeftOf="@+id/imgSearch"
@@ -31,12 +32,11 @@
         <ImageView
             android:layout_marginRight="10dp"
             android:layout_centerVertical="true"
-            android:backgroundTint="@color/colorAccent"
-            android:background="@drawable/search"
+            android:src="@drawable/search"
             android:id="@+id/imgSearch"
             android:layout_alignParentRight="true"
-            android:layout_width="20dp"
-            android:layout_height="20dp" />
+            android:layout_width="22dp"
+            android:layout_height="22dp" />
     </RelativeLayout>
 
     <View

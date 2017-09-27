@@ -107,7 +107,7 @@ public class ByNameFragment extends Fragment
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
-                if(s.length() <= 0)
+                if(s.length() == 0)
                 {
                     listView.setVisibility(View.GONE);
                     tvDataInfo.setVisibility(View.GONE);

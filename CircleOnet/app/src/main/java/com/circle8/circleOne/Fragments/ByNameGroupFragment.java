@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,7 +56,7 @@ public class ByNameGroupFragment extends Fragment {
 
     LoginSession session;
     String profileID, userID ;
-
+    ImageView imgSearch;
 
     public ByNameGroupFragment() {
         // Required empty public constructor
@@ -72,7 +73,7 @@ public class ByNameGroupFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_by_name_group, container, false);
-
+        imgSearch = (ImageView) view.findViewById(R.id.imgSearch);
 
         tvDataInfo = (TextView)view.findViewById(R.id.tvDataInfo);
         searchText = (AutoCompleteTextView)view.findViewById(R.id.searchView);
@@ -88,6 +89,23 @@ public class ByNameGroupFragment extends Fragment {
         profileID = user.get(LoginSession.KEY_PROFILEID);
         userID = user.get(LoginSession.KEY_USERID);
 
+        imgSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
+
+                String Findby = "name";
+                String Search = "Circle One" ;
+                String rc_no = "10";
+                String page_no = "1";
+
+                listView.setVisibility(View.VISIBLE);
+                connectTags.clear();
+                new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
+
+            }
+        });
+
         searchText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after)
@@ -97,7 +115,7 @@ public class ByNameGroupFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
-                if(s.length() <= 0)
+                if(s.length() == 0)
                 {
                     listView.setVisibility(View.GONE);
                     tvDataInfo.setVisibility(View.GONE);
@@ -105,13 +123,6 @@ public class ByNameGroupFragment extends Fragment {
                     SearchGroupMembers.selectedStrings = new JSONArray();
 //                    connectListAdapter.notifyDataSetChanged();
 //                    GetData(getContext());
-                }
-                else if(s.length() >= 1)
-                {
-                    String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
-                    listView.setVisibility(View.VISIBLE);
-                    connectTags.clear();
-                    new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
                 }
             }
 
