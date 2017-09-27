@@ -284,7 +284,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                 } else if (position == 1) {
                     getSupportActionBar().show();
                     setActionBarTitle("Connect");
-                    setActionBarRightImage(R.drawable.ic_dehaze_black_24dp);
+                    setActionBarRightImageGone();
                 } else if (position == 2) {
                     getSupportActionBar().show();
                     setActionBarTitle("Events");
@@ -670,6 +670,9 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         imgDrawer.setImageResource(image);
     }
 
+    public void setActionBarRightImageGone() {
+        imgDrawer.setVisibility(View.GONE);
+    }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
