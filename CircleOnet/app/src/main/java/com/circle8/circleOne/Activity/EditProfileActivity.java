@@ -18,6 +18,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -36,6 +37,8 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -131,7 +134,8 @@ public class EditProfileActivity extends AppCompatActivity implements
         View.OnClickListener,
         GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks,
         PictureCallback,
-        ContourDetectorFrameHandler.ResultHandler {
+        ContourDetectorFrameHandler.ResultHandler
+{
     public static final String PACKAGE = "com.circle8.circleOne";
     private static final int PICKFILE_RESULT_CODE = 1;
     public static ArrayList<TestimonialModel> allTaggs;
@@ -228,6 +232,10 @@ public class EditProfileActivity extends AppCompatActivity implements
     AppBarLayout appbar;
     ImageView ivProfileDelete;
 
+    private static RelativeLayout rlProgressDialog ;
+    private static TextView tvProgressing ;
+    private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line = "";
@@ -240,7 +248,8 @@ public class EditProfileActivity extends AppCompatActivity implements
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         supportRequestWindowFeature(WindowCompat.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
@@ -276,6 +285,12 @@ public class EditProfileActivity extends AppCompatActivity implements
         ccpCountry = (CountryCodePicker) findViewById(R.id.ccpAddress5);
         resultImageView = (ImageView) findViewById(R.id.resultImageView);
         resultImageView.setVisibility(View.GONE);
+
+        rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
+        tvProgressing = (TextView)findViewById(R.id.txtProgressing);
+        ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
+        ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
+        ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
 
         imgProfileShare.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -683,12 +698,17 @@ public class EditProfileActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
 
-                try {
+                try
+                {
                     associationID = AssoIdList.get(spnAssociation.getSelectedItemPosition()).toString();
-                }catch (Exception e){}
-                if (type.equals("add")) {
+                }
+                catch (Exception e){}
+                if (type.equals("add"))
+                {
                     new HttpAsyncTaskAddProfile().execute("http://circle8.asia:8999/Onet.svc/AddProfile");
-                } else if (type.equals("edit")) {
+                }
+                else if (type.equals("edit"))
+                {
                     new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/UpdateProfile");
                 }
             }
@@ -823,13 +843,15 @@ public class EditProfileActivity extends AppCompatActivity implements
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(EditProfileActivity.this);
+            /*dialog = new ProgressDialog(EditProfileActivity.this);
             dialog.setMessage("Deleting Profile...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
+            String loading = "Deleting Profile" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -841,7 +863,9 @@ public class EditProfileActivity extends AppCompatActivity implements
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
+
             try
             {
 
@@ -2416,16 +2440,21 @@ public class EditProfileActivity extends AppCompatActivity implements
 
     }
 
-    private class HttpAsyncTaskAssociation extends AsyncTask<String, Void, String> {
+    private class HttpAsyncTaskAssociation extends AsyncTask<String, Void, String>
+    {
         ProgressDialog dialog;
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             super.onPreExecute();
-            dialog = new ProgressDialog(EditProfileActivity.this);
+           /* dialog = new ProgressDialog(EditProfileActivity.this);
             dialog.setMessage("Get Association..");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
+
+            String loading = "Get Association" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -2434,8 +2463,10 @@ public class EditProfileActivity extends AppCompatActivity implements
         }
 
         @Override
-        protected void onPostExecute(String result) {
-            dialog.dismiss();
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result != null) {
@@ -2465,19 +2496,22 @@ public class EditProfileActivity extends AppCompatActivity implements
 
     }
 
-    private class HttpAsyncTaskAddProfile extends AsyncTask<String, Void, String> {
+    private class HttpAsyncTaskAddProfile extends AsyncTask<String, Void, String>
+    {
         ProgressDialog dialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(EditProfileActivity.this);
+           /* dialog = new ProgressDialog(EditProfileActivity.this);
             dialog.setMessage("Creating Profile..");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
+            String loading = "Creating Profile" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -2487,8 +2521,11 @@ public class EditProfileActivity extends AppCompatActivity implements
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
-            dialog.dismiss();
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
+
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result != null) {
@@ -2716,14 +2753,15 @@ public class EditProfileActivity extends AppCompatActivity implements
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(EditProfileActivity.this);
+           /* dialog = new ProgressDialog(EditProfileActivity.this);
             dialog.setMessage("Loading..");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
-
+            String loading = "Loading" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -2733,12 +2771,14 @@ public class EditProfileActivity extends AppCompatActivity implements
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
-            dialog.dismiss();
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
             // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
 
-
-            try {
+            try
+            {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
@@ -2934,13 +2974,16 @@ public class EditProfileActivity extends AppCompatActivity implements
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(EditProfileActivity.this);
+           /* dialog = new ProgressDialog(EditProfileActivity.this);
             dialog.setMessage("Updating Profile..");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
+
+            String loading = "Updating Profile" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -2950,8 +2993,10 @@ public class EditProfileActivity extends AppCompatActivity implements
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
-            dialog.dismiss();
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result != null) {
@@ -2984,17 +3029,21 @@ public class EditProfileActivity extends AppCompatActivity implements
         }
     }
 
-    private static class HttpAsyncTaskFrontUpload extends AsyncTask<String, Void, String> {
+    private static class HttpAsyncTaskFrontUpload extends AsyncTask<String, Void, String>
+    {
         ProgressDialog dialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(activity);
+           /* dialog = new ProgressDialog(activity);
             dialog.setMessage("Uploading...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
+
+            String loading = "Uploading" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -3004,10 +3053,13 @@ public class EditProfileActivity extends AppCompatActivity implements
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
-            dialog.dismiss();
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-            try {
+            try
+            {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
                     String ImgName = jsonObject.getString("ImgName").toString();
@@ -3040,11 +3092,14 @@ public class EditProfileActivity extends AppCompatActivity implements
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(EditProfileActivity.this);
+            /*dialog = new ProgressDialog(EditProfileActivity.this);
             dialog.setMessage("Uploading...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
+
+            String loading = "Uploading" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -3054,8 +3109,10 @@ public class EditProfileActivity extends AppCompatActivity implements
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
-            dialog.dismiss();
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result != null) {
@@ -3091,11 +3148,13 @@ public class EditProfileActivity extends AppCompatActivity implements
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(activity);
+           /* dialog = new ProgressDialog(activity);
             dialog.setMessage("Uploading...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
+            String loading = "Uploading" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -3105,10 +3164,13 @@ public class EditProfileActivity extends AppCompatActivity implements
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
-            dialog.dismiss();
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-            try {
+            try
+            {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
                     String ImgName = jsonObject.getString("ImgName").toString();
@@ -3152,6 +3214,42 @@ public class EditProfileActivity extends AppCompatActivity implements
         cursor.close();
         return s;
     }*/
+
+    public static void CustomProgressDialog(final String loading)
+    {
+        rlProgressDialog.setVisibility(View.VISIBLE);
+        tvProgressing.setText(loading);
+
+        Animation anim = AnimationUtils.loadAnimation(activity,R.anim.anticlockwise);
+        ivConnecting1.startAnimation(anim);
+        Animation anim1 = AnimationUtils.loadAnimation(activity,R.anim.clockwise);
+        ivConnecting2.startAnimation(anim1);
+
+        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
+        for (int i = 350; i <= SPLASHTIME; i = i + 350)
+        {
+            final int j = i;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run()
+                {
+                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
+                    {
+                        tvProgressing.setText(loading+".");
+                    }
+                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
+                    {
+                        tvProgressing.setText(loading+"..");
+                    }
+                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+
+                }
+            }, i);
+        }
+    }
 
 
 }

@@ -10,6 +10,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
@@ -24,8 +25,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -120,13 +124,19 @@ public class ProfileFragment extends Fragment
     private CallbackManager callbackManager;
     View view;
     AppBarLayout appbar;
+    private String displayProfile ;
+
+    private static RelativeLayout rlProgressDialog ;
+    private static TextView tvProgressing ;
+    private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+
     public ProfileFragment() {
         // Required empty public constructor
     }
-    private String displayProfile ;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getContext());
      //   getActivity().requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -189,6 +199,13 @@ public class ProfileFragment extends Fragment
         loginButton = (LoginButton) view.findViewById(R.id.login_button);
         session = new LoginSession(getContext());
         appbar = (AppBarLayout) view.findViewById(R.id.appbar);
+
+        rlProgressDialog = (RelativeLayout)view.findViewById(R.id.rlProgressDialog);
+        tvProgressing = (TextView)view.findViewById(R.id.txtProgressing);
+        ivConnecting1 = (ImageView)view.findViewById(R.id.imgConnecting1) ;
+        ivConnecting2 = (ImageView)view.findViewById(R.id.imgConnecting2) ;
+        ivConnecting3 = (ImageView)view.findViewById(R.id.imgConnecting3) ;
+
 //        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetUserProfile");
         new HttpAsyncTaskProfiles().execute("http://circle8.asia:8999/Onet.svc/MyProfiles");
 
@@ -908,13 +925,16 @@ public class ProfileFragment extends Fragment
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(getActivity());
+            /*dialog = new ProgressDialog(getActivity());
             dialog.setMessage("Fetching Profiles...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
+
+            String loading = "Fetching Profile" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -926,7 +946,8 @@ public class ProfileFragment extends Fragment
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
             try
             {
 
@@ -1699,5 +1720,42 @@ public class ProfileFragment extends Fragment
         super.onStop();
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
     }*/
+
+    public  void CustomProgressDialog(final String loading)
+    {
+        rlProgressDialog.setVisibility(View.VISIBLE);
+        tvProgressing.setText(loading);
+
+        Animation anim = AnimationUtils.loadAnimation(getActivity(),R.anim.anticlockwise);
+        ivConnecting1.startAnimation(anim);
+        Animation anim1 = AnimationUtils.loadAnimation(getActivity(),R.anim.clockwise);
+        ivConnecting2.startAnimation(anim1);
+
+        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
+        for (int i = 350; i <= SPLASHTIME; i = i + 350)
+        {
+            final int j = i;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run()
+                {
+                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
+                    {
+                        tvProgressing.setText(loading+".");
+                    }
+                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
+                    {
+                        tvProgressing.setText(loading+"..");
+                    }
+                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+
+                }
+            }, i);
+        }
+    }
+
 
 }

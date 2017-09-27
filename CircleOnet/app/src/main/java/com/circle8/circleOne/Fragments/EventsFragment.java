@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,7 +13,10 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -56,6 +60,10 @@ public class EventsFragment extends Fragment
 
     private ArrayList<EventModel> eventModelArrayList = new ArrayList<>();
 
+    private static RelativeLayout rlProgressDialog ;
+    private static TextView tvProgressing ;
+    private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+
     public EventsFragment() {
         // Required empty public constructor
     }
@@ -71,6 +79,12 @@ public class EventsFragment extends Fragment
         session = new LoginSession(getContext());
         HashMap<String, String> user = session.getUserDetails();
         user_id = user.get(LoginSession.KEY_USERID);
+
+        rlProgressDialog = (RelativeLayout)view.findViewById(R.id.rlProgressDialog);
+        tvProgressing = (TextView)view.findViewById(R.id.txtProgressing);
+        ivConnecting1 = (ImageView)view.findViewById(R.id.imgConnecting1) ;
+        ivConnecting2 = (ImageView)view.findViewById(R.id.imgConnecting2) ;
+        ivConnecting3 = (ImageView)view.findViewById(R.id.imgConnecting3) ;
 
         new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/Events/List");
 
@@ -174,9 +188,12 @@ public class EventsFragment extends Fragment
         protected void onPreExecute()
         {
             super.onPreExecute();
-            dialog = new ProgressDialog(getActivity());
+           /* dialog = new ProgressDialog(getActivity());
             dialog.setMessage("Finding Events...");
-            dialog.show();
+            dialog.show();*/
+
+            String loading = "Finding Events" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -188,7 +205,8 @@ public class EventsFragment extends Fragment
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
 
             try
@@ -308,7 +326,8 @@ public class EventsFragment extends Fragment
         return result;
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException
+    {
         BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
         String line = "";
         String result = "";
@@ -317,8 +336,44 @@ public class EventsFragment extends Fragment
 
         inputStream.close();
         return result;
-
     }
+
+    public void CustomProgressDialog(final String loading)
+    {
+        rlProgressDialog.setVisibility(View.VISIBLE);
+        tvProgressing.setText(loading);
+
+        Animation anim = AnimationUtils.loadAnimation(getActivity(),R.anim.anticlockwise);
+        ivConnecting1.startAnimation(anim);
+        Animation anim1 = AnimationUtils.loadAnimation(getActivity(),R.anim.clockwise);
+        ivConnecting2.startAnimation(anim1);
+
+        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
+        for (int i = 350; i <= SPLASHTIME; i = i + 350)
+        {
+            final int j = i;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run()
+                {
+                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
+                    {
+                        tvProgressing.setText(loading+".");
+                    }
+                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
+                    {
+                        tvProgressing.setText(loading+"..");
+                    }
+                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+
+                }
+            }, i);
+        }
+    }
+
 
 
 }
