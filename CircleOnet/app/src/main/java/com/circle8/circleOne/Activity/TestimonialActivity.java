@@ -49,9 +49,9 @@ public class TestimonialActivity extends AppCompatActivity
     ImageView imgLogo, imgDrawer;
     String from = "", type = "";
 
-    private static RelativeLayout rlProgressDialog ;
-    private static TextView tvProgressing ;
-    private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+    public static RelativeLayout rlProgressDialog ;
+    public static TextView tvProgressing ;
+    public static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)

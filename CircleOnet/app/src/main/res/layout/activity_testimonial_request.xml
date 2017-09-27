@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="0.6"
+                android:layout_weight="0.7"
                 android:gravity="right"
                 android:layout_marginRight="15dp">
 
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:text="Connecting."
                 android:layout_gravity="center_vertical"
-                android:layout_weight="0.4"/>
+                android:layout_weight="0.3"/>
         </LinearLayout>
     </RelativeLayout>
 

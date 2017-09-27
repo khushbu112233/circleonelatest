@@ -25,6 +25,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -92,6 +94,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static com.circle8.circleOne.Utils.Validation.validate;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, AsyncRequest.OnAsyncRequestComplete {
+
     public static EditText etFirstName, etLastName, etPassword, etConfirmPass, etPhone, etEmail;
     public static TextView tvUsernameInfo, tvFirstnameInfo, tvLastnameInfo, tvPasswordInfo, tvRePasswordInfo, tvEmailInfo, tvPhoneInfo;
     private LinearLayout lnrRegister;
@@ -127,6 +130,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     int motionLength;
     int roundWidth = 0, lineWidth = 0;
     View viewCenter;
+
+    private RelativeLayout rlProgressDialog ;
+    private TextView tvProgressing ;
+    private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -167,6 +174,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         tvRePasswordInfo = (TextView) findViewById(R.id.tvAgainPasswordInfo);
         tvEmailInfo = (TextView) findViewById(R.id.tvEmailInfo);
         tvPhoneInfo = (TextView) findViewById(R.id.tvPhoneInfo);
+
+        rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
+        tvProgressing = (TextView)findViewById(R.id.txtProgressing);
+        ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
+        ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
+        ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
 
         Intent intent = getIntent();
         Twitter = intent.getStringExtra("Twitter");
@@ -1056,11 +1069,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(RegisterActivity.this);
+            /*dialog = new ProgressDialog(RegisterActivity.this);
             dialog.setMessage("Registering...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
+
+            String loading = "Registering" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -1070,8 +1086,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
-            dialog.dismiss();
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
+
             // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result != null) {
@@ -1143,7 +1162,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             dialog.setCancelable(false);
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
-
         }
 
         @Override
@@ -1218,11 +1236,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(RegisterActivity.this);
+           /* dialog = new ProgressDialog(RegisterActivity.this);
             dialog.setMessage("Uploading...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
+
+            String loading = "Uploading" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -1232,8 +1253,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
-            dialog.dismiss();
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result != null) {
@@ -1596,6 +1619,42 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             e.printStackTrace();
         }
         return answer;
+    }
+
+    public void CustomProgressDialog(final String loading)
+    {
+        rlProgressDialog.setVisibility(View.VISIBLE);
+        tvProgressing.setText(loading);
+
+        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
+        ivConnecting1.startAnimation(anim);
+        Animation anim1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.clockwise);
+        ivConnecting2.startAnimation(anim1);
+
+        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
+        for (int i = 350; i <= SPLASHTIME; i = i + 350)
+        {
+            final int j = i;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run()
+                {
+                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
+                    {
+                        tvProgressing.setText(loading+".");
+                    }
+                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
+                    {
+                        tvProgressing.setText(loading+"..");
+                    }
+                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+
+                }
+            }, i);
+        }
     }
 
 

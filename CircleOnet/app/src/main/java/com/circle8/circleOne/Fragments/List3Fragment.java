@@ -94,9 +94,9 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
     static String totalArray ;
     static int numberCount, listSize ;
 
-    private static RelativeLayout rlProgressDialog ;
-    private static TextView tvProgressing ;
-    private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+    public static RelativeLayout rlProgressDialog ;
+    public static TextView tvProgressing ;
+    public static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
 
     public List3Fragment() {
         // Required empty public constructor

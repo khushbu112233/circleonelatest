@@ -348,13 +348,15 @@ public class GridViewAdapter extends BaseSwipeAdapter
         protected void onPreExecute()
         {
             super.onPreExecute();
-            dialog = new ProgressDialog(context);
+            /*dialog = new ProgressDialog(context);
             dialog.setMessage("Deleting Records...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
+            String loading = "Deleting Records";
+            List2Fragment.CustomProgressDialog(loading);
         }
 
         @Override
@@ -366,7 +368,8 @@ public class GridViewAdapter extends BaseSwipeAdapter
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
+//            dialog.dismiss();
+            List2Fragment.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
             try
             {

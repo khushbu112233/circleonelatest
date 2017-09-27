@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Activity.TestimonialActivity;
+import com.circle8.circleOne.Activity.TestimonialRequest;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.TestimonialModel;
 import com.circle8.circleOne.R;
@@ -187,13 +188,15 @@ public class TestimonialRequestAdapter extends BaseSwipeAdapter
         protected void onPreExecute()
         {
             super.onPreExecute();
-            dialog = new ProgressDialog(context);
+           /* dialog = new ProgressDialog(context);
             dialog.setMessage("Requesting...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
+            String loading = "Requesting";
+            TestimonialRequest.CustomProgressDialog(loading);
         }
 
         @Override
@@ -205,8 +208,10 @@ public class TestimonialRequestAdapter extends BaseSwipeAdapter
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
-            try {
+//            dialog.dismiss();
+            TestimonialRequest.rlProgressDialog.setVisibility(View.GONE);
+            try
+            {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
                     String success = jsonObject.getString("Success");
@@ -317,13 +322,17 @@ public class TestimonialRequestAdapter extends BaseSwipeAdapter
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(context);
-            dialog.setMessage("Deleting Records...");
-            //dialog.setTitle("Saving Reminder");
-            dialog.show();
-            dialog.setCancelable(false);
+//            dialog = new ProgressDialog(context);
+//            dialog.setMessage("Deleting Records...");
+//            //dialog.setTitle("Saving Reminder");
+//            dialog.show();
+//            dialog.setCancelable(false);
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
+
+            String loading = "Deleting Records";
+            TestimonialRequest.CustomProgressDialog(loading);
+
         }
 
         @Override
@@ -335,7 +344,8 @@ public class TestimonialRequestAdapter extends BaseSwipeAdapter
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
+//            dialog.dismiss();
+            TestimonialRequest.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
             try
             {
