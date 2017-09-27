@@ -280,7 +280,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 roundWidth = width / 2;
                 motionLength = motionLength + roundWidth;
                 System.out.print("ivFemale" + height + " " + width + " " + L + " " + R + " " + T + " " + B);
-                Toast.makeText(RegisterActivity.this, height+" "+width+" "+L+" "+R+" "+T+" "+B,Toast.LENGTH_LONG).show();
+              //  Toast.makeText(RegisterActivity.this, height+" "+width+" "+L+" "+R+" "+T+" "+B,Toast.LENGTH_LONG).show();
                 //don't forget to remove the listener to prevent being called again by future layout events:
                 ivFemaleround.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
@@ -364,7 +364,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             finish();
         }
         if (v == ivMale) {
-            Toast.makeText(getApplicationContext(), String.valueOf(motionLength), Toast.LENGTH_LONG).show();
+          //  Toast.makeText(getApplicationContext(), String.valueOf(motionLength), Toast.LENGTH_LONG).show();
             TranslateAnimation slide1 = new TranslateAnimation(0, -(motionLength), 0, 0);
             slide1.setDuration(1000);
             ivConnect.startAnimation(slide1);
@@ -393,7 +393,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             txtGender.setText("Gender: Male");
         }
         if (v == ivFemale) {
-            Toast.makeText(getApplicationContext(), String.valueOf(motionLength), Toast.LENGTH_LONG).show();
+          //  Toast.makeText(getApplicationContext(), String.valueOf(motionLength), Toast.LENGTH_LONG).show();
             TranslateAnimation slide = new TranslateAnimation(0, motionLength, 0, 0);
             slide.setDuration(1000);
             ivConnect.startAnimation(slide);

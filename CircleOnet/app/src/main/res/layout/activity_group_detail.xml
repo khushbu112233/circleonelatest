@@ -162,7 +162,7 @@
             android:id="@+id/tvMemberInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="You are not having any members in this Circle"
+            android:text="Please add members"
             android:layout_centerInParent="true"
             android:textAlignment="center"
             android:visibility="gone"

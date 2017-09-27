@@ -215,6 +215,7 @@
                             android:src="@drawable/ic_keyboard_arrow_left_black_24dp" />
 
                         <ImageView
+                            android:visibility="gone"
                             android:layout_width="22dp"
                             android:layout_height="30dp"
                             android:layout_alignParentRight="true"

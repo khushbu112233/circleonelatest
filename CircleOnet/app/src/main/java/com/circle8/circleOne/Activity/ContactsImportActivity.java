@@ -163,7 +163,7 @@ public class ContactsImportActivity extends AppCompatActivity
                   //  Toast.makeText(getApplicationContext(), num, Toast.LENGTH_LONG).show();
                    // Toast.makeText(getApplicationContext(), listView.getAdapter().getItem((int)listView.getCheckItemIds()[i]).toString(), Toast.LENGTH_LONG).show();
                 }
-                Toast.makeText(getApplicationContext(), selectedStrings.toString(), Toast.LENGTH_LONG).show();
+               // Toast.makeText(getApplicationContext(), selectedStrings.toString(), Toast.LENGTH_LONG).show();
 
                 new HttpAsyncTaskImportContacts().execute("http://circle8.asia:8999/Onet.svc/ImportContacts");
             }

@@ -99,7 +99,7 @@ public class Connect4Activity extends AppCompatActivity
             {
                 txtCongratulations.setVisibility(View.GONE);
                 txtAsk.setVisibility(View.GONE);
-                txtLink.setText("You are not having any Connection.");
+                txtLink.setText("You don’t have any connections");
                 level1.setVisibility(View.GONE);
                 level2.setVisibility(View.GONE);
                 level3.setVisibility(View.GONE);

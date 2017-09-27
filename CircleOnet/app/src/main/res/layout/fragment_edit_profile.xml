@@ -152,14 +152,15 @@
 
                             <ImageView
                                 android:id="@+id/imgBack"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
                                 android:layout_alignParentLeft="true"
                                 android:layout_alignParentStart="true"
                                 android:layout_alignParentTop="true"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginTop="5dp"
-                                android:src="@drawable/ic_keyboard_arrow_left_black_24dp" />
+                                android:src="@drawable/login_logo"
+                                android:tint="@color/white"/>
 
                             <TextView
                                 android:id="@+id/txtprofile"
