@@ -320,10 +320,11 @@
             android:layout_marginBottom="15dp">
 
             <View
+                android:id="@+id/viewCenter"
                 android:layout_width="40dp"
                 android:layout_height="2dp"
               android:layout_centerInParent="true"
-                android:background="@color/colorPrimary"
+                android:background="@color/unselected"
                 android:layerType="software"
                />
 
@@ -337,7 +338,7 @@
                     android:id="@+id/ivMaleRound"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/ic_man_blue"
+                    android:src="@drawable/ic_man_gray"
                     android:layout_centerInParent="true" />
             </RelativeLayout>
             <View
@@ -345,7 +346,7 @@
                 android:layout_width="15dp"
                 android:layout_height="2dp"
                 android:layout_centerVertical="true"
-                android:background="@color/colorPrimary"
+                android:background="@color/unselected"
                 android:layerType="software"
                 android:layout_toLeftOf="@+id/iv_ConnectImg"/>
 
@@ -361,7 +362,7 @@
                 android:layout_width="15dp"
                 android:layout_height="2dp"
                 android:layout_centerVertical="true"
-                android:background="@color/colorPrimary"
+                android:background="@color/unselected"
                 android:layerType="software"
                 android:layout_toRightOf="@+id/iv_ConnectImg"/>
 
@@ -375,7 +376,7 @@
                     android:id="@+id/ivFemaleround"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/ic_girl_blue"
+                    android:src="@drawable/ic_girl_gray"
                     android:layout_centerInParent="true" />
             </RelativeLayout>
         </RelativeLayout>
