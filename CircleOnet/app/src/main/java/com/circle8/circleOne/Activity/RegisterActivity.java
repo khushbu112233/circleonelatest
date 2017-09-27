@@ -359,16 +359,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    line_view2.setBackgroundColor(getResources().getColor(R.color.unselected));
+                   // line_view2.setBackgroundColor(getResources().getColor(R.color.unselected));
                    // ivFemaleImg.setImageResource(R.drawable.ic_female_gray);
                     ivFemaleround.setImageResource(R.drawable.ic_girl_gray);
                 }
             }, 1300);
-            ivConnect.setVisibility(View.GONE);
+            ivConnect.setVisibility(View.INVISIBLE);
             //second things
-            line_view1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+         //  line_view1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
          //   ivMaleImg.setImageResource(R.drawable.ic_male);
-            ivMaleRound.setImageResource(R.drawable.ic_man_gray);
+            ivMaleRound.setImageResource(R.drawable.ic_man_blue);
             gender = "M";
             txtGender.setText("Gender: Male");
         }
@@ -382,13 +382,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    line_view1.setBackgroundColor(getResources().getColor(R.color.unselected));
+                  //  line_view1.setBackgroundColor(getResources().getColor(R.color.unselected));
                  //   ivMaleImg.setImageResource(R.drawable.ic_male_gray);
                     ivMaleRound.setImageResource(R.drawable.ic_man_gray);
                 }
             }, 1300);
+            ivConnect.setVisibility(View.INVISIBLE);
             //second things
-            line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+           // line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
          //   line_view2.setBackground(getResources().getDrawable(R.drawable.dotted));
           //  ivFemaleImg.setImageResource(R.drawable.ic_female);
             ivFemaleround.setImageResource(R.drawable.ic_girl_blue);
