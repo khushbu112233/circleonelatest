@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,11 +14,15 @@ import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Activity.CardDetail;
@@ -82,6 +87,10 @@ public class List4Fragment extends Fragment
 
     static int numberCount, listSize;
 
+    private static RelativeLayout rlProgressDialog ;
+    private static TextView tvProgressing ;
+    private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+
     public List4Fragment() {
         // Required empty public constructor
     }
@@ -117,6 +126,11 @@ public class List4Fragment extends Fragment
 
         listView = (ListView) view.findViewById(R.id.listViewType4);
         rlLoadMore = (RelativeLayout) view.findViewById(R.id.rlLoadMore);
+        rlProgressDialog = (RelativeLayout)view.findViewById(R.id.rlProgressDialog);
+        tvProgressing = (TextView)view.findViewById(R.id.txtProgressing);
+        ivConnecting1 = (ImageView)view.findViewById(R.id.imgConnecting1) ;
+        ivConnecting2 = (ImageView)view.findViewById(R.id.imgConnecting2) ;
+        ivConnecting3 = (ImageView)view.findViewById(R.id.imgConnecting3) ;
 
         //considering from Database
 //        allTags = db.getActiveNFC();
@@ -406,25 +420,30 @@ public class List4Fragment extends Fragment
     }
 
 
-    private static class HttpAsyncTask extends AsyncTask<String, Void, String> {
+    private static class HttpAsyncTask extends AsyncTask<String, Void, String>
+    {
         ProgressDialog dialog;
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             super.onPreExecute();
             dialog = new ProgressDialog(mContext);
             dialog.setMessage("Fetching Cards...");
             //dialog.setTitle("Saving Reminder");
             dialog.setCancelable(false);
-            if (comeAtTime.equalsIgnoreCase("FIRST")) {
+           /* if (comeAtTime.equalsIgnoreCase("FIRST")) {
                 dialog.show();
                 comeAtTime = "SECOND";
             } else {
                 dialog.dismiss();
-            }
+            }*/
 
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
+
+            String loading = "Fetching Cards" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -434,9 +453,13 @@ public class List4Fragment extends Fragment
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
-            dialog.dismiss();
-            try {
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
+
+            try
+            {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
 //                    numberCount = Integer.parseInt(jsonObject.getString("count")) ;
@@ -791,4 +814,41 @@ public class List4Fragment extends Fragment
         gridAdapter.notifyDataSetChanged();
         CardsActivity.setActionBarTitle("Cards - " + nfcModel1.size());
     }
+
+    public static void CustomProgressDialog(final String loading)
+    {
+        rlProgressDialog.setVisibility(View.VISIBLE);
+        tvProgressing.setText(loading);
+
+        Animation anim = AnimationUtils.loadAnimation(mContext,R.anim.anticlockwise);
+        ivConnecting1.startAnimation(anim);
+        Animation anim1 = AnimationUtils.loadAnimation(mContext,R.anim.clockwise);
+        ivConnecting2.startAnimation(anim1);
+
+        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
+        for (int i = 350; i <= SPLASHTIME; i = i + 350)
+        {
+            final int j = i;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run()
+                {
+                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
+                    {
+                        tvProgressing.setText(loading+".");
+                    }
+                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
+                    {
+                        tvProgressing.setText(loading+"..");
+                    }
+                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+
+                }
+            }, i);
+        }
+    }
+
 }

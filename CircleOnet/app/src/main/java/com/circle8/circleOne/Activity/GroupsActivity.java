@@ -197,6 +197,7 @@ public class GroupsActivity extends AppCompatActivity
 
 //                final Dialog dialog = new Dialog(GroupsActivity.this);
 //                dialog.setContentView(R.layout.create_or_update_popup);
+
                 final AlertDialog dialog = new AlertDialog.Builder(GroupsActivity.this).create();
                 LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final View dialogView = inflater.inflate(R.layout.create_or_update_popup, null);
