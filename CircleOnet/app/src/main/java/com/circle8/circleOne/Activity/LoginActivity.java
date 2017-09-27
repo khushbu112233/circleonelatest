@@ -15,6 +15,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CancellationSignal;
+import android.os.Handler;
 import android.provider.Settings;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
@@ -30,12 +31,15 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -129,7 +133,8 @@ public class LoginActivity extends AppCompatActivity implements
         View.OnClickListener,
         GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks,
         TextWatcher,
-        CompoundButton.OnCheckedChangeListener{
+        CompoundButton.OnCheckedChangeListener
+{
 
     public static String ReferrenceCode = "";
     Button btnSimpleLogin, btnRegister;
@@ -199,18 +204,27 @@ public class LoginActivity extends AppCompatActivity implements
     private static final String KEY_USERNAME = "username";
     private static final String KEY_PASS = "password";
 
+    private static RelativeLayout rlProgressDialog ;
+    private static TextView tvProgressing ;
+    private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
+
         TwitterAuthConfig authConfig = new TwitterAuthConfig(
                 getString(R.string.twitter_consumer_key),
                 getString(R.string.twitter_consumer_secret));
         Fabric.with(this, new Twitter(authConfig));
+
         loginSession = new LoginSession(getApplicationContext());
         fingerPrintSession = new FingerPrintSession(getApplicationContext());
         setContentView(R.layout.activity_login);
+
         btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
         btnSimpleLogin = (Button) findViewById(R.id.btnLogin);
         btnLogin = (ImageView) findViewById(R.id.fbLogin);
@@ -226,6 +240,11 @@ public class LoginActivity extends AppCompatActivity implements
         tvUsernameInfo = (TextView) findViewById(R.id.tvUserInfo);
         tvPasswordInfo = (TextView) findViewById(R.id.tvPasswordInfo);
 
+        rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
+        tvProgressing = (TextView)findViewById(R.id.txtProgressing);
+        ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
+        ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
+        ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
 
         sharedPreferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -284,7 +303,8 @@ public class LoginActivity extends AppCompatActivity implements
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             fingerprintHandler = new FingerprintHandler(this);
             fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
-            if (!fingerprintManager.hasEnrolledFingerprints()) {
+            if (!fingerprintManager.hasEnrolledFingerprints())
+            {
                 //textView.setText("No fingerprint configured. Please register at least one fingerprint in your device's Settings");
                 imgFinger.setVisibility(View.GONE);
             } else {
@@ -828,11 +848,14 @@ public class LoginActivity extends AppCompatActivity implements
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(LoginActivity.this);
+           /* dialog = new ProgressDialog(LoginActivity.this);
             dialog.setMessage("Logging In...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
+
+            String loading = "Logging In" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -844,7 +867,9 @@ public class LoginActivity extends AppCompatActivity implements
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
+
             try
             {
                 if (result != null)
@@ -1221,10 +1246,16 @@ public class LoginActivity extends AppCompatActivity implements
         });
     }
 
-    private void handleTwitterSession(TwitterSession session) {
+    private void handleTwitterSession(TwitterSession session)
+    {
         Log.d(TAG, "handleTwitterSession:" + session);
         // [START_EXCLUDE silent]
+
         showProgressDialog();
+
+     /*   String loading = "Google Login" ;
+        CustomProgressDialog(loading);*/
+
         // [END_EXCLUDE]
 
         AuthCredential credential = TwitterAuthProvider.getCredential(
@@ -1304,6 +1335,7 @@ public class LoginActivity extends AppCompatActivity implements
 
                         // [START_EXCLUDE]
                         hideProgressDialog();
+//                        rlProgressDialog.setVisibility(View.GONE);
                         // [END_EXCLUDE]
                     }
                 });
@@ -1478,13 +1510,14 @@ public class LoginActivity extends AppCompatActivity implements
         }
     }
 
-    private void showProgressDialog() {
-        if (mProgressDialog == null) {
+    private void showProgressDialog()
+    {
+        if (mProgressDialog == null)
+        {
             mProgressDialog = new ProgressDialog(LoginActivity.this);
             mProgressDialog.setMessage("Google Login..");
             mProgressDialog.setIndeterminate(true);
         }
-
         mProgressDialog.show();
     }
 
@@ -1638,7 +1671,8 @@ public class LoginActivity extends AppCompatActivity implements
         }
     }
 
-    private class HttpAsyncTaskSocialMedia extends AsyncTask<String, Void, String> {
+    private class HttpAsyncTaskSocialMedia extends AsyncTask<String, Void, String>
+    {
         ProgressDialog dialog;
 
         @Override
@@ -1833,4 +1867,41 @@ public class LoginActivity extends AppCompatActivity implements
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+
+    public void CustomProgressDialog(final String loading)
+    {
+        rlProgressDialog.setVisibility(View.VISIBLE);
+        tvProgressing.setText(loading);
+
+        Animation anim = AnimationUtils.loadAnimation(LoginActivity.this,R.anim.anticlockwise);
+        ivConnecting1.startAnimation(anim);
+        Animation anim1 = AnimationUtils.loadAnimation(LoginActivity.this,R.anim.clockwise);
+        ivConnecting2.startAnimation(anim1);
+
+        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
+        for (int i = 350; i <= SPLASHTIME; i = i + 350)
+        {
+            final int j = i;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run()
+                {
+                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
+                    {
+                        tvProgressing.setText(loading+".");
+                    }
+                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
+                    {
+                        tvProgressing.setText(loading+"..");
+                    }
+                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+
+                }
+            }, i);
+        }
+    }
+
 }

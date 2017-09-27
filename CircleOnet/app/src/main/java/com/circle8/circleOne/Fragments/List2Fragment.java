@@ -6,7 +6,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,10 +17,14 @@ import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AutoCompleteTextView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Activity.CardsActivity;
@@ -55,7 +61,8 @@ import java.util.Locale;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class List2Fragment extends Fragment {
+public class List2Fragment extends Fragment
+{
     private static GridView gridView;
     public static GridViewAdapter gridAdapter;
     ArrayList<byte[]> imgf;
@@ -87,6 +94,9 @@ public class List2Fragment extends Fragment {
 
     static int numberCount, gridSize;
 
+    private static RelativeLayout rlProgressDialog ;
+    private static TextView tvProgressing ;
+    private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
 
     public List2Fragment() {
         // Required empty public constructor
@@ -112,6 +122,11 @@ public class List2Fragment extends Fragment {
         gridView = (GridView) view.findViewById(R.id.gridView);
         searchText = (AutoCompleteTextView) view.findViewById(R.id.searchView);
         rlLoadMore = (RelativeLayout) view.findViewById(R.id.rlLoadMore);
+        rlProgressDialog = (RelativeLayout)view.findViewById(R.id.rlProgressDialog);
+        tvProgressing = (TextView)view.findViewById(R.id.txtProgressing);
+        ivConnecting1 = (ImageView)view.findViewById(R.id.imgConnecting1) ;
+        ivConnecting2 = (ImageView)view.findViewById(R.id.imgConnecting2) ;
+        ivConnecting3 = (ImageView)view.findViewById(R.id.imgConnecting3) ;
 
         nfcModel = new ArrayList<>();
 
@@ -354,25 +369,35 @@ public class List2Fragment extends Fragment {
         return imageItems;
     }
 
-    private static class HttpAsyncTask extends AsyncTask<String, Void, String> {
+    private static class HttpAsyncTask extends AsyncTask<String, Void, String>
+    {
         ProgressDialog dialog;
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             super.onPreExecute();
-            dialog = new ProgressDialog(mContext);
+           /* dialog = new ProgressDialog(mContext);
             dialog.setMessage("Fetching Cards...");
             //dialog.setTitle("Saving Reminder");
-            dialog.setCancelable(false);
-            if (comeAtTime.equalsIgnoreCase("FIRST")) {
+            dialog.setCancelable(false);*/
+
+           /* if (comeAtTime.equalsIgnoreCase("FIRST")) {
                 dialog.show();
                 comeAtTime = "SECOND";
             } else {
                 dialog.dismiss();
-            }
+            }*/
+
+          /*  String status = "true" ;
+            String loading = "Fetching Cards..." ;
+            CustomProgressBar(loading, status);*/
 
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
+
+            String loading = "Fetching Cards" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -382,8 +407,16 @@ public class List2Fragment extends Fragment {
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
-            dialog.dismiss();
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+
+            rlProgressDialog.setVisibility(View.GONE);
+
+         /*   String status = "false" ;
+            String loading = "Fetching Cards..." ;
+            CustomProgressBar(loading, status);*/
+
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
@@ -832,5 +865,72 @@ public class List2Fragment extends Fragment {
         CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
         gridAdapter.setMode(Attributes.Mode.Single);
     }
+
+    public static void CustomProgressBar(String loading, String status)
+    {
+        final AlertDialog dialog = new AlertDialog.Builder(mContext).create();
+        LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View dialogView = inflater.inflate(R.layout.custom_progress_bar, null);
+        ImageView imgConnecting = (ImageView)dialogView.findViewById(R.id.imgConnecting);
+        ImageView imgConnecting1 = (ImageView)dialogView.findViewById(R.id.imgConnecting1);
+        TextView tvProgressing = (TextView)dialogView.findViewById(R.id.txtProgressing);
+        Animation anim = AnimationUtils.loadAnimation(mContext,R.anim.anticlockwise);
+        imgConnecting.startAnimation(anim);
+        Animation anim1 = AnimationUtils.loadAnimation(mContext,R.anim.clockwise);
+        imgConnecting1.startAnimation(anim1);
+        tvProgressing.setText(loading);
+
+        if (status.equals("true"))
+        {
+            dialog.setView(dialogView);
+            dialog.show();
+        }
+        else if (status.equals("false"))
+        {
+            dialog.cancel();
+        }
+        else
+        {
+
+        }
+    }
+
+    public static void CustomProgressDialog(final String loading)
+    {
+        rlProgressDialog.setVisibility(View.VISIBLE);
+        tvProgressing.setText(loading);
+
+        Animation anim = AnimationUtils.loadAnimation(mContext,R.anim.anticlockwise);
+        ivConnecting1.startAnimation(anim);
+        Animation anim1 = AnimationUtils.loadAnimation(mContext,R.anim.clockwise);
+        ivConnecting2.startAnimation(anim1);
+
+        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
+        for (int i = 350; i <= SPLASHTIME; i = i + 350)
+        {
+            final int j = i;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run()
+                {
+                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
+                    {
+                        tvProgressing.setText(loading+".");
+                    }
+                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
+                    {
+                        tvProgressing.setText(loading+"..");
+                    }
+                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+
+                }
+            }, i);
+        }
+    }
+
+
 
 }

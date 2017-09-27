@@ -130,6 +130,7 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
     <LinearLayout
         android:weightSum="1"
         android:orientation="vertical"
@@ -156,11 +157,79 @@
 
     <TextView
         android:textAlignment="center"
-        android:visibility="visible"
+        android:visibility="gone"
         android:id="@+id/txtNoCard1"
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/no_friend_connection"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rlProgressDialog"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/colorPrimary"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:elevation="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_centerVertical="true"
+            android:weightSum="1">
+
+            <RelativeLayout
+                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.6"
+                android:gravity="right"
+                android:layout_marginRight="15dp">
+
+                <ImageView
+                    android:layout_centerInParent="true"
+                    android:id="@+id/imgConnecting1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/round1" />
+                <ImageView
+                    android:layout_centerInParent="true"
+                    android:id="@+id/imgConnecting2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/round2" />
+                <ImageView
+                    android:layout_centerInParent="true"
+                    android:id="@+id/imgConnecting3"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:src="@drawable/round3" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txtProgressing"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="0dp"
+                android:textSize="15dp"
+                android:layout_below="@+id/imgConnecting"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Connecting."
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.4"/>
+             </LinearLayout>
+         </RelativeLayout>
+    </RelativeLayout>
+
 
 </RelativeLayout>

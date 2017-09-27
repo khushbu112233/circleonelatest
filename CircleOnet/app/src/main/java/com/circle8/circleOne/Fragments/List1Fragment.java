@@ -5,7 +5,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -17,9 +19,12 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -30,6 +35,7 @@ import com.azoft.carousellayoutmanager.CarouselLayoutManager;
 import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
 import com.azoft.carousellayoutmanager.CenterScrollListener;
 import com.circle8.circleOne.Activity.CardsActivity;
+import com.circle8.circleOne.Activity.GroupsActivity;
 import com.circle8.circleOne.Activity.SortAndFilterOption;
 import com.circle8.circleOne.Adapter.GalleryAdapter;
 import com.circle8.circleOne.Adapter.GalleryAdapter1;
@@ -58,7 +64,8 @@ import java.util.Locale;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
 
-public class List1Fragment extends Fragment {
+public class List1Fragment extends Fragment
+{
     // private ArrayList<Integer> imageFront = new ArrayList<>();
     // private ArrayList<Integer> imageBack = new ArrayList<>();
     //  public static MyPager myPager ;
@@ -111,6 +118,13 @@ public class List1Fragment extends Fragment {
 
     static int numberCount, recycleSize;
 
+    static AlertDialog customProgressBar ;
+    static String customProgressBarStatus = "";
+
+    private static RelativeLayout rlProgressDialog ;
+    private static TextView tvProgressing ;
+    private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+
     public List1Fragment() {
         // Required empty public constructor
     }
@@ -121,7 +135,8 @@ public class List1Fragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
 
         view = inflater.inflate(R.layout.fragment_list1, container, false);
@@ -144,6 +159,11 @@ public class List1Fragment extends Fragment {
         rlLoadMore1 = (RelativeLayout) view.findViewById(R.id.rlLoadMore1);
         progressBar2 = (ProgressBar) view.findViewById(R.id.more_progress2);
         rlLoadMore2 = (RelativeLayout) view.findViewById(R.id.rlLoadMore2);
+        rlProgressDialog = (RelativeLayout)view.findViewById(R.id.rlProgressDialog);
+        tvProgressing = (TextView)view.findViewById(R.id.txtProgressing);
+        ivConnecting1 = (ImageView)view.findViewById(R.id.imgConnecting1) ;
+        ivConnecting2 = (ImageView)view.findViewById(R.id.imgConnecting2) ;
+        ivConnecting3 = (ImageView)view.findViewById(R.id.imgConnecting3) ;
 
         session = new LoginSession(getContext());
         HashMap<String, String> user = session.getUserDetails();
@@ -485,17 +505,19 @@ public class List1Fragment extends Fragment {
 
     }
 
-    private static class HttpAsyncTask extends AsyncTask<String, Void, String> {
+    public static class HttpAsyncTask extends AsyncTask<String, Void, String>
+    {
         ProgressDialog dialog;
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             super.onPreExecute();
-            dialog = new ProgressDialog(mContext);
+           /* dialog = new ProgressDialog(mContext);
             dialog.setMessage("Fetching Cards...");
             //dialog.setTitle("Saving Reminder");
             dialog.setCancelable(false);
-            dialog.show();
+            dialog.show();*/
            /* if(comeAtTime.equalsIgnoreCase("FIRST"))
             {
                 dialog.show();
@@ -507,6 +529,15 @@ public class List1Fragment extends Fragment {
             }*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
+
+//            customProgressBarStatus = "run";
+           /* String status = "true" ;
+            String loading = "Fetching Cards..." ;
+            CustomProgressBar(loading, status);*/
+
+//            rlProgressDialog.setVisibility(View.VISIBLE);
+            String loading = "Fetching Cards" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -516,10 +547,19 @@ public class List1Fragment extends Fragment {
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
-            dialog.dismiss();
-            try {
-                if (result != null) {
+        protected void onPostExecute(String result)
+        {
+//            customProgressBarStatus = "stop";
+          /*  String status = "false" ;
+            String loading = "Fetching Cards..." ;
+            CustomProgressBar(loading, status);*/
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
+
+            try
+            {
+                if (result != null)
+                {
                     JSONObject jsonObject = new JSONObject(result);
 
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
@@ -956,10 +996,12 @@ public class List1Fragment extends Fragment {
         }
     }
 
-    public String POSTSearch(String url) {
+    public String POSTSearch(String url)
+    {
         InputStream inputStream = null;
         String result = "";
-        try {
+        try
+        {
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
 
@@ -1055,6 +1097,71 @@ public class List1Fragment extends Fragment {
         //  myPager.notifyDataSetChanged();
 
         //gridAdapter.setMode(Attributes.Mode.Single);
+    }
+
+    public static void CustomProgressDialog(final String loading)
+    {
+        rlProgressDialog.setVisibility(View.VISIBLE);
+        tvProgressing.setText(loading);
+
+        Animation anim = AnimationUtils.loadAnimation(mContext,R.anim.anticlockwise);
+        ivConnecting1.startAnimation(anim);
+        Animation anim1 = AnimationUtils.loadAnimation(mContext,R.anim.clockwise);
+        ivConnecting2.startAnimation(anim1);
+
+        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
+        for (int i = 350; i <= SPLASHTIME; i = i + 350)
+        {
+            final int j = i;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run()
+                {
+                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
+                    {
+                        tvProgressing.setText(loading+".");
+                    }
+                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
+                    {
+                        tvProgressing.setText(loading+"..");
+                    }
+                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+
+                }
+            }, i);
+        }
+    }
+
+    public static void CustomProgressBar(String loading, String status)
+    {
+        final AlertDialog dialog = new AlertDialog.Builder(mContext).create();
+        LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View dialogView = inflater.inflate(R.layout.custom_progress_bar, null);
+        ImageView imgConnecting = (ImageView)dialogView.findViewById(R.id.imgConnecting);
+        ImageView imgConnecting1 = (ImageView)dialogView.findViewById(R.id.imgConnecting1);
+        TextView tvProgressing = (TextView)dialogView.findViewById(R.id.txtProgressing);
+        Animation anim = AnimationUtils.loadAnimation(mContext,R.anim.anticlockwise);
+        imgConnecting.startAnimation(anim);
+        Animation anim1 = AnimationUtils.loadAnimation(mContext,R.anim.clockwise);
+        imgConnecting1.startAnimation(anim1);
+        tvProgressing.setText(loading);
+
+        if (status.equals("true"))
+        {
+            dialog.setView(dialogView);
+            dialog.show();
+        }
+        else if (status.equals("false"))
+        {
+            dialog.cancel();
+        }
+        else
+        {
+
+        }
     }
 
 }
