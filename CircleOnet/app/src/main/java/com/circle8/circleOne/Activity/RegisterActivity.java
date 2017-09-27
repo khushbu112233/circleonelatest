@@ -126,6 +126,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     TextView tvReferrelInfo;
     int motionLength;
     int roundWidth = 0, lineWidth = 0;
+    View viewCenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -158,7 +159,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         imgBack.setOnClickListener(this);
         pDialog = new ProgressDialog(this);
         civProfilePic = (CircleImageView) findViewById(R.id.imgProfileCard);
-
+        viewCenter = findViewById(R.id.viewCenter);
         tvUsernameInfo = (TextView) findViewById(R.id.tvUsernameInfo);
         tvFirstnameInfo = (TextView) findViewById(R.id.tvFirstNameInfo);
         tvLastnameInfo = (TextView) findViewById(R.id.tvLastNameInfo);
@@ -359,14 +360,20 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    line_view1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                    // line_view2.setBackgroundColor(getResources().getColor(R.color.unselected));
                    // ivFemaleImg.setImageResource(R.drawable.ic_female_gray);
-                    ivFemaleround.setImageResource(R.drawable.ic_girl_gray);
+
                 }
             }, 1300);
+            ivFemaleround.setImageResource(R.drawable.ic_girl_gray);
             ivConnect.setVisibility(View.INVISIBLE);
             //second things
-         //  line_view1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+           line_view1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
          //   ivMaleImg.setImageResource(R.drawable.ic_male);
             ivMaleRound.setImageResource(R.drawable.ic_man_blue);
             gender = "M";
@@ -382,12 +389,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    line_view1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                   //  line_view1.setBackgroundColor(getResources().getColor(R.color.unselected));
                  //   ivMaleImg.setImageResource(R.drawable.ic_male_gray);
-                    ivMaleRound.setImageResource(R.drawable.ic_man_gray);
+
                 }
             }, 1300);
             ivConnect.setVisibility(View.INVISIBLE);
+            ivMaleRound.setImageResource(R.drawable.ic_man_gray);
+            line_view1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             //second things
            // line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
          //   line_view2.setBackground(getResources().getDrawable(R.drawable.dotted));
