@@ -4,12 +4,17 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,16 +37,22 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class TestimonialRequest extends AppCompatActivity {
-
+public class TestimonialRequest extends AppCompatActivity
+{
     static ListView lstTestimonial;
     static Context mContext ;
     static String TestimonialProfileId = "";
     static ArrayList<TestimonialModel> allTaggs;
     TextView textView;
     ImageView imgLogo;
+
+    private static RelativeLayout rlProgressDialog ;
+    private static TextView tvProgressing ;
+    private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testimonial_request);
         mContext = TestimonialRequest.this ;
@@ -59,6 +70,12 @@ public class TestimonialRequest extends AppCompatActivity {
         allTaggs = new ArrayList<>();
         lstTestimonial = (ListView) findViewById(R.id.lstTestimonial);
 
+        rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
+        tvProgressing = (TextView)findViewById(R.id.txtProgressing);
+        ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
+        ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
+        ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
+
         new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8999/Onet.svc/GetFriends_Profile");
     }
 
@@ -71,13 +88,16 @@ public class TestimonialRequest extends AppCompatActivity {
         protected void onPreExecute()
         {
             super.onPreExecute();
-            dialog = new ProgressDialog(mContext);
+           /* dialog = new ProgressDialog(mContext);
             dialog.setMessage("Loading...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
+
+            String loading = "Loading" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -89,16 +109,22 @@ public class TestimonialRequest extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
-            try {
-                if (result != null) {
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
+
+            try
+            {
+                if (result != null)
+                {
                     JSONObject jsonObject = new JSONObject(result);
                     String success = jsonObject.getString("success");
-                    if (success.equals("1")) {
+                    if (success.equals("1"))
+                    {
                         JSONArray jsonArray = jsonObject.getJSONArray("Profiles");
                         //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
 
-                        for (int i = 0; i < jsonArray.length(); i++) {
+                        for (int i = 0; i < jsonArray.length(); i++)
+                        {
 
                             JSONObject object = jsonArray.getJSONObject(i);
                             //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
@@ -116,7 +142,6 @@ public class TestimonialRequest extends AppCompatActivity {
                         adapter = new TestimonialRequestAdapter(mContext, R.layout.full_testimonial_row, allTaggs);
                         lstTestimonial.setAdapter(adapter);
                     }
-
                 }
                 else
                 {
@@ -195,6 +220,42 @@ public class TestimonialRequest extends AppCompatActivity {
 
         inputStream.close();
         return result;
-
     }
+
+    public static void CustomProgressDialog(final String loading)
+    {
+        rlProgressDialog.setVisibility(View.VISIBLE);
+        tvProgressing.setText(loading);
+
+        Animation anim = AnimationUtils.loadAnimation(mContext,R.anim.anticlockwise);
+        ivConnecting1.startAnimation(anim);
+        Animation anim1 = AnimationUtils.loadAnimation(mContext,R.anim.clockwise);
+        ivConnecting2.startAnimation(anim1);
+
+        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
+        for (int i = 350; i <= SPLASHTIME; i = i + 350)
+        {
+            final int j = i;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run()
+                {
+                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
+                    {
+                        tvProgressing.setText(loading+".");
+                    }
+                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
+                    {
+                        tvProgressing.setText(loading+"..");
+                    }
+                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+
+                }
+            }, i);
+        }
+    }
+
 }
