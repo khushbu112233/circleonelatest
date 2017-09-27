@@ -275,6 +275,7 @@ public class List4Fragment extends Fragment
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("FindBy", "NAME");
             jsonObject.accumulate("Search", searchText.getText().toString());
+            jsonObject.accumulate("SearchType", "Local" );
             jsonObject.accumulate("UserID", UserId);
             jsonObject.accumulate("numofrecords", "30");
             jsonObject.accumulate("pageno", "1");

@@ -224,17 +224,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <TextView
-                android:id="@+id/tvCountryCode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textSize="18dp"
-                android:textColor="@color/colorPrimary"
-                android:text="+65"
-                android:layout_marginRight="10dp"/>
             <com.hbb20.CountryCodePicker
-                android:visibility="gone"
+                android:visibility="visible"
+                app:ccpDialog_searchEditTextTint="@color/colorPrimary"
                 app:ccp_textSize="15dp"
                 app:ccpDialog_textColor="@color/colorPrimary"
                 android:textColor="@color/colorPrimary"
@@ -327,6 +319,14 @@
             android:gravity="center"
             android:layout_marginBottom="15dp">
 
+            <View
+                android:layout_width="40dp"
+                android:layout_height="2dp"
+              android:layout_centerInParent="true"
+                android:background="@color/colorPrimary"
+                android:layerType="software"
+               />
+
             <RelativeLayout
                 android:id="@+id/ivMale"
                 android:layout_width="wrap_content"
@@ -335,39 +335,33 @@
                 android:layout_toLeftOf="@+id/vwDrag1">
                 <ImageView
                     android:id="@+id/ivMaleRound"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:src="@drawable/round_blue"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_man_blue"
                     android:layout_centerInParent="true" />
-            <ImageView
-                android:id="@+id/ivMaleImg"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_male"
-                android:layout_centerInParent="true" />
             </RelativeLayout>
             <View
                 android:id="@+id/vwDrag1"
-                android:layout_width="40dp"
-                android:layout_height="5dp"
+                android:layout_width="15dp"
+                android:layout_height="2dp"
                 android:layout_centerVertical="true"
-                android:background="@drawable/dotted"
+                android:background="@color/colorPrimary"
                 android:layerType="software"
                 android:layout_toLeftOf="@+id/iv_ConnectImg"/>
 
             <ImageView
                 android:id="@+id/iv_ConnectImg"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:src="@drawable/ic_connect"
                 android:layout_centerInParent="true"/>
 
             <View
                 android:id="@+id/vwDrag2"
-                android:layout_width="40dp"
-                android:layout_height="5dp"
+                android:layout_width="15dp"
+                android:layout_height="2dp"
                 android:layout_centerVertical="true"
-                android:background="@drawable/dotted"
+                android:background="@color/colorPrimary"
                 android:layerType="software"
                 android:layout_toRightOf="@+id/iv_ConnectImg"/>
 
@@ -379,15 +373,9 @@
                 android:layout_toRightOf="@+id/vwDrag2">
                 <ImageView
                     android:id="@+id/ivFemaleround"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:src="@drawable/round_blue"
-                    android:layout_centerInParent="true" />
-                <ImageView
-                    android:id="@+id/ivFemaleImg"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_female"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_girl_blue"
                     android:layout_centerInParent="true" />
             </RelativeLayout>
         </RelativeLayout>

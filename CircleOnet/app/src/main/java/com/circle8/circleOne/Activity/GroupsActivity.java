@@ -32,6 +32,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.Adapter.GroupAdapter;
 import com.circle8.circleOne.Adapter.GroupDisplayAdapter;
 import com.circle8.circleOne.Adapter.GroupsItemsAdapter;
@@ -39,6 +40,8 @@ import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.GroupModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -215,7 +218,10 @@ public class GroupsActivity extends AppCompatActivity
                     @Override
                     public void onClick(View v)
                     {
-                        selectImage();
+                        //selectImage();
+                        CropImage.activity(null)
+                                .setGuidelines(CropImageView.Guidelines.ON)
+                                .start(GroupsActivity.this);
                     }
                 });
 
@@ -236,15 +242,19 @@ public class GroupsActivity extends AppCompatActivity
                             Toast.makeText(getApplicationContext(), "Enter Circle Description", Toast.LENGTH_LONG).show();
 //                            tvCircleDescInfo.setVisibility(View.VISIBLE);
                         }
-                        else if (final_ImgBase64.equals(""))
-                        {
-                            Toast.makeText(getApplicationContext(), "Upload Circle Image", Toast.LENGTH_LONG).show();
-//                            tvProfileInfo.setVisibility(View.VISIBLE);
-                        }
                         else
                         {
                             dialog.dismiss();
-                            new HttpAsyncTaskPhotoUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+
+                            if (final_ImgBase64.equals(""))
+                            {
+                                new HttpAsyncTaskGroupCreate().execute("http://circle8.asia:8999/Onet.svc/Group/Create");
+                                //Toast.makeText(getApplicationContext(), "Upload Circle Image", Toast.LENGTH_LONG).show();
+//                            tvProfileInfo.setVisibility(View.VISIBLE);
+                            }else {
+
+                                new HttpAsyncTaskPhotoUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                            }
                             // new HttpAsyncTaskGroupCreate().execute("http://circle8.asia:8999/Onet.svc/Group/Create");
                         }
                     }
@@ -450,7 +460,33 @@ public class GroupsActivity extends AppCompatActivity
             else if (requestCode == REQUEST_CAMERA)
                 onCaptureImageResult(data);
         }
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Bitmap bitmap;
 
+                try {
+                    bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(result.getUri()));
+                    // originalBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
+
+                    image = ConvertBitmapToString(bitmap);
+                    final_ImgBase64 = BitMapToString(bitmap);
+                    // final_ImgBase64 = resizeBase64Image(s);
+                    Log.d("base64string ", final_ImgBase64);
+//                  Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
+                    // Upload();
+                    ivGroupImage.setImageBitmap(bitmap);
+                } catch (FileNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+                // ((ImageView) findViewById(R.id.quick_start_cropped_image)).setImageURI(result.getUri());
+                //Toast.makeText(this, "Cropping successful, Sample: " + result.getSampleSize(), Toast.LENGTH_LONG).show();
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Toast.makeText(this, "Cropping failed: " + result.getError(), Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     private void onCaptureImageResult(Intent data) {

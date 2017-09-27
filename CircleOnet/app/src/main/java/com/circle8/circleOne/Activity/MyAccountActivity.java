@@ -41,6 +41,8 @@ import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
 import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -68,6 +70,7 @@ import java.util.HashMap;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.circle8.circleOne.Activity.RegisterActivity.BitMapToString;
+import static com.circle8.circleOne.Activity.RegisterActivity.ConvertBitmapToString;
 import static com.circle8.circleOne.Utils.Validation.updateRegisterValidate;
 import static com.circle8.circleOne.Utils.Validation.validate;
 
@@ -273,7 +276,10 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         }
         if ( v == ivMiniCamera)
         {
-            selectImage();
+           // selectImage();
+            CropImage.activity(null)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .start(MyAccountActivity.this);
         }
         if( v == tvSave)
         {
@@ -291,13 +297,17 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             {
                 Toast.makeText(getApplicationContext(), "Select Gender", Toast.LENGTH_SHORT).show();
             }
-            else if (final_ImgBase64.equals(""))
-            {
-                Toast.makeText(getApplicationContext(), "Upload Image", Toast.LENGTH_SHORT).show();
-            }
             else
             {
-                new HttpAsyncTaskPhotoUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                if (final_ImgBase64.equals(""))
+                {
+                   // Toast.makeText(getApplicationContext(), "Upload Image", Toast.LENGTH_SHORT).show();
+                    register_img = user_img;
+                    new HttpAsyncTaskUpdateRegister().execute("http://circle8.asia:8999/Onet.svc/UpdateRegistration");
+                }
+                else {
+                    new HttpAsyncTaskPhotoUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                }
             }
         }
         if( v == tvCancel)
@@ -409,6 +419,34 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             else if (requestCode == REQUEST_CAMERA)
                 onCaptureImageResult(data);
         }
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Bitmap bitmap;
+
+                try {
+                    bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(result.getUri()));
+                    // originalBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
+
+                    image = ConvertBitmapToString(bitmap);
+                    final_ImgBase64 = BitMapToString(bitmap);
+                    // final_ImgBase64 = resizeBase64Image(s);
+                    Log.d("base64string ", final_ImgBase64);
+//                  Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
+                    //    Upload();
+                    imgProfile.setImageBitmap(bitmap);
+
+                } catch (FileNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+                // ((ImageView) findViewById(R.id.quick_start_cropped_image)).setImageURI(result.getUri());
+                //Toast.makeText(this, "Cropping successful, Sample: " + result.getSampleSize(), Toast.LENGTH_LONG).show();
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Toast.makeText(this, "Cropping failed: " + result.getError(), Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     private void onCaptureImageResult(Intent data) {
@@ -467,7 +505,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                     // final_ImgBase64 = resizeBase64Image(s);
                     Log.d("base64string ", final_ImgBase64);
 //                  Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
-                    Upload();
+                //    Upload();
                     imgProfile.setImageBitmap(resizedBitmap);
                 }
                 catch (FileNotFoundException e)
