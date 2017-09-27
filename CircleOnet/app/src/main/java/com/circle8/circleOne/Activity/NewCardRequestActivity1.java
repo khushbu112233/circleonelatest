@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -12,9 +13,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,7 +50,8 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class NewCardRequestActivity1 extends AppCompatActivity {
+public class NewCardRequestActivity1 extends AppCompatActivity
+{
     private CircleImageView imgProfile;
     private ImageView ivSubmit;
     private TextView tvPerson, tvDesignation, tvCompany, tvProfile;
@@ -70,8 +75,13 @@ public class NewCardRequestActivity1 extends AppCompatActivity {
     LoginSession session;
     private String profileId, userID;
 
+    private static RelativeLayout rlProgressDialog ;
+    private static TextView tvProgressing ;
+    private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_card_request1);
 
@@ -103,8 +113,20 @@ public class NewCardRequestActivity1 extends AppCompatActivity {
         mViewPager1 = (ViewPager) findViewById(R.id.viewPager);
         mViewPager2 = (ViewPager) findViewById(R.id.viewPager1);
 
-        recycle_image1 = "http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
-        recycle_image2 = "http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
+        rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
+        tvProgressing = (TextView)findViewById(R.id.txtProgressing);
+        ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
+        ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
+        ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
+
+        Intent i = getIntent();
+        image = i.getStringExtra("image");
+        card_front = i.getStringExtra("card_front");
+        card_back = i.getStringExtra("card_back");
+        profileId = i.getStringExtra("profileID");
+
+        recycle_image1 = "http://circle8.asia/App_ImgLib/Cards/"+card_front;
+        recycle_image2 = "http://circle8.asia/App_ImgLib/Cards/"+card_back;
         swipe_image.add(recycle_image1);
         swipe_image.add(recycle_image2);
         myPager = new CardSwipe(getApplicationContext(), swipe_image);
@@ -120,15 +142,12 @@ public class NewCardRequestActivity1 extends AppCompatActivity {
         mViewPager2.setOffscreenPageLimit(1);
         mViewPager2.setAdapter(myPager);
 
-        Intent i = getIntent();
-        image = i.getStringExtra("image");
-        card_front = i.getStringExtra("card_front");
-        card_back = i.getStringExtra("card_back");
-        profileId = i.getStringExtra("profileID");
-
-        if (image.equals("")) {
+        if (image.equals(""))
+        {
             imgProfile.setImageResource(R.drawable.usr_1);
-        } else {
+        }
+        else
+        {
             Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/" + image).into(imgProfile);
         }
         tvPerson.setText(i.getStringExtra("person"));
@@ -138,7 +157,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity {
 
         etPerson.setText(i.getStringExtra("person"));
         etCompany.setText(i.getStringExtra("company"));
-        etPhone.setText(i.getStringExtra("profile"));
+        etPhone.setText(i.getStringExtra("phone"));
         etAddress1.setText("Address");
         etAddress2.setText("");
 
@@ -151,12 +170,17 @@ public class NewCardRequestActivity1 extends AppCompatActivity {
 
         ivSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                try {
+            public void onClick(View v)
+            {
+                try
+                {
                     stripe = new Stripe("pk_test_6fZCC6Gu2kwYLUQxJhGte65l");
-                } catch (AuthenticationException e) {
+                }
+                catch (AuthenticationException e)
+                {
                     e.printStackTrace();
                 }
+
                 alertDialog = new AlertDialog.Builder(NewCardRequestActivity1.this).create();
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View dialogView = inflater.inflate(R.layout.activity_stripe_1, null);
@@ -165,7 +189,6 @@ public class NewCardRequestActivity1 extends AppCompatActivity {
                 monthField = (TextView) dialogView.findViewById(R.id.month);
                 yearField = (TextView) dialogView.findViewById(R.id.year);
                 cvcField = (TextView) dialogView.findViewById(R.id.cvc);
-
 
                 alertDialog.setView(dialogView);
 
@@ -355,15 +378,19 @@ public class NewCardRequestActivity1 extends AppCompatActivity {
         ProgressDialog dialog;
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             super.onPreExecute();
-            dialog = new ProgressDialog(NewCardRequestActivity1.this);
+           /* dialog = new ProgressDialog(NewCardRequestActivity1.this);
             dialog.setMessage("Loading...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
+
+            String loading = "Loading" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -373,9 +400,13 @@ public class NewCardRequestActivity1 extends AppCompatActivity {
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
-            dialog.dismiss();
-            try {
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
+
+            try
+            {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
                     JSONArray jsonArray = jsonObject.getJSONArray("PhysicalCard_Types");
@@ -407,19 +438,23 @@ public class NewCardRequestActivity1 extends AppCompatActivity {
         }
     }
 
-    private class HttpAsyncRequestTask extends AsyncTask<String, Void, String> {
+    private class HttpAsyncRequestTask extends AsyncTask<String, Void, String>
+    {
         ProgressDialog dialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(NewCardRequestActivity1.this);
+            /*dialog = new ProgressDialog(NewCardRequestActivity1.this);
             dialog.setMessage("Requesting...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
+
+            String loading = "Requesting" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -429,9 +464,13 @@ public class NewCardRequestActivity1 extends AppCompatActivity {
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
-            dialog.dismiss();
-            try {
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
+
+            try
+            {
                 if (result != null) {
                     JSONObject object = new JSONObject(result);
 
@@ -498,5 +537,42 @@ public class NewCardRequestActivity1 extends AppCompatActivity {
             }
         });
     }
+
+    public void CustomProgressDialog(final String loading)
+    {
+        rlProgressDialog.setVisibility(View.VISIBLE);
+        tvProgressing.setText(loading);
+
+        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
+        ivConnecting1.startAnimation(anim);
+        Animation anim1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.clockwise);
+        ivConnecting2.startAnimation(anim1);
+
+        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
+        for (int i = 350; i <= SPLASHTIME; i = i + 350)
+        {
+            final int j = i;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run()
+                {
+                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
+                    {
+                        tvProgressing.setText(loading+".");
+                    }
+                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
+                    {
+                        tvProgressing.setText(loading+"..");
+                    }
+                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+
+                }
+            }, i);
+        }
+    }
+
 
 }

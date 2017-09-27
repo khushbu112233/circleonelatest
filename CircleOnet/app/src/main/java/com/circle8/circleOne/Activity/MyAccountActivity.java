@@ -28,6 +28,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -100,6 +102,10 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     private String encodedImageData, register_img;
     private String user_Photo ;
 
+    private RelativeLayout rlProgressDialog ;
+    private TextView tvProgressing ;
+    private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -150,6 +156,12 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         tvPasswordInfo = (TextView)findViewById(R.id.tvPasswordInfo);
         tvAgainPasswordInfo = (TextView)findViewById(R.id.tvAgainPasswordInfo);
         tvPhoneInfo = (TextView)findViewById(R.id.tvPhoneInfo);
+
+        rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
+        tvProgressing = (TextView)findViewById(R.id.txtProgressing);
+        ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
+        ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
+        ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
 
         pDialog = new ProgressDialog(this);
         etUserName.setText(email_id);
@@ -305,7 +317,8 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                     register_img = user_img;
                     new HttpAsyncTaskUpdateRegister().execute("http://circle8.asia:8999/Onet.svc/UpdateRegistration");
                 }
-                else {
+                else
+                {
                     new HttpAsyncTaskPhotoUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
                 }
             }
@@ -698,13 +711,17 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         ProgressDialog dialog;
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             super.onPreExecute();
-            dialog = new ProgressDialog(MyAccountActivity.this);
+           /* dialog = new ProgressDialog(MyAccountActivity.this);
             dialog.setMessage("Uploading...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
+
+            String loading = "Uploading" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -716,7 +733,8 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -817,11 +835,14 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(MyAccountActivity.this);
+            /*dialog = new ProgressDialog(MyAccountActivity.this);
             dialog.setMessage("Update Registering...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
+
+            String loading = "Update Registering" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -833,7 +854,9 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
+
             try
             {
                 if (result != null)
@@ -932,11 +955,14 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(MyAccountActivity.this);
+            /*dialog = new ProgressDialog(MyAccountActivity.this);
             dialog.setMessage("Fetching My Account...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
+
+            String loading = "My Account" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -948,7 +974,9 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
+
             try
             {
                 if (result != null)
@@ -1098,6 +1126,43 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         inputStream.close();
         return result;
     }
+
+    public  void CustomProgressDialog(final String loading)
+    {
+        rlProgressDialog.setVisibility(View.VISIBLE);
+        tvProgressing.setText(loading);
+
+        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
+        ivConnecting1.startAnimation(anim);
+        Animation anim1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.clockwise);
+        ivConnecting2.startAnimation(anim1);
+
+        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
+        for (int i = 350; i <= SPLASHTIME; i = i + 350)
+        {
+            final int j = i;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run()
+                {
+                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
+                    {
+                        tvProgressing.setText(loading+".");
+                    }
+                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
+                    {
+                        tvProgressing.setText(loading+"..");
+                    }
+                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+
+                }
+            }, i);
+        }
+    }
+
 
 
 }
