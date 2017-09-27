@@ -455,7 +455,7 @@ public class SubscriptionActivity extends AppCompatActivity
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("amt", 15 );
+            jsonObject.accumulate("amt", 50 );
             jsonObject.accumulate("currency", "usd" );
             jsonObject.accumulate("source", strToken );
             jsonObject.accumulate("Description", "test" );

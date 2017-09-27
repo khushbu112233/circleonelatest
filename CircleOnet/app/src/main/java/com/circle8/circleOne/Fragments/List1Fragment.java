@@ -90,6 +90,7 @@ public class List1Fragment extends Fragment
     FrameLayout frame, frame1;
 
     public static int pageno = 1;
+    ImageView imgSearch;
 
     View view;
 
@@ -148,7 +149,7 @@ public class List1Fragment extends Fragment
 
         mContext = List1Fragment.this.getContext();
         pageno = 1;
-
+        imgSearch = (ImageView) view.findViewById(R.id.imgSearch);
         recyclerView1 = (RecyclerView) view.findViewById(R.id.list_horizontal1);
         recyclerView2 = (RecyclerView) view.findViewById(R.id.list_horizontal2);
         txtNoCard1 = (TextView) view.findViewById(R.id.txtNoCard1);
@@ -341,6 +342,23 @@ public class List1Fragment extends Fragment
         //myPager = new MyPager(getContext(), imgf, imgb, tag_id);
         //viewPager.setAdapter(myPager);
 
+        imgSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                allTags.clear();
+                try {
+                    mAdapter.notifyDataSetChanged();
+                } catch (Exception e) {
+                }
+                try {
+                    mAdapter1.notifyDataSetChanged();
+                } catch (Exception e) {
+                }
+                new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
+            }
+        });
+
+
         searchText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -367,38 +385,7 @@ public class List1Fragment extends Fragment
 
             @Override
             public void onTextChanged(final CharSequence s, int start, int before, int count) {
-                if (s.length() == 0) {
-                    // allTags = db.getActiveNFC();
-//                    GetData(getContext());
-                    nfcModel.clear();
-                    pageno = 1;
-                    allTags.clear();
-                    try {
-                        mAdapter.notifyDataSetChanged();
-                    } catch (Exception e) {
-                    }
-                    try {
-                        mAdapter1.notifyDataSetChanged();
-                    } catch (Exception e) {
-                    }
-                    callFirst();
-                } else if (s.length() > 0) {
-                    String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
 
-//                        nfcModel.clear();
-                    allTags.clear();
-                    try {
-                        mAdapter.notifyDataSetChanged();
-                    } catch (Exception e) {
-                    }
-                    try {
-                        mAdapter1.notifyDataSetChanged();
-                    } catch (Exception e) {
-                    }
-                    new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
-                } else {
-
-                }
             }
 
             @Override
@@ -912,7 +899,7 @@ public class List1Fragment extends Fragment
             dialog = new ProgressDialog(getActivity());
             dialog.setMessage("Searching Records...");
             //dialog.setTitle("Saving Reminder");
-            //  dialog.show();
+              dialog.show();
             //  dialog.setCancelable(false);
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
@@ -926,7 +913,7 @@ public class List1Fragment extends Fragment
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
-            // dialog.dismiss();
+             dialog.dismiss();
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
 
             try {

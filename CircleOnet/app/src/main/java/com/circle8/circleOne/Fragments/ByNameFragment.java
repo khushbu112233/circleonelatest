@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,6 +64,7 @@ public class ByNameFragment extends Fragment
 
     LoginSession session;
     String profileID, userID ;
+    ImageView imgSearch;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,  Bundle savedInstanceState)
@@ -74,7 +76,7 @@ public class ByNameFragment extends Fragment
         tvDataInfo = (TextView)view.findViewById(R.id.tvDataInfo);
         searchText = (AutoCompleteTextView)view.findViewById(R.id.searchView);
         listView = (ListView) view.findViewById(R.id.listViewType4);
-
+        imgSearch = (ImageView) view.findViewById(R.id.imgSearch);
         searchText.setHint("Search by name");
 
         listView.setVisibility(View.GONE);
@@ -85,10 +87,21 @@ public class ByNameFragment extends Fragment
         profileID = user.get(LoginSession.KEY_PROFILEID);
         userID = user.get(LoginSession.KEY_USERID);
 
+        imgSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
+                listView.setVisibility(View.VISIBLE);
+                connectTags.clear();
+                new ByNameFragment.HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
+            }
+        });
+
         searchText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after)
             {
+
             }
 
             @Override
@@ -102,13 +115,7 @@ public class ByNameFragment extends Fragment
 //                    connectListAdapter.notifyDataSetChanged();
 //                    GetData(getContext());
                 }
-                else if(s.length() >= 1)
-                {
-                    String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
-                    listView.setVisibility(View.VISIBLE);
-                    connectTags.clear();
-                    new ByNameFragment.HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
-                }
+
             }
 
             @Override
