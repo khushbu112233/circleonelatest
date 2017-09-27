@@ -1404,8 +1404,8 @@ public class LoginActivity extends AppCompatActivity implements
 //            Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
             Facebook = "";
             Google = "";
-            Linkedin = "";
-            Twitter = response.get("id").toString();
+            Linkedin = response.get("id").toString();
+            Twitter = "";
 
             final_name = response.get("formattedName").toString();
             final_email = response.get("emailAddress").toString();

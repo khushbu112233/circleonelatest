@@ -82,12 +82,33 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.TwitterAuthProvider;
 import com.hbb20.CountryCodePicker;
+import com.linkedin.platform.APIHelper;
+import com.linkedin.platform.LISessionManager;
+import com.linkedin.platform.errors.LIApiError;
+import com.linkedin.platform.errors.LIAuthError;
+import com.linkedin.platform.listeners.ApiListener;
+import com.linkedin.platform.listeners.ApiResponse;
+import com.linkedin.platform.listeners.AuthListener;
 import com.linkedin.platform.utils.Scope;
 import com.neovisionaries.i18n.CountryCode;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 
 import net.doo.snap.camera.AutoSnappingController;
 import net.doo.snap.camera.CameraOpenCallback;
@@ -127,6 +148,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.fabric.sdk.android.Fabric;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -235,6 +257,15 @@ public class EditProfileActivity extends AppCompatActivity implements
     private static RelativeLayout rlProgressDialog ;
     private static TextView tvProgressing ;
     private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+    private boolean LinkedInFlag = false;
+    private ProgressDialog progress;
+
+    private static final String host = "api.linkedin.com";
+    private static final String topCardUrl = "https://" + host + "/v1/people/~:" +
+            "(id,email-address,formatted-name,phone-numbers,public-profile-url,picture-url,picture-urls::(original))";
+
+    private FirebaseAuth mAuth;
+    private TwitterAuthClient client;
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -252,6 +283,10 @@ public class EditProfileActivity extends AppCompatActivity implements
     {
         supportRequestWindowFeature(WindowCompat.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(
+                getString(R.string.twitter_consumer_key),
+                getString(R.string.twitter_consumer_secret));
+        Fabric.with(this, new Twitter(authConfig));
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.fragment_edit_profile);
         activity = EditProfileActivity.this;
@@ -274,7 +309,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         imgProfileShare = (ImageView) findViewById(R.id.imgProfileShare);
         resultView = (ImageView) findViewById(R.id.result);
         rltGallery = (RelativeLayout) findViewById(R.id.rltGallery);
-
+        mAuth = FirebaseAuth.getInstance();
         editPolygonView = (EditPolygonImageView) findViewById(R.id.polygonView1);
         // editPolygonView.setImageResource(R.drawable.test_receipt);
         //    originalBitmap = ((BitmapDrawable) editPolygonView.getDrawable()).getBitmap();
@@ -426,6 +461,25 @@ public class EditProfileActivity extends AppCompatActivity implements
                 cameraView.takePicture(false);
             }
         });
+        client = new TwitterAuthClient();
+        imgTwitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                client.authorize(EditProfileActivity.this, new Callback<TwitterSession>() {
+                    @Override
+                    public void success(Result<TwitterSession> twitterSessionResult) {
+                        Toast.makeText(EditProfileActivity.this, "success", Toast.LENGTH_SHORT).show();
+                        handleTwitterSession(twitterSessionResult.data);
+                    }
+
+                    @Override
+                    public void failure(TwitterException e) {
+                        Toast.makeText(EditProfileActivity.this, "failure", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+        });
 
         findViewById(R.id.done).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -485,6 +539,14 @@ public class EditProfileActivity extends AppCompatActivity implements
             public void onClick(View v) {
 
                 finish();
+            }
+        });
+
+        imgLinkedin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LinkedInFlag = true;
+                login_linkedin();
             }
         });
 
@@ -767,6 +829,77 @@ public class EditProfileActivity extends AppCompatActivity implements
             makeRequest();
         }
     }
+
+    private void handleTwitterSession(TwitterSession session)
+    {
+        Log.d("TAG", "handleTwitterSession:" + session);
+        // [START_EXCLUDE silent]
+
+        showProgressDialog();
+
+     /*   String loading = "Google Login" ;
+        CustomProgressDialog(loading);*/
+
+        // [END_EXCLUDE]
+
+        AuthCredential credential = TwitterAuthProvider.getCredential(
+                session.getAuthToken().token,
+                session.getAuthToken().secret);
+
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("TAG", "signInWithCredential:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            /*loginSession.createLoginSession("", user.getDisplayName(), user.getEmail(), String.valueOf(user.getPhotoUrl()), "");
+                            Intent homeIntent = new Intent(LoginActivity.this, CardsActivity.class);
+                            homeIntent.putExtra("viewpager_position", 0);
+                            startActivity(homeIntent);
+
+                            finish();
+*/
+                            strTwitter = "https://twitter.com/" + user.getDisplayName();
+                            imgTwitter.setImageResource(R.drawable.icon_twitter);
+
+                            mAuth.signOut();
+                            com.twitter.sdk.android.Twitter.logOut();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("TAG", "signInWithCredential:failure", task.getException());
+                            Toast.makeText(EditProfileActivity.this, task.getException().toString(),
+                                    Toast.LENGTH_SHORT).show();
+                            // updateUI(null);
+                        }
+
+                        // [START_EXCLUDE]
+                        hideProgressDialog();
+//                        rlProgressDialog.setVisibility(View.GONE);
+                        // [END_EXCLUDE]
+                    }
+                });
+    }
+
+    public void login_linkedin() {
+        LISessionManager.getInstance(getApplicationContext()).init(this, buildScope(), new AuthListener() {
+            @Override
+            public void onAuthSuccess() {
+
+                 Toast.makeText(getApplicationContext(), "success" + LISessionManager.getInstance(getApplicationContext()).getSession().getAccessToken().toString(), Toast.LENGTH_LONG).show();
+               // login_linkedin_btn.setVisibility(View.GONE);
+
+            }
+
+            @Override
+            public void onAuthError(LIAuthError error) {
+
+                Toast.makeText(getApplicationContext(), "failed " + error.toString(), Toast.LENGTH_LONG).show();
+            }
+        }, true);
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -1875,12 +2008,60 @@ public class EditProfileActivity extends AppCompatActivity implements
         return Scope.build(Scope.R_BASICPROFILE, Scope.R_EMAILADDRESS);
     }
 
+    public void setprofile(JSONObject response) {
+
+        try {
+            Log.d("response link ", response.toString());
+           // Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
+
+            strLinkedin = response.get("publicProfileUrl").toString().replaceAll("/", "");
+
+            imgLinkedin.setImageResource(R.drawable.icon_linkedin);
+            LISessionManager.getInstance(getApplicationContext()).clearSession();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void linkededinApiHelper() {
+        APIHelper apiHelper = APIHelper.getInstance(getApplicationContext());
+        apiHelper.getRequest(EditProfileActivity.this, topCardUrl, new ApiListener() {
+            @Override
+            public void onApiSuccess(ApiResponse result) {
+                try {
+
+                    setprofile(result.getResponseDataAsJson());
+                    progress.dismiss();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onApiError(LIApiError error) {
+                // ((TextView) findViewById(R.id.error)).setText(error.toString());
+                //  Toast.makeText(getApplicationContext(), "Not able to Login to LinkedIn..", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
 
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+        client.onActivityResult(requestCode, resultCode, data);
+        if (LinkedInFlag == true) {
+            LISessionManager.getInstance(getApplicationContext()).onActivityResult(this, requestCode, resultCode, data);
+            progress = new ProgressDialog(this);
+            progress.setMessage("Logging in...");
+            progress.setCanceledOnTouchOutside(false);
+            progress.show();
+            linkededinApiHelper();
+        }
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == RC_SIGN_IN) {
                 GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
@@ -2844,6 +3025,49 @@ public class EditProfileActivity extends AppCompatActivity implements
                     } catch (Exception e) {
 
                     }
+
+
+                    if (strFB.equals("") || strFB.equals(null))
+                    {
+                        imgFb.setImageResource(R.drawable.ic_fb_gray);
+                    }
+                    else {
+                        imgFb.setImageResource(R.drawable.icon_fb);
+                    }
+
+                    if (strYoutube.equals("") || strYoutube.equals(null))
+                    {
+                        imgYoutube.setImageResource(R.drawable.icon_utube_gray);
+                    }
+                    else {
+                        imgYoutube.setImageResource(R.drawable.icon_utube_red);
+                    }
+
+                    if (strGoogle.equals("") || strGoogle.equals(null))
+                    {
+                        imgGoogle.setImageResource(R.drawable.ic_google_gray);
+                    }
+                    else {
+                        imgGoogle.setImageResource(R.drawable.icon_google);
+                    }
+
+                    if (strTwitter.equals("") || strTwitter.equals(null))
+                    {
+                        imgTwitter.setImageResource(R.drawable.icon_twitter_gray);
+                    }
+                    else {
+                        imgTwitter.setImageResource(R.drawable.icon_twitter);
+                    }
+
+                    if (strLinkedin.equals("") || strLinkedin.equals(null))
+                    {
+                        imgLinkedin.setImageResource(R.drawable.icon_linkedin_gray);
+                    }
+                    else {
+                        imgLinkedin.setImageResource(R.drawable.icon_linkedin);
+                    }
+
+
                     tvCompany.setText(CompanyName);
                     tvDesignation.setText(Designation);
                     tvPersonName.setText(FirstName + " " + LastName);

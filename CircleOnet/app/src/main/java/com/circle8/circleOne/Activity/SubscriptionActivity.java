@@ -134,7 +134,7 @@ public class SubscriptionActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
-                    stripe = new Stripe("pk_test_6fZCC6Gu2kwYLUQxJhGte65l");
+                    stripe = new Stripe("pk_live_Y06kAlfrEnrtIi71QwCPp1kl");
                 } catch (AuthenticationException e) {
                     e.printStackTrace();
                 }
@@ -176,7 +176,7 @@ public class SubscriptionActivity extends AppCompatActivity
         */
 
 
-        stripe.createToken(card, "pk_test_6fZCC6Gu2kwYLUQxJhGte65l", new TokenCallback() {
+        stripe.createToken(card, "pk_live_Y06kAlfrEnrtIi71QwCPp1kl", new TokenCallback() {
             public void onSuccess(Token token) {
                 // TODO: Send Token information to your backend to initiate a charge
                 Toast.makeText(getApplicationContext(), "Token created: " + token.getId(), Toast.LENGTH_LONG).show();
