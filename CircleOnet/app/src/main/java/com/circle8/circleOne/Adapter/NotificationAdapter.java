@@ -427,13 +427,15 @@ public class NotificationAdapter extends BaseAdapter
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(activity);
+            /*dialog = new ProgressDialog(activity);
             dialog.setMessage("Please Wait..");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
+            String loading = "Please Wait";
+            Notification.CustomProgressDialog(loading);
         }
 
         @Override
@@ -443,8 +445,10 @@ public class NotificationAdapter extends BaseAdapter
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
-            dialog.dismiss();
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            Notification.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result.equals("")) {
@@ -486,13 +490,15 @@ public class NotificationAdapter extends BaseAdapter
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(activity);
+            /*dialog = new ProgressDialog(activity);
             dialog.setMessage("Please Wait..");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
+            String loading = "Please Wait";
+            Notification.CustomProgressDialog(loading);
         }
 
         @Override
@@ -502,8 +508,10 @@ public class NotificationAdapter extends BaseAdapter
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
-            dialog.dismiss();
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            Notification.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result.equals("")) {
@@ -538,13 +546,15 @@ public class NotificationAdapter extends BaseAdapter
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(activity);
+            /*dialog = new ProgressDialog(activity);
             dialog.setMessage("Writing Testimonial..");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
+            String loading = "Writing Testimonial";
+            Notification.CustomProgressDialog(loading);
         }
 
         @Override
@@ -557,7 +567,8 @@ public class NotificationAdapter extends BaseAdapter
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
+//            dialog.dismiss();
+            Notification.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -596,13 +607,15 @@ public class NotificationAdapter extends BaseAdapter
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(activity);
+            /*dialog = new ProgressDialog(activity);
             dialog.setMessage("Accepting Friend Request..");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
+            String loading = "Accepting Friend Request";
+            Notification.CustomProgressDialog(loading);
         }
 
         @Override
@@ -612,8 +625,11 @@ public class NotificationAdapter extends BaseAdapter
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
-            dialog.dismiss();
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            Notification.rlProgressDialog.setVisibility(View.GONE);
+
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result.equals("")) {

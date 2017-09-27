@@ -2,67 +2,30 @@ package com.circle8.circleOne.Adapter;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.media.ExifInterface;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Build;
-import android.provider.MediaStore;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.circle8.circleOne.Activity.GroupDetailActivity;
-import com.circle8.circleOne.Activity.GroupsActivity;
 import com.circle8.circleOne.Activity.ImageZoom;
-import com.circle8.circleOne.Activity.MyAccountActivity;
 import com.circle8.circleOne.Activity.UpdateGroupActivity;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.GroupModel;
 import com.circle8.circleOne.R;
-import com.circle8.circleOne.Utils.Utility;
 import com.squareup.picasso.Picasso;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static com.circle8.circleOne.Activity.RegisterActivity.BitMapToString;
-import static com.circle8.circleOne.Activity.RegisterActivity.ConvertBitmapToString;
-import static com.circle8.circleOne.Activity.RegisterActivity.rotateImage;
-import static java.security.AccessController.getContext;
 
 /**
  * Created by ample-arch on 9/22/2017.

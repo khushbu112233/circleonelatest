@@ -94,9 +94,9 @@ public class List2Fragment extends Fragment
 
     static int numberCount, gridSize;
 
-    private static RelativeLayout rlProgressDialog ;
-    private static TextView tvProgressing ;
-    private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+    public static RelativeLayout rlProgressDialog ;
+    public static TextView tvProgressing ;
+    public static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
 
     public List2Fragment() {
         // Required empty public constructor

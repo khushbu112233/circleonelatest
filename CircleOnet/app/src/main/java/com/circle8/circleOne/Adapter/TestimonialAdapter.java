@@ -191,13 +191,15 @@ public class TestimonialAdapter extends BaseSwipeAdapter
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(context);
+           /* dialog = new ProgressDialog(context);
             dialog.setMessage("Deleting Records...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
+            String loading = "Deleting Records";
+            TestimonialActivity.CustomProgressDialog(loading);
         }
 
         @Override
@@ -209,7 +211,8 @@ public class TestimonialAdapter extends BaseSwipeAdapter
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
+//            dialog.dismiss();
+            TestimonialActivity.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
             try
             {
