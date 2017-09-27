@@ -364,6 +364,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     ivFemaleround.setImageResource(R.drawable.ic_girl_gray);
                 }
             }, 1300);
+            ivConnect.setVisibility(View.GONE);
             //second things
             line_view1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
          //   ivMaleImg.setImageResource(R.drawable.ic_male);

@@ -226,6 +226,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     public static Activity activity;
     ImageView imgProfileShare;
     AppBarLayout appbar;
+    ImageView ivProfileDelete;
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -260,7 +261,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                 }, 700);
             }
         });
-
+        ivProfileDelete = (ImageView) findViewById(R.id.ivProfileDelete);
         imgProfileShare = (ImageView) findViewById(R.id.imgProfileShare);
         resultView = (ImageView) findViewById(R.id.result);
         rltGallery = (RelativeLayout) findViewById(R.id.rltGallery);
@@ -564,6 +565,37 @@ public class EditProfileActivity extends AppCompatActivity implements
             }
         });
 
+        ivProfileDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(
+                        EditProfileActivity.this);
+                alert.setMessage("Do you want to Delete this Profile?");
+                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //do your work here
+                        dialog.dismiss();
+                        new HttpAsyncTaskProfileDelete().execute("http://circle8.asia:8999/Onet.svc/DeleteProfile");
+
+                    }
+                });
+                alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                alert.show();
+
+
+            }
+        });
+
       /*  ivAddAssociate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -726,6 +758,112 @@ public class EditProfileActivity extends AppCompatActivity implements
                     openCameraDialog();
                 }
                 return;
+            }
+        }
+    }
+
+    public  String POST9(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("ProfileID", profileId );
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    private class HttpAsyncTaskProfileDelete extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(EditProfileActivity.this);
+            dialog.setMessage("Deleting Profile...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            return POST9(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+            dialog.dismiss();
+            try
+            {
+
+                if (result != null)
+                {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String success = jsonObject.getString("success");
+                    String message = jsonObject.getString("message");
+                    if (success.equalsIgnoreCase("1")){
+                       finish();
+                        Toast.makeText(getApplicationContext(), "Profile Deleted Successfully..", Toast.LENGTH_LONG).show();
+                    }else {
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                    }
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "Not able to delete Profile..", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
     }
