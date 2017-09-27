@@ -4,15 +4,19 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Adapter.NewCardRequestAdapter;
@@ -51,6 +55,10 @@ public class ManageMyProfile extends AppCompatActivity
     RelativeLayout llBottomAdd;
     String ProfileID = "";
 
+    private RelativeLayout rlProgressDialog ;
+    private TextView tvProgressing ;
+    private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -65,6 +73,13 @@ public class ManageMyProfile extends AppCompatActivity
         UserID = user.get(LoginSession.KEY_USERID);
         allTags = new ArrayList<>();
         newCardModelArrayList = new ArrayList<>();
+
+        rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
+        tvProgressing = (TextView)findViewById(R.id.txtProgressing);
+        ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
+        ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
+        ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
+
         new HttpAsyncTaskProfiles().execute("http://circle8.asia:8999/Onet.svc/MyProfiles");
 
         imgBack.setOnClickListener(new View.OnClickListener() {
@@ -255,15 +270,18 @@ public class ManageMyProfile extends AppCompatActivity
         ProgressDialog dialog;
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             super.onPreExecute();
-            dialog = new ProgressDialog(ManageMyProfile.this);
+            /*dialog = new ProgressDialog(ManageMyProfile.this);
             dialog.setMessage("Fetching Profiles...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
+            String loading = "Fetching Profiles" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -275,7 +293,9 @@ public class ManageMyProfile extends AppCompatActivity
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
+
             try
             {
 
@@ -358,13 +378,15 @@ public class ManageMyProfile extends AppCompatActivity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(ManageMyProfile.this);
+           /* dialog = new ProgressDialog(ManageMyProfile.this);
             dialog.setMessage("Deleting Profile...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
+            String loading = "Deleting Profile" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -376,7 +398,9 @@ public class ManageMyProfile extends AppCompatActivity
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
+
             try
             {
 
@@ -402,4 +426,41 @@ public class ManageMyProfile extends AppCompatActivity
             }
         }
     }
+
+    public void CustomProgressDialog(final String loading)
+    {
+        rlProgressDialog.setVisibility(View.VISIBLE);
+        tvProgressing.setText(loading);
+
+        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
+        ivConnecting1.startAnimation(anim);
+        Animation anim1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.clockwise);
+        ivConnecting2.startAnimation(anim1);
+
+        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
+        for (int i = 350; i <= SPLASHTIME; i = i + 350)
+        {
+            final int j = i;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run()
+                {
+                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
+                    {
+                        tvProgressing.setText(loading+".");
+                    }
+                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
+                    {
+                        tvProgressing.setText(loading+"..");
+                    }
+                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+
+                }
+            }, i);
+        }
+    }
+
 }

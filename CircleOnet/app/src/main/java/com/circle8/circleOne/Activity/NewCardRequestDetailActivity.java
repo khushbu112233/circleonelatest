@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -18,8 +19,11 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,12 +85,18 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
     TextView txtUse, txtUse1;
     AppBarLayout appbar;
 
+    private static RelativeLayout rlProgressDialog ;
+    private static TextView tvProgressing ;
+    private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_card_request_detail);
+
         activity = NewCardRequestDetailActivity.this;
+
         imgProfile = (CircleImageView)findViewById(R.id.imgProfile);
         tvPerson = (TextView)findViewById(R.id.tvPersonName);
         tvCompany = (TextView)findViewById(R.id.tvCompany);
@@ -101,9 +111,26 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
         mViewPager1 = (ViewPager)findViewById(R.id.viewPager);
         mViewPager2 = (ViewPager)findViewById(R.id.viewPager1);
         appbar = (AppBarLayout) findViewById(R.id.appbar);
+        rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
+        tvProgressing = (TextView)findViewById(R.id.txtProgressing);
+        ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
+        ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
+        ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
 
-        recycle_image1 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
-        recycle_image2 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
+        Intent i = getIntent();
+        name = i.getStringExtra("person") ;
+        designation = i.getStringExtra("designation") ;
+        company = i.getStringExtra("company") ;
+        phone = i.getStringExtra("phone") ;
+        profile = i.getStringExtra("profile");
+        image = i.getStringExtra("image") ;
+        profileID = i.getStringExtra("profileID");
+        Card_Front = i.getStringExtra("Card_Front");
+        Card_Back = i.getStringExtra("Card_Back");
+
+        recycle_image1 ="http://circle8.asia/App_ImgLib/Cards/"+Card_Front ;
+        recycle_image2 ="http://circle8.asia/App_ImgLib/Cards/"+Card_Back ;
+
         swipe_image.add(recycle_image1);
         swipe_image.add(recycle_image2);
         myPager = new CardSwipe(getApplicationContext(), swipe_image);
@@ -118,17 +145,6 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
         mViewPager2.setOffscreenPageLimit(1);
         mViewPager2.setAdapter(myPager);
 
-        Intent i = getIntent();
-        name = i.getStringExtra("person") ;
-        designation = i.getStringExtra("designation") ;
-        company = i.getStringExtra("company") ;
-        phone = i.getStringExtra("phone") ;
-        profile = i.getStringExtra("profile");
-        image = i.getStringExtra("image") ;
-        profileID = i.getStringExtra("profileID");
-        Card_Front = i.getStringExtra("Card_Front");
-        Card_Back = i.getStringExtra("Card_Back");
-
        // Toast.makeText(getApplicationContext(), Card_Back, Toast.LENGTH_LONG).show();
 
         tvPerson.setText(i.getStringExtra("person"));
@@ -136,7 +152,8 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
         tvCompany.setText(i.getStringExtra("company"));
         tvProfile.setText(i.getStringExtra("profile"));
 
-        if (Card_Back.equals("") || Card_Front.equals("")){
+        if (Card_Back.equals("") || Card_Front.equals(""))
+        {
             llDefaultCard.setAlpha(0.4f);
             llDefaultCard.setEnabled(false);
             //imgUse.setColorFilter(getApplicationContext().getResources().getColor(R.color.unselected));
@@ -145,7 +162,8 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
             txtUse1.setTextColor(getResources().getColor(R.color.unselected));
             appbar.setVisibility(View.GONE);
         }
-        else {
+        else
+        {
             llDefaultCard.setAlpha(1.0f);
             llDefaultCard.setEnabled(true);
             appbar.setVisibility(View.VISIBLE);
@@ -178,6 +196,8 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                 i.putExtra("image", image);
                 i.putExtra("phone",phone);
                 i.putExtra("profileID",profileID);
+                i.putExtra("card_front", Card_Front);
+                i.putExtra("card_back", Card_Back);
                 startActivity(i);
             }
         });
@@ -226,7 +246,8 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
 
     }
 
-    private void selectCardType() {
+    private void selectCardType()
+    {
         type = new CharSequence[]{"Add Front Card", "Add Back Card", "Done"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(NewCardRequestDetailActivity.this);
@@ -308,7 +329,8 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
         builder.show();
     }
 
-    private void galleryCardIntent() {
+    private void galleryCardIntent()
+    {
         //  rltGallery.setVisibility(View.VISIBLE);
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -317,7 +339,8 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
         // TODO Auto-generated method stub
 
         super.onActivityResult(requestCode, resultCode, data);
@@ -327,12 +350,15 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
            /* else if (requestCode == REQUEST_CAMERA_CARD)
                 onCaptureImageResultCard(data);*/
         }
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)
+        {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK) {
+            if (resultCode == RESULT_OK)
+            {
                 Bitmap bitmap;
 
-                try {
+                try
+                {
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(result.getUri()));
                     // originalBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
 
@@ -343,7 +369,8 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                         new HttpAsyncTaskFrontUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
                     else if (cardType.equals("back"))
                         new HttpAsyncTaskBackUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
-                } catch (FileNotFoundException e) {
+                }
+                catch (FileNotFoundException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
@@ -411,11 +438,14 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(activity);
+            /*dialog = new ProgressDialog(activity);
             dialog.setMessage("Uploading...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
+
+            String loading = "Uploading" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -425,8 +455,10 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
-            dialog.dismiss();
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result != null) {
@@ -531,11 +563,14 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(activity);
+           /* dialog = new ProgressDialog(activity);
             dialog.setMessage("Uploading...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
+
+            String loading = "Uploading" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -545,8 +580,10 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
-            dialog.dismiss();
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result != null) {
@@ -575,5 +612,39 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
         }
     }
 
+    public static void CustomProgressDialog(final String loading)
+    {
+        rlProgressDialog.setVisibility(View.VISIBLE);
+        tvProgressing.setText(loading);
 
+        Animation anim = AnimationUtils.loadAnimation(activity,R.anim.anticlockwise);
+        ivConnecting1.startAnimation(anim);
+        Animation anim1 = AnimationUtils.loadAnimation(activity,R.anim.clockwise);
+        ivConnecting2.startAnimation(anim1);
+
+        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
+        for (int i = 350; i <= SPLASHTIME; i = i + 350)
+        {
+            final int j = i;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run()
+                {
+                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
+                    {
+                        tvProgressing.setText(loading+".");
+                    }
+                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
+                    {
+                        tvProgressing.setText(loading+"..");
+                    }
+                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+
+                }
+            }, i);
+        }
+    }
 }

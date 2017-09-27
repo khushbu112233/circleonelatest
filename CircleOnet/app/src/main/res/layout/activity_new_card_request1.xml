@@ -15,13 +15,79 @@
         android:layout_width="match_parent"
         android:layout_height="245dp" />
 
-    <android.support.design.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/main_content"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/rlProgressDialog"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@color/colorPrimary"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:elevation="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_centerVertical="true"
+                android:weightSum="1">
+
+                <RelativeLayout
+                    android:layout_centerInParent="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.7"
+                    android:gravity="right"
+                    android:layout_marginRight="15dp">
+
+                    <ImageView
+                        android:layout_centerInParent="true"
+                        android:id="@+id/imgConnecting1"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/round1" />
+                    <ImageView
+                        android:layout_centerInParent="true"
+                        android:id="@+id/imgConnecting2"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/round2" />
+                    <ImageView
+                        android:layout_centerInParent="true"
+                        android:id="@+id/imgConnecting3"
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:src="@drawable/round3" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txtProgressing"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="0dp"
+                    android:textSize="15dp"
+                    android:layout_below="@+id/imgConnecting"
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Connecting."
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.3"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <android.support.design.widget.CoordinatorLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/main_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
         <android.support.design.widget.AppBarLayout
             android:background="@android:color/transparent"
@@ -48,12 +114,15 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <LinearLayout
-
-                android:id="@+id/frame_container"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/frame_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -179,306 +248,308 @@
                     </FrameLayout>
                 </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="@color/white">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Uploaded Successfully"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20dp"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/colorPrimary"/>
-
-               <!--Below profile -->
-
-                <ScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="fill_parent">
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:layout_marginTop="5dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginLeft="10dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Please Confirm or Update the delivery info"
-                            android:textColor="@color/colorPrimary"
-                            android:layout_centerVertical="true"/>
-                        <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:src="@drawable/pencil_edit_blue"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"/>
-                    </RelativeLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="0.3"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="25dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginTop="5dp"
-                            android:gravity="center_vertical">
-                            <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:src="@drawable/ic_acc_blue"
-                                android:layout_marginRight="15dp"/>
-                            <EditText
-                                android:id="@+id/etPerson"
-                                android:textColor="#6b6c6e"
-                                android:textSize="13sp"
-                                android:hint="Person"
-                                android:textColorHint="#6b6c6e"
-                                android:backgroundTint="@color/colorPrimary"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginTop="5dp"
-                            android:gravity="center_vertical">
-                            <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:src="@drawable/ic_group_blue"
-                                android:layout_marginRight="15dp"/>
-                            <EditText
-                                android:id="@+id/etCompany"
-                                android:textColor="#6b6c6e"
-                                android:textSize="13sp"
-                                android:hint="Company"
-                                android:textColorHint="#6b6c6e"
-                                android:backgroundTint="@color/colorPrimary"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginTop="5dp"
-                            android:gravity="center_vertical">
-                            <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:src="@drawable/ic_mob_blue"
-                                android:layout_marginRight="15dp"/>
-                            <EditText
-                                android:id="@+id/etPhone"
-                                android:textColor="#6b6c6e"
-                                android:textSize="13sp"
-                                android:hint="Phone No."
-                                android:textColorHint="#6b6c6e"
-                                android:backgroundTint="@color/colorPrimary"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginTop="5dp">
-                            <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:src="@drawable/ic_location_blue"
-                                android:layout_marginRight="15dp"/>
-                            <EditText
-                                android:id="@+id/etAddress1"
-                                android:textColor="#6b6c6e"
-                                android:textSize="13sp"
-                                android:hint="Address"
-                                android:textColorHint="#6b6c6e"
-                                android:backgroundTint="@color/colorPrimary"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginTop="5dp"
-                            android:gravity="center_vertical">
-                            <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:layout_marginRight="15dp"/>
-                            <EditText
-                                android:id="@+id/etAddress2"
-                                android:textColor="#6b6c6e"
-                                android:textSize="13sp"
-                                android:backgroundTint="@color/colorPrimary"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/colorPrimary"
-                        android:layout_marginTop="10dp"/>
+                    android:background="@color/white">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Please choose methods of printing"
+                        android:text="Uploaded Successfully"
                         android:textColor="@color/colorPrimary"
+                        android:textSize="20dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"/>
-
-                    <LinearLayout
-                        android:weightSum="2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:orientation="horizontal"
-                        android:gravity="center_horizontal">
-
-                        <LinearLayout
-                            android:gravity="center"
-                            android:layout_weight="1"
-                            android:id="@+id/llGoldCardSample"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_marginRight="5dp">
-                            <TextView
-                                android:id="@+id/txtLaserCost"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="$ 65.00/PCE"
-                                android:textColor="@color/colorPrimary"
-                                android:layout_gravity="center_horizontal"/>
-                            <ImageView
-                                android:layout_width="170dp"
-                                android:layout_height="120dp"
-                                android:src="@drawable/card_sample_gold"/>
-                            <TextView
-                                android:id="@+id/txtLaserDesc"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Special offset printing"
-                                android:textColor="@color/colorPrimary"
-                                android:layout_gravity="center_horizontal"/>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:gravity="center"
-                            android:layout_weight="1"
-                            android:id="@+id/llBlueCardSample"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_marginLeft="5dp">
-                            <TextView
-                                android:id="@+id/txtNormalCost"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="$ 25.00/PCE"
-                                android:textColor="@color/colorPrimary"
-                                android:layout_gravity="center_horizontal"/>
-                            <ImageView
-                                android:layout_width="170dp"
-                                android:layout_height="120dp"
-                                android:src="@drawable/card_sample_blue"/>
-                            <TextView
-                                android:id="@+id/txtNormalDesc"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Normal digital printing"
-                                android:textColor="@color/colorPrimary"
-                                android:layout_gravity="center_horizontal"/>
-                        </LinearLayout>
-                    </LinearLayout>
+                        android:layout_marginRight="10dp"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/colorPrimary"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"/>
+                        android:layout_marginTop="5dp"
+                        android:background="@color/colorPrimary"/>
 
-                    <TextView
-                        android:id="@+id/tvCardInfo"
+                   <!--Below profile -->
+
+                    <ScrollView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:text="PS: Here at Unico Creative, we strive for success and client satisfaction, no matter how big or small your project may be."/>
+                        android:layout_height="fill_parent">
 
-
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_marginTop="5dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginLeft="10dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Please Confirm or Update the delivery info"
+                                android:textColor="@color/colorPrimary"
+                                android:layout_centerVertical="true"/>
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:src="@drawable/pencil_edit_blue"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"/>
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="0.3"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="25dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center_vertical">
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/ic_acc_blue"
+                                    android:layout_marginRight="15dp"/>
+                                <EditText
+                                    android:id="@+id/etPerson"
+                                    android:textColor="#6b6c6e"
+                                    android:textSize="13sp"
+                                    android:hint="Person"
+                                    android:textColorHint="#6b6c6e"
+                                    android:backgroundTint="@color/colorPrimary"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center_vertical">
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/ic_group_blue"
+                                    android:layout_marginRight="15dp"/>
+                                <EditText
+                                    android:id="@+id/etCompany"
+                                    android:textColor="#6b6c6e"
+                                    android:textSize="13sp"
+                                    android:hint="Company"
+                                    android:textColorHint="#6b6c6e"
+                                    android:backgroundTint="@color/colorPrimary"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center_vertical">
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/ic_mob_blue"
+                                    android:layout_marginRight="15dp"/>
+                                <EditText
+                                    android:id="@+id/etPhone"
+                                    android:textColor="#6b6c6e"
+                                    android:textSize="13sp"
+                                    android:hint="Phone No."
+                                    android:textColorHint="#6b6c6e"
+                                    android:backgroundTint="@color/colorPrimary"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="5dp">
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/ic_location_blue"
+                                    android:layout_marginRight="15dp"/>
+                                <EditText
+                                    android:id="@+id/etAddress1"
+                                    android:textColor="#6b6c6e"
+                                    android:textSize="13sp"
+                                    android:hint="Address"
+                                    android:textColorHint="#6b6c6e"
+                                    android:backgroundTint="@color/colorPrimary"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center_vertical">
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_marginRight="15dp"/>
+                                <EditText
+                                    android:id="@+id/etAddress2"
+                                    android:textColor="#6b6c6e"
+                                    android:textSize="13sp"
+                                    android:backgroundTint="@color/colorPrimary"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content" />
+                            </LinearLayout>
+                        </LinearLayout>
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_centerVertical="true"
-                            android:background="@color/colorPrimary"/>
-                        <ImageView
-                            android:id="@+id/ivSubmit"
-                            android:layout_width="50dp"
-                            android:layout_height="45dp"
-                            android:src="@drawable/ic_connect"
-                            android:layout_centerInParent="true"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/ivSubmit"
-                            android:text="Submit"
-                            android:layout_marginTop="20dp"
-                            android:layout_centerHorizontal="true"/>
-                    </RelativeLayout>
+                            android:background="@color/colorPrimary"
+                            android:layout_marginTop="10dp"/>
 
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Please choose methods of printing"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"/>
+
+                        <LinearLayout
+                            android:weightSum="2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:orientation="horizontal"
+                            android:gravity="center_horizontal">
+
+                            <LinearLayout
+                                android:gravity="center"
+                                android:layout_weight="1"
+                                android:id="@+id/llGoldCardSample"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_marginRight="5dp">
+                                <TextView
+                                    android:id="@+id/txtLaserCost"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="$ 65.00/PCE"
+                                    android:textColor="@color/colorPrimary"
+                                    android:layout_gravity="center_horizontal"/>
+                                <ImageView
+                                    android:layout_width="170dp"
+                                    android:layout_height="120dp"
+                                    android:src="@drawable/card_sample_gold"/>
+                                <TextView
+                                    android:id="@+id/txtLaserDesc"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Special offset printing"
+                                    android:textColor="@color/colorPrimary"
+                                    android:layout_gravity="center_horizontal"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:gravity="center"
+                                android:layout_weight="1"
+                                android:id="@+id/llBlueCardSample"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_marginLeft="5dp">
+                                <TextView
+                                    android:id="@+id/txtNormalCost"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="$ 25.00/PCE"
+                                    android:textColor="@color/colorPrimary"
+                                    android:layout_gravity="center_horizontal"/>
+                                <ImageView
+                                    android:layout_width="170dp"
+                                    android:layout_height="120dp"
+                                    android:src="@drawable/card_sample_blue"/>
+                                <TextView
+                                    android:id="@+id/txtNormalDesc"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Normal digital printing"
+                                    android:textColor="@color/colorPrimary"
+                                    android:layout_gravity="center_horizontal"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/colorPrimary"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"/>
+
+                        <TextView
+                            android:id="@+id/tvCardInfo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:text="PS: Here at Unico Creative, we strive for success and client satisfaction, no matter how big or small your project may be."/>
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_centerVertical="true"
+                                android:background="@color/colorPrimary"/>
+                            <ImageView
+                                android:id="@+id/ivSubmit"
+                                android:layout_width="50dp"
+                                android:layout_height="45dp"
+                                android:src="@drawable/ic_connect"
+                                android:layout_centerInParent="true"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/ivSubmit"
+                                android:text="Submit"
+                                android:layout_marginTop="20dp"
+                                android:layout_centerHorizontal="true"/>
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+
+                    </ScrollView>
 
                 </LinearLayout>
 
-                </ScrollView>
+             </LinearLayout>
 
-            </LinearLayout>
+            </RelativeLayout>
 
-            </LinearLayout>
-
-        </com.circle8.circleOne.Utils.StickyScrollView>
+         </com.circle8.circleOne.Utils.StickyScrollView>
 
         <!--  <ImageView
               android:id="@+id/fab"
@@ -491,5 +562,6 @@
 
     </android.support.design.widget.CoordinatorLayout>
 
+    </RelativeLayout>
 
 </RelativeLayout>
