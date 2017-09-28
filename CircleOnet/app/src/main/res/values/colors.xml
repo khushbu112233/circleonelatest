@@ -37,4 +37,6 @@
     <color name="viewfinder_laser">#3cc1c8</color>
     <color name="viewfinder_border">#3cc1c8</color>
 
+    <color name="transparent_blue">#3cc1c8</color>
+
 </resources>

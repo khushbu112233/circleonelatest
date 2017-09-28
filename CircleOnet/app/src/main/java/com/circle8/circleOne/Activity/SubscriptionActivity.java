@@ -1,5 +1,6 @@
 package com.circle8.circleOne.Activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -10,9 +11,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -47,6 +52,8 @@ public class SubscriptionActivity extends AppCompatActivity
 {
     private ListView listView ;
     private ImageView ivBack ;
+    private RelativeLayout rlStripePayment, rlListView ;
+//    private TextView tvCancel, tvPay ;
 
     private ArrayList<SubscriptionModel> subscriptionModelArrayList ;
 
@@ -70,11 +77,18 @@ public class SubscriptionActivity extends AppCompatActivity
     private TextView tvProgressing ;
     private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
 
+    int width, height;
+    WindowManager.LayoutParams params;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subscription);
+
+        WindowManager manager = (WindowManager) getSystemService(Activity.WINDOW_SERVICE);
+        width = manager.getDefaultDisplay().getWidth();
+        height = manager.getDefaultDisplay().getHeight();
 
         ivBack = (ImageView)findViewById(R.id.imgBack);
         listView = (ListView)findViewById(R.id.listView);
@@ -86,6 +100,12 @@ public class SubscriptionActivity extends AppCompatActivity
         ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
         ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
         ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
+
+        rlStripePayment = (RelativeLayout)findViewById(R.id.rlStripePayment);
+        rlListView = (RelativeLayout)findViewById(R.id.rlListView);
+
+//        tvPay = (TextView)findViewById(R.id.tvPay);
+//        tvCancel = (TextView)findViewById(R.id.tvCancel);
 
         packageName.add("Free Package");
         contact.add(10);
@@ -134,6 +154,8 @@ public class SubscriptionActivity extends AppCompatActivity
         listView.setAdapter(subscriptionAdapter);
         subscriptionAdapter.notifyDataSetChanged();*/
 
+        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/Subscription/GetPackageList");
+
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,28 +163,84 @@ public class SubscriptionActivity extends AppCompatActivity
             }
         });
 
-        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/Subscription/GetPackageList");
-
+/*
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                rlStripePayment.setVisibility(View.GONE);
+                rlListView.setAlpha(1);
+            }
+        });
+*/
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                try {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                String package_Name = subscriptionModelArrayList.get(position).getPackageName();
+                String contacts_limit = subscriptionModelArrayList.get(position).getConnectionLimit();
+                String groups_limit = subscriptionModelArrayList.get(position).getGroupLimit();
+                String month_connect_limit = subscriptionModelArrayList.get(position).getMonthlyConnectionLimit();
+                String left_connection = subscriptionModelArrayList.get(position).getLetf_connection();
+                String amount = subscriptionModelArrayList.get(position).getPrice();
+
+                try
+                {
                     stripe = new Stripe("pk_live_d0uXEesOC2Qg5919ul4t7Ocl");
-                } catch (AuthenticationException e) {
+                }
+                catch (AuthenticationException e)
+                {
                     e.printStackTrace();
                 }
+
+
+//                rlStripePayment.setVisibility(View.VISIBLE);
+//                rlListView.setAlpha((float) 0.1);
+
                 alertDialog = new AlertDialog.Builder(SubscriptionActivity.this).create();
                 LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View dialogView = inflater.inflate(R.layout.activity_stripe_1, null);
+                View dialogView = inflater.inflate(R.layout.stripe_payment_screen, null);
 
-                cardNumberField = (TextView) dialogView.findViewById(R.id.cardNumber);
+                TextView tvPackageName = (TextView)dialogView.findViewById(R.id.tvPackageName);
+                TextView tvConnect_Group = (TextView)dialogView.findViewById(R.id.tvContact_Group);
+                TextView tvConnection = (TextView)dialogView.findViewById(R.id.tvConnection);
+                TextView tvAmount = (TextView)dialogView.findViewById(R.id.tvAmount);
+                TextView tvLeftConnection = (TextView)dialogView.findViewById(R.id.tvLeftConnection);
+                RelativeLayout rlLeftConnection = (RelativeLayout)dialogView.findViewById(R.id.rlLeftConnection);
+                ImageView ivVisa = (ImageView)dialogView.findViewById(R.id.ivVisa);
+                ImageView ivMasterCard = (ImageView)dialogView.findViewById(R.id.ivMasterCard);
+                ImageView ivAmex = (ImageView)dialogView.findViewById(R.id.ivAmex);
+                EditText etCardNumber = (EditText)dialogView.findViewById(R.id.etCardNumber);
+                EditText etCardHolderName = (EditText)dialogView.findViewById(R.id.etCardHolderName);
+                EditText etExMonth = (EditText)dialogView.findViewById(R.id.etExMonth);
+                EditText etExYear = (EditText)dialogView.findViewById(R.id.etExYear);
+                EditText etSecurityCode = (EditText)dialogView.findViewById(R.id.etSecurityCode);
+                EditText etMobileNumber = (EditText)dialogView.findViewById(R.id.etMobileNumber);
+                TextView tvPay = (TextView)dialogView.findViewById(R.id.tvPay);
+                TextView tvCancel = (TextView)dialogView.findViewById(R.id.tvCancel);
+
+                tvPackageName.setText(package_Name);
+                tvConnect_Group.setText(contacts_limit+" contacts, up to "+groups_limit+" circles,");
+                tvConnection.setText("up to "+month_connect_limit+" connections per month.");
+                tvAmount.setText("S$"+amount);
+                /*cardNumberField = (TextView) dialogView.findViewById(R.id.cardNumber);
                 monthField = (TextView) dialogView.findViewById(R.id.month);
                 yearField = (TextView) dialogView.findViewById(R.id.year);
-                cvcField = (TextView) dialogView.findViewById(R.id.cvc);
+                cvcField = (TextView) dialogView.findViewById(R.id.cvc);*/
+
+                tvCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        alertDialog.dismiss();
+                    }
+                });
 
                 alertDialog.setView(dialogView);
-
+                alertDialog.setCancelable(false);
+//                alertDialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+//                alertDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
                 alertDialog.show();
             }
         });
