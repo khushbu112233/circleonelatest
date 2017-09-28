@@ -365,7 +365,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
         if (v == ivMale) {
           //  Toast.makeText(getApplicationContext(), String.valueOf(motionLength), Toast.LENGTH_LONG).show();
-            TranslateAnimation slide1 = new TranslateAnimation(0, -(motionLength), 0, 0);
+            TranslateAnimation slide1 = new TranslateAnimation(0, -(motionLength-15), 0, 0);
             slide1.setDuration(1000);
             ivConnect.startAnimation(slide1);
 
@@ -378,6 +378,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                    // line_view2.setBackgroundColor(getResources().getColor(R.color.unselected));
                    // ivFemaleImg.setImageResource(R.drawable.ic_female_gray);
+                    ivMaleRound.setImageResource(R.drawable.ic_man_blue);
 
                 }
             }, 1300);
@@ -388,13 +389,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
          //   ivMaleImg.setImageResource(R.drawable.ic_male);
-            ivMaleRound.setImageResource(R.drawable.ic_man_blue);
+
             gender = "M";
             txtGender.setText("Gender: Male");
         }
         if (v == ivFemale) {
           //  Toast.makeText(getApplicationContext(), String.valueOf(motionLength), Toast.LENGTH_LONG).show();
-            TranslateAnimation slide = new TranslateAnimation(0, motionLength, 0, 0);
+            TranslateAnimation slide = new TranslateAnimation(0, motionLength-15, 0, 0);
             slide.setDuration(1000);
             ivConnect.startAnimation(slide);
 
@@ -407,6 +408,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                   //  line_view1.setBackgroundColor(getResources().getColor(R.color.unselected));
                  //   ivMaleImg.setImageResource(R.drawable.ic_male_gray);
+                    ivFemaleround.setImageResource(R.drawable.ic_girl_blue);
 
                 }
             }, 1300);
@@ -419,7 +421,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
            // line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
          //   line_view2.setBackground(getResources().getDrawable(R.drawable.dotted));
           //  ivFemaleImg.setImageResource(R.drawable.ic_female);
-            ivFemaleround.setImageResource(R.drawable.ic_girl_blue);
+
             gender = "F";
             txtGender.setText("Gender: Female");
 

@@ -34,7 +34,7 @@
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <TextView
+        <com.circle8.circleOne.Utils.cgBoldTextView
             android:textStyle="bold"
             android:textColor="@android:color/black"
             android:gravity="left"
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:textSize="12sp" />
 
-        <TextView
+        <com.circle8.circleOne.Utils.cgTextView
             android:textColor="@android:color/black"
             android:gravity="left"
             android:text="Physician Yong"
@@ -53,10 +53,10 @@
             android:id="@+id/textDescList3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
     </LinearLayout>
 
-    <TextView
+    <com.circle8.circleOne.Utils.cgTextView
         android:ellipsize="end"
         android:maxLines="5"
         android:layout_gravity="center_vertical|right"

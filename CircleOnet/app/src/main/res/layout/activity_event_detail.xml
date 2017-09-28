@@ -33,18 +33,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <TextView
+            <com.circle8.circleOne.Utils.cgBoldTextView
                 android:layout_marginLeft="10dp"
                 android:textStyle="bold"
+                android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:text="HSBC Singapore Rugby Sevens"
                 android:visibility="visible"
                 android:id="@+id/tvEventTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp" />
+                android:textSize="15sp" />
 
-            <TextView
+            <com.circle8.circleOne.Utils.cgTextView
                 android:layout_marginLeft="10dp"
                 android:textColor="@android:color/white"
                 android:text="HSBC Singapore Rugby Sevens"
@@ -61,7 +62,7 @@
         android:layout_below="@+id/android_custom_gridview_layout"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="0dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -74,16 +75,18 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-                <TextView
+                android:layout_marginTop="8dp">
+                <com.circle8.circleOne.Utils.cgTextView
                     android:id="@+id/tvCompanyName"
-                    android:textSize="22dp"
+                    android:textSize="20dp"
+                    android:textAllCaps="true"
                     android:textColor="@color/colorAccent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Company Name"
                     android:layout_centerVertical="true"/>
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
+                    android:visibility="gone"
                     android:id="@+id/tvIndustryName"
                     android:textSize="20dp"
                     android:textColor="@color/colorAccent"
@@ -95,7 +98,8 @@
                     android:layout_toRightOf="@+id/tvCompanyName"/>
             </RelativeLayout>
 
-            <TextView
+            <com.circle8.circleOne.Utils.cgTextView
+                android:visibility="gone"
                 android:id="@+id/tvEventType"
                 android:textAllCaps="true"
                 android:textSize="18dp"
@@ -105,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:text="Event Type"/>
 
-            <TextView
+            <com.circle8.circleOne.Utils.cgTextView
                 android:id="@+id/tvEventDesc"
                 android:layout_marginTop="10dp"
                 android:textSize="13dp"
@@ -119,10 +123,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <TextView
+                <com.circle8.circleOne.Utils.cgBoldTextView
                     android:layout_marginTop="15dp"
                     android:textAllCaps="true"
-                    android:textSize="15dp"
+                    android:textSize="13dp"
                     android:textColor="@color/colorAccent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -144,16 +148,18 @@
 Monday - April 3, 2017 - 9:30am - 5:00pm
 Monday - April 3, 2017 - 9:30am - 5:00pm"/>
 -->
-            <TextView
-                android:layout_marginTop="15dp"
-                android:textAllCaps="true"
-                android:textSize="15dp"
-                android:textColor="@color/colorAccent"
+            <com.circle8.circleOne.Utils.cgBoldTextView
+                android:id="@+id/cgBoldTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Location:"/>
+                android:layout_marginTop="5dp"
+                android:text="Location:"
+                android:textAllCaps="true"
+                android:textColor="@color/colorAccent"
+                android:textSize="13dp"
+                android:textStyle="bold" />
 
-            <TextView
+            <com.circle8.circleOne.Utils.cgTextView
                 android:id="@+id/tvEventAddress"
                 android:layout_marginTop="5dp"
                 android:textSize="13dp"
@@ -170,18 +176,18 @@ Monday - April 3, 2017 - 9:30am - 5:00pm"/>
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.circle8.circleOne.Utils.cgBoldTextView
                     android:textStyle="bold"
-                    android:textSize="15dp"
+                    android:textSize="13dp"
                     android:textColor="@color/colorAccent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Visitor Registration"/>
 
-                <TextView
+                <com.circle8.circleOne.Utils.cgBoldTextView
                     android:textStyle="bold"
                     android:layout_marginLeft="20dp"
-                    android:textSize="15dp"
+                    android:textSize="13dp"
                     android:textColor="@color/colorAccent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

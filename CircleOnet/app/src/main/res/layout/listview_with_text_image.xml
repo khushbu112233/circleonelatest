@@ -33,19 +33,19 @@
         android:gravity="center_vertical">
 
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:id="@+id/drawer1"
             android:src="@drawable/ic_acc"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="0dp" />
 
-        <TextView
+        <com.circle8.circleOne.Utils.orkebyTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="My Account"
             android:id="@+id/textDrawer1"
-            android:textSize="17dp"
+            android:textSize="15dp"
             android:layout_marginLeft="20dp"
             android:textColor="@android:color/white" />
 
@@ -61,21 +61,21 @@
 
             <ImageView
                 android:id="@+id/drawerQR"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="0dp"
                 android:contentDescription="Home!"
                 android:src="@drawable/ic_qrscann" />
 
-            <TextView
+            <com.circle8.circleOne.Utils.orkebyTextView
                 android:id="@+id/textDrawerQR"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:text="Add by QR Code"
                 android:textColor="@android:color/white"
-                android:textSize="17dp" />
+                android:textSize="15dp" />
 
         </LinearLayout>
 
@@ -89,21 +89,21 @@
 
         <ImageView
             android:id="@+id/drawer2"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="0dp"
             android:contentDescription="Home!"
             android:src="@drawable/ic_manage_cards" />
 
-        <TextView
+        <com.circle8.circleOne.Utils.orkebyTextView
             android:id="@+id/textDrawer2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:text="Manage my Profile"
             android:textColor="@android:color/white"
-            android:textSize="17dp" />
+            android:textSize="15dp" />
 
     </LinearLayout>
 
@@ -115,18 +115,18 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:id="@+id/drawer3"
             android:src="@drawable/ic_new_card"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="0dp" />
-        <TextView
+        <com.circle8.circleOne.Utils.orkebyTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Request a new card         "
             android:id="@+id/textDrawer3"
-            android:textSize="17dp"
+            android:textSize="15dp"
             android:layout_marginLeft="20dp"
             android:textColor="@android:color/white" />
 
@@ -140,16 +140,16 @@
             android:orientation="horizontal"
             android:gravity="center_vertical">
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:src="@drawable/ic_new_card"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="0dp" />
-            <TextView
+            <com.circle8.circleOne.Utils.orkebyTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sync Contacts         "
-                android:textSize="17dp"
+                android:textSize="15dp"
                 android:layout_marginLeft="20dp"
                 android:textColor="@android:color/white" />
 
@@ -163,16 +163,16 @@
             android:orientation="horizontal"
             android:gravity="center_vertical">
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:src="@drawable/ic_paid_event"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="0dp" />
-            <TextView
+            <com.circle8.circleOne.Utils.orkebyTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Reward Point         "
-                android:textSize="17dp"
+                android:textSize="15dp"
                 android:layout_marginLeft="20dp"
                 android:textColor="@android:color/white" />
 
@@ -188,21 +188,21 @@
 
             <ImageView
                 android:id="@+id/drawer4"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="0dp"
                 android:contentDescription="Home!"
                 android:src="@drawable/ic_noti" />
 
-            <TextView
+            <com.circle8.circleOne.Utils.orkebyTextView
                 android:id="@+id/textDrawer4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:text="Notifications"
                 android:textColor="@android:color/white"
-                android:textSize="17dp" />
+                android:textSize="15dp" />
 
         </LinearLayout>
 
@@ -215,22 +215,22 @@
         android:gravity="center_vertical">
 
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:id="@+id/drawer5"
             android:src="@drawable/ic_group"
             android:layout_marginLeft="10dp"
             android:contentDescription="Home!"
             android:layout_marginTop="0dp" />
 
-        <TextView
+        <com.circle8.circleOne.Utils.orkebyTextView
             android:id="@+id/textDrawer5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:text="Circles"
             android:textColor="@android:color/white"
-            android:textSize="17dp" />
+            android:textSize="15dp" />
 
     </LinearLayout>
 
@@ -242,21 +242,21 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:id="@+id/drawer6"
             android:src="@drawable/ic_subscribe"
             android:layout_marginLeft="10dp"
             android:contentDescription="Home!"
             android:layout_marginTop="0dp" />
-        <TextView
+        <com.circle8.circleOne.Utils.orkebyTextView
             android:id="@+id/textDrawer6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:text="Subscription"
             android:textColor="@android:color/white"
-            android:textSize="17dp" />
+            android:textSize="15dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -267,20 +267,20 @@
         android:gravity="center_vertical">
 
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:id="@+id/drawer7"
             android:src="@drawable/ic_history"
             android:layout_marginLeft="10dp"
             android:contentDescription="Home!"
             android:layout_marginTop="0dp" />
 
-        <TextView
+        <com.circle8.circleOne.Utils.orkebyTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="History"
             android:id="@+id/textDrawer7"
-            android:textSize="17dp"
+            android:textSize="15dp"
             android:layout_marginLeft="20dp"
             android:textColor="@android:color/white" />
 
@@ -295,19 +295,19 @@
 
         <ImageView
             android:id="@+id/drawer8"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="0dp"
             android:contentDescription="Home!"
             android:src="@drawable/ic_lang" />
 
-        <TextView
+        <com.circle8.circleOne.Utils.orkebyTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Language"
             android:id="@+id/textDrawer8"
-            android:textSize="17dp"
+            android:textSize="15dp"
             android:layout_marginLeft="20dp"
             android:textColor="@android:color/white" />
 
@@ -348,19 +348,19 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:id="@+id/drawer10"
             android:src="@drawable/ic_contact"
             android:layout_marginLeft="10dp"
             android:contentDescription="Home!"
             android:layout_marginTop="0dp" />
-        <TextView
+        <com.circle8.circleOne.Utils.orkebyTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Contact us"
             android:id="@+id/textDrawer10"
-            android:textSize="17dp"
+            android:textSize="15dp"
             android:layout_marginLeft="20dp"
             android:textColor="@android:color/white" />
     </LinearLayout>
@@ -373,19 +373,19 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:id="@+id/drawer11"
             android:src="@drawable/ic_help"
             android:layout_marginLeft="10dp"
             android:contentDescription="Home!"
             android:layout_marginTop="0dp" />
-        <TextView
+        <com.circle8.circleOne.Utils.orkebyTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Help"
             android:id="@+id/textDrawer11"
-            android:textSize="17dp"
+            android:textSize="15dp"
             android:layout_marginLeft="20dp"
             android:textColor="@android:color/white" />
     </LinearLayout>
@@ -400,20 +400,20 @@
             android:layout_marginBottom="15dp">
 
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:id="@+id/drawer12"
                 android:src="@drawable/ic_logout"
                 android:layout_marginLeft="10dp"
                 android:contentDescription="Home!"
                 android:layout_marginTop="0dp" />
 
-            <TextView
+            <com.circle8.circleOne.Utils.orkebyTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Logout"
                 android:id="@+id/textDrawer12"
-                android:textSize="17dp"
+                android:textSize="15dp"
                 android:layout_marginLeft="20dp"
                 android:textColor="@android:color/white" />
 

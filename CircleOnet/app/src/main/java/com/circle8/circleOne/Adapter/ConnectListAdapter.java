@@ -83,65 +83,54 @@ public class ConnectListAdapter extends BaseAdapter
             holder = (ViewHolder)row.getTag();
         }
 
-        holder.nameText.setText(connectLists.get(position).getFirstname()+" "+connectLists.get(position).getLastname());
+        try {
+            holder.nameText.setText(connectLists.get(position).getFirstname() + " " + connectLists.get(position).getLastname());
+        }catch (Exception e){}
 //        descText.setText(connectLists.get(position).getDesignation());
 //        detailText.setText(connectLists.get(position).getCompanyname()+"\n"+connectLists.get(position).getUsername()+"\n"
 //                +connectLists.get(position).getWebsite());
 
-        if(connectLists.get(position).getCompanyname().equalsIgnoreCase("")
-                || connectLists.get(position).getCompanyname().equalsIgnoreCase("null"))
-        {
-            company = "" ;
-        }
-        else
-        {
-            company = connectLists.get(position).getCompanyname() ;
-        }
+        try {
+            if (connectLists.get(position).getCompanyname().equalsIgnoreCase("")
+                    || connectLists.get(position).getCompanyname().equalsIgnoreCase("null")) {
+                company = "";
+            } else {
+                company = connectLists.get(position).getCompanyname();
+            }
 
-        if(connectLists.get(position).getUsername().equalsIgnoreCase("")
-                || connectLists.get(position).getUsername().equalsIgnoreCase("null"))
-        {
-            email = "" ;
-        }
-        else
-        {
-            email = connectLists.get(position).getUsername() ;
-        }
+            if (connectLists.get(position).getUsername().equalsIgnoreCase("")
+                    || connectLists.get(position).getUsername().equalsIgnoreCase("null")) {
+                email = "";
+            } else {
+                email = connectLists.get(position).getUsername();
+            }
 
-        if(connectLists.get(position).getWebsite().equalsIgnoreCase("")
-                || connectLists.get(position).getWebsite().equalsIgnoreCase("null"))
-        {
-            website = "" ;
-        }
-        else
-        {
-            website = connectLists.get(position).getWebsite() ;
-        }
+            if (connectLists.get(position).getWebsite().equalsIgnoreCase("")
+                    || connectLists.get(position).getWebsite().equalsIgnoreCase("null")) {
+                website = "";
+            } else {
+                website = connectLists.get(position).getWebsite();
+            }
 
-        if(connectLists.get(position).getDesignation().equalsIgnoreCase("")
-                || connectLists.get(position).getDesignation().equalsIgnoreCase("null"))
-        {
-            holder.descText.setText("");
+            if (connectLists.get(position).getDesignation().equalsIgnoreCase("")
+                    || connectLists.get(position).getDesignation().equalsIgnoreCase("null")) {
+                holder.descText.setText("");
 //            descText.setVisibility(View.GONE);
-        }
-        else
-        {
-            holder.descText.setText(connectLists.get(position).getDesignation());
-        }
+            } else {
+                holder.descText.setText(connectLists.get(position).getDesignation());
+            }
 
-        designation = company+"\n"+email+"\n"+website ;
+            designation = company + "\n" + email + "\n" + website;
 
-        holder.detailText.setText(company+"\n"+email+"\n"+website);
+            holder.detailText.setText(company + "\n" + email + "\n" + website);
 
 
-        if(connectLists.get(position).getUserphoto().equalsIgnoreCase(""))
-        {
-            holder.circleImageView.setImageResource(R.drawable.usr);
-        }
-        else
-        {
-            Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/"+connectLists.get(position).getUserphoto()).into(holder.circleImageView);
-        }
+            if (connectLists.get(position).getUserphoto().equalsIgnoreCase("")) {
+                holder.circleImageView.setImageResource(R.drawable.usr);
+            } else {
+                Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/" + connectLists.get(position).getUserphoto()).into(holder.circleImageView);
+            }
+        }catch (Exception e){}
 
         return row;
     }
