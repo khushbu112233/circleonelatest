@@ -212,16 +212,20 @@ public class TestimonialRequestAdapter extends BaseSwipeAdapter
             TestimonialRequest.rlProgressDialog.setVisibility(View.GONE);
             try
             {
-                if (result != null) {
+                if (result != null)
+                {
                     JSONObject jsonObject = new JSONObject(result);
                     String success = jsonObject.getString("Success");
-                    if (success.equals("1")) {
+                    String message = jsonObject.getString("Message");
+
+                    if (success.equals("1"))
+                    {
                         Toast.makeText(context, "Request sent..", Toast.LENGTH_LONG).show();
                         holder.txtRequest.setVisibility(View.GONE);
                     }
                     else
                     {
-                        Toast.makeText(context, "Request has not been sent..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                     }
 
                 }
