@@ -89,7 +89,8 @@ public class ByNameFragment extends Fragment
 
         imgSearch.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
                 listView.setVisibility(View.VISIBLE);
                 connectTags.clear();

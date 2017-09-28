@@ -11,6 +11,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,16 +74,18 @@ public class List4Fragment extends Fragment
     public static ArrayList<FriendConnection> allTaggs;
 
     //new asign value
-    AutoCompleteTextView searchText;
-    public static ArrayList<NFCModel> nfcModel;
-    public static ArrayList<FriendConnection> nfcModel1;
-    LoginSession session;
-    static String UserId = "";
+    AutoCompleteTextView searchText ;
+    ImageView imgSearch ;
+    TextView tvFriendInfo ;
+    public static ArrayList<NFCModel> nfcModel ;
+    public static ArrayList<FriendConnection> nfcModel1 ;
+    LoginSession session ;
+    static String UserId = "" ;
 
-    public static Context mContext;
-    public static int pageno = 1;
+    public static Context mContext ;
+    public static int pageno = 1 ;
 
-    static RelativeLayout rlLoadMore;
+    static RelativeLayout rlLoadMore ;
 
     static String comeAtTime = "FIRST";
 
@@ -122,6 +125,9 @@ public class List4Fragment extends Fragment
         this.gestureDetector1.setOnDoubleTapListener(doubleTapListener);*/
 
         lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
+        imgSearch = (ImageView)view.findViewById(R.id.imgSearch);
+        tvFriendInfo = (TextView)view.findViewById(R.id.tvFriendInfo);
+
         line = view.findViewById(R.id.view);
         /*lnrSearch.setVisibility(View.GONE);
         line.setVisibility(View.GONE);
@@ -254,9 +260,10 @@ public class List4Fragment extends Fragment
                        } catch (Exception e) {
                        }
                        callFirst();
+                       tvFriendInfo.setVisibility(View.GONE);
 //                    GetData(getContext());
                    }
-                   else if (s.length() > 0)
+                  /* else if (s.length() > 0)
                    {
                        String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
 
@@ -271,7 +278,7 @@ public class List4Fragment extends Fragment
                             e.printStackTrace();
                        }
                        new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
-                   }
+                   }*/
                }
                catch (Exception e)
                {
@@ -284,6 +291,45 @@ public class List4Fragment extends Fragment
 
             }
         });
+
+        imgSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                nfcModel1.clear();
+                allTaggs.clear();
+                try
+                {
+                    gridAdapter.notifyDataSetChanged();
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
+            }
+        });
+
+        searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+            {
+                nfcModel1.clear();
+                allTaggs.clear();
+                try
+                {
+                    gridAdapter.notifyDataSetChanged();
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
+
+                return true;
+            }
+        });
+
 
         return view;
     }
@@ -400,7 +446,7 @@ public class List4Fragment extends Fragment
 
                     if (connect.length() == 0)
                     {
-                        //tvDataInfo.setVisibility(View.VISIBLE);
+                        tvFriendInfo.setVisibility(View.VISIBLE);
                         allTaggs.clear();
                         try
                         {
@@ -409,7 +455,8 @@ public class List4Fragment extends Fragment
                     }
                     else
                     {
-                        //  tvDataInfo.setVisibility(View.GONE);
+                          tvFriendInfo.setVisibility(View.GONE);
+
                         for (int i = 0; i <= connect.length(); i++)
                         {
                             JSONObject iCon = connect.getJSONObject(i);

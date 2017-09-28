@@ -12,6 +12,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,6 +80,8 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
 
     //new asign value
     AutoCompleteTextView searchText ;
+    ImageView imgSearch ;
+    TextView tvFriendInfo ;
     public static ArrayList<NFCModel> nfcModel ;
     public static ArrayList<FriendConnection> nfcModel1 ;
 
@@ -121,6 +124,8 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
 
         listView = (ListView) view.findViewById(R.id.listViewType3);
         searchText = (AutoCompleteTextView)view.findViewById(R.id.searchView);
+        imgSearch = (ImageView)view.findViewById(R.id.imgSearch);
+        tvFriendInfo = (TextView)view.findViewById(R.id.tvFriendInfo);
         rlLoadMore = (RelativeLayout)view.findViewById(R.id.rlLoadMore);
         rlProgressDialog = (RelativeLayout)view.findViewById(R.id.rlProgressDialog);
         tvProgressing = (TextView)view.findViewById(R.id.txtProgressing);
@@ -274,10 +279,11 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                         } catch (Exception e) {
                         }
                         callFirst();
+                        tvFriendInfo.setVisibility(View.GONE);
 //                        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
 //                    GetData(getContext());
                     }
-                    else if (s.length() > 0)
+                    /*else if (s.length() > 0)
                     {
                         String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
 
@@ -292,7 +298,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                             e.printStackTrace();
                         }
                         new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
-                    }
+                    }*/
                 }
                 catch (Exception e)
                 {
@@ -303,6 +309,44 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
             @Override
             public void afterTextChanged(Editable s) {
 
+            }
+        });
+
+        imgSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                nfcModel1.clear();
+                allTaggs.clear();
+                try
+                {
+                    gridAdapter.notifyDataSetChanged();
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
+            }
+        });
+
+        searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+            {
+                nfcModel1.clear();
+                allTaggs.clear();
+                try
+                {
+                    gridAdapter.notifyDataSetChanged();
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
+
+                return true;
             }
         });
 
@@ -435,7 +479,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
 
                     if(connect.length() == 0)
                     {
-                        //tvDataInfo.setVisibility(View.VISIBLE);
+                        tvFriendInfo.setVisibility(View.VISIBLE);
                         allTaggs.clear();
                         try {
                             gridAdapter.notifyDataSetChanged();
@@ -443,7 +487,8 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                     }
                     else
                     {
-                        //  tvDataInfo.setVisibility(View.GONE);
+                          tvFriendInfo.setVisibility(View.GONE);
+
                         for(int i = 0 ; i <= connect.length() ; i++ )
                         {
                             JSONObject iCon = connect.getJSONObject(i);

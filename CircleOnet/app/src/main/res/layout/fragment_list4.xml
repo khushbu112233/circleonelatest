@@ -10,62 +10,79 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_marginTop="5dp"
-        android:id="@+id/lnrSearch"
-        android:layout_below="@+id/appbar1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <com.circle8.circleOne.Utils.MyRiadProAutoComplete
-            android:layout_centerVertical="true"
-            android:textSize="12dp"
-            android:background="@drawable/txt_back"
-            android:paddingRight="10dp"
-            android:layout_toLeftOf="@+id/imgSearch"
-            android:paddingLeft="10dp"
-            android:hint="search in contacts"
-            android:id="@+id/searchView"
+        <RelativeLayout
+            android:layout_marginTop="5dp"
+            android:id="@+id/lnrSearch"
+            android:layout_below="@+id/appbar1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:focusableInTouchMode="true"
-            android:imeOptions="actionSearch"
-            android:inputType="textAutoComplete|textAutoCorrect"
-            android:textColor="#dbdada" />
+            android:orientation="horizontal">
+            <com.circle8.circleOne.Utils.MyRiadProAutoComplete
+                android:layout_centerVertical="true"
+                android:textSize="12dp"
+                android:background="@drawable/txt_back"
+                android:paddingRight="10dp"
+                android:layout_toLeftOf="@+id/imgSearch"
+                android:paddingLeft="10dp"
+                android:hint="search in contacts"
+                android:id="@+id/searchView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:focusableInTouchMode="true"
+                android:imeOptions="actionSearch"
+                android:inputType="textAutoComplete|textAutoCorrect"
+                android:textColor="#dbdada" />
 
-        <ImageView
+            <ImageView
+                android:layout_marginRight="10dp"
+                android:layout_centerVertical="true"
+                android:backgroundTint="@color/colorAccent"
+                android:background="@drawable/search"
+                android:id="@+id/imgSearch"
+                android:layout_alignParentRight="true"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_marginTop="3dp"
+            android:id="@+id/view"
+            android:layout_below="@+id/lnrSearch"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimary">
+
+        </View>
+
+        <TextView
+            android:id="@+id/tvFriendInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/view"
+            android:layout_marginTop="20dp"
+            android:text="@string/no_connection"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:textColor="@color/unselected"
+            android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_centerVertical="true"
-            android:backgroundTint="@color/colorAccent"
-            android:background="@drawable/search"
-            android:id="@+id/imgSearch"
-            android:layout_alignParentRight="true"
-            android:layout_width="20dp"
-            android:layout_height="20dp" />
-    </RelativeLayout>
+            android:visibility="gone"/>
 
-    <View
-        android:layout_marginTop="3dp"
-        android:id="@+id/view"
-        android:layout_below="@+id/lnrSearch"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorPrimary"></View>
-
-    <ListView
-        android:layout_marginTop="5dp"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        tools:listitem="@layout/grid_list4_layout"
-        android:id="@+id/listViewType4"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="fill"
-        android:layout_below="@+id/view"
-        android:layout_above="@+id/rlLoadMore"/>
+        <ListView
+            android:layout_marginTop="5dp"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            tools:listitem="@layout/grid_list4_layout"
+            android:id="@+id/listViewType4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="fill"
+            android:layout_below="@+id/view"
+            android:layout_above="@+id/rlLoadMore"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
