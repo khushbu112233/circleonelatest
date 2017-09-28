@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,6 +99,18 @@ public class ByNameFragment extends Fragment
             }
         });
 
+        searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+            {
+                listView.setVisibility(View.VISIBLE);
+                connectTags.clear();
+                new ByNameFragment.HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
+
+                return true;
+            }
+        });
+
         searchText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after)
@@ -115,6 +128,7 @@ public class ByNameFragment extends Fragment
                     connectTags.clear();
 //                    connectListAdapter.notifyDataSetChanged();
 //                    GetData(getContext());
+                    tvDataInfo.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -136,6 +150,8 @@ public class ByNameFragment extends Fragment
                getContext().startActivity(intent);
            }
        });
+
+
 
         return view;
     }
