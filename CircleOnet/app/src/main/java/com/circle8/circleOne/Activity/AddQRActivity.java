@@ -174,6 +174,8 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
             scanQr = decrypt(rawResult.getText().toString(), secretKey);
            // Toast.makeText(getApplicationContext(), scanQr, Toast.LENGTH_LONG).show();
             try {
+                mScannerView.stopCamera();
+                CameraScann();
                 new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();

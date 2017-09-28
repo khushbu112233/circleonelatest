@@ -18,6 +18,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -74,8 +75,19 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -125,7 +137,7 @@ public class ProfileFragment extends Fragment
     View view;
     AppBarLayout appbar;
     private String displayProfile ;
-
+    private String secretKey = "1234567890234561";
     private static RelativeLayout rlProgressDialog ;
     private static TextView tvProgressing ;
     private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
@@ -713,10 +725,12 @@ public class ProfileFragment extends Fragment
             @Override
             public void onClick(View v)
             {
-                Toast.makeText(getContext(), "Generating QR Code.. Please Wait..", Toast.LENGTH_LONG).show();
-                String barName = tvName.getText().toString();
+              //  Toast.makeText(getContext(), "Generating QR Code.. Please Wait..", Toast.LENGTH_LONG).show();
+                String barName;
+
                 try
                 {
+                    barName = encrypt(TestimonialProfileId, secretKey);
                     AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
                     LayoutInflater inflater = getActivity().getLayoutInflater();
                     final View dialogView = inflater.inflate(R.layout.person_qrcode, null);
@@ -729,6 +743,20 @@ public class ProfileFragment extends Fragment
                     alertDialog.show();
                 }
                 catch (WriterException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                } catch (InvalidKeyException e) {
+                    e.printStackTrace();
+                } catch (InvalidAlgorithmParameterException e) {
+                    e.printStackTrace();
+                } catch (NoSuchPaddingException e) {
+                    e.printStackTrace();
+                } catch (BadPaddingException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (IllegalBlockSizeException e) {
                     e.printStackTrace();
                 }
 
@@ -808,6 +836,34 @@ public class ProfileFragment extends Fragment
             }
         });
     }*/
+
+    public String encrypt(String value, String key)
+            throws UnsupportedEncodingException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException
+    {
+        byte[] value_bytes = value.getBytes("UTF-8");
+        byte[] key_bytes = getKeyBytes(key);
+        return Base64.encodeToString(encrypt(value_bytes, key_bytes, key_bytes), 0);
+    }
+
+    public byte[] encrypt(byte[] paramArrayOfByte1, byte[] paramArrayOfByte2, byte[] paramArrayOfByte3)
+            throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException
+    {
+        // setup AES cipher in CBC mode with PKCS #5 padding
+        Cipher localCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+
+        // encrypt
+        localCipher.init(1, new SecretKeySpec(paramArrayOfByte2, "AES"), new IvParameterSpec(paramArrayOfByte3));
+        return localCipher.doFinal(paramArrayOfByte1);
+    }
+
+    private byte[] getKeyBytes(String paramString)
+            throws UnsupportedEncodingException
+    {
+        byte[] arrayOfByte1 = new byte[16];
+        byte[] arrayOfByte2 = paramString.getBytes("UTF-8");
+        System.arraycopy(arrayOfByte2, 0, arrayOfByte1, 0, Math.min(arrayOfByte2.length, arrayOfByte1.length));
+        return arrayOfByte1;
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
