@@ -17,6 +17,7 @@ import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
@@ -103,9 +104,12 @@ public class List2Fragment extends Fragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list2, container, false);
+
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         mContext = List2Fragment.this.getContext();
         pageno = 1;
@@ -118,6 +122,7 @@ public class List2Fragment extends Fragment
         }*/
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
+
         db = new DatabaseHelper(getContext());
         gridView = (GridView) view.findViewById(R.id.gridView);
         searchText = (AutoCompleteTextView) view.findViewById(R.id.searchView);
@@ -173,7 +178,8 @@ public class List2Fragment extends Fragment
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
                /* if(s.length() <= 0)
                 {
                     nfcModel.clear();
@@ -184,8 +190,10 @@ public class List2Fragment extends Fragment
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
                     gridAdapter.Filter(text);
                 }*/
-                try {
-                    if (s.length() <= 0) {
+                try
+                {
+                    if (s.length() <= 0)
+                    {
                         pageno = 1;
                         nfcModel.clear();
                         allTaggs.clear();
@@ -197,19 +205,27 @@ public class List2Fragment extends Fragment
 
 //                        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
 //                    GetData(getContext());
-                    } else if (s.length() > 0) {
+                    }
+                    else if (s.length() > 0)
+                    {
                         String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
 
                         nfcModel.clear();
                         allTaggs.clear();
-                        try {
+                        try
+                        {
                             gridAdapter.notifyDataSetChanged();
-                        } catch (Exception e) {
+                        }
+                        catch (Exception e)
+                        {
+                            e.printStackTrace();
                         }
 //                        allTaggs.clear();
                         new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
                     }
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     e.printStackTrace();
                 }
             }
@@ -247,14 +263,18 @@ public class List2Fragment extends Fragment
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(String result)
+        {
             //  dialog.dismiss();
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
-
-            try {
-                if (result == "") {
+            try
+            {
+                if (result == "")
+                {
                     Toast.makeText(getContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
-                } else {
+                }
+                else
+                {
                     JSONObject response = new JSONObject(result);
                     String message = response.getString("message");
                     String success = response.getString("success");
@@ -271,16 +291,22 @@ public class List2Fragment extends Fragment
                         gridAdapter.notifyDataSetChanged();
                     } catch (Exception e) {
                     }
-                    if (connect.length() == 0) {
+
+                    if (connect.length() == 0)
+                    {
                         //tvDataInfo.setVisibility(View.VISIBLE);
                         allTaggs.clear();
-                        try {
+                        try
+                        {
                             gridAdapter.notifyDataSetChanged();
-                        }catch (Exception e){}
-                    } else {
+                        }
+                        catch (Exception e){}
+                    }
+                    else
+                    {
                         //  tvDataInfo.setVisibility(View.GONE);
-
-                        for (int i = 0; i <= connect.length(); i++) {
+                        for (int i = 0; i <= connect.length(); i++)
+                        {
                             JSONObject iCon = connect.getJSONObject(i);
                             FriendConnection connectModel = new FriendConnection();
                             connectModel.setUserID(iCon.getString("UserID"));
@@ -497,10 +523,12 @@ public class List2Fragment extends Fragment
         }
     }
 
-    public String POSTSearch(String url) {
+    public String POSTSearch(String url)
+    {
         InputStream inputStream = null;
         String result = "";
-        try {
+        try
+        {
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
 

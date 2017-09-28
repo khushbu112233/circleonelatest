@@ -14,6 +14,7 @@ import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
@@ -102,8 +103,10 @@ public class List4Fragment extends Fragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         View view = inflater.inflate(R.layout.fragment_list4, container, false);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         mContext = List4Fragment.this.getContext();
         pageno = 1;
@@ -238,17 +241,42 @@ public class List4Fragment extends Fragment
                     gridAdapter.Filter(text);
                 }*/
 
-                if (s.length() <= 0) {
-                    pageno = 1;
-                    allTaggs.clear();
-                    new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
+               try
+               {
+                   if (s.length() <= 0)
+                   {
+                       pageno = 1;
+                       nfcModel1.clear();
+                       allTaggs.clear();
+                       try
+                       {
+                           gridAdapter.notifyDataSetChanged();
+                       } catch (Exception e) {
+                       }
+                       callFirst();
 //                    GetData(getContext());
-                } else if (s.length() > 0) {
-                    String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
+                   }
+                   else if (s.length() > 0)
+                   {
+                       String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
 
-                    allTaggs.clear();
-                    new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
-                }
+                       nfcModel1.clear();
+                       allTaggs.clear();
+                       try
+                       {
+                           gridAdapter.notifyDataSetChanged();
+                       }
+                       catch (Exception e)
+                       {
+                            e.printStackTrace();
+                       }
+                       new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
+                   }
+               }
+               catch (Exception e)
+               {
+                   e.printStackTrace();
+               }
             }
 
             @Override
@@ -344,10 +372,14 @@ public class List4Fragment extends Fragment
             //   dialog.dismiss();
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
 
-            try {
-                if (result == "") {
+            try
+            {
+                if (result == "")
+                {
                     Toast.makeText(getContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
-                } else {
+                }
+                else
+                {
                     JSONObject response = new JSONObject(result);
                     String message = response.getString("message");
                     String success = response.getString("success");
@@ -360,21 +392,26 @@ public class List4Fragment extends Fragment
                     JSONArray connect = response.getJSONArray("connect");
 
                     allTaggs.clear();
-
-                    try {
+                    try
+                    {
                         gridAdapter.notifyDataSetChanged();
-                    } catch (Exception e) {
                     }
-                    if (connect.length() == 0) {
+                    catch (Exception e) { }
+
+                    if (connect.length() == 0)
+                    {
                         //tvDataInfo.setVisibility(View.VISIBLE);
                         allTaggs.clear();
-                        try {
+                        try
+                        {
                             gridAdapter.notifyDataSetChanged();
                         }catch (Exception e){}
-                    } else {
+                    }
+                    else
+                    {
                         //  tvDataInfo.setVisibility(View.GONE);
-
-                        for (int i = 0; i <= connect.length(); i++) {
+                        for (int i = 0; i <= connect.length(); i++)
+                        {
                             JSONObject iCon = connect.getJSONObject(i);
                             FriendConnection connectModel = new FriendConnection();
                             connectModel.setUserID(iCon.getString("UserID"));
@@ -398,7 +435,6 @@ public class List4Fragment extends Fragment
                             gridAdapter = new List4Adapter(getContext(), R.layout.grid_list4_layout, allTaggs);
                             listView.setAdapter(gridAdapter);
                             gridAdapter.notifyDataSetChanged();
-
 //                            GetData(getContext());
                         }
                     }
@@ -773,7 +809,8 @@ public class List4Fragment extends Fragment
 
 //    GestureDetector gestureDetector = new GestureDetector(simpleOnGestureListener);
 
-    public static void GetData(Context context) {
+    public static void GetData(Context context)
+    {
         nfcModel1.clear();
         /*for(NFCModel reTag : allTags)
         {
