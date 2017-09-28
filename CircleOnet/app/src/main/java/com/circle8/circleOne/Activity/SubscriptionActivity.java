@@ -170,7 +170,7 @@ public class SubscriptionActivity extends AppCompatActivity
                 tvPackageName.setText(package_Name);
                 tvConnect_Group.setText(contacts_limit+" contacts, up to "+groups_limit+" circles,");
                 tvConnection.setText("up to "+month_connect_limit+" connections per month.");
-                tvAmount.setText("S$"+amount);
+                tvAmount.setText("S$"+price);
 
                 /*cardNumberField = (TextView) dialogView.findViewById(R.id.cardNumber);
                 monthField = (TextView) dialogView.findViewById(R.id.month);
@@ -216,7 +216,8 @@ public class SubscriptionActivity extends AppCompatActivity
                         }
                         else
                         {
-                            submitCard();
+                            cardPayment();
+                            alertDialog.dismiss();
                         }
                     }
                 });
@@ -239,7 +240,39 @@ public class SubscriptionActivity extends AppCompatActivity
 
     }
 
-    public void submitCard()
+    public void cardPayment()
+    {
+        card = new Card
+        (
+                numberOnCard,
+                Integer.valueOf(exMonthOnCard),
+                Integer.valueOf(exYearOnCard),
+                cvvOnCard
+        );
+
+        card.setCurrency("sgd");
+        card.setName(nameOnCard);
+
+        stripe.createToken(card, "pk_live_d0uXEesOC2Qg5919ul4t7Ocl", new TokenCallback() {
+            public void onSuccess(Token token) {
+                // TODO: Send Token information to your backend to initiate a charge
+                Toast.makeText(getApplicationContext(), "Token created: " + token.getId(), Toast.LENGTH_LONG).show();
+                tok = token;
+                strToken = token.getId();
+                //  new StripeCharge(token.getId()).execute();
+                new HttpAsyncTokenTask().execute("https://circle8.asia/Checkout/pay");
+                alertDialog.cancel();
+            }
+
+            public void onError(Exception error) {
+                Log.d("Stripe", error.getLocalizedMessage());
+            }
+        });
+
+    }
+
+
+    public void submitCard(View view)
     {
         // TODO: replace with your own test key
 
