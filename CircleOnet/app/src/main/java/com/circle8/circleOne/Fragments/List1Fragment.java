@@ -14,6 +14,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -372,24 +373,27 @@ public class List1Fragment extends Fragment
             @Override
             public void onTextChanged(final CharSequence s, int start, int before, int count)
             {
-                if (s.length() == 0)
+                try
                 {
-                    // allTags = db.getActiveNFC();
+                    if (s.length() == 0)
+                    {
+                        // allTags = db.getActiveNFC();
 //                    GetData(getContext());
-                    nfcModel.clear();
-                    pageno = 1;
-                    allTags.clear();
-                    try {
-                        mAdapter.notifyDataSetChanged();
-                    } catch (Exception e) {
+                        nfcModel.clear();
+                        pageno = 1;
+                        allTags.clear();
+                        try {
+                            mAdapter.notifyDataSetChanged();
+                        } catch (Exception e) {
+                        }
+
+                        try {
+                            mAdapter1.notifyDataSetChanged();
+                        } catch (Exception e) {
+                        }
+                        callFirst();
                     }
-                    try {
-                        mAdapter1.notifyDataSetChanged();
-                    } catch (Exception e) {
-                    }
-                    callFirst();
-                }
-                else if (s.length() > 0)
+              /*  else if (s.length() > 0)
                 {
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
 
@@ -405,16 +409,21 @@ public class List1Fragment extends Fragment
                     } catch (Exception e) {
                     }
                     new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
-                }
-                else
-                {
+                }*/
+                    else {
 
+                    }
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() == 0) {
+                if (s.length() == 0)
+                {
                     pageno = 1;
                     allTags.clear();
                     try {
@@ -429,6 +438,47 @@ public class List1Fragment extends Fragment
                 }
             }
         });
+
+        imgSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                nfcModel.clear();
+                allTags.clear();
+                try
+                {
+                    mAdapter.notifyDataSetChanged();
+                } catch (Exception e) {
+                }
+                try {
+                    mAdapter1.notifyDataSetChanged();
+                } catch (Exception e) {
+                }
+                new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
+            }
+        });
+
+        searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+            {
+                nfcModel.clear();
+                allTags.clear();
+                try
+                {
+                    mAdapter.notifyDataSetChanged();
+                } catch (Exception e) {
+                }
+                try {
+                    mAdapter1.notifyDataSetChanged();
+                } catch (Exception e) {
+                }
+                new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
+
+                return true;
+            }
+        });
+
 
         return view;
     }
@@ -447,10 +497,12 @@ public class List1Fragment extends Fragment
         new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
     }
 
-    public static String POST(String url) {
+    public static String POST(String url)
+    {
         InputStream inputStream = null;
         String result = "";
-        try {
+        try
+        {
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
 
@@ -461,8 +513,9 @@ public class List1Fragment extends Fragment
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Type", SortAndFilterOption.SortType);
-            jsonObject.accumulate("numofrecords", "3");
-            jsonObject.accumulate("pageno", pageno);
+            jsonObject.accumulate("numofrecords", "100");
+//            jsonObject.accumulate("pageno", pageno);
+            jsonObject.accumulate("pageno", "1");
             jsonObject.accumulate("userid", UserId);
 
             // 4. convert JSONObject to JSON to String
@@ -582,11 +635,13 @@ public class List1Fragment extends Fragment
                     }
 
 //                    nfcModel.clear();
-//                    allTags.clear();
-                    try {
+                    allTags.clear();
+                    try
+                    {
                         mAdapter.notifyDataSetChanged();
                         mAdapter1.notifyDataSetChanged();
-                    } catch (Exception e) {
+                    }
+                    catch (Exception e) {
                         e.printStackTrace();
                     }
 
@@ -596,7 +651,8 @@ public class List1Fragment extends Fragment
                     rlLoadMore1.setVisibility(View.GONE);
                     rlLoadMore2.setVisibility(View.GONE);
 
-                    for (int i = 0; i < jsonArray.length(); i++) {
+                    for (int i = 0; i < jsonArray.length(); i++)
+                    {
                         JSONObject object = jsonArray.getJSONObject(i);
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
 
@@ -620,8 +676,8 @@ public class List1Fragment extends Fragment
 
                     recycleSize = allTags.size();
 
-                    final CarouselLayoutManager linearLayoutManager1 = (CarouselLayoutManager) recyclerView1.getLayoutManager();
-
+                    // Load More in recycler view
+                    /*final CarouselLayoutManager linearLayoutManager1 = (CarouselLayoutManager) recyclerView1.getLayoutManager();
                     recyclerView1.setOnScrollListener(new RecyclerView.OnScrollListener() {
                         @Override
                         public void onScrollStateChanged(RecyclerView recyclerView, int scrollState) {
@@ -643,14 +699,14 @@ public class List1Fragment extends Fragment
                                 }
                             }
                         }
-
                         @Override
                         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                             super.onScrolled(recyclerView, dx, dy);
                         }
-                    });
-
-                } else {
+                    });*/
+                }
+                else
+                {
                     Toast.makeText(mContext, "Not able to load Cards..", Toast.LENGTH_LONG).show();
                 }
 
@@ -1075,12 +1131,14 @@ public class List1Fragment extends Fragment
         return result;
     }
 
-    public static void GetData(Context context) {
+    public static void GetData(Context context)
+    {
         images = new ArrayList<>();
         images1 = new ArrayList<>();
         //newly added
         nfcModel.clear();
-        for (FriendConnection reTag : allTags) {
+        for (FriendConnection reTag : allTags)
+        {
             FriendConnection nfcModelTag = new FriendConnection();
             // nfcModelTag.setId(reTag.getId());
             nfcModelTag.setName(reTag.getName());
