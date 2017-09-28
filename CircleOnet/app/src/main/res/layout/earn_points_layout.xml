@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_margin="10dp">
 
-    <TextView
+    <com.circle8.circleOne.Utils.cgBoldTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="RM 1 = 1 Point"
@@ -20,7 +20,7 @@
         android:weightSum="2"
         android:gravity="center_vertical"
         android:layout_marginTop="5dp">
-       <TextView
+       <com.circle8.circleOne.Utils.cgTextView
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:text="1. CIRCLE1 Share &amp; Earn"
@@ -33,7 +33,7 @@
             android:orientation="horizontal"
             android:layout_weight="1"
             android:gravity="right">
-            <TextView
+            <com.circle8.circleOne.Utils.cgTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="+ 100"
@@ -49,7 +49,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <TextView
+    <com.circle8.circleOne.Utils.cgTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/earn_point_detail"
@@ -63,7 +63,7 @@
         android:background="@color/colorPrimary"
         android:layout_marginTop="10dp"/>
 
-    <TextView
+    <com.circle8.circleOne.Utils.cgBoldTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="RM 1 = 1 Point"
@@ -78,7 +78,7 @@
         android:weightSum="2"
         android:gravity="center_vertical"
         android:layout_marginTop="5dp">
-        <TextView
+        <com.circle8.circleOne.Utils.cgTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2. Transfer &amp; Earn"
@@ -91,7 +91,7 @@
             android:orientation="horizontal"
             android:layout_weight="1"
             android:gravity="right">
-            <TextView
+            <com.circle8.circleOne.Utils.cgTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="+ 50"
@@ -107,7 +107,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <TextView
+    <com.circle8.circleOne.Utils.cgTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/earn_point_detail"

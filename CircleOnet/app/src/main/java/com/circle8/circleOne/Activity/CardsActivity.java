@@ -113,7 +113,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
     LoginSession session;
     private FirebaseAuth mAuth;
     String profileId = "", nfcProfileId = "";
-    private String secretKey = "1234567890234561";
+    public String secretKey = "1234567890234561";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

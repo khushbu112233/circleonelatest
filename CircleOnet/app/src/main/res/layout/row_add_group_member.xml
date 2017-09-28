@@ -36,21 +36,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <TextView
+                <com.circle8.circleOne.Utils.cgBoldTextView
                     android:textStyle="bold"
                     android:textColor="@android:color/black"
                     android:gravity="left"
-                    android:text="Physician Yong"
                     android:visibility="visible"
                     android:id="@+id/textNameList3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp" />
 
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:textColor="@android:color/black"
                     android:gravity="left"
-                    android:text="Physician Yong"
                     android:visibility="visible"
                     android:id="@+id/textDescList3"
                     android:layout_width="wrap_content"
@@ -58,13 +56,12 @@
                     android:textSize="12sp" />
             </LinearLayout>
 
-            <TextView
+            <com.circle8.circleOne.Utils.cgTextView
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:maxLines="5"
                 android:layout_gravity="center_vertical|right"
                 android:gravity="left|center_vertical"
-                android:text="TCMOng Medicare pvt ltd \n gbfgbfgbgfb rgrfgfdgfd\n rfgdfgdfgfgg dfgf\nfgffgf\nfdgdfgfg"
                 android:visibility="visible"
                 android:id="@+id/textList3"
                 android:layout_width="wrap_content"

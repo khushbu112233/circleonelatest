@@ -133,7 +133,6 @@
         android:maxLines="5"
         android:layout_gravity="center_vertical"
         android:gravity="left|center_vertical"
-        android:text="TCMOng Medicare pvt ltd \n gbfgbfgbgfb rgrfgfdgfd\n rfgdfgdfgfgg dfgf\nfgffgf\nfdgdfgfg"
         android:layout_marginLeft="5dp"
         android:visibility="visible"
         android:id="@+id/textList3"
@@ -153,7 +152,6 @@
         android:textStyle="bold"
         android:textColor="@android:color/black"
         android:gravity="right"
-        android:text="Physician Yong"
         android:layout_marginLeft="5dp"
         android:visibility="visible"
         android:id="@+id/textNameList3"
@@ -164,7 +162,6 @@
     <com.circle8.circleOne.Utils.cgTextView
         android:textColor="@android:color/black"
         android:gravity="right"
-        android:text="Physician Yong"
         android:layout_marginLeft="5dp"
         android:visibility="visible"
         android:id="@+id/textDescList3"

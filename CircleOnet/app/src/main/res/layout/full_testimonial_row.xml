@@ -72,21 +72,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:textStyle="bold"
                     android:textColor="@android:color/black"
                     android:gravity="left"
-                    android:text="Physician Yong"
                     android:visibility="visible"
                     android:id="@+id/txtName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="12sp" />
 
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:textColor="@android:color/black"
                     android:gravity="left"
-                    android:text="Physician Yong"
                     android:visibility="visible"
                     android:id="@+id/txtTestimonial"
                     android:layout_width="match_parent"

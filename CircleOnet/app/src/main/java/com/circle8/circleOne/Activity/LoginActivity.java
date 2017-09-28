@@ -1049,7 +1049,7 @@ public class LoginActivity extends AppCompatActivity implements
             public void onAuthSuccess() {
 
                 // Toast.makeText(getApplicationContext(), "success" + LISessionManager.getInstance(getApplicationContext()).getSession().getAccessToken().toString(), Toast.LENGTH_LONG).show();
-                login_linkedin_btn.setVisibility(View.GONE);
+               // login_linkedin_btn.setVisibility(View.GONE);
 
             }
 
