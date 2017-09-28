@@ -68,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <TextView
+                <com.circle8.circleOne.Utils.cgBoldTextView
                     android:textStyle="bold"
                     android:textColor="@android:color/black"
                     android:gravity="left"
@@ -78,7 +78,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp" />
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:textColor="@color/gray_text"
                     android:gravity="left"
                     android:text="Physician Yong"
@@ -89,7 +89,7 @@
                     android:textSize="12sp" />
             </LinearLayout>
 
-            <TextView android:layout_weight="1"
+            <com.circle8.circleOne.Utils.cgTextView android:layout_weight="1"
                 android:ellipsize="end"
                 android:maxLines="6"
                 android:layout_gravity="center_vertical|right"
@@ -100,7 +100,7 @@
                 android:id="@+id/tvPersonDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="90dp"
-                android:textSize="12sp" />
+                android:textSize="11sp" />
 
             <CheckBox android:layout_weight="1"
                 android:visibility="gone"

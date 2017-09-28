@@ -44,7 +44,7 @@
     <integer name="viewfinder_border_width">4</integer>
     <integer name="viewfinder_border_length">60</integer>
 
-    <string name="registration_success">Registration successful! Please check your email to activate your account</string>
+    <string name="registration_success">Please check your email to \n activate your account</string>
     <string name="no_friend_connection">No CircleOne name card collected \n Start Tapping</string>
     <string name="successful_request_sent">Notification has been sent to your selected contact group</string>
     <string name="no_connection">You do not have any connection</string>
