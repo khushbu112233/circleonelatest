@@ -32,7 +32,7 @@
                 android:layout_height="20dp"
                 android:src="@drawable/ic_acc_blue"
                 android:layout_marginRight="15dp"/>
-            <TextView
+            <com.circle8.circleOne.Utils.cgTextView
                 android:id="@+id/tvPerson"
                 android:textAlignment="center"
                 android:gravity="center"
@@ -53,7 +53,7 @@
                 android:layout_height="20dp"
                 android:src="@drawable/ic_ceo"
                 android:layout_marginRight="15dp"/>
-            <TextView
+            <com.circle8.circleOne.Utils.cgTextView
                 android:id="@+id/tvDesignation"
                 android:textAlignment="center"
                 android:gravity="center"
@@ -74,7 +74,7 @@
                 android:layout_height="20dp"
                 android:src="@drawable/ic_group_blue"
                 android:layout_marginRight="15dp"/>
-            <TextView
+            <com.circle8.circleOne.Utils.cgTextView
                 android:id="@+id/tvCompany"
                 android:textAlignment="center"
                 android:gravity="center"
@@ -95,7 +95,7 @@
                 android:layout_height="20dp"
                 android:src="@drawable/ic_mail_blue"
                 android:layout_marginRight="15dp"/>
-            <TextView
+            <com.circle8.circleOne.Utils.cgTextView
                 android:id="@+id/tvEmail"
                 android:textAlignment="center"
                 android:gravity="center"
@@ -116,7 +116,7 @@
                 android:layout_height="20dp"
                 android:src="@drawable/ic_mob_blue"
                 android:layout_marginRight="15dp"/>
-            <TextView
+            <com.circle8.circleOne.Utils.cgTextView
                 android:id="@+id/tvPhone"
                 android:textAlignment="center"
                 android:gravity="center"
@@ -152,7 +152,7 @@
                 android:layout_marginTop="45dp"
                 android:layout_marginLeft="40dp"/>
         </RelativeLayout>
-        <TextView
+        <com.circle8.circleOne.Utils.orkebyBoldTextView
             android:id="@+id/tvProfile"
             android:textSize="15dp"
             android:layout_marginTop="10dp"

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="10dp">
 
-    <TextView
+    <com.circle8.circleOne.Utils.cgTextView
         android:id="@+id/tvUtility"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

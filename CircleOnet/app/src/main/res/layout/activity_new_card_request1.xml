@@ -164,16 +164,16 @@
                                 android:layout_alignParentTop="true"
                                 android:layout_alignParentLeft="true"
                                 android:layout_alignParentStart="true" />
-                            <TextView
+                            <com.circle8.circleOne.Utils.cgTextView
                                 android:id="@+id/tvBarTitle"
-                                android:textSize="18dp"
+                                android:textSize="17dp"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="8dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Request a New Card"
                                 android:textColor="@color/white"/>
-                            <TextView
+                            <com.circle8.circleOne.Utils.cgTextView
                                 android:layout_below="@+id/tvBarTitle"
                                 android:textSize="12dp"
                                 android:layout_centerHorizontal="true"
@@ -203,7 +203,7 @@
                                         android:layout_width="70dp"
                                         android:layout_height="70dp" />
                                 </RelativeLayout>
-                                <TextView
+                                <com.circle8.circleOne.Utils.orkebyBoldTextView
                                     android:id="@+id/tvPersonName"
                                     android:textSize="19dp"
                                     android:layout_marginTop="5dp"
@@ -213,19 +213,19 @@
                                     android:text="Person"
                                     android:textStyle="bold"
                                     android:textColor="@color/white"/>
-                                <TextView
+                                <com.circle8.circleOne.Utils.orkebyTextView
                                     android:id="@+id/tvDesignation"
-                                    android:textSize="19dp"
-                                    android:layout_marginTop="0dp"
+                                    android:textSize="15dp"
+                                    android:layout_marginTop="5dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:textAlignment="center"
                                     android:text="Designation"
                                     android:textColor="@color/white"/>
-                                <TextView
+                                <com.circle8.circleOne.Utils.orkebyTextView
                                     android:id="@+id/tvCompany"
-                                    android:textSize="19dp"
-                                    android:layout_marginTop="0dp"
+                                    android:textSize="17dp"
+                                    android:layout_marginTop="5dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:textAlignment="center"
@@ -233,7 +233,7 @@
                                     android:textColor="@color/white"/>
                             </LinearLayout>
 
-                            <TextView
+                            <com.circle8.circleOne.Utils.cgBoldTextView
                                 android:id="@+id/tvProfile"
                                 android:layout_alignParentBottom="true"
                                 android:layout_alignParentRight="true"
@@ -242,7 +242,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Profile 1"
-                                android:textSize="20dp"
+                                android:textSize="17dp"
                                 android:textColor="@color/white"/>
                         </RelativeLayout>
                     </FrameLayout>
@@ -254,12 +254,12 @@
                     android:orientation="vertical"
                     android:background="@color/white">
 
-                    <TextView
+                    <com.circle8.circleOne.Utils.cgBoldTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Uploaded Successfully"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="20dp"
+                        android:textSize="17dp"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
                         android:layout_marginLeft="10dp"
@@ -289,7 +289,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_marginLeft="10dp">
 
-                            <TextView
+                            <com.circle8.circleOne.Utils.cgTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Please Confirm or Update the delivery info"
@@ -322,7 +322,7 @@
                                     android:layout_height="20dp"
                                     android:src="@drawable/ic_acc_blue"
                                     android:layout_marginRight="15dp"/>
-                                <EditText
+                                <com.circle8.circleOne.Utils.cgEditView
                                     android:id="@+id/etPerson"
                                     android:textColor="#6b6c6e"
                                     android:textSize="13sp"
@@ -336,14 +336,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
-                                android:layout_marginTop="5dp"
+                                android:layout_marginTop="0dp"
                                 android:gravity="center_vertical">
                                 <ImageView
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
                                     android:src="@drawable/ic_group_blue"
                                     android:layout_marginRight="15dp"/>
-                                <EditText
+                                <com.circle8.circleOne.Utils.cgEditView
                                     android:id="@+id/etCompany"
                                     android:textColor="#6b6c6e"
                                     android:textSize="13sp"
@@ -357,14 +357,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
-                                android:layout_marginTop="5dp"
+                                android:layout_marginTop="0dp"
                                 android:gravity="center_vertical">
                                 <ImageView
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
                                     android:src="@drawable/ic_mob_blue"
                                     android:layout_marginRight="15dp"/>
-                                <EditText
+                                <com.circle8.circleOne.Utils.cgEditView
                                     android:id="@+id/etPhone"
                                     android:textColor="#6b6c6e"
                                     android:textSize="13sp"
@@ -378,13 +378,13 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
-                                android:layout_marginTop="5dp">
+                                android:layout_marginTop="0dp">
                                 <ImageView
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
                                     android:src="@drawable/ic_location_blue"
                                     android:layout_marginRight="15dp"/>
-                                <EditText
+                                <com.circle8.circleOne.Utils.cgEditView
                                     android:id="@+id/etAddress1"
                                     android:textColor="#6b6c6e"
                                     android:textSize="13sp"
@@ -398,13 +398,13 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
-                                android:layout_marginTop="5dp"
+                                android:layout_marginTop="0dp"
                                 android:gravity="center_vertical">
                                 <ImageView
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
                                     android:layout_marginRight="15dp"/>
-                                <EditText
+                                <com.circle8.circleOne.Utils.cgEditView
                                     android:id="@+id/etAddress2"
                                     android:textColor="#6b6c6e"
                                     android:textSize="13sp"
@@ -420,7 +420,8 @@
                             android:background="@color/colorPrimary"
                             android:layout_marginTop="10dp"/>
 
-                        <TextView
+                        <com.circle8.circleOne.Utils.cgTextView
+                            android:textSize="15dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Please choose methods of printing"
@@ -448,7 +449,7 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
                                 android:layout_marginRight="5dp">
-                                <TextView
+                                <com.circle8.circleOne.Utils.cgTextView
                                     android:id="@+id/txtLaserCost"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -459,7 +460,7 @@
                                     android:layout_width="170dp"
                                     android:layout_height="120dp"
                                     android:src="@drawable/card_sample_gold"/>
-                                <TextView
+                                <com.circle8.circleOne.Utils.cgTextView
                                     android:id="@+id/txtLaserDesc"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -475,7 +476,7 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
                                 android:layout_marginLeft="5dp">
-                                <TextView
+                                <com.circle8.circleOne.Utils.cgTextView
                                     android:id="@+id/txtNormalCost"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -486,7 +487,7 @@
                                     android:layout_width="170dp"
                                     android:layout_height="120dp"
                                     android:src="@drawable/card_sample_blue"/>
-                                <TextView
+                                <com.circle8.circleOne.Utils.cgTextView
                                     android:id="@+id/txtNormalDesc"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -503,7 +504,7 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="10dp"/>
 
-                        <TextView
+                        <com.circle8.circleOne.Utils.cgTextView
                             android:id="@+id/tvCardInfo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -529,7 +530,7 @@
                                 android:layout_height="45dp"
                                 android:src="@drawable/ic_connect"
                                 android:layout_centerInParent="true"/>
-                            <TextView
+                            <com.circle8.circleOne.Utils.cgTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/ivSubmit"

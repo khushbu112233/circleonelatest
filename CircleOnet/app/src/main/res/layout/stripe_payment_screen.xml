@@ -30,7 +30,7 @@
                     android:src="@drawable/up_expandable"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"/>
-                <TextView
+                <com.circle8.circleOne.Utils.GillSans
                     android:id="@+id/tvLeftConnection"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -41,12 +41,12 @@
                     android:layout_centerVertical="true"/>
             </RelativeLayout>
 
-            <TextView
+            <com.circle8.circleOne.Utils.GillSans
                 android:id="@+id/tvPackageName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Free Package"
-                android:textSize="20dp"
+                android:textSize="17dp"
                 android:textStyle="bold"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="15dp"
@@ -67,14 +67,14 @@
                     android:layout_weight="0.9"
                     android:layout_marginTop="8dp"
                     android:layout_gravity="center_vertical">
-                    <TextView
+                    <com.circle8.circleOne.Utils.GillSans
                         android:id="@+id/tvContact_Group"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="200 contacts, up to 5 groups,"
                         android:textColor="@color/white"
                         android:textSize="12sp"/>
-                    <TextView
+                    <com.circle8.circleOne.Utils.GillSans
                         android:id="@+id/tvConnection"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -91,22 +91,22 @@
                     android:orientation="vertical"
                     android:layout_weight="0.1"
                     android:layout_gravity="center_vertical">
-                    <TextView
+                    <com.circle8.circleOne.Utils.GillSans
                         android:id="@+id/tvAmount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="S&amp;0"
                         android:textStyle="bold"
-                        android:textSize="22dp"
+                        android:textSize="25dp"
                         android:layout_gravity="right"
                         android:textColor="@color/white"/>
-                    <TextView
+                    <com.circle8.circleOne.Utils.GillSans
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="/user/month billed"
                         android:layout_gravity="right"
                         android:textColor="@color/white"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:layout_marginTop="0dp"/>
                 </LinearLayout>
 
@@ -125,6 +125,8 @@
             android:layout_marginBottom="50dp">
 
             <LinearLayout
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:orientation="horizontal"
@@ -133,25 +135,25 @@
                 android:layout_marginTop="5dp">
                 <ImageView
                     android:id="@+id/ivVisa"
-                    android:layout_width="45dp"
-                    android:layout_height="30dp"
+                    android:layout_width="30dp"
+                    android:layout_height="25dp"
                     android:src="@drawable/visa_blue"
                     android:layout_weight="1" />
                 <ImageView
                     android:id="@+id/ivMasterCard"
-                    android:layout_width="45dp"
-                    android:layout_height="30dp"
+                    android:layout_width="30dp"
+                    android:layout_height="25dp"
                     android:src="@drawable/mastercard_blue"
                     android:layout_weight="1"/>
                 <ImageView
                     android:id="@+id/ivAmex"
-                    android:layout_width="45dp"
-                    android:layout_height="30dp"
+                    android:layout_width="30dp"
+                    android:layout_height="25dp"
                     android:src="@drawable/amex_blue"
                     android:layout_weight="1"/>
             </LinearLayout>
 
-            <TextView
+            <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colorPrimary"
@@ -166,7 +168,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:weightSum="1">
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Card No.: "
@@ -174,7 +176,7 @@
                     android:textColor="@color/unselected"
                     android:layout_marginRight="0dp"
                     android:layout_weight="0.75"/>
-                <EditText
+                <com.circle8.circleOne.Utils.cgEditView
                     android:id="@+id/etCardNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -205,14 +207,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.75"
                     android:orientation="vertical">
-                    <TextView
+                    <com.circle8.circleOne.Utils.cgTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Name"
                         android:textSize="12sp"
                         android:textColor="@color/unselected"
                         android:layout_marginRight="0dp" />
-                    <TextView
+                    <com.circle8.circleOne.Utils.cgTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="On the card"
@@ -220,7 +222,7 @@
                         android:textColor="@color/unselected"
                         android:layout_marginRight="0dp" />
                 </LinearLayout>
-                <EditText
+                <com.circle8.circleOne.Utils.cgEditView
                     android:id="@+id/etCardHolderName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -246,7 +248,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:layout_weight="1">
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Expiry Date: "
@@ -260,7 +262,7 @@
                     android:layout_weight="0.25"
                     android:orientation="horizontal"
                     android:weightSum="1">
-                    <EditText
+                    <com.circle8.circleOne.Utils.cgEditView
                         android:id="@+id/etExMonth"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -276,14 +278,14 @@
                         android:textSize="12sp"
                         android:enabled="true"
                         android:layout_weight="0.5"/>
-                    <TextView
+                    <com.circle8.circleOne.Utils.cgTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="/"
                         android:textColor="@color/colorPrimary"
                         android:layout_gravity="bottom"
                         android:layout_marginBottom="2dp"/>
-                    <EditText
+                    <com.circle8.circleOne.Utils.cgEditView
                         android:id="@+id/etExYear"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -311,7 +313,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:layout_weight="1">
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Security code: "
@@ -319,7 +321,7 @@
                     android:textColor="@color/unselected"
                     android:layout_marginRight="0dp"
                     android:layout_weight="0.75"/>
-                <EditText
+                <com.circle8.circleOne.Utils.cgEditView
                     android:id="@+id/etSecurityCode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -346,7 +348,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:weightSum="1">
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Mobile No.: "
@@ -354,7 +356,7 @@
                     android:textColor="@color/unselected"
                     android:layout_marginRight="0dp"
                     android:layout_weight="0.75"/>
-                <EditText
+                <com.circle8.circleOne.Utils.cgEditView
                     android:id="@+id/etMobileNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -379,7 +381,7 @@
                 android:weightSum="1"
                 android:gravity="center_vertical">
 
-                <TextView
+                <com.circle8.circleOne.Utils.cgBoldTextView
                     android:id="@+id/tvPay"
                     android:textSize="20dp"
                     android:layout_width="wrap_content"
@@ -389,7 +391,7 @@
                     android:layout_weight="0.5"
                     android:gravity="right"
                     android:layout_marginRight="60dp"/>
-                <TextView
+                <com.circle8.circleOne.Utils.cgBoldTextView
                     android:id="@+id/tvCancel"
                     android:textSize="20dp"
                     android:layout_width="wrap_content"

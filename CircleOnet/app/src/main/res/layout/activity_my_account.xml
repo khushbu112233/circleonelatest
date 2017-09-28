@@ -85,7 +85,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="140dp"
             android:background="@color/colorPrimary">
             <ImageView
                 android:id="@+id/imgCard"
@@ -118,9 +118,9 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true" />
 
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:id="@+id/tvMyAccount"
-                    android:textSize="18dp"
+                    android:textSize="17dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="8dp"
                     android:layout_width="wrap_content"
@@ -144,7 +144,7 @@
                     android:orientation="vertical"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_marginTop="60dp">
+                    android:layout_marginTop="35dp">
                     <RelativeLayout
                         android:layout_width="70dp"
                         android:layout_height="70dp">
@@ -164,9 +164,9 @@
                             android:layout_marginTop="50dp"
                             android:layout_marginLeft="50dp"/>
                     </RelativeLayout>
-                    <TextView
+                    <com.circle8.circleOne.Utils.HelveticaLightTextView
                         android:id="@+id/tvPhotoUpload"
-                        android:textSize="19dp"
+                        android:textSize="13dp"
                         android:layout_marginTop="8dp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -186,13 +186,13 @@
             android:layout_marginTop="10dp"
             android:id="@+id/rlMyAccount"
             android:layout_below="@+id/llProfile">
-            <TextView
+            <com.circle8.circleOne.Utils.cgTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="My Account Info"
                 android:textColor="@color/colorPrimary"
                 android:layout_centerVertical="true"
-                android:textSize="22dp"
+                android:textSize="17dp"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="10dp"/>
             <ImageView
@@ -233,12 +233,13 @@
                     android:text="*"
                     android:textColor="@color/colorPrimary"
                     android:layout_marginRight="0dp" />
-                <EditText
+                <com.circle8.circleOne.Utils.HelveticaLightEditText
+                    android:textStyle="bold"
                     android:id="@+id/etUserName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:paddingBottom="15dp"
+                    android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:hint="Email(Username)"
                     android:backgroundTint="@color/colorPrimary"
@@ -269,7 +270,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="0dp"
                     android:layout_weight="0.5"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
@@ -279,12 +280,12 @@
                         android:text="*"
                         android:textColor="@color/colorPrimary"
                         android:layout_marginRight="0dp" />
-                    <EditText
+                    <com.circle8.circleOne.Utils.HelveticaLightEditText
                         android:id="@+id/etFirstName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:paddingBottom="15dp"
+                        android:paddingBottom="10dp"
                         android:paddingLeft="10dp"
                         android:hint="First Name"
                         android:backgroundTint="@color/colorPrimary"
@@ -296,7 +297,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="0dp"
                     android:layout_weight="0.5"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
@@ -306,12 +307,12 @@
                         android:text="*"
                         android:textColor="@color/colorPrimary"
                         android:layout_marginRight="0dp" />
-                    <EditText
+                    <com.circle8.circleOne.Utils.HelveticaLightEditText
                         android:id="@+id/etLastName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:paddingBottom="15dp"
+                        android:paddingBottom="10dp"
                         android:paddingLeft="10dp"
                         android:hint="Last Name"
                         android:backgroundTint="@color/colorPrimary"
@@ -327,7 +328,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginLeft="20dp">
-                <TextView
+                <com.circle8.circleOne.Utils.HelveticaLightTextView
                     android:visibility="gone"
                     android:id="@+id/tvFirstNameInfo"
                     android:layout_weight="1"
@@ -337,7 +338,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"/>
-                <TextView
+                <com.circle8.circleOne.Utils.HelveticaLightTextView
                     android:visibility="gone"
                     android:id="@+id/tvLastNameInfo"
                     android:layout_weight="1"
@@ -354,7 +355,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="0dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
                 <TextView
@@ -363,12 +364,12 @@
                     android:text="*"
                     android:textColor="@color/colorPrimary"
                     android:layout_marginRight="0dp" />
-                <EditText
+                <com.circle8.circleOne.Utils.HelveticaLightEditText
                     android:id="@+id/etPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:paddingBottom="15dp"
+                    android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:hint="Password"
                     android:backgroundTint="@color/colorPrimary"
@@ -378,7 +379,7 @@
                     android:inputType="textPassword"
                     android:enabled="false"/>
             </LinearLayout>
-            <TextView
+            <com.circle8.circleOne.Utils.HelveticaLightTextView
                 android:visibility="gone"
                 android:id="@+id/tvPasswordInfo"
                 android:textColor="@color/unselected"
@@ -393,7 +394,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="0dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
                 <TextView
@@ -402,12 +403,12 @@
                     android:text="*"
                     android:textColor="@color/colorPrimary"
                     android:layout_marginRight="0dp" />
-                <EditText
+                <com.circle8.circleOne.Utils.HelveticaLightEditText
                     android:id="@+id/etPasswordAgain"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:paddingBottom="15dp"
+                    android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:hint="Password Again"
                     android:backgroundTint="@color/colorPrimary"
@@ -417,7 +418,7 @@
                     android:inputType="textPassword"
                     android:enabled="false"/>
             </LinearLayout>
-            <TextView
+            <com.circle8.circleOne.Utils.HelveticaLightTextView
                 android:visibility="gone"
                 android:id="@+id/tvAgainPasswordInfo"
                 android:textColor="@color/unselected"
@@ -432,7 +433,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="0dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
                 <TextView
@@ -441,12 +442,12 @@
                     android:text="*"
                     android:textColor="@color/colorPrimary"
                     android:layout_marginRight="0dp" />
-                <EditText
+                <com.circle8.circleOne.Utils.HelveticaLightEditText
                     android:id="@+id/etPhone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:paddingBottom="15dp"
+                    android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:hint="Phone"
                     android:backgroundTint="@color/colorPrimary"
@@ -455,7 +456,7 @@
                     android:textSize="13sp"
                     android:enabled="false"/>
             </LinearLayout>
-            <TextView
+            <com.circle8.circleOne.Utils.HelveticaLightTextView
                 android:visibility="gone"
                 android:id="@+id/tvPhoneInfo"
                 android:textColor="@color/unselected"
@@ -470,7 +471,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="0dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:visibility="gone">
@@ -480,12 +481,12 @@
                     android:text="*"
                     android:textColor="@color/colorPrimary"
                     android:layout_marginRight="0dp" />
-                <EditText
+                <com.circle8.circleOne.Utils.HelveticaLightEditText
                     android:id="@+id/etEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:paddingBottom="15dp"
+                    android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:hint="Email"
                     android:backgroundTint="@color/colorPrimary"
@@ -493,7 +494,7 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="13sp" />
             </LinearLayout>
-            <TextView
+            <com.circle8.circleOne.Utils.HelveticaLightTextView
                 android:visibility="gone"
                 android:id="@+id/tvEmailInfo"
                 android:textColor="@color/unselected"
@@ -508,7 +509,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="0dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:visibility="gone">
@@ -518,12 +519,12 @@
                     android:text="*"
                     android:textColor="@color/colorPrimary"
                     android:layout_marginRight="0dp" />
-                <EditText
+                <com.circle8.circleOne.Utils.HelveticaLightEditText
                     android:id="@+id/etDob"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:paddingBottom="15dp"
+                    android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:hint="DOB(DD/MM/YY)"
                     android:backgroundTint="@color/colorPrimary"
@@ -590,7 +591,7 @@
                     android:textSize="13sp" />
             </LinearLayout>
 
-            <TextView
+            <com.circle8.circleOne.Utils.HelveticaLightTextView
                 android:id="@+id/txtGender"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="15dp"
@@ -686,8 +687,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colorPrimary"/>
-            <TextView
+            <com.circle8.circleOne.Utils.HelveticaLightTextView
                 android:id="@+id/tvSave"
+                android:textStyle="bold"
                 android:textSize="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -696,9 +698,10 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:textColor="@color/colorPrimary"/>
-            <TextView
+            <com.circle8.circleOne.Utils.HelveticaLightTextView
                 android:id="@+id/tvCancel"
                 android:textSize="20dp"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Cancel"

@@ -23,9 +23,9 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
-        <TextView
+        <com.circle8.circleOne.Utils.cgTextView
             android:id="@+id/txtTitle"
-            android:textSize="18dp"
+            android:textSize="17dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp"
             android:layout_width="wrap_content"
@@ -67,107 +67,115 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="5dp">
-                <TextView
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="15dp">
+
+                <com.circle8.circleOne.Utils.cgBoldTextView
                     android:id="@+id/tvRewardName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="CIRCLE1 REWARDS POINTS"
-                    android:textAlignment="textEnd"
+                    android:textAlignment="textStart"
+                    android:textColor="@android:color/white"
                     android:textSize="13dp"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/white"/>
-                <TextView
+                    android:textStyle="bold" />
+
+                <com.circle8.circleOne.Utils.cgTextView
                     android:id="@+id/tvLine"
                     android:layout_width="180dp"
                     android:layout_height="1dp"
-                    android:background="@android:color/white"
                     android:layout_below="@+id/tvRewardName"
-                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="0dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="0dp"/>
-                <TextView
+                    android:background="@android:color/white" />
+
+                <com.circle8.circleOne.Utils.cgTextView
                     android:id="@+id/tvRewardType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TYPE THE CARD FOR DETAILS"
                     android:layout_below="@+id/tvLine"
-                    android:textAlignment="textEnd"
-                    android:textSize="09dp"
+                    android:layout_marginTop="5dp"
+                    android:text="TYPE THE CARD FOR DETAILS"
+                    android:textAlignment="textStart"
                     android:textColor="@android:color/white"
-                    android:layout_marginTop="5dp" />
+                    android:textSize="09dp" />
             </RelativeLayout>
 
-            <TextView
+            <com.circle8.circleOne.Utils.cgTextView
                 android:id="@+id/tvRewardPoint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5,450"
-                android:textSize="25dp"
-                android:textStyle="bold"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:textColor="@android:color/white"/>
+                android:text="5,450"
+                android:textColor="@android:color/white"
+                android:textSize="22dp"
+                android:textStyle="bold" />
 
             <ImageView
-                android:layout_width="120dp"
-                android:layout_height="70dp"
+                android:layout_width="90dp"
+                android:layout_height="50dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:src="@drawable/ic_chip_blue"
-                android:visibility="visible"/>
+                android:visibility="visible" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:weightSum="2"
+                android:layout_marginBottom="10dp"
                 android:gravity="center"
-                android:layout_marginBottom="10dp">
+                android:weightSum="2">
+
                 <LinearLayout
                     android:id="@+id/llEarnPointBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:layout_weight="1"
                     android:gravity="center_vertical|left"
-                    android:layout_weight="1">
+                    android:orientation="horizontal">
+
                     <ImageView
                         android:id="@+id/ivCirclePlus"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
-                        android:src="@drawable/ic_circle_plus"/>
-                    <TextView
+                        android:src="@drawable/ic_circle_plus" />
+
+                    <com.circle8.circleOne.Utils.cgBoldTextView
                         android:id="@+id/tvPoints"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:text="EARN POINTS"
-                        android:textSize="10dp"
-                        android:textStyle="bold"
                         android:textColor="@android:color/white"
-                        android:layout_marginLeft="10dp"/>
+                        android:textSize="10dp"
+                        android:textStyle="bold" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/llMerchantBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:layout_weight="1"
                     android:gravity="center_vertical|right"
-                    android:layout_weight="1">
+                    android:orientation="horizontal">
+
                     <ImageView
                         android:id="@+id/ivHouse"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
-                        android:src="@drawable/ic_house"/>
-                    <TextView
+                        android:src="@drawable/ic_house" />
+
+                    <com.circle8.circleOne.Utils.cgBoldTextView
                         android:id="@+id/tvMerchant"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:text="MERCHANTS"
-                        android:textSize="10dp"
-                        android:textStyle="bold"
                         android:textColor="@android:color/white"
-                        android:layout_marginLeft="10dp"/>
+                        android:textSize="10dp"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -187,13 +195,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <TextView
+            <com.circle8.circleOne.Utils.cgBoldTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Balance:"
                 android:textStyle="bold"
                 android:textColor="@color/colorPrimary"/>
-            <TextView
+            <com.circle8.circleOne.Utils.cgBoldTextView
                 android:id="@+id/tvRewardPoints"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -202,7 +210,7 @@
                 android:textColor="@color/colorPrimary"/>
         </LinearLayout>
 
-        <TextView
+        <com.circle8.circleOne.Utils.cgBoldTextView
             android:id="@+id/tvHistory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
