@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-    <TextView
+    <com.circle8.circleOne.Utils.cgBoldTextView
         android:layout_marginLeft="10dp"
         android:textStyle="bold"
         android:textColor="@android:color/white"
@@ -31,9 +31,9 @@
         android:id="@+id/txtEventTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp" />
+        android:textSize="15sp" />
 
-        <TextView
+        <com.circle8.circleOne.Utils.cgTextView
             android:layout_marginLeft="10dp"
             android:textColor="@android:color/white"
             android:text="HSBC Singapore Rugby Sevens"

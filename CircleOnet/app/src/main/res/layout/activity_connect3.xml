@@ -35,11 +35,11 @@
                     android:layout_centerInParent="true"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="15dp"/>
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Connect"
-                    android:textSize="15dp"
+                    android:textSize="17dp"
                     android:textColor="@android:color/white"
                     android:layout_centerInParent="true"/>
                 <ImageView
@@ -77,11 +77,11 @@
                     android:layout_height="11dp"
                     android:src="@drawable/round3" />
 
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:id="@+id/txtConnecting"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="50dp"
-                    android:textSize="20dp"
+                    android:textSize="16dp"
                     android:layout_below="@+id/imgConnecting"
                     android:textColor="@color/white"
                     android:layout_width="wrap_content"

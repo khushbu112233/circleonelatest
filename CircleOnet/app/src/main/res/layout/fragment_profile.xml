@@ -163,9 +163,9 @@
                                 android:layout_alignParentLeft="true"
                                 android:layout_alignParentStart="true" />
 
-                            <TextView
+                            <com.circle8.circleOne.Utils.cgTextView
                                 android:id="@+id/txtprofile"
-                                android:textSize="18dp"
+                                android:textSize="17dp"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="8dp"
                                 android:layout_width="wrap_content"
@@ -204,9 +204,9 @@
 
                                 </RelativeLayout>
 
-                                <TextView
+                                <com.circle8.circleOne.Utils.orkebyBoldTextView
                                     android:id="@+id/tvPersonName"
-                                    android:textSize="19dp"
+                                    android:textSize="17dp"
                                     android:layout_marginTop="8dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -215,19 +215,19 @@
                                     android:textStyle="bold"
                                     android:textColor="@color/white"/>
 
-                                <TextView
+                                <com.circle8.circleOne.Utils.orkebyTextView
                                     android:id="@+id/tvDesignation"
-                                    android:textSize="19dp"
+                                    android:textSize="16dp"
                                     android:layout_marginTop="0dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:textAlignment="center"
                                     android:text="Designation"
                                     android:textColor="@color/white"/>
-                                <TextView
+                                <com.circle8.circleOne.Utils.orkebyTextView
                                     android:id="@+id/tvCompany"
-                                    android:textSize="19dp"
-                                    android:layout_marginTop="0dp"
+                                    android:textSize="16dp"
+                                    android:layout_marginTop="2dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:textAlignment="center"
@@ -283,7 +283,7 @@
                             android:layout_height="20dp"
                             android:src="@drawable/ic_acc_blue"/>
 
-                        <TextView
+                        <com.circle8.circleOne.Utils.cgTextView
                             android:id="@+id/tvName"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
@@ -317,7 +317,7 @@
                             android:layout_height="20dp"
                             android:src="@drawable/ic_group_blue"/>
 
-                        <TextView
+                        <com.circle8.circleOne.Utils.cgTextView
                             android:id="@+id/tvCompanyName"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
@@ -344,7 +344,7 @@
                             android:layout_height="20dp"
                             android:src="@drawable/ic_branding"/>
 
-                        <TextView
+                        <com.circle8.circleOne.Utils.cgTextView
                             android:id="@+id/textIndustry"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
@@ -370,7 +370,7 @@
                             android:layout_height="20dp"
                             android:src="@drawable/ic_ceo"/>
 
-                        <TextView
+                        <com.circle8.circleOne.Utils.cgTextView
                             android:id="@+id/tvDesi"
                             android:textAlignment="center"
                             android:gravity="center"
@@ -396,7 +396,7 @@
                             android:layout_height="20dp"
                             android:src="@drawable/ic_association"/>
 
-                        <TextView
+                        <com.circle8.circleOne.Utils.cgTextView
                             android:id="@+id/tvAssociation"
                             android:textAlignment="center"
                             android:gravity="center"
@@ -422,7 +422,7 @@
                             android:layout_height="20dp"
                             android:src="@drawable/ic_location_blue"/>
 
-                        <TextView
+                        <com.circle8.circleOne.Utils.cgTextView
                             android:id="@+id/tvAddress"
                             android:textColor="#6b6c6e"
                             android:textSize="13sp"
@@ -446,7 +446,7 @@
                             android:layout_height="20dp"
                             android:src="@drawable/ic_web_blue"/>
 
-                        <TextView
+                        <com.circle8.circleOne.Utils.cgTextView
                             android:id="@+id/tvWebsite"
                             android:textAlignment="center"
                             android:gravity="center"
@@ -472,7 +472,7 @@
                             android:layout_height="20dp"
                             android:src="@drawable/ic_mail_blue"/>
 
-                        <TextView
+                        <com.circle8.circleOne.Utils.cgTextView
                             android:id="@+id/tvMail"
                             android:textAlignment="center"
                             android:gravity="center"
@@ -498,7 +498,7 @@
                             android:layout_height="20dp"
                             android:src="@drawable/ic_mob_blue"/>
 
-                        <TextView
+                        <com.circle8.circleOne.Utils.cgTextView
                             android:id="@+id/tvMob"
                             android:textAlignment="center"
                             android:gravity="center"
@@ -524,7 +524,7 @@
                             android:layout_height="20dp"
                             android:src="@drawable/ic_phone_blue"/>
 
-                        <TextView
+                        <com.circle8.circleOne.Utils.cgTextView
                             android:id="@+id/tvWork"
                             android:textAlignment="center"
                             android:gravity="center"
@@ -606,7 +606,7 @@
                             android:layout_height="1dp"
                             android:background="@color/colorPrimary"></View>
                     </LinearLayout>
-                    <TextView
+                    <com.circle8.circleOne.Utils.orkebyTextView
                         android:layout_marginTop="10dp"
                         android:layout_marginLeft="20dp"
                         android:layout_centerVertical="true"
@@ -616,7 +616,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" />
 
-                    <TextView
+                    <com.circle8.circleOne.Utils.orkebyTextView
+                        android:layout_marginTop="5dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginLeft="20dp"
                         android:layout_centerVertical="true"
@@ -627,7 +628,7 @@
                         android:layout_height="match_parent" />
 
 
-                    <TextView
+                    <com.circle8.circleOne.Utils.orkebyTextView
                         android:layout_marginTop="10dp"
                         android:layout_marginLeft="20dp"
                         android:layout_centerVertical="true"
@@ -637,7 +638,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" />
 
-                    <TextView
+                    <com.circle8.circleOne.Utils.orkebyTextView
+                        android:layout_marginTop="5dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginLeft="20dp"
                         android:layout_centerVertical="true"
@@ -650,9 +652,9 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-                    <TextView
+                    <com.circle8.circleOne.Utils.orkebyTextView
                         android:id="@+id/txtTestLbl"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="15dp"
                         android:layout_marginLeft="20dp"
                         android:layout_centerVertical="true"
                         android:textColor="@color/colorPrimary"
@@ -708,7 +710,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" />
 
-                    <TextView
+                    <com.circle8.circleOne.Utils.orkebyTextView
                         android:layout_marginBottom="20dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginLeft="20dp"

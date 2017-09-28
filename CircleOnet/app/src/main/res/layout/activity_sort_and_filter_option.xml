@@ -75,8 +75,8 @@
 
                 <ImageView
                     android:backgroundTint="@color/colorAccent"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:id="@+id/drawer1"
                     android:src="@drawable/ic_all_cards"
                     android:layout_marginLeft="10dp"
@@ -88,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:text="All Cards"
                     android:id="@+id/txtAllCard"
-                    android:textSize="16dp"
+                    android:textSize="14dp"
                     android:layout_marginLeft="20dp"
                     android:textColor="@color/colorAccent" />
 
@@ -104,8 +104,8 @@
 
                 <ImageView
                     android:backgroundTint="@color/colorAccent"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:id="@+id/drawer2"
                     android:src="@drawable/ic_shared"
                     android:layout_marginLeft="10dp"
@@ -117,7 +117,7 @@
                     android:layout_height="wrap_content"
                     android:text="Shared Cards"
                     android:id="@+id/textDrawer2"
-                    android:textSize="16dp"
+                    android:textSize="14dp"
                     android:layout_marginLeft="20dp"
                     android:textColor="@color/colorAccent" />
 
@@ -134,8 +134,8 @@
 
                 <ImageView
                     android:backgroundTint="@color/colorAccent"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:id="@+id/drawer3"
                     android:src="@drawable/ic_recently_added"
                     android:layout_marginLeft="10dp"
@@ -147,7 +147,7 @@
                     android:layout_height="wrap_content"
                     android:text="Sort by Recently Added"
                     android:id="@+id/textDrawer3"
-                    android:textSize="16dp"
+                    android:textSize="14dp"
                     android:layout_marginLeft="20dp"
                     android:textColor="@color/colorAccent" />
 
@@ -164,8 +164,8 @@
 
                 <ImageView
                     android:backgroundTint="@color/colorAccent"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:id="@+id/drawer4"
                     android:src="@drawable/ic_sort"
                     android:layout_marginLeft="10dp"
@@ -177,7 +177,7 @@
                     android:layout_height="wrap_content"
                     android:text="Sort by Name"
                     android:id="@+id/textDrawer4"
-                    android:textSize="16dp"
+                    android:textSize="14dp"
                     android:layout_marginLeft="20dp"
                     android:textColor="@color/colorAccent" />
 
@@ -193,8 +193,8 @@
 
                 <ImageView
                     android:backgroundTint="@color/colorAccent"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:id="@+id/drawer5"
                     android:src="@drawable/ic_sort"
                     android:layout_marginLeft="10dp"
@@ -206,7 +206,7 @@
                     android:layout_height="wrap_content"
                     android:text="Sort by Company Name"
                     android:id="@+id/textDrawer5"
-                    android:textSize="16dp"
+                    android:textSize="14dp"
                     android:layout_marginLeft="20dp"
                     android:textColor="@color/colorAccent" />
 
@@ -222,8 +222,8 @@
 
                 <ImageView
                     android:backgroundTint="@color/colorAccent"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:id="@+id/drawer6"
                     android:src="@drawable/ic_group_blue"
                     android:layout_marginLeft="10dp"
@@ -235,7 +235,7 @@
                     android:layout_height="wrap_content"
                     android:text="by Company"
                     android:id="@+id/textDrawer6"
-                    android:textSize="16dp"
+                    android:textSize="14dp"
                     android:layout_marginLeft="20dp"
                     android:textColor="@color/colorAccent" />
 
@@ -251,8 +251,8 @@
 
                 <ImageView
                     android:backgroundTint="@color/colorAccent"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:id="@+id/drawer7"
                     android:src="@drawable/ic_ceo"
                     android:layout_marginLeft="10dp"
@@ -264,7 +264,7 @@
                     android:layout_height="wrap_content"
                     android:text="by Title"
                     android:id="@+id/textDrawer7"
-                    android:textSize="16dp"
+                    android:textSize="14dp"
                     android:layout_marginLeft="20dp"
                     android:textColor="@color/colorAccent" />
 
@@ -280,8 +280,8 @@
 
                 <ImageView
                     android:backgroundTint="@color/colorAccent"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:id="@+id/drawer8"
                     android:src="@drawable/ic_branding"
                     android:layout_marginLeft="10dp"
@@ -293,7 +293,7 @@
                     android:layout_height="wrap_content"
                     android:text="by Industry"
                     android:id="@+id/textDrawer8"
-                    android:textSize="16dp"
+                    android:textSize="14dp"
                     android:layout_marginLeft="20dp"
                     android:textColor="@color/colorAccent" />
 
@@ -309,8 +309,8 @@
 
                 <ImageView
                     android:backgroundTint="@color/colorAccent"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:id="@+id/drawer9"
                     android:src="@drawable/ic_association"
                     android:layout_marginLeft="10dp"
@@ -322,7 +322,7 @@
                     android:layout_height="wrap_content"
                     android:text="by Association"
                     android:id="@+id/textDrawer9"
-                    android:textSize="16dp"
+                    android:textSize="14dp"
                     android:layout_marginLeft="20dp"
                     android:textColor="@color/colorAccent" />
 

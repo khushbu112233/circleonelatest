@@ -73,20 +73,20 @@
 
                 <ImageView
                     android:backgroundTint="@color/colorAccent"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:id="@+id/drawer1"
                     android:src="@drawable/ic_all_events"
                     android:layout_marginLeft="10dp"
                     android:contentDescription="Home!"
                     android:layout_marginTop="0dp" />
 
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="All Events"
                     android:id="@+id/textDrawer1"
-                    android:textSize="16dp"
+                    android:textSize="14dp"
                     android:layout_marginLeft="20dp"
                     android:textColor="@color/colorAccent" />
 
@@ -102,20 +102,20 @@
 
                 <ImageView
                     android:backgroundTint="@color/colorAccent"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:id="@+id/drawer2"
                     android:src="@drawable/ic_shared"
                     android:layout_marginLeft="10dp"
                     android:contentDescription="Home!"
                     android:layout_marginTop="0dp" />
 
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Shared Events"
                     android:id="@+id/textDrawer2"
-                    android:textSize="16dp"
+                    android:textSize="14dp"
                     android:layout_marginLeft="20dp"
                     android:textColor="@color/colorAccent" />
 
@@ -131,20 +131,20 @@
 
                 <ImageView
                     android:backgroundTint="@color/colorAccent"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:id="@+id/drawer3"
                     android:src="@drawable/ic_group_blue"
                     android:layout_marginLeft="10dp"
                     android:contentDescription="Home!"
                     android:layout_marginTop="0dp" />
 
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Filter by Company / Association"
                     android:id="@+id/textDrawer3"
-                    android:textSize="16dp"
+                    android:textSize="14dp"
                     android:layout_marginLeft="20dp"
                     android:textColor="@color/colorAccent" />
 
@@ -160,20 +160,20 @@
 
                 <ImageView
                     android:backgroundTint="@color/colorAccent"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:id="@+id/drawer4"
                     android:src="@drawable/ic_branding"
                     android:layout_marginLeft="10dp"
                     android:contentDescription="Home!"
                     android:layout_marginTop="0dp" />
 
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Filter by Industry"
                     android:id="@+id/textDrawer4"
-                    android:textSize="16dp"
+                    android:textSize="14dp"
                     android:layout_marginLeft="20dp"
                     android:textColor="@color/colorAccent" />
 
@@ -189,20 +189,20 @@
 
                 <ImageView
                     android:backgroundTint="@color/colorAccent"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:id="@+id/drawer5"
                     android:src="@drawable/ic_free_event"
                     android:layout_marginLeft="10dp"
                     android:contentDescription="Home!"
                     android:layout_marginTop="0dp" />
 
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Free Events"
                     android:id="@+id/textDrawer5"
-                    android:textSize="16dp"
+                    android:textSize="14dp"
                     android:layout_marginLeft="20dp"
                     android:textColor="@color/colorAccent" />
 
@@ -218,20 +218,20 @@
 
                 <ImageView
                     android:backgroundTint="@color/colorAccent"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:id="@+id/drawer6"
                     android:src="@drawable/ic_paid_event"
                     android:layout_marginLeft="10dp"
                     android:contentDescription="Home!"
                     android:layout_marginTop="0dp" />
 
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Paid Event"
                     android:id="@+id/textDrawer6"
-                    android:textSize="16dp"
+                    android:textSize="14dp"
                     android:layout_marginLeft="20dp"
                     android:textColor="@color/colorAccent" />
 
@@ -247,20 +247,20 @@
 
                 <ImageView
                     android:backgroundTint="@color/colorAccent"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:id="@+id/drawer7"
                     android:src="@drawable/ic_location_blue"
                     android:layout_marginLeft="10dp"
                     android:contentDescription="Home!"
                     android:layout_marginTop="0dp" />
 
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Filter by Location"
                     android:id="@+id/textDrawer7"
-                    android:textSize="16dp"
+                    android:textSize="14dp"
                     android:layout_marginLeft="20dp"
                     android:textColor="@color/colorAccent" />
 
@@ -277,20 +277,20 @@
 
                 <ImageView
                     android:backgroundTint="@color/colorAccent"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:id="@+id/drawer8"
                     android:src="@drawable/ic_filter_date"
                     android:layout_marginLeft="10dp"
                     android:contentDescription="Home!"
                     android:layout_marginTop="0dp" />
 
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Filter by Date"
                     android:id="@+id/textDrawer8"
-                    android:textSize="16dp"
+                    android:textSize="14dp"
                     android:layout_marginLeft="20dp"
                     android:textColor="@color/colorAccent" />
 

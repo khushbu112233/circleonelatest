@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <TextView
+                <com.circle8.circleOne.Utils.orkebyTextView
                     android:singleLine="true"
                     android:ellipsize="end"
                     android:textStyle="bold"
@@ -50,7 +50,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="12sp" />
 
-                <TextView
+                <com.circle8.circleOne.Utils.orkebyTextView
                     android:maxLines="2"
                     android:ellipsize="end"
                     android:textColor="@android:color/black"

@@ -11,7 +11,7 @@
         app:layout_scrollFlags="scroll|snap"
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="245dp" />
+        android:layout_height="220dp" />
 
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -37,7 +37,7 @@
             app:layout_scrollFlags="scroll|snap"
             android:id="@+id/viewPager1"
             android:layout_width="match_parent"
-            android:layout_height="245dp" />
+            android:layout_height="220dp" />
 
         </android.support.design.widget.AppBarLayout>
 
@@ -182,7 +182,7 @@
                 <FrameLayout
                     android:alpha="0.7"
                     android:layout_width="match_parent"
-                    android:layout_height="245dp"
+                    android:layout_height="220dp"
                     android:background="@color/colorAccent">
 
                     <ImageView
@@ -240,7 +240,7 @@
                                 app:civ_border_color="@color/colorPrimary"
                                 app:civ_border_width="2dp" />
 
-                            <com.circle8.circleOne.Utils.cgTextView
+                            <com.circle8.circleOne.Utils.orkebyBoldTextView
                                 android:id="@+id/txtName"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -248,10 +248,10 @@
                                 android:text="Person"
                                 android:textAlignment="center"
                                 android:textColor="@color/white"
-                                android:textSize="19dp"
+                                android:textSize="17dp"
                                 android:textStyle="bold" />
 
-                            <com.circle8.circleOne.Utils.cgTextView
+                            <com.circle8.circleOne.Utils.orkebyTextView
                                 android:id="@+id/txtDesi"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -259,9 +259,9 @@
                                 android:text="Designation"
                                 android:textAlignment="center"
                                 android:textColor="@color/white"
-                                android:textSize="19dp" />
+                                android:textSize="16dp" />
 
-                            <com.circle8.circleOne.Utils.cgTextView
+                            <com.circle8.circleOne.Utils.orkebyTextView
                                 android:id="@+id/txtCompany"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -269,7 +269,7 @@
                                 android:text="Company"
                                 android:textAlignment="center"
                                 android:textColor="@color/white"
-                                android:textSize="19dp" />
+                                android:textSize="16dp" />
 
                         </LinearLayout>
 
@@ -298,8 +298,8 @@
 
                     <ImageView
                         android:id="@+id/imgCall"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
                         android:layout_marginLeft="25dp"
                         android:layout_weight="1"
                         android:padding="7dp"
@@ -307,24 +307,24 @@
 
                     <ImageView
                         android:id="@+id/imgSMS"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
                         android:layout_weight="1"
                         android:padding="7dp"
                         android:src="@drawable/ic_sms" />
 
                     <ImageView
                         android:id="@+id/imgMail"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
                         android:layout_weight="1"
                         android:padding="8.5dp"
                         android:src="@drawable/ic_mail" />
 
                     <ImageView
                         android:id="@+id/imgProfileShare"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
                         android:layout_marginRight="25dp"
                         android:layout_weight="1"
                         android:padding="7dp"
@@ -553,7 +553,7 @@
                 android:layout_marginRight="15dp"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.circle8.circleOne.Utils.cgBoldTextView
                     android:layout_marginTop="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

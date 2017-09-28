@@ -34,11 +34,11 @@
                 android:layout_centerInParent="true"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="15dp"/>
-            <TextView
+            <com.circle8.circleOne.Utils.cgTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Connect"
-                android:textSize="18dp"
+                android:textSize="17dp"
                 android:textColor="@android:color/white"
                 android:layout_centerInParent="true"/>
             <ImageView
@@ -70,7 +70,7 @@
                     android:layout_marginTop="55dp"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true" />
-                <TextView
+                <com.circle8.circleOne.Utils.orkebyBoldTextView
                     android:id="@+id/tvPersonName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -82,25 +82,25 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="5dp"/>
 
-                <TextView
+                <com.circle8.circleOne.Utils.orkebyTextView
                     android:id="@+id/tvPersonDesignation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Designation"
                     android:textColor="@android:color/white"
-                    android:textSize="18dp"
+                    android:textSize="17dp"
                     android:textStyle="bold"
                     android:layout_below="@+id/tvPersonName"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="5dp"/>
 
-                <TextView
+                <com.circle8.circleOne.Utils.orkebyTextView
                     android:id="@+id/tvCompanyName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Company"
                     android:textColor="@android:color/white"
-                    android:textSize="18dp"
+                    android:textSize="17dp"
                     android:textStyle="normal"
                     android:layout_below="@+id/tvPersonDesignation"
                     android:layout_centerHorizontal="true"
@@ -720,19 +720,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lnrTag"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="0dp"
                 android:orientation="vertical"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp">
                 <RelativeLayout
                     android:layout_marginRight="15dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <TextView
+                    <com.circle8.circleOne.Utils.cgBoldTextView
                         android:layout_alignParentLeft="true"
                         android:textColor="@android:color/black"
                         android:textSize="15sp"
