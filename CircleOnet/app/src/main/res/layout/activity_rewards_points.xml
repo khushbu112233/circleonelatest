@@ -30,7 +30,7 @@
             android:layout_marginTop="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CIRCLE1 Rewards Card"
+            android:text="Reward Points"
             android:textColor="@color/white"/>
         <ImageView
             android:id="@+id/imgProfileMenu"
