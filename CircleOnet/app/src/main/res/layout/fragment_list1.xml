@@ -30,7 +30,8 @@
             android:focusableInTouchMode="true"
             android:imeOptions="actionSearch"
             android:inputType="textAutoComplete|textAutoCorrect"
-            android:textColor="#dbdada" />
+            android:textColor="@color/unselected"
+            android:textColorHint="#dbdada"/>
 
         <ImageView
             android:layout_marginRight="10dp"

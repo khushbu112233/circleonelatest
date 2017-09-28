@@ -432,13 +432,16 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(getActivity());
+            /*dialog = new ProgressDialog(getActivity());
             dialog.setMessage("Searching Records...");
             //dialog.setTitle("Saving Reminder");
           //  dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
+
+            String loading = "Searching" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -451,6 +454,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
         protected void onPostExecute(String result)
         {
            // dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
 
             try

@@ -398,13 +398,16 @@ public class List4Fragment extends Fragment
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(getActivity());
+            /*dialog = new ProgressDialog(getActivity());
             dialog.setMessage("Searching Records...");
             //dialog.setTitle("Saving Reminder");
             //  dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
+
+            String loading = "Searching" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -414,8 +417,10 @@ public class List4Fragment extends Fragment
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(String result)
+        {
             //   dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
 
             try
@@ -511,10 +516,10 @@ public class List4Fragment extends Fragment
         protected void onPreExecute()
         {
             super.onPreExecute();
-            dialog = new ProgressDialog(mContext);
+            /*dialog = new ProgressDialog(mContext);
             dialog.setMessage("Fetching Cards...");
             //dialog.setTitle("Saving Reminder");
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
            /* if (comeAtTime.equalsIgnoreCase("FIRST")) {
                 dialog.show();
                 comeAtTime = "SECOND";
