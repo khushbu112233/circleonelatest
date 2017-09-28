@@ -8,7 +8,8 @@
     <color name="blue">#00abea</color>
     <color name="white">#ffffff</color>
     <color name="unselected">#8f9194</color>
-
+    <color name="pressed_color">#4d90fe</color>
+    <color name="default_color">#ffffff</color>
     <color name="QRCodeWhiteColor">#ffffff</color>
     <color name="QRCodeBlackColor">#000000</color>
 

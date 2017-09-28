@@ -280,7 +280,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <com.hbb20.CountryCodePicker
-                app:ccp_defaultPhoneCode="+65"
+                app:ccp_defaultNameCode="SG"
                 android:visibility="visible"
                 app:ccpDialog_searchEditTextTint="@color/colorPrimary"
                 app:ccp_textSize="15dp"
@@ -384,19 +384,6 @@
                 android:layerType="software"
                />
 
-            <RelativeLayout
-                android:id="@+id/ivMale"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/vwDrag1">
-                <ImageView
-                    android:id="@+id/ivMaleRound"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/ic_man_gray"
-                    android:layout_centerInParent="true" />
-            </RelativeLayout>
             <View
                 android:id="@+id/vwDrag1"
                 android:layout_width="15dp"
@@ -433,6 +420,20 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/ic_girl_gray"
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/ivMale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/vwDrag1">
+                <ImageView
+                    android:id="@+id/ivMaleRound"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_man_gray"
                     android:layout_centerInParent="true" />
             </RelativeLayout>
         </RelativeLayout>

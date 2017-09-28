@@ -28,6 +28,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -153,7 +154,6 @@ public class GroupDetailActivity extends AppCompatActivity
         }
 
         View v = LayoutInflater.from(getApplicationContext()).inflate(R.layout.group_detail_items, null);
-        CheckBox checkBox = (CheckBox) v.findViewById(R.id.chCheckBox);
        /* if (GroupDetailActivity.listView.getChoiceMode() == ListView.CHOICE_MODE_MULTIPLE){
             checkBox.setVisibility(View.VISIBLE);
         }
@@ -193,27 +193,140 @@ public class GroupDetailActivity extends AppCompatActivity
             public void onClick(View v) {
 
                 if(isPressed) {
-                    listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-                    GroupDetailAdapter.chCheckBox.setVisibility(View.VISIBLE);
+                    listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+                   /* listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+                    GroupDetailAdapter.chCheckBox.setVisibility(View.VISIBLE);*/
                 }
                 else {
                     listView.setChoiceMode(ListView.CHOICE_MODE_NONE);
-                    GroupDetailAdapter.chCheckBox.setVisibility(View.GONE);
+                  //  GroupDetailAdapter.chCheckBox.setVisibility(View.GONE);
                 }
 
 
-                if (GroupDetailActivity.listView.getChoiceMode() == ListView.CHOICE_MODE_MULTIPLE){
+             /*   if (GroupDetailActivity.listView.getChoiceMode() == ListView.CHOICE_MODE_MULTIPLE){
                  //   GroupDetailAdapter.holder.chCheckBox.setVisibility(View.VISIBLE);
                    // notifyDataSetChanged();
                 }
                 else {
                   //  GroupDetailAdapter.holder.chCheckBox.setVisibility(View.GONE);
                     //notifyDataSetChanged();
-                }
+                }*/
 
                 isPressed = !isPressed;
             }
         });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,long arg3) {
+                view.setSelected(true);
+            }
+        });
+
+        listView.setMultiChoiceModeListener(new  MultiChoiceModeListener() {
+
+            @Override
+            public boolean  onPrepareActionMode(ActionMode mode, Menu menu) {
+                // TODO  Auto-generated method stub
+                return false;
+            }
+
+            @Override
+            public void  onDestroyActionMode(ActionMode mode) {
+                // TODO  Auto-generated method stub
+
+            }
+
+            @Override
+            public boolean  onCreateActionMode(ActionMode mode, Menu menu) {
+                // TODO  Auto-generated method stub
+               // mode.getMenuInflater().inflate(R.menu.multiple_delete, menu);
+                return true;
+
+            }
+
+            @Override
+            public boolean  onActionItemClicked(final ActionMode mode,
+                                                MenuItem item) {
+                // TODO  Auto-generated method stub
+               /* switch  (item.getItemId()) {
+                    case R.id.selectAll:
+                        //
+                        final int checkedCount  = myList.size();
+                        // If item  is already selected or checked then remove or
+                        // unchecked  and again select all
+                        adapter.removeSelection();
+                        for (int i = 0; i <  checkedCount; i++) {
+                            listView.setItemChecked(i,   true);
+                            //  listviewadapter.toggleSelection(i);
+                        }
+                        // Set the  CAB title according to total checked items
+
+                        // Calls  toggleSelection method from ListViewAdapter Class
+
+                        // Count no.  of selected item and print it
+                        mode.setTitle(checkedCount  + "  Selected");
+                        return true;
+                    case R.id.delete:
+                        // Add  dialog for confirmation to delete selected item
+                        // record.
+                        AlertDialog.Builder  builder = new AlertDialog.Builder(
+                                MainActivity.this);
+                        builder.setMessage("Do you  want to delete selected record(s)?");
+
+                        builder.setNegativeButton("No", new  OnClickListener() {
+
+                            @Override
+                            public void  onClick(DialogInterface dialog, int which) {
+                                // TODO  Auto-generated method stub
+
+                            }
+                        });
+                        builder.setPositiveButton("Yes", new  OnClickListener() {
+
+                            @Override
+                            public void  onClick(DialogInterface dialog, int which) {
+                                // TODO  Auto-generated method stub
+                                SparseBooleanArray  selected = adapter
+                                        .getSelectedIds();
+                                for (int i =  (selected.size() - 1); i >= 0; i--) {
+                                    if  (selected.valueAt(i)) {
+                                        String  selecteditem = adapter
+                                                .getItem(selected.keyAt(i));
+                                        // Remove  selected items following the ids
+                                        adapter.remove(selecteditem);
+                                    }
+                                }
+
+                                // Close CAB
+                                mode.finish();
+                                selected.clear();
+
+                            }
+                        });
+                        AlertDialog alert =  builder.create();
+                        alert.setIcon(R.drawable.questionicon);// dialog  Icon
+                        alert.setTitle("Confirmation"); // dialog  Title
+                        alert.show();
+                        return true;
+                    default:
+                        return false;
+                }*/
+               return false;
+            }
+
+            @Override
+            public void  onItemCheckedStateChanged(ActionMode mode,
+                                                   int position, long id, boolean checked) {
+                // TODO  Auto-generated method stub
+                final int checkedCount  = listView.getCheckedItemCount();
+                // Set the  CAB title according to total checked items
+                mode.setTitle(checkedCount  + "  Selected");
+                // Calls  toggleSelection method from ListViewAdapter Class
+                groupDetailAdapter.toggleSelection(position);
+        }
+        });
+
 
         new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/FetchConnection");
 
@@ -221,6 +334,22 @@ public class GroupDetailActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), selectedStrings.toString(), Toast.LENGTH_LONG).show();
+
+                SparseBooleanArray  selected = groupDetailAdapter
+                        .getSelectedIds();
+                for (int i =  (selected.size() - 1); i >= 0; i--) {
+                    if  (selected.valueAt(i)) {
+                        String  selecteditem = String.valueOf(groupDetailAdapter
+                                .getItem(selected.keyAt(i)));
+                        Toast.makeText(getApplicationContext(), selecteditem, Toast.LENGTH_LONG).show();
+                        // Remove  selected items following the ids
+                     //   groupDetailAdapter.remove(selecteditem);
+                    }
+                }
+
+                // Close CAB
+               // mode.finish();
+                selected.clear();
             }
         });
 

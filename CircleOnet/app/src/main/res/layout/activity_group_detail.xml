@@ -13,7 +13,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_collapseMode="parallax"
-        app:layout_scrollFlags="snap">
+        app:layout_scrollFlags="snap"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <FrameLayout
             android:alpha="1"
@@ -169,6 +172,7 @@
             android:textColor="@color/colorPrimary"/>
 
         <ListView
+            android:background="@drawable/bg_key"
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

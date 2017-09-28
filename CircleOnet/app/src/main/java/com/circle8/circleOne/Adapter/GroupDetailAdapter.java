@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.SparseBooleanArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,7 +55,8 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
     private ArrayList<String> address = new ArrayList<>();
     private ArrayList<String> imgprofile = new ArrayList<>();
     public static ViewHolder holder;
-    public static CheckBox chCheckBox;
+    private SparseBooleanArray mSelectedItemsIds;
+    View row;
     public GroupDetailAdapter(Context applicationContext, int group_detail_items,
            ArrayList<String> name, ArrayList<String> designation, ArrayList<String> company,
            ArrayList<String> website, ArrayList<String> email, ArrayList<String> phone,
@@ -76,9 +78,53 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
     public GroupDetailAdapter(Activity applicationContext, int group_detail_items,
                               ArrayList<GroupDetailModel> groupDetailModelArrayList)
     {
+        mSelectedItemsIds = new  SparseBooleanArray();
         this.context = applicationContext ;
         this.layoutResourceId = group_detail_items ;
         this.groupDetailModelArrayList = groupDetailModelArrayList;
+    }
+
+    // get List after update or delete
+    public  ArrayList<GroupDetailModel> getMyList() {
+        return groupDetailModelArrayList;
+    }
+
+    public void  toggleSelection(int position) {
+        selectView(position, !mSelectedItemsIds.get(position));
+    }
+
+    // Remove selection after unchecked
+    public void  removeSelection() {
+        mSelectedItemsIds = new  SparseBooleanArray();
+        notifyDataSetChanged();
+    }
+
+    // Item checked on selection
+    public void selectView(int position, boolean value) {
+        if (value) {
+            mSelectedItemsIds.put(position, value);
+
+               /* row.setSelected(true);
+                row.setPressed(true);
+                row.setBackgroundColor(Color.parseColor("#FF9912"));*/
+        }
+        else {
+            mSelectedItemsIds.delete(position);
+
+              /*  row.setSelected(false);
+                row.setPressed(false);
+                row.setBackgroundColor(Color.parseColor("#ffffff"));*/
+        }
+        notifyDataSetChanged();
+    }
+
+    // Get number of selected item
+    public int  getSelectedCount() {
+        return mSelectedItemsIds.size();
+    }
+
+    public  SparseBooleanArray getSelectedIds() {
+        return mSelectedItemsIds;
     }
 
     @Override
@@ -113,11 +159,10 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
     @Override
     public void fillValues(final int position, View convertView)
     {
-        View row = convertView;
+        row = convertView;
         holder = null;
 
         holder = new ViewHolder();
-        chCheckBox = (CheckBox) row.findViewById(R.id.chCheckBox);
         holder.personName = (TextView) row.findViewById(R.id.tvPersonName);
         holder.personDesignation = (TextView) row.findViewById(R.id.tvDesignation);
         holder.personDetail = (TextView) row.findViewById(R.id.tvPersonDetail);
@@ -136,7 +181,7 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
         String Mobile = mobile.get(position);
         String Address = address.get(position);*/
 
-        if (GroupDetailActivity.listView.getChoiceMode() == ListView.CHOICE_MODE_MULTIPLE){
+      /*  if (GroupDetailActivity.listView.getChoiceMode() == ListView.CHOICE_MODE_MULTIPLE){
             chCheckBox.setVisibility(View.VISIBLE);
             notifyDataSetChanged();
         }
@@ -159,7 +204,7 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
                 }
             }
         });
-
+*/
         String Company = groupDetailModelArrayList.get(position).getCompany();
         String Email = groupDetailModelArrayList.get(position).getEmail();
         String Website = groupDetailModelArrayList.get(position).getWebsite();
