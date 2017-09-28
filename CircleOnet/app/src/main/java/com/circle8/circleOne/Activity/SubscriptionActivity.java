@@ -79,6 +79,8 @@ public class SubscriptionActivity extends AppCompatActivity
     int width, height;
     WindowManager.LayoutParams params;
 
+    String numberOnCard, nameOnCard, exYearOnCard, exMonthOnCard, cvvOnCard, mobileNoOnCard ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -127,12 +129,13 @@ public class SubscriptionActivity extends AppCompatActivity
                 String groups_limit = subscriptionModelArrayList.get(position).getGroupLimit();
                 String month_connect_limit = subscriptionModelArrayList.get(position).getMonthlyConnectionLimit();
                 String left_connection = subscriptionModelArrayList.get(position).getLetf_connection();
-                String amount = subscriptionModelArrayList.get(position).getPrice();
+                String amountt = subscriptionModelArrayList.get(position).getPrice();
 
                 int price = Integer.parseInt(subscriptionModelArrayList.get(position).getPrice());
                 PackageName = subscriptionModelArrayList.get(position).getPackageName();
                 SubscriptionID = subscriptionModelArrayList.get(position).getPackageID();
-                
+                amount = price * 100;
+
                 try
                 {
                     stripe = new Stripe("pk_live_d0uXEesOC2Qg5919ul4t7Ocl");
@@ -155,12 +158,12 @@ public class SubscriptionActivity extends AppCompatActivity
                 ImageView ivVisa = (ImageView)dialogView.findViewById(R.id.ivVisa);
                 ImageView ivMasterCard = (ImageView)dialogView.findViewById(R.id.ivMasterCard);
                 ImageView ivAmex = (ImageView)dialogView.findViewById(R.id.ivAmex);
-                EditText etCardNumber = (EditText)dialogView.findViewById(R.id.etCardNumber);
-                EditText etCardHolderName = (EditText)dialogView.findViewById(R.id.etCardHolderName);
-                EditText etExMonth = (EditText)dialogView.findViewById(R.id.etExMonth);
-                EditText etExYear = (EditText)dialogView.findViewById(R.id.etExYear);
-                EditText etSecurityCode = (EditText)dialogView.findViewById(R.id.etSecurityCode);
-                EditText etMobileNumber = (EditText)dialogView.findViewById(R.id.etMobileNumber);
+                final EditText etCardNumber = (EditText)dialogView.findViewById(R.id.etCardNumber);
+                final EditText etCardHolderName = (EditText)dialogView.findViewById(R.id.etCardHolderName);
+                final EditText etExMonth = (EditText)dialogView.findViewById(R.id.etExMonth);
+                final EditText etExYear = (EditText)dialogView.findViewById(R.id.etExYear);
+                final EditText etSecurityCode = (EditText)dialogView.findViewById(R.id.etSecurityCode);
+                final EditText etMobileNumber = (EditText)dialogView.findViewById(R.id.etMobileNumber);
                 TextView tvPay = (TextView)dialogView.findViewById(R.id.tvPay);
                 TextView tvCancel = (TextView)dialogView.findViewById(R.id.tvCancel);
 
@@ -175,6 +178,48 @@ public class SubscriptionActivity extends AppCompatActivity
                 cvcField = (TextView) dialogView.findViewById(R.id.cvc);*/
 //                cvcField = (TextView) dialogView.findViewById(R.id.cvc);
 //                cardHolderName = (TextView) dialogView.findViewById(R.id.cardHolderName);
+
+                tvPay.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        numberOnCard = etCardNumber.getText().toString();
+                        nameOnCard = etCardHolderName.getText().toString();
+                        exYearOnCard = etExYear.getText().toString();
+                        exMonthOnCard = etExMonth.getText().toString();
+                        cvvOnCard = etSecurityCode.getText().toString();
+                        mobileNoOnCard = etMobileNumber.getText().toString();
+
+                        if (numberOnCard.isEmpty())
+                        {
+                            Toast.makeText(SubscriptionActivity.this,"Enter Card No.",Toast.LENGTH_SHORT).show();
+                        }
+                        else if (nameOnCard.isEmpty())
+                        {
+                            Toast.makeText(SubscriptionActivity.this,"Enter Holder Name",Toast.LENGTH_SHORT).show();
+                        }
+                        else if (exMonthOnCard.isEmpty())
+                        {
+                            Toast.makeText(SubscriptionActivity.this,"Enter Expiry Month",Toast.LENGTH_SHORT).show();
+                        }
+                        else if (exYearOnCard.isEmpty())
+                        {
+                            Toast.makeText(SubscriptionActivity.this,"Enter Expiry Month",Toast.LENGTH_SHORT).show();
+                        }
+                        else if (cvvOnCard.isEmpty())
+                        {
+                            Toast.makeText(SubscriptionActivity.this,"Enter CVV No.",Toast.LENGTH_SHORT).show();
+                        }
+                        else if (mobileNoOnCard.isEmpty())
+                        {
+                            Toast.makeText(SubscriptionActivity.this,"Enter Mobile No.",Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            submitCard();
+                        }
+                    }
+                });
 
                 tvCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -194,18 +239,28 @@ public class SubscriptionActivity extends AppCompatActivity
 
     }
 
-    public void submitCard(View view) {
+    public void submitCard()
+    {
         // TODO: replace with your own test key
 
-        card = new Card(
-                cardNumberField.getText().toString(),
-                Integer.valueOf(monthField.getText().toString()),
-                Integer.valueOf(yearField.getText().toString()),
-                cvcField.getText().toString()
-        );
+       /* card = new Card
+        (
+            cardNumberField.getText().toString(),
+            Integer.valueOf(monthField.getText().toString()),
+            Integer.valueOf(yearField.getText().toString()),
+            cvcField.getText().toString()
+        );*/
+        card = new Card
+                (
+                        numberOnCard,
+                        Integer.valueOf(exMonthOnCard),
+                        Integer.valueOf(exYearOnCard),
+                        cvvOnCard
+                );
 
         card.setCurrency("sgd");
-        card.setName(cardHolderName.getText().toString());
+//        card.setName(cardHolderName.getText().toString());
+        card.setName(nameOnCard);
        // card.setAddressZip("1000");
         /*
         card.setNumber(4242424242424242);
