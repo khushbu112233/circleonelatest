@@ -187,7 +187,7 @@
                     android:textColorHint="@color/colorPrimary"
                     android:textColor="@color/colorPrimary"
                     android:textSize="12sp"
-                    android:enabled="false"
+                    android:enabled="true"
                     android:layout_weight="0.25"/>
             </LinearLayout>
 
@@ -233,7 +233,7 @@
                     android:textColorHint="@color/colorPrimary"
                     android:textColor="@color/colorPrimary"
                     android:textSize="12sp"
-                    android:enabled="false"
+                    android:enabled="true"
                     android:layout_weight="0.25"/>
             </LinearLayout>
 
@@ -274,7 +274,7 @@
                         android:textColorHint="@color/unselected"
                         android:textColor="@color/colorPrimary"
                         android:textSize="12sp"
-                        android:enabled="false"
+                        android:enabled="true"
                         android:layout_weight="0.5"/>
                     <TextView
                         android:layout_width="wrap_content"
@@ -297,7 +297,7 @@
                         android:textColorHint="@color/unselected"
                         android:textColor="@color/colorPrimary"
                         android:textSize="12sp"
-                        android:enabled="false"
+                        android:enabled="true"
                         android:layout_weight="0.5"/>
                 </LinearLayout>
             </LinearLayout>
@@ -333,7 +333,7 @@
                     android:textColorHint="@color/colorPrimary"
                     android:textColor="@color/colorPrimary"
                     android:textSize="12sp"
-                    android:enabled="false"
+                    android:enabled="true"
                     android:layout_weight="0.25"/>
             </LinearLayout>
 
@@ -367,7 +367,7 @@
                     android:textColorHint="@color/colorPrimary"
                     android:textColor="@color/colorPrimary"
                     android:textSize="13sp"
-                    android:enabled="false"
+                    android:enabled="true"
                     android:layout_weight="0.25"/>
             </LinearLayout>
 
