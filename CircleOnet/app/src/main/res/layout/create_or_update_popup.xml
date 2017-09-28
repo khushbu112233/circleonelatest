@@ -7,11 +7,11 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <TextView
+    <com.circle8.circleOne.Utils.cgBoldTextView
         android:id="@+id/tvTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create A New Circle"
+        android:text="Create New Circle"
         android:textSize="18sp"
         android:textColor="@color/colorPrimary"
         android:layout_centerHorizontal="true"
@@ -23,7 +23,7 @@
         android:layout_height="90dp"
         android:layout_below="@+id/tvTextView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="20dp">
         <de.hdodenhof.circleimageview.CircleImageView
             app:civ_border_width="1dp"
             app:civ_border_color="@color/colorPrimary"
@@ -51,7 +51,7 @@
         android:textSize="11sp"
         android:visibility="gone"/>
 
-    <EditText
+    <com.circle8.circleOne.Utils.cgEditView
         android:id="@+id/etCircleName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
         android:textColor="@color/unselected" />
-    <TextView
+    <com.circle8.circleOne.Utils.cgTextView
         android:id="@+id/tvCircleNameInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
         android:textSize="11sp"
         android:visibility="gone"/>
 
-    <EditText
+    <com.circle8.circleOne.Utils.cgEditView
         android:id="@+id/etCircleDesc"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -118,23 +118,23 @@
         android:layout_marginBottom="20dp"
         android:orientation="horizontal">
 
-        <TextView
+        <com.circle8.circleOne.Utils.cgBoldTextView
             android:id="@+id/tvCreateOrUpdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Create Or Update"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textColor="@color/colorPrimary"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="30dp"/>
 
-        <TextView
+        <com.circle8.circleOne.Utils.cgBoldTextView
             android:id="@+id/tvCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cancel"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textColor="@color/colorPrimary"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"

@@ -9,8 +9,8 @@
     android:layout_height="fill_parent" >
 
 
-    <TextView
-        android:textSize="15dp"
+    <com.circle8.circleOne.Utils.cgBoldTextView
+        android:textSize="20dp"
         android:textStyle="bold"
         android:id="@+id/text"
         android:text="Registration Successful!"
@@ -19,9 +19,9 @@
         android:textColor="#FFF"
         android:layout_toRightOf="@+id/image"/>
 
-    <TextView
+    <com.circle8.circleOne.Utils.cgTextView
         android:textAlignment="center"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="17dp"
         android:layout_below="@+id/text"
         android:textSize="13dp"
         android:layout_centerInParent="true"

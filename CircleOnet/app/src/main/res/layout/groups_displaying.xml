@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <TextView
+                    <com.circle8.circleOne.Utils.cgTextView
                         android:textStyle="bold"
                         android:textColor="@color/colorPrimary"
                         android:gravity="left"
@@ -64,9 +64,9 @@
                         android:id="@+id/tvGroupName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp" />
+                        android:textSize="13sp" />
 
-                    <TextView
+                    <com.circle8.circleOne.Utils.cgTextView
                         android:textStyle="bold"
                         android:textColor="@color/colorPrimary"
                         android:gravity="left"
@@ -76,12 +76,12 @@
                         android:id="@+id/tvMemberCount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="13sp"
                         android:layout_marginLeft="0dp"/>
 
                 </LinearLayout>
 
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:textColor="@color/gray_text"
                     android:gravity="left"
                     android:hint="Group Description"
@@ -89,11 +89,11 @@
                     android:id="@+id/tvGroupDesc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
+                    android:textSize="11sp"
                     android:layout_marginTop="5dp"/>
             </LinearLayout>
 
-            <TextView
+            <com.circle8.circleOne.Utils.cgTextView
                 android:layout_weight="0.4"
                 android:ellipsize="end"
                 android:maxLines="4"

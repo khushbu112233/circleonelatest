@@ -18,29 +18,29 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp">
         <ImageView
-            android:layout_width="22dp"
-            android:layout_height="22dp"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:src="@drawable/up_expandable"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"/>
-        <TextView
+        <com.circle8.circleOne.Utils.GillSans
             android:id="@+id/tvLeftConnection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2 connections left, until end of this month"
             android:textColor="@color/colorPrimary"
-            android:textSize="12sp"
+            android:textSize="11sp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
 
-    <TextView
+    <com.circle8.circleOne.Utils.GillSans
         android:id="@+id/tvPackageName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Free Package"
-        android:textSize="25dp"
         android:textStyle="bold"
+        android:textSize="17dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="15dp"
         android:textColor="@color/colorPrimary"/>
@@ -60,13 +60,15 @@
             android:layout_weight="0.9"
             android:layout_marginTop="8dp"
             android:layout_gravity="center_vertical">
-            <TextView
+            <com.circle8.circleOne.Utils.GillSans
+                android:textSize="12dp"
                 android:id="@+id/tvContact_Group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="200 contacts, up to 5 groups,"
                 android:textColor="@color/colorPrimary"/>
-            <TextView
+            <com.circle8.circleOne.Utils.GillSans
+                android:textSize="12dp"
                 android:id="@+id/tvConnection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -81,16 +83,17 @@
             android:orientation="vertical"
             android:layout_weight="0.1"
             android:layout_gravity="center_vertical">
-            <TextView
+            <com.circle8.circleOne.Utils.GillSans
                 android:id="@+id/tvAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="S&amp; 0"
                 android:textStyle="bold"
-                android:textSize="30dp"
+                android:textSize="22dp"
                 android:layout_gravity="right"
                 android:textColor="@color/colorPrimary"/>
-            <TextView
+            <com.circle8.circleOne.Utils.GillSans
+                android:textSize="12dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="/user/month billed"
