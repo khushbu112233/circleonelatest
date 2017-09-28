@@ -44,7 +44,7 @@ public class TestimonialRequest extends AppCompatActivity
     static String TestimonialProfileId = "";
     static ArrayList<TestimonialModel> allTaggs;
     TextView textView;
-    ImageView imgLogo;
+    ImageView imgLogo, imgMenu;
 
     public static RelativeLayout rlProgressDialog ;
     public static TextView tvProgressing ;
@@ -63,6 +63,8 @@ public class TestimonialRequest extends AppCompatActivity
         getSupportActionBar().setShowHideAnimationEnabled(false);
         textView = (TextView) findViewById(R.id.mytext);
         imgLogo = (ImageView) findViewById(R.id.imgLogo);
+        imgMenu = (ImageView)findViewById(R.id.drawer);
+        imgMenu.setVisibility(View.GONE);
         textView.setText("Testimonial");
 
         Intent intent = getIntent();
@@ -169,6 +171,7 @@ public class TestimonialRequest extends AppCompatActivity
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("SearchType", "local" );
             jsonObject.accumulate("numofrecords", "30" );
             jsonObject.accumulate("pageno", "1" );
             jsonObject.accumulate("profileId", TestimonialProfileId );
