@@ -27,14 +27,14 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
-            <TextView
+            <com.circle8.circleOne.Utils.cgTextView
                 android:id="@+id/txtTitle"
-                android:textSize="18dp"
+                android:textSize="17dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add QR"
+                android:text="Add by QR"
                 android:textColor="@color/white"/>
             <ImageView
                 android:id="@+id/imgProfileMenu"

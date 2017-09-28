@@ -42,7 +42,7 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <com.circle8.circleOne.Utils.StickyScrollView
+        <LinearLayout
             android:id="@+id/scroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -65,7 +65,7 @@
                     <FrameLayout
                         android:alpha="1"
                         android:layout_width="match_parent"
-                        android:layout_height="245dp"
+                        android:layout_height="230dp"
                         android:background="@color/colorAccent">
 
                         <ImageView
@@ -97,9 +97,9 @@
                                 android:layout_alignParentLeft="true"
                                 android:layout_alignParentStart="true" />
 
-                            <TextView
+                            <com.circle8.circleOne.Utils.cgTextView
                                 android:id="@+id/txtprofile"
-                                android:textSize="18dp"
+                                android:textSize="17dp"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="8dp"
                                 android:layout_width="wrap_content"
@@ -136,10 +136,10 @@
 
                                 </RelativeLayout>
 
-                                <TextView
+                                <com.circle8.circleOne.Utils.orkebyBoldTextView
                                     android:id="@+id/tvCompanyName"
-                                    android:textSize="18dp"
-                                    android:layout_marginTop="8dp"
+                                    android:textSize="16dp"
+                                    android:layout_marginTop="15dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:textAlignment="center"
@@ -147,10 +147,10 @@
                                     android:textStyle="bold"
                                     android:textColor="@color/white"/>
 
-                                <TextView
+                                <com.circle8.circleOne.Utils.orkebyTextView
                                     android:id="@+id/tvPartner"
                                     android:textSize="16dp"
-                                    android:layout_marginTop="0dp"
+                                    android:layout_marginTop="5dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:textAlignment="center"
@@ -162,8 +162,8 @@
                                 android:id="@+id/ivMessage"
                                 android:layout_marginBottom="5dp"
                                 android:layout_marginLeft="15dp"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
                                 android:src="@drawable/ic_mail_white"
                                 android:layout_alignParentLeft="true"
                                 android:layout_alignParentBottom="true"/>
@@ -173,9 +173,9 @@
                                 android:layout_alignParentBottom="true"
                                 android:layout_alignParentRight="true"
                                 android:layout_marginRight="15dp"
-                                android:layout_marginBottom="10dp"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                                android:layout_marginBottom="5dp"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
                                 android:src="@drawable/ic_phone_white"/>
 
                         </RelativeLayout>
@@ -190,7 +190,7 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:elevation="2dp"
+                        android:elevation="1dp"
                         android:layout_marginTop="0dp"
                         android:layout_marginBottom="5dp"
                         android:gravity="center"
@@ -204,37 +204,37 @@
                             android:layout_marginLeft="30dp"
                             android:layout_weight="1"
                             android:padding="6dp"
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
                             android:src="@drawable/icon_fb"/>
                         <ImageView
                             android:id="@+id/linkedInUrl"
                             android:layout_weight="1"
                             android:padding="5dp"
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
                             android:src="@drawable/icon_linkedin"/>
                         <ImageView
                             android:id="@+id/twitterUrl"
                             android:layout_weight="1"
                             android:padding="5dp"
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
                             android:src="@drawable/icon_twitter"/>
                         <ImageView
                             android:id="@+id/googleUrl"
                             android:layout_weight="1"
                             android:padding="5dp"
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
                             android:src="@drawable/icon_google"/>
                         <ImageView
                             android:id="@+id/youtubeUrl"
                             android:layout_marginRight="30dp"
                             android:layout_weight="1"
                             android:padding="5dp"
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
                             android:src="@drawable/icon_utube_red"/>
                     </LinearLayout>
 
@@ -254,7 +254,10 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="285dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true">
 
                         <LinearLayout
                             android:id="@+id/lnrAddress1"
@@ -269,7 +272,7 @@
                                 android:layout_width="25dp"
                                 android:layout_height="25dp"
                                 android:src="@drawable/ic_location_blue"/>
-                            <TextView
+                            <com.circle8.circleOne.Utils.cgTextView
                                 android:id="@+id/tvAddress1"
                                 android:textColor="@color/colorPrimary"
                                 android:textSize="15sp"
@@ -291,7 +294,7 @@
                                 android:layout_width="25dp"
                                 android:layout_height="25dp"
                                 android:src="@drawable/ic_web_blue"/>
-                            <TextView
+                            <com.circle8.circleOne.Utils.cgTextView
                                 android:id="@+id/tvWebsite"
                                 android:textAlignment="center"
                                 android:gravity="center"
@@ -315,7 +318,7 @@
                                 android:layout_width="25dp"
                                 android:layout_height="25dp"
                                 android:src="@drawable/ic_mail_blue"/>
-                            <TextView
+                            <com.circle8.circleOne.Utils.cgTextView
                                 android:id="@+id/tvMail"
                                 android:textAlignment="center"
                                 android:gravity="center"
@@ -339,7 +342,7 @@
                                 android:layout_width="25dp"
                                 android:layout_height="25dp"
                                 android:src="@drawable/ic_phone_blue"/>
-                            <TextView
+                            <com.circle8.circleOne.Utils.cgTextView
                                 android:id="@+id/tvPhone"
                                 android:textAlignment="center"
                                 android:gravity="center"
@@ -360,7 +363,7 @@
 
             </LinearLayout>
 
-        </com.circle8.circleOne.Utils.StickyScrollView>
+        </LinearLayout>
 
     </android.support.design.widget.CoordinatorLayout>
 
