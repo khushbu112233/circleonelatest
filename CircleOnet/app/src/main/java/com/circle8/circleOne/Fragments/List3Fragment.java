@@ -15,6 +15,7 @@ import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
@@ -107,6 +108,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
     {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list3, container, false);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         mContext = List3Fragment.this.getContext() ;
 
@@ -259,22 +261,43 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
                     gridAdapter.Filter(text);
                 }*/
+                try
+                {
                     if (s.length() <= 0)
                     {
                         pageno = 1;
+                        nfcModel1.clear();
                         allTaggs.clear();
-                        searchTags.clear();
-                        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
+                        try
+                        {
+                            gridAdapter.notifyDataSetChanged();
+                        } catch (Exception e) {
+                        }
+                        callFirst();
+//                        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
 //                    GetData(getContext());
                     }
                     else if (s.length() > 0)
                     {
                         String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
 
+                        nfcModel1.clear();
                         allTaggs.clear();
-                        searchTags.clear();
+                        try
+                        {
+                            gridAdapter.notifyDataSetChanged();
+                        }
+                        catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
                         new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
                     }
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
                 }
 
             @Override
@@ -409,11 +432,11 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                     try {
                         gridAdapter.notifyDataSetChanged();
                     }catch (Exception e){}
+
                     if(connect.length() == 0)
                     {
                         //tvDataInfo.setVisibility(View.VISIBLE);
                         allTaggs.clear();
-                        searchTags.clear();
                         try {
                             gridAdapter.notifyDataSetChanged();
                         }catch (Exception e){}
@@ -421,7 +444,6 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                     else
                     {
                         //  tvDataInfo.setVisibility(View.GONE);
-
                         for(int i = 0 ; i <= connect.length() ; i++ )
                         {
                             JSONObject iCon = connect.getJSONObject(i);

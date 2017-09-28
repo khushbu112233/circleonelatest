@@ -476,9 +476,12 @@ public class LoginActivity extends AppCompatActivity implements
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressDialog = new ProgressDialog(LoginActivity.this);
+               /* progressDialog = new ProgressDialog(LoginActivity.this);
                 progressDialog.setMessage("Loading...");
-                progressDialog.show();
+                progressDialog.show();*/
+
+                String loading = "Loading" ;
+                CustomProgressDialog(loading);
 
                 loginButton.performClick();
 
@@ -1226,9 +1229,12 @@ public class LoginActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
 
-                progressDialog = new ProgressDialog(LoginActivity.this);
+               /* progressDialog = new ProgressDialog(LoginActivity.this);
                 progressDialog.setMessage("Loading...");
-                progressDialog.show();
+                progressDialog.show();*/
+
+                String loading = "Loading" ;
+                CustomProgressDialog(loading);
 
                 loginButton.performClick();
 
@@ -1354,15 +1360,20 @@ public class LoginActivity extends AppCompatActivity implements
         super.onActivityResult(requestCode, resultCode, data);
         // mLoginButton.onActivityResult(requestCode, resultCode, data);
         client.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode == RC_SIGN_IN)
+        {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
-        } else if (LinkedInFlag == true) {
+        }
+        else if (LinkedInFlag == true)
+        {
             LISessionManager.getInstance(getApplicationContext()).onActivityResult(this, requestCode, resultCode, data);
-            progress = new ProgressDialog(this);
+            /*progress = new ProgressDialog(this);
             progress.setMessage("Logging in...");
             progress.setCanceledOnTouchOutside(false);
-            progress.show();
+            progress.show();*/
+            String loading = "Logging In" ;
+            CustomProgressDialog(loading);
             linkededinApiHelper();
         }
         callbackManager.onActivityResult(requestCode, resultCode, data);
@@ -1376,7 +1387,8 @@ public class LoginActivity extends AppCompatActivity implements
                 try {
 
                     setprofile(result.getResponseDataAsJson());
-                    progress.dismiss();
+//                    progress.dismiss();
+                    rlProgressDialog.setVisibility(View.GONE);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -1495,7 +1507,9 @@ public class LoginActivity extends AppCompatActivity implements
             Log.d(TAG, "Got cached sign-in");
             GoogleSignInResult result = opr.get();
             handleSignInResult(result);
-        } else {
+        }
+        else
+        {
             // If the user has not previously signed in on this device or the sign-in has expired,
             // this asynchronous branch will attempt to sign in the user silently.  Cross-device
             // single sign-on will occur in this branch.
@@ -1512,19 +1526,23 @@ public class LoginActivity extends AppCompatActivity implements
 
     private void showProgressDialog()
     {
-        if (mProgressDialog == null)
+        /*if (mProgressDialog == null)
         {
             mProgressDialog = new ProgressDialog(LoginActivity.this);
             mProgressDialog.setMessage("Google Login..");
             mProgressDialog.setIndeterminate(true);
         }
-        mProgressDialog.show();
+        mProgressDialog.show();*/
+        String loading = "Google Login" ;
+        CustomProgressDialog(loading);
     }
 
-    private void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+    private void hideProgressDialog()
+    {
+        /*if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.hide();
-        }
+        }*/
+        rlProgressDialog.setVisibility(View.GONE);
     }
 
     private void updateUI(boolean isSignedIn) {
@@ -1548,9 +1566,11 @@ public class LoginActivity extends AppCompatActivity implements
 
     private FacebookCallback<LoginResult> mCallBack = new FacebookCallback<LoginResult>() {
         @Override
-        public void onSuccess(LoginResult loginResult) {
+        public void onSuccess(LoginResult loginResult)
+        {
 
-            progressDialog.dismiss();
+//            progressDialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
 
             // App code
             GraphRequest request = GraphRequest.newMeRequest(
@@ -1645,12 +1665,14 @@ public class LoginActivity extends AppCompatActivity implements
 
         @Override
         public void onCancel() {
-            progressDialog.dismiss();
+//            progressDialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
         }
 
         @Override
         public void onError(FacebookException e) {
-            progressDialog.dismiss();
+//            progressDialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
         }
     };
 
@@ -1678,11 +1700,13 @@ public class LoginActivity extends AppCompatActivity implements
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(LoginActivity.this);
+            /*dialog = new ProgressDialog(LoginActivity.this);
             dialog.setMessage("Logging In...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
+            String loading = "Logging In" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -1692,9 +1716,13 @@ public class LoginActivity extends AppCompatActivity implements
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
-            dialog.dismiss();
-            try {
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
+
+            try
+            {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
                     String success = jsonObject.getString("success").toString();

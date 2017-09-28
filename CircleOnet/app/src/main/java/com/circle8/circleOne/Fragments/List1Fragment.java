@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
@@ -142,6 +143,8 @@ public class List1Fragment extends Fragment
 
         view = inflater.inflate(R.layout.fragment_list1, container, false);
         vc = ViewConfiguration.get(view.getContext());
+
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
         // frameList1 = (FrameLayout) view.findViewById(R.id.frameList1);
@@ -367,8 +370,10 @@ public class List1Fragment extends Fragment
             }
 
             @Override
-            public void onTextChanged(final CharSequence s, int start, int before, int count) {
-                if (s.length() == 0) {
+            public void onTextChanged(final CharSequence s, int start, int before, int count)
+            {
+                if (s.length() == 0)
+                {
                     // allTags = db.getActiveNFC();
 //                    GetData(getContext());
                     nfcModel.clear();
@@ -383,12 +388,15 @@ public class List1Fragment extends Fragment
                     } catch (Exception e) {
                     }
                     callFirst();
-                } else if (s.length() > 0) {
+                }
+                else if (s.length() > 0)
+                {
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
 
-//                        nfcModel.clear();
+                    nfcModel.clear();
                     allTags.clear();
-                    try {
+                    try
+                    {
                         mAdapter.notifyDataSetChanged();
                     } catch (Exception e) {
                     }
@@ -397,7 +405,9 @@ public class List1Fragment extends Fragment
                     } catch (Exception e) {
                     }
                     new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
-                } else {
+                }
+                else
+                {
 
                 }
             }
@@ -930,10 +940,14 @@ public class List1Fragment extends Fragment
             // dialog.dismiss();
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
 
-            try {
-                if (result == "") {
+            try
+            {
+                if (result == "")
+                {
                     Toast.makeText(getContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
-                } else {
+                }
+                else
+                {
                     JSONObject response = new JSONObject(result);
                     String message = response.getString("message");
                     String success = response.getString("success");
@@ -952,7 +966,9 @@ public class List1Fragment extends Fragment
                         mAdapter1.notifyDataSetChanged();
                     } catch (Exception e) {
                     }
-                    if (connect.length() == 0) {
+
+                    if (connect.length() == 0)
+                    {
                         //  tvNoCard.setVisibility(View.VISIBLE);
                         allTags.clear();
                         try {
@@ -963,10 +979,12 @@ public class List1Fragment extends Fragment
                             mAdapter1.notifyDataSetChanged();
                         } catch (Exception e) {
                         }
-                    } else {
+                    }
+                    else
+                    {
                         //  tvNoCard.setVisibility(View.GONE);
-
-                        for (int i = 0; i <= connect.length(); i++) {
+                        for (int i = 0; i <= connect.length(); i++)
+                        {
                             JSONObject iCon = connect.getJSONObject(i);
                             FriendConnection connectModel = new FriendConnection();
                             connectModel.setUserID(iCon.getString("UserID"));

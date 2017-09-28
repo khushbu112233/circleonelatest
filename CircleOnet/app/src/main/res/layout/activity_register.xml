@@ -280,7 +280,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <com.hbb20.CountryCodePicker
-                app:ccp_defaultPhoneCode="+65"
+                app:ccp_defaultPhoneCode="65"
                 android:visibility="visible"
                 app:ccpDialog_searchEditTextTint="@color/colorPrimary"
                 app:ccp_textSize="15dp"

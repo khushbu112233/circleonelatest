@@ -14,6 +14,7 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -27,12 +28,15 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -111,6 +115,11 @@ public class GroupDetailActivity extends AppCompatActivity
     String image;
     public static JSONArray selectedStrings = new JSONArray();
     ImageView ivDelete;
+
+    private RelativeLayout rlProgressDialog ;
+    private TextView tvProgressing ;
+    private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -128,6 +137,12 @@ public class GroupDetailActivity extends AppCompatActivity
         ivChangeProfImg = (ImageView)findViewById(R.id.imgCamera);
         ivShareImg = (ImageView)findViewById(R.id.ivProfileShare);
         ivEditImg = (ImageView)findViewById(R.id.ivEdit);
+
+        rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
+        tvProgressing = (TextView)findViewById(R.id.txtProgressing);
+        ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
+        ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
+        ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
 
         session = new LoginSession(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
@@ -339,13 +354,16 @@ public class GroupDetailActivity extends AppCompatActivity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(GroupDetailActivity.this);
+           /* dialog = new ProgressDialog(GroupDetailActivity.this);
             dialog.setMessage("Deleting Group...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
+
+            String loading = "Deleting Group" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -357,7 +375,8 @@ public class GroupDetailActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
             try
             {
 
@@ -391,11 +410,14 @@ public class GroupDetailActivity extends AppCompatActivity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(GroupDetailActivity.this);
+           /* dialog = new ProgressDialog(GroupDetailActivity.this);
             dialog.setMessage("Uploading...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
+
+            String loading = "Uploading" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -407,7 +429,8 @@ public class GroupDetailActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result != null)
@@ -506,13 +529,16 @@ public class GroupDetailActivity extends AppCompatActivity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(GroupDetailActivity.this);
+            /*dialog = new ProgressDialog(GroupDetailActivity.this);
             dialog.setMessage("Creating Circle...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
+
+            String loading = "Creating Circle" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -524,7 +550,9 @@ public class GroupDetailActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
+
             try
             {
                 if (result != null)
@@ -703,10 +731,13 @@ public class GroupDetailActivity extends AppCompatActivity
         protected void onPreExecute()
         {
             super.onPreExecute();
-            dialog = new ProgressDialog(GroupDetailActivity.this);
+           /* dialog = new ProgressDialog(GroupDetailActivity.this);
             dialog.setMessage("Fetching Connections...");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
+
+            String loading = "Fetch Connections" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -718,7 +749,9 @@ public class GroupDetailActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
+
             try
             {
                 if (result != null)
@@ -1015,6 +1048,43 @@ public class GroupDetailActivity extends AppCompatActivity
         }
 //        BmToString(bm);
     }
+
+    public void CustomProgressDialog(final String loading)
+    {
+        rlProgressDialog.setVisibility(View.VISIBLE);
+        tvProgressing.setText(loading);
+
+        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
+        ivConnecting1.startAnimation(anim);
+        Animation anim1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.clockwise);
+        ivConnecting2.startAnimation(anim1);
+
+        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
+        for (int i = 350; i <= SPLASHTIME; i = i + 350)
+        {
+            final int j = i;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run()
+                {
+                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
+                    {
+                        tvProgressing.setText(loading+".");
+                    }
+                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
+                    {
+                        tvProgressing.setText(loading+"..");
+                    }
+                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+
+                }
+            }, i);
+        }
+    }
+
 
 
 }
