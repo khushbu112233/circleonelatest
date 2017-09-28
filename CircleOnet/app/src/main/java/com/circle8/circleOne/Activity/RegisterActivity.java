@@ -436,8 +436,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             password = etPassword.getText().toString();
             c_password = etConfirmPass.getText().toString();
             email = etEmail.getText().toString();
+            String code;
+            try {
+                code = ccp.getSelectedCountryCode().toString();
+            }catch (Exception e){
+                code = ccp.getDefaultCountryCodeWithPlus().toString();
+            }
 
-            String code = ccp.getSelectedCountryCode().toString();
            // String code = tvCountryCode.getText().toString();
             String contact = phone_no;
             phone_no = code + contact;

@@ -72,7 +72,6 @@
                     android:textStyle="bold"
                     android:textColor="@android:color/black"
                     android:gravity="left"
-                    android:text="Physician Yong"
                     android:visibility="visible"
                     android:id="@+id/tvPersonName"
                     android:layout_width="wrap_content"
@@ -81,7 +80,6 @@
                 <com.circle8.circleOne.Utils.cgTextView
                     android:textColor="@color/gray_text"
                     android:gravity="left"
-                    android:text="Physician Yong"
                     android:visibility="visible"
                     android:id="@+id/tvDesignation"
                     android:layout_width="wrap_content"
@@ -94,7 +92,6 @@
                 android:maxLines="6"
                 android:layout_gravity="center_vertical|right"
                 android:gravity="left|center_vertical"
-                android:text="Address \n Company Name\n Email \n Website \n Telephone \n Mobile"
                 android:visibility="visible"
                 android:textColor="@color/gray_text"
                 android:id="@+id/tvPersonDetail"

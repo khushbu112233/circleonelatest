@@ -35,7 +35,6 @@
                     android:textStyle="normal"
                     android:textColor="@color/colorPrimary"
                     android:gravity="left"
-                    android:hint="Physician Yong"
                     android:textColorHint="@color/colorPrimary"
                     android:visibility="visible"
                     android:id="@+id/tvPersonName1"

@@ -12,7 +12,7 @@
         android:layout_marginRight="0dp"
         android:layout_marginTop="5dp">
 
-        <TextView
+        <com.circle8.circleOne.Utils.cgTextView
             android:id="@+id/tvMonth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,14 +27,14 @@
             android:weightSum="3"
             android:layout_below="@+id/tvMonth"
             android:layout_marginTop="10dp">
-            <TextView
+            <com.circle8.circleOne.Utils.cgTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="07th"
                 android:textColor="@color/colorPrimary"
                 android:layout_weight="1"
                 android:layout_gravity="left"/>
-            <TextView
+            <com.circle8.circleOne.Utils.cgTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Transfer To Circle1 Card"
@@ -48,7 +48,7 @@
                 android:orientation="horizontal"
                 android:layout_weight="1"
                 android:gravity="center_vertical">
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="-1000"

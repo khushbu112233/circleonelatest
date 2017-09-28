@@ -1,27 +1,61 @@
 package com.circle8.circleOne.Activity;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.util.Base64;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.circle8.circleOne.Fragments.CardsFragment;
+import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.R;
 import com.google.zxing.Result;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 import me.dm7.barcodescanner.core.IViewFinder;
 import me.dm7.barcodescanner.core.ViewFinderView;
@@ -34,6 +68,9 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
     ZXingScannerView mScannerView ;
     ViewGroup contentFrame ;
     String scanQr="",scanFormat="" ;
+    String profileId = "";
+    private LoginSession session;
+    public String secretKey = "1234567890234561";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -44,7 +81,10 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
         contentFrame = (ViewGroup) findViewById(R.id.content_frame);
         btnRescan = (Button)findViewById(R.id.btnRescan);
         imgBack = (ImageView)findViewById(R.id.imgBack);
+        session = new LoginSession(getApplicationContext());
+        HashMap<String, String> user = session.getUserDetails();
 
+        profileId = user.get(LoginSession.KEY_PROFILEID);
        /* mScannerView = new ZXingScannerView(this);
         contentFrame.addView(mScannerView);
         CameraScann();*/
@@ -84,6 +124,32 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
 
     }
 
+    public String decrypt(String value, String key)
+            throws GeneralSecurityException, IOException {
+        byte[] value_bytes = Base64.decode(value, 0);
+        byte[] key_bytes = getKeyBytes(key);
+        return new String(decrypt(value_bytes, key_bytes, key_bytes), "UTF-8");
+    }
+
+    public byte[] decrypt(byte[] ArrayOfByte1, byte[] ArrayOfByte2, byte[] ArrayOfByte3)
+            throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
+        // setup AES cipher in CBC mode with PKCS #5 padding
+        Cipher localCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+
+        // decrypt
+        localCipher.init(2, new SecretKeySpec(ArrayOfByte2, "AES"), new IvParameterSpec(ArrayOfByte3));
+        return localCipher.doFinal(ArrayOfByte1);
+    }
+
+    private byte[] getKeyBytes(String paramString)
+            throws UnsupportedEncodingException {
+        byte[] arrayOfByte1 = new byte[16];
+        byte[] arrayOfByte2 = paramString.getBytes("UTF-8");
+        System.arraycopy(arrayOfByte2, 0, arrayOfByte1, 0, Math.min(arrayOfByte2.length, arrayOfByte1.length));
+        return arrayOfByte1;
+    }
+
+
     @Override
     public void onBackPressed() {
 
@@ -96,9 +162,30 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
 //                ", Format = " + rawResult.getBarcodeFormat().toString()+
 //                ", Points = "+rawResult.getResultPoints(), Toast.LENGTH_SHORT).show();
 
-        scanQr = rawResult.getText();
+    //    nfcProfileId = decrypt(scanQr, secretKey);
+       // scanQr = rawResult.getText();
         scanFormat = rawResult.getBarcodeFormat().toString();
-        AlertDisplay();
+    //    new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
+
+
+
+        try {
+
+            scanQr = decrypt(rawResult.getText().toString(), secretKey);
+           // Toast.makeText(getApplicationContext(), scanQr, Toast.LENGTH_LONG).show();
+            try {
+                mScannerView.stopCamera();
+                CameraScann();
+                new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+            }
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //AlertDisplay();
 
 //        Handler handler = new Handler();
 //        handler.postDelayed(new Runnable() {
@@ -123,6 +210,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
                 adialog.cancel();
                 mScannerView.stopCamera();
                 CameraScann();
+                new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
             }
         });
 //        alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -134,6 +222,172 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
 //        });
         AlertDialog alertDialog = alert.create();
         alertDialog.show();
+    }
+
+    public String POST(String url) {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("Operation", "Request");
+            jsonObject.accumulate("RequestType", "NFC");
+            jsonObject.accumulate("friendProfileId", scanQr);
+            jsonObject.accumulate("myProfileId", profileId);
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+        while ((line = bufferedReader.readLine()) != null)
+            result += line;
+
+        inputStream.close();
+        return result;
+
+    }
+
+
+    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(AddQRActivity.this);
+            dialog.setMessage("Adding Records...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return POST(urls[0]);
+        }
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+            dialog.dismiss();
+            //  Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            try {
+                if (result == "") {
+                    Toast.makeText(getApplicationContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
+                } else {
+                    JSONObject response = new JSONObject(result);
+                    String message = response.getString("message");
+                    String success = response.getString("success");
+
+                    if (success.equals("1")) {
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.successful_request_sent), Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
+                        intent.putExtra("viewpager_position", CardsActivity.mViewPager.getCurrentItem());
+                        intent.putExtra("nested_viewpager_position", CardsFragment.mViewPager.getCurrentItem());
+                        startActivity(intent);
+                        finish();
+                        /*CardsFragment.mViewPager.getCurrentItem();
+                        List1Fragment.webCall();
+                        List2Fragment.webCall();
+                        List3Fragment.webCall();
+                        List4Fragment.webCall();*/
+                    } else {
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                    }
+
+                 /*   try
+                    {
+//                    List2Fragment.allTaggs.clear();
+                        List2Fragment.nfcModel.clear();
+                        List2Fragment.gridAdapter.notifyDataSetChanged();
+                        List2Fragment.GetData(context);
+                    }
+                    catch(Exception e) {    }
+
+                    try
+                    {
+
+//                    List3Fragment.allTaggs.clear();
+                        List3Fragment.nfcModel1.clear();
+                        List3Fragment.gridAdapter.notifyDataSetChanged();
+                        List3Fragment.GetData(context);
+                    }
+                    catch(Exception e) {    }
+
+                    try
+                    {
+
+//                    List4Fragment.allTaggs.clear();
+                        List4Fragment.nfcModel1.clear();
+                        List4Fragment.gridAdapter.notifyDataSetChanged();
+                        List4Fragment.GetData(context);
+                    }
+                    catch(Exception e) {    }
+
+                    try
+                    {
+
+//                    List1Fragment.allTags.clear();
+                        List1Fragment.nfcModel.clear();
+                        List1Fragment.mAdapter.notifyDataSetChanged();
+                        List1Fragment.mAdapter1.notifyDataSetChanged();
+                        List1Fragment.GetData(context);
+                    }
+                    catch(Exception e) {    }*/
+
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
