@@ -20,7 +20,7 @@ public class Validation
         if(userName.isEmpty() || userName.length() < 3 )
         {
 //            RegisterActivity.etUserName.setError("Minimum 3 Characters.");
-            RegisterActivity.tvUsernameInfo.setText("Mini 3 Characters");
+            RegisterActivity.tvUsernameInfo.setText("Min 3 Characters");
             RegisterActivity.tvUsernameInfo.setVisibility(View.VISIBLE);
             valid = false ;
         }
@@ -33,7 +33,7 @@ public class Validation
         if(firstName.isEmpty() || firstName.length() < 3 )
         {
 //            RegisterActivity.etFirstName.setError("Minimum 3 Characters.");
-            RegisterActivity.tvFirstnameInfo.setText("Mini 3 Characters");
+            RegisterActivity.tvFirstnameInfo.setText("Min 3 Characters");
             RegisterActivity.tvFirstnameInfo.setVisibility(View.VISIBLE);
             valid = false ;
         }
@@ -46,7 +46,7 @@ public class Validation
         if(lastName.isEmpty() || lastName.length() < 3 )
         {
 //            RegisterActivity.etLastName.setError("Minimum 3 Characters.");
-            RegisterActivity.tvLastnameInfo.setText("Mini 3 Characters");
+            RegisterActivity.tvLastnameInfo.setText("Min 3 Characters");
             RegisterActivity.tvLastnameInfo.setVisibility(View.VISIBLE);
             valid = false ;
         }
@@ -74,10 +74,10 @@ public class Validation
             RegisterActivity.tvEmailInfo.setVisibility(View.GONE);
         }
 
-        if(contactNo.isEmpty() || contactNo.length() <= 8  )
+        if(contactNo.isEmpty()  )
         {
 //            RegisterActivity.etPhone.setError("10 Characters Required");
-            RegisterActivity.tvPhoneInfo.setText("Mini 8 digit");
+            RegisterActivity.tvPhoneInfo.setText("Enter Contact Number");
             RegisterActivity.tvPhoneInfo.setVisibility(View.VISIBLE);
             valid = false ;
         }
@@ -90,7 +90,7 @@ public class Validation
         if (password.isEmpty() || password.length() < 4)
         {
 //            RegisterActivity.etPassword.setError("Minimum 4 Characters");
-            RegisterActivity.tvPasswordInfo.setText("Mini 4 Characters");
+            RegisterActivity.tvPasswordInfo.setText("Min 4 Characters");
             RegisterActivity.tvPasswordInfo.setVisibility(View.VISIBLE);
             valid = false;
         }

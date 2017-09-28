@@ -90,6 +90,7 @@ public class List1Fragment extends Fragment
     FrameLayout frame, frame1;
 
     public static int pageno = 1;
+    ImageView imgSearch;
 
     View view;
 
@@ -148,7 +149,7 @@ public class List1Fragment extends Fragment
 
         mContext = List1Fragment.this.getContext();
         pageno = 1;
-
+        imgSearch = (ImageView) view.findViewById(R.id.imgSearch);
         recyclerView1 = (RecyclerView) view.findViewById(R.id.list_horizontal1);
         recyclerView2 = (RecyclerView) view.findViewById(R.id.list_horizontal2);
         txtNoCard1 = (TextView) view.findViewById(R.id.txtNoCard1);

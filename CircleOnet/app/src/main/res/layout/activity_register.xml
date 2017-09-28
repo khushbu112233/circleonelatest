@@ -104,14 +104,6 @@
                 android:text="Registration"
                 android:textColor="@color/white"/>
 
-            <ImageView
-                android:layout_width="22dp"
-                android:layout_height="30dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:src="@drawable/ic_dehaze_black_24dp" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -288,6 +280,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <com.hbb20.CountryCodePicker
+                app:ccp_defaultPhoneCode="+65"
                 android:visibility="visible"
                 app:ccpDialog_searchEditTextTint="@color/colorPrimary"
                 app:ccp_textSize="15dp"
@@ -350,7 +343,7 @@
             android:textSize="15dp"
             android:backgroundTint="@color/textColor"
             android:textColorHint="@color/colorPrimary"
-            android:hint="* Referral Code"
+            android:hint="Referral Code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"/>

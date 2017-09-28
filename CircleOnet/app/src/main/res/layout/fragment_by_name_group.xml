@@ -17,6 +17,7 @@
             android:paddingRight="10dp"
             android:layout_toLeftOf="@+id/imgSearch"
             android:paddingLeft="10dp"
+            android:layout_marginRight="20dp"
             android:hint="Search in your contacts"
             android:id="@+id/searchView"
             android:layout_width="match_parent"
@@ -31,12 +32,11 @@
         <ImageView
             android:layout_marginRight="10dp"
             android:layout_centerVertical="true"
-            android:backgroundTint="@color/colorAccent"
-            android:background="@drawable/search"
+            android:src="@drawable/search"
             android:id="@+id/imgSearch"
             android:layout_alignParentRight="true"
-            android:layout_width="20dp"
-            android:layout_height="20dp" />
+            android:layout_width="22dp"
+            android:layout_height="22dp" />
     </RelativeLayout>
 
     <View
