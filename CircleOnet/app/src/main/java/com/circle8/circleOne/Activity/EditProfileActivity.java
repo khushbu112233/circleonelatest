@@ -516,9 +516,12 @@ public class EditProfileActivity extends AppCompatActivity implements
         imgFb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressDialog = new ProgressDialog(EditProfileActivity.this);
+                /*progressDialog = new ProgressDialog(EditProfileActivity.this);
                 progressDialog.setMessage("Loading...");
-                progressDialog.show();
+                progressDialog.show();*/
+
+                String loading = "Loading" ;
+                CustomProgressDialog(loading);
 
                 loginButton.performClick();
 
@@ -1095,9 +1098,11 @@ public class EditProfileActivity extends AppCompatActivity implements
 
     private FacebookCallback<LoginResult> mCallBack = new FacebookCallback<LoginResult>() {
         @Override
-        public void onSuccess(LoginResult loginResult) {
+        public void onSuccess(LoginResult loginResult)
+        {
 
-            progressDialog.dismiss();
+//            progressDialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
 
             // App code
             GraphRequest request = GraphRequest.newMeRequest(
@@ -1129,13 +1134,17 @@ public class EditProfileActivity extends AppCompatActivity implements
         }
 
         @Override
-        public void onCancel() {
-            progressDialog.dismiss();
+        public void onCancel()
+        {
+//            progressDialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
         }
 
         @Override
-        public void onError(FacebookException e) {
-            progressDialog.dismiss();
+        public void onError(FacebookException e)
+        {
+//            progressDialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
         }
     };
 
@@ -1155,9 +1164,12 @@ public class EditProfileActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
 
-                progressDialog = new ProgressDialog(EditProfileActivity.this);
+               /* progressDialog = new ProgressDialog(EditProfileActivity.this);
                 progressDialog.setMessage("Loading...");
-                progressDialog.show();
+                progressDialog.show();*/
+
+                String loading = "Loading" ;
+                CustomProgressDialog(loading);
 
                 loginButton.performClick();
 
@@ -2054,12 +2066,17 @@ public class EditProfileActivity extends AppCompatActivity implements
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
         client.onActivityResult(requestCode, resultCode, data);
-        if (LinkedInFlag == true) {
+        if (LinkedInFlag == true)
+        {
             LISessionManager.getInstance(getApplicationContext()).onActivityResult(this, requestCode, resultCode, data);
-            progress = new ProgressDialog(this);
+            /*progress = new ProgressDialog(this);
             progress.setMessage("Logging in...");
             progress.setCanceledOnTouchOutside(false);
-            progress.show();
+            progress.show();*/
+
+            String loading = "Logging In" ;
+            CustomProgressDialog(loading);
+
             linkededinApiHelper();
         }
         if (resultCode == Activity.RESULT_OK) {
@@ -2136,7 +2153,9 @@ public class EditProfileActivity extends AppCompatActivity implements
             Log.d("TAG", "Got cached sign-in");
             GoogleSignInResult result = opr.get();
             handleSignInResult(result);
-        } else {
+        }
+        else
+        {
             // If the user has not previously signed in on this device or the sign-in has expired,
             // this asynchronous branch will attempt to sign in the user silently.  Cross-device
             // single sign-on will occur in this branch.
@@ -2151,20 +2170,27 @@ public class EditProfileActivity extends AppCompatActivity implements
         }
     }
 
-    private void showProgressDialog() {
-        if (mProgressDialog == null) {
+    private void showProgressDialog()
+    {
+       /* if (mProgressDialog == null)
+        {
             mProgressDialog = new ProgressDialog(this);
             mProgressDialog.setMessage("Google Login..");
             mProgressDialog.setIndeterminate(true);
         }
 
-        mProgressDialog.show();
+        mProgressDialog.show();*/
+
+        String loading = "Google Login" ;
+        CustomProgressDialog(loading);
     }
 
-    private void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+    private void hideProgressDialog()
+    {
+        /*if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.hide();
-        }
+        }*/
+        rlProgressDialog.setVisibility(View.GONE);
     }
 
     @Override
@@ -2819,14 +2845,16 @@ public class EditProfileActivity extends AppCompatActivity implements
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(EditProfileActivity.this);
+           /* dialog = new ProgressDialog(EditProfileActivity.this);
             dialog.setMessage("Loading..");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
 
+            String loading = "Loading" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -2836,8 +2864,10 @@ public class EditProfileActivity extends AppCompatActivity implements
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
-            dialog.dismiss();
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
 
 
@@ -2876,14 +2906,16 @@ public class EditProfileActivity extends AppCompatActivity implements
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(EditProfileActivity.this);
+           /* dialog = new ProgressDialog(EditProfileActivity.this);
             dialog.setMessage("Loading..");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
 
+            String loading = "Loading" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -2893,12 +2925,14 @@ public class EditProfileActivity extends AppCompatActivity implements
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
-            dialog.dismiss();
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
 
-
-            try {
+            try
+            {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
                     JSONArray jsonArray = jsonObject.getJSONArray("company");
@@ -3145,14 +3179,16 @@ public class EditProfileActivity extends AppCompatActivity implements
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(EditProfileActivity.this);
+            /*dialog = new ProgressDialog(EditProfileActivity.this);
             dialog.setMessage("Loading..");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
 
+            String loading = "Loading" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -3162,8 +3198,10 @@ public class EditProfileActivity extends AppCompatActivity implements
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
-            dialog.dismiss();
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result != null) {
