@@ -175,9 +175,9 @@ public class EditProfileActivity extends AppCompatActivity implements
     String association_ID, association_NAME;
     String profileId = "", Card_Front = "", Card_Back = "", FirstName = "", LastName = "", UserPhoto = "", Phone1 = "", Phone2 = "", Mobile1 = "", Mobile2 = "",
             Fax1 = "", Fax2 = "", Email1 = "", Email2 = "", Youtube = "",
-            Facebook = "", Twitter = "", Google = "", LinkedIn = "", IndustryName = "", CompanyName = "", CompanyProfile = "", Designation = "", ProfileDesc = "", ProfileName = "", Status = "";
+            Facebook = "", Twitter = "", Google = "", LinkedIn = "", IndustryName = "", CompanyName = "", CompanyProfile = "", Designation = "", ProfileDesc = "", Status = "";
     String Address1 = "", Address2 = "", Address3 = "", Address4 = "", City = "", State = "", Country = "", Postalcode = "", Website = "", Attachment_FileName = "";
-    EditText edtUserName, edtWork, edtPrimary, edtEmail, edtProfileName, edtProfileDesc, edtCompanyDesc;
+    EditText edtUserName, edtWork, edtPrimary, edtEmail, edtProfileDesc, edtCompanyDesc;
     public static ViewPager mViewPager, viewPager1;
     CircleImageView imgProfile;
     TextView tvPersonName, tvDesignation, tvCompany;
@@ -394,7 +394,6 @@ public class EditProfileActivity extends AppCompatActivity implements
         edtEmail = (EditText) findViewById(R.id.edtEmail);
         edtWebsite = (EditText) findViewById(R.id.edtWebsite);
         edtProfileDesc = (EditText) findViewById(R.id.edtProfileDesc);
-        edtProfileName = (EditText)findViewById(R.id.edtProfileName);
         edtCompanyDesc = (EditText) findViewById(R.id.edtCompanyDesc);
         edtPrimary = (EditText) findViewById(R.id.edtPrimary);
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -720,8 +719,8 @@ public class EditProfileActivity extends AppCompatActivity implements
       //  new HttpAsyncTaskIndustry().execute("http://circle8.asia:8999/Onet.svc/GetIndustryList");
       //  new HttpAsyncTaskDesignation().execute("http://circle8.asia:8999/Onet.svc/GetDesignationList");
         new HttpAsyncTaskAssociation().execute("http://circle8.asia:8999/Onet.svc/GetAssociationList");
-        new HttpAsyncTaskEventList().execute("http://circle8.asia:8999/Onet.svc/Events/List");
-
+//        new HttpAsyncTaskEventList().execute("http://circle8.asia:8999/Onet.svc/Events/List");
+//
         if (type.equals("edit")) {
             new HttpAsyncTaskUserProfile().execute("http://circle8.asia:8999/Onet.svc/GetUserProfile");
             new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Fetch");
@@ -1412,7 +1411,6 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("Postalcode", edtAddress6.getText().toString());
             jsonObject.accumulate("ProfileID", profileId);
             jsonObject.accumulate("Profile_Desc", ProfileDesc);
-            jsonObject.accumulate("ProfileName", ProfileName);
             jsonObject.accumulate("Profile_Type", "work");
             jsonObject.accumulate("State", edtAddress4.getText().toString());
             jsonObject.accumulate("Twitter", strTwitter);
@@ -1847,6 +1845,12 @@ public class EditProfileActivity extends AppCompatActivity implements
             if (designationID == null){
                 designationID = "";
             }
+            JSONArray jsonArray = new JSONArray();
+            jsonArray.put("1011");
+
+            JSONArray jsonArray1 = new JSONArray();
+            jsonArray.put("1");
+
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Address1", edtAddress1.getText().toString());
@@ -1855,7 +1859,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("Address4", ccpCountry.getSelectedCountryName().toString() + " " + edtAddress6.getText().toString());
             jsonObject.accumulate("Address_ID", "");
             jsonObject.accumulate("Address_Type", "");
-            jsonObject.accumulate("AssociationID", associationID);
+            jsonObject.accumulate("AssociationIDs", jsonArray);
             jsonObject.accumulate("Attachment_FileName", etAttachFile.getText().toString());
             jsonObject.accumulate("Card_Back", txtCardBack.getText().toString());
             jsonObject.accumulate("Card_Front", txtCardFront.getText().toString());
@@ -1868,6 +1872,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("DesignationID", designationID);
             jsonObject.accumulate("Email1", edtEmail.getText().toString());
             jsonObject.accumulate("Email2", edtEmail2.getText().toString());
+            jsonObject.accumulate("Event_Cat_IDs", jsonArray1);
             jsonObject.accumulate("Facebook", strFB);
             jsonObject.accumulate("Fax1", edtFax1.getText().toString());
             jsonObject.accumulate("Fax2", edtFax2.getText().toString());
@@ -1881,8 +1886,8 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("Phone2", edtWork2.getText().toString());
             jsonObject.accumulate("Postalcode", edtAddress6.getText().toString());
             jsonObject.accumulate("ProfileID", profileId);
+            jsonObject.accumulate("ProfileName", "");
             jsonObject.accumulate("Profile_Desc", ProfileDesc);
-            jsonObject.accumulate("ProfileName", ProfileName);
             jsonObject.accumulate("Profile_Type", "");
             jsonObject.accumulate("State", edtAddress4.getText().toString());
             jsonObject.accumulate("Twitter", strTwitter);
@@ -3034,7 +3039,6 @@ public class EditProfileActivity extends AppCompatActivity implements
                     CompanyName = jsonObject.getString("CompanyName");
                     CompanyProfile = jsonObject.getString("CompanyProfile");
                     Designation = jsonObject.getString("Designation");
-                    ProfileName = jsonObject.getString("ProfileName");
                     ProfileDesc = jsonObject.getString("ProfileDesc");
                     Status = jsonObject.getString("Status");
                     Address1 = jsonObject.getString("Address1");
@@ -3122,7 +3126,6 @@ public class EditProfileActivity extends AppCompatActivity implements
                     edtUserName.setText(FirstName + " " + LastName);
                     edtCompanyDesc.setText(CompanyProfile);
                     edtProfileDesc.setText(ProfileDesc);
-                    edtProfileName.setText(ProfileName);
                     edtEmail.setText(Email1);
                     edtPrimary.setText(Mobile1);
                     edtWork.setText(Phone1);
@@ -3541,7 +3544,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                             String Event_Category_Name = eList.getString("Event_Category_Name") ;
 
                             eventCategoryIDList.add(Event_Category_ID);
-                            eventCategoryNameList.add(Event_Category_Name);
+
                         }
                     }
                 }
