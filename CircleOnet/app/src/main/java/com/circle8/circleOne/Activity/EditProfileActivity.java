@@ -173,9 +173,31 @@ public class EditProfileActivity extends AppCompatActivity implements
     //String[] languages={"Android ","java","IOS","SQL","JDBC","Web services"};
     ArrayList<String> company, designation, industry, designation_id, company_id, industry_id;
     String association_ID, association_NAME;
-    String profileId = "", Card_Front = "", Card_Back = "", FirstName = "", LastName = "", UserPhoto = "", Phone1 = "", Phone2 = "", Mobile1 = "", Mobile2 = "",
-            Fax1 = "", Fax2 = "", Email1 = "", Email2 = "", Youtube = "",
-            Facebook = "", Twitter = "", Google = "", LinkedIn = "", IndustryName = "", CompanyName = "", CompanyProfile = "", Designation = "", ProfileDesc = "", Status = "";
+    String profileId = "";
+    String Card_Front = "";
+    String Card_Back = "";
+    String FirstName = "";
+    String LastName = "";
+    static String UserPhoto = "";
+    String Phone1 = "";
+    String Phone2 = "";
+    String Mobile1 = "";
+    String Mobile2 = "";
+    String Fax1 = "";
+    String Fax2 = "";
+    String Email1 = "";
+    String Email2 = "";
+    String Youtube = "";
+    String Facebook = "";
+    String Twitter = "";
+    String Google = "";
+    String LinkedIn = "";
+    String IndustryName = "";
+    String CompanyName = "";
+    String CompanyProfile = "";
+    String Designation = "";
+    String ProfileDesc = "";
+    String Status = "";
     String Address1 = "", Address2 = "", Address3 = "", Address4 = "", City = "", State = "", Country = "", Postalcode = "", Website = "", Attachment_FileName = "";
     EditText edtUserName, edtWork, edtPrimary, edtEmail, edtProfileDesc, edtCompanyDesc;
     public static ViewPager mViewPager, viewPager1;
@@ -483,6 +505,17 @@ public class EditProfileActivity extends AppCompatActivity implements
                         Toast.makeText(EditProfileActivity.this, "failure", Toast.LENGTH_SHORT).show();
                     }
                 });
+
+            }
+        });
+
+        imgProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                CropImage.activity(null)
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .start(EditProfileActivity.this);
 
             }
         });
@@ -1549,6 +1582,61 @@ public class EditProfileActivity extends AppCompatActivity implements
         return result;
     }
 
+    public static String POST10(String url) {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("ImgBase64", final_ImgBase64);
+            jsonObject.accumulate("classification", "userphoto");
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+
     public static String POST7(String url) {
         InputStream inputStream = null;
         String result = "";
@@ -2139,11 +2227,19 @@ public class EditProfileActivity extends AppCompatActivity implements
 
                     final_ImgBase64 = BitMapToString(bitmap);
                     //   Upload();
-                    CardSwipe.imageView.setImageBitmap(bitmap);
-                    if (cardType.equals("front"))
+
+                    if (cardType.equals("front")) {
+                        CardSwipe.imageView.setImageBitmap(bitmap);
                         new HttpAsyncTaskFrontUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
-                    else if (cardType.equals("back"))
+                    }
+                    else if (cardType.equals("back")) {
+                        CardSwipe.imageView.setImageBitmap(bitmap);
                         new HttpAsyncTaskBackUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                    }
+                    else {
+                        imgProfile.setImageBitmap(bitmap);
+                        new HttpAsyncTaskUserUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                    }
                 } catch (FileNotFoundException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -3409,6 +3505,62 @@ public class EditProfileActivity extends AppCompatActivity implements
                     }
                 } else {
                     Toast.makeText(getBaseContext(), "Not able to Register..", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private static class HttpAsyncTaskUserUpload extends AsyncTask<String, Void, String> {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+           /* dialog = new ProgressDialog(activity);
+            dialog.setMessage("Uploading...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+            String loading = "Uploading" ;
+            CustomProgressDialog(loading);
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return POST10(urls[0]);
+        }
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            try
+            {
+                if (result != null) {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String ImgName = jsonObject.getString("ImgName").toString();
+                    String success = jsonObject.getString("success").toString();
+
+                    if (success.equals("1") && ImgName != null) {
+                        /*Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(intent);
+                        finish();*/
+                        // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
+                        UserPhoto = ImgName;
+                       // txtCardBack.setText(ImgName);
+                    } else {
+                        Toast.makeText(activity, "Error While Uploading Image..", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(activity, "Not able to Register..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
