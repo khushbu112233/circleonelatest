@@ -89,7 +89,7 @@ public class SearchGroupMembers extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Select Connection to add into Circle", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), selectedStrings.toString(), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), selectedStrings.toString(), Toast.LENGTH_LONG).show();
                     new HttpAsyncTaskGroupAddFriend().execute("http://circle8.asia:8999/Onet.svc/Group/AddFriend");
                 }
             }
@@ -279,14 +279,14 @@ public class SearchGroupMembers extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             dialog.dismiss();
-            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+          //  Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
                     String Success = jsonObject.getString("Success");
                     String Message = jsonObject.getString("Message");
                     if (Success.equals("1")) {
-                        Toast.makeText(getApplicationContext(), Message, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Member added in Circle", Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(getApplicationContext(), Message, Toast.LENGTH_LONG).show();
                     }
