@@ -175,9 +175,9 @@ public class EditProfileActivity extends AppCompatActivity implements
     String association_ID, association_NAME;
     String profileId = "", Card_Front = "", Card_Back = "", FirstName = "", LastName = "", UserPhoto = "", Phone1 = "", Phone2 = "", Mobile1 = "", Mobile2 = "",
             Fax1 = "", Fax2 = "", Email1 = "", Email2 = "", Youtube = "",
-            Facebook = "", Twitter = "", Google = "", LinkedIn = "", IndustryName = "", CompanyName = "", CompanyProfile = "", Designation = "", ProfileDesc = "", Status = "";
+            Facebook = "", Twitter = "", Google = "", LinkedIn = "", IndustryName = "", CompanyName = "", CompanyProfile = "", Designation = "", ProfileDesc = "", ProfileName = "", Status = "";
     String Address1 = "", Address2 = "", Address3 = "", Address4 = "", City = "", State = "", Country = "", Postalcode = "", Website = "", Attachment_FileName = "";
-    EditText edtUserName, edtWork, edtPrimary, edtEmail, edtProfileDesc, edtCompanyDesc;
+    EditText edtUserName, edtWork, edtPrimary, edtEmail, edtProfileName, edtProfileDesc, edtCompanyDesc;
     public static ViewPager mViewPager, viewPager1;
     CircleImageView imgProfile;
     TextView tvPersonName, tvDesignation, tvCompany;
@@ -394,6 +394,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         edtEmail = (EditText) findViewById(R.id.edtEmail);
         edtWebsite = (EditText) findViewById(R.id.edtWebsite);
         edtProfileDesc = (EditText) findViewById(R.id.edtProfileDesc);
+        edtProfileName = (EditText)findViewById(R.id.edtProfileName);
         edtCompanyDesc = (EditText) findViewById(R.id.edtCompanyDesc);
         edtPrimary = (EditText) findViewById(R.id.edtPrimary);
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -725,6 +726,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             new HttpAsyncTaskUserProfile().execute("http://circle8.asia:8999/Onet.svc/GetUserProfile");
             new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Fetch");
         }
+
 
         autoCompleteDesignation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -1410,6 +1412,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("Postalcode", edtAddress6.getText().toString());
             jsonObject.accumulate("ProfileID", profileId);
             jsonObject.accumulate("Profile_Desc", ProfileDesc);
+            jsonObject.accumulate("ProfileName", ProfileName);
             jsonObject.accumulate("Profile_Type", "work");
             jsonObject.accumulate("State", edtAddress4.getText().toString());
             jsonObject.accumulate("Twitter", strTwitter);
@@ -1879,6 +1882,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("Postalcode", edtAddress6.getText().toString());
             jsonObject.accumulate("ProfileID", profileId);
             jsonObject.accumulate("Profile_Desc", ProfileDesc);
+            jsonObject.accumulate("ProfileName", ProfileName);
             jsonObject.accumulate("Profile_Type", "");
             jsonObject.accumulate("State", edtAddress4.getText().toString());
             jsonObject.accumulate("Twitter", strTwitter);
@@ -3030,6 +3034,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                     CompanyName = jsonObject.getString("CompanyName");
                     CompanyProfile = jsonObject.getString("CompanyProfile");
                     Designation = jsonObject.getString("Designation");
+                    ProfileName = jsonObject.getString("ProfileName");
                     ProfileDesc = jsonObject.getString("ProfileDesc");
                     Status = jsonObject.getString("Status");
                     Address1 = jsonObject.getString("Address1");
@@ -3117,6 +3122,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                     edtUserName.setText(FirstName + " " + LastName);
                     edtCompanyDesc.setText(CompanyProfile);
                     edtProfileDesc.setText(ProfileDesc);
+                    edtProfileName.setText(ProfileName);
                     edtEmail.setText(Email1);
                     edtPrimary.setText(Mobile1);
                     edtWork.setText(Phone1);
