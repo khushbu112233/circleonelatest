@@ -125,8 +125,6 @@ public class List4Adapter extends BaseSwipeAdapter
 
         db = new DatabaseHelper(context);
 
-
-
         swipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {
             @Override
             public void onDoubleClick(SwipeLayout layout, boolean surface) {
