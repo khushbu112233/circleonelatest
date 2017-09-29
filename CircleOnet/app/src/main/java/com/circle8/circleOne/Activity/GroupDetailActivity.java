@@ -3,6 +3,7 @@ package com.circle8.circleOne.Activity;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -83,16 +84,16 @@ import static java.security.AccessController.getContext;
 public class GroupDetailActivity extends AppCompatActivity
 {
     public static ListView listView ;
-    private CircleImageView imgProfile ;
-    private ImageView ivChangeProfImg, ivBackImg, ivMenuImg, ivShareImg, ivEditImg ;
-    private  TextView tvGroupName, tvGroupDesc, tvMemberInfo ;
+    private static CircleImageView imgProfile ;
+    private static ImageView ivChangeProfImg, ivBackImg, ivMenuImg, ivShareImg, ivEditImg ;
+    private static TextView tvGroupName, tvGroupDesc, tvMemberInfo ;
 
-    private GroupDetailAdapter groupDetailAdapter ;
+    private static GroupDetailAdapter groupDetailAdapter ;
     ImageView imgBack;
-    private ArrayList<GroupDetailModel> groupDetailModelArrayList = new ArrayList<>();
+    private static ArrayList<GroupDetailModel> groupDetailModelArrayList = new ArrayList<>();
 
     private LoginSession session;
-    private String profile_id, user_id ;
+    private static String profile_id, user_id ;
     boolean isPressed = false;
     private ArrayList<String> name = new ArrayList<>();
     private ArrayList<String> designation = new ArrayList<>();
@@ -117,15 +118,20 @@ public class GroupDetailActivity extends AppCompatActivity
     public static JSONArray selectedStrings = new JSONArray();
     ImageView ivDelete;
 
-    private RelativeLayout rlProgressDialog ;
-    private TextView tvProgressing ;
-    private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+    private static RelativeLayout rlProgressDialog ;
+    private static TextView tvProgressing ;
+    private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+
+    private static Activity mContext ;
+    public static String loading ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_detail);
+
+        mContext = GroupDetailActivity.this ;
 
         listView = (ListView)findViewById(R.id.listView);
         imgProfile = (CircleImageView)findViewById(R.id.imgProfile);
@@ -175,6 +181,8 @@ public class GroupDetailActivity extends AppCompatActivity
         else {
             checkBox.setVisibility(View.GONE);
         }*/
+
+       callFirst();
 
        ivMenuImg.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -399,8 +407,6 @@ public class GroupDetailActivity extends AppCompatActivity
         });
 */
 
-        new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/FetchConnection");
-
         ivDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -476,6 +482,24 @@ public class GroupDetailActivity extends AppCompatActivity
                 startActivity(intent1);
             }
         });
+    }
+
+    public void callFirst()
+    {
+        loading = "Fetch Connections" ;
+        new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/FetchConnection");
+    }
+
+    public static void webCall()
+    {
+        loading = "Update Connections" ;
+        groupDetailModelArrayList.clear();
+        try
+        {
+            groupDetailAdapter.notifyDataSetChanged();
+        }catch (Exception e) { e.printStackTrace(); }
+
+        new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/FetchConnection");
     }
 
     public  String POST1(String url)
@@ -836,11 +860,7 @@ public class GroupDetailActivity extends AppCompatActivity
         return result;
     }
 
-
-
-
-
-    public String POST4(String url) {
+    public static String POST4(String url) {
         InputStream inputStream = null;
         String result = "";
         try {
@@ -908,7 +928,7 @@ public class GroupDetailActivity extends AppCompatActivity
 
     }
 
-    private class HttpAsyncTaskGroup extends AsyncTask<String, Void, String>
+    private static class HttpAsyncTaskGroup extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
 
@@ -921,7 +941,7 @@ public class GroupDetailActivity extends AppCompatActivity
             dialog.show();
             dialog.setCancelable(false);*/
 
-            String loading = "Fetch Connections" ;
+
             CustomProgressDialog(loading);
         }
 
@@ -980,16 +1000,15 @@ public class GroupDetailActivity extends AppCompatActivity
                         groupDetailModelArrayList.add(groupDetailModel);
                     }
 
-                    groupDetailAdapter = new GroupDetailAdapter(GroupDetailActivity.this, R.layout.group_detail_items, groupDetailModelArrayList);
+                    groupDetailAdapter = new GroupDetailAdapter(mContext, R.layout.group_detail_items, groupDetailModelArrayList);
                     listView.setAdapter(groupDetailAdapter);
                     groupDetailAdapter.notifyDataSetChanged();
-
 
                     // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "Not able to load Cards..", Toast.LENGTH_LONG).show();
                 }
             }
             catch (JSONException e)
@@ -1234,14 +1253,14 @@ public class GroupDetailActivity extends AppCompatActivity
 //        BmToString(bm);
     }
 
-    public void CustomProgressDialog(final String loading)
+    public static void CustomProgressDialog(final String loading)
     {
         rlProgressDialog.setVisibility(View.VISIBLE);
         tvProgressing.setText(loading);
 
-        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
+        Animation anim = AnimationUtils.loadAnimation(mContext,R.anim.anticlockwise);
         ivConnecting1.startAnimation(anim);
-        Animation anim1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.clockwise);
+        Animation anim1 = AnimationUtils.loadAnimation(mContext,R.anim.clockwise);
         ivConnecting2.startAnimation(anim1);
 
         int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.

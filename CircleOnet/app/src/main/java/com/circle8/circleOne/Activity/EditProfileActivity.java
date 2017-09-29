@@ -752,12 +752,13 @@ public class EditProfileActivity extends AppCompatActivity implements
       //  new HttpAsyncTaskIndustry().execute("http://circle8.asia:8999/Onet.svc/GetIndustryList");
       //  new HttpAsyncTaskDesignation().execute("http://circle8.asia:8999/Onet.svc/GetDesignationList");
         new HttpAsyncTaskAssociation().execute("http://circle8.asia:8999/Onet.svc/GetAssociationList");
-        new HttpAsyncTaskEventList().execute("http://circle8.asia:8999/Onet.svc/Events/List");
-
+//        new HttpAsyncTaskEventList().execute("http://circle8.asia:8999/Onet.svc/Events/List");
+//
         if (type.equals("edit")) {
             new HttpAsyncTaskUserProfile().execute("http://circle8.asia:8999/Onet.svc/GetUserProfile");
             new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Fetch");
         }
+
 
         autoCompleteDesignation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -1960,6 +1961,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("DesignationID", designationID);
             jsonObject.accumulate("Email1", edtEmail.getText().toString());
             jsonObject.accumulate("Email2", edtEmail2.getText().toString());
+            jsonObject.accumulate("Event_Cat_IDs", jsonArray1);
             jsonObject.accumulate("Facebook", strFB);
             jsonObject.accumulate("Fax1", edtFax1.getText().toString());
             jsonObject.accumulate("Fax2", edtFax2.getText().toString());
@@ -1973,6 +1975,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("Phone2", edtWork2.getText().toString());
             jsonObject.accumulate("Postalcode", edtAddress6.getText().toString());
             jsonObject.accumulate("ProfileID", profileId);
+            jsonObject.accumulate("ProfileName", "");
             jsonObject.accumulate("Profile_Desc", ProfileDesc);
             jsonObject.accumulate("Profile_Type", "");
             jsonObject.accumulate("State", edtAddress4.getText().toString());
@@ -3696,7 +3699,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                             String Event_Category_Name = eList.getString("Event_Category_Name") ;
 
                             eventCategoryIDList.add(Event_Category_ID);
-                            eventCategoryNameList.add(Event_Category_Name);
+
                         }
                     }
                 }

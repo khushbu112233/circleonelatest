@@ -284,11 +284,38 @@
                         android:orientation="vertical">
 
                         <LinearLayout
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="15dp"
                             android:layout_marginTop="10dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginRight="20dp"
+                                android:src="@drawable/ic_acc_blue" />
+
+                            <com.circle8.circleOne.Utils.cgEditView
+                                android:id="@+id/edtProfileName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:paddingBottom="10dp"
+                                android:paddingLeft="10dp"
+                                android:hint="Profile Name"
+                                android:textSize="13sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="0dp"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
@@ -988,7 +1015,7 @@
 
                                 <com.circle8.circleOne.Utils.cgEditView
                                     android:layout_width="match_parent"
-                                    android:layout_height="30dp"
+                                    android:layout_height="35dp"
                                     android:layout_toLeftOf="@+id/ivLink"
                                     android:background="@drawable/txt_box_blue"
                                     android:gravity="start"
@@ -1007,7 +1034,7 @@
 
                                 <com.circle8.circleOne.Utils.cgEditView
                                     android:layout_width="match_parent"
-                                    android:layout_height="30dp"
+                                    android:layout_height="35dp"
                                     android:layout_toRightOf="@+id/ivLink"
                                     android:background="@drawable/txt_box_blue"
                                     android:gravity="start"
@@ -1055,7 +1082,7 @@
 
                                 <com.circle8.circleOne.Utils.cgEditView
                                     android:layout_width="match_parent"
-                                    android:layout_height="30dp"
+                                    android:layout_height="35dp"
                                     android:layout_toLeftOf="@+id/ivLink1"
                                     android:background="@drawable/txt_box_blue"
                                     android:gravity="start"
@@ -1074,7 +1101,7 @@
 
                                 <com.circle8.circleOne.Utils.cgEditView
                                     android:layout_width="match_parent"
-                                    android:layout_height="30dp"
+                                    android:layout_height="35dp"
                                     android:layout_toRightOf="@+id/ivLink1"
                                     android:background="@drawable/txt_box_blue"
                                     android:gravity="start"
@@ -1110,7 +1137,7 @@
                                 <com.circle8.circleOne.Utils.cgEditView
                                     android:id="@+id/etAttachFile"
                                     android:layout_width="200dp"
-                                    android:layout_height="30dp"
+                                    android:layout_height="35dp"
                                     android:layout_alignParentLeft="true"
                                     android:background="@drawable/txt_box_blue"
                                     android:gravity="start"
@@ -1168,7 +1195,7 @@
                                 <com.circle8.circleOne.Utils.cgTextView
                                     android:id="@+id/txtCardFront"
                                     android:layout_width="200dp"
-                                    android:layout_height="30dp"
+                                    android:layout_height="35dp"
                                     android:layout_alignParentLeft="true"
                                     android:background="@drawable/txt_box_blue"
                                     android:gravity="start"
@@ -1219,7 +1246,7 @@
                                 <com.circle8.circleOne.Utils.cgTextView
                                     android:id="@+id/txtCardBack"
                                     android:layout_width="200dp"
-                                    android:layout_height="30dp"
+                                    android:layout_height="35dp"
                                     android:layout_alignParentLeft="true"
                                     android:background="@drawable/txt_box_blue"
                                     android:gravity="start"
