@@ -172,7 +172,7 @@ public class TestimonialRequest extends AppCompatActivity
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("SearchType", "local" );
-            jsonObject.accumulate("numofrecords", "30" );
+            jsonObject.accumulate("numofrecords", "10" );
             jsonObject.accumulate("pageno", "1" );
             jsonObject.accumulate("profileId", TestimonialProfileId );
 
