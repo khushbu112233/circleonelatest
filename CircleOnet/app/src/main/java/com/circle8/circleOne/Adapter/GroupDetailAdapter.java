@@ -328,8 +328,10 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
                     String success = jsonObject.getString("success");
                     String message = jsonObject.getString("message");
 
-                    if (success.equalsIgnoreCase("1")){
+                    if (success.equalsIgnoreCase("1"))
+                    {
                         Toast.makeText(context, "Deleted suceessfully..", Toast.LENGTH_LONG).show();
+                        GroupDetailActivity.webCall();
                         notifyDataSetChanged();
                     }
                     else {
