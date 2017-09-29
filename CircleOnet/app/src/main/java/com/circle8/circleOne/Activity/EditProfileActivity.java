@@ -1932,6 +1932,13 @@ public class EditProfileActivity extends AppCompatActivity implements
             if (designationID == null){
                 designationID = "";
             }
+
+            JSONArray jsonArray = new JSONArray();
+            jsonArray.put(1011);
+
+
+            JSONArray jsonArray1 = new JSONArray();
+            jsonArray1.put(1);
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Address1", edtAddress1.getText().toString());
@@ -1940,7 +1947,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("Address4", ccpCountry.getSelectedCountryName().toString() + " " + edtAddress6.getText().toString());
             jsonObject.accumulate("Address_ID", "");
             jsonObject.accumulate("Address_Type", "");
-            jsonObject.accumulate("AssociationID", associationID);
+            jsonObject.accumulate("AssociationIDs", jsonArray);
             jsonObject.accumulate("Attachment_FileName", etAttachFile.getText().toString());
             jsonObject.accumulate("Card_Back", txtCardBack.getText().toString());
             jsonObject.accumulate("Card_Front", txtCardFront.getText().toString());
@@ -1973,6 +1980,8 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("UserID", UserID);
             jsonObject.accumulate("Website", edtWebsite.getText().toString());
             jsonObject.accumulate("Youtube", strYoutube);
+            jsonObject.accumulate("Event_Cat_IDs", jsonArray1);
+            jsonObject.accumulate("ProfileName", "Profile11");
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();

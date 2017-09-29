@@ -516,6 +516,7 @@ public class List3Adapter extends BaseSwipeAdapter
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Operation", "Remove" );
+            jsonObject.accumulate("RequestType", "" );
             jsonObject.accumulate("friendProfileId", nfcModelList1.get(posi).getProfile_id());
             jsonObject.accumulate("myProfileId", profile_id );
 
