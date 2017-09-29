@@ -287,9 +287,12 @@ public class SearchGroupMembers extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(result);
                     String Success = jsonObject.getString("Success");
                     String Message = jsonObject.getString("Message");
-                    if (Success.equals("1")) {
+                    if (Success.equals("1"))
+                    {
                         Toast.makeText(getApplicationContext(), Message, Toast.LENGTH_LONG).show();
-                    } else {
+                    }
+                    else
+                    {
                         Toast.makeText(getApplicationContext(), Message, Toast.LENGTH_LONG).show();
                     }
                     // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)

@@ -182,6 +182,7 @@ public class GroupDetailActivity extends AppCompatActivity
             checkBox.setVisibility(View.GONE);
         }*/
 
+       groupDetailModelArrayList.clear();
        callFirst();
 
        ivMenuImg.setOnClickListener(new View.OnClickListener() {
