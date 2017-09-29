@@ -86,6 +86,7 @@ public class List1Fragment extends Fragment
     public static List<FriendConnection> allTags;
     //new asign value
     AutoCompleteTextView searchText;
+    TextView tvFriendInfo ;
     public static ArrayList<FriendConnection> nfcModel;
     ViewConfiguration vc;
     private int mTouchSlop;
@@ -154,6 +155,7 @@ public class List1Fragment extends Fragment
         mContext = List1Fragment.this.getContext();
         pageno = 1;
         imgSearch = (ImageView) view.findViewById(R.id.imgSearch);
+        tvFriendInfo = (TextView)view.findViewById(R.id.tvFriendInfo);
         recyclerView1 = (RecyclerView) view.findViewById(R.id.list_horizontal1);
         recyclerView2 = (RecyclerView) view.findViewById(R.id.list_horizontal2);
         txtNoCard1 = (TextView) view.findViewById(R.id.txtNoCard1);
@@ -392,6 +394,7 @@ public class List1Fragment extends Fragment
                         } catch (Exception e) {
                         }
                         callFirst();
+                        tvFriendInfo.setVisibility(View.GONE);
                     }
               /*  else if (s.length() > 0)
                 {
@@ -1030,7 +1033,7 @@ public class List1Fragment extends Fragment
 
                     if (connect.length() == 0)
                     {
-                        //  tvNoCard.setVisibility(View.VISIBLE);
+                        tvFriendInfo.setVisibility(View.VISIBLE);
                         allTags.clear();
                         try {
                             mAdapter.notifyDataSetChanged();
@@ -1043,7 +1046,8 @@ public class List1Fragment extends Fragment
                     }
                     else
                     {
-                        //  tvNoCard.setVisibility(View.GONE);
+                        tvFriendInfo.setVisibility(View.GONE);
+
                         for (int i = 0; i <= connect.length(); i++)
                         {
                             JSONObject iCon = connect.getJSONObject(i);
