@@ -102,7 +102,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:text="Manage my Profile"
+            android:text="Manage My Profile"
             android:textColor="@android:color/white"
             android:textSize="15dp" />
 
@@ -125,7 +125,7 @@
         <com.circle8.circleOne.Utils.orkebyTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Request a new card         "
+            android:text="Request a New Card         "
             android:id="@+id/textDrawer3"
             android:textSize="15dp"
             android:layout_marginLeft="20dp"
@@ -172,7 +172,7 @@
             <com.circle8.circleOne.Utils.orkebyTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Reward Point         "
+                android:text="Reward Points         "
                 android:textSize="15dp"
                 android:layout_marginLeft="20dp"
                 android:textColor="@android:color/white" />
@@ -359,7 +359,7 @@
         <com.circle8.circleOne.Utils.orkebyTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Contact us"
+            android:text="Contact Us"
             android:id="@+id/textDrawer10"
             android:textSize="15dp"
             android:layout_marginLeft="20dp"

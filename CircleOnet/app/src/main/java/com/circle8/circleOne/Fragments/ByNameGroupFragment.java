@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -116,7 +117,17 @@ public class ByNameGroupFragment extends Fragment {
                 listView.setVisibility(View.VISIBLE);
                 connectTags.clear();
                 new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
+            }
+        });
 
+        searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+            {
+                listView.setVisibility(View.VISIBLE);
+                connectTags.clear();
+                new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
+                return true;
             }
         });
 

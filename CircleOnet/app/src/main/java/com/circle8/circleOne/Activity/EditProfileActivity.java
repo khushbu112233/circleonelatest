@@ -55,8 +55,10 @@ import android.widget.Toast;
 import com.circle8.circleOne.Adapter.AddEventAdapter;
 import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.Adapter.CustomAdapter;
+import com.circle8.circleOne.Adapter.EventsAdapter;
 import com.circle8.circleOne.Fragments.CameraDialogFragment;
 import com.circle8.circleOne.Helper.LoginSession;
+import com.circle8.circleOne.Model.EventModel;
 import com.circle8.circleOne.Model.TestimonialModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.ExpandableHeightGridView;
@@ -266,6 +268,10 @@ public class EditProfileActivity extends AppCompatActivity implements
 
     private FirebaseAuth mAuth;
     private TwitterAuthClient client;
+
+    private ArrayList<EventModel> eventModelArrayList = new ArrayList<>();
+    private ArrayList<String> eventCategoryIDList = new ArrayList<>();
+    private ArrayList<String> eventCategoryNameList = new ArrayList<>();
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -713,13 +719,13 @@ public class EditProfileActivity extends AppCompatActivity implements
       //  new HttpAsyncTaskIndustry().execute("http://circle8.asia:8999/Onet.svc/GetIndustryList");
       //  new HttpAsyncTaskDesignation().execute("http://circle8.asia:8999/Onet.svc/GetDesignationList");
         new HttpAsyncTaskAssociation().execute("http://circle8.asia:8999/Onet.svc/GetAssociationList");
+        new HttpAsyncTaskEventList().execute("http://circle8.asia:8999/Onet.svc/Events/List");
 
         if (type.equals("edit")) {
             new HttpAsyncTaskUserProfile().execute("http://circle8.asia:8999/Onet.svc/GetUserProfile");
             new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Fetch");
         }
-
-
+        
         autoCompleteDesignation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -3458,6 +3464,146 @@ public class EditProfileActivity extends AppCompatActivity implements
             //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
         }
     }
+
+    private class HttpAsyncTaskEventList extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+           /* dialog = new ProgressDialog(getActivity());
+            dialog.setMessage("Finding Events...");
+            dialog.show();*/
+
+            String loading = "Finding Events" ;
+            CustomProgressDialog(loading);
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            return EventListPost(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
+//            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+
+            try
+            {
+                if(result == "")
+                {
+                    Toast.makeText(getApplicationContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    JSONObject response = new JSONObject(result);
+                    String message = response.getString("message");
+                    String success = response.getString("success");
+                    String count = response.getString("count");
+                    String pageno = response.getString("pageno");
+                    String numofrecords = response.getString("numofrecords");
+
+                    JSONArray eventList = response.getJSONArray("EventList");
+
+                    if(eventList.length() == 0)
+                    {
+
+                    }
+                    else
+                    {
+                        for(int i = 0 ; i <= eventList.length() ; i++ )
+                        {
+                            JSONObject eList = eventList.getJSONObject(i);
+                            EventModel eventModel = new EventModel();
+                            eventModel.setEvent_ID(eList.getString("Event_ID"));
+                            eventModel.setEvent_Name(eList.getString("Event_Name"));
+                            eventModel.setEvent_Type(eList.getString("Event_Type"));
+                            eventModel.setEvent_Category_ID(eList.getString("Event_Category_ID"));
+                            eventModel.setEvent_Category_Name(eList.getString("Event_Category_Name"));
+                            eventModelArrayList.add(eventModel);
+
+                            String Event_ID = eList.getString("Event_ID") ;
+                            String Event_Name = eList.getString("Event_Name") ;
+                            String Event_Type = eList.getString("Event_Type") ;
+                            String Event_Category_ID = eList.getString("Event_Category_ID") ;
+                            String Event_Category_Name = eList.getString("Event_Category_Name") ;
+
+                            eventCategoryIDList.add(Event_Category_ID);
+                            eventCategoryNameList.add(Event_Category_Name);
+                        }
+                    }
+                }
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public  String EventListPost(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("my_userid", "" );
+            jsonObject.accumulate("numofrecords", "10");
+            jsonObject.accumulate("pageno", "1" );
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
 
 
    /* private void getFile()
