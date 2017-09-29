@@ -75,7 +75,8 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
     private SparseBooleanArray mSelectedItemsIds;
     public static JSONArray selectedStrings = new JSONArray();
     View row;
-    int posi;
+    int posi, deletePosi ;
+
     public GroupDetailAdapter(Context applicationContext, int group_detail_items,
            ArrayList<String> name, ArrayList<String> designation, ArrayList<String> company,
            ArrayList<String> website, ArrayList<String> email, ArrayList<String> phone,
@@ -155,8 +156,11 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
     public View generateView(final int position, ViewGroup parent)
     {
         View v = LayoutInflater.from(context).inflate(R.layout.group_detail_items, null);
-
         final SwipeLayout swipeLayout = (SwipeLayout)v.findViewById(getSwipeLayoutResourceId(position));
+
+
+//        selectedStrings.put(groupDetailModelArrayList.get(position).getProfileid());
+
         swipeLayout.addSwipeListener(new SimpleSwipeListener() {
             @Override
             public void onOpen(SwipeLayout layout) {
@@ -168,9 +172,9 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
             @Override
             public void onClick(View view)
             {
+                deletePosi = position ;
                 swipeLayout.close();
                 new HttpAsyncTaskGroupDeleteMember().execute("http://circle8.asia:8999/Onet.svc/Group/DeleteMembers");
-
             }
         });
 
@@ -182,7 +186,7 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
     {
         row = convertView;
         holder = null;
-        selectedStrings = new JSONArray();
+//        selectedStrings = new JSONArray();
         holder = new ViewHolder();
         holder.personName = (TextView) row.findViewById(R.id.tvPersonName);
         holder.personDesignation = (TextView) row.findViewById(R.id.tvDesignation);
@@ -299,13 +303,13 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
         protected void onPreExecute()
         {
             super.onPreExecute();
-            dialog = new ProgressDialog(context);
+           /* dialog = new ProgressDialog(context);
             dialog.setMessage("Deleting Circle Member...");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
 
             String loading = "Deleting Circle Member" ;
-          //  CustomProgressDialog(loading);
+            GroupDetailActivity.CustomProgressDialog(loading);
         }
 
         @Override
@@ -317,8 +321,8 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
-           // rlProgressDialog.setVisibility(View.GONE);
+//            dialog.dismiss();
+            GroupDetailActivity.rlProgressDialog.setVisibility(View.GONE);
 
             try
             {
@@ -360,7 +364,7 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
             // 2. make POST request to the given URL
             HttpPost httpPost = new HttpPost(url);
             String json = "";
-            selectedStrings.put(groupDetailModelArrayList.get(posi).getProfileid());
+            selectedStrings.put(groupDetailModelArrayList.get(deletePosi).getProfileid());
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
