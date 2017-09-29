@@ -60,6 +60,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpResponse;
@@ -141,6 +142,8 @@ public class ProfileFragment extends Fragment
     private static RelativeLayout rlProgressDialog ;
     private static TextView tvProgressing ;
     private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+
+    String barName;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -726,45 +729,31 @@ public class ProfileFragment extends Fragment
             public void onClick(View v)
             {
               //  Toast.makeText(getContext(), "Generating QR Code.. Please Wait..", Toast.LENGTH_LONG).show();
-                String barName;
 
-                try
-                {
-                    barName = encrypt(TestimonialProfileId, secretKey);
-                    AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-                    LayoutInflater inflater = getActivity().getLayoutInflater();
-                    final View dialogView = inflater.inflate(R.layout.person_qrcode, null);
-                    TextView tvBarName = (TextView)dialogView.findViewById(R.id.tvBarName);
-                    ImageView ivBarImage = (ImageView)dialogView.findViewById(R.id.ivBarImage);
-                    tvBarName.setText(barName);
-                    bitmap = TextToImageEncode(barName);
-                    ivBarImage.setImageBitmap(bitmap);
-                    alertDialog.setView(dialogView);
-                    alertDialog.show();
-                }
-                catch (WriterException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                } catch (InvalidKeyException e) {
-                    e.printStackTrace();
-                } catch (InvalidAlgorithmParameterException e) {
-                    e.printStackTrace();
-                } catch (NoSuchPaddingException e) {
-                    e.printStackTrace();
-                } catch (BadPaddingException e) {
-                    e.printStackTrace();
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                } catch (IllegalBlockSizeException e) {
-                    e.printStackTrace();
-                }
+                //                    barName = encrypt(TestimonialProfileId, secretKey);
+
+
+                // for another way to get qr code image using zxing
+                /*MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+                BitMatrix bitMatrix = multiFormatWriter.encode(barName, BarcodeFormat.QR_CODE,200,200);
+                BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+                bitmap = barcodeEncoder.createBitmap(bitMatrix);*/
+
+                AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                LayoutInflater inflater = getActivity().getLayoutInflater();
+                final View dialogView = inflater.inflate(R.layout.person_qrcode, null);
+                TextView tvBarName = (TextView)dialogView.findViewById(R.id.tvBarName);
+                ImageView ivBarImage = (ImageView)dialogView.findViewById(R.id.ivBarImage);
+//                tvBarName.setText(barName);
+                tvBarName.setText(tvPersonName.getText().toString());
+//                    bitmap = TextToImageEncode(barName);
+                ivBarImage.setImageBitmap(bitmap);
+                alertDialog.setView(dialogView);
+                alertDialog.show();
 
 //                progressDialog = new ProgressDialog(getActivity());
 //                progressDialog.setMessage("Generating Qr Code...");
 //                progressDialog.setCancelable(false);
-
-
 
                /* try
                 {
@@ -798,6 +787,30 @@ public class ProfileFragment extends Fragment
                 startActivity(intent);
             }
         });
+
+       /* // for bar code generating
+        try
+        {
+            barName = encrypt(TestimonialProfileId, secretKey);
+            bitmap = TextToImageEncode(barName);
+        }
+        catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }*/
 
         return view;
     }
@@ -1301,8 +1314,29 @@ public class ProfileFragment extends Fragment
                  //   viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
                     viewPager1.setAdapter(myPager);
 
-
-
+                    // for bar code generating
+                    try
+                    {
+                        barName = encrypt(TestimonialProfileId, secretKey);
+                        bitmap = TextToImageEncode(barName);
+                    }
+                    catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    } catch (InvalidKeyException e) {
+                        e.printStackTrace();
+                    } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    } catch (NoSuchPaddingException e) {
+                        e.printStackTrace();
+                    } catch (InvalidAlgorithmParameterException e) {
+                        e.printStackTrace();
+                    } catch (IllegalBlockSizeException e) {
+                        e.printStackTrace();
+                    } catch (BadPaddingException e) {
+                        e.printStackTrace();
+                    } catch (WriterException e) {
+                        e.printStackTrace();
+                    }
                 }
                 else
                 {
@@ -1417,20 +1451,24 @@ public class ProfileFragment extends Fragment
                     JSONArray jsonArray = jsonObject.getJSONArray("Testimonials");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
 
-                    if (jsonArray.length() == 0){
+                    if (jsonArray.length() == 0)
+                    {
                         lstTestimonial.setVisibility(View.GONE);
                         txtMore.setVisibility(View.GONE);
                         txtTestimonial.setVisibility(View.VISIBLE);
                     }
-                    else {
+                    else
+                    {
                         lstTestimonial.setVisibility(View.VISIBLE);
                         txtMore.setVisibility(View.VISIBLE);
                         txtTestimonial.setVisibility(View.GONE);
                     }
                     allTaggs.clear();
-                    for (int i = 0; i < jsonArray.length(); i++){
+                    for (int i = 0; i < jsonArray.length(); i++)
+                    {
 
-                        if (i < 3) {
+                        if (i < 3)
+                        {
                             JSONObject object = jsonArray.getJSONObject(i);
                             //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
 
@@ -1454,7 +1492,6 @@ public class ProfileFragment extends Fragment
                     customAdapter = new CustomAdapter(getActivity(), allTaggs);
                     lstTestimonial.setAdapter(customAdapter);
                     lstTestimonial.setExpanded(true);
-
                 }
                 else
                 {

@@ -104,7 +104,7 @@ public class GroupDetailActivity extends AppCompatActivity
     private ArrayList<String> address = new ArrayList<>();
     private ArrayList<String> imgprofile = new ArrayList<>();
 
-    String group_id = "", group_Name, group_Desc, group_Img ;
+    public static String group_id = "", group_Name, group_Desc, group_Img ;
 
     CircleImageView ivGroupImage ;
     String GroupName, GroupDesc, GroupImage = "";
@@ -231,14 +231,70 @@ public class GroupDetailActivity extends AppCompatActivity
             }
         });
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+       /* listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,long arg3) {
                 view.setSelected(true);
             }
+        });*/
+
+        listView.setMultiChoiceModeListener(new MultiChoiceModeListener() {
+
+            @Override
+            public void onItemCheckedStateChanged(ActionMode mode,
+                                                  int position, long id, boolean checked) {
+                // Capture total checked items
+                final int checkedCount = listView.getCheckedItemCount();
+                // Set the CAB title according to total checked items
+                mode.setTitle(checkedCount + " Selected");
+                // Calls toggleSelection method from ListViewAdapter Class
+                groupDetailAdapter.toggleSelection(position);
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.delete:
+                        // Calls getSelectedIds method from ListViewAdapter Class
+                        SparseBooleanArray selected = groupDetailAdapter
+                                .getSelectedIds();
+                        // Captures all selected ids with a loop
+                        for (int i = (selected.size() - 1); i >= 0; i--) {
+                            if (selected.valueAt(i)) {
+                                GroupDetailModel selecteditem = (GroupDetailModel) groupDetailAdapter
+                                        .getItem(selected.keyAt(i));
+                                // Remove selected items following the ids
+                                //groupDetailAdapter.remove(selecteditem);
+                            }
+                        }
+                        // Close CAB
+                        mode.finish();
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                mode.getMenuInflater().inflate(R.menu.activity_main, menu);
+                return true;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+                // TODO Auto-generated method stub
+                groupDetailAdapter.removeSelection();
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                // TODO Auto-generated method stub
+                return false;
+            }
         });
 
-        listView.setMultiChoiceModeListener(new  MultiChoiceModeListener() {
+        /*listView.setMultiChoiceModeListener(new  MultiChoiceModeListener() {
 
             @Override
             public boolean  onPrepareActionMode(ActionMode mode, Menu menu) {
@@ -264,7 +320,7 @@ public class GroupDetailActivity extends AppCompatActivity
             public boolean  onActionItemClicked(final ActionMode mode,
                                                 MenuItem item) {
                 // TODO  Auto-generated method stub
-               /* switch  (item.getItemId()) {
+               *//* switch  (item.getItemId()) {
                     case R.id.selectAll:
                         //
                         final int checkedCount  = myList.size();
@@ -326,7 +382,7 @@ public class GroupDetailActivity extends AppCompatActivity
                         return true;
                     default:
                         return false;
-                }*/
+                }*//*
                return false;
             }
 
@@ -341,7 +397,7 @@ public class GroupDetailActivity extends AppCompatActivity
                 groupDetailAdapter.toggleSelection(position);
         }
         });
-
+*/
 
         new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/FetchConnection");
 

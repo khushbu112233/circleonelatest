@@ -28,6 +28,9 @@ public class EventModel
     String StartDate ;
     String EndDate ;
 
+    String Event_Category_ID ;
+    String Event_Category_Name ;
+
     public EventModel() {    }
 
     public EventModel(String Event_ID, String Event_Name, String Event_Image, String Event_Desc,
@@ -216,5 +219,21 @@ public class EventModel
 
     public void setEndDate(String endDate) {
         EndDate = endDate;
+    }
+
+    public String getEvent_Category_ID() {
+        return Event_Category_ID;
+    }
+
+    public void setEvent_Category_ID(String event_Category_ID) {
+        Event_Category_ID = event_Category_ID;
+    }
+
+    public String getEvent_Category_Name() {
+        return Event_Category_Name;
+    }
+
+    public void setEvent_Category_Name(String event_Category_Name) {
+        Event_Category_Name = event_Category_Name;
     }
 }

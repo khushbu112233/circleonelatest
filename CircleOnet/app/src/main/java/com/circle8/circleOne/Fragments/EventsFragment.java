@@ -242,6 +242,8 @@ public class EventsFragment extends Fragment
                             eventModel.setEvent_Type(eList.getString("Event_Type"));
                             eventModel.setEvent_Image(eList.getString("Event_Image"));
                             eventModel.setEvent_Desc(eList.getString("Event_Desc"));
+                            eventModel.setEvent_Category_ID(eList.getString("Event_Category_ID"));
+                            eventModel.setEvent_Category_Name(eList.getString("Event_Category_Name"));
                             eventModel.setEvent_StartDate(eList.getString("Event_StartDate"));
                             eventModel.setEvent_EndDate(eList.getString("Event_EndDate"));
                             eventModel.setCompanyName(eList.getString("CompanyName"));
