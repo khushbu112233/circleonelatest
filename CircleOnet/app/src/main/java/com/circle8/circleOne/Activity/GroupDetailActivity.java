@@ -215,8 +215,8 @@ public class GroupDetailActivity extends AppCompatActivity
         ivShareImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(isPressed) {
+                if(isPressed)
+                {
                     listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
                    /* listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
                     GroupDetailAdapter.chCheckBox.setVisibility(View.VISIBLE);*/
