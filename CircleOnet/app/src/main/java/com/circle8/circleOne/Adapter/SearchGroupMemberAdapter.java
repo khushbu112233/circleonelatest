@@ -28,7 +28,6 @@ public class SearchGroupMemberAdapter extends BaseAdapter
     ArrayList<ConnectList> connectListsFilter = new ArrayList<>();
     private Context context;
     private int layoutResourceId;
-    public static ViewHolder holder;
     String personName, designation, company, website, email, description ;
 
     public SearchGroupMemberAdapter(Context context, int grid_list3_layout, ArrayList<ConnectList> connectLists)
@@ -65,7 +64,7 @@ public class SearchGroupMemberAdapter extends BaseAdapter
     public View getView(final int position, View convertView, ViewGroup parent)
     {
         View row = convertView;
-        holder = null;
+        ViewHolder holder = null;
 
         if( row == null)
         {
@@ -135,7 +134,6 @@ public class SearchGroupMemberAdapter extends BaseAdapter
         designation = company+"\n"+email+"\n"+website ;
 
         holder.detailText.setText(company+"\n"+email+"\n"+website);
-
 
         if(connectLists.get(position).getUserphoto().equalsIgnoreCase(""))
         {

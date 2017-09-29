@@ -108,7 +108,8 @@ public class SearchGroupMembers extends AppCompatActivity
                 {
                     Toast.makeText(getApplicationContext(), "Select Connection to add into Circle", Toast.LENGTH_LONG).show();
                 }
-                else {
+                else
+                {
                     //Toast.makeText(getApplicationContext(), selectedStrings.toString(), Toast.LENGTH_LONG).show();
                     new HttpAsyncTaskGroupAddFriend().execute("http://circle8.asia:8999/Onet.svc/Group/AddFriend");
                 }
@@ -117,7 +118,8 @@ public class SearchGroupMembers extends AppCompatActivity
 
     }
 
-    private void setupViewPager(ViewPager viewPager) {
+    private void setupViewPager(ViewPager viewPager)
+    {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
       /*  adapter.addFrag(new ConnectListFragment(), "by Name");
         adapter.addFrag(new ConnectListFragment(), "by Company Name");
@@ -133,7 +135,8 @@ public class SearchGroupMembers extends AppCompatActivity
         viewPager.setAdapter(adapter);
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
+    class ViewPagerAdapter extends FragmentPagerAdapter
+    {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
@@ -162,7 +165,8 @@ public class SearchGroupMembers extends AppCompatActivity
         }
     }
 
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class SectionsPagerAdapter extends FragmentPagerAdapter
+    {
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
