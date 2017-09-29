@@ -191,7 +191,7 @@ public class GroupDetailActivity extends AppCompatActivity
 
                PopupMenu popup = new PopupMenu(GroupDetailActivity.this, ivMenuImg);
                //Inflating the Popup using xml file
-
+               popup.getMenu().add("Edit Circle");
                popup.getMenu().add("Delete Circle");
                //registering popup with OnMenuItemClickListener
                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -202,13 +202,21 @@ public class GroupDetailActivity extends AppCompatActivity
                        {
                            new HttpAsyncTaskGroupDelete().execute("http://circle8.asia:8999/Onet.svc/Group/Delete");
                        }
+                       else if (item.getTitle().toString().equals("Edit Circle"))
+                       {
+                           Intent in = new Intent(getApplicationContext(), UpdateGroupActivity.class);
+                           in.putExtra("type", "group_detail");
+                           in.putExtra("GroupImage", group_Img);
+                           in.putExtra("GroupName", group_Name);
+                           in.putExtra("GroupDesc", group_Desc);
+                           in.putExtra("GroupID", group_id);
+                           startActivity(in);
+                           finish();
+                       }
                        return true;
                    }
                });
-
                popup.show();//showing popup men
-
-
            }
        });
 
@@ -487,13 +495,13 @@ public class GroupDetailActivity extends AppCompatActivity
 
     public void callFirst()
     {
-        loading = "Fetch Connections" ;
+        loading = "Fetching Connections" ;
         new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/FetchConnection");
     }
 
     public static void webCall()
     {
-        loading = "Update Connections" ;
+        loading = "Updating Connections" ;
         groupDetailModelArrayList.clear();
         try
         {
@@ -557,6 +565,13 @@ public class GroupDetailActivity extends AppCompatActivity
         return result;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        groupDetailModelArrayList.clear();
+        callFirst();
+    }
+
     private class HttpAsyncTaskGroupDelete extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -598,7 +613,8 @@ public class GroupDetailActivity extends AppCompatActivity
                     if (success.equalsIgnoreCase("1")){
                         finish();
                         Toast.makeText(getApplicationContext(), "Group Deleted Successfully..", Toast.LENGTH_LONG).show();
-                    }else {
+                    }
+                    else {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     }
                 }
@@ -976,7 +992,7 @@ public class GroupDetailActivity extends AppCompatActivity
                         tvMemberInfo.setVisibility(View.GONE);
                         listView.setVisibility(View.VISIBLE);
                     }
-
+                    groupDetailModelArrayList.clear();
                     for (int i = 0; i < jsonArray.length(); i++)
                     {
                         JSONObject object = jsonArray.getJSONObject(i);

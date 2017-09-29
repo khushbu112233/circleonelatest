@@ -155,6 +155,7 @@ public class GroupDisplayAdapter extends BaseAdapter
             public void onClick(View v)
             {
                 Intent in = new Intent(context, UpdateGroupActivity.class);
+                in.putExtra("type", "group");
                 in.putExtra("GroupImage", groupModelsList.get(position).getGroup_Photo());
                 in.putExtra("GroupName", groupModelsList.get(position).getGroup_Name());
                 in.putExtra("GroupDesc", groupModelsList.get(position).getGroup_Desc());

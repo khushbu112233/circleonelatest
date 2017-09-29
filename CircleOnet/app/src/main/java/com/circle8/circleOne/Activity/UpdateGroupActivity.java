@@ -73,6 +73,7 @@ public class UpdateGroupActivity extends AppCompatActivity
     private RelativeLayout rlProgressDialog ;
     private TextView tvProgressing ;
     private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+    String type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -84,6 +85,9 @@ public class UpdateGroupActivity extends AppCompatActivity
         HashMap<String, String> user = session.getUserDetails();
         profile_id = user.get(LoginSession.KEY_PROFILEID);
         user_id = user.get(LoginSession.KEY_USERID);
+
+        Intent intent = getIntent();
+        type = intent.getStringExtra("type");
 
         ivGroupImage = (CircleImageView) findViewById(R.id.imgProfile);
         ivMiniCamera = (ImageView) findViewById(R.id.imgCamera);
@@ -116,6 +120,15 @@ public class UpdateGroupActivity extends AppCompatActivity
         } else {
             Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/Group/" + groupPhoto).placeholder(R.drawable.usr_1).into(ivGroupImage);
         }
+
+        ivGroupImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CropImage.activity(null)
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .start(UpdateGroupActivity.this);
+            }
+        });
 
         ivMiniCamera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -323,6 +336,17 @@ public class UpdateGroupActivity extends AppCompatActivity
                     String Message = jsonObject.getString("Message").toString();
                     if (Success.equals("1")) {
                         Toast.makeText(getApplicationContext(), "Circle Updated..", Toast.LENGTH_LONG).show();
+                        if (type.equalsIgnoreCase("group")) {
+                            finish();
+                        }else if (type.equals("group_detail")){
+                            Intent intent = new Intent(getApplicationContext(), GroupDetailActivity.class);
+                            intent.putExtra("group_id", group_id);
+                            intent.putExtra("groupName", GroupName);
+                            intent.putExtra("groupDesc", GroupDesc);
+                            intent.putExtra("groupImg", GroupImage);
+                            startActivity(intent);
+                            finish();
+                        }
                        /* tvGroupName.setText(GroupName);
                         tvGroupDesc.setText(GroupDesc);
 
