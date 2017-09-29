@@ -84,8 +84,10 @@ public class SearchGroupMembers extends AppCompatActivity {
 
         txtAdd.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if (selectedStrings == null){
+            public void onClick(View v)
+            {
+                if (selectedStrings == null)
+                {
                     Toast.makeText(getApplicationContext(), "Select Connection to add into Circle", Toast.LENGTH_LONG).show();
                 }
                 else {
