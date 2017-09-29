@@ -725,7 +725,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             new HttpAsyncTaskUserProfile().execute("http://circle8.asia:8999/Onet.svc/GetUserProfile");
             new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Fetch");
         }
-        
+
         autoCompleteDesignation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override

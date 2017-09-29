@@ -1451,20 +1451,24 @@ public class ProfileFragment extends Fragment
                     JSONArray jsonArray = jsonObject.getJSONArray("Testimonials");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
 
-                    if (jsonArray.length() == 0){
+                    if (jsonArray.length() == 0)
+                    {
                         lstTestimonial.setVisibility(View.GONE);
                         txtMore.setVisibility(View.GONE);
                         txtTestimonial.setVisibility(View.VISIBLE);
                     }
-                    else {
+                    else
+                    {
                         lstTestimonial.setVisibility(View.VISIBLE);
                         txtMore.setVisibility(View.VISIBLE);
                         txtTestimonial.setVisibility(View.GONE);
                     }
                     allTaggs.clear();
-                    for (int i = 0; i < jsonArray.length(); i++){
+                    for (int i = 0; i < jsonArray.length(); i++)
+                    {
 
-                        if (i < 3) {
+                        if (i < 3)
+                        {
                             JSONObject object = jsonArray.getJSONObject(i);
                             //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
 
@@ -1488,7 +1492,6 @@ public class ProfileFragment extends Fragment
                     customAdapter = new CustomAdapter(getActivity(), allTaggs);
                     lstTestimonial.setAdapter(customAdapter);
                     lstTestimonial.setExpanded(true);
-
                 }
                 else
                 {
