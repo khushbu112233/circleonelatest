@@ -92,6 +92,11 @@ public class GroupDetailActivity extends AppCompatActivity
     ImageView imgBack;
     private static ArrayList<GroupDetailModel> groupDetailModelArrayList = new ArrayList<>();
 
+    JSONArray selectArray = new JSONArray();
+    JSONArray selectArray1 = new JSONArray();
+    int selectListPosition ;
+    ArrayList<String> selectedList = new ArrayList<>();
+
     private LoginSession session;
     private static String profile_id, user_id ;
     boolean isPressed = false;
@@ -214,15 +219,21 @@ public class GroupDetailActivity extends AppCompatActivity
 
         ivShareImg.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
+
+                selectArray = new JSONArray();
+                selectedList.clear();
+
                 if(isPressed)
                 {
-                    listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+                    listView.setChoiceMode(ListView.CHOICE_MODE_NONE);
                    /* listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
                     GroupDetailAdapter.chCheckBox.setVisibility(View.VISIBLE);*/
                 }
                 else {
-                    listView.setChoiceMode(ListView.CHOICE_MODE_NONE);
+
+                    listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
                   //  GroupDetailAdapter.chCheckBox.setVisibility(View.GONE);
                 }
 
@@ -250,26 +261,49 @@ public class GroupDetailActivity extends AppCompatActivity
         listView.setMultiChoiceModeListener(new MultiChoiceModeListener() {
 
             @Override
-            public void onItemCheckedStateChanged(ActionMode mode,
-                                                  int position, long id, boolean checked) {
+            public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean cecked)
+            {
+                selectListPosition = position ;
+
                 // Capture total checked items
                 final int checkedCount = listView.getCheckedItemCount();
                 // Set the CAB title according to total checked items
                 mode.setTitle(checkedCount + " Selected");
                 // Calls toggleSelection method from ListViewAdapter Class
                 groupDetailAdapter.toggleSelection(position);
+
+                String p_Id = groupDetailModelArrayList.get(selectListPosition).getProfileid();
+
+                if (cecked)
+                {
+                    selectArray.put(groupDetailModelArrayList.get(selectListPosition).getProfileid());
+                    selectedList.add(groupDetailModelArrayList.get(selectListPosition).getProfileid());
+//                    Toast.makeText(getApplicationContext(),"Select"+p_Id,Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    selectArray.remove(position);
+//                    selectArray.put(groupDetailModelArrayList.get(position).getProfileid());
+                    selectedList.remove(groupDetailModelArrayList.get(selectListPosition).getProfileid());
+//                    selectedList.add(groupDetailModelArrayList.get(position).getProfileid());
+//                    Toast.makeText(getApplicationContext(),"UnSelect"+p_Id,Toast.LENGTH_SHORT).show();
+                }
+
+
             }
 
             @Override
             public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                switch (item.getItemId()) {
+                switch (item.getItemId())
+                {
                     case R.id.delete:
                         // Calls getSelectedIds method from ListViewAdapter Class
-                        SparseBooleanArray selected = groupDetailAdapter
-                                .getSelectedIds();
+                        SparseBooleanArray selected = groupDetailAdapter.getSelectedIds();
                         // Captures all selected ids with a loop
-                        for (int i = (selected.size() - 1); i >= 0; i--) {
-                            if (selected.valueAt(i)) {
+                        for (int i = (selected.size() - 1); i >= 0; i--)
+                        {
+                            if (selected.valueAt(i))
+                            {
                                 GroupDetailModel selecteditem = (GroupDetailModel) groupDetailAdapter
                                         .getItem(selected.keyAt(i));
                                 // Remove selected items following the ids
@@ -410,8 +444,30 @@ public class GroupDetailActivity extends AppCompatActivity
 
         ivDelete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), selectedStrings.toString(), Toast.LENGTH_LONG).show();
+            public void onClick(View v)
+            {
+                Toast.makeText(getApplicationContext(), "Json Array & List Array "+selectArray.toString()+" "+selectedList.toString(), Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(getApplicationContext(), String.valueOf(selectedList.size()), Toast.LENGTH_LONG).show();
+
+                selectArray1 = new JSONArray(selectedList);
+                Toast.makeText(getApplicationContext(), selectArray1.toString(), Toast.LENGTH_LONG).show();
+
+                try
+                {
+                    for (int i=0; i <= selectedList.size(); i++)
+                    {
+                        selectArray1.put(selectedList.get(i));
+                    }
+                    Toast.makeText(getApplicationContext(), selectArray1.toString(), Toast.LENGTH_LONG).show();
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+
+
+
 
                 SparseBooleanArray  selected = groupDetailAdapter
                         .getSelectedIds();
@@ -419,7 +475,7 @@ public class GroupDetailActivity extends AppCompatActivity
                     if  (selected.valueAt(i)) {
                         String  selecteditem = String.valueOf(groupDetailAdapter
                                 .getItem(selected.keyAt(i)));
-                        Toast.makeText(getApplicationContext(), selecteditem, Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getApplicationContext(), selecteditem, Toast.LENGTH_LONG).show();
                         // Remove  selected items following the ids
                      //   groupDetailAdapter.remove(selecteditem);
                     }
