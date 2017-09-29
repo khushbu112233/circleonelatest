@@ -3,6 +3,7 @@ package com.circle8.circleOne.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +14,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,7 +52,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class SearchGroupMembers extends AppCompatActivity {
+public class SearchGroupMembers extends AppCompatActivity
+{
 
     public static CustomViewPager mViewPager;
     TabLayout tabLayout;
@@ -57,8 +63,13 @@ public class SearchGroupMembers extends AppCompatActivity {
     private LoginSession loginSession;
     String GroupId = "";
 
+    private RelativeLayout rlProgressDialog ;
+    private TextView tvProgressing ;
+    private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_group_members);
 
@@ -67,6 +78,13 @@ public class SearchGroupMembers extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.custom_group_actionbar);
         getSupportActionBar().setShowHideAnimationEnabled(false);
         txtAdd = (TextView) findViewById(R.id.mytext1);
+
+        rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
+        tvProgressing = (TextView)findViewById(R.id.txtProgressing);
+        ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
+        ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
+        ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
+
         Intent intent = getIntent();
         GroupId = intent.getStringExtra("GroupId");
         loginSession = new LoginSession(getApplicationContext());
@@ -263,13 +281,16 @@ public class SearchGroupMembers extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(SearchGroupMembers.this);
+           /* dialog = new ProgressDialog(SearchGroupMembers.this);
             dialog.setMessage("Adding Friend...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
+
+            String loading = "Adding Friend" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -279,17 +300,23 @@ public class SearchGroupMembers extends AppCompatActivity {
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
-            dialog.dismiss();
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
           //  Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-            try {
-                if (result != null) {
+            try
+            {
+                if (result != null)
+                {
                     JSONObject jsonObject = new JSONObject(result);
                     String Success = jsonObject.getString("Success");
                     String Message = jsonObject.getString("Message");
-                    if (Success.equals("1")) {
+                    if (Success.equals("1"))
+                    {
                         Toast.makeText(getApplicationContext(), "Member added in Circle", Toast.LENGTH_LONG).show();
-                    } else {
+                    }
+                    else {
                         Toast.makeText(getApplicationContext(), Message, Toast.LENGTH_LONG).show();
                     }
                     // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
@@ -302,5 +329,40 @@ public class SearchGroupMembers extends AppCompatActivity {
         }
     }
 
+    public void CustomProgressDialog(final String loading)
+    {
+        rlProgressDialog.setVisibility(View.VISIBLE);
+        tvProgressing.setText(loading);
+
+        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
+        ivConnecting1.startAnimation(anim);
+        Animation anim1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.clockwise);
+        ivConnecting2.startAnimation(anim1);
+
+        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
+        for (int i = 350; i <= SPLASHTIME; i = i + 350)
+        {
+            final int j = i;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run()
+                {
+                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
+                    {
+                        tvProgressing.setText(loading+".");
+                    }
+                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
+                    {
+                        tvProgressing.setText(loading+"..");
+                    }
+                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+
+                }
+            }, i);
+        }
+    }
 
 }

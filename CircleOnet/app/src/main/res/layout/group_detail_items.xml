@@ -49,10 +49,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="1">
+
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_marginLeft="8dp"
-                android:layout_weight="1"
+                android:layout_marginLeft="0dp"
+                android:layout_weight="0.2"
                 app:civ_border_width="2dp"
                 app:civ_border_color="@color/colorPrimary"
                 android:layout_gravity="center_vertical"
@@ -62,8 +64,8 @@
                 android:layout_height="55dp" />
 
             <LinearLayout
-                android:layout_weight="1"
-                android:layout_marginLeft="10dp"
+                android:layout_weight="0.3"
+                android:layout_marginLeft="0dp"
                 android:layout_marginRight="5dp"
                 android:layout_gravity="center_vertical|left"
                 android:layout_width="wrap_content"
@@ -88,9 +90,9 @@
                     android:textSize="12sp" />
             </LinearLayout>
 
-            <com.circle8.circleOne.Utils.cgTextView android:layout_weight="1"
+            <com.circle8.circleOne.Utils.cgTextView
+                android:layout_weight="0.5"
                 android:ellipsize="end"
-                android:maxLines="6"
                 android:layout_gravity="center_vertical|right"
                 android:gravity="left|center_vertical"
                 android:visibility="visible"
