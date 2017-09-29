@@ -7,6 +7,13 @@
     android:layout_height="match_parent"
     tools:context="com.circle8.circleOne.Activity.GroupsActivity">
 
+    <com.circle8.circleOne.Utils.cgTextView
+        android:id="@+id/txtNoGroup"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="You don't have any Group"/>
+
     <RelativeLayout
         android:id="@+id/rlProgressDialog"
         android:layout_width="match_parent"
@@ -147,5 +154,6 @@
             android:layout_centerInParent="true"
             android:src="@drawable/ic_plus_blue"/>
     </RelativeLayout>
+
 
 </RelativeLayout>

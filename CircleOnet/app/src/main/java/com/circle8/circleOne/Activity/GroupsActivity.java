@@ -75,7 +75,7 @@ public class GroupsActivity extends AppCompatActivity
 {
     ArrayList<String> groupName = new ArrayList<>();
     GroupsItemsAdapter groupsItemsAdapter ;
-
+    TextView txtNoGroup;
     ListView listView ;
     private LoginSession session;
     private String user_id ;
@@ -106,7 +106,7 @@ public class GroupsActivity extends AppCompatActivity
         session = new LoginSession(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
         user_id = user.get(LoginSession.KEY_USERID);
-
+        txtNoGroup = (TextView) findViewById(R.id.txtNoGroup);
         groupModelArrayList = new ArrayList<>();
 
         listView = (ListView)findViewById(R.id.listView);
@@ -226,6 +226,15 @@ public class GroupsActivity extends AppCompatActivity
                 final TextView tvCircleDescInfo = (TextView)dialogView.findViewById(R.id.tvCircleDescInfo);
                 final TextView tvProfileInfo = (TextView)dialogView.findViewById(R.id.tvProfileInfo);
                 tvCreateOrUpdate.setText("Create");
+
+                ivGroupImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CropImage.activity(null)
+                                .setGuidelines(CropImageView.Guidelines.ON)
+                                .start(GroupsActivity.this);
+                    }
+                });
 
                 ivMiniCamera.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -794,6 +803,12 @@ public class GroupsActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        groupModelArrayList.clear();
+        new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/Fetch");
+    }
 
     private class HttpAsyncTaskGroup extends AsyncTask<String, Void, String>
     {
@@ -838,13 +853,16 @@ public class GroupsActivity extends AppCompatActivity
                     {
                         listView.setVisibility(View.GONE);
                         //txtGroup.setVisibility(View.VISIBLE);
+                        txtNoGroup.setVisibility(View.VISIBLE);
                     }
                     else
                     {
                         listView.setVisibility(View.VISIBLE);
+                        txtNoGroup.setVisibility(View.GONE);
                        // txtGroup.setVisibility(View.GONE);
                     }
 
+                    groupModelArrayList.clear();
                     for (int i = 0; i < jsonArray.length() ; i++)
                     {
                         JSONObject object = jsonArray.getJSONObject(i);
