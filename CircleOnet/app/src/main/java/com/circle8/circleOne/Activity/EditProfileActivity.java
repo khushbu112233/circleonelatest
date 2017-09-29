@@ -536,6 +536,17 @@ public class EditProfileActivity extends AppCompatActivity implements
             }
         });
 
+        imgProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                CropImage.activity(null)
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .start(EditProfileActivity.this);
+
+            }
+        });
+
         findViewById(R.id.flash).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -3552,8 +3563,8 @@ public class EditProfileActivity extends AppCompatActivity implements
                     String success = jsonObject.getString("success").toString();
 
                     if (success.equals("1") && ImgName != null) {
-                        /*Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        Toast.makeText(activity, "uploaded", Toast.LENGTH_LONG).show();
+                       /* Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(intent);
                         finish();*/
                         // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
