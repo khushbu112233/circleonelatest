@@ -281,7 +281,7 @@ public class ByTitleGroupFragment extends Fragment
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("FindBy", find_by );
             jsonObject.accumulate("Search", searchText.getText().toString() );
-            jsonObject.accumulate("SearchType", "Global" );
+            jsonObject.accumulate("SearchType", "Local" );
             jsonObject.accumulate("UserID", userID );
             jsonObject.accumulate("numofrecords", "100" );
             jsonObject.accumulate("pageno", "1" );
