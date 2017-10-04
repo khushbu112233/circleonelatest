@@ -1428,7 +1428,9 @@ public class EditProfileActivity extends AppCompatActivity implements
             JSONArray jsonArray = new JSONArray();
             jsonArray.put(1011);
 
-
+            String name = edtUserName.getText().toString();
+            String kept = name.substring(0, name.indexOf(" "));
+            String remainder = name.substring(name.indexOf(" ") + 1, name.length());
             JSONArray jsonArray1 = new JSONArray();
             jsonArray1.put(1);
 
@@ -1475,8 +1477,9 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("Youtube", strYoutube);
             jsonObject.accumulate("Event_Cat_IDs", jsonArray1);
             jsonObject.accumulate("ProfileName", "Profile11");
-
-
+            jsonObject.accumulate("UserPhoto", UserPhoto);
+            jsonObject.accumulate("FirstName", kept);
+            jsonObject.accumulate("LastName", remainder);
 
 
          /*   jsonObject.accumulate("Facebook", strFB);
@@ -1982,7 +1985,9 @@ public class EditProfileActivity extends AppCompatActivity implements
             JSONArray jsonArray = new JSONArray();
             jsonArray.put(1011);
 
-
+            String name = edtUserName.getText().toString();
+            String kept = name.substring(0, name.indexOf(" "));
+            String remainder = name.substring(name.indexOf(" ") + 1, name.length());
             JSONArray jsonArray1 = new JSONArray();
             jsonArray1.put(1);
             // 3. build jsonObject
@@ -2028,6 +2033,9 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("Youtube", strYoutube);
             jsonObject.accumulate("Event_Cat_IDs", jsonArray1);
             jsonObject.accumulate("ProfileName", "Profile11");
+            jsonObject.accumulate("UserPhoto", UserPhoto);
+            jsonObject.accumulate("FirstName", kept);
+            jsonObject.accumulate("LastName", remainder);
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
