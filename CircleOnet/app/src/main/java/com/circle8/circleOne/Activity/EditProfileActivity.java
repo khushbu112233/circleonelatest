@@ -305,6 +305,10 @@ public class EditProfileActivity extends AppCompatActivity implements
     RecyclerView recyclerAssociation;
     private RecyclerView.Adapter mAdapter;
 
+    LinearLayout llTelePhoneBox1, llTelePhoneBox2, llMobileBox1, llMobileBox2, llFaxBox1, llFaxBox2 ;
+    CountryCodePicker ccp1,ccp2,ccp3,ccp4,ccp5,ccp6;
+    ImageView ivTeleAdd, ivMobAdd, ivFaxAdd ;
+
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line = "";
@@ -922,6 +926,73 @@ public class EditProfileActivity extends AppCompatActivity implements
             Log.i("Camera Permission", "Permission to record denied");
             makeRequest();
         }
+
+        llTelePhoneBox1 = (LinearLayout)findViewById(R.id.llTelephoneBox1);
+        llTelePhoneBox2 = (LinearLayout)findViewById(R.id.llTelephoneBox2);
+        llMobileBox1 = (LinearLayout)findViewById(R.id.llMobileBox1);
+        llMobileBox2 = (LinearLayout)findViewById(R.id.llMobileBox2);
+        llFaxBox1 = (LinearLayout)findViewById(R.id.llFaxBox1);
+        llFaxBox2 = (LinearLayout)findViewById(R.id.llFaxBox2);
+        ccp1 = (CountryCodePicker) findViewById(R.id.ccp1);
+        ccp2 = (CountryCodePicker) findViewById(R.id.ccp2);
+        ccp3 = (CountryCodePicker) findViewById(R.id.ccp3);
+        ccp4 = (CountryCodePicker) findViewById(R.id.ccp4);
+        ccp5 = (CountryCodePicker) findViewById(R.id.ccp5);
+        ivTeleAdd = (ImageView)findViewById(R.id.ivTeleAdd);
+        ivMobAdd = (ImageView)findViewById(R.id.ivMobAdd);
+        ivFaxAdd = (ImageView)findViewById(R.id.ivFaxAdd);
+
+        ivTeleAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                if (llTelePhoneBox2.getVisibility() == View.GONE)
+                {
+                    llTelePhoneBox2.setVisibility(View.VISIBLE);
+                    ivTeleAdd.setImageResource(R.drawable.ic_minus_blue);
+                }
+                else
+                {
+                    llTelePhoneBox2.setVisibility(View.GONE);
+                    ivTeleAdd.setImageResource(R.drawable.ic_plus_blue);
+                }
+            }
+        });
+
+        ivMobAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                if (llMobileBox2.getVisibility() == View.GONE)
+                {
+                    llMobileBox2.setVisibility(View.VISIBLE);
+                    ivMobAdd.setImageResource(R.drawable.ic_minus_blue);
+                }
+                else
+                {
+                    llMobileBox2.setVisibility(View.GONE);
+                    ivMobAdd.setImageResource(R.drawable.ic_plus_blue);
+                }
+            }
+        });
+
+        ivFaxAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                if (llFaxBox2.getVisibility() == View.GONE)
+                {
+                    llFaxBox2.setVisibility(View.VISIBLE);
+                    ivFaxAdd.setImageResource(R.drawable.ic_minus_blue);
+                }
+                else
+                {
+                    llFaxBox2.setVisibility(View.GONE);
+                    ivFaxAdd.setImageResource(R.drawable.ic_plus_blue);
+                }
+            }
+        });
+
     }
 
     private void handleTwitterSession(TwitterSession session)

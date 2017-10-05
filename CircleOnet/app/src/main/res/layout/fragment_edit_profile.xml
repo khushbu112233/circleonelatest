@@ -472,14 +472,16 @@
                                     android:paddingLeft="10dp"
                                     android:hint="phone1"
                                     android:textSize="13sp"
-                                    android:layout_weight="0.7"
+                                    android:layout_weight="0.8"
+                                    android:layout_marginRight="10dp"
                                     android:backgroundTint="@color/colorPrimary"/>
 
                                 <ImageView
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
+                                    android:id="@+id/ivTeleAdd"
+                                    android:layout_width="20dp"
+                                    android:layout_height="22dp"
                                     android:src="@drawable/ic_plus_blue"
-                                    android:layout_weight="0.3"/>
+                                    android:layout_weight="0.2"/>
 
                             </LinearLayout>
 
@@ -492,7 +494,8 @@
                             android:orientation="horizontal"
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="15dp"
-                            android:gravity="center_vertical">
+                            android:gravity="center_vertical"
+                            android:visibility="gone">
 
                             <ImageView
                                 android:layout_width="20dp"
@@ -533,13 +536,14 @@
                                     android:paddingLeft="10dp"
                                     android:hint="phone2"
                                     android:textSize="13sp"
-                                    android:layout_weight="0.7"
+                                    android:layout_weight="0.8"
+                                    android:layout_marginRight="10dp"
                                     android:backgroundTint="@color/colorPrimary"/>
 
                                 <ImageView
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
-                                    android:layout_weight="0.3"/>
+                                    android:layout_width="20dp"
+                                    android:layout_height="22dp"
+                                    android:layout_weight="0.2"/>
 
                             </LinearLayout>
 
@@ -593,14 +597,16 @@
                                     android:paddingLeft="10dp"
                                     android:hint="mobile1"
                                     android:textSize="13sp"
-                                    android:layout_weight="0.7"
+                                    android:layout_weight="0.8"
+                                    android:layout_marginRight="10dp"
                                     android:backgroundTint="@color/colorPrimary"/>
 
                                 <ImageView
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
+                                    android:id="@+id/ivMobAdd"
+                                    android:layout_width="20dp"
+                                    android:layout_height="22dp"
                                     android:src="@drawable/ic_plus_blue"
-                                    android:layout_weight="0.3"/>
+                                    android:layout_weight="0.2"/>
 
                             </LinearLayout>
 
@@ -613,7 +619,8 @@
                             android:orientation="horizontal"
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="15dp"
-                            android:gravity="center_vertical">
+                            android:gravity="center_vertical"
+                            android:visibility="gone">
 
                             <ImageView
                                 android:layout_width="20dp"
@@ -654,13 +661,14 @@
                                     android:paddingLeft="10dp"
                                     android:hint="mobile2"
                                     android:textSize="13sp"
-                                    android:layout_weight="0.7"
+                                    android:layout_weight="0.8"
+                                    android:layout_marginRight="10dp"
                                     android:backgroundTint="@color/colorPrimary"/>
 
                                 <ImageView
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
-                                    android:layout_weight="0.3"/>
+                                    android:layout_width="20dp"
+                                    android:layout_height="22dp"
+                                    android:layout_weight="0.2"/>
 
                             </LinearLayout>
 
@@ -861,7 +869,7 @@
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:layout_marginRight="20dp"
-                                android:src="@drawable/ic_mob_blue" />
+                                android:src="@drawable/ic_fax_blue" />
 
                             <com.hbb20.CountryCodePicker
                                 app:ccp_defaultPhoneCode="65"
@@ -896,14 +904,17 @@
                                     android:paddingLeft="10dp"
                                     android:hint="fax1"
                                     android:textSize="13sp"
-                                    android:layout_weight="0.7"
+                                    android:layout_weight="0.8"
+                                    android:layout_marginRight="10dp"
                                     android:backgroundTint="@color/colorPrimary"/>
 
                                 <ImageView
+                                    android:id="@+id/ivFaxAdd"
                                     android:layout_width="25dp"
                                     android:layout_height="25dp"
                                     android:src="@drawable/ic_plus_blue"
-                                    android:layout_weight="0.3"/>
+                                    android:layout_weight="0.2"
+                                    android:visibility="gone"/>
 
                             </LinearLayout>
 
@@ -916,13 +927,14 @@
                             android:orientation="horizontal"
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="15dp"
-                            android:gravity="center_vertical">
+                            android:gravity="center_vertical"
+                            android:visibility="gone">
 
                             <ImageView
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:layout_marginRight="20dp"
-                                android:src="@drawable/ic_mob_blue" />
+                                android:src="@drawable/ic_fax_blue" />
 
                             <com.hbb20.CountryCodePicker
                                 app:ccp_defaultPhoneCode="65"
@@ -957,13 +969,14 @@
                                     android:paddingLeft="10dp"
                                     android:hint="fax2"
                                     android:textSize="13sp"
-                                    android:layout_weight="0.7"
+                                    android:layout_weight="0.8"
+                                    android:layout_marginRight="10dp"
                                     android:backgroundTint="@color/colorPrimary"/>
 
                                 <ImageView
                                     android:layout_width="25dp"
                                     android:layout_height="25dp"
-                                    android:layout_weight="0.3"/>
+                                    android:layout_weight="0.2"/>
 
                             </LinearLayout>
 
