@@ -57,7 +57,7 @@ public class SearchGroupMemberAdapter extends BaseAdapter
     {
         TextView nameText, descText, detailText ;
         CircleImageView circleImageView ;
-        public static CheckBox chCheckBox;
+        CheckBox chCheckBox;
     }
 
     @Override
@@ -84,6 +84,12 @@ public class SearchGroupMemberAdapter extends BaseAdapter
         {
             holder = (ViewHolder)row.getTag();
         }
+
+      /*  if (checkboxstate[((int) holder.chCheckBox.getTag())] == null)
+        {
+            checkboxstate[((int) holder.chCheckBox.getTag())] = false;
+        }
+        holder.chCheckBox.setChecked(checkboxstate[((int)holder.chCheckBox.getTag())]);*/
 
         holder.nameText.setText(connectLists.get(position).getFirstname()+" "+connectLists.get(position).getLastname());
 //        descText.setText(connectLists.get(position).getDesignation());
@@ -159,6 +165,7 @@ public class SearchGroupMemberAdapter extends BaseAdapter
             }
         });
 
+        row.setTag(holder);
         return row;
     }
 

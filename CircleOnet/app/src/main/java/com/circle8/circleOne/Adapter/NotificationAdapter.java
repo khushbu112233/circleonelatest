@@ -138,8 +138,6 @@ public class NotificationAdapter extends BaseAdapter
         posi = position;
         String purpose = testimonialModels.get(position).getPurpose();
 
-
-
         if (purpose.equalsIgnoreCase("Recieved Testimonial"))
         {
             lnrTestRec.setVisibility(View.VISIBLE);
