@@ -479,7 +479,7 @@
                                 <ImageView
                                     android:id="@+id/ivTeleAdd"
                                     android:layout_width="20dp"
-                                    android:layout_height="22dp"
+                                    android:layout_height="20dp"
                                     android:src="@drawable/ic_plus_blue"
                                     android:layout_weight="0.2"/>
 
@@ -542,7 +542,7 @@
 
                                 <ImageView
                                     android:layout_width="20dp"
-                                    android:layout_height="22dp"
+                                    android:layout_height="20dp"
                                     android:layout_weight="0.2"/>
 
                             </LinearLayout>
@@ -604,7 +604,7 @@
                                 <ImageView
                                     android:id="@+id/ivMobAdd"
                                     android:layout_width="20dp"
-                                    android:layout_height="22dp"
+                                    android:layout_height="20dp"
                                     android:src="@drawable/ic_plus_blue"
                                     android:layout_weight="0.2"/>
 
@@ -667,7 +667,7 @@
 
                                 <ImageView
                                     android:layout_width="20dp"
-                                    android:layout_height="22dp"
+                                    android:layout_height="20dp"
                                     android:layout_weight="0.2"/>
 
                             </LinearLayout>
@@ -910,8 +910,8 @@
 
                                 <ImageView
                                     android:id="@+id/ivFaxAdd"
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
                                     android:src="@drawable/ic_plus_blue"
                                     android:layout_weight="0.2"
                                     android:visibility="gone"/>
@@ -974,8 +974,8 @@
                                     android:backgroundTint="@color/colorPrimary"/>
 
                                 <ImageView
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
                                     android:layout_weight="0.2"/>
 
                             </LinearLayout>
