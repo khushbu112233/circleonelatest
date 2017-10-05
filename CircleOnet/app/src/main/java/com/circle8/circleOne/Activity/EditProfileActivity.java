@@ -2037,7 +2037,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("Address4", ccpCountry.getSelectedCountryName().toString() + " " + edtAddress6.getText().toString());
             jsonObject.accumulate("Address_ID", "");
             jsonObject.accumulate("Address_Type", "");
-            jsonObject.accumulate("AssociationIDs", jsonArray);
+            jsonObject.accumulate("AssociationIDs", arrayAssociation);
             jsonObject.accumulate("Attachment_FileName", etAttachFile.getText().toString());
             jsonObject.accumulate("Card_Back", txtCardBack.getText().toString());
             jsonObject.accumulate("Card_Front", txtCardFront.getText().toString());
