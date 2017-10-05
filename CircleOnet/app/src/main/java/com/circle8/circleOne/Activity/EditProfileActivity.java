@@ -753,32 +753,26 @@ public class EditProfileActivity extends AppCompatActivity implements
 
         ivProfileDelete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
-                AlertDialog.Builder alert = new AlertDialog.Builder(
-                        EditProfileActivity.this);
+            public void onClick(View v)
+            {
+                AlertDialog.Builder alert = new AlertDialog.Builder(EditProfileActivity.this, R.style.Blue_AlertDialog);
                 alert.setMessage("Do you want to Delete this Profile?");
                 alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //do your work here
                         dialog.dismiss();
                         new HttpAsyncTaskProfileDelete().execute("http://circle8.asia:8999/Onet.svc/DeleteProfile");
-
                     }
                 });
-                alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
-
+                alert.setNegativeButton("No", new DialogInterface.OnClickListener()
+                {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
                 });
-
                 alert.show();
-
-
             }
         });
 
