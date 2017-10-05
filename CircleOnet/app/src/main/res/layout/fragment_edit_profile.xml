@@ -588,9 +588,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
+                                android:hint="email2"
                                 android:paddingBottom="10dp"
                                 android:paddingLeft="10dp"
-                                android:hint="email2"
                                 android:textSize="13sp" />
                         </LinearLayout>
 
