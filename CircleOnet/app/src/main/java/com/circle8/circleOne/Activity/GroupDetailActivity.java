@@ -205,10 +205,7 @@ public class GroupDetailActivity extends AppCompatActivity
 
                        if (item.getTitle().toString().equals("Delete Circle"))
                        {
-
-
-                           AlertDialog.Builder alert = new AlertDialog.Builder(
-                                   GroupDetailActivity.this);
+                           AlertDialog.Builder alert = new AlertDialog.Builder(GroupDetailActivity.this, R.style.Blue_AlertDialog);
                            alert.setMessage("Do you want to Delete Member(s) from Circle");
                            alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
@@ -1375,7 +1372,6 @@ public class GroupDetailActivity extends AppCompatActivity
                     {
                         tvProgressing.setText(loading+"...");
                     }
-
                 }
             }, i);
         }

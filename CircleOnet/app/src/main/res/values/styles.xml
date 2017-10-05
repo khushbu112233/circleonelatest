@@ -56,4 +56,11 @@
         <item name="windowActionBar">false</item>
     </style>
 
+    <style name="Blue_AlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:colorAccent">@color/white</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
+    </style>
+
 </resources>
