@@ -1259,16 +1259,17 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="15dp"
-                            android:layout_marginTop="0dp"
+                            android:layout_marginTop="5dp"
                             android:gravity="center_vertical"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:weightSum="1">
 
                             <ImageView
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:layout_marginRight="20dp"
+                                android:layout_weight="0.0"
                                 android:src="@drawable/ic_association_blue" />
-
 
                             <Spinner
                                 android:visibility="gone"
@@ -1281,7 +1282,17 @@
                                 android:textColor="@color/colorPrimary"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Association"/>
+                                android:text="Association"
+                                android:layout_weight="0.9"/>
+
+                            <ImageView
+                                android:id="@+id/ivArrowImg1"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_weight="0.1"
+                                android:layout_gravity="center_vertical"
+                                android:src="@drawable/ic_right_arrow_blue" />
 
                         </LinearLayout>
 
@@ -1293,7 +1304,8 @@
                             android:scrollbars="horizontal"
                             android:layout_toLeftOf="@+id/imgAddGroupFriend"
                             android:layout_marginRight="10dp"
-                            android:layout_marginLeft="20dp"/>
+                            android:layout_marginLeft="20dp"
+                            android:visibility="gone"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"

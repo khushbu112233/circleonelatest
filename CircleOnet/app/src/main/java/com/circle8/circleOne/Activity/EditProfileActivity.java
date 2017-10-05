@@ -233,9 +233,10 @@ public class EditProfileActivity extends AppCompatActivity implements
     private CardSwipe myPager;
     private String addEventString;
     private LinearLayout llEventBox;
-    private ImageView ivArrowImg;
+    private ImageView ivArrowImg, ivArrowImg1;
     RecyclerView recyclerEvents;
     private String arrowStatus = "RIGHT";
+    private String arrowStatus1 = "RIGHT";
     private LoginSession session;
     private int SELECT_GALLERY_CARD = 500;
     private int REQUEST_CAMERA_CARD = 501;
@@ -446,6 +447,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         txtMore = (TextView) findViewById(R.id.txtMore);
         loginButton = (LoginButton) findViewById(R.id.login_button);
         ivArrowImg = (ImageView) findViewById(R.id.ivArrowImg);
+        ivArrowImg1 = (ImageView) findViewById(R.id.ivArrowImg1);
         tvEventInfo = (TextView) findViewById(R.id.tvEventInfo);
         imgAdd = (ImageView) findViewById(R.id.imgAdd);
         llEventBox = (LinearLayout) findViewById(R.id.llEventBox);
@@ -726,6 +728,25 @@ public class EditProfileActivity extends AppCompatActivity implements
                     ivArrowImg.setImageResource(R.drawable.ic_right_arrow_blue);
                     recyclerEvents.setVisibility(View.GONE);
                     arrowStatus = "RIGHT";
+                }
+            }
+        });
+
+        ivArrowImg1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                if (arrowStatus1.equalsIgnoreCase("RIGHT"))
+                {
+                    ivArrowImg1.setImageResource(R.drawable.ic_down_arrow_blue);
+                    recyclerAssociation.setVisibility(View.VISIBLE);
+                    arrowStatus1 = "DOWN";
+                }
+                else if (arrowStatus1.equalsIgnoreCase("DOWN"))
+                {
+                    ivArrowImg1.setImageResource(R.drawable.ic_right_arrow_blue);
+                    recyclerAssociation.setVisibility(View.GONE);
+                    arrowStatus1 = "RIGHT";
                 }
             }
         });
