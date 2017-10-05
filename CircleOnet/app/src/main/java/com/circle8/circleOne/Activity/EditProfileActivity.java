@@ -775,7 +775,7 @@ public class EditProfileActivity extends AppCompatActivity implements
       //  new HttpAsyncTaskIndustry().execute("http://circle8.asia:8999/Onet.svc/GetIndustryList");
       //  new HttpAsyncTaskDesignation().execute("http://circle8.asia:8999/Onet.svc/GetDesignationList");
         new HttpAsyncTaskAssociation().execute("http://circle8.asia:8999/Onet.svc/GetAssociationList");
-        new HttpAsyncTaskEvents().execute("http://circle8.asia:8999/Onet.svc/GetAssociationList");
+      //  new HttpAsyncTaskEvents().execute("http://circle8.asia:8999/Onet.svc/GetAssociationList");
 //        new HttpAsyncTaskEventList().execute("http://circle8.asia:8999/Onet.svc/Events/List");
 //
         if (type.equals("edit")) {

@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import com.circle8.circleOne.Model.AssociationModel;
@@ -68,10 +67,6 @@ public class CardViewDataAdapter extends
                 contact.setSelected(cb.isChecked());
                 stList.get(pos).setSelected(cb.isChecked());
 
-                Toast.makeText(
-                        v.getContext(),
-                        "Clicked on Checkbox: " + cb.getText() + " is "
-                                + cb.isChecked(), Toast.LENGTH_LONG).show();
             }
         });
 
