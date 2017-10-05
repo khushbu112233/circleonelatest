@@ -278,10 +278,11 @@
                         android:orientation="horizontal">
 
                         <ImageView
+                            android:tint="@color/colorPrimary"
                             android:layout_marginRight="20dp"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@drawable/ic_acc_blue"/>
+                            android:src="@drawable/ic_profile_gray"/>
 
                         <com.circle8.circleOne.Utils.cgTextView
                             android:id="@+id/tvProfileName"
@@ -793,7 +794,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" />
                     <RelativeLayout
-                        android:layout_marginTop="5dp"
                         android:layout_marginBottom="20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">

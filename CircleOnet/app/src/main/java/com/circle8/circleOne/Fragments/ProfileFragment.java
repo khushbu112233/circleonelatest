@@ -645,47 +645,50 @@ public class ProfileFragment extends Fragment
                                             listAssociation.add(array.getString(i1));
 
                                         }
+
+                                        int countAssociation;
+                                        if (array.length()>=5){
+                                            countAssociation = 5;
+                                        }else {
+                                            countAssociation = array.length();
+                                        }
+
+                                        int countEvents;
+                                        if (arrayEvents.length()>=5){
+                                            countEvents = 5;
+                                        }else {
+                                            countEvents = arrayEvents.length();
+                                        }
+
+                                        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), countAssociation, GridLayoutManager.HORIZONTAL, false);
+                                        recyclerAssociation.setAdapter(new TextRecyclerAdapter(listAssociation));
+                                        recyclerAssociation.setLayoutManager(gridLayoutManager);
+
+                                        GridLayoutManager gridLayoutManager1 = new GridLayoutManager(getContext(), countEvents, GridLayoutManager.HORIZONTAL, false);
+                                        recyclerEvents.setAdapter(new TextRecyclerAdapter(listEvents));
+                                        recyclerEvents.setLayoutManager(gridLayoutManager1);
+                                        if (listAssociation.size() == 0){
+                                            recyclerAssociation.setVisibility(View.GONE);
+                                            txtNoAssociation.setVisibility(View.VISIBLE);
+                                        }
+                                        else {
+                                            recyclerAssociation.setVisibility(View.VISIBLE);
+                                            txtNoAssociation.setVisibility(View.GONE);
+                                        }
+
+                                        if (listEvents.size() == 0){
+                                            recyclerEvents.setVisibility(View.GONE);
+                                            txtNoEvent.setVisibility(View.VISIBLE);
+                                        }
+                                        else {
+                                            recyclerEvents.setVisibility(View.VISIBLE);
+                                            txtNoEvent.setVisibility(View.GONE);
+                                        }
+
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
-                                    int countAssociation;
-                                    if (array.length()>=5){
-                                        countAssociation = 5;
-                                    }else {
-                                        countAssociation = array.length();
-                                    }
 
-                                    int countEvents;
-                                    if (arrayEvents.length()>=5){
-                                        countEvents = 5;
-                                    }else {
-                                        countEvents = arrayEvents.length();
-                                    }
-
-                                    GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), countAssociation, GridLayoutManager.HORIZONTAL, false);
-                                    recyclerAssociation.setAdapter(new TextRecyclerAdapter(listAssociation));
-                                    recyclerAssociation.setLayoutManager(gridLayoutManager);
-
-                                    GridLayoutManager gridLayoutManager1 = new GridLayoutManager(getContext(), countEvents, GridLayoutManager.HORIZONTAL, false);
-                                    recyclerEvents.setAdapter(new TextRecyclerAdapter(listEvents));
-                                    recyclerEvents.setLayoutManager(gridLayoutManager1);
-                                    if (listAssociation.size() == 0){
-                                        recyclerAssociation.setVisibility(View.GONE);
-                                        txtNoAssociation.setVisibility(View.VISIBLE);
-                                    }
-                                    else {
-                                        recyclerAssociation.setVisibility(View.VISIBLE);
-                                        txtNoAssociation.setVisibility(View.GONE);
-                                    }
-
-                                    if (listEvents.size() == 0){
-                                        recyclerEvents.setVisibility(View.GONE);
-                                        txtNoEvent.setVisibility(View.VISIBLE);
-                                    }
-                                    else {
-                                        recyclerEvents.setVisibility(View.VISIBLE);
-                                        txtNoEvent.setVisibility(View.GONE);
-                                    }
 
                                     if (allTags.get(i).getUserPhoto().equals(""))
                                     {
@@ -1207,46 +1210,49 @@ public class ProfileFragment extends Fragment
                             listAssociation.add(array.getString(i1));
 
                         }
+
+                        int countAssociation;
+                        if (array.length()>=5){
+                            countAssociation = 5;
+                        }else {
+                            countAssociation = array.length();
+                        }
+
+                        int countEvents;
+                        if (arrayEvents.length()>=5){
+                            countEvents = 5;
+                        }else {
+                            countEvents = arrayEvents.length();
+                        }
+
+                        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), countAssociation, GridLayoutManager.HORIZONTAL, false);
+                        recyclerAssociation.setAdapter(new TextRecyclerAdapter(listAssociation));
+                        recyclerAssociation.setLayoutManager(gridLayoutManager);
+
+                        GridLayoutManager gridLayoutManager1 = new GridLayoutManager(getContext(), countEvents, GridLayoutManager.HORIZONTAL, false);
+                        recyclerEvents.setAdapter(new TextRecyclerAdapter(listEvents));
+                        recyclerEvents.setLayoutManager(gridLayoutManager1);
+                        if (listAssociation.size() == 0){
+                            recyclerAssociation.setVisibility(View.GONE);
+                            txtNoAssociation.setVisibility(View.VISIBLE);
+                        }
+                        else {
+                            recyclerAssociation.setVisibility(View.VISIBLE);
+                            txtNoAssociation.setVisibility(View.GONE);
+                        }
+
+                        if (listEvents.size() == 0){
+                            recyclerEvents.setVisibility(View.GONE);
+                            txtNoEvent.setVisibility(View.VISIBLE);
+                        }
+                        else {
+                            recyclerEvents.setVisibility(View.VISIBLE);
+                            txtNoEvent.setVisibility(View.GONE);
+                        }
+
+
                     } catch (JSONException e) {
                         e.printStackTrace();
-                    }
-                    int countAssociation;
-                    if (array.length()>=5){
-                        countAssociation = 5;
-                    }else {
-                        countAssociation = array.length();
-                    }
-
-                    int countEvents;
-                    if (arrayEvents.length()>=5){
-                        countEvents = 5;
-                    }else {
-                        countEvents = arrayEvents.length();
-                    }
-
-                    GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), countAssociation, GridLayoutManager.HORIZONTAL, false);
-                    recyclerAssociation.setAdapter(new TextRecyclerAdapter(listAssociation));
-                    recyclerAssociation.setLayoutManager(gridLayoutManager);
-
-                    GridLayoutManager gridLayoutManager1 = new GridLayoutManager(getContext(), countEvents, GridLayoutManager.HORIZONTAL, false);
-                    recyclerEvents.setAdapter(new TextRecyclerAdapter(listEvents));
-                    recyclerEvents.setLayoutManager(gridLayoutManager1);
-                    if (listAssociation.size() == 0){
-                        recyclerAssociation.setVisibility(View.GONE);
-                        txtNoAssociation.setVisibility(View.VISIBLE);
-                    }
-                    else {
-                        recyclerAssociation.setVisibility(View.VISIBLE);
-                        txtNoAssociation.setVisibility(View.GONE);
-                    }
-
-                    if (listEvents.size() == 0){
-                        recyclerEvents.setVisibility(View.GONE);
-                        txtNoEvent.setVisibility(View.VISIBLE);
-                    }
-                    else {
-                        recyclerEvents.setVisibility(View.VISIBLE);
-                        txtNoEvent.setVisibility(View.GONE);
                     }
 
                     if (allTags.get(0).getCard_Front().equalsIgnoreCase("") || allTags.get(0).getCard_Back().equalsIgnoreCase("")) {

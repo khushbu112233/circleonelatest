@@ -32,6 +32,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.WindowCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.util.Log;
 import android.util.Pair;
@@ -54,10 +56,12 @@ import android.widget.Toast;
 
 import com.circle8.circleOne.Adapter.AddEventAdapter;
 import com.circle8.circleOne.Adapter.CardSwipe;
+import com.circle8.circleOne.Adapter.CardViewDataAdapter;
 import com.circle8.circleOne.Adapter.CustomAdapter;
 import com.circle8.circleOne.Adapter.EventsAdapter;
 import com.circle8.circleOne.Fragments.CameraDialogFragment;
 import com.circle8.circleOne.Helper.LoginSession;
+import com.circle8.circleOne.Model.AssociationModel;
 import com.circle8.circleOne.Model.EventModel;
 import com.circle8.circleOne.Model.TestimonialModel;
 import com.circle8.circleOne.R;
@@ -261,7 +265,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     private ContourDetectorFrameHandler contourDetectorFrameHandler;
     private AutoSnappingController autoSnappingController;
     private Toast userGuidanceToast;
-
+    private List<AssociationModel> associationList;
     private boolean flashEnabled = false;
     private boolean autoSnappingEnabled = true;
     private Bitmap documentImage;
@@ -294,7 +298,10 @@ public class EditProfileActivity extends AppCompatActivity implements
     private ArrayList<EventModel> eventModelArrayList = new ArrayList<>();
     private ArrayList<String> eventCategoryIDList = new ArrayList<>();
     private ArrayList<String> eventCategoryNameList = new ArrayList<>();
-
+    EditText edtProfileName;
+    String ProfileName;
+    RecyclerView recyclerAssociation;
+    private RecyclerView.Adapter mAdapter;
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line = "";
@@ -333,6 +340,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                 }, 700);
             }
         });
+        edtProfileName = (EditText) findViewById(R.id.edtProfileName);
         ivProfileDelete = (ImageView) findViewById(R.id.ivProfileDelete);
         imgProfileShare = (ImageView) findViewById(R.id.imgProfileShare);
         resultView = (ImageView) findViewById(R.id.result);
@@ -354,7 +362,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
         ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
         ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
-
+        recyclerAssociation = (RecyclerView) findViewById(R.id.recyclerAssociation);
         imgProfileShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -436,9 +444,10 @@ public class EditProfileActivity extends AppCompatActivity implements
         ivAttachFrontImage = (ImageView) findViewById(R.id.ivAttachFrontImage);
         txtCardFront = (TextView) findViewById(R.id.txtCardFront);
         txtCardBack = (TextView) findViewById(R.id.txtCardBack);
-        ivAddAssociate = (ImageView) findViewById(R.id.ivAddAssociate);
+       // ivAddAssociate = (ImageView) findViewById(R.id.ivAddAssociate);
         //  etAssociationName = (EditText)findViewById(R.id.etAssociationName);
         spnAssociation = (Spinner) findViewById(R.id.spnAssociation);
+
         imgYoutube = (ImageView) findViewById(R.id.imgYoutube);
         imgGoogle = (ImageView) findViewById(R.id.imgGoogle);
         imgTwitter = (ImageView) findViewById(R.id.imgTwitter);
@@ -814,7 +823,32 @@ public class EditProfileActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
 
-                try
+                String data = "";
+                List<AssociationModel> stList = ((CardViewDataAdapter) mAdapter)
+                        .getStudentist();
+
+                for (int i = 0; i < stList.size(); i++) {
+                    AssociationModel singleStudent = stList.get(i);
+                    if (singleStudent.isSelected() == true) {
+
+                        data = data + "\n" + singleStudent.getName().toString();
+      /*
+       * Toast.makeText( CardViewActivity.this, " " +
+       * singleStudent.getName() + " " +
+       * singleStudent.getEmailId() + " " +
+       * singleStudent.isSelected(),
+       * Toast.LENGTH_SHORT).show();
+       */
+                    }
+
+                }
+
+                Toast.makeText(EditProfileActivity.this,
+                        "Selected Students: \n" + data, Toast.LENGTH_LONG)
+                        .show();
+
+
+               /* try
                 {
                     associationID = AssoIdList.get(spnAssociation.getSelectedItemPosition()).toString();
                 }
@@ -826,7 +860,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                 else if (type.equals("edit"))
                 {
                     new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/UpdateProfile");
-                }
+                }*/
             }
         });
         generateHashkey();
@@ -1476,7 +1510,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("Website", edtWebsite.getText().toString());
             jsonObject.accumulate("Youtube", strYoutube);
             jsonObject.accumulate("Event_Cat_IDs", jsonArray1);
-            jsonObject.accumulate("ProfileName", "Profile11");
+            jsonObject.accumulate("ProfileName", edtProfileName.getText().toString());
             jsonObject.accumulate("UserPhoto", UserPhoto);
             jsonObject.accumulate("FirstName", kept);
             jsonObject.accumulate("LastName", remainder);
@@ -2032,7 +2066,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("Website", edtWebsite.getText().toString());
             jsonObject.accumulate("Youtube", strYoutube);
             jsonObject.accumulate("Event_Cat_IDs", jsonArray1);
-            jsonObject.accumulate("ProfileName", "Profile11");
+            jsonObject.accumulate("ProfileName", edtProfileName.getText().toString());
             jsonObject.accumulate("UserPhoto", UserPhoto);
             jsonObject.accumulate("FirstName", kept);
             jsonObject.accumulate("LastName", remainder);
@@ -2842,11 +2876,18 @@ public class EditProfileActivity extends AppCompatActivity implements
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result != null) {
+                    associationList = new ArrayList<AssociationModel>();
                     JSONObject jsonObject = new JSONObject(result);
                     JSONArray jsonArray = jsonObject.getJSONArray("association");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
+
+                        AssociationModel st = new AssociationModel(object.getString("AssociationID"), object.getString("AssociationName"), false );
+
+                        associationList.add(st);
+
+
                         association_NAME = object.getString("AssociationName");
                         association_ID = object.getString("AssociationID");
 
@@ -2856,6 +2897,14 @@ public class EditProfileActivity extends AppCompatActivity implements
                                 android.R.layout.simple_spinner_item, AssoNameList);
                         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spnAssociation.setAdapter(dataAdapter);
+
+                        mAdapter = new CardViewDataAdapter(associationList);
+
+                        GridLayoutManager gridLayoutManager = new GridLayoutManager(EditProfileActivity.this, 5, GridLayoutManager.HORIZONTAL, false);
+                        recyclerAssociation.setAdapter(mAdapter);
+                        recyclerAssociation.setLayoutManager(gridLayoutManager);
+
+
                     }
                 } else {
                     // Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
@@ -3201,7 +3250,9 @@ public class EditProfileActivity extends AppCompatActivity implements
                     Postalcode = jsonObject.getString("Postalcode");
                     Website = jsonObject.getString("Website");
                     Attachment_FileName = jsonObject.getString("Attachment_FileName");
+                    ProfileName = jsonObject.getString("ProfileName");
 
+                    edtProfileName.setText(ProfileName);
                     try {
 
                         int selectedPos = company.indexOf((String) CompanyName);
