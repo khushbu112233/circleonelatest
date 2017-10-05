@@ -5,14 +5,33 @@
     android:orientation="vertical"
     android:background="@color/colorPrimary">
 
+    <RelativeLayout
+        android:layout_alignParentLeft="true"
+        android:layout_width="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/imgLogo"
         android:tint="@color/white"
-        android:layout_alignParentLeft="true"
         android:src="@drawable/login_logo"
-        android:layout_centerVertical="true"
         android:layout_width="30dp"
         android:layout_height="25dp" />
+
+        <com.circle8.circleOne.Utils.CircularTextView
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/imgLogo"
+            android:layout_marginLeft="0dp"
+            android:id="@+id/txtNotificationCountAction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="8sp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
+            android:padding="2dp"/>
+
+        </RelativeLayout>
     <com.circle8.circleOne.Utils.cgTextView
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"

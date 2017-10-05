@@ -7,6 +7,18 @@
     android:layout_height="match_parent"
     tools:context="com.circle8.circleOne.Activity.TestimonialActivity">
 
+    <com.circle8.circleOne.Utils.cgTextView
+        android:visibility="visible"
+        android:layout_centerInParent="true"
+        android:id="@+id/txtTestimonial"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_centerVertical="true"
+        android:textSize="13sp"
+        android:text="You do not have any testimonials"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <ListView
         android:nestedScrollingEnabled="true"
         android:layout_marginTop="10dp"

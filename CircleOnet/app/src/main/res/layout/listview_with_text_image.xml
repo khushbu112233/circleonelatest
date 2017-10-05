@@ -205,6 +205,17 @@
                 android:textColor="@android:color/white"
                 android:textSize="15dp" />
 
+            <com.circle8.circleOne.Utils.CircularTextView
+                android:layout_marginLeft="8dp"
+                android:id="@+id/txtNotificationCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:gravity="center"
+                android:padding="2dp"/>
+
         </LinearLayout>
 
         <LinearLayout

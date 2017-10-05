@@ -269,6 +269,34 @@
                     android:layout_height="match_parent">
 
                     <LinearLayout
+                        android:id="@+id/llProfileNameBox"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:tint="@color/colorPrimary"
+                            android:layout_marginRight="20dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_profile_gray"/>
+
+                        <com.circle8.circleOne.Utils.cgTextView
+                            android:id="@+id/tvProfileName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="Profile"
+                            android:textAlignment="center"
+                            android:textColor="#6b6c6e"
+                            android:textSize="13sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:id="@+id/llNameBox"
                         android:layout_marginRight="15dp"
                         android:layout_marginLeft="20dp"
@@ -293,13 +321,19 @@
                             android:textColor="#6b6c6e"
                             android:textSize="13sp" />
 
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
                         <ImageView
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="right"
                             android:id="@+id/imgQR"
                             android:layout_marginLeft="8dp"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:src="@drawable/barcode_scanner"/>
-
+                        </RelativeLayout>
                     </LinearLayout>
 
                     <LinearLayout
@@ -688,6 +722,21 @@
                         android:textColor="@color/colorPrimary"/>
                     </RelativeLayout>
 
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.circle8.circleOne.Utils.cgTextView
+                            android:visibility="visible"
+                            android:id="@+id/txtTestimonial"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_centerVertical="true"
+                            android:textSize="13sp"
+                            android:text="You do not have any testimonials"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
+
                     <com.circle8.circleOne.Utils.ExpandableHeightListView
                         android:nestedScrollingEnabled="true"
                         android:layout_marginTop="5dp"
@@ -701,6 +750,7 @@
 
                     </com.circle8.circleOne.Utils.ExpandableHeightListView>
 
+                    </RelativeLayout>
                     <com.circle8.circleOne.Utils.orkebyTextView
                         android:id="@+id/txtAssociation"
                         android:layout_marginTop="15dp"
@@ -711,29 +761,30 @@
                         android:text="Association"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" />
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <com.circle8.circleOne.Utils.cgTextView
+                            android:visibility="visible"
+                            android:id="@+id/txtNoAssociation"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_centerVertical="true"
+                            android:textSize="13sp"
+                            android:text="You do not have any associations"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
                     <android.support.v7.widget.RecyclerView
                         android:layout_marginTop="5dp"
-                        android:id="@+id/recycler_view"
+                        android:id="@+id/recyclerAssociation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:scrollbars="horizontal"
                         android:layout_toLeftOf="@+id/imgAddGroupFriend"
                         android:layout_marginRight="10dp"
                         android:layout_marginLeft="20dp"/>
-
-                    <TextView
-                        android:visibility="gone"
-                        android:id="@+id/txtTestimonial"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_centerVertical="true"
-                        android:textSize="13sp"
-                        android:text="You do not have any testimonial"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent" />
-
+                    </RelativeLayout>
                     <com.circle8.circleOne.Utils.orkebyTextView
-                        android:layout_marginBottom="20dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginLeft="20dp"
                         android:layout_centerVertical="true"
@@ -742,6 +793,30 @@
                         android:text="Preferred Event Industries"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" />
+                    <RelativeLayout
+                        android:layout_marginBottom="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <com.circle8.circleOne.Utils.cgTextView
+                            android:visibility="visible"
+                            android:id="@+id/txtNoEvent"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_centerVertical="true"
+                            android:textSize="13sp"
+                            android:text="You do not have any events"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
+                        <android.support.v7.widget.RecyclerView
+                            android:layout_marginTop="5dp"
+                            android:id="@+id/recyclerEvents"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:scrollbars="horizontal"
+                            android:layout_toLeftOf="@+id/imgAddGroupFriend"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginLeft="20dp"/>
+                    </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
 

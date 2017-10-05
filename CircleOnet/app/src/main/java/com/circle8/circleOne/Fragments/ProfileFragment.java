@@ -17,7 +17,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.PopupMenu;
+import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
@@ -39,10 +41,12 @@ import com.circle8.circleOne.Activity.EditProfileActivity;
 import com.circle8.circleOne.Activity.ImageZoom;
 import com.circle8.circleOne.Activity.LoginActivity;
 import com.circle8.circleOne.Activity.MyAccountActivity;
+import com.circle8.circleOne.Activity.SearchGroupMembers;
 import com.circle8.circleOne.Activity.TestimonialActivity;
 import com.circle8.circleOne.Activity.TestimonialRequest;
 import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.Adapter.CustomAdapter;
+import com.circle8.circleOne.Adapter.TextRecyclerAdapter;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.ProfileModel;
 import com.circle8.circleOne.Model.TestimonialModel;
@@ -81,6 +85,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -98,7 +103,7 @@ public class ProfileFragment extends Fragment
 {
    // private ProgressBar firstBar = null;
     ImageView imgProfileShare, imgProfileMenu, imgQR, ivEditProfile;
-    TextView tvPersonName ;
+    TextView tvPersonName, tvProfileName ;
     public final static int QRcodeWidth = 500 ;
     Bitmap bitmap ;
     ProgressDialog progressDialog ;
@@ -109,8 +114,10 @@ public class ProfileFragment extends Fragment
     ImageView imgBack, imgAdd;
 
     public static ArrayList<ProfileModel> allTags ;
+    JSONArray array, arrayEvents;
+    List<String> listAssociation, listEvents;
     String profileId = "";
-
+    TextView txtNoAssociation, txtNoEvent;
     private int i = 0;
     TextView tvDesignation, tvCompany, tvName, tvCompanyName, tvDesi,
             tvAssociation, tvAddress, tvWebsite, tvMail, tvMob, tvWork, textIndustry;
@@ -141,8 +148,9 @@ public class ProfileFragment extends Fragment
     private static RelativeLayout rlProgressDialog ;
     private static TextView tvProgressing ;
     private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
-
+    RecyclerView recyclerAssociation, recyclerEvents;
     String barName;
+    JSONArray jsonArray;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -193,20 +201,26 @@ public class ProfileFragment extends Fragment
         lnrWork = (LinearLayout) view.findViewById(R.id.lnrWork);
         lnrWebsite = (LinearLayout) view.findViewById(R.id.lnrWebsite);
         lnrMap = (LinearLayout) view.findViewById(R.id.lnrMap);
+        txtNoEvent = (TextView) view.findViewById(R.id.txtNoEvent);
+        txtNoAssociation = (TextView) view.findViewById(R.id.txtNoAssociation);
         mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
         viewPager1 = (ViewPager) view.findViewById(R.id.viewPager1);
         lstTestimonial = (ExpandableHeightListView) view.findViewById(R.id.lstTestimonial);
         txtTestimonial = (TextView) view.findViewById(R.id.txtTestimonial);
         txtMore = (TextView) view.findViewById(R.id.txtMore);
         imgBack = (ImageView) view.findViewById(R.id.imgBack);
+        recyclerAssociation = (RecyclerView) view.findViewById(R.id.recyclerAssociation);
+        recyclerEvents = (RecyclerView) view.findViewById(R.id.recyclerEvents);
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Generating Qr Code...");
         progressDialog.setCancelable(false);
         allTags = new ArrayList<>();
+        listAssociation = new ArrayList<>();
         imgQR = (ImageView) view.findViewById(R.id.imgQR);
         imgAdd = (ImageView) view.findViewById(R.id.imgAdd);
       //  firstBar = (ProgressBar)view.findViewById(R.id.firstBar);
         tvPersonName = (TextView)view.findViewById(R.id.tvPersonName);
+        tvProfileName = (TextView) view.findViewById(R.id.tvProfileName);
         imgProfileShare = (ImageView) view.findViewById(R.id.imgProfileShare);
         imgProfileMenu = (ImageView) view.findViewById(R.id.imgProfileMenu);
         ivEditProfile = (ImageView)view.findViewById(R.id.ivEditProfile);
@@ -366,9 +380,16 @@ public class ProfileFragment extends Fragment
         imgAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), TestimonialRequest.class);
-                intent.putExtra("ProfileId", TestimonialProfileId);
-                startActivity(intent);
+
+                Intent intent1 = new Intent(getContext(), SearchGroupMembers.class);
+                intent1.putExtra("from", "profile");
+                intent1.putExtra("ProfileId", TestimonialProfileId);
+                startActivity(intent1);
+
+//
+//                Intent intent = new Intent(getContext(), TestimonialRequest.class);
+//                intent.putExtra("ProfileId", TestimonialProfileId);
+//                startActivity(intent);
             }
         });
 
@@ -588,6 +609,7 @@ public class ProfileFragment extends Fragment
                                 if (item.getTitle().toString().equals(profile_array.get(i).toString()))
                                 {
 //                                    Toast.makeText(getContext(), profile_array.get(i).toString(), Toast.LENGTH_LONG).show();
+                                    tvProfileName.setText(allTags.get(i).getProfile());
                                     tvPersonName.setText(allTags.get(i).getFirstName() + " "+ allTags.get(i).getLastName());
                                     tvDesignation.setText(allTags.get(i).getDesignation());
                                     tvCompany.setText(allTags.get(i).getCompanyName());
@@ -604,6 +626,70 @@ public class ProfileFragment extends Fragment
                                             + allTags.get(i).getPostalcode());
                                     tvWebsite.setText(allTags.get(i).getWebsite());
                                     TestimonialProfileId = allTags.get(i).getProfileID();
+
+                                    try {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+                                        array = object.getJSONArray("Association_Name");
+                                        arrayEvents = object.getJSONArray("Event_Cat_Name");
+                                        listAssociation = new ArrayList<String>();
+                                        listEvents = new ArrayList<String>();
+
+                                        for (int i1 = 0; i1 < arrayEvents.length(); i1++) {
+
+                                            listEvents.add(arrayEvents.getString(i1));
+
+                                        }
+
+                                        for (int i1 = 0; i1 < array.length(); i1++) {
+
+                                            listAssociation.add(array.getString(i1));
+
+                                        }
+
+                                        int countAssociation;
+                                        if (array.length()>=5){
+                                            countAssociation = 5;
+                                        }else {
+                                            countAssociation = array.length();
+                                        }
+
+                                        int countEvents;
+                                        if (arrayEvents.length()>=5){
+                                            countEvents = 5;
+                                        }else {
+                                            countEvents = arrayEvents.length();
+                                        }
+
+                                        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), countAssociation, GridLayoutManager.HORIZONTAL, false);
+                                        recyclerAssociation.setAdapter(new TextRecyclerAdapter(listAssociation));
+                                        recyclerAssociation.setLayoutManager(gridLayoutManager);
+
+                                        GridLayoutManager gridLayoutManager1 = new GridLayoutManager(getContext(), countEvents, GridLayoutManager.HORIZONTAL, false);
+                                        recyclerEvents.setAdapter(new TextRecyclerAdapter(listEvents));
+                                        recyclerEvents.setLayoutManager(gridLayoutManager1);
+                                        if (listAssociation.size() == 0){
+                                            recyclerAssociation.setVisibility(View.GONE);
+                                            txtNoAssociation.setVisibility(View.VISIBLE);
+                                        }
+                                        else {
+                                            recyclerAssociation.setVisibility(View.VISIBLE);
+                                            txtNoAssociation.setVisibility(View.GONE);
+                                        }
+
+                                        if (listEvents.size() == 0){
+                                            recyclerEvents.setVisibility(View.GONE);
+                                            txtNoEvent.setVisibility(View.VISIBLE);
+                                        }
+                                        else {
+                                            recyclerEvents.setVisibility(View.VISIBLE);
+                                            txtNoEvent.setVisibility(View.GONE);
+                                        }
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+
                                     if (allTags.get(i).getUserPhoto().equals(""))
                                     {
                                         imgProfile.setImageResource(R.drawable.usr);
@@ -1022,17 +1108,17 @@ public class ProfileFragment extends Fragment
                 if (result != null)
                 {
                     JSONObject jsonObject = new JSONObject(result);
-                    JSONArray jsonArray = jsonObject.getJSONArray("Profiles");
+                    jsonArray = jsonObject.getJSONArray("Profiles");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
                     profile_array = new ArrayList<String>();
                     NameArray = new ArrayList<>();
                     DesignationArray = new ArrayList<>();
-
+                    listAssociation = new ArrayList<>();
                     for (int i = 0; i < jsonArray.length(); i++)
                     {
                         JSONObject object = jsonArray.getJSONObject(i);
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
-                        profile_array.add(object.getString("CompanyName")+ " " + object.getString("FirstName") + " " + object.getString("LastName")
+                        profile_array.add(object.getString("ProfileName")+ " " + object.getString("CompanyName")+ " " + object.getString("FirstName") + " " + object.getString("LastName")
                         + " " + object.getString("Designation") );
                         NameArray.add(object.getString("FirstName") + " " + object.getString("LastName"));
                         DesignationArray.add(object.getString("Designation"));
@@ -1072,6 +1158,15 @@ public class ProfileFragment extends Fragment
                         nfcModelTag.setLinkedin(object.getString("Linkedin"));
                         nfcModelTag.setYoutube(object.getString("Youtube"));
                         nfcModelTag.setAttachment_FileName(object.getString("Attachment_FileName"));
+                        nfcModelTag.setProfile(object.getString("ProfileName"));
+
+                       /* array = object.getJSONArray("Association_Name");
+                        for (int i1 = 0; i1 < array.length(); i1++){
+
+                            listAssociation.add(array.getString(i1));
+
+                        }
+                        Toast.makeText(getContext(), i + listAssociation.toString(), Toast.LENGTH_LONG).show();*/
                         allTags.add(nfcModelTag);
                       //  GetData(getContext());
 
@@ -1092,6 +1187,72 @@ public class ProfileFragment extends Fragment
                     {
                         tvName.setText(personName);
                         tvPersonName.setText(personName);
+                    }
+
+                    tvProfileName.setText(allTags.get(0).getProfile());
+
+
+                    try {
+                        JSONObject object = jsonArray.getJSONObject(0);
+                        array = object.getJSONArray("Association_Name");
+                        arrayEvents = object.getJSONArray("Event_Cat_Name");
+                        listAssociation = new ArrayList<String>();
+                        listEvents = new ArrayList<String>();
+
+                        for (int i1 = 0; i1 < arrayEvents.length(); i1++) {
+
+                            listEvents.add(arrayEvents.getString(i1));
+
+                        }
+
+                        for (int i1 = 0; i1 < array.length(); i1++) {
+
+                            listAssociation.add(array.getString(i1));
+
+                        }
+
+                        int countAssociation;
+                        if (array.length()>=5){
+                            countAssociation = 5;
+                        }else {
+                            countAssociation = array.length();
+                        }
+
+                        int countEvents;
+                        if (arrayEvents.length()>=5){
+                            countEvents = 5;
+                        }else {
+                            countEvents = arrayEvents.length();
+                        }
+
+                        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), countAssociation, GridLayoutManager.HORIZONTAL, false);
+                        recyclerAssociation.setAdapter(new TextRecyclerAdapter(listAssociation));
+                        recyclerAssociation.setLayoutManager(gridLayoutManager);
+
+                        GridLayoutManager gridLayoutManager1 = new GridLayoutManager(getContext(), countEvents, GridLayoutManager.HORIZONTAL, false);
+                        recyclerEvents.setAdapter(new TextRecyclerAdapter(listEvents));
+                        recyclerEvents.setLayoutManager(gridLayoutManager1);
+                        if (listAssociation.size() == 0){
+                            recyclerAssociation.setVisibility(View.GONE);
+                            txtNoAssociation.setVisibility(View.VISIBLE);
+                        }
+                        else {
+                            recyclerAssociation.setVisibility(View.VISIBLE);
+                            txtNoAssociation.setVisibility(View.GONE);
+                        }
+
+                        if (listEvents.size() == 0){
+                            recyclerEvents.setVisibility(View.GONE);
+                            txtNoEvent.setVisibility(View.VISIBLE);
+                        }
+                        else {
+                            recyclerEvents.setVisibility(View.VISIBLE);
+                            txtNoEvent.setVisibility(View.GONE);
+                        }
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
 
                     if (allTags.get(0).getCard_Front().equalsIgnoreCase("") || allTags.get(0).getCard_Back().equalsIgnoreCase("")) {

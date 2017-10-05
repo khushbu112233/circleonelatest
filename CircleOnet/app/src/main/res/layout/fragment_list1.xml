@@ -183,7 +183,10 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/tvFriendInfo"
+        android:layout_toEndOf="@+id/tvFriendInfo">
 
     <RelativeLayout
         android:id="@+id/rlProgressDialog"
