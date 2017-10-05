@@ -233,6 +233,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     private String addEventString;
     private LinearLayout llEventBox;
     private ImageView ivArrowImg;
+    RecyclerView recyclerEvents;
     private String arrowStatus = "RIGHT";
     private LoginSession session;
     private int SELECT_GALLERY_CARD = 500;
@@ -265,7 +266,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     private ContourDetectorFrameHandler contourDetectorFrameHandler;
     private AutoSnappingController autoSnappingController;
     private Toast userGuidanceToast;
-    private List<AssociationModel> associationList;
+    private List<AssociationModel> associationList, eventList;
     private boolean flashEnabled = false;
     private boolean autoSnappingEnabled = true;
     private Bitmap documentImage;
@@ -294,6 +295,7 @@ public class EditProfileActivity extends AppCompatActivity implements
 
     private FirebaseAuth mAuth;
     private TwitterAuthClient client;
+    JSONArray arrayAssociation;
 
     private ArrayList<EventModel> eventModelArrayList = new ArrayList<>();
     private ArrayList<String> eventCategoryIDList = new ArrayList<>();
@@ -341,6 +343,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                 }, 700);
             }
         });
+        recyclerEvents = (RecyclerView) findViewById(R.id.recyclerEvents);
         edtProfileName = (EditText) findViewById(R.id.edtProfileName);
         ivProfileDelete = (ImageView) findViewById(R.id.ivProfileDelete);
         imgProfileShare = (ImageView) findViewById(R.id.imgProfileShare);
@@ -695,11 +698,11 @@ public class EditProfileActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 if (arrowStatus.equalsIgnoreCase("RIGHT")) {
                     ivArrowImg.setImageResource(R.drawable.ic_down_arrow_blue);
-                    llEventBox.setVisibility(View.VISIBLE);
+                    recyclerEvents.setVisibility(View.VISIBLE);
                     arrowStatus = "DOWN";
                 } else if (arrowStatus.equalsIgnoreCase("DOWN")) {
                     ivArrowImg.setImageResource(R.drawable.ic_right_arrow_blue);
-                    llEventBox.setVisibility(View.GONE);
+                    recyclerEvents.setVisibility(View.GONE);
                     arrowStatus = "RIGHT";
                 }
             }
@@ -773,6 +776,7 @@ public class EditProfileActivity extends AppCompatActivity implements
       //  new HttpAsyncTaskIndustry().execute("http://circle8.asia:8999/Onet.svc/GetIndustryList");
       //  new HttpAsyncTaskDesignation().execute("http://circle8.asia:8999/Onet.svc/GetDesignationList");
         new HttpAsyncTaskAssociation().execute("http://circle8.asia:8999/Onet.svc/GetAssociationList");
+      //  new HttpAsyncTaskEvents().execute("http://circle8.asia:8999/Onet.svc/GetAssociationList");
 //        new HttpAsyncTaskEventList().execute("http://circle8.asia:8999/Onet.svc/Events/List");
 //
         if (type.equals("edit")) {
@@ -823,7 +827,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         imgDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                arrayAssociation = new JSONArray();
                 String data = "";
                 List<AssociationModel> stList = ((CardViewDataAdapter) mAdapter)
                         .getStudentist();
@@ -832,7 +836,8 @@ public class EditProfileActivity extends AppCompatActivity implements
                     AssociationModel singleStudent = stList.get(i);
                     if (singleStudent.isSelected() == true) {
 
-                        data = data + "\n" + singleStudent.getName().toString();
+                        data = data + "\n" + singleStudent.getId().toString();
+                        arrayAssociation.put(Integer.parseInt(singleStudent.getId().toString()));
       /*
        * Toast.makeText( CardViewActivity.this, " " +
        * singleStudent.getName() + " " +
@@ -844,12 +849,12 @@ public class EditProfileActivity extends AppCompatActivity implements
 
                 }
 
-                Toast.makeText(EditProfileActivity.this,
-                        "Selected Students: \n" + data, Toast.LENGTH_LONG)
+              /*  Toast.makeText(EditProfileActivity.this,
+                        "Selected Students: \n" + arrayAssociation, Toast.LENGTH_LONG)
                         .show();
+*/
 
-
-               /* try
+                try
                 {
                     associationID = AssoIdList.get(spnAssociation.getSelectedItemPosition()).toString();
                 }
@@ -861,7 +866,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                 else if (type.equals("edit"))
                 {
                     new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/UpdateProfile");
-                }*/
+                }
             }
         });
         generateHashkey();
@@ -1477,7 +1482,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("Address4", ccpCountry.getSelectedCountryName().toString() + " " + edtAddress6.getText().toString());
             jsonObject.accumulate("Address_ID", "1");
             jsonObject.accumulate("Address_Type", "work");
-            jsonObject.accumulate("AssociationIDs", jsonArray);
+            jsonObject.accumulate("AssociationIDs", arrayAssociation);
             jsonObject.accumulate("Attachment_FileName", etAttachFile.getText().toString());
             jsonObject.accumulate("Card_Back", txtCardBack.getText().toString());
             jsonObject.accumulate("Card_Front", txtCardFront.getText().toString());
