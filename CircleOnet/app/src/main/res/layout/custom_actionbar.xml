@@ -18,6 +18,7 @@
         android:layout_height="25dp" />
 
         <com.circle8.circleOne.Utils.CircularTextView
+            android:visibility="gone"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/imgLogo"
             android:layout_marginLeft="0dp"

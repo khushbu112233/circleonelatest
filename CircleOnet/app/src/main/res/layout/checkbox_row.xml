@@ -5,6 +5,7 @@
     android:orientation="horizontal">
 
     <LinearLayout
+        android:layout_marginRight="10dp"
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -12,6 +13,7 @@
 
         <com.circle8.circleOne.Utils.cgTextView
             android:id="@+id/tvName"
+            android:gravity="center"
             android:layout_width="150dp"
             android:layout_height="match_parent"
             android:textColor="@android:color/black"

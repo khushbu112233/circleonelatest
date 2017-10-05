@@ -1909,6 +1909,7 @@
 
                         <android.support.v7.widget.RecyclerView
                             android:visibility="gone"
+                            android:layout_marginBottom="20dp"
                             android:layout_marginTop="5dp"
                             android:id="@+id/recyclerEvents"
                             android:layout_width="match_parent"
