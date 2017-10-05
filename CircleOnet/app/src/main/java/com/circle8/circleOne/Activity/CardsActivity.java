@@ -414,6 +414,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
             getSupportActionBar().setShowHideAnimationEnabled(false);
             textView = (TextView) findViewById(R.id.mytext);
             txtNotificationCountAction = (TextView) findViewById(R.id.txtNotificationCountAction);
+            txtNotificationCountAction.setVisibility(View.VISIBLE);
             // cardCount = db.getActiveNFCCount();
             SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 

@@ -150,6 +150,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -295,7 +296,7 @@ public class EditProfileActivity extends AppCompatActivity implements
 
     private FirebaseAuth mAuth;
     private TwitterAuthClient client;
-    JSONArray arrayAssociation;
+    JSONArray arrayAssociation, arrayEvents;
 
     private ArrayList<EventModel> eventModelArrayList = new ArrayList<>();
     private ArrayList<String> eventCategoryIDList = new ArrayList<>();
@@ -303,7 +304,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     EditText edtProfileName;
     String ProfileName;
     RecyclerView recyclerAssociation;
-    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.Adapter mAdapter, mAdapter1;
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -495,6 +496,23 @@ public class EditProfileActivity extends AppCompatActivity implements
                 "Travel", "Fine Arts", "Utilities", "Food & Beverage", "Video Game", "Green Technology", "Web Services", "Health"};
         gridView.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.mytextview, array));
         gridView.setExpanded(true);
+
+        List<String> stringList = new ArrayList<String>(Arrays.asList(array));
+        eventList = new ArrayList<AssociationModel>();
+        for (int i = 0; i < array.length; i++) {
+
+            AssociationModel st = new AssociationModel(String.valueOf(i), stringList.get(i), false );
+
+            eventList.add(st);
+
+            mAdapter1 = new CardViewDataAdapter(eventList);
+
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(EditProfileActivity.this, 5, GridLayoutManager.HORIZONTAL, false);
+            recyclerEvents.setAdapter(mAdapter1);
+            recyclerEvents.setLayoutManager(gridLayoutManager);
+
+
+        }
 
         findViewById(R.id.snap).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -849,8 +867,31 @@ public class EditProfileActivity extends AppCompatActivity implements
 
                 }
 
-              /*  Toast.makeText(EditProfileActivity.this,
-                        "Selected Students: \n" + arrayAssociation, Toast.LENGTH_LONG)
+                arrayEvents = new JSONArray();
+                String data1 = "";
+                List<AssociationModel> stList1 = ((CardViewDataAdapter) mAdapter1)
+                        .getStudentist();
+
+                for (int i = 0; i < stList1.size(); i++) {
+                    AssociationModel singleStudent = stList1.get(i);
+                    if (singleStudent.isSelected() == true) {
+
+                        data1 = data1 + "\n" + singleStudent.getId().toString();
+                        arrayEvents.put(Integer.parseInt(singleStudent.getId().toString()));
+      /*
+       * Toast.makeText( CardViewActivity.this, " " +
+       * singleStudent.getName() + " " +
+       * singleStudent.getEmailId() + " " +
+       * singleStudent.isSelected(),
+       * Toast.LENGTH_SHORT).show();
+       */
+                    }
+
+                }
+
+
+               /* Toast.makeText(EditProfileActivity.this,
+                        "Selected Students: \n" + arrayEvents, Toast.LENGTH_LONG)
                         .show();
 */
 
@@ -1515,7 +1556,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("UserID", UserID);
             jsonObject.accumulate("Website", edtWebsite.getText().toString());
             jsonObject.accumulate("Youtube", strYoutube);
-            jsonObject.accumulate("Event_Cat_IDs", jsonArray1);
+            jsonObject.accumulate("Event_Cat_IDs", arrayEvents);
             jsonObject.accumulate("ProfileName", edtProfileName.getText().toString());
             jsonObject.accumulate("UserPhoto", UserPhoto);
             jsonObject.accumulate("FirstName", kept);
@@ -2071,7 +2112,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("UserID", UserID);
             jsonObject.accumulate("Website", edtWebsite.getText().toString());
             jsonObject.accumulate("Youtube", strYoutube);
-            jsonObject.accumulate("Event_Cat_IDs", jsonArray1);
+            jsonObject.accumulate("Event_Cat_IDs", arrayEvents);
             jsonObject.accumulate("ProfileName", edtProfileName.getText().toString());
             jsonObject.accumulate("UserPhoto", UserPhoto);
             jsonObject.accumulate("FirstName", kept);
