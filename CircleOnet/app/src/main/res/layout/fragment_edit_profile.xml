@@ -1511,6 +1511,18 @@
                                                 </LinearLayout>
                                             </LinearLayout>
                         -->
+
+                        <android.support.v7.widget.RecyclerView
+                            android:visibility="gone"
+                            android:layout_marginTop="5dp"
+                            android:id="@+id/recyclerEvents"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:scrollbars="horizontal"
+                            android:layout_toLeftOf="@+id/imgAddGroupFriend"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginLeft="20dp"/>
+
                         <LinearLayout
                             android:id="@+id/llEventBox"
                             android:layout_width="match_parent"
