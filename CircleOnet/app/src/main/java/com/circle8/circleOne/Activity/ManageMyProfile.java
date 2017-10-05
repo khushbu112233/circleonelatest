@@ -343,7 +343,7 @@ public class ManageMyProfile extends AppCompatActivity
                         nfcModelTag.setLinkedin(object.getString("Linkedin"));
                         nfcModelTag.setYoutube(object.getString("Youtube"));
                         nfcModelTag.setAttachment_FileName(object.getString("Attachment_FileName"));
-                        nfcModelTag.setProfile("Profile "+(i+1));
+                        nfcModelTag.setProfile(object.getString("ProfileName"));
                         allTags.add(nfcModelTag);
                         //  GetData(getContext());
                     }

@@ -302,6 +302,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     String ProfileName;
     RecyclerView recyclerAssociation;
     private RecyclerView.Adapter mAdapter;
+
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line = "";

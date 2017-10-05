@@ -308,7 +308,8 @@
                                 android:paddingBottom="10dp"
                                 android:paddingLeft="10dp"
                                 android:hint="Profile Name"
-                                android:textSize="13sp" />
+                                android:textSize="13sp"
+                                android:backgroundTint="@color/colorPrimary"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -334,7 +335,8 @@
                                 android:paddingBottom="10dp"
                                 android:paddingLeft="10dp"
                                 android:hint="Full Name"
-                                android:textSize="13sp" />
+                                android:textSize="13sp"
+                                android:backgroundTint="@color/colorPrimary"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -361,7 +363,8 @@
                                 android:hint="Designation"
                                 android:paddingBottom="10dp"
                                 android:paddingLeft="10dp"
-                                android:textSize="13sp" />
+                                android:textSize="13sp"
+                                android:backgroundTint="@color/colorPrimary"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -388,7 +391,8 @@
                                 android:paddingBottom="10dp"
                                 android:paddingLeft="10dp"
                                 android:hint="Company Name"
-                                android:textSize="13sp" />
+                                android:textSize="13sp"
+                                android:backgroundTint="@color/colorPrimary"/>
 
                         </LinearLayout>
 
@@ -416,9 +420,253 @@
                                 android:hint="Industry"
                                 android:paddingBottom="10dp"
                                 android:paddingLeft="10dp"
-                                android:textSize="13sp" />
+                                android:textSize="13sp"
+                                android:backgroundTint="@color/colorPrimary"/>
                         </LinearLayout>
 
+                        <LinearLayout
+                            android:id="@+id/llTelephoneBox1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="15dp"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginRight="20dp"
+                                android:src="@drawable/ic_phone_blue" />
+
+                            <com.hbb20.CountryCodePicker
+                                app:ccp_defaultPhoneCode="65"
+                                android:visibility="visible"
+                                app:ccpDialog_searchEditTextTint="@color/colorPrimary"
+                                app:ccp_textSize="15dp"
+                                app:ccpDialog_textColor="@color/colorPrimary"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="15dp"
+                                app:ccp_showNameCode="false"
+                                app:ccp_showPhoneCode="true"
+                                app:ccp_showFlag="false"
+                                app:ccp_contentColor="@color/colorPrimary"
+                                android:layout_marginRight="0dp"
+                                android:id="@+id/ccp1"
+                                android:layout_gravity="center_vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:weightSum="1">
+
+                                <com.circle8.circleOne.Utils.cgEditView
+                                    android:id="@+id/edtWork"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:paddingBottom="10dp"
+                                    android:paddingLeft="10dp"
+                                    android:hint="phone1"
+                                    android:textSize="13sp"
+                                    android:layout_weight="0.7"
+                                    android:backgroundTint="@color/colorPrimary"/>
+
+                                <ImageView
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:src="@drawable/ic_plus_blue"
+                                    android:layout_weight="0.3"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llTelephoneBox2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="15dp"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginRight="20dp"
+                                android:src="@drawable/ic_phone_blue" />
+
+                            <com.hbb20.CountryCodePicker
+                                app:ccp_defaultPhoneCode="65"
+                                android:visibility="visible"
+                                app:ccpDialog_searchEditTextTint="@color/colorPrimary"
+                                app:ccp_textSize="15dp"
+                                app:ccpDialog_textColor="@color/colorPrimary"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="15dp"
+                                app:ccp_showNameCode="false"
+                                app:ccp_showPhoneCode="true"
+                                app:ccp_showFlag="false"
+                                app:ccp_contentColor="@color/colorPrimary"
+                                android:layout_marginRight="0dp"
+                                android:id="@+id/ccp2"
+                                android:layout_gravity="center_vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:weightSum="1">
+
+                                <com.circle8.circleOne.Utils.cgEditView
+                                    android:id="@+id/edtWork2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:paddingBottom="10dp"
+                                    android:paddingLeft="10dp"
+                                    android:hint="phone2"
+                                    android:textSize="13sp"
+                                    android:layout_weight="0.7"
+                                    android:backgroundTint="@color/colorPrimary"/>
+
+                                <ImageView
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_weight="0.3"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llMobileBox1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="15dp"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginRight="20dp"
+                                android:src="@drawable/ic_mob_blue" />
+
+                            <com.hbb20.CountryCodePicker
+                                app:ccp_defaultPhoneCode="65"
+                                android:visibility="visible"
+                                app:ccpDialog_searchEditTextTint="@color/colorPrimary"
+                                app:ccp_textSize="15dp"
+                                app:ccpDialog_textColor="@color/colorPrimary"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="15dp"
+                                app:ccp_showNameCode="false"
+                                app:ccp_showPhoneCode="true"
+                                app:ccp_showFlag="false"
+                                app:ccp_contentColor="@color/colorPrimary"
+                                android:layout_marginRight="0dp"
+                                android:id="@+id/ccp3"
+                                android:layout_gravity="center_vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:weightSum="1">
+
+                                <com.circle8.circleOne.Utils.cgEditView
+                                    android:id="@+id/edtPrimary"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:paddingBottom="10dp"
+                                    android:paddingLeft="10dp"
+                                    android:hint="mobile1"
+                                    android:textSize="13sp"
+                                    android:layout_weight="0.7"
+                                    android:backgroundTint="@color/colorPrimary"/>
+
+                                <ImageView
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:src="@drawable/ic_plus_blue"
+                                    android:layout_weight="0.3"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llMobileBox2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="15dp"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginRight="20dp"
+                                android:src="@drawable/ic_mob_blue" />
+
+                            <com.hbb20.CountryCodePicker
+                                app:ccp_defaultPhoneCode="65"
+                                android:visibility="visible"
+                                app:ccpDialog_searchEditTextTint="@color/colorPrimary"
+                                app:ccp_textSize="15dp"
+                                app:ccpDialog_textColor="@color/colorPrimary"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="15dp"
+                                app:ccp_showNameCode="false"
+                                app:ccp_showPhoneCode="true"
+                                app:ccp_showFlag="false"
+                                app:ccp_contentColor="@color/colorPrimary"
+                                android:layout_marginRight="0dp"
+                                android:id="@+id/ccp4"
+                                android:layout_gravity="center_vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:weightSum="1">
+
+                                <com.circle8.circleOne.Utils.cgEditView
+                                    android:id="@+id/edtPrimary2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:paddingBottom="10dp"
+                                    android:paddingLeft="10dp"
+                                    android:hint="mobile2"
+                                    android:textSize="13sp"
+                                    android:layout_weight="0.7"
+                                    android:backgroundTint="@color/colorPrimary"/>
+
+                                <ImageView
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_weight="0.3"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+<!--
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -480,7 +728,9 @@
                             </LinearLayout>
 
                         </LinearLayout>
+-->
 
+<!--
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -542,6 +792,7 @@
                             </LinearLayout>
 
                         </LinearLayout>
+-->
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -566,7 +817,8 @@
                                 android:paddingBottom="10dp"
                                 android:paddingLeft="10dp"
                                 android:hint="email1"
-                                android:textSize="13sp" />
+                                android:textSize="13sp"
+                                android:backgroundTint="@color/colorPrimary"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -592,9 +844,132 @@
                                 android:hint="email2"
                                 android:paddingBottom="10dp"
                                 android:paddingLeft="10dp"
-                                android:textSize="13sp" />
+                                android:textSize="13sp"
+                                android:backgroundTint="@color/colorPrimary"/>
                         </LinearLayout>
 
+                        <LinearLayout
+                            android:id="@+id/llFaxBox1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="15dp"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginRight="20dp"
+                                android:src="@drawable/ic_mob_blue" />
+
+                            <com.hbb20.CountryCodePicker
+                                app:ccp_defaultPhoneCode="65"
+                                android:visibility="visible"
+                                app:ccpDialog_searchEditTextTint="@color/colorPrimary"
+                                app:ccp_textSize="15dp"
+                                app:ccpDialog_textColor="@color/colorPrimary"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="15dp"
+                                app:ccp_showNameCode="false"
+                                app:ccp_showPhoneCode="true"
+                                app:ccp_showFlag="false"
+                                app:ccp_contentColor="@color/colorPrimary"
+                                android:layout_marginRight="0dp"
+                                android:id="@+id/ccp5"
+                                android:layout_gravity="center_vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:weightSum="1">
+
+                                <com.circle8.circleOne.Utils.cgEditView
+                                    android:id="@+id/edtFax1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:paddingBottom="10dp"
+                                    android:paddingLeft="10dp"
+                                    android:hint="fax1"
+                                    android:textSize="13sp"
+                                    android:layout_weight="0.7"
+                                    android:backgroundTint="@color/colorPrimary"/>
+
+                                <ImageView
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:src="@drawable/ic_plus_blue"
+                                    android:layout_weight="0.3"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llFaxBox2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="15dp"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginRight="20dp"
+                                android:src="@drawable/ic_mob_blue" />
+
+                            <com.hbb20.CountryCodePicker
+                                app:ccp_defaultPhoneCode="65"
+                                android:visibility="visible"
+                                app:ccpDialog_searchEditTextTint="@color/colorPrimary"
+                                app:ccp_textSize="15dp"
+                                app:ccpDialog_textColor="@color/colorPrimary"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="15dp"
+                                app:ccp_showNameCode="false"
+                                app:ccp_showPhoneCode="true"
+                                app:ccp_showFlag="false"
+                                app:ccp_contentColor="@color/colorPrimary"
+                                android:layout_marginRight="0dp"
+                                android:id="@+id/ccp6"
+                                android:layout_gravity="center_vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:weightSum="1">
+
+                                <com.circle8.circleOne.Utils.cgEditView
+                                    android:id="@+id/edtFax2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:paddingBottom="10dp"
+                                    android:paddingLeft="10dp"
+                                    android:hint="fax2"
+                                    android:textSize="13sp"
+                                    android:layout_weight="0.7"
+                                    android:backgroundTint="@color/colorPrimary"/>
+
+                                <ImageView
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_weight="0.3"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+<!--
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -655,6 +1030,7 @@
                             </LinearLayout>
 
                         </LinearLayout>
+-->
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -679,7 +1055,8 @@
                                 android:paddingBottom="10dp"
                                 android:paddingLeft="10dp"
                                 android:hint="address"
-                                android:textSize="13sp" />
+                                android:textSize="13sp"
+                                android:backgroundTint="@color/colorPrimary"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -704,7 +1081,8 @@
                                 android:paddingBottom="10dp"
                                 android:paddingLeft="10dp"
                                 android:text=""
-                                android:textSize="13sp" />
+                                android:textSize="13sp"
+                                android:backgroundTint="@color/colorPrimary"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -769,7 +1147,8 @@
                                     android:paddingBottom="10dp"
                                     android:paddingLeft="10dp"
                                     android:hint="state"
-                                    android:textSize="13sp" />
+                                    android:textSize="13sp"
+                                    android:backgroundTint="@color/colorPrimary"/>
                             </LinearLayout>
 
                         </LinearLayout>
@@ -804,7 +1183,8 @@
                                     android:paddingBottom="10dp"
                                     android:paddingLeft="10dp"
                                     android:hint="city"
-                                    android:textSize="13sp" />
+                                    android:textSize="13sp"
+                                    android:backgroundTint="@color/colorPrimary"/>
                             </LinearLayout>
 
                             <LinearLayout
@@ -828,7 +1208,8 @@
                                     android:paddingBottom="10dp"
                                     android:paddingLeft="10dp"
                                     android:hint="postcode"
-                                    android:textSize="13sp" />
+                                    android:textSize="13sp"
+                                    android:backgroundTint="@color/colorPrimary"/>
                             </LinearLayout>
 
                         </LinearLayout>
@@ -856,7 +1237,8 @@
                                 android:paddingBottom="10dp"
                                 android:paddingLeft="10dp"
                                 android:hint="website"
-                                android:textSize="13sp" />
+                                android:textSize="13sp"
+                                android:backgroundTint="@color/colorPrimary"/>
                         </LinearLayout>
 
                         <LinearLayout
