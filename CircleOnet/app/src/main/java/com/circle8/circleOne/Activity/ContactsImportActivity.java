@@ -110,6 +110,8 @@ public class ContactsImportActivity extends AppCompatActivity
         if (result) {*/
        // }
 
+
+
         View.OnClickListener clickListener = new View.OnClickListener() {
 
             @Override
@@ -288,6 +290,9 @@ public class ContactsImportActivity extends AppCompatActivity
         arrayListPhoneName = new ArrayList<>();
         arrayListPhoneNumber = new ArrayList<>();
 
+        String loading = "Loading Contacts" ;
+        CustomProgressDialog(loading);
+
         Cursor cursor = cntx.getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
         Integer contactsCount = cursor.getCount(); // get how many contacts you have in your contacts list
 
@@ -298,9 +303,6 @@ public class ContactsImportActivity extends AppCompatActivity
             progressDialog.setCancelable(false);
             progressDialog.setIndeterminate(true);
             progressDialog.show();*/
-
-            String loading = "Loading Contacts" ;
-            CustomProgressDialog(loading);
 
             while(cursor.moveToNext())
             {

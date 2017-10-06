@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.circle8.circleOne.Activity.ImageZoom;
 import com.circle8.circleOne.Activity.Notification;
+import com.circle8.circleOne.Activity.WriteTestimonialActivity;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.NotificationModel;
 import com.circle8.circleOne.R;
@@ -236,6 +237,13 @@ public class NotificationAdapter extends BaseAdapter
             @Override
             public void onClick(View v)
             {
+                /*Intent in = new Intent(activity, WriteTestimonialActivity.class);
+                in.putExtra("ProfileID", profileId);
+                in.putExtra("FriendProfileID", testimonialModels.get(posi).getFriendProfileID());
+                in.putExtra("UserImg", testimonialModels.get(posi).getUserPhoto());
+                in.putExtra("UserName",testimonialModels.get(posi).getFirstName()+" "+testimonialModels.get(posi).getLastName());
+                activity.startActivity(in);*/
+
                 final AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
 //                LayoutInflater inflater = activity.getLayoutInflater();
                 final View dialogView = inflater.inflate(R.layout.textimonial_write, null);
