@@ -398,7 +398,6 @@ public class NotificationAdapter extends BaseAdapter
                 }
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-
                 ivViewImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
