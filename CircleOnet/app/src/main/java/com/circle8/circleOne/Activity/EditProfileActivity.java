@@ -221,7 +221,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     CountryCodePicker ccpCountry;
     private ExpandableHeightGridView gridView, gridViewAdded;
     private String[] array;
-    private EditText etAttachFile;
+    private TextView etAttachFile;
     private ImageView ivAttachFile;
     private CharSequence[] items;
     private String userChoosenTask;
@@ -418,7 +418,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         autoCompleteIndustry = (AutoCompleteTextView) findViewById(R.id.autoCompleteIndustry);
         gridView = (ExpandableHeightGridView) findViewById(R.id.gridView);
         gridViewAdded = (ExpandableHeightGridView) findViewById(R.id.gridViewAdded);
-        etAttachFile = (EditText) findViewById(R.id.etAttachFile);
+        etAttachFile = (TextView) findViewById(R.id.etAttachFile);
         ivAttachFile = (ImageView) findViewById(R.id.ivAttachFile);
         session = new LoginSession(getApplicationContext());
         imgDone = (TextView) findViewById(R.id.imgDone);

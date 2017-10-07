@@ -389,12 +389,12 @@ public class LoginActivity extends AppCompatActivity implements
             }
         });
 
-       /* if (loginSession.isLoggedIn()) {
+        if (loginSession.isLoggedIn()) {
 
             Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
             startActivity(intent);
             finish();
-        }*/
+        }
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
 
