@@ -1,4 +1,5 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,796 +14,865 @@
         android:layout_width="match_parent"
         android:layout_height="220dp" />
 
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_content"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true">
-
-    <android.support.design.widget.AppBarLayout
-        android:background="@android:color/transparent"
-        android:id="@+id/appbar"
-        android:visibility="visible"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/NoActionbar"
-        app:expanded="false">
+        android:layout_height="match_parent">
 
-        <android.support.v4.view.ViewPager
-            android:alpha="0.0"
-            android:clickable="true"
-            app:layout_scrollFlags="scroll|snap"
-            android:id="@+id/viewPager1"
+        <RelativeLayout
+            android:id="@+id/rlProgressDialog"
             android:layout_width="match_parent"
-            android:layout_height="220dp" />
-
-        </android.support.design.widget.AppBarLayout>
-
-    <LinearLayout
-        android:background="@color/white"
-        android:id="@+id/lnrBottomTab"
-        android:layout_gravity="bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <View
-            android:layout_above="@+id/lnrBottomTab"
-            android:id="@+id/view1"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorPrimary"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="4dp">
-
-            <LinearLayout
-                android:gravity="center"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-            <ImageView
-                android:id="@+id/imgCards"
-                android:layout_width="55dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_icon1b" />
-
-                <TextView
-                    android:layout_marginTop="-2dp"
-                    android:textColor="@color/colorPrimary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cards"
-                    android:textSize="9sp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:gravity="center"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <ImageView
-                    android:id="@+id/imgConnect"
-                    android:layout_width="55dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_icon2" />
-
-                <TextView
-                    android:layout_marginTop="-2dp"
-                    android:textColor="@color/unselected"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Connect"
-                    android:textSize="9sp"/>
-            </LinearLayout>
-            <LinearLayout
-                android:gravity="center"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <ImageView
-                    android:id="@+id/imgEvents"
-                    android:layout_width="55dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_icon3" />
-
-                <TextView
-                    android:layout_marginTop="-2dp"
-                    android:textColor="@color/unselected"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Events"
-                    android:textSize="9sp"/>
-            </LinearLayout>
-            <LinearLayout
-                android:gravity="center"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:layout_marginRight="20dp"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <ImageView
-                    android:id="@+id/imgProfile"
-                    android:layout_width="55dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_icon4" />
-
-                <TextView
-                    android:layout_marginTop="-2dp"
-                    android:textColor="@color/unselected"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Profile"
-                    android:textSize="9sp"/>
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-
-    <com.circle8.circleOne.Utils.StickyScrollView
-        android:id="@+id/scroll"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="65dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <LinearLayout
-            android:id="@+id/frame_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="70dp"
+            android:background="@color/colorPrimary"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:elevation="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_collapseMode="parallax"
-                app:layout_scrollFlags="snap">
+                android:orientation="horizontal"
+                android:layout_centerVertical="true"
+                android:weightSum="1">
 
-                <FrameLayout
-                    android:alpha="0.7"
+                <RelativeLayout
+                    android:layout_centerInParent="true"
                     android:layout_width="match_parent"
-                    android:layout_height="220dp"
-                    android:background="@color/colorAccent">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.6"
+                    android:gravity="right"
+                    android:layout_marginRight="15dp">
 
                     <ImageView
-                        android:id="@+id/imgCard"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/democard" />
-
+                        android:layout_centerInParent="true"
+                        android:id="@+id/imgConnecting1"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/round1" />
                     <ImageView
+                        android:layout_centerInParent="true"
+                        android:id="@+id/imgConnecting2"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/round2" />
+                    <ImageView
+                        android:layout_centerInParent="true"
+                        android:id="@+id/imgConnecting3"
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:src="@drawable/round3" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txtProgressing"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="0dp"
+                    android:textSize="15dp"
+                    android:layout_below="@+id/imgConnecting"
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Connecting."
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.4"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:fitsSystemWindows="true">
+
+        <android.support.design.widget.AppBarLayout
+            android:background="@android:color/transparent"
+            android:id="@+id/appbar"
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/NoActionbar"
+            app:expanded="false">
+
+            <android.support.v4.view.ViewPager
+                android:alpha="0.0"
+                android:clickable="true"
+                app:layout_scrollFlags="scroll|snap"
+                android:id="@+id/viewPager1"
+                android:layout_width="match_parent"
+                android:layout_height="220dp" />
+
+            </android.support.design.widget.AppBarLayout>
+
+        <LinearLayout
+            android:background="@color/white"
+            android:id="@+id/lnrBottomTab"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:layout_above="@+id/lnrBottomTab"
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimary"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="4dp">
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/imgCards"
+                    android:layout_width="55dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_icon1b" />
+
+                    <TextView
+                        android:layout_marginTop="-2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cards"
+                        android:textSize="9sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/imgConnect"
+                        android:layout_width="55dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_icon2" />
+
+                    <TextView
+                        android:layout_marginTop="-2dp"
+                        android:textColor="@color/unselected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Connect"
+                        android:textSize="9sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/imgEvents"
+                        android:layout_width="55dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_icon3" />
+
+                    <TextView
+                        android:layout_marginTop="-2dp"
+                        android:textColor="@color/unselected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Events"
+                        android:textSize="9sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/imgProfile"
+                        android:layout_width="55dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_icon4" />
+
+                    <TextView
+                        android:layout_marginTop="-2dp"
+                        android:textColor="@color/unselected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Profile"
+                        android:textSize="9sp"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.circle8.circleOne.Utils.StickyScrollView
+            android:id="@+id/scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="65dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:id="@+id/frame_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_collapseMode="parallax"
+                    app:layout_scrollFlags="snap">
+
+                    <FrameLayout
+                        android:alpha="0.7"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:alpha="1"
-                        android:background="#83ced4"
-                        android:scaleType="fitXY" />
+                        android:layout_height="220dp"
+                        android:background="@color/colorAccent">
+
+                        <ImageView
+                            android:id="@+id/imgCard"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/democard" />
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:alpha="1"
+                            android:background="#83ced4"
+                            android:scaleType="fitXY" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/imgBack"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="5dp"
+                                android:src="@drawable/ic_keyboard_arrow_left_black_24dp" />
+
+                            <ImageView
+                                android:visibility="gone"
+                                android:layout_width="22dp"
+                                android:layout_height="30dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginTop="5dp"
+                                android:src="@drawable/ic_dehaze_black_24dp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/txtprofile"
+                                android:layout_centerInParent="true"
+                                android:layout_marginTop="10dp"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/imgProfileCard"
+                                    android:layout_width="80dp"
+                                    android:layout_height="80dp"
+                                    android:src="@drawable/usr"
+                                    app:civ_border_color="@color/colorPrimary"
+                                    app:civ_border_width="2dp" />
+
+                                <com.circle8.circleOne.Utils.orkebyBoldTextView
+                                    android:id="@+id/txtName"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="8dp"
+                                    android:text="Person"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/white"
+                                    android:textSize="17dp"
+                                    android:textStyle="bold" />
+
+                                <com.circle8.circleOne.Utils.orkebyTextView
+                                    android:id="@+id/txtDesi"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="3dp"
+                                    android:text="Designation"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/white"
+                                    android:textSize="16dp" />
+
+                                <com.circle8.circleOne.Utils.orkebyTextView
+                                    android:id="@+id/txtCompany"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="3dp"
+                                    android:text="Company"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/white"
+                                    android:textSize="16dp" />
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                    </FrameLayout>
+                </LinearLayout>
+
+
+                <android.support.design.widget.AppBarLayout
+                    app:elevation="0dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="always"
+                    android:tag="sticky"
+                    android:theme="@style/NoActionbar">
+
+                    <LinearLayout
+                        android:id="@+id/tabs"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dip"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:tag="sticky">
+
+                        <ImageView
+                            android:id="@+id/imgCall"
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:layout_marginLeft="25dp"
+                            android:layout_weight="1"
+                            android:padding="7dp"
+                            android:src="@drawable/ic_call" />
+
+                        <ImageView
+                            android:id="@+id/imgSMS"
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:layout_weight="1"
+                            android:padding="7dp"
+                            android:src="@drawable/ic_sms" />
+
+                        <ImageView
+                            android:id="@+id/imgMail"
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:layout_weight="1"
+                            android:padding="8.5dp"
+                            android:src="@drawable/ic_mail" />
+
+                        <ImageView
+                            android:id="@+id/imgProfileShare"
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:layout_marginRight="25dp"
+                            android:layout_weight="1"
+                            android:padding="7dp"
+                            android:src="@drawable/ic_profile_send" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/colorPrimary"
+                        android:tag="sticky"></View>
+
+                    <LinearLayout
+                        android:id="@+id/tabs1"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dip"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:tag="sticky">
+
+
+                        <ImageView
+                            android:id="@+id/fbUrl"
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:layout_marginLeft="25dp"
+                            android:layout_weight="1"
+                            android:padding="6dp"
+                            android:src="@drawable/icon_fb" />
+
+                        <ImageView
+                            android:id="@+id/linkedInUrl"
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:layout_weight="1"
+                            android:padding="5dp"
+                            android:src="@drawable/icon_linkedin_gray" />
+
+                        <ImageView
+                            android:id="@+id/twitterUrl"
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:layout_weight="1"
+                            android:padding="5dp"
+                            android:src="@drawable/icon_twitter" />
+
+                        <ImageView
+                            android:id="@+id/googleUrl"
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:layout_weight="1"
+                            android:padding="5dp"
+                            android:src="@drawable/icon_google" />
+
+                        <ImageView
+                            android:id="@+id/youtubeUrl"
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:layout_marginRight="25dp"
+                            android:layout_weight="1"
+                            android:padding="5dp"
+                            android:src="@drawable/icon_utube_gray" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/colorPrimary"
+                        android:tag="sticky"></View>
+                </android.support.design.widget.AppBarLayout>
+
+
+                <LinearLayout
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical">
 
-                        <ImageView
-                            android:id="@+id/imgBack"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="5dp"
-                            android:src="@drawable/ic_keyboard_arrow_left_black_24dp" />
-
-                        <ImageView
+                        <TextView
+                            android:id="@+id/tvAddedGroupInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="This friend is not added in any Circle"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_centerHorizontal="true"
                             android:visibility="gone"
-                            android:layout_width="22dp"
-                            android:layout_height="30dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginTop="5dp"
-                            android:src="@drawable/ic_dehaze_black_24dp" />
+                            android:textSize="12sp"/>
 
-                        <LinearLayout
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recycler_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/txtprofile"
-                            android:layout_centerInParent="true"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center"
-                            android:orientation="vertical">
+                            android:scrollbars="horizontal"
+                            android:layout_toLeftOf="@+id/imgAddGroupFriend"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginLeft="10dp" />
 
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/imgProfileCard"
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:src="@drawable/usr"
-                                app:civ_border_color="@color/colorPrimary"
-                                app:civ_border_width="2dp" />
+                        <ImageView
+                            android:layout_alignParentRight="true"
+                            android:id="@+id/imgAddGroupFriend"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="right"
+                            android:layout_marginRight="10dp"
+                            android:src="@drawable/ic_edit" />
 
-                            <com.circle8.circleOne.Utils.orkebyBoldTextView
-                                android:id="@+id/txtName"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="8dp"
-                                android:text="Person"
-                                android:textAlignment="center"
-                                android:textColor="@color/white"
-                                android:textSize="17dp"
-                                android:textStyle="bold" />
+                        <ListView
+                            android:visibility="gone"
+                            android:id="@+id/groupListView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@+id/imgAddGroupFriend"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginLeft="10dp">
 
-                            <com.circle8.circleOne.Utils.orkebyTextView
-                                android:id="@+id/txtDesi"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="3dp"
-                                android:text="Designation"
-                                android:textAlignment="center"
-                                android:textColor="@color/white"
-                                android:textSize="16dp" />
+                        </ListView>
 
-                            <com.circle8.circleOne.Utils.orkebyTextView
-                                android:id="@+id/txtCompany"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="3dp"
-                                android:text="Company"
-                                android:textAlignment="center"
-                                android:textColor="@color/white"
-                                android:textSize="16dp" />
 
-                        </LinearLayout>
 
                     </RelativeLayout>
 
-                </FrameLayout>
-            </LinearLayout>
-
-
-            <android.support.design.widget.AppBarLayout
-                app:elevation="0dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:overScrollMode="always"
-                android:tag="sticky"
-                android:theme="@style/NoActionbar">
-
-                <LinearLayout
-                    android:id="@+id/tabs"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dip"
-                    android:background="@color/white"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:tag="sticky">
-
-                    <ImageView
-                        android:id="@+id/imgCall"
-                        android:layout_width="38dp"
-                        android:layout_height="38dp"
-                        android:layout_marginLeft="25dp"
-                        android:layout_weight="1"
-                        android:padding="7dp"
-                        android:src="@drawable/ic_call" />
-
-                    <ImageView
-                        android:id="@+id/imgSMS"
-                        android:layout_width="38dp"
-                        android:layout_height="38dp"
-                        android:layout_weight="1"
-                        android:padding="7dp"
-                        android:src="@drawable/ic_sms" />
-
-                    <ImageView
-                        android:id="@+id/imgMail"
-                        android:layout_width="38dp"
-                        android:layout_height="38dp"
-                        android:layout_weight="1"
-                        android:padding="8.5dp"
-                        android:src="@drawable/ic_mail" />
-
-                    <ImageView
-                        android:id="@+id/imgProfileShare"
-                        android:layout_width="38dp"
-                        android:layout_height="38dp"
-                        android:layout_marginRight="25dp"
-                        android:layout_weight="1"
-                        android:padding="7dp"
-                        android:src="@drawable/ic_profile_send" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/colorPrimary"
-                    android:tag="sticky"></View>
-
-                <LinearLayout
-                    android:id="@+id/tabs1"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dip"
-                    android:background="@color/white"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:tag="sticky">
-
-
-                    <ImageView
-                        android:id="@+id/fbUrl"
-                        android:layout_width="38dp"
-                        android:layout_height="38dp"
-                        android:layout_marginLeft="25dp"
-                        android:layout_weight="1"
-                        android:padding="6dp"
-                        android:src="@drawable/icon_fb" />
-
-                    <ImageView
-                        android:id="@+id/linkedInUrl"
-                        android:layout_width="38dp"
-                        android:layout_height="38dp"
-                        android:layout_weight="1"
-                        android:padding="5dp"
-                        android:src="@drawable/icon_linkedin_gray" />
-
-                    <ImageView
-                        android:id="@+id/twitterUrl"
-                        android:layout_width="38dp"
-                        android:layout_height="38dp"
-                        android:layout_weight="1"
-                        android:padding="5dp"
-                        android:src="@drawable/icon_twitter" />
-
-                    <ImageView
-                        android:id="@+id/googleUrl"
-                        android:layout_width="38dp"
-                        android:layout_height="38dp"
-                        android:layout_weight="1"
-                        android:padding="5dp"
-                        android:src="@drawable/icon_google" />
-
-                    <ImageView
-                        android:id="@+id/youtubeUrl"
-                        android:layout_width="38dp"
-                        android:layout_height="38dp"
-                        android:layout_marginRight="25dp"
-                        android:layout_weight="1"
-                        android:padding="5dp"
-                        android:src="@drawable/icon_utube_gray" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/colorPrimary"
-                    android:tag="sticky"></View>
-            </android.support.design.widget.AppBarLayout>
-
-
-            <LinearLayout
-                android:background="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
+    <!--
                 <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:background="@color/white"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="8dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="2dp"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:id="@+id/lnrTag"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"
+                        android:id="@+id/img2"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignTop="@+id/txt1"
+                        android:layout_marginRight="5dp"
+                        android:src="@drawable/ic_tag1" />
 
                     <TextView
-                        android:id="@+id/tvAddedGroupInfo"
+                        android:layout_toRightOf="@+id/img2"
+                        android:id="@+id/txt1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="This friend is not added in any Circle"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="8dp"
+                        android:text="Group Tag 1"
                         android:textColor="@color/colorPrimary"
-                        android:layout_centerHorizontal="true"
-                        android:visibility="gone"
-                        android:textSize="12sp"/>
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/recycler_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:scrollbars="horizontal"
-                        android:layout_toLeftOf="@+id/imgAddGroupFriend"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginLeft="10dp" />
+                        android:textSize="12sp" />
 
                     <ImageView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/imgTag2"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignTop="@+id/txt1"
+                        android:layout_marginRight="5dp"
+                        android:layout_toRightOf="@+id/txt1"
+                        android:src="@drawable/ic_tag2" />
+
+                    <TextView
+                        android:id="@+id/txtTag2"
+                        android:layout_toRightOf="@+id/imgTag2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="8dp"
+                        android:text="Group Tag 2"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/imgTag3"
+                        android:layout_toRightOf="@+id/txtTag2"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignTop="@+id/txt1"
+                        android:layout_marginRight="5dp"
+                        android:src="@drawable/ic_tag3" />
+
+                    <TextView
+                        android:layout_toLeftOf="@+id/img1"
+                        android:layout_toRightOf="@+id/imgTag3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="8dp"
+                        android:text="Group Tag 3"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:layout_centerVertical="true"
                         android:layout_alignParentRight="true"
                         android:id="@+id/imgAddGroupFriend"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_gravity="right"
-                        android:layout_marginRight="10dp"
                         android:src="@drawable/ic_edit" />
 
-                    <ListView
-                        android:visibility="gone"
-                        android:id="@+id/groupListView"
-                        android:layout_width="match_parent"
+                </RelativeLayout>
+    -->
+
+                <RelativeLayout
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="15dp"
+                    android:orientation="horizontal">
+
+                    <com.circle8.circleOne.Utils.cgBoldTextView
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/imgAddGroupFriend"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginLeft="10dp">
-
-                    </ListView>
-
-
+                        android:text="Contact Info"
+                        android:textColor="@android:color/black"
+                        android:textSize="15sp" />
 
                 </RelativeLayout>
 
-<!--
-            <RelativeLayout
-                android:background="@color/white"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="5dp"
-                android:gravity="center_vertical"
-                android:id="@+id/lnrTag"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentLeft="true"
-                    android:id="@+id/img2"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_alignTop="@+id/txt1"
-                    android:layout_marginRight="5dp"
-                    android:src="@drawable/ic_tag1" />
-
-                <TextView
-                    android:layout_toRightOf="@+id/img2"
-                    android:id="@+id/txt1"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/llWebsiteBox"
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="8dp"
-                    android:text="Group Tag 1"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="12sp" />
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_centerVertical="true"
-                    android:id="@+id/imgTag2"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_alignTop="@+id/txt1"
-                    android:layout_marginRight="5dp"
-                    android:layout_toRightOf="@+id/txt1"
-                    android:src="@drawable/ic_tag2" />
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/ic_web" />
 
-                <TextView
-                    android:id="@+id/txtTag2"
-                    android:layout_toRightOf="@+id/imgTag2"
-                    android:layout_width="wrap_content"
+                    <com.circle8.circleOne.Utils.cgTextView
+                        android:id="@+id/txtWebsite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:hint="Website"
+                        android:textAlignment="center"
+                        android:textColor="#6b6c6e"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llEmailBox"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="8dp"
-                    android:text="Group Tag 2"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="12sp" />
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_centerVertical="true"
-                    android:id="@+id/imgTag3"
-                    android:layout_toRightOf="@+id/txtTag2"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_alignTop="@+id/txt1"
-                    android:layout_marginRight="5dp"
-                    android:src="@drawable/ic_tag3" />
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/ic_mail_gray" />
 
-                <TextView
-                    android:layout_toLeftOf="@+id/img1"
-                    android:layout_toRightOf="@+id/imgTag3"
-                    android:layout_width="wrap_content"
+                    <com.circle8.circleOne.Utils.cgTextView
+                        android:id="@+id/txtEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:hint="Email Address"
+                        android:textAlignment="center"
+                        android:textColor="#6b6c6e"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llTeleBox"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="8dp"
-                    android:text="Group Tag 3"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="12sp" />
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:id="@+id/imgAddGroupFriend"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="right"
-                    android:src="@drawable/ic_edit" />
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/ic_phone" />
 
-            </RelativeLayout>
--->
+                    <com.circle8.circleOne.Utils.cgTextView
+                        android:id="@+id/txtPH"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:hint="Telephone No."
+                        android:textAlignment="center"
+                        android:textColor="#6b6c6e"
+                        android:textSize="13sp" />
+                </LinearLayout>
 
-            <RelativeLayout
-                android:background="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="15dp"
-                android:orientation="horizontal">
-
-                <com.circle8.circleOne.Utils.cgBoldTextView
-                    android:layout_marginTop="8dp"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/llFaxBox"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Contact Info"
-                    android:textColor="@android:color/black"
-                    android:textSize="15sp" />
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/ic_phone2" />
+                    <com.circle8.circleOne.Utils.cgTextView
+                        android:id="@+id/txtWork"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:hint="Fax No."
+                        android:textAlignment="center"
+                        android:textColor="#6b6c6e"
+                        android:textSize="13sp" />
+                </LinearLayout>
 
-            </RelativeLayout>
+                <LinearLayout
+                    android:id="@+id/llMobileBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/llWebsiteBox"
-                android:background="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
-                android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/ic_mob" />
+
+                    <com.circle8.circleOne.Utils.cgTextView
+                        android:id="@+id/txtMob"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:hint="Mobile No."
+                        android:textAlignment="center"
+                        android:textColor="#6b6c6e"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llAddressBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/ic_location" />
+
+                    <com.circle8.circleOne.Utils.cgTextView
+                        android:id="@+id/txtAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Address"
+                        android:textColor="#6b6c6e"
+                        android:textSize="13sp" />
+                </LinearLayout>
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:id="@+id/ivMap"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/ic_web" />
+                    android:layout_marginTop="10dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_map" />
 
-                <com.circle8.circleOne.Utils.cgTextView
-                    android:id="@+id/txtWebsite"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorPrimary"></View>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="15dp"
                     android:gravity="center"
-                    android:hint="Website"
-                    android:textAlignment="center"
-                    android:textColor="#6b6c6e"
-                    android:textSize="13sp" />
-            </LinearLayout>
+                    android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/llEmailBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
-                android:orientation="horizontal">
+                    <com.circle8.circleOne.Utils.cgTextView
+                        android:id="@+id/txtTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:text="Circle"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="15sp" />
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginRight="20dp"
-                    android:src="@drawable/ic_mail_gray" />
+                    <ImageView
+                        android:layout_marginTop="5dp"
+                        android:layout_width="35dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/ic_nfc" />
 
-                <com.circle8.circleOne.Utils.cgTextView
-                    android:id="@+id/txtEmail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:hint="Email Address"
-                    android:textAlignment="center"
-                    android:textColor="#6b6c6e"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llTeleBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginRight="20dp"
-                    android:src="@drawable/ic_phone" />
+                </RelativeLayout>
 
                 <com.circle8.circleOne.Utils.cgTextView
-                    android:id="@+id/txtPH"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:hint="Telephone No."
-                    android:textAlignment="center"
-                    android:textColor="#6b6c6e"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llFaxBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginRight="20dp"
-                    android:src="@drawable/ic_phone2" />
-                <com.circle8.circleOne.Utils.cgTextView
-                    android:id="@+id/txtWork"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:hint="Fax No."
-                    android:textAlignment="center"
-                    android:textColor="#6b6c6e"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llMobileBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginRight="20dp"
-                    android:src="@drawable/ic_mob" />
-
-                <com.circle8.circleOne.Utils.cgTextView
-                    android:id="@+id/txtMob"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:hint="Mobile No."
-                    android:textAlignment="center"
-                    android:textColor="#6b6c6e"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llAddressBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginRight="20dp"
-                    android:src="@drawable/ic_location" />
-
-                <com.circle8.circleOne.Utils.cgTextView
-                    android:id="@+id/txtAddress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="Address"
-                    android:textColor="#6b6c6e"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/ivMap"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_map" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/colorPrimary"></View>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="15dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <com.circle8.circleOne.Utils.cgTextView
-                    android:id="@+id/txtTime"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
-                    android:text="Circle"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="15sp" />
-
-                <ImageView
-                    android:layout_marginTop="5dp"
-                    android:layout_width="35dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:src="@drawable/ic_nfc" />
-
-            </RelativeLayout>
-
-            <com.circle8.circleOne.Utils.cgTextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:hint="time: 04/04/2017   10:25am"
-                android:textColor="#6b6c6e"
-                android:textSize="13sp" />
-
-            <LinearLayout
-                android:layout_marginTop="2dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-            <com.circle8.circleOne.Utils.cgTextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:text="location: "
-                android:textColor="#6b6c6e"
-                android:textSize="13sp" />
-
-                <com.circle8.circleOne.Utils.cgTextView
-                    android:id="@+id/txtRemark"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="246 Macpherson Road.Betime Building #03-04.Singapore 348578"
+                    android:layout_marginLeft="20dp"
+                    android:hint="time: 04/04/2017   10:25am"
                     android:textColor="#6b6c6e"
                     android:textSize="13sp" />
+
+                <LinearLayout
+                    android:layout_marginTop="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <com.circle8.circleOne.Utils.cgTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="location: "
+                    android:textColor="#6b6c6e"
+                    android:textSize="13sp" />
+
+                    <com.circle8.circleOne.Utils.cgTextView
+                        android:id="@+id/txtRemark"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="246 Macpherson Road.Betime Building #03-04.Singapore 348578"
+                        android:textColor="#6b6c6e"
+                        android:textSize="13sp" />
+                </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
 
-    </com.circle8.circleOne.Utils.StickyScrollView>
+        </com.circle8.circleOne.Utils.StickyScrollView>
 
-    <!--  <ImageView
-          android:id="@+id/fab"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="top|end"
-          android:layout_margin="@dimen/fab_margin"
-          android:src="@drawable/card1_front" />
-  -->
+        <!--  <ImageView
+              android:id="@+id/fab"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="top|end"
+              android:layout_margin="@dimen/fab_margin"
+              android:src="@drawable/card1_front" />
+      -->
 
-</android.support.design.widget.CoordinatorLayout>
+    </android.support.design.widget.CoordinatorLayout>
+
+  </RelativeLayout>
+
 </RelativeLayout>

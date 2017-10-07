@@ -3416,6 +3416,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         {
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
+
 //            rlProgressDialog.setVisibility(View.GONE);
             // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
 
