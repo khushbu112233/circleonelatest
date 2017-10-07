@@ -399,6 +399,7 @@ public class List2Fragment extends Fragment
     {
         try
         {
+            nfcModel.clear();
             allTaggs.clear();
             gridAdapter.notifyDataSetChanged();
             new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");

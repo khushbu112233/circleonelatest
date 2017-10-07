@@ -539,6 +539,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
     {
         try
         {
+            nfcModel1.clear();
             allTaggs.clear();
             gridAdapter.notifyDataSetChanged();
             new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");

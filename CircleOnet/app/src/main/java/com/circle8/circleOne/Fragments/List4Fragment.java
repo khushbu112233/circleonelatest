@@ -504,6 +504,7 @@ public class List4Fragment extends Fragment
     public static void webCall() {
         try
         {
+            nfcModel1.clear();
             allTaggs.clear();
             gridAdapter.notifyDataSetChanged();
             new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
