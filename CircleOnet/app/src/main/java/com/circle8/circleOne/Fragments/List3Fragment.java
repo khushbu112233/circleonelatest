@@ -533,6 +533,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
 
     public static void callFirst()
     {
+        pageno = 1;
         new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
     }
 
@@ -544,8 +545,8 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
             allTaggs.clear();
             gridAdapter.notifyDataSetChanged();
             new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
-
-        }catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -608,6 +609,16 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                     {
                         numberCount = Integer.parseInt(count);
                     }
+
+                    allTaggs.clear();
+                    try
+                    {
+                        gridAdapter.notifyDataSetChanged();
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
 //                    Toast.makeText(mContext,"Counts: "+numberCount,Toast.LENGTH_SHORT).show();
 
                     JSONArray jsonArray = jsonObject.getJSONArray("connection");
@@ -673,9 +684,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
 
                         }
                     });
-
 //                    Toast.makeText(mContext,"ListView size: "+allTaggs.size(),Toast.LENGTH_SHORT).show();
-
                 }
                 else
                 {

@@ -395,7 +395,9 @@ public class List2Fragment extends Fragment
         }
     }
 
-    private void callFirst() {
+    private void callFirst()
+    {
+        pageno = 1;
         new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
     }
 
@@ -407,8 +409,8 @@ public class List2Fragment extends Fragment
             allTaggs.clear();
             gridAdapter.notifyDataSetChanged();
             new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
-
-        }catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -506,8 +508,10 @@ public class List2Fragment extends Fragment
             String loading = "Fetching Cards..." ;
             CustomProgressBar(loading, status);*/
 
-            try {
-                if (result != null) {
+            try
+            {
+                if (result != null)
+                {
                     JSONObject jsonObject = new JSONObject(result);
 
                     String count = jsonObject.getString("count");
@@ -518,13 +522,23 @@ public class List2Fragment extends Fragment
                         numberCount = Integer.parseInt(count);
                     }
 
+                    allTaggs.clear();
+                    try
+                    {
+                        gridAdapter.notifyDataSetChanged();
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                     JSONArray jsonArray = jsonObject.getJSONArray("connection");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
                     numberCount = jsonArray.length();
 
                     rlLoadMore.setVisibility(View.GONE);
 
-                    for (int i = 0; i < jsonArray.length(); i++) {
+                    for (int i = 0; i < jsonArray.length(); i++)
+                    {
                         JSONObject object = jsonArray.getJSONObject(i);
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
 
