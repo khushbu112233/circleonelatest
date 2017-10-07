@@ -327,6 +327,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     {
         supportRequestWindowFeature(WindowCompat.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
+
         TwitterAuthConfig authConfig = new TwitterAuthConfig(
                 getString(R.string.twitter_consumer_key),
                 getString(R.string.twitter_consumer_secret));
@@ -349,6 +350,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                 }, 700);
             }
         });
+
         recyclerEvents = (RecyclerView) findViewById(R.id.recyclerEvents);
         edtProfileName = (EditText) findViewById(R.id.edtProfileName);
         ivProfileDelete = (ImageView) findViewById(R.id.ivProfileDelete);
@@ -373,6 +375,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
         ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
         recyclerAssociation = (RecyclerView) findViewById(R.id.recyclerAssociation);
+
         imgProfileShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -491,6 +494,13 @@ public class EditProfileActivity extends AppCompatActivity implements
         btnSignIn.setSize(SignInButton.SIZE_ICON_ONLY);
         btnSignIn.setScopes(gso.getScopeArray());
 
+        new HttpAsyncTaskAssociation().execute("http://circle8.asia:8999/Onet.svc/GetAssociationList");
+
+        if (type.equals("edit"))
+        {
+            new HttpAsyncTaskUserProfile().execute("http://circle8.asia:8999/Onet.svc/GetUserProfile");
+            new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Fetch");
+        }
 
         array = new String[]{"Accommodations", "Information", "Accounting", "Information technology", "Advertising",
                 "Insurance", "Aerospace", "Journalism & News", "Agriculture & Agribusiness", "Legal Services", "Air Transportation",
@@ -627,7 +637,6 @@ public class EditProfileActivity extends AppCompatActivity implements
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 finish();
             }
         });
@@ -818,15 +827,9 @@ public class EditProfileActivity extends AppCompatActivity implements
       //  new HttpAsyncTaskCompany().execute("http://circle8.asia:8999/Onet.svc/GetCompanyList");
       //  new HttpAsyncTaskIndustry().execute("http://circle8.asia:8999/Onet.svc/GetIndustryList");
       //  new HttpAsyncTaskDesignation().execute("http://circle8.asia:8999/Onet.svc/GetDesignationList");
-        new HttpAsyncTaskAssociation().execute("http://circle8.asia:8999/Onet.svc/GetAssociationList");
+
       //  new HttpAsyncTaskEvents().execute("http://circle8.asia:8999/Onet.svc/GetAssociationList");
 //        new HttpAsyncTaskEventList().execute("http://circle8.asia:8999/Onet.svc/Events/List");
-//
-        if (type.equals("edit")) {
-            new HttpAsyncTaskUserProfile().execute("http://circle8.asia:8999/Onet.svc/GetUserProfile");
-            new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Fetch");
-        }
-
 
         autoCompleteDesignation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -985,6 +988,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                     associationID = AssoIdList.get(spnAssociation.getSelectedItemPosition()).toString();
                 }
                 catch (Exception e){}
+
                 if (type.equals("add"))
                 {
                     new HttpAsyncTaskAddProfile().execute("http://circle8.asia:8999/Onet.svc/AddProfile");
@@ -1124,7 +1128,7 @@ public class EditProfileActivity extends AppCompatActivity implements
 
         showProgressDialog();
 
-     /*   String loading = "Google Login" ;
+       /* String loading = "Google Login" ;
         CustomProgressDialog(loading);*/
 
         // [END_EXCLUDE]
@@ -2557,11 +2561,13 @@ public class EditProfileActivity extends AppCompatActivity implements
             // If the user has not previously signed in on this device or the sign-in has expired,
             // this asynchronous branch will attempt to sign in the user silently.  Cross-device
             // single sign-on will occur in this branch.
-            showProgressDialog();
+
+//            showProgressDialog();
+
             opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
                 @Override
                 public void onResult(GoogleSignInResult googleSignInResult) {
-                    hideProgressDialog();
+//                    hideProgressDialog();
                     handleSignInResult(googleSignInResult);
                 }
             });
@@ -3058,8 +3064,8 @@ public class EditProfileActivity extends AppCompatActivity implements
             dialog.show();
             dialog.setCancelable(false);*/
 
-            String loading = "Get Association" ;
-            CustomProgressDialog(loading);
+            /*String loading = "Get Association" ;
+            CustomProgressDialog(loading);*/
         }
 
         @Override
@@ -3071,7 +3077,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+//            rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result != null) {
@@ -3388,7 +3394,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
-            String loading = "Loading" ;
+            String loading = "Profile Loading" ;
             CustomProgressDialog(loading);
         }
 
@@ -3403,6 +3409,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         {
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
+//            rlProgressDialog.setVisibility(View.GONE);
             // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
 
             try
