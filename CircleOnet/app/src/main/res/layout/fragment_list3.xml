@@ -68,6 +68,15 @@
             android:layout_marginRight="10dp"
             android:visibility="gone"/>
 
+        <TextView
+            android:textAlignment="center"
+            android:visibility="gone"
+            android:id="@+id/txtNoCard1"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_friend_connection"/>
+
         <ListView
             android:divider="@color/colorPrimary"
             android:dividerHeight="1dp"

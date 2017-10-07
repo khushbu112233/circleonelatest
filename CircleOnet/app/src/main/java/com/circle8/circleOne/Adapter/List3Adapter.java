@@ -429,16 +429,13 @@ public class List3Adapter extends BaseSwipeAdapter
 
                     if(success.equals("1"))
                     {
-                        Toast.makeText(context, "Delete Successfully", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_LONG).show();
 //                        fragment.webCall();
                         try
                         {
                             List1Fragment.webCall();
                             List2Fragment.webCall();
-                            List3Fragment.allTaggs.clear();
-                            List3Fragment.gridAdapter.notifyDataSetChanged();
-                            List3Fragment.callFirst();
-//                        List3Fragment.webCall();
+                            List3Fragment.webCall();
                             List4Fragment.webCall();
                         }
                         catch (Exception e)

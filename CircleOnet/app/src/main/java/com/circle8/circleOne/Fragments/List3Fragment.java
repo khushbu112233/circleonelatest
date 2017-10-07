@@ -81,7 +81,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
     //new asign value
     AutoCompleteTextView searchText ;
     ImageView imgSearch ;
-    TextView tvFriendInfo ;
+    public static TextView tvFriendInfo, txtNoCard1 ;
     public static ArrayList<NFCModel> nfcModel ;
     public static ArrayList<FriendConnection> nfcModel1 ;
 
@@ -126,6 +126,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
         searchText = (AutoCompleteTextView)view.findViewById(R.id.searchView);
         imgSearch = (ImageView)view.findViewById(R.id.imgSearch);
         tvFriendInfo = (TextView)view.findViewById(R.id.tvFriendInfo);
+        txtNoCard1 = (TextView) view.findViewById(R.id.txtNoCard1);
         rlLoadMore = (RelativeLayout)view.findViewById(R.id.rlLoadMore);
         rlProgressDialog = (RelativeLayout)view.findViewById(R.id.rlProgressDialog);
         tvProgressing = (TextView)view.findViewById(R.id.txtProgressing);
@@ -792,6 +793,12 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
             nfcModelTag.setProfile_id(reTag.getProfile_id());
             nfcModelTag.setAddress(reTag.getAddress());
             nfcModel1.add(nfcModelTag);
+        }
+
+        if (nfcModel1.size() == 0) {
+            txtNoCard1.setVisibility(View.VISIBLE);
+        } else {
+            txtNoCard1.setVisibility(View.GONE);
         }
 
 //        rlLoadMore.setVisibility(View.GONE);

@@ -385,7 +385,7 @@ public class GridViewAdapter extends BaseSwipeAdapter
 
                     if(success.equals("1"))
                     {
-                        Toast.makeText(context, "Delete Successfully", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_LONG).show();
                         List1Fragment.webCall();
                         List2Fragment.webCall();
                         List3Fragment.webCall();

@@ -76,7 +76,7 @@ public class List4Fragment extends Fragment
     //new asign value
     AutoCompleteTextView searchText ;
     ImageView imgSearch ;
-    TextView tvFriendInfo ;
+    public static TextView tvFriendInfo, txtNoCard1 ;
     public static ArrayList<NFCModel> nfcModel ;
     public static ArrayList<FriendConnection> nfcModel1 ;
     LoginSession session ;
@@ -127,6 +127,7 @@ public class List4Fragment extends Fragment
         lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
         imgSearch = (ImageView)view.findViewById(R.id.imgSearch);
         tvFriendInfo = (TextView)view.findViewById(R.id.tvFriendInfo);
+        txtNoCard1 = (TextView) view.findViewById(R.id.txtNoCard1);
 
         line = view.findViewById(R.id.view);
         /*lnrSearch.setVisibility(View.GONE);
@@ -902,6 +903,12 @@ public class List4Fragment extends Fragment
             nfcModelTag.setProfile_id(reTag.getProfile_id());
             nfcModelTag.setAddress(reTag.getAddress());
             nfcModel1.add(nfcModelTag);
+        }
+
+        if (nfcModel1.size() == 0) {
+            txtNoCard1.setVisibility(View.VISIBLE);
+        } else {
+            txtNoCard1.setVisibility(View.GONE);
         }
 
 //        rlLoadMore.setVisibility(View.GONE);
