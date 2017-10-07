@@ -1237,7 +1237,7 @@ public class CardDetail extends NfcActivity
                         llTeleBox.setVisibility(View.GONE);
                     } else {
 //                        Phone1 = Phone1.trim();
-                        Phone1 = Phone1.replaceAll("\\s+", "");
+                        Phone1 = Phone1.replaceAll("\\s+", "").trim();
                         /*int number = Integer.parseInt(Phone1);
 //                        Phone1 = Phone1.replaceAll("\\s++$", "");
                         String number1 = String.valueOf(number);
