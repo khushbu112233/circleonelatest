@@ -187,13 +187,12 @@
 
                 <ImageView
                     android:id="@+id/ivProfileShare"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="15dp"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/list_selecting"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentBottom="true"/>
+                    android:layout_alignTop="@+id/ivDelete"
+                    android:layout_alignLeft="@+id/imgBack"
+                    android:layout_alignStart="@+id/imgBack" />
 
                 <ImageView
                     android:id="@+id/ivEdit"

@@ -379,7 +379,7 @@ public class GroupsActivity extends AppCompatActivity
             dialog.show();
             dialog.setCancelable(false);*/
 
-            String loading = "Uploading" ;
+            String loading = "Creating" ;
             CustomProgressDialog(loading);
         }
 

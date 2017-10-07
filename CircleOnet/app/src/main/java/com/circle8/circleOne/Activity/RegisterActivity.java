@@ -437,15 +437,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             c_password = etConfirmPass.getText().toString();
             email = etEmail.getText().toString();
             String code;
-            try {
-                code = ccp.getSelectedCountryCode().toString();
-            }catch (Exception e){
+            try
+            {
+                code = ccp.getSelectedCountryCodeWithPlus().toString();
+            }
+            catch (Exception e){
                 code = ccp.getDefaultCountryCodeWithPlus().toString();
             }
 
            // String code = tvCountryCode.getText().toString();
             String contact = phone_no;
-            phone_no = code + contact;
+            if (!contact.equals("")) {
+                phone_no = code + " " + contact;
+            }
 
             if (!validate(user_name, first_name, last_name, password, c_password, phone_no, email)) {
 //                Toast.makeText(getApplicationContext(), "Something Wrong!", Toast.LENGTH_SHORT).show();
@@ -453,6 +457,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
            /* else if (refferelCode.equals("")){
                 Toast.makeText(getApplicationContext(), "Enter Referral Code", Toast.LENGTH_SHORT).show();
             }*/
+            else if (phone_no.equals("")) {
+                Toast.makeText(getApplicationContext(), "Enter Contact Number", Toast.LENGTH_SHORT).show();
+            }
             else if (gender.equals("")) {
                 Toast.makeText(getApplicationContext(), "Select Gender", Toast.LENGTH_SHORT).show();
             }

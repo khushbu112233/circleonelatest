@@ -71,7 +71,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.internal.pu;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
@@ -133,8 +132,7 @@ public class LoginActivity extends AppCompatActivity implements
         View.OnClickListener,
         GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks,
         TextWatcher,
-        CompoundButton.OnCheckedChangeListener
-{
+        CompoundButton.OnCheckedChangeListener {
 
     public static String ReferrenceCode = "";
     Button btnSimpleLogin, btnRegister;
@@ -149,7 +147,7 @@ public class LoginActivity extends AppCompatActivity implements
     private ProgressDialog mProgressDialog;
 
     public static TextView tvUsernameInfo, tvPasswordInfo;
-
+    ImageView imgForgotPass;
     private SignInButton btnSignIn;
     private Button btnSignOut, btnRevokeAccess;
 
@@ -204,15 +202,14 @@ public class LoginActivity extends AppCompatActivity implements
     private static final String KEY_USERNAME = "username";
     private static final String KEY_PASS = "password";
 
-    private static RelativeLayout rlProgressDialog ;
-    private static TextView tvProgressing ;
-    private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+    private static RelativeLayout rlProgressDialog;
+    private static TextView tvProgressing;
+    private static ImageView ivConnecting1, ivConnecting2, ivConnecting3;
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
 
@@ -223,7 +220,7 @@ public class LoginActivity extends AppCompatActivity implements
         loginSession = new LoginSession(getApplicationContext());
         fingerPrintSession = new FingerPrintSession(getApplicationContext());
         setContentView(R.layout.activity_login);
-
+        imgForgotPass = (ImageView) findViewById(R.id.imgForgotPass);
         btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
         btnSimpleLogin = (Button) findViewById(R.id.btnLogin);
         btnLogin = (ImageView) findViewById(R.id.fbLogin);
@@ -239,23 +236,23 @@ public class LoginActivity extends AppCompatActivity implements
         tvUsernameInfo = (TextView) findViewById(R.id.tvUserInfo);
         tvPasswordInfo = (TextView) findViewById(R.id.tvPasswordInfo);
 
-        rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
-        tvProgressing = (TextView)findViewById(R.id.txtProgressing);
-        ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
-        ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
-        ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
+        rlProgressDialog = (RelativeLayout) findViewById(R.id.rlProgressDialog);
+        tvProgressing = (TextView) findViewById(R.id.txtProgressing);
+        ivConnecting1 = (ImageView) findViewById(R.id.imgConnecting1);
+        ivConnecting2 = (ImageView) findViewById(R.id.imgConnecting2);
+        ivConnecting3 = (ImageView) findViewById(R.id.imgConnecting3);
 
         sharedPreferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        rem_userpass = (CheckBox)findViewById(R.id.switchRemember);
+        rem_userpass = (CheckBox) findViewById(R.id.switchRemember);
 
-        if(sharedPreferences.getBoolean(KEY_REMEMBER, false))
+        if (sharedPreferences.getBoolean(KEY_REMEMBER, false))
             rem_userpass.setChecked(true);
         else
             rem_userpass.setChecked(false);
 
-        etLoginUser.setText(sharedPreferences.getString(KEY_USERNAME,""));
-        etLoginPass.setText(sharedPreferences.getString(KEY_PASS,""));
+        etLoginUser.setText(sharedPreferences.getString(KEY_USERNAME, ""));
+        etLoginPass.setText(sharedPreferences.getString(KEY_PASS, ""));
 
         prefs = getSharedPreferences("com.circle8.circleOne", MODE_PRIVATE);
         etLoginPass.setImeOptions(EditorInfo.IME_ACTION_DONE);
@@ -271,9 +268,9 @@ public class LoginActivity extends AppCompatActivity implements
         pushToken = Settings.Secure.getString(getApplicationContext().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
 
-       // pushToken = status.getSubscriptionStatus().getPushToken();
+        // pushToken = status.getSubscriptionStatus().getPushToken();
         System.out.println("pushtoken " + pushToken);
-       // Toast.makeText(getApplicationContext(), pushToken, Toast.LENGTH_LONG).show();
+        // Toast.makeText(getApplicationContext(), pushToken, Toast.LENGTH_LONG).show();
 
         etLoginPass.addTextChangedListener(this);
         etLoginUser.addTextChangedListener(this);
@@ -286,12 +283,9 @@ public class LoginActivity extends AppCompatActivity implements
                     userName = etLoginUser.getText().toString();
                     userPassword = etLoginPass.getText().toString();
 
-                    if (!validateLogin(userName, userPassword))
-                    {
+                    if (!validateLogin(userName, userPassword)) {
                         Toast.makeText(getApplicationContext(), "All fields are require!", Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                    {
+                    } else {
                         new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/UserLogin");
                     }
                 }
@@ -299,11 +293,17 @@ public class LoginActivity extends AppCompatActivity implements
             }
         });
 
+        imgForgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, ForgotActivity.class));
+            }
+        });
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             fingerprintHandler = new FingerprintHandler(this);
             fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
-            if (!fingerprintManager.hasEnrolledFingerprints())
-            {
+            if (!fingerprintManager.hasEnrolledFingerprints()) {
                 //textView.setText("No fingerprint configured. Please register at least one fingerprint in your device's Settings");
                 imgFinger.setVisibility(View.GONE);
             } else {
@@ -328,7 +328,7 @@ public class LoginActivity extends AppCompatActivity implements
             imgFinger.setVisibility(View.GONE);
         }
 
-        etLoginPass.setOnTouchListener(new View.OnTouchListener() {
+        /*etLoginPass.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 final int DRAWABLE_LEFT = 0;
@@ -345,7 +345,7 @@ public class LoginActivity extends AppCompatActivity implements
                 }
                 return false;
             }
-        });
+        });*/
 
        /* tvPasswordInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -442,12 +442,9 @@ public class LoginActivity extends AppCompatActivity implements
                 userName = etLoginUser.getText().toString();
                 userPassword = etLoginPass.getText().toString();
 
-                if (!validateLogin(userName, userPassword))
-                {
+                if (!validateLogin(userName, userPassword)) {
 //                    Toast.makeText(getApplicationContext(), "Form Fill Invalid!", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+                } else {
                     new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/UserLogin");
                 }
             /* Create an Intent that will start the Menu-Activity. */
@@ -479,7 +476,7 @@ public class LoginActivity extends AppCompatActivity implements
                 progressDialog.setMessage("Loading...");
                 progressDialog.show();*/
 
-                String loading = "Loading" ;
+                String loading = "Loading";
                 CustomProgressDialog(loading);
 
                 loginButton.performClick();
@@ -546,13 +543,13 @@ public class LoginActivity extends AppCompatActivity implements
         managePrefs();
     }
 
-    private void managePrefs(){
-        if(rem_userpass.isChecked()){
+    private void managePrefs() {
+        if (rem_userpass.isChecked()) {
             editor.putString(KEY_USERNAME, etLoginUser.getText().toString().trim());
             editor.putString(KEY_PASS, etLoginPass.getText().toString().trim());
             editor.putBoolean(KEY_REMEMBER, true);
             editor.apply();
-        }else{
+        } else {
             editor.putBoolean(KEY_REMEMBER, false);
             editor.remove(KEY_PASS);//editor.putString(KEY_PASS,"");
             editor.remove(KEY_USERNAME);//editor.putString(KEY_USERNAME, "");
@@ -700,7 +697,7 @@ public class LoginActivity extends AppCompatActivity implements
             return cipher;
         } catch (Exception e) {
             // throw new RuntimeException("Failed to instantiate Cipher class");
-             imgFinger.setVisibility(View.GONE);
+            imgFinger.setVisibility(View.GONE);
             return null;
         }
     }
@@ -843,8 +840,7 @@ public class LoginActivity extends AppCompatActivity implements
 
     }
 
-    private class HttpAsyncTask extends AsyncTask<String, Void, String>
-    {
+    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
@@ -856,7 +852,7 @@ public class LoginActivity extends AppCompatActivity implements
             dialog.show();
             dialog.setCancelable(false);*/
 
-            String loading = "Logging In" ;
+            String loading = "Logging In";
             CustomProgressDialog(loading);
         }
 
@@ -867,21 +863,17 @@ public class LoginActivity extends AppCompatActivity implements
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result)
-        {
+        protected void onPostExecute(String result) {
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
 
-            try
-            {
-                if (result != null)
-                {
+            try {
+                if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
                     String success = jsonObject.getString("success").toString();
                     String UserID = "", profileid = "", FirstName = "", LastName = "", UserPhoto = "";
 
-                    if (success.equals("1"))
-                    {
+                    if (success.equals("1")) {
                         //  Toast.makeText(getBaseContext(), "LoggedIn Successfully..", Toast.LENGTH_LONG).show();
                         //   fingerPrintSession.createLoginSession(UserID, "", userName, "", "");
 
@@ -894,32 +886,27 @@ public class LoginActivity extends AppCompatActivity implements
                         UserPhoto = jsonArray.getString("UserPhoto");
                         String Status = jsonArray.getString("Status");
 
-                        try
-                        {
+                        try {
                             ReferrenceCode = jsonArray.getString("ReferrenceCode");
-                        }catch (Exception e) {}
+                        } catch (Exception e) {
+                        }
 
-                        if (Status.equalsIgnoreCase("Verified"))
-                        {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                            {
+                        if (Status.equalsIgnoreCase("Verified")) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                 Gson gson = ((MyApplication) getApplication()).getGsonObject();
                                 UserObject userData = new UserObject(profileid, FirstName + " " + LastName, userName, userPassword, UserID, "", UserPhoto, false);
                                 String userDataString = gson.toJson(userData);
                                 CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
                                 pref.setUserData(userDataString);
 
-                                loginSession.createLoginSession(profileid, UserID, "", userName, "", "",userPassword);
-                                if (prefs.getBoolean("firstrun", true))
-                                {
+                                loginSession.createLoginSession(profileid, UserID, "", userName, "", "", userPassword);
+                                if (prefs.getBoolean("firstrun", true)) {
                                     // Do first run stuff here then set 'firstrun' as false
                                     // using the following line to edit/commit prefs
                                     Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
                                     startActivity(intent);
                                     prefs.edit().putBoolean("firstrun", false).commit();
-                                }
-                                else
-                                {
+                                } else {
                                     Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
                                     userIntent.putExtra("viewpager_position", 0);
                                     startActivity(userIntent);
@@ -977,15 +964,12 @@ public class LoginActivity extends AppCompatActivity implements
                                     startActivity(userIntent);
                                     finish();
                                 }*/
-                            }
-                            else
-                            {
+                            } else {
                                 // imgFinger.setVisibility(View.GONE);
 //                                loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, final_email, UserPhoto, "");
                                 loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, userName, UserPhoto, "", userPassword);
 
-                                if (prefs.getBoolean("firstrun", true))
-                                {
+                                if (prefs.getBoolean("firstrun", true)) {
                                     // Do first run stuff here then set 'firstrun' as false
                                     // using the following line to edit/commit prefs
                                     Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
@@ -1048,7 +1032,7 @@ public class LoginActivity extends AppCompatActivity implements
             public void onAuthSuccess() {
 
                 // Toast.makeText(getApplicationContext(), "success" + LISessionManager.getInstance(getApplicationContext()).getSession().getAccessToken().toString(), Toast.LENGTH_LONG).show();
-               // login_linkedin_btn.setVisibility(View.GONE);
+                // login_linkedin_btn.setVisibility(View.GONE);
 
             }
 
@@ -1232,7 +1216,7 @@ public class LoginActivity extends AppCompatActivity implements
                 progressDialog.setMessage("Loading...");
                 progressDialog.show();*/
 
-                String loading = "Loading" ;
+                String loading = "Loading";
                 CustomProgressDialog(loading);
 
                 loginButton.performClick();
@@ -1251,8 +1235,7 @@ public class LoginActivity extends AppCompatActivity implements
         });
     }
 
-    private void handleTwitterSession(TwitterSession session)
-    {
+    private void handleTwitterSession(TwitterSession session) {
         Log.d(TAG, "handleTwitterSession:" + session);
         // [START_EXCLUDE silent]
 
@@ -1359,19 +1342,16 @@ public class LoginActivity extends AppCompatActivity implements
         super.onActivityResult(requestCode, resultCode, data);
         // mLoginButton.onActivityResult(requestCode, resultCode, data);
         client.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN)
-        {
+        if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
-        }
-        else if (LinkedInFlag == true)
-        {
+        } else if (LinkedInFlag == true) {
             LISessionManager.getInstance(getApplicationContext()).onActivityResult(this, requestCode, resultCode, data);
             /*progress = new ProgressDialog(this);
             progress.setMessage("Logging in...");
             progress.setCanceledOnTouchOutside(false);
             progress.show();*/
-            String loading = "Logging In" ;
+            String loading = "Logging In";
             CustomProgressDialog(loading);
             linkededinApiHelper();
         }
@@ -1506,9 +1486,7 @@ public class LoginActivity extends AppCompatActivity implements
             Log.d(TAG, "Got cached sign-in");
             GoogleSignInResult result = opr.get();
             handleSignInResult(result);
-        }
-        else
-        {
+        } else {
             // If the user has not previously signed in on this device or the sign-in has expired,
             // this asynchronous branch will attempt to sign in the user silently.  Cross-device
             // single sign-on will occur in this branch.
@@ -1523,8 +1501,7 @@ public class LoginActivity extends AppCompatActivity implements
         }
     }
 
-    private void showProgressDialog()
-    {
+    private void showProgressDialog() {
         /*if (mProgressDialog == null)
         {
             mProgressDialog = new ProgressDialog(LoginActivity.this);
@@ -1532,12 +1509,11 @@ public class LoginActivity extends AppCompatActivity implements
             mProgressDialog.setIndeterminate(true);
         }
         mProgressDialog.show();*/
-        String loading = "Google Login" ;
+        String loading = "Google Login";
         CustomProgressDialog(loading);
     }
 
-    private void hideProgressDialog()
-    {
+    private void hideProgressDialog() {
         /*if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.hide();
         }*/
@@ -1565,8 +1541,7 @@ public class LoginActivity extends AppCompatActivity implements
 
     private FacebookCallback<LoginResult> mCallBack = new FacebookCallback<LoginResult>() {
         @Override
-        public void onSuccess(LoginResult loginResult)
-        {
+        public void onSuccess(LoginResult loginResult) {
 
 //            progressDialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
@@ -1692,8 +1667,7 @@ public class LoginActivity extends AppCompatActivity implements
         }
     }
 
-    private class HttpAsyncTaskSocialMedia extends AsyncTask<String, Void, String>
-    {
+    private class HttpAsyncTaskSocialMedia extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
@@ -1704,7 +1678,7 @@ public class LoginActivity extends AppCompatActivity implements
             //dialog.setTitle("Saving Reminder");
             dialog.show();
             dialog.setCancelable(false);*/
-            String loading = "Logging In" ;
+            String loading = "Logging In";
             CustomProgressDialog(loading);
         }
 
@@ -1715,13 +1689,11 @@ public class LoginActivity extends AppCompatActivity implements
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result)
-        {
+        protected void onPostExecute(String result) {
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
 
-            try
-            {
+            try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
                     String success = jsonObject.getString("success").toString();
@@ -1749,17 +1721,14 @@ public class LoginActivity extends AppCompatActivity implements
                                 CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
                                 pref.setUserData(userDataString);
 
-                                loginSession.createLoginSession(profileid, UserID, "", userName, "", "",userPassword);
-                                if (prefs.getBoolean("firstrun", true))
-                                {
+                                loginSession.createLoginSession(profileid, UserID, "", userName, "", "", userPassword);
+                                if (prefs.getBoolean("firstrun", true)) {
                                     // Do first run stuff here then set 'firstrun' as false
                                     // using the following line to edit/commit prefs
                                     Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
                                     startActivity(intent);
                                     prefs.edit().putBoolean("firstrun", false).commit();
-                                }
-                                else
-                                {
+                                } else {
                                     Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
                                     userIntent.putExtra("viewpager_position", 0);
                                     startActivity(userIntent);
@@ -1831,6 +1800,36 @@ public class LoginActivity extends AppCompatActivity implements
                                 }
                             }
                         } else {
+                            try {
+                                if (!Google.equals("")) {
+                                    signOut();
+                                }
+                            } catch (Exception e) {
+                            }
+
+                            try {
+                                if (!Facebook.equals("")) {
+                                    PrefUtils.clearCurrentUser(LoginActivity.this);
+                                    // We can logout from facebook by calling following method
+                                    LoginManager.getInstance().logOut();
+                                }
+                            } catch (Exception e) {
+                            }
+
+                            try {
+                                if (!Twitter.equals("")) {
+                                    mAuth.signOut();
+                                    com.twitter.sdk.android.Twitter.logOut();
+                                }
+                            } catch (Exception e) {
+                            }
+
+                            try {
+                                if (!Linkedin.equals("")) {
+                                    LISessionManager.getInstance(getApplicationContext()).clearSession();
+                                }
+                            } catch (Exception e) {
+                            }
                             Toast.makeText(getBaseContext(), "You should verify your Account First..", Toast.LENGTH_LONG).show();
                         }
 
@@ -1895,35 +1894,27 @@ public class LoginActivity extends AppCompatActivity implements
 
     }
 
-    public void CustomProgressDialog(final String loading)
-    {
+    public void CustomProgressDialog(final String loading) {
         rlProgressDialog.setVisibility(View.VISIBLE);
         tvProgressing.setText(loading);
 
-        Animation anim = AnimationUtils.loadAnimation(LoginActivity.this,R.anim.anticlockwise);
+        Animation anim = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.anticlockwise);
         ivConnecting1.startAnimation(anim);
-        Animation anim1 = AnimationUtils.loadAnimation(LoginActivity.this,R.anim.clockwise);
+        Animation anim1 = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.clockwise);
         ivConnecting2.startAnimation(anim1);
 
-        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
-        for (int i = 350; i <= SPLASHTIME; i = i + 350)
-        {
+        int SPLASHTIME = 1000 * 60;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
+        for (int i = 350; i <= SPLASHTIME; i = i + 350) {
             final int j = i;
             final Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
-                public void run()
-                {
-                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
-                    {
-                        tvProgressing.setText(loading+".");
-                    }
-                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
-                    {
-                        tvProgressing.setText(loading+"..");
-                    }
-                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
-                    {
-                        tvProgressing.setText(loading+"...");
+                public void run() {
+                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10) {
+                        tvProgressing.setText(loading + ".");
+                    } else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8) {
+                        tvProgressing.setText(loading + "..");
+                    } else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9) {
+                        tvProgressing.setText(loading + "...");
                     }
 
                 }

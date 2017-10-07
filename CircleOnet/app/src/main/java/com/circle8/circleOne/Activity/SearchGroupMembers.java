@@ -139,7 +139,8 @@ public class SearchGroupMembers extends AppCompatActivity
                     {
                         //Toast.makeText(getApplicationContext(), selectedStrings.toString(), Toast.LENGTH_LONG).show();
                        // new HttpAsyncTaskGroupAddFriend().execute("http://circle8.asia:8999/Onet.svc/Group/AddFriend");
-                        new HttpAsyncTaskTestimonialRequest().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Request");
+                        finish();
+                      //  new HttpAsyncTaskTestimonialRequest().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Request");
                     }
                 }
 

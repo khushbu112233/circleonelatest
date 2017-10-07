@@ -59,6 +59,12 @@
             android:layout_marginLeft="45dp"
             android:layout_marginRight="45dp" />
 
+        <RelativeLayout
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="45dp"
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
         <com.circle8.circleOne.Utils.HelveticaLightEditText
             android:textSize="15sp"
             android:singleLine="true"
@@ -66,19 +72,24 @@
             android:id="@+id/etLoginPass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="45dp"
-            android:layout_marginRight="45dp"
-            android:layout_marginTop="15dp"
             android:background="@drawable/edit_back"
-            android:drawableRight="@drawable/question"
             android:hint="Password"
             android:paddingBottom="10dp"
             android:paddingLeft="20dp"
-            android:paddingRight="20dp"
+            android:paddingRight="35dp"
             android:paddingTop="10dp"
             android:textColor="@color/white"
             android:textColorHint="@color/white" />
 
+            <ImageView
+                android:id="@+id/imgForgotPass"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/question"/>
+        </RelativeLayout>
 
         <TextView
             android:visibility="gone"

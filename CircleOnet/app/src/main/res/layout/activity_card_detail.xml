@@ -635,7 +635,6 @@
                     android:id="@+id/txtPH"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:gravity="center"
                     android:hint="Telephone No."
                     android:textAlignment="center"
                     android:textColor="#6b6c6e"

@@ -43,6 +43,7 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
+import com.hbb20.CountryCodePicker;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -111,6 +112,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
 
     int motionLength;
     int roundWidth = 0, lineWidth = 0;
+    CountryCodePicker ccp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -142,6 +144,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         tvSave = (TextView)findViewById(R.id.tvSave);
         tvCancel = (TextView)findViewById(R.id.tvCancel);
         txtGender = (TextView)findViewById(R.id.txtGender);
+        ccp = (CountryCodePicker) findViewById(R.id.ccp);
 
         rlMale = (RelativeLayout)findViewById(R.id.ivMale);
         rlFemale = (RelativeLayout)findViewById(R.id.ivFemale);
@@ -360,9 +363,27 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             c_password = etPasswordAgain.getText().toString();
             phone_no = etPhone.getText().toString();
 
+            String code;
+            try {
+                code = ccp.getSelectedCountryCodeWithPlus().toString();
+            }catch (Exception e){
+                code = ccp.getDefaultCountryCodeWithPlus().toString();
+            }
+
+            // String code = tvCountryCode.getText().toString();
+            String contact = phone_no;
+            if (!contact.equals("")) {
+                phone_no = code + " " + contact;
+            }
+
+
             if (!updateRegisterValidate(first_name, last_name, password, c_password, phone_no))
             {
 //                Toast.makeText(getApplicationContext(), "Something Wrong!", Toast.LENGTH_SHORT).show();
+            }
+            else if (phone_no.equals(""))
+            {
+                Toast.makeText(getApplicationContext(), "Enter Contact Number", Toast.LENGTH_SHORT).show();
             }
             else if (gender.equals(""))
             {
@@ -1110,7 +1131,18 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                         etUserName.setText(profile.getString("UserName"));
                         etFirstName.setText(profile.getString("FirstName"));
                         etLastName.setText(profile.getString("LastName"));
-                        etPhone.setText(profile.getString("Phone"));
+                        if (profile.getString("Phone").contains(" ")){
+                            String name = profile.getString("Phone");
+                            String kept = name.substring(0, name.indexOf(" "));
+                            String remainder = name.substring(name.indexOf(" ") + 1, name.length());
+                            kept = kept.replaceAll("//+", "");
+                            ccp.setCountryForPhoneCode(Integer.parseInt(kept));
+                            etPhone.setText(remainder);
+                        }
+                        else {
+                            etPhone.setText(profile.getString("Phone"));
+                        }
+                        //etPhone.setText(profile.getString("Phone"));
                         etPassword.setText(user_pass);
                         etPasswordAgain.setText(user_pass);
                         String user_Gender = profile.getString("Gender");

@@ -257,12 +257,15 @@ public class GroupDetailActivity extends AppCompatActivity
                 if(isPressed)
                 {
                     listView.setChoiceMode(ListView.CHOICE_MODE_NONE);
+                    ivShareImg.setImageResource(R.drawable.list_selecting);
                    /* listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
                     GroupDetailAdapter.chCheckBox.setVisibility(View.VISIBLE);*/
                 }
                 else {
 
                     listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+                    ivShareImg.setImageResource(R.drawable.group_selected);
+                    Toast.makeText(getApplicationContext(), "Long Press and select members to delete from circle", Toast.LENGTH_LONG).show();
                   //  GroupDetailAdapter.chCheckBox.setVisibility(View.GONE);
                 }
 
@@ -659,7 +662,7 @@ public class GroupDetailActivity extends AppCompatActivity
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
 
-            String loading = "Deleting Group" ;
+            String loading = "Deleting Circle" ;
             CustomProgressDialog(loading);
         }
 
@@ -684,7 +687,7 @@ public class GroupDetailActivity extends AppCompatActivity
                     String message = jsonObject.getString("message");
                     if (success.equalsIgnoreCase("1")){
                         finish();
-                        Toast.makeText(getApplicationContext(), "Group Deleted Successfully..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Circle Deleted Successfully..", Toast.LENGTH_LONG).show();
                     }
                     else {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();

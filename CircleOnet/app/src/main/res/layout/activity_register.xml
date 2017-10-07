@@ -289,6 +289,7 @@
                 android:textSize="15dp"
                 app:ccp_showNameCode="false"
                 app:ccp_showPhoneCode="true"
+                app:ccp_contentColor="@color/colorPrimary"
                 app:ccp_showFlag="false"
                 android:layout_marginRight="10dp"
                 android:id="@+id/ccp"

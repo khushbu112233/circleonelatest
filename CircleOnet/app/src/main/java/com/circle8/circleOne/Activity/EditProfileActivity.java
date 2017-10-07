@@ -643,9 +643,15 @@ public class EditProfileActivity extends AppCompatActivity implements
         imgAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), TestimonialRequest.class);
+               /* Intent intent = new Intent(getApplicationContext(), TestimonialRequest.class);
                 intent.putExtra("ProfileId", profileId);
-                startActivity(intent);
+                startActivity(intent);*/
+
+                Intent intent1 = new Intent(getApplicationContext(), SearchGroupMembers.class);
+                intent1.putExtra("from", "profile");
+                intent1.putExtra("ProfileId", profileId);
+                startActivity(intent1);
+
             }
         });
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -913,6 +919,66 @@ public class EditProfileActivity extends AppCompatActivity implements
                         "Selected Students: \n" + arrayEvents, Toast.LENGTH_LONG)
                         .show();
 */
+
+               if (!edtWork.getText().toString().equals("")) {
+                   try {
+                       if (ccp1.getSelectedCountryCodeWithPlus() != null) {
+                           Phone1 = ccp1.getSelectedCountryCodeWithPlus() + " " + edtWork.getText().toString();
+                       }
+                   } catch (Exception e) {
+                       Phone1 = ccp1.getDefaultCountryCodeWithPlus() + " " + edtWork.getText().toString();
+                   }
+               }
+
+                if (!edtWork2.getText().toString().equals("")) {
+                    try {
+                        if (ccp2.getSelectedCountryCodeWithPlus() != null) {
+                            Phone2 = ccp2.getSelectedCountryCodeWithPlus() + " " + edtWork2.getText().toString();
+                        }
+                    } catch (Exception e) {
+                        Phone2 = ccp2.getDefaultCountryCodeWithPlus() + " " + edtWork2.getText().toString();
+                    }
+                }
+
+                if (!edtPrimary.getText().toString().equals("")) {
+                    try {
+                        if (ccp3.getSelectedCountryCodeWithPlus() != null) {
+                            Mobile1 = ccp3.getSelectedCountryCodeWithPlus() + " " + edtPrimary.getText().toString();
+                        }
+                    } catch (Exception e) {
+                        Mobile1 = ccp3.getDefaultCountryCodeWithPlus() + " " + edtPrimary.getText().toString();
+                    }
+                }
+
+                if (!edtPrimary2.getText().toString().equals("")) {
+                    try {
+                        if (ccp4.getSelectedCountryCodeWithPlus() != null) {
+                            Mobile2 = ccp4.getSelectedCountryCodeWithPlus() + " " + edtPrimary2.getText().toString();
+                        }
+                    } catch (Exception e) {
+                        Mobile2 = ccp4.getDefaultCountryCodeWithPlus() + " " + edtPrimary2.getText().toString();
+                    }
+                }
+
+                if (!edtFax1.getText().toString().equals("")) {
+                    try {
+                        if (ccp5.getSelectedCountryCodeWithPlus() != null) {
+                            Fax1 = ccp5.getSelectedCountryCodeWithPlus() + " " + edtFax1.getText().toString();
+                        }
+                    } catch (Exception e) {
+                        Fax1 = ccp5.getDefaultCountryCodeWithPlus() + " " + edtFax1.getText().toString();
+                    }
+                }
+
+                if (!edtFax2.getText().toString().equals("")) {
+                    try {
+                        if (ccp6.getSelectedCountryCodeWithPlus() != null) {
+                            Fax2 = ccp6.getSelectedCountryCodeWithPlus() + " " + edtFax2.getText().toString();
+                        }
+                    } catch (Exception e) {
+                        Fax2 = ccp6.getDefaultCountryCodeWithPlus() + " " + edtFax2.getText().toString();
+                    }
+                }
 
                 try
                 {
@@ -1623,16 +1689,16 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("Email1", edtEmail.getText().toString());
             jsonObject.accumulate("Email2", edtEmail2.getText().toString());
             jsonObject.accumulate("Facebook", strFB);
-            jsonObject.accumulate("Fax1", edtFax1.getText().toString());
-            jsonObject.accumulate("Fax2", edtFax2.getText().toString());
+            jsonObject.accumulate("Fax1", Fax1);
+            jsonObject.accumulate("Fax2", Fax2);
             jsonObject.accumulate("Google", strGoogle);
             jsonObject.accumulate("IndustryID", industryID);
             jsonObject.accumulate("IndustryName", autoCompleteIndustry.getText().toString());
             jsonObject.accumulate("Linkedin", strLinkedin);
-            jsonObject.accumulate("Mobile1", edtPrimary.getText().toString());
-            jsonObject.accumulate("Mobile2", edtPrimary2.getText().toString());
-            jsonObject.accumulate("Phone1", edtWork.getText().toString());
-            jsonObject.accumulate("Phone2", edtWork2.getText().toString());
+            jsonObject.accumulate("Mobile1", Mobile1);
+            jsonObject.accumulate("Mobile2", Mobile2);
+            jsonObject.accumulate("Phone1", Phone1);
+            jsonObject.accumulate("Phone2", Phone2);
             jsonObject.accumulate("Postalcode", edtAddress6.getText().toString());
             jsonObject.accumulate("ProfileID", profileId);
             jsonObject.accumulate("Profile_Desc", ProfileDesc);
@@ -2179,16 +2245,16 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("Email1", edtEmail.getText().toString());
             jsonObject.accumulate("Email2", edtEmail2.getText().toString());
             jsonObject.accumulate("Facebook", strFB);
-            jsonObject.accumulate("Fax1", edtFax1.getText().toString());
-            jsonObject.accumulate("Fax2", edtFax2.getText().toString());
+            jsonObject.accumulate("Fax1", Fax1);
+            jsonObject.accumulate("Fax2", Fax2);
             jsonObject.accumulate("Google", strGoogle);
             jsonObject.accumulate("IndustryID", industryID);
             jsonObject.accumulate("IndustryName", autoCompleteIndustry.getText().toString());
             jsonObject.accumulate("Linkedin", strLinkedin);
-            jsonObject.accumulate("Mobile1", edtPrimary.getText().toString());
-            jsonObject.accumulate("Mobile2", edtPrimary2.getText().toString());
-            jsonObject.accumulate("Phone1", edtWork.getText().toString());
-            jsonObject.accumulate("Phone2", edtWork2.getText().toString());
+            jsonObject.accumulate("Mobile1", Mobile1);
+            jsonObject.accumulate("Mobile2", Mobile2);
+            jsonObject.accumulate("Phone1", Phone1);
+            jsonObject.accumulate("Phone2", Phone2);
             jsonObject.accumulate("Postalcode", edtAddress6.getText().toString());
             jsonObject.accumulate("ProfileID", profileId);
             jsonObject.accumulate("Profile_Desc", ProfileDesc);

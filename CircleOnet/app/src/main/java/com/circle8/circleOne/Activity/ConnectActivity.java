@@ -196,7 +196,7 @@ public class ConnectActivity extends AppCompatActivity
 
         if (friendProfile_id.equals(""))
         {
-            Toast.makeText(ConnectActivity.this, "Having no friend profile ID",Toast.LENGTH_LONG).show();
+            Toast.makeText(ConnectActivity.this, "Do not have friend profile ID",Toast.LENGTH_LONG).show();
         }
         else
         {
@@ -314,9 +314,8 @@ public class ConnectActivity extends AppCompatActivity
             {
                 boolean result = Utility.checkContactPermission(ConnectActivity.this);
                 if (result) {
-                    Boolean aBoolean = contactExists(getApplicationContext(), txtMob.getText().toString());
+                    //Boolean aBoolean = contactExists(getApplicationContext(), txtMob.getText().toString());
 
-                    if (aBoolean == true) {
                         TranslateAnimation slide1 = new TranslateAnimation(0, -(motionLength), 0, 0);
                         slide1.setDuration(1000);
                         ivConnectImg.startAnimation(slide1);
@@ -339,10 +338,7 @@ public class ConnectActivity extends AppCompatActivity
                        // tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
                         tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted));
                     }
-                    else {
 
-                    }
-                }
             }
         });
 
@@ -594,6 +590,7 @@ public class ConnectActivity extends AppCompatActivity
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Operation", "Request");
+            jsonObject.accumulate("RequestType", "");
             jsonObject.accumulate("friendProfileId", friendProfile_id);
             jsonObject.accumulate("myProfileId", profile_id);
 
@@ -671,6 +668,10 @@ public class ConnectActivity extends AppCompatActivity
 
                     if (success.equals("1")) {
                         Toast.makeText(getApplicationContext(), getString(R.string.successful_request_sent), Toast.LENGTH_LONG).show();
+                        ivAddRound.setImageResource(R.drawable.round_gray);
+                        tvAdd.setTextColor(getResources().getColor(R.color.unselected));
+                        tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
+                        rlAdd.setEnabled(false);
                     } else {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     }
