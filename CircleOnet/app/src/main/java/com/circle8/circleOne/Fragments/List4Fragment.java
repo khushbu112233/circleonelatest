@@ -502,9 +502,16 @@ public class List4Fragment extends Fragment
     }
 
     public static void webCall() {
-        allTaggs.clear();
-        gridAdapter.notifyDataSetChanged();
-        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
+        try
+        {
+            allTaggs.clear();
+            gridAdapter.notifyDataSetChanged();
+            new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
+
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
 
