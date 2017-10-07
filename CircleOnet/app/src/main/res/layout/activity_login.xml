@@ -70,7 +70,7 @@
             android:layout_marginRight="45dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/edit_back"
-            android:drawableRight="@drawable/question"
+            android:drawableRight="@drawable/forgot_pass"
             android:hint="Password"
             android:paddingBottom="10dp"
             android:paddingLeft="20dp"

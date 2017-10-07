@@ -285,6 +285,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                     getSupportActionBar().show();
                     setActionBarTitle("Cards - " + List1Fragment.nfcModel.size());
                     setActionBarRightImage(R.drawable.ic_drawer);
+                    setActionBarRightImagevisible();
                 } else if (position == 1) {
                     getSupportActionBar().show();
                     setActionBarTitle("Connect");
@@ -293,6 +294,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                     getSupportActionBar().show();
                     setActionBarTitle("Events");
                     setActionBarRightImage(R.drawable.ic_drawer);
+                    setActionBarRightImagevisible();
                 } else if (position == 3) {
                     //getSupportActionBar().hide();
                 }
@@ -690,6 +692,11 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
 
     public void setActionBarRightImageGone() {
         imgDrawer.setVisibility(View.GONE);
+    }
+
+
+    public void setActionBarRightImagevisible() {
+        imgDrawer.setVisibility(View.VISIBLE);
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {

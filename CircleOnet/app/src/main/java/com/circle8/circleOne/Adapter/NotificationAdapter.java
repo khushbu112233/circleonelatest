@@ -186,7 +186,53 @@ public class NotificationAdapter extends BaseAdapter
             holder.txtFriendName.setText(testimonialModels.get(position).getFirstName());
         }
 
-        else if (purpose.equalsIgnoreCase("Connection Requested"))
+        else if (purpose.equalsIgnoreCase("Connection Accepted"))
+        {
+            lnrFriend.setVisibility(View.VISIBLE);
+            lnrTestReq.setVisibility(View.GONE);
+            lnrTestRec.setVisibility(View.GONE);
+            if (testimonialModels.get(position).getUserPhoto().equals(""))
+            {
+                holder.imgFriend.setImageResource(R.drawable.usr);
+            }
+            else
+            {
+                Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgFriend);
+            }
+            if (testimonialModels.get(position).getStatus().equalsIgnoreCase("Accepted"))
+            {
+                holder.btnAcceptFriend.setVisibility(View.GONE);
+                holder.btnRejectFriend.setVisibility(View.GONE);
+                holder.txtRequested.setVisibility(View.VISIBLE);
+                holder.txtRequested.setText("Accepted");
+            }
+            holder.txtFriendPurpose.setText(purpose);
+            holder.txtFriendName.setText(testimonialModels.get(position).getFirstName());
+        }
+
+        else if (purpose.equalsIgnoreCase("Access Right Accepted"))
+        {
+            lnrFriend.setVisibility(View.VISIBLE);
+            lnrTestReq.setVisibility(View.GONE);
+            lnrTestRec.setVisibility(View.GONE);
+            if (testimonialModels.get(position).getUserPhoto().equals(""))
+            {
+                holder.imgFriend.setImageResource(R.drawable.usr);
+            }
+            else
+            {
+                Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgFriend);
+            }
+
+                holder.btnAcceptFriend.setVisibility(View.GONE);
+                holder.btnRejectFriend.setVisibility(View.GONE);
+                holder.txtRequested.setVisibility(View.VISIBLE);
+            holder.txtRequested.setText("Accepted");
+            holder.txtFriendPurpose.setText(purpose);
+            holder.txtFriendName.setText(testimonialModels.get(position).getFirstName());
+        }
+
+        else if (purpose.equalsIgnoreCase("Access Right Requested"))
         {
             lnrFriend.setVisibility(View.VISIBLE);
             lnrTestReq.setVisibility(View.GONE);
@@ -208,6 +254,7 @@ public class NotificationAdapter extends BaseAdapter
             holder.txtFriendPurpose.setText(purpose);
             holder.txtFriendName.setText(testimonialModels.get(position).getFirstName());
         }
+
         else if (purpose.equalsIgnoreCase("Recieved Testimonial Request"))
         {
             lnrFriend.setVisibility(View.GONE);
@@ -231,7 +278,52 @@ public class NotificationAdapter extends BaseAdapter
             holder.txtTestPurpose.setText(purpose);
             holder.txtTestName.setText(testimonialModels.get(position).getFirstName());
         }
+        else if (purpose.equalsIgnoreCase("Sent Testimonial Request"))
+        {
+            lnrFriend.setVisibility(View.GONE);
+            lnrTestReq.setVisibility(View.VISIBLE);
+            lnrTestRec.setVisibility(View.GONE);
+            if (testimonialModels.get(position).getUserPhoto().equals(""))
+            {
+                holder.imgTestReq.setImageResource(R.drawable.usr);
+            }
+            else
+            {
+                Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgTestReq);
+            }
 
+            if (testimonialModels.get(position).getStatus().equals("Requested")){
+                holder.btnTestReject.setVisibility(View.GONE);
+                holder.btnTestWrite.setVisibility(View.GONE);
+                holder.txtRequestedTestReq.setVisibility(View.VISIBLE);
+            }
+
+            holder.txtTestPurpose.setText(purpose);
+            holder.txtTestName.setText(testimonialModels.get(position).getFirstName());
+        }
+        else
+        {
+            lnrFriend.setVisibility(View.VISIBLE);
+            lnrTestReq.setVisibility(View.GONE);
+            lnrTestRec.setVisibility(View.GONE);
+            if (testimonialModels.get(position).getUserPhoto().equals(""))
+            {
+                holder.imgFriend.setImageResource(R.drawable.usr);
+            }
+            else
+            {
+                Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgFriend);
+            }
+            if (testimonialModels.get(position).getStatus().equalsIgnoreCase("Accepted"))
+            {
+                holder.btnAcceptFriend.setVisibility(View.GONE);
+                holder.btnRejectFriend.setVisibility(View.GONE);
+                holder.txtRequested.setVisibility(View.VISIBLE);
+                holder.txtRequested.setText("Accepted");
+            }
+            holder.txtFriendPurpose.setText(purpose);
+            holder.txtFriendName.setText(testimonialModels.get(position).getFirstName());
+        }
         holder.btnTestWrite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -670,6 +762,7 @@ public class NotificationAdapter extends BaseAdapter
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Operation", "Accept");
+            jsonObject.accumulate("RequestType", "");
             jsonObject.accumulate("friendProfileId", testimonialModels.get(posi).getFriendProfileID());
             jsonObject.accumulate("myProfileId", profileId);
 
@@ -837,6 +930,7 @@ public class NotificationAdapter extends BaseAdapter
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Operation", "Reject");
+            jsonObject.accumulate("RequestType", "");
             jsonObject.accumulate("friendProfileId", testimonialModels.get(posi).getFriendProfileID());
             jsonObject.accumulate("myProfileId", profileId);
 

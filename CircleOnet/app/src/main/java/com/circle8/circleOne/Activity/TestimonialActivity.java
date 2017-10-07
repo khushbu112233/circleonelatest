@@ -43,7 +43,7 @@ public class TestimonialActivity extends AppCompatActivity
     static TestimonialAdapter adapter;
     static ListView lstTestimonial;
     static ArrayList<TestimonialModel> allTaggs;
-
+    static TextView txtTestimonial;
     static Context mContext ;
     TextView textView;
     ImageView imgLogo, imgDrawer;
@@ -73,7 +73,7 @@ public class TestimonialActivity extends AppCompatActivity
         ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
         ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
         ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
-
+        txtTestimonial = (TextView) findViewById(R.id.txtTestimonial);
         imgDrawer.setVisibility(View.GONE);
         textView.setText("Testimonial");
         imgLogo.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
@@ -189,6 +189,12 @@ public class TestimonialActivity extends AppCompatActivity
                     }
                     adapter = new TestimonialAdapter(mContext, R.layout.full_testimonial_row, allTaggs);
                     lstTestimonial.setAdapter(adapter);
+                    if (allTaggs.size() == 0){
+                        txtTestimonial.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        txtTestimonial.setVisibility(View.GONE);
+                    }
 
                 }
                 else

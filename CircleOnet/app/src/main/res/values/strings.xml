@@ -57,7 +57,7 @@
     <string name="attch_file">Attach file</string>
     <string name="take_photo">Take Photo</string>
     <string name="larger_file">Sorry : Please select a file not more than 3MB</string>
-    <string name="msg_create_group">Please touch the plus "+" button to create a new circle</string>
+    <string name="msg_create_group">Please touch the plus "+" button to create new circle</string>
     <string name="take_photo_group">Take Photo</string>
     <string name="add_group_member">Please add members</string>
 
