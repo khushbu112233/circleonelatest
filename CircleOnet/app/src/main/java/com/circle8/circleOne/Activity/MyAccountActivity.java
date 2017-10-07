@@ -305,7 +305,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             alertDialog.setView(dialogView);
             alertDialog.show();*/
 
-            final Dialog dialog = new Dialog(MyAccountActivity.this);
+            /*final Dialog dialog = new Dialog(MyAccountActivity.this);
             dialog.setContentView(R.layout.imageview_popup);
 
             ImageView ivViewImage = (ImageView)dialog.findViewById(R.id.ivViewImage);
@@ -334,7 +334,10 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             wmlp.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
             wmlp.y = 400;   //y position
             dialog.show();
-
+*/
+            CropImage.activity(null)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .start(MyAccountActivity.this);
         }
         if ( v == ivEditImg)
         {

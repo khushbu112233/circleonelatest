@@ -90,7 +90,7 @@ public class SortAndFilterOption extends AppCompatActivity
         lnrSortCompany = (LinearLayout) findViewById(R.id.lnrSortCompany);
         lnrAllCards = (LinearLayout) findViewById(R.id.lnrAllCards);
         listView = (ExpandableHeightListView)findViewById(R.id.listView);
-
+        imgLogo.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
         session = new LoginSession(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
         user_id = user.get(LoginSession.KEY_USERID);
@@ -395,12 +395,13 @@ public class SortAndFilterOption extends AppCompatActivity
 
                 //Toast.makeText(getApplicationContext(), "Hello", Toast.LENGTH_LONG).show();
 
-                TypedValue tv = new TypedValue();
+                /*TypedValue tv = new TypedValue();
                 if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
                     actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
                 }
 
-                showDialog(SortAndFilterOption.this, 0, actionBarHeight);
+                showDialog(SortAndFilterOption.this, 0, actionBarHeight);*/
+                finish();
             }
         });
 

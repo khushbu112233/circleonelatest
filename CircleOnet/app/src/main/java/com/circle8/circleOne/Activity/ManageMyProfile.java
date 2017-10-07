@@ -95,6 +95,7 @@ public class ManageMyProfile extends AppCompatActivity
                 Intent intent = new Intent(getApplicationContext(), EditProfileActivity.class);
                 intent.putExtra("profile_id", profile_id);
                 intent.putExtra("type", "add");
+                intent.putExtra("activity", "manage");
                 startActivity(intent);
             }
         });
@@ -105,6 +106,7 @@ public class ManageMyProfile extends AppCompatActivity
                 Intent intent = new Intent(getApplicationContext(), EditProfileActivity.class);
                 intent.putExtra("type", "edit");
                 intent.putExtra("profile_id", allTags.get(position).getProfileID());
+                intent.putExtra("activity", "manage");
                 startActivity(intent);
             }
         });
@@ -301,6 +303,7 @@ public class ManageMyProfile extends AppCompatActivity
 
                 if (result != null)
                 {
+                    allTags.clear();
                     JSONObject jsonObject = new JSONObject(result);
                     JSONArray jsonArray = jsonObject.getJSONArray("Profiles");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
@@ -370,6 +373,11 @@ public class ManageMyProfile extends AppCompatActivity
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new HttpAsyncTaskProfiles().execute("http://circle8.asia:8999/Onet.svc/MyProfiles");
+    }
 
     private class HttpAsyncTaskProfileDelete extends AsyncTask<String, Void, String>
     {
