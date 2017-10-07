@@ -14,6 +14,7 @@ import android.nfc.NfcManager;
 import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -117,6 +118,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
     public String secretKey = "1234567890234561";
     CircularTextView txtNotificationCount;
     String UserId= "", NotificationCount ;
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1254,12 +1256,27 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        moveTaskToBack(true);
-        android.os.Process.killProcess(android.os.Process.myPid());
-        finish();
+
+            if (doubleBackToExitPressedOnce) {
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                moveTaskToBack(true);
+                android.os.Process.killProcess(android.os.Process.myPid());
+                finish();
+
+            }
+
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "Press BACK again to exit", Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce=false;
+                }
+            }, 2000);
 
     }
 }
