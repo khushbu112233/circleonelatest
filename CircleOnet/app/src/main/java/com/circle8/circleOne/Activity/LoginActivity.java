@@ -147,7 +147,7 @@ public class LoginActivity extends AppCompatActivity implements
     private ProgressDialog mProgressDialog;
 
     public static TextView tvUsernameInfo, tvPasswordInfo;
-
+    ImageView imgForgotPass;
     private SignInButton btnSignIn;
     private Button btnSignOut, btnRevokeAccess;
 
@@ -221,7 +221,7 @@ public class LoginActivity extends AppCompatActivity implements
         loginSession = new LoginSession(getApplicationContext());
         fingerPrintSession = new FingerPrintSession(getApplicationContext());
         setContentView(R.layout.activity_login);
-
+        imgForgotPass = (ImageView) findViewById(R.id.imgForgotPass);
         btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
         btnSimpleLogin = (Button) findViewById(R.id.btnLogin);
         btnLogin = (ImageView) findViewById(R.id.fbLogin);
@@ -294,6 +294,13 @@ public class LoginActivity extends AppCompatActivity implements
             }
         });
 
+        imgForgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, ForgotActivity.class));
+            }
+        });
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             fingerprintHandler = new FingerprintHandler(this);
             fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
@@ -322,7 +329,7 @@ public class LoginActivity extends AppCompatActivity implements
             imgFinger.setVisibility(View.GONE);
         }
 
-        etLoginPass.setOnTouchListener(new View.OnTouchListener() {
+        /*etLoginPass.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 final int DRAWABLE_LEFT = 0;
@@ -339,7 +346,7 @@ public class LoginActivity extends AppCompatActivity implements
                 }
                 return false;
             }
-        });
+        });*/
 
        /* tvPasswordInfo.setOnClickListener(new View.OnClickListener() {
             @Override
