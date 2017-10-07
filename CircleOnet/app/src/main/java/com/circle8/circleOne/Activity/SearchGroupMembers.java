@@ -139,8 +139,8 @@ public class SearchGroupMembers extends AppCompatActivity
                     {
                         //Toast.makeText(getApplicationContext(), selectedStrings.toString(), Toast.LENGTH_LONG).show();
                        // new HttpAsyncTaskGroupAddFriend().execute("http://circle8.asia:8999/Onet.svc/Group/AddFriend");
-                        finish();
-                      //  new HttpAsyncTaskTestimonialRequest().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Request");
+                       // finish();
+                        new HttpAsyncTaskTestimonialRequest().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Request");
                     }
                 }
 
@@ -222,7 +222,7 @@ public class SearchGroupMembers extends AppCompatActivity
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
             String loading = "Requesting";
-            TestimonialRequest.CustomProgressDialog(loading);
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -235,7 +235,7 @@ public class SearchGroupMembers extends AppCompatActivity
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            TestimonialRequest.rlProgressDialog.setVisibility(View.GONE);
+            rlProgressDialog.setVisibility(View.GONE);
             try
             {
                 if (result != null)

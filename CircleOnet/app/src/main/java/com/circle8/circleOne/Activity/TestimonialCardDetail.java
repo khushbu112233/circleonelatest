@@ -4,10 +4,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Adapter.TestimonialAdapter;
+import com.circle8.circleOne.Adapter.TestimonialCardDetailAdapter;
 import com.circle8.circleOne.Model.TestimonialModel;
 import com.circle8.circleOne.R;
 
@@ -37,10 +38,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class TestimonialActivity extends AppCompatActivity
+/**
+ * Created by admin on 10/07/2017.
+ */
+
+public class TestimonialCardDetail extends AppCompatActivity
 {
     static String TestimonialProfileId = "";
-    static TestimonialAdapter adapter;
+    static TestimonialCardDetailAdapter adapter;
     static ListView lstTestimonial;
     static ArrayList<TestimonialModel> allTaggs;
     static TextView txtTestimonial;
@@ -59,7 +64,7 @@ public class TestimonialActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testimonial);
 
-        mContext = TestimonialActivity.this ;
+        mContext = TestimonialCardDetail.this ;
 
         final ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -81,8 +86,6 @@ public class TestimonialActivity extends AppCompatActivity
 
         Intent intent = getIntent();
         TestimonialProfileId = intent.getStringExtra("ProfileId");
-        from = intent.getStringExtra("from");
-        type = intent.getStringExtra("type");
         lstTestimonial = (ListView) findViewById(R.id.lstTestimonial);
 
         allTaggs = new ArrayList<>();
@@ -90,27 +93,7 @@ public class TestimonialActivity extends AppCompatActivity
         imgLogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (from.equalsIgnoreCase("profile")) {
-                    Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-
-                    // you pass the position you want the viewpager to show in the extra,
-                    // please don't forget to define and initialize the position variable
-                    // properly
-                    go.putExtra("viewpager_position", 3);
-                    startActivity(go);
                     finish();
-                } else if (from.equalsIgnoreCase("editprofile")) {
-                    Intent go = new Intent(getApplicationContext(),EditProfileActivity.class);
-
-                    // you pass the position you want the viewpager to show in the extra,
-                    // please don't forget to define and initialize the position variable
-                    // properly
-                    go.putExtra("profile_id", TestimonialProfileId);
-                    go.putExtra("type", type);
-                    startActivity(go);
-                    finish();
-                }
 
             }
         });
@@ -187,7 +170,7 @@ public class TestimonialActivity extends AppCompatActivity
                         nfcModelTag.setUserPhoto(object.getString("UserPhoto"));
                         allTaggs.add(nfcModelTag);
                     }
-                    adapter = new TestimonialAdapter(mContext, R.layout.full_testimonial_row, allTaggs);
+                    adapter = new TestimonialCardDetailAdapter(mContext, R.layout.full_testimonial_row, allTaggs);
                     lstTestimonial.setAdapter(adapter);
                     if (allTaggs.size() == 0){
                         txtTestimonial.setVisibility(View.VISIBLE);
@@ -315,3 +298,4 @@ public class TestimonialActivity extends AppCompatActivity
 
 
 }
+

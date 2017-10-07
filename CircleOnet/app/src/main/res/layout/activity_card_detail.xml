@@ -2,6 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:background="@color/white"
     android:fitsSystemWindows="true">
@@ -725,6 +726,65 @@
                 android:layout_marginTop="10dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_map" />
+
+
+                <RelativeLayout
+                    android:id="@+id/rltTestimonial"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <com.circle8.circleOne.Utils.orkebyTextView
+                        android:id="@+id/txtTestLbl"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13sp"
+                        android:text="Testimonial (choose from your contact)"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" />
+
+                    <TextView
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/txtMore"
+                        android:layout_marginRight="20dp"
+                        android:textAlignment="textEnd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="More.."
+                        android:textColor="@color/colorPrimary"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rltTestimonialList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.circle8.circleOne.Utils.cgTextView
+                        android:visibility="visible"
+                        android:id="@+id/txtTestimonial"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_centerVertical="true"
+                        android:textSize="13sp"
+                        android:text="Your connection do not have any testimonials"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" />
+
+                    <com.circle8.circleOne.Utils.ExpandableHeightListView
+                        android:nestedScrollingEnabled="true"
+                        android:layout_marginTop="5dp"
+                        tools:listitem="@layout/testimonial_row"
+                        android:id="@+id/lstTestimonial"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_centerVertical="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </com.circle8.circleOne.Utils.ExpandableHeightListView>
+
+                </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"

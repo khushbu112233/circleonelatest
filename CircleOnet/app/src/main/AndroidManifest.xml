@@ -232,7 +232,10 @@
             android:name=".Activity.ImageZoom"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
-        <activity android:name=".Activity.SearchGroupMembers"></activity>
+        <activity android:name=".Activity.SearchGroupMembers"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".Activity.TestimonialCardDetail"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
