@@ -277,8 +277,9 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     }
 
     @Override
-    public void onBackPressed() {
-
+    public void onBackPressed()
+    {
+        finish();
     }
 
     @Override

@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -21,11 +22,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,6 +69,10 @@ public class ContactsImportActivity extends AppCompatActivity
     private LoginSession session;
     private String user_id, profile_id ;
 
+    private RelativeLayout rlProgressDialog ;
+    private TextView tvProgressing ;
+    private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -80,6 +88,12 @@ public class ContactsImportActivity extends AppCompatActivity
         txtCancel = (TextView) findViewById(R.id.txtCancel);
         arrayList = new ArrayList<>();
 
+        rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
+        tvProgressing = (TextView)findViewById(R.id.txtProgressing);
+        ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
+        ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
+        ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
+
         final ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.custom_actionbar);
@@ -94,8 +108,9 @@ public class ContactsImportActivity extends AppCompatActivity
         askForContactPermission();
         /*boolean result = Utility.checkContactPermission(ContactsImportActivity.this);
         if (result) {*/
-
        // }
+
+
 
         View.OnClickListener clickListener = new View.OnClickListener() {
 
@@ -218,8 +233,7 @@ public class ContactsImportActivity extends AppCompatActivity
                 {
                     // No explanation needed, we can request the permission.
                     ActivityCompat.requestPermissions(ContactsImportActivity.this,
-                            new String[]{Manifest.permission.READ_CONTACTS},
-                            PERMISSION_REQUEST_CONTACT);
+                            new String[]{Manifest.permission.READ_CONTACTS}, PERMISSION_REQUEST_CONTACT);
 
                     // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
                     // app-defined int constant. The callback method gets the
@@ -276,16 +290,20 @@ public class ContactsImportActivity extends AppCompatActivity
         arrayListPhoneName = new ArrayList<>();
         arrayListPhoneNumber = new ArrayList<>();
 
+        String loading = "Loading Contacts" ;
+        CustomProgressDialog(loading);
+
         Cursor cursor = cntx.getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
         Integer contactsCount = cursor.getCount(); // get how many contacts you have in your contacts list
 
         if (contactsCount > 0)
         {
-            progressDialog = new ProgressDialog(ContactsImportActivity.this);
+           /* progressDialog = new ProgressDialog(ContactsImportActivity.this);
             progressDialog.setMessage("Loading Contacts..");
             progressDialog.setCancelable(false);
             progressDialog.setIndeterminate(true);
-            progressDialog.show();
+            progressDialog.show();*/
+
             while(cursor.moveToNext())
             {
                 String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
@@ -352,7 +370,12 @@ public class ContactsImportActivity extends AppCompatActivity
                 }
             }
             cursor.close();
-            progressDialog.dismiss();
+//            progressDialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
+        }
+        else
+        {
+
         }
     }
 
@@ -364,10 +387,13 @@ public class ContactsImportActivity extends AppCompatActivity
         protected void onPreExecute()
         {
             super.onPreExecute();
-            dialog = new ProgressDialog(ContactsImportActivity.this);
+          /*  dialog = new ProgressDialog(ContactsImportActivity.this);
             dialog.setMessage("Sending Request...");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
+
+            String loading = "Sending Request" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -379,7 +405,8 @@ public class ContactsImportActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -478,6 +505,42 @@ public class ContactsImportActivity extends AppCompatActivity
 
         inputStream.close();
         return result;
+    }
+
+    public void CustomProgressDialog(final String loading)
+    {
+        rlProgressDialog.setVisibility(View.VISIBLE);
+        tvProgressing.setText(loading);
+
+        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
+        ivConnecting1.startAnimation(anim);
+        Animation anim1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.clockwise);
+        ivConnecting2.startAnimation(anim1);
+
+        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
+        for (int i = 350; i <= SPLASHTIME; i = i + 350)
+        {
+            final int j = i;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run()
+                {
+                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
+                    {
+                        tvProgressing.setText(loading+".");
+                    }
+                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
+                    {
+                        tvProgressing.setText(loading+"..");
+                    }
+                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+
+                }
+            }, i);
+        }
     }
 
 }
