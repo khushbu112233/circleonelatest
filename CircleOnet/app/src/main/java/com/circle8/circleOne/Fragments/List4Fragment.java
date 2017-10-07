@@ -498,22 +498,36 @@ public class List4Fragment extends Fragment
         }
     }
 
-    private void callFirst() {
+    private static void callFirst()
+    {
         new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
     }
 
-    public static void webCall() {
-        try
+    public static void webCall()
+    {
+        /*try
         {
             nfcModel1.clear();
             allTaggs.clear();
             gridAdapter.notifyDataSetChanged();
             new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
-
-        }catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
+        }*/
+
+        pageno = 1;
+
+        try
+        {
+            nfcModel1.clear();
+            allTaggs.clear();
+            gridAdapter.notifyDataSetChanged();
+        } catch (Exception e) {
         }
+        callFirst();
+
     }
 
 

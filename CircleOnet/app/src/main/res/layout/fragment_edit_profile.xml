@@ -1572,36 +1572,32 @@
                                     android:hint="Attachment Name"
                                     android:textSize="12sp" />
 
-                                <LinearLayout
+                                <com.circle8.circleOne.Utils.cgTextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom"
+                                    android:text="less than 3MB"
+                                    android:layout_marginRight="5dp"
+                                    android:layout_toLeftOf="@+id/ivAttachFile"
+                                    android:layout_alignParentBottom="true"/>
+
+                                <ImageView
+                                    android:id="@+id/ivAttachFile"
+                                    android:layout_width="20dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/ic_attach_blue"
                                     android:layout_alignParentRight="true"
-                                    android:orientation="horizontal">
-
-                                    <com.circle8.circleOne.Utils.cgTextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="bottom"
-                                        android:text="less than 3MB" />
-
-                                    <ImageView
-                                        android:id="@+id/ivAttachFile"
-                                        android:layout_width="20dp"
-                                        android:layout_height="30dp"
-                                        android:layout_marginLeft="10dp"
-                                        android:src="@drawable/ic_attach_blue" />
-                                </LinearLayout>
+                                    android:layout_alignParentBottom="true"/>
 
                             </RelativeLayout>
 
                         </LinearLayout>
 
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
-                            android:layout_marginRight="10dp"
+                            android:layout_marginRight="15dp"
                             android:layout_marginTop="20dp"
                             android:orientation="vertical">
 
@@ -1630,19 +1626,23 @@
                                     android:hint="Front Card"
                                     android:textSize="12sp" />
 
-                                <LinearLayout
+                                <com.circle8.circleOne.Utils.cgTextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true"
-                                    android:orientation="horizontal">
+                                    android:layout_gravity="bottom"
+                                    android:text="            "
+                                    android:layout_marginRight="5dp"
+                                    android:layout_toLeftOf="@+id/ivAttachFrontImage"
+                                    android:layout_alignParentBottom="true"/>
 
-                                    <ImageView
-                                        android:id="@+id/ivAttachFrontImage"
-                                        android:layout_width="20dp"
-                                        android:layout_height="30dp"
-                                        android:layout_marginLeft="10dp"
-                                        android:src="@drawable/ic_attach_blue" />
-                                </LinearLayout>
+
+                                <ImageView
+                                    android:id="@+id/ivAttachFrontImage"
+                                    android:layout_width="20dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/ic_attach_blue"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignParentBottom="true"/>
 
                             </RelativeLayout>
 
@@ -1681,19 +1681,22 @@
                                     android:hint="Back Card"
                                     android:textSize="12sp" />
 
-                                <LinearLayout
+                                <com.circle8.circleOne.Utils.cgTextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true"
-                                    android:orientation="horizontal">
+                                    android:layout_gravity="bottom"
+                                    android:text="            "
+                                    android:layout_marginRight="5dp"
+                                    android:layout_toLeftOf="@+id/ivAttachBackImage"
+                                    android:layout_alignParentBottom="true"/>
 
-                                    <ImageView
-                                        android:id="@+id/ivAttachBackImage"
-                                        android:layout_width="20dp"
-                                        android:layout_height="30dp"
-                                        android:layout_marginLeft="10dp"
-                                        android:src="@drawable/ic_attach_blue" />
-                                </LinearLayout>
+                                <ImageView
+                                    android:id="@+id/ivAttachBackImage"
+                                    android:layout_width="20dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/ic_attach_blue"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignParentBottom="true"/>
 
                             </RelativeLayout>
 

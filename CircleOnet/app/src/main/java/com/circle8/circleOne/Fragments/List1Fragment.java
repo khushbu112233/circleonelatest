@@ -486,7 +486,8 @@ public class List1Fragment extends Fragment
         return view;
     }
 
-    private void callFirst() {
+    private static void callFirst()
+    {
         // tvNoCard.setVisibility(View.GONE);
         nfcModel.clear();
         pageno = 1;
@@ -495,11 +496,30 @@ public class List1Fragment extends Fragment
 
     public static void webCall()
     {
-        nfcModel.clear();
+       /* nfcModel.clear();
         allTags.clear();
-        mAdapter.notifyDataSetChanged();
-        mAdapter1.notifyDataSetChanged();
-        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
+        try
+        {
+            mAdapter.notifyDataSetChanged();
+            mAdapter1.notifyDataSetChanged();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");*/
+
+
+        pageno = 1;
+        try
+        {
+            nfcModel.clear();
+            allTags.clear();
+            mAdapter.notifyDataSetChanged();
+            mAdapter1.notifyDataSetChanged();
+        } catch (Exception e) {
+        }
+        callFirst();
     }
 
     public static String POST(String url)
@@ -633,6 +653,7 @@ public class List1Fragment extends Fragment
 
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
                     String count = jsonObject.getString("count");
+
                     if (count.equals("") || count.equals("null")) {
                         numberCount = 0;
                     } else {
