@@ -38,7 +38,15 @@
                 android:id="@+id/rltDefaultCard"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/default_card">
+                android:background="@color/colorPrimary">
+
+                <ImageView
+                    android:layout_margin="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/login_logo"
+                    android:tint="@color/white"/>
 
                 <LinearLayout
                     android:layout_alignParentBottom="true"

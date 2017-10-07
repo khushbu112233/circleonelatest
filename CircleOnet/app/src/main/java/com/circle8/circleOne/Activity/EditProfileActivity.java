@@ -310,6 +310,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     LinearLayout llTelePhoneBox1, llTelePhoneBox2, llMobileBox1, llMobileBox2, llFaxBox1, llFaxBox2 ;
     CountryCodePicker ccp1,ccp2,ccp3,ccp4,ccp5,ccp6;
     ImageView ivTeleAdd, ivMobAdd, ivFaxAdd ;
+    String fromActivity = "";
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -470,6 +471,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         loginButton = (LoginButton) findViewById(R.id.login_button);
         Intent intent = getIntent();
         type = intent.getStringExtra("type");
+        fromActivity = intent.getStringExtra("activity");
         HashMap<String, String> user = session.getUserDetails();
         UserID = user.get(LoginSession.KEY_USERID);
         profileId = intent.getStringExtra("profile_id");
@@ -3162,15 +3164,20 @@ public class EditProfileActivity extends AppCompatActivity implements
                     String ProfileID = jsonObject.getString("ProfileID");
 
                     if (success.equalsIgnoreCase("1")) {
-                        Toast.makeText(getApplicationContext(), "Successfully Added", Toast.LENGTH_SHORT).show();
-                        Intent go = new Intent(getApplicationContext(), CardsActivity.class);
 
-                        // you pass the position you want the viewpager to show in the extra,
-                        // please don't forget to define and initialize the position variable
-                        // properly
-                        go.putExtra("viewpager_position", 3);
-                        startActivity(go);
-                        finish();
+                        if (fromActivity.equalsIgnoreCase("manage")){
+                            finish();
+                        }else {
+                            Toast.makeText(getApplicationContext(), "Successfully Added", Toast.LENGTH_SHORT).show();
+                            Intent go = new Intent(getApplicationContext(), CardsActivity.class);
+
+                            // you pass the position you want the viewpager to show in the extra,
+                            // please don't forget to define and initialize the position variable
+                            // properly
+                            go.putExtra("viewpager_position", 3);
+                            startActivity(go);
+                            finish();
+                        }
                     } else {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     }
@@ -3691,15 +3698,20 @@ public class EditProfileActivity extends AppCompatActivity implements
                     String ProfileID = jsonObject.getString("ProfileID");
 
                     if (success.equalsIgnoreCase("1")) {
-                        Toast.makeText(getApplicationContext(), "Successfully Updated", Toast.LENGTH_SHORT).show();
-                        Intent go = new Intent(getApplicationContext(), CardsActivity.class);
 
-                        // you pass the position you want the viewpager to show in the extra,
-                        // please don't forget to define and initialize the position variable
-                        // properly
-                        go.putExtra("viewpager_position", 3);
-                        startActivity(go);
-                        finish();
+                        if (fromActivity.equalsIgnoreCase("manage")){
+                            finish();
+                        }else {
+                            Toast.makeText(getApplicationContext(), "Successfully Updated", Toast.LENGTH_SHORT).show();
+                            Intent go = new Intent(getApplicationContext(), CardsActivity.class);
+
+                            // you pass the position you want the viewpager to show in the extra,
+                            // please don't forget to define and initialize the position variable
+                            // properly
+                            go.putExtra("viewpager_position", 3);
+                            startActivity(go);
+                            finish();
+                        }
                     } else {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     }

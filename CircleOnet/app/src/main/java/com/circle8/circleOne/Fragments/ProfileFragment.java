@@ -601,6 +601,7 @@ public class ProfileFragment extends Fragment
                             Intent intent = new Intent(getContext(), EditProfileActivity.class);
                             intent.putExtra("profile_id", TestimonialProfileId);
                             intent.putExtra("type", "add");
+                            intent.putExtra("activity", "profile");
                             startActivity(intent);
                         }
                         else
@@ -893,6 +894,7 @@ public class ProfileFragment extends Fragment
                 Intent intent = new Intent(getContext(), EditProfileActivity.class);
                 intent.putExtra("type", "edit");
                 intent.putExtra("profile_id", TestimonialProfileId);
+                intent.putExtra("activity", "profile");
                 startActivity(intent);
             }
         });

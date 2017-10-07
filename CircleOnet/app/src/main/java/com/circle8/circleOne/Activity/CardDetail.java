@@ -1204,6 +1204,7 @@ public class CardDetail extends NfcActivity
                         txtPH.setText("Phone No.");
                         llTeleBox.setVisibility(View.GONE);
                     } else {
+                        Phone1.trim();
                         txtPH.setText(Phone1);
                     }
 
@@ -1212,6 +1213,7 @@ public class CardDetail extends NfcActivity
                         txtMob.setText("Mobile No.");
                         llMobileBox.setVisibility(View.GONE);
                     } else {
+                        Mobile1.trim();
                         txtMob.setText(Mobile1);
                     }
 
@@ -1229,6 +1231,7 @@ public class CardDetail extends NfcActivity
                         txtWork.setText("Fax");
                         llFaxBox.setVisibility(View.GONE);
                     } else {
+                        Fax1.trim();
                         txtWork.setText(Fax1);
                     }
 
