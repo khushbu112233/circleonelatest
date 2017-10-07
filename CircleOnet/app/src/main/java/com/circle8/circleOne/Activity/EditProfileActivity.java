@@ -3430,6 +3430,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                     FirstName = jsonObject.getString("FirstName");
                     LastName = jsonObject.getString("LastName");
                     UserPhoto = jsonObject.getString("UserPhoto");
+
                     Phone1 = jsonObject.getString("Phone1");
                     Phone2 = jsonObject.getString("Phone2");
                     Mobile1 = jsonObject.getString("Mobile1");
@@ -3465,6 +3466,78 @@ public class EditProfileActivity extends AppCompatActivity implements
                     Website = jsonObject.getString("Website");
                     Attachment_FileName = jsonObject.getString("Attachment_FileName");
                     ProfileName = jsonObject.getString("ProfileName");
+
+                    if (Phone1.contains(" ")){
+                        String name = Phone1;
+                        String kept = name.substring(0, name.indexOf(" "));
+                        String remainder = name.substring(name.indexOf(" ") + 1, name.length());
+                        kept = kept.replaceAll("//+", "");
+                        ccp1.setCountryForPhoneCode(Integer.parseInt(kept));
+                        edtWork.setText(remainder);
+                    }
+                    else {
+                        edtWork.setText(Phone1);
+                    }
+
+                    if (Phone2.contains(" ")){
+                        String name = Phone2;
+                        String kept = name.substring(0, name.indexOf(" "));
+                        String remainder = name.substring(name.indexOf(" ") + 1, name.length());
+                        kept = kept.replaceAll("//+", "");
+                        ccp2.setCountryForPhoneCode(Integer.parseInt(kept));
+                        edtWork2.setText(remainder);
+                    }
+                    else {
+                        edtWork2.setText(Phone2);
+                    }
+
+                    if (Mobile1.contains(" ")){
+                        String name = Mobile1;
+                        String kept = name.substring(0, name.indexOf(" "));
+                        String remainder = name.substring(name.indexOf(" ") + 1, name.length());
+                        kept = kept.replaceAll("//+", "");
+                        ccp3.setCountryForPhoneCode(Integer.parseInt(kept));
+                        edtPrimary.setText(remainder);
+                    }
+                    else {
+                        edtPrimary.setText(Mobile1);
+                    }
+
+                    if (Mobile2.contains(" ")){
+                        String name = Mobile2;
+                        String kept = name.substring(0, name.indexOf(" "));
+                        String remainder = name.substring(name.indexOf(" ") + 1, name.length());
+                        kept = kept.replaceAll("//+", "");
+                        ccp4.setCountryForPhoneCode(Integer.parseInt(kept));
+                        edtPrimary2.setText(remainder);
+                    }
+                    else {
+                        edtPrimary2.setText(Mobile2);
+                    }
+
+                    if (Fax1.contains(" ")){
+                        String name = Fax1;
+                        String kept = name.substring(0, name.indexOf(" "));
+                        String remainder = name.substring(name.indexOf(" ") + 1, name.length());
+                        kept = kept.replaceAll("//+", "");
+                        ccp5.setCountryForPhoneCode(Integer.parseInt(kept));
+                        edtFax1.setText(remainder);
+                    }
+                    else {
+                        edtFax1.setText(Fax1);
+                    }
+
+                    if (Fax2.contains(" ")){
+                        String name = Fax2;
+                        String kept = name.substring(0, name.indexOf(" "));
+                        String remainder = name.substring(name.indexOf(" ") + 1, name.length());
+                        kept = kept.replaceAll("//+", "");
+                        ccp6.setCountryForPhoneCode(Integer.parseInt(kept));
+                        edtFax2.setText(remainder);
+                    }
+                    else {
+                        edtFax2.setText(Fax2);
+                    }
 
                     edtProfileName.setText(ProfileName);
                     try {
@@ -3542,13 +3615,13 @@ public class EditProfileActivity extends AppCompatActivity implements
                     edtCompanyDesc.setText(CompanyProfile);
                     edtProfileDesc.setText(ProfileDesc);
                     edtEmail.setText(Email1);
-                    edtPrimary.setText(Mobile1);
-                    edtWork.setText(Phone1);
-                    edtWork2.setText(Phone2);
-                    edtPrimary2.setText(Mobile2);
+                  //  edtPrimary.setText(Mobile1);
+                  //  edtWork.setText(Phone1);
+                   // edtWork2.setText(Phone2);
+                   // edtPrimary2.setText(Mobile2);
                     edtEmail2.setText(Email2);
-                    edtFax1.setText(Fax1);
-                    edtFax2.setText(Fax2);
+                 //   edtFax1.setText(Fax1);
+                  //  edtFax2.setText(Fax2);
                     edtWebsite.setText(Website);
                     edtAddress1.setText(Address1 + " " + Address2);
                     edtAddress2.setText(Address3 + " " + Address4);
