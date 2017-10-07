@@ -493,7 +493,9 @@ public class List1Fragment extends Fragment
         new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
     }
 
-    public static void webCall() {
+    public static void webCall()
+    {
+        nfcModel.clear();
         allTags.clear();
         mAdapter.notifyDataSetChanged();
         mAdapter1.notifyDataSetChanged();
