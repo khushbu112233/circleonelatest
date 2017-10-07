@@ -216,8 +216,7 @@ public class LoginActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
 
-        TwitterAuthConfig authConfig = new TwitterAuthConfig(
-                getString(R.string.twitter_consumer_key),
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(getString(R.string.twitter_consumer_key),
                 getString(R.string.twitter_consumer_secret));
         Fabric.with(this, new Twitter(authConfig));
 

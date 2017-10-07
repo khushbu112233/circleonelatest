@@ -537,9 +537,16 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
 
     public static void webCall()
     {
-        allTaggs.clear();
-        gridAdapter.notifyDataSetChanged();
-        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
+        try
+        {
+            allTaggs.clear();
+            gridAdapter.notifyDataSetChanged();
+            new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
+
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     private static class HttpAsyncTask extends AsyncTask<String, Void, String>
