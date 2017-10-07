@@ -76,6 +76,8 @@ public class List2Fragment extends Fragment
     private static final String TAG = "TestGesture";
     private GestureDetector gestureDetector1;
 
+
+
     public static List<NFCModel> allTags;
     public static ArrayList<FriendConnection> allTaggs;
     public static ArrayList<FriendConnection> nfcModel;
@@ -88,7 +90,8 @@ public class List2Fragment extends Fragment
     //new asign value
     AutoCompleteTextView searchText;
     ImageView imgSearch ;
-    TextView tvFriendInfo ;
+
+    public static TextView txtNoCard1, tvFriendInfo;
     //    public static ArrayList<NFCModel> nfcModel ;
     public static int pageno = 1;
 
@@ -132,6 +135,7 @@ public class List2Fragment extends Fragment
         searchText = (AutoCompleteTextView) view.findViewById(R.id.searchView);
         imgSearch = (ImageView)view.findViewById(R.id.imgSearch);
         tvFriendInfo = (TextView)view.findViewById(R.id.tvFriendInfo);
+        txtNoCard1 = (TextView) view.findViewById(R.id.txtNoCard1);
         rlLoadMore = (RelativeLayout) view.findViewById(R.id.rlLoadMore);
         rlProgressDialog = (RelativeLayout)view.findViewById(R.id.rlProgressDialog);
         tvProgressing = (TextView)view.findViewById(R.id.txtProgressing);
@@ -901,11 +905,13 @@ public class List2Fragment extends Fragment
     }
 */
 
-    public static void GetData(Context context) {
+    public static void GetData(Context context)
+    {
         //newly added
         nfcModel.clear();
 
-        for (FriendConnection reTag : allTaggs) {
+        for (FriendConnection reTag : allTaggs)
+        {
             FriendConnection nfcModelTag = new FriendConnection();
 //            nfcModelTag.setId(reTag.getId());
             nfcModelTag.setName(reTag.getName());
@@ -919,6 +925,12 @@ public class List2Fragment extends Fragment
             nfcModelTag.setProfile_id(reTag.getProfile_id());
             nfcModelTag.setAddress(reTag.getAddress());
             nfcModel.add(nfcModelTag);
+        }
+
+        if (nfcModel.size() == 0) {
+            txtNoCard1.setVisibility(View.VISIBLE);
+        } else {
+            txtNoCard1.setVisibility(View.GONE);
         }
 
        /* Collections.sort(nfcModel, new Comparator<NFCModel>()
