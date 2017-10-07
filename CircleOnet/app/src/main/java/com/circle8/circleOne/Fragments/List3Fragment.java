@@ -533,23 +533,33 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
 
     public static void callFirst()
     {
-        pageno = 1;
         new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
     }
 
     public static void webCall()
     {
+       /* nfcModel1.clear();
+        allTaggs.clear();
         try
         {
-            nfcModel1.clear();
-            allTaggs.clear();
             gridAdapter.notifyDataSetChanged();
-            new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
+        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");*/
+
+        pageno = 1;
+
+        try
+        {
+            nfcModel1.clear();
+            allTaggs.clear();
+            gridAdapter.notifyDataSetChanged();
+        } catch (Exception e) {
+        }
+        callFirst();
     }
 
     private static class HttpAsyncTask extends AsyncTask<String, Void, String>
@@ -609,16 +619,6 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                     {
                         numberCount = Integer.parseInt(count);
                     }
-
-                    allTaggs.clear();
-                    try
-                    {
-                        gridAdapter.notifyDataSetChanged();
-                    }
-                    catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
 //                    Toast.makeText(mContext,"Counts: "+numberCount,Toast.LENGTH_SHORT).show();
 
                     JSONArray jsonArray = jsonObject.getJSONArray("connection");
@@ -684,7 +684,9 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
 
                         }
                     });
+
 //                    Toast.makeText(mContext,"ListView size: "+allTaggs.size(),Toast.LENGTH_SHORT).show();
+
                 }
                 else
                 {
