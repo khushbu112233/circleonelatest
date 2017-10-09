@@ -52,7 +52,7 @@
         android:id="@+id/tvHistoryInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="This user has not such a history"
+        android:text="You do not have any History records"
         android:textColor="@color/unselected"
         android:layout_centerInParent="true"
         android:visibility="gone"/>
