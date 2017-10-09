@@ -892,7 +892,8 @@
                 android:layout_marginLeft="20dp"
                 android:hint="time: 04/04/2017   10:25am"
                 android:textColor="#6b6c6e"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:id="@+id/tvDateInitiated"/>
 
             <LinearLayout
                 android:layout_marginTop="2dp"

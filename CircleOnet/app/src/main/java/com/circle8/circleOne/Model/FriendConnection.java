@@ -33,6 +33,7 @@ public class FriendConnection
     String UserID = "";
     String FirstName = "";
     String LastName = "";
+    String DateInitiated = "";
 
 
     public String getProfile_id() {
@@ -279,5 +280,13 @@ public class FriendConnection
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getDateInitiated() {
+        return DateInitiated;
+    }
+
+    public void setDateInitiated(String dateInitiated) {
+        DateInitiated = dateInitiated;
     }
 }

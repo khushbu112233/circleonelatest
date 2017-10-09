@@ -382,7 +382,6 @@ public class List2Fragment extends Fragment
                             gridAdapter = new GridViewAdapter(getContext(), R.layout.grid_list2_layout, allTaggs);
                             gridView.setAdapter(gridAdapter);
                             gridAdapter.notifyDataSetChanged();
-
 //                            GetData(getContext());
                         }
                     }
@@ -574,7 +573,7 @@ public class List2Fragment extends Fragment
                         nfcModelTag.setProfile_id(object.getString("ProfileId"));
                         nfcModelTag.setAddress(object.getString("Address1") + " " + object.getString("Address2") + " "
                                 + object.getString("Address3") + object.getString("Address4"));
-
+                        nfcModelTag.setDateInitiated(object.getString("DateInitiated"));
                         nfcModelTag.setNfc_tag("en000000001");
                         allTaggs.add(nfcModelTag);
                         GetData(mContext);
@@ -962,6 +961,7 @@ public class List2Fragment extends Fragment
             nfcModelTag.setNfc_tag(reTag.getNfc_tag());
             nfcModelTag.setProfile_id(reTag.getProfile_id());
             nfcModelTag.setAddress(reTag.getAddress());
+            nfcModelTag.setDateInitiated(reTag.getDateInitiated());
             nfcModel.add(nfcModelTag);
         }
 

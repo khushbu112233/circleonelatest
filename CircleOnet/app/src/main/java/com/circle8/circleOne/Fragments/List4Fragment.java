@@ -190,6 +190,7 @@ public class List4Fragment extends Fragment
                 Intent intent = new Intent(getContext(), CardDetail.class);
                 intent.putExtra("tag_id", nfcModel1.get(position).getNfc_tag());
                 intent.putExtra("profile_id", nfcModel1.get(position).getProfile_id());
+                intent.putExtra("DateInitiated",nfcModel1.get(position).getDateInitiated());
                 getContext().startActivity(intent);
             }
         });
@@ -630,6 +631,7 @@ public class List4Fragment extends Fragment
                         nfcModelTag.setNfc_tag("en000000001");
                         nfcModelTag.setAddress(object.getString("Address1") + " " + object.getString("Address2") + " "
                                 + object.getString("Address3") + object.getString("Address4"));
+                        nfcModelTag.setDateInitiated(object.getString("DateInitiated"));
                         allTaggs.add(nfcModelTag);
                         GetData(mContext);
                     }
@@ -945,6 +947,7 @@ public class List4Fragment extends Fragment
             nfcModelTag.setNfc_tag(reTag.getNfc_tag());
             nfcModelTag.setProfile_id(reTag.getProfile_id());
             nfcModelTag.setAddress(reTag.getAddress());
+            nfcModelTag.setDateInitiated(reTag.getDateInitiated());
             nfcModel1.add(nfcModelTag);
         }
 

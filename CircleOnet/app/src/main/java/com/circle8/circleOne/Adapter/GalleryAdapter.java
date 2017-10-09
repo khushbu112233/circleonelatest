@@ -65,6 +65,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             int position = getAdapterPosition();
             Intent intent = new Intent(mContext, CardDetail.class);
             intent.putExtra("profile_id", nfcModelList.get(position).getProfile_id());
+            intent.putExtra("DateInitiated",nfcModelList.get(position).getDateInitiated());
             mContext.startActivity(intent);
         }
     }
@@ -225,6 +226,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
 
             Intent intent = new Intent(mContext, CardDetail.class);
             intent.putExtra("profile_id", nfcModelList.get(posi).getProfile_id());
+            intent.putExtra("DateInitiated",nfcModelList.get(posi).getDateInitiated());
             mContext.startActivity(intent);
             return true;
         }

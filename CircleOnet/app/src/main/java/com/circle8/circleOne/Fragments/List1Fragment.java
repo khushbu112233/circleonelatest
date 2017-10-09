@@ -693,6 +693,7 @@ public class List1Fragment extends Fragment
                         nfcModelTag.setCard_back(object.getString("Card_Back"));
                         nfcModelTag.setUser_image(object.getString("UserPhoto"));
                         nfcModelTag.setProfile_id(object.getString("ProfileId"));
+                        nfcModelTag.setDateInitiated(object.getString("DateInitiated"));
 //                        Toast.makeText(getActivity(),"Profile_id"+object.getString("ProfileId"),Toast.LENGTH_SHORT).show();
                         nfcModelTag.setNfc_tag("en000000001");
                         allTags.add(nfcModelTag);
@@ -1183,6 +1184,7 @@ public class List1Fragment extends Fragment
             nfcModelTag.setCard_back(reTag.getCard_back());
             nfcModelTag.setNfc_tag(reTag.getNfc_tag());
             nfcModelTag.setProfile_id(reTag.getProfile_id());
+            nfcModelTag.setDateInitiated(reTag.getDateInitiated());
             nfcModel.add(nfcModelTag);
         }
 

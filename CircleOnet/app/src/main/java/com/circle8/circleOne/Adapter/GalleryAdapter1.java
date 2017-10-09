@@ -125,6 +125,7 @@ public class GalleryAdapter1 extends RecyclerView.Adapter<GalleryAdapter1.MyView
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, CardDetail.class);
                 intent.putExtra("profile_id", nfcModelList.get(position).getProfile_id());
+                intent.putExtra("DateInitiated",nfcModelList.get(position).getDateInitiated());
                 mContext.startActivity(intent);
             }
         });
@@ -181,6 +182,7 @@ public class GalleryAdapter1 extends RecyclerView.Adapter<GalleryAdapter1.MyView
 
             Intent intent = new Intent(mContext, CardDetail.class);
             intent.putExtra("profile_id", nfcModelList.get(posi).getProfile_id());
+            intent.putExtra("DateInitiated",nfcModelList.get(posi).getDateInitiated());
             mContext.startActivity(intent);
 
             return true;

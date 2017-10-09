@@ -117,7 +117,6 @@ public class GridViewAdapter extends BaseSwipeAdapter
         db = new DatabaseHelper(context);
 
 
-
         swipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {
             @Override
             public void onDoubleClick(SwipeLayout layout, boolean surface) {
@@ -136,58 +135,6 @@ public class GridViewAdapter extends BaseSwipeAdapter
 //                Toast.makeText(context, "Friend Profile ID: "+ nfcModelList1.get(posi).getProfile_id(), Toast.LENGTH_SHORT).show();
 
                 new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
-
-               /* List2Fragment.gridAdapter.notifyDataSetChanged();
-                try {
-                    List1Fragment.mAdapter.notifyDataSetChanged();
-                    List1Fragment.mAdapter1.notifyDataSetChanged();
-                    //   List1Fragment.allTags = db.getActiveNFC();
-                    List1Fragment.nfcModel.clear();
-                    //  nfcModelList.clear();
-                    List1Fragment.GetData(context);
-                } catch (Exception e) {
-                }*/
-                //  nfcModelList.remove(position);
-                /*try
-                {
-                    List2Fragment.gridAdapter.notifyDataSetChanged();
-                    List2Fragment.allTags = db.getActiveNFC();
-                    List2Fragment.nfcModel.clear();
-                    //  nfcModelList.clear();
-                    List2Fragment.GetData(context);
-                } catch (Exception e) {
-
-                }
-
-                try {
-                    List3Fragment.gridAdapter.notifyDataSetChanged();
-                    List3Fragment.allTags = db.getActiveNFC();
-                    List3Fragment.nfcModel.clear();
-                    //  nfcModelList.clear();
-                    List3Fragment.GetData(context);
-                } catch (Exception e) {
-
-                }
-
-                try {
-                    List4Fragment.gridAdapter.notifyDataSetChanged();
-                    List4Fragment.allTags = db.getActiveNFC();
-                    List4Fragment.nfcModel.clear();
-                    //  nfcModelList.clear();
-                    List4Fragment.GetData(context);
-                } catch (Exception e) {
-
-                }
-
-                try {
-                    List1Fragment.mAdapter.notifyDataSetChanged();
-                    List1Fragment.mAdapter1.notifyDataSetChanged();
-                    //   List1Fragment.allTags = db.getActiveNFC();
-                    List1Fragment.nfcModel.clear();
-                    //  nfcModelList.clear();
-                    List1Fragment.GetData(context);
-                } catch (Exception e) {
-                }*/
 
                 /*if (CardsActivity.mViewPager.getCurrentItem() == 0){
                     Intent go = new Intent(context,CardsActivity.class);
@@ -285,6 +232,7 @@ public class GridViewAdapter extends BaseSwipeAdapter
                 Intent intent = new Intent(context, CardDetail.class);
                 intent.putExtra("tag_id", nfcModelList1.get(position).getNfc_tag());
                 intent.putExtra("profile_id", nfcModelList1.get(position).getProfile_id());
+                intent.putExtra("DateInitiated", nfcModelList1.get(position).getDateInitiated());
                 context.startActivity(intent);
             }
         });
@@ -296,6 +244,7 @@ public class GridViewAdapter extends BaseSwipeAdapter
                 Intent intent = new Intent(context, CardDetail.class);
                 intent.putExtra("tag_id", nfcModelList1.get(position).getNfc_tag());
                 intent.putExtra("profile_id", nfcModelList1.get(position).getProfile_id());
+                intent.putExtra("DateInitiated", nfcModelList1.get(position).getDateInitiated());
                 context.startActivity(intent);
             }
         });
@@ -324,15 +273,21 @@ public class GridViewAdapter extends BaseSwipeAdapter
 
     }
 
-    public void Filter(String charText) {
+    public void Filter(String charText)
+    {
         charText = charText.toLowerCase(Locale.getDefault());
         nfcModelList1.clear();
 
-        if (charText.length() == 0) {
+        if (charText.length() == 0)
+        {
             nfcModelList1.addAll(nfcModelListFilter1);
-        } else {
-            for (FriendConnection md : nfcModelListFilter1) {
-                if (md.getName().toLowerCase(Locale.getDefault()).contains(charText)) {
+        }
+        else
+        {
+            for (FriendConnection md : nfcModelListFilter1)
+            {
+                if (md.getName().toLowerCase(Locale.getDefault()).contains(charText))
+                {
                     nfcModelList1.add(md);
                 }
                 CardsActivity.setActionBarTitle("Cards - " + nfcModelList1.size());
@@ -351,11 +306,9 @@ public class GridViewAdapter extends BaseSwipeAdapter
             super.onPreExecute();
             /*dialog = new ProgressDialog(context);
             dialog.setMessage("Deleting Records...");
-            //dialog.setTitle("Saving Reminder");
             dialog.show();
             dialog.setCancelable(false);*/
-            //  nfcModel = new ArrayList<>();
-            //   allTags = new ArrayList<>();
+
             String loading = "Deleting Records";
             List2Fragment.CustomProgressDialog(loading);
         }
@@ -400,47 +353,6 @@ public class GridViewAdapter extends BaseSwipeAdapter
                     {
                         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                     }
-
-                 /*   try
-                    {
-//                    List2Fragment.allTaggs.clear();
-                        List2Fragment.nfcModel.clear();
-                        List2Fragment.gridAdapter.notifyDataSetChanged();
-                        List2Fragment.GetData(context);
-                    }
-                    catch(Exception e) {    }
-
-                    try
-                    {
-
-//                    List3Fragment.allTaggs.clear();
-                        List3Fragment.nfcModel1.clear();
-                        List3Fragment.gridAdapter.notifyDataSetChanged();
-                        List3Fragment.GetData(context);
-                    }
-                    catch(Exception e) {    }
-
-                    try
-                    {
-
-//                    List4Fragment.allTaggs.clear();
-                        List4Fragment.nfcModel1.clear();
-                        List4Fragment.gridAdapter.notifyDataSetChanged();
-                        List4Fragment.GetData(context);
-                    }
-                    catch(Exception e) {    }
-
-                    try
-                    {
-
-//                    List1Fragment.allTags.clear();
-                        List1Fragment.nfcModel.clear();
-                        List1Fragment.mAdapter.notifyDataSetChanged();
-                        List1Fragment.mAdapter1.notifyDataSetChanged();
-                        List1Fragment.GetData(context);
-                    }
-                    catch(Exception e) {    }*/
-
                 }
 
             }
@@ -518,7 +430,6 @@ public class GridViewAdapter extends BaseSwipeAdapter
 
         inputStream.close();
         return result;
-
     }
 
 

@@ -90,7 +90,7 @@ public class CardDetail extends NfcActivity
     DatabaseHelper db;
     TextView txtName, txtCompany, txtWebsite, txtEmail, txtPH, txtWork, txtMob, txtAddress, txtRemark, txtDesi;
     CircleImageView imgProfileCard;
-    String user_id = "", profile_id, currentUser_ProfileId = "";
+    String user_id = "", profile_id, currentUser_ProfileId = "", DateInitiated = "";
     StickyScrollView scroll;
     ImageView imgCall, imgSMS, imgMail;
     String recycle_image1, recycle_image2;
@@ -107,7 +107,7 @@ public class CardDetail extends NfcActivity
     String FirstName = "", LastName = "", UserPhoto = "", Phone1 = "", Phone2 = "", Mobile1 = "", Mobile2 = "", Fax1 = "",
             Fax2 = "", Email1 = "", Email2 = "", IndustryName = "", CompanyName = "", CompanyProfile = "", Designation = "",
             ProfileDesc = "";
-    TextView txtTestimonial, txtMore;
+    TextView txtTestimonial, txtMore, tvDateInitiated;
     ArrayList<GroupModel> groupModelArrayList = new ArrayList<>();
     ArrayList<String> groupName = new ArrayList<>();
     ArrayList<String> groupPhoto = new ArrayList<>();
@@ -185,6 +185,7 @@ public class CardDetail extends NfcActivity
         list = new ArrayList<CharSequence>();
         listGroupId = new ArrayList<String>();
         txtTestimonial = (TextView) findViewById(R.id.txtTestimonial);
+        tvDateInitiated = (TextView)findViewById(R.id.tvDateInitiated);
 
         rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
         tvProgressing = (TextView)findViewById(R.id.txtProgressing);
@@ -193,9 +194,18 @@ public class CardDetail extends NfcActivity
         ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
 
         txtMore = (TextView) findViewById(R.id.txtMore);
+
         Intent intent = getIntent();
         profile_id = intent.getStringExtra("profile_id");
+        DateInitiated = intent.getStringExtra("DateInitiated");
+
+//        Toast.makeText(getApplicationContext(), DateInitiated.toString(),Toast.LENGTH_SHORT).show();
+
+
+        tvDateInitiated.setText(DateInitiated);
+
         allTaggs = new ArrayList<>();
+
         if (profile_id.equals(""))
         {
             Toast.makeText(CardDetail.this, "Having no profile ID",Toast.LENGTH_LONG).show();
@@ -1148,8 +1158,8 @@ public class CardDetail extends NfcActivity
             //dialog.show();
             dialog.setCancelable(false);
 
-            String loading = "Fetching Circles" ;
-            CustomProgressDialog(loading);
+            /*String loading = "Fetching Circles" ;
+            CustomProgressDialog(loading);*/
         }
 
         @Override
@@ -1162,7 +1172,7 @@ public class CardDetail extends NfcActivity
         protected void onPostExecute(String result)
         {
            // dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+//            rlProgressDialog.setVisibility(View.GONE);
             try
             {
                 if (result != null)
@@ -1249,7 +1259,6 @@ public class CardDetail extends NfcActivity
         }
     }
 
-
     private class HttpAsyncTask extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -1257,13 +1266,16 @@ public class CardDetail extends NfcActivity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(CardDetail.this);
+           /* dialog = new ProgressDialog(CardDetail.this);
             dialog.setMessage("Fetching Cards...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
+
+            String loading = "Fetching User" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -1273,8 +1285,11 @@ public class CardDetail extends NfcActivity
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
-            dialog.dismiss();
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
+
             try
             {
                 if (result != null)
