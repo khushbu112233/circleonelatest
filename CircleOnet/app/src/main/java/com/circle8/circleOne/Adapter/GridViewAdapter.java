@@ -83,7 +83,8 @@ public class GridViewAdapter extends BaseSwipeAdapter
 //        this.nfcModelListFilter.addAll(nfcModelList);
 //    }
 
-    public GridViewAdapter(Context context, int grid_list3_layout, ArrayList<FriendConnection> nfcModel) {
+    public GridViewAdapter(Context context, int grid_list3_layout, ArrayList<FriendConnection> nfcModel)
+    {
         this.context = context;
         this.layoutResourceId = grid_list3_layout;
         this.nfcModelList1 = nfcModel;
@@ -385,6 +386,10 @@ public class GridViewAdapter extends BaseSwipeAdapter
 
                     if(success.equals("1"))
                     {
+                        List2Fragment.progressStatus = "DELETE";
+                        List3Fragment.progressStatus = "DELETE";
+                        List4Fragment.progressStatus = "DELETE";
+
                         Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_LONG).show();
                         List1Fragment.webCall();
                         List2Fragment.webCall();

@@ -94,7 +94,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
     static boolean  userScrolled = false;
     static RelativeLayout rlLoadMore ;
 
-    static String comeAtTime = "FIRST" ;
+    public static String progressStatus = "FIRST" ;
     static String totalArray ;
     static int numberCount, listSize ;
 
@@ -559,7 +559,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
             gridAdapter.notifyDataSetChanged();
         } catch (Exception e) {
         }
-        callFirst();
+        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
     }
 
     private static class HttpAsyncTask extends AsyncTask<String, Void, String>
@@ -586,8 +586,33 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
 
-            String loading = "Fetching Cards" ;
-            CustomProgressDialog(loading);
+            if (progressStatus.equalsIgnoreCase("FIRST"))
+            {
+                String loading = "Fetching Cards" ;
+                CustomProgressDialog(loading);
+
+                progressStatus = "SECOND";
+            }
+            else if (progressStatus.equalsIgnoreCase("SECOND"))
+            {
+
+            }
+            else if (progressStatus.equalsIgnoreCase("LOAD MORE"))
+            {
+
+            }
+            else if (progressStatus.equalsIgnoreCase("DELETE"))
+            {
+                String loading = "Refreshing Cards" ;
+                CustomProgressDialog(loading);
+            }
+            else
+            {
+
+            }
+
+            /*String loading = "Fetching Cards" ;
+            CustomProgressDialog(loading);*/
         }
 
         @Override
@@ -659,7 +684,11 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                     {
                         @Override
                         public void onScrollStateChanged(AbsListView view, int scrollState)
-                        { // TODO Auto-generated method stub
+                        {
+                            // TODO Auto-generated method stub
+
+                            progressStatus = "LOAD MORE";
+
                             int threshold = 1;
                             int count = listView.getCount();
 

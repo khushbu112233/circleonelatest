@@ -76,8 +76,6 @@ public class List2Fragment extends Fragment
     private static final String TAG = "TestGesture";
     private GestureDetector gestureDetector1;
 
-
-
     public static List<NFCModel> allTags;
     public static ArrayList<FriendConnection> allTaggs;
     public static ArrayList<FriendConnection> nfcModel;
@@ -98,7 +96,7 @@ public class List2Fragment extends Fragment
     static RelativeLayout rlLoadMore;
 
 
-    static String comeAtTime = "FIRST";
+    public static String progressStatus = "FIRST";
 
     static int numberCount, gridSize;
 
@@ -422,7 +420,7 @@ public class List2Fragment extends Fragment
             gridAdapter.notifyDataSetChanged();
         } catch (Exception e) {
         }
-        callFirst();
+        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
     }
 
 
@@ -495,9 +493,33 @@ public class List2Fragment extends Fragment
 
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
+            if (progressStatus.equalsIgnoreCase("FIRST"))
+            {
+                String loading = "Fetching Cards" ;
+                CustomProgressDialog(loading);
 
-            String loading = "Fetching Cards" ;
-            CustomProgressDialog(loading);
+                progressStatus = "SECOND";
+            }
+            else if (progressStatus.equalsIgnoreCase("SECOND"))
+            {
+
+            }
+            else if (progressStatus.equalsIgnoreCase("LOAD MORE"))
+            {
+
+            }
+            else if (progressStatus.equalsIgnoreCase("DELETE"))
+            {
+                String loading = "Refreshing Cards" ;
+                CustomProgressDialog(loading);
+            }
+            else
+            {
+
+            }
+
+            /*String loading = "Fetching Cards" ;
+            CustomProgressDialog(loading);*/
         }
 
         @Override
@@ -535,7 +557,8 @@ public class List2Fragment extends Fragment
 
                     rlLoadMore.setVisibility(View.GONE);
 
-                    for (int i = 0; i < jsonArray.length(); i++) {
+                    for (int i = 0; i < jsonArray.length(); i++)
+                    {
                         JSONObject object = jsonArray.getJSONObject(i);
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
 
@@ -561,8 +584,12 @@ public class List2Fragment extends Fragment
 
                     gridView.setOnScrollListener(new AbsListView.OnScrollListener() {
                         @Override
-                        public void onScrollStateChanged(AbsListView view, int scrollState) {
+                        public void onScrollStateChanged(AbsListView view, int scrollState)
+                        {
                             // TODO Auto-generated method stub
+
+                            progressStatus = "LOAD MORE";
+
                             int threshold = 1;
                             int count = gridView.getCount();
 
