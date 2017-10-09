@@ -510,6 +510,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         LinearLayout lnrHelp = (LinearLayout) dialog.findViewById(R.id.lnrHelp);
         LinearLayout lnrSyncContacts = (LinearLayout) dialog.findViewById(R.id.lnrSyncContacts);
         LinearLayout lnrRewardsPoints = (LinearLayout)dialog.findViewById(R.id.lnrRewardsPoints);
+        LinearLayout lnrHistory = (LinearLayout)dialog.findViewById(R.id.lnrHistory);
         txtNotificationCount = (CircularTextView) dialog.findViewById(R.id.txtNotificationCount);
 
         txtNotificationCount.setText(NotificationCount);
@@ -610,6 +611,16 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
             public void onClick(View v)
             {
                 Intent intent = new Intent(getApplicationContext(), RewardsPointsActivity.class);
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        });
+
+        lnrHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(getApplicationContext(), HistoryActivity.class);
                 startActivity(intent);
                 dialog.dismiss();
             }
