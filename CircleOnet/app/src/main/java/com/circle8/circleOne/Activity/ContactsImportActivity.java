@@ -110,8 +110,6 @@ public class ContactsImportActivity extends AppCompatActivity
         if (result) {*/
        // }
 
-
-
         View.OnClickListener clickListener = new View.OnClickListener() {
 
             @Override
