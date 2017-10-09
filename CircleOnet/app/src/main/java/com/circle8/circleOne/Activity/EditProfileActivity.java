@@ -272,7 +272,8 @@ public class EditProfileActivity extends AppCompatActivity implements
     private boolean flashEnabled = false;
     private boolean autoSnappingEnabled = true;
     private Bitmap documentImage;
-
+    ArrayList<String> final_associationIdArray, final_eventIdArray;
+    ArrayList<String> final_associationNameArray, final_eventNameArray;
     private static EditPolygonImageView editPolygonView;
     private MagnifierView magnifierView;
     private Bitmap originalBitmap;
@@ -3466,6 +3467,77 @@ public class EditProfileActivity extends AppCompatActivity implements
                     Website = jsonObject.getString("Website");
                     Attachment_FileName = jsonObject.getString("Attachment_FileName");
                     ProfileName = jsonObject.getString("ProfileName");
+                    final_associationIdArray = new ArrayList<>();
+                    final_associationNameArray = new ArrayList<>();
+                    final_eventIdArray = new ArrayList<>();
+                    final_eventNameArray = new ArrayList<>();
+
+
+                    try {
+                        JSONArray jsonArrayAsso = jsonObject.getJSONArray("Association_Name");
+                        if (jsonArrayAsso != null) {
+
+                            for (int i = 0; i < jsonArrayAsso.length(); i++) {
+                                String name = jsonArrayAsso.getString(i).toString();
+                                String kept = name.substring(0, name.indexOf(":"));
+                                String remainder = name.substring(name.indexOf(":") + 1, name.length());
+
+                                final_associationIdArray.add(kept);
+                                final_associationNameArray.add(remainder);
+
+                            }
+
+                            try {
+
+                                for (int i = 0; i < final_associationNameArray.size(); i++) {
+
+                                    if (AssoNameList.contains(final_associationNameArray.get(i).toString())) {
+                                        int i1 = AssoNameList.indexOf(final_associationNameArray.get(i).toString());
+                                        AssociationModel st = new AssociationModel(final_associationIdArray.get(i).toString(), final_associationNameArray.get(i).toString(), true);
+                                        associationList.remove(i1);
+                                        associationList.add(i1, st);
+                                        GridLayoutManager gridLayoutManager = new GridLayoutManager(EditProfileActivity.this, 5, GridLayoutManager.HORIZONTAL, false);
+                                        recyclerAssociation.setAdapter(mAdapter);
+                                        recyclerAssociation.setLayoutManager(gridLayoutManager);
+                                    }
+                                }
+                            }catch (Exception e){}
+
+                        }
+                    }catch (Exception e){}
+
+
+                    try{
+                        JSONArray jsonArrayEvents = jsonObject.getJSONArray("Event_Cat_Name");
+                        if (jsonArrayEvents != null) {
+                            for (int i = 0; i < jsonArrayEvents.length(); i++) {
+                                String name = jsonArrayEvents.getString(i).toString();
+                                String kept = name.substring(0, name.indexOf(":"));
+                                String remainder = name.substring(name.indexOf(":") + 1, name.length());
+
+                                final_eventIdArray.add(kept);
+                                final_eventNameArray.add(remainder);
+
+                            }
+
+                            try{
+                                List<String> stringList = new ArrayList<String>(Arrays.asList(array));
+                                for (int i = 0; i < final_eventNameArray.size(); i++) {
+
+                                    if (stringList.contains(final_eventNameArray.get(i).toString())){
+                                        int i1 = stringList.indexOf(final_eventNameArray.get(i).toString());
+                                        AssociationModel st = new AssociationModel(final_eventIdArray.get(i).toString(), final_eventNameArray.get(i).toString(), true );
+                                        eventList.remove(i1);
+                                        eventList.add(i1, st);
+                                        GridLayoutManager gridLayoutManager = new GridLayoutManager(EditProfileActivity.this, 5, GridLayoutManager.HORIZONTAL, false);
+                                        recyclerEvents.setAdapter(mAdapter1);
+                                        recyclerEvents.setLayoutManager(gridLayoutManager);
+                                    }
+                                }
+                            }catch (Exception e){}
+                        }
+                    }catch (Exception e){}
+
 
                     if (Phone1.contains(" ")){
                         String name = Phone1;

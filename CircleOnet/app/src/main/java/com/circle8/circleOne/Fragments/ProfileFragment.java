@@ -87,6 +87,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.Exchanger;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -632,62 +633,69 @@ public class ProfileFragment extends Fragment
 
                                     try {
                                         JSONObject object = jsonArray.getJSONObject(i);
-                                        array = object.getJSONArray("Association_Name");
-                                        arrayEvents = object.getJSONArray("Event_Cat_Name");
-                                        listAssociation = new ArrayList<String>();
-                                        listEvents = new ArrayList<String>();
+                                        try {
+                                            array = object.getJSONArray("Association_Name");
+                                            listAssociation = new ArrayList<String>();
+                                            for (int i1 = 0; i1 < array.length(); i1++) {
 
-                                        for (int i1 = 0; i1 < arrayEvents.length(); i1++) {
+                                                listAssociation.add(array.getString(i1));
 
-                                            listEvents.add(arrayEvents.getString(i1));
+                                            }
 
-                                        }
+                                            int countAssociation;
+                                            if (array.length()>=5){
+                                                countAssociation = 5;
+                                            }else {
+                                                countAssociation = array.length();
+                                            }
+                                            GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), countAssociation, GridLayoutManager.HORIZONTAL, false);
+                                            recyclerAssociation.setAdapter(new TextRecyclerAdapter(listAssociation));
+                                            recyclerAssociation.setLayoutManager(gridLayoutManager);
 
-                                        for (int i1 = 0; i1 < array.length(); i1++) {
+                                            if (listAssociation.size() == 0){
+                                                recyclerAssociation.setVisibility(View.GONE);
+                                                txtNoAssociation.setVisibility(View.VISIBLE);
+                                            }
+                                            else {
+                                                recyclerAssociation.setVisibility(View.VISIBLE);
+                                                txtNoAssociation.setVisibility(View.GONE);
+                                            }
+                                        }catch (Exception e){}
 
-                                            listAssociation.add(array.getString(i1));
+                                        try {
+                                            arrayEvents = object.getJSONArray("Event_Cat_Name");
 
-                                        }
+                                            listEvents = new ArrayList<String>();
 
-                                        int countAssociation;
-                                        if (array.length()>=5){
-                                            countAssociation = 5;
-                                        }else {
-                                            countAssociation = array.length();
-                                        }
+                                            for (int i1 = 0; i1 < arrayEvents.length(); i1++) {
 
-                                        int countEvents;
-                                        if (arrayEvents.length()>=5){
-                                            countEvents = 5;
-                                        }else {
-                                            countEvents = arrayEvents.length();
-                                        }
+                                                listEvents.add(arrayEvents.getString(i1));
 
-                                        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), countAssociation, GridLayoutManager.HORIZONTAL, false);
-                                        recyclerAssociation.setAdapter(new TextRecyclerAdapter(listAssociation));
-                                        recyclerAssociation.setLayoutManager(gridLayoutManager);
+                                            }
 
-                                        GridLayoutManager gridLayoutManager1 = new GridLayoutManager(getContext(), countEvents, GridLayoutManager.HORIZONTAL, false);
-                                        recyclerEvents.setAdapter(new TextRecyclerAdapter(listEvents));
-                                        recyclerEvents.setLayoutManager(gridLayoutManager1);
-                                        if (listAssociation.size() == 0){
-                                            recyclerAssociation.setVisibility(View.GONE);
-                                            txtNoAssociation.setVisibility(View.VISIBLE);
-                                        }
-                                        else {
-                                            recyclerAssociation.setVisibility(View.VISIBLE);
-                                            txtNoAssociation.setVisibility(View.GONE);
-                                        }
 
-                                        if (listEvents.size() == 0){
-                                            recyclerEvents.setVisibility(View.GONE);
-                                            txtNoEvent.setVisibility(View.VISIBLE);
-                                        }
-                                        else {
-                                            recyclerEvents.setVisibility(View.VISIBLE);
-                                            txtNoEvent.setVisibility(View.GONE);
-                                        }
+                                            int countEvents;
+                                            if (arrayEvents.length() >= 5) {
+                                                countEvents = 5;
+                                            } else {
+                                                countEvents = arrayEvents.length();
+                                            }
 
+
+                                            GridLayoutManager gridLayoutManager1 = new GridLayoutManager(getContext(), countEvents, GridLayoutManager.HORIZONTAL, false);
+                                            recyclerEvents.setAdapter(new TextRecyclerAdapter(listEvents));
+                                            recyclerEvents.setLayoutManager(gridLayoutManager1);
+
+
+                                            if (listEvents.size() == 0) {
+                                                recyclerEvents.setVisibility(View.GONE);
+                                                txtNoEvent.setVisibility(View.VISIBLE);
+                                            } else {
+                                                recyclerEvents.setVisibility(View.VISIBLE);
+                                                txtNoEvent.setVisibility(View.GONE);
+                                            }
+
+                                        }catch (Exception e){}
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
