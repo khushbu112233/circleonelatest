@@ -73,6 +73,7 @@ dependencies {
     }
     compile project(':linkedin-sdk')
     // Required for OneSignal
+    //    compile 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
@@ -92,7 +93,6 @@ dependencies {
     compile 'com.google.android.gms:play-services:11.0.1'
     compile 'com.github.dmytrodanylyk.shadow-layout:library:1.0.3'
     compile 'me.dm7.barcodescanner:zxing:1.8.4'
-//    compile 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
     compile 'com.google.zxing:core:3.2.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.intuit.sdp:sdp-android:1.0.3'
