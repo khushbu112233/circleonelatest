@@ -36,6 +36,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Adapter.CardSwipe;
+import com.circle8.circleOne.Adapter.CustomAdapter;
 import com.circle8.circleOne.Adapter.EditGroupAdapter;
 import com.circle8.circleOne.Adapter.GroupsInCardDetailAdapter;
 import com.circle8.circleOne.Adapter.GroupsRecyclerAdapter;
@@ -43,10 +44,14 @@ import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.GroupModel;
 import com.circle8.circleOne.Model.NFCModel;
+import com.circle8.circleOne.Model.TestimonialModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.ExpandableHeightListView;
 import com.circle8.circleOne.Utils.StickyScrollView;
 import com.circle8.circleOne.Utils.Utility;
+import com.google.android.gms.internal.pr;
 import com.squareup.picasso.Picasso;
+import com.stripe.android.model.Card;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -72,6 +77,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CardDetail extends NfcActivity
 {
+    ExpandableHeightListView lstTestimonial;
     ViewPager mViewPager, viewPager1;
     private ArrayList<String> image = new ArrayList<>();
     private CardSwipe myPager;
@@ -101,7 +107,7 @@ public class CardDetail extends NfcActivity
     String FirstName = "", LastName = "", UserPhoto = "", Phone1 = "", Phone2 = "", Mobile1 = "", Mobile2 = "", Fax1 = "",
             Fax2 = "", Email1 = "", Email2 = "", IndustryName = "", CompanyName = "", CompanyProfile = "", Designation = "",
             ProfileDesc = "";
-
+    TextView txtTestimonial, txtMore;
     ArrayList<GroupModel> groupModelArrayList = new ArrayList<>();
     ArrayList<String> groupName = new ArrayList<>();
     ArrayList<String> groupPhoto = new ArrayList<>();
@@ -112,10 +118,14 @@ public class CardDetail extends NfcActivity
     RecyclerView recycler_view ;
     TextView tvAddedGroupInfo ;
     private String displayProfile;
+    public static ArrayList<TestimonialModel> allTaggs ;
+    private CustomAdapter customAdapter;
+    RelativeLayout rltTestimonial, rltTestimonialList;
 
     private RelativeLayout rlProgressDialog ;
     private TextView tvProgressing ;
     private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -169,6 +179,12 @@ public class CardDetail extends NfcActivity
         groupListView = (ListView)findViewById(R.id.groupListView);
         recycler_view = (RecyclerView)findViewById(R.id.recycler_view);
         tvAddedGroupInfo = (TextView)findViewById(R.id.tvAddedGroupInfo);
+        lstTestimonial = (ExpandableHeightListView) findViewById(R.id.lstTestimonial);
+        rltTestimonial = (RelativeLayout) findViewById(R.id.rltTestimonial);
+        rltTestimonialList = (RelativeLayout) findViewById(R.id.rltTestimonialList);
+        list = new ArrayList<CharSequence>();
+        listGroupId = new ArrayList<String>();
+        txtTestimonial = (TextView) findViewById(R.id.txtTestimonial);
 
         rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
         tvProgressing = (TextView)findViewById(R.id.txtProgressing);
@@ -176,12 +192,10 @@ public class CardDetail extends NfcActivity
         ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
         ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
 
-        list = new ArrayList<CharSequence>();
-        listGroupId = new ArrayList<String>();
-
+        txtMore = (TextView) findViewById(R.id.txtMore);
         Intent intent = getIntent();
         profile_id = intent.getStringExtra("profile_id");
-
+        allTaggs = new ArrayList<>();
         if (profile_id.equals(""))
         {
             Toast.makeText(CardDetail.this, "Having no profile ID",Toast.LENGTH_LONG).show();
@@ -195,6 +209,8 @@ public class CardDetail extends NfcActivity
 
         new HttpAsyncTaskGroupsFetch().execute("http://circle8.asia:8999/Onet.svc/Group/MyGroupsTaggedWithFriendProfile");
 
+        new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Fetch");
+
         imgProfileShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -205,6 +221,16 @@ public class CardDetail extends NfcActivity
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, txtName.getText().toString());
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Share Profile Via"));
+            }
+        });
+
+        txtMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getApplicationContext(), TestimonialCardDetail.class);
+                intent.putExtra("ProfileId", profile_id);
+                startActivity(intent);
             }
         });
 
@@ -807,6 +833,151 @@ public class CardDetail extends NfcActivity
         });
     }
 
+    public String POST2(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("ProfileId", profile_id);
+            jsonObject.accumulate("numofrecords", "10" );
+            jsonObject.accumulate("pageno", "1" );
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    private class HttpAsyncTaskTestimonial extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            dialog = new ProgressDialog(CardDetail.this);
+            dialog.setMessage("Fetching Testimonials...");
+            //dialog.setTitle("Saving Reminder");
+            // dialog.show();
+            dialog.setCancelable(false);
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            return POST2(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+            // dialog.dismiss();
+            try {
+                if (result != null) {
+                    JSONObject jsonObject = new JSONObject(result);
+                    JSONArray jsonArray = jsonObject.getJSONArray("Testimonials");
+                    //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
+
+                    if (jsonArray.length() == 0)
+                    {
+                        rltTestimonialList.setVisibility(View.GONE);
+                        rltTestimonial.setVisibility(View.GONE);
+                        lstTestimonial.setVisibility(View.GONE);
+                        txtMore.setVisibility(View.GONE);
+                        txtTestimonial.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        rltTestimonialList.setVisibility(View.VISIBLE);
+                        rltTestimonial.setVisibility(View.VISIBLE);
+                        lstTestimonial.setVisibility(View.VISIBLE);
+                        txtMore.setVisibility(View.VISIBLE);
+                        txtTestimonial.setVisibility(View.GONE);
+                    }
+                    allTaggs.clear();
+                    for (int i = 0; i < jsonArray.length(); i++)
+                    {
+
+                        if (i < 3)
+                        {
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
+
+                            TestimonialModel nfcModelTag = new TestimonialModel();
+                            nfcModelTag.setCompanyName(object.getString("CompanyName"));
+                            nfcModelTag.setDesignation(object.getString("Designation"));
+                            nfcModelTag.setFirstName(object.getString("FirstName"));
+                            nfcModelTag.setFriendProfileID(object.getString("FriendProfileID"));
+                            nfcModelTag.setLastName(object.getString("LastName"));
+                            nfcModelTag.setPurpose(object.getString("Purpose"));
+                            nfcModelTag.setStatus(object.getString("Status"));
+                            nfcModelTag.setTestimonial_Text(object.getString("Testimonial_Text"));
+                            nfcModelTag.setUserPhoto(object.getString("UserPhoto"));
+                            nfcModelTag.setTestimonial_ID(object.getString("Testimonial_ID"));
+//                        Toast.makeText(getContext(), object.getString("Testimonial_Text"), Toast.LENGTH_LONG).show();
+                            allTaggs.add(nfcModelTag);
+                        }
+                    }
+                    customAdapter = new CustomAdapter(CardDetail.this, allTaggs);
+                    lstTestimonial.setAdapter(customAdapter);
+                    lstTestimonial.setExpanded(true);
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                }
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private int getCheckedItemCount(){
         int cnt = 0;
         SparseBooleanArray positions = listView1.getCheckedItemPositions();
@@ -928,6 +1099,41 @@ public class CardDetail extends NfcActivity
         return result;
     }
 
+    public void CustomProgressDialog(final String loading)
+    {
+        rlProgressDialog.setVisibility(View.VISIBLE);
+        tvProgressing.setText(loading);
+
+        Animation anim = AnimationUtils.loadAnimation(CardDetail.this,R.anim.anticlockwise);
+        ivConnecting1.startAnimation(anim);
+        Animation anim1 = AnimationUtils.loadAnimation(CardDetail.this,R.anim.clockwise);
+        ivConnecting2.startAnimation(anim1);
+
+        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
+        for (int i = 350; i <= SPLASHTIME; i = i + 350)
+        {
+            final int j = i;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run()
+                {
+                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
+                    {
+                        tvProgressing.setText(loading+".");
+                    }
+                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
+                    {
+                        tvProgressing.setText(loading+"..");
+                    }
+                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+
+                }
+            }, i);
+        }
+    }
 
     private class HttpAsyncTaskGroup extends AsyncTask<String, Void, String>
     {
@@ -937,10 +1143,10 @@ public class CardDetail extends NfcActivity
         protected void onPreExecute()
         {
             super.onPreExecute();
-            /*dialog = new ProgressDialog(CardDetail.this);
+            dialog = new ProgressDialog(CardDetail.this);
             dialog.setMessage("Fetching Circles...");
-            dialog.show();
-            dialog.setCancelable(false);*/
+            //dialog.show();
+            dialog.setCancelable(false);
 
             String loading = "Fetching Circles" ;
             CustomProgressDialog(loading);
@@ -955,9 +1161,8 @@ public class CardDetail extends NfcActivity
         @Override
         protected void onPostExecute(String result)
         {
-//            dialog.dismiss();
+           // dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
-
             try
             {
                 if (result != null)
@@ -1003,14 +1208,13 @@ public class CardDetail extends NfcActivity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            /*dialog = new ProgressDialog(CardDetail.this);
+            dialog = new ProgressDialog(CardDetail.this);
             dialog.setMessage("Adding Friend...");
             //dialog.setTitle("Saving Reminder");
-            dialog.show();
-            dialog.setCancelable(false);*/
+            //dialog.show();
+            dialog.setCancelable(false);
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
-
             String loading = "Adding Friend" ;
             CustomProgressDialog(loading);
         }
@@ -1022,13 +1226,10 @@ public class CardDetail extends NfcActivity
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result)
-        {
-//            dialog.dismiss();
+        protected void onPostExecute(String result) {
+           // dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
-
-            try
-            {
+            try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
                     String Success = jsonObject.getString("Success");
@@ -1056,16 +1257,13 @@ public class CardDetail extends NfcActivity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-           /* dialog = new ProgressDialog(CardDetail.this);
+            dialog = new ProgressDialog(CardDetail.this);
             dialog.setMessage("Fetching Cards...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);*/
+            dialog.setCancelable(false);
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
-
-            String loading = "Fetching Cards" ;
-            CustomProgressDialog(loading);
         }
 
         @Override
@@ -1075,11 +1273,8 @@ public class CardDetail extends NfcActivity
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result)
-        {
-//            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
-
+        protected void onPostExecute(String result) {
+            dialog.dismiss();
             try
             {
                 if (result != null)
@@ -1236,6 +1431,7 @@ public class CardDetail extends NfcActivity
                         txtPH.setText("Phone No.");
                         llTeleBox.setVisibility(View.GONE);
                     } else {
+     //                   Phone1.trim();
 //                        Phone1 = Phone1.trim();
                         Phone1 = Phone1.replaceAll("\\s+", "").trim();
                         /*int number = Integer.parseInt(Phone1);
@@ -1254,8 +1450,7 @@ public class CardDetail extends NfcActivity
                         txtMob.setText(Mobile1);
                     }
 
-                    if (personAddress.startsWith(" ")
-                            || personAddress.equalsIgnoreCase(null)
+                    if (personAddress == null
                             || personAddress.equalsIgnoreCase("")) {
                         txtAddress.setText("Address");
                         llAddressBox.setVisibility(View.GONE);
@@ -1688,42 +1883,6 @@ public class CardDetail extends NfcActivity
 
         // 11. return result
         return result;
-    }
-
-    public void CustomProgressDialog(final String loading)
-    {
-        rlProgressDialog.setVisibility(View.VISIBLE);
-        tvProgressing.setText(loading);
-
-        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
-        ivConnecting1.startAnimation(anim);
-        Animation anim1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.clockwise);
-        ivConnecting2.startAnimation(anim1);
-
-        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
-        for (int i = 350; i <= SPLASHTIME; i = i + 350)
-        {
-            final int j = i;
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run()
-                {
-                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
-                    {
-                        tvProgressing.setText(loading+".");
-                    }
-                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
-                    {
-                        tvProgressing.setText(loading+"..");
-                    }
-                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
-                    {
-                        tvProgressing.setText(loading+"...");
-                    }
-
-                }
-            }, i);
-        }
     }
 
 
