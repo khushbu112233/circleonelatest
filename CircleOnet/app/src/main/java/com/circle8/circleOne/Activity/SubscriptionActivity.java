@@ -3,6 +3,7 @@ package com.circle8.circleOne.Activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.PixelFormat;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -232,6 +233,7 @@ public class SubscriptionActivity extends AppCompatActivity
 
                 alertDialog.setView(dialogView);
                 alertDialog.setCancelable(false);
+                alertDialog.getWindow().setFormat(PixelFormat.TRANSLUCENT);
 //                alertDialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
 //                alertDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
                 alertDialog.show();
