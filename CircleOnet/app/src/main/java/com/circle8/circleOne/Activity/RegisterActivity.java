@@ -133,6 +133,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private RelativeLayout rlProgressDialog ;
     private TextView tvProgressing ;
+    EditText etDOB;
     private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
 
     @Override
@@ -163,6 +164,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         line_view1 = (View) findViewById(R.id.vwDrag1);
         line_view2 = (View) findViewById(R.id.vwDrag2);
         imgBack = (ImageView) findViewById(R.id.imgBack);
+        etDOB = (EditText) findViewById(R.id.etDOB);
         imgBack.setOnClickListener(this);
         pDialog = new ProgressDialog(this);
         civProfilePic = (CircleImageView) findViewById(R.id.imgProfileCard);
@@ -459,6 +461,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }*/
             else if (phone_no.equals("")) {
                 Toast.makeText(getApplicationContext(), "Enter Contact Number", Toast.LENGTH_SHORT).show();
+            }
+            else if (etDOB.getText().toString().equals("")) {
+                Toast.makeText(getApplicationContext(), "Enter DOB", Toast.LENGTH_SHORT).show();
             }
             else if (gender.equals("")) {
                 Toast.makeText(getApplicationContext(), "Select Gender", Toast.LENGTH_SHORT).show();
@@ -983,6 +988,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             jsonObject.accumulate("Token", LoginActivity.pushToken);
             jsonObject.accumulate("Twitter", Twitter);
             jsonObject.accumulate("UserName", email);
+            jsonObject.accumulate("dob", etDOB.getText().toString());
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();

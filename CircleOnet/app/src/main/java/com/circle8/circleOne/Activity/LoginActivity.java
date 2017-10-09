@@ -1721,7 +1721,8 @@ public class LoginActivity extends AppCompatActivity implements
                                 CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
                                 pref.setUserData(userDataString);
 
-                                loginSession.createLoginSession(profileid, UserID, "", userName, "", "", userPassword);
+                               // Toast.makeText(getApplicationContext(), userName + " " + userPassword, Toast.LENGTH_LONG).show();
+                                loginSession.createLoginSession(profileid, UserID, "", final_email, "", "", "");
                                 if (prefs.getBoolean("firstrun", true)) {
                                     // Do first run stuff here then set 'firstrun' as false
                                     // using the following line to edit/commit prefs
@@ -1785,7 +1786,7 @@ public class LoginActivity extends AppCompatActivity implements
                                 }*/
                             } else {
                                 // imgFinger.setVisibility(View.GONE);
-                                loginSession.createLoginSession(profileid, UserID, "", userName, "", "", userPassword);
+                                loginSession.createLoginSession(profileid, UserID, "", final_email, "", "", "");
                                 if (prefs.getBoolean("firstrun", true)) {
                                     // Do first run stuff here then set 'firstrun' as false
                                     // using the following line to edit/commit prefs

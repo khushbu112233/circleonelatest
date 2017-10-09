@@ -21,6 +21,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
@@ -40,9 +41,14 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.circle8.circleOne.Adapter.CardSwipe;
+import com.circle8.circleOne.Adapter.TextRecyclerAdapter;
+import com.circle8.circleOne.Fragments.ProfileFragment;
 import com.circle8.circleOne.Helper.LoginSession;
+import com.circle8.circleOne.Model.ProfileModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
+import com.google.zxing.WriterException;
 import com.hbb20.CountryCodePicker;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -69,7 +75,15 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -129,6 +143,8 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         user_img = user.get(LoginSession.KEY_IMAGE);
         user_pass = user.get(LoginSession.KEY_PASSWORD);
 
+        Toast.makeText(getApplicationContext(),email_id+" "+user_pass,Toast.LENGTH_LONG).show();
+
         imgProfile = (CircleImageView)findViewById(R.id.imgProfile);
         etUserName = (EditText)findViewById(R.id.etUserName);
         etFirstName = (EditText)findViewById(R.id.etFirstName);
@@ -177,6 +193,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         etUserName.setText(email_id);
 
         new HttpAsyncTaskFetchLoginData().execute("http://circle8.asia:8999/Onet.svc/UserLogin");
+//        new HttpAsyncTaskProfiles().execute("http://circle8.asia:8999/Onet.svc/MyProfiles");
 
       /*  if (user_img.equals(""))
         {
@@ -1339,6 +1356,98 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                 }
             }, i);
         }
+    }
+
+    private class HttpAsyncTaskProfiles extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            /*dialog = new ProgressDialog(getActivity());
+            dialog.setMessage("Fetching Profiles...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+
+            String loading = "My Account" ;
+            CustomProgressDialog(loading);
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            return MyProfilePost(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
+
+
+        }
+    }
+
+    public  String MyProfilePost(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("numofrecords", "10" );
+            jsonObject.accumulate("pageno", "1" );
+            jsonObject.accumulate("userid", user_id);
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
     }
 
 

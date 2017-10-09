@@ -21,7 +21,6 @@ import com.onesignal.OSNotificationAction;
 import com.onesignal.OSNotificationOpenResult;
 import com.onesignal.OneSignal;
 
-import net.doo.snap.ScanbotSDKInitializer;
 
 import org.json.JSONObject;
 
@@ -48,10 +47,6 @@ public class MyApplication extends MultiDexApplication
     @Override
     public void onCreate()
     {
-        new ScanbotSDKInitializer()
-                // TODO add your license
-                // .license(this, "YOUR_SCANBOT_SDK_LICENSE_KEY")
-                .initialize(this);
         super.onCreate();
 
         mInstance = this ;

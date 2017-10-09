@@ -58,8 +58,6 @@ import com.circle8.circleOne.Adapter.AddEventAdapter;
 import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.Adapter.CardViewDataAdapter;
 import com.circle8.circleOne.Adapter.CustomAdapter;
-import com.circle8.circleOne.Adapter.EventsAdapter;
-import com.circle8.circleOne.Fragments.CameraDialogFragment;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.AssociationModel;
 import com.circle8.circleOne.Model.EventModel;
@@ -116,17 +114,6 @@ import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 
-import net.doo.snap.camera.AutoSnappingController;
-import net.doo.snap.camera.CameraOpenCallback;
-import net.doo.snap.camera.ContourDetectorFrameHandler;
-import net.doo.snap.camera.PictureCallback;
-import net.doo.snap.camera.ScanbotCameraView;
-import net.doo.snap.lib.detector.ContourDetector;
-import net.doo.snap.lib.detector.DetectionResult;
-import net.doo.snap.lib.detector.Line2D;
-import net.doo.snap.ui.EditPolygonImageView;
-import net.doo.snap.ui.MagnifierView;
-import net.doo.snap.ui.PolygonView;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -161,9 +148,7 @@ import static junit.framework.Assert.assertEquals;
 
 public class EditProfileActivity extends AppCompatActivity implements
         View.OnClickListener,
-        GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks,
-        PictureCallback,
-        ContourDetectorFrameHandler.ResultHandler
+        GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks
 {
     public static final String PACKAGE = "com.circle8.circleOne";
     private static final int PICKFILE_RESULT_CODE = 1;
@@ -262,11 +247,6 @@ public class EditProfileActivity extends AppCompatActivity implements
     private static final int PERMISSIONS_REQUEST_CAMERA = 314;
     FrameLayout FrameScanBotCamera;
 
-    private ScanbotCameraView cameraView;
-    private PolygonView polygonView;
-    private ImageView resultView;
-    private ContourDetectorFrameHandler contourDetectorFrameHandler;
-    private AutoSnappingController autoSnappingController;
     private Toast userGuidanceToast;
     private List<AssociationModel> associationList, eventList;
     private boolean flashEnabled = false;
@@ -274,8 +254,6 @@ public class EditProfileActivity extends AppCompatActivity implements
     private Bitmap documentImage;
     ArrayList<String> final_associationIdArray, final_eventIdArray;
     ArrayList<String> final_associationNameArray, final_eventNameArray;
-    private static EditPolygonImageView editPolygonView;
-    private MagnifierView magnifierView;
     private Bitmap originalBitmap;
     private ImageView resultImageView;
     private Button cropButton;
@@ -339,37 +317,17 @@ public class EditProfileActivity extends AppCompatActivity implements
         activity = EditProfileActivity.this;
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-        cameraView = (ScanbotCameraView) findViewById(R.id.camera);
-        cameraView.setCameraOpenCallback(new CameraOpenCallback() {
-            @Override
-            public void onCameraOpened() {
-                cameraView.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        cameraView.continuousFocus();
-                        cameraView.useFlash(flashEnabled);
-                    }
-                }, 700);
-            }
-        });
+
 
         recyclerEvents = (RecyclerView) findViewById(R.id.recyclerEvents);
         edtProfileName = (EditText) findViewById(R.id.edtProfileName);
         ivProfileDelete = (ImageView) findViewById(R.id.ivProfileDelete);
         imgProfileShare = (ImageView) findViewById(R.id.imgProfileShare);
-        resultView = (ImageView) findViewById(R.id.result);
-        rltGallery = (RelativeLayout) findViewById(R.id.rltGallery);
         mAuth = FirebaseAuth.getInstance();
-        editPolygonView = (EditPolygonImageView) findViewById(R.id.polygonView1);
         // editPolygonView.setImageResource(R.drawable.test_receipt);
         //    originalBitmap = ((BitmapDrawable) editPolygonView.getDrawable()).getBitmap();
         appbar = (AppBarLayout) findViewById(R.id.appbar);
-        magnifierView = (MagnifierView) findViewById(R.id.magnifier);
-        // MagifierView should be set up every time when editPolygonView is set with new image
-        magnifierView.setupMagnifier(editPolygonView);
         ccpCountry = (CountryCodePicker) findViewById(R.id.ccpAddress5);
-        resultImageView = (ImageView) findViewById(R.id.resultImageView);
-        resultImageView.setVisibility(View.GONE);
 
         rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
         tvProgressing = (TextView)findViewById(R.id.txtProgressing);
@@ -391,33 +349,12 @@ public class EditProfileActivity extends AppCompatActivity implements
             }
         });
 
-        cropButton = (Button) findViewById(R.id.cropButton);
-       /* cropButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                crop();
-            }
-        });
-*/
-        backButton = (Button) findViewById(R.id.backButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                backButton.setVisibility(View.GONE);
-                resultImageView.setVisibility(View.GONE);
-
-                editPolygonView.setVisibility(View.VISIBLE);
-                cropButton.setVisibility(View.VISIBLE);
-            }
-        });
-
 
         edtWork2 = (EditText) findViewById(R.id.edtWork2);
         edtPrimary2 = (EditText) findViewById(R.id.edtPrimary2);
         edtEmail2 = (EditText) findViewById(R.id.edtEmail2);
         edtFax1 = (EditText) findViewById(R.id.edtFax1);
         edtFax2 = (EditText) findViewById(R.id.edtFax2);
-        FrameScanBotCamera = (FrameLayout) findViewById(R.id.FrameScanBotCamera);
         autoCompleteCompany = (AutoCompleteTextView) findViewById(R.id.autoCompleteCompany);
         autoCompleteDesignation = (AutoCompleteTextView) findViewById(R.id.autoCompleteDesignation);
         autoCompleteIndustry = (AutoCompleteTextView) findViewById(R.id.autoCompleteIndustry);
@@ -533,12 +470,6 @@ public class EditProfileActivity extends AppCompatActivity implements
 
         }
 
-        findViewById(R.id.snap).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cameraView.takePicture(false);
-            }
-        });
         client = new TwitterAuthClient();
         imgTwitter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -570,21 +501,6 @@ public class EditProfileActivity extends AppCompatActivity implements
             }
         });
 
-        findViewById(R.id.done).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FrameScanBotCamera.setVisibility(View.GONE);
-                cameraView.stopPreview();
-                final_ImgBase64 = BitMapToString(documentImage);
-                //   Upload();
-                CardSwipe.imageView.setImageBitmap(documentImage);
-                if (cardType.equals("front"))
-                    new HttpAsyncTaskFrontUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
-                else if (cardType.equals("back"))
-                    new HttpAsyncTaskBackUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
-
-            }
-        });
 
         imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -597,21 +513,6 @@ public class EditProfileActivity extends AppCompatActivity implements
             }
         });
 
-        findViewById(R.id.flash).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                flashEnabled = !flashEnabled;
-                cameraView.useFlash(flashEnabled);
-            }
-        });
-
-        findViewById(R.id.autoSnappingToggle).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                autoSnappingEnabled = !autoSnappingEnabled;
-                setAutoSnapEnabled(autoSnappingEnabled);
-            }
-        });
 
         imgFb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1328,8 +1229,8 @@ public class EditProfileActivity extends AppCompatActivity implements
         ft.addToBackStack(null);
 
         // Create and show the dialog.
-        DialogFragment newFragment = CameraDialogFragment.newInstance();
-        newFragment.show(ft, "dialog");
+       /* DialogFragment newFragment = CameraDialogFragment.newInstance();
+        newFragment.show(ft, "dialog");*/
     }
 
     @Override
@@ -1443,7 +1344,6 @@ public class EditProfileActivity extends AppCompatActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-        cameraView.onResume();
         callbackManager = CallbackManager.Factory.create();
 
         loginButton = (LoginButton) findViewById(R.id.login_button);
@@ -1515,9 +1415,9 @@ public class EditProfileActivity extends AppCompatActivity implements
                         userGuidanceToast.setGravity(Gravity.CENTER, 0, 0);
                         setAutoSnapEnabled(true);*/
 
-                        Intent intent1 = new Intent(getApplicationContext(), ScanbotCamera.class);
+                        /*Intent intent1 = new Intent(getApplicationContext(), ScanbotCamera.class);
                         intent1.putExtra("from", "edit");
-                        startActivity(intent1);
+                        startActivity(intent1);*/
                     }
                 } else if (items[item].equals("Choose from Library")) {
                     userChoosenTask = "Choose from Library";
@@ -1531,102 +1431,6 @@ public class EditProfileActivity extends AppCompatActivity implements
             }
         });
         builder.show();
-    }
-
-    @Override
-    public boolean handleResult(final ContourDetectorFrameHandler.DetectedFrame detectedFrame) {
-        // Here you are continuously notified about contour detection results.
-        // For example, you can show a user guidance text depending on the current detection status.
-        this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                showUserGuidance(detectedFrame.detectionResult);
-            }
-        });
-
-        return false; // typically you need to return false
-    }
-
-    private void showUserGuidance(final DetectionResult result) {
-      /*  if (!autoSnappingEnabled) {
-            return;
-        }
-*/
-        switch (result) {
-            case OK:
-                userGuidanceToast.setText("Don't move");
-                userGuidanceToast.show();
-                break;
-            case OK_BUT_TOO_SMALL:
-                userGuidanceToast.setText("Move closer");
-                userGuidanceToast.show();
-                break;
-            case OK_BUT_BAD_ANGLES:
-                userGuidanceToast.setText("Perspective");
-                userGuidanceToast.show();
-                break;
-            case ERROR_NOTHING_DETECTED:
-                userGuidanceToast.setText("No Document");
-                userGuidanceToast.show();
-                break;
-            case ERROR_TOO_NOISY:
-                userGuidanceToast.setText("Background too noisy");
-                userGuidanceToast.show();
-                break;
-            case ERROR_TOO_DARK:
-                userGuidanceToast.setText("Poor light");
-                userGuidanceToast.show();
-                break;
-            default:
-                userGuidanceToast.cancel();
-                break;
-        }
-    }
-
-    @Override
-    public void onPictureTaken(byte[] image, int imageOrientation) {
-        // Here we get the full image from the camera.
-        // Implement a suitable async(!) detection and image handling here.
-        // This is just a demo showing detected image as downscaled preview image.
-
-        // Decode Bitmap from bytes of original image:
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = 8; // use 1 for original size (if you want no downscale)!
-        // in this demo we downscale the image to 1/8 for the preview.
-        Bitmap originalBitmap = BitmapFactory.decodeByteArray(image, 0, image.length, options);
-
-        // rotate original image if required:
-        if (imageOrientation > 0) {
-            final Matrix matrix = new Matrix();
-            matrix.setRotate(imageOrientation, originalBitmap.getWidth() / 2f, originalBitmap.getHeight() / 2f);
-            originalBitmap = Bitmap.createBitmap(originalBitmap, 0, 0, originalBitmap.getWidth(), originalBitmap.getHeight(), matrix, false);
-        }
-
-        // Run document detection on original image:
-        final ContourDetector detector = new ContourDetector();
-        detector.detect(originalBitmap);
-        documentImage = detector.processImageAndRelease(originalBitmap, detector.getPolygonF(), ContourDetector.IMAGE_FILTER_NONE);
-        resultView.post(new Runnable() {
-            @Override
-            public void run() {
-                resultView.setImageBitmap(documentImage);
-                cameraView.continuousFocus();
-                cameraView.startPreview();
-            }
-        });
-    }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        cameraView.onPause();
-    }
-
-    private void setAutoSnapEnabled(boolean enabled) {
-        autoSnappingController.setEnabled(enabled);
-        contourDetectorFrameHandler.setEnabled(enabled);
-        polygonView.setVisibility(enabled ? View.VISIBLE : View.GONE);
     }
 
     private void galleryCardIntent() {
@@ -2672,10 +2476,10 @@ public class EditProfileActivity extends AppCompatActivity implements
                 bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
                 originalBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
 
-                Intent intent = new Intent(getApplicationContext(), com.circle8.circleOne.ScanBotGallery.MainActivity.class);
+               /* Intent intent = new Intent(getApplicationContext(), com.circle8.circleOne.ScanBotGallery.MainActivity.class);
                 intent.putExtra("bitmap", originalBitmap);
                 intent.putExtra("from", "edit");
-                startActivity(intent);
+                startActivity(intent);*/
              /*   editPolygonView.setImageBitmap(originalBitmap);
 
 
@@ -2726,49 +2530,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             new HttpAsyncTaskBackUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
     }
 
-    public static class InitImageViewTask extends AsyncTask<Bitmap, Void, InitImageResult> {
-
-        @Override
-        protected InitImageResult doInBackground(Bitmap... params) {
-            Bitmap image = params[0];
-            ContourDetector detector = new ContourDetector();
-            final DetectionResult detectionResult = detector.detect(image);
-            Pair<List<Line2D>, List<Line2D>> linesPair = null;
-            List<PointF> polygon = new ArrayList<>(EditPolygonImageView.DEFAULT_POLYGON);
-            switch (detectionResult) {
-                case OK:
-                case OK_BUT_BAD_ANGLES:
-                case OK_BUT_TOO_SMALL:
-                case OK_BUT_BAD_ASPECT_RATIO:
-                    linesPair = new Pair<>(detector.getHorizontalLines(), detector.getVerticalLines());
-                    polygon = detector.getPolygonF();
-                    break;
-            }
-
-            return new InitImageResult(linesPair, polygon);
-        }
-
-        @Override
-        protected void onPostExecute(final InitImageResult initImageResult) {
-            // set detected polygon and lines into EditPolygonImageView
-            editPolygonView.setPolygon(initImageResult.polygon);
-            if (initImageResult.linesPair != null) {
-                editPolygonView.setLines(initImageResult.linesPair.first, initImageResult.linesPair.second);
-            }
-        }
-    }
-
-    static class InitImageResult {
-        final Pair<List<Line2D>, List<Line2D>> linesPair;
-        final List<PointF> polygon;
-
-        InitImageResult(final Pair<List<Line2D>, List<Line2D>> linesPair, final List<PointF> polygon) {
-            this.linesPair = linesPair;
-            this.polygon = polygon;
-        }
-    }
-
-    public String POSTImage(String url) {
+  public String POSTImage(String url) {
         InputStream inputStream = null;
         String result = "";
         try {
