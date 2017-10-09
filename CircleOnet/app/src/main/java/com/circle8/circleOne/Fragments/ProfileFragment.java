@@ -673,14 +673,12 @@ public class ProfileFragment extends Fragment
 
                                             }
 
-
                                             int countEvents;
                                             if (arrayEvents.length() >= 5) {
                                                 countEvents = 5;
                                             } else {
                                                 countEvents = arrayEvents.length();
                                             }
-
 
                                             GridLayoutManager gridLayoutManager1 = new GridLayoutManager(getContext(), countEvents, GridLayoutManager.HORIZONTAL, false);
                                             recyclerEvents.setAdapter(new TextRecyclerAdapter(listEvents));

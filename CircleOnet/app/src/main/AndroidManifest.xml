@@ -218,10 +218,6 @@
             android:name=".Activity.ForgotActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
-        <activity android:name=".Activity.ScanbotCamera" />
-        <activity
-            android:name=".ScanBotGallery.MainActivity"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.RewardsPointsActivity"
             android:screenOrientation="portrait"
@@ -236,7 +232,7 @@
         <activity
             android:name=".Activity.SearchGroupMembers"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionbar" />
+            />
         <activity
             android:name=".Activity.HistoryActivity"
             android:screenOrientation="portrait"

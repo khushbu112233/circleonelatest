@@ -15,21 +15,21 @@ public class TutorialPagerAdapter extends FragmentStatePagerAdapter
 {
     private static final int COUNT = 4;
 
-    // Images resources
+   /* // Images resources
     private static final int[] IMAGE_RES_IDS = {
             R.drawable.walkthrough_1, R.drawable.walkthrough_2, R.drawable.walkthrough_3, R.drawable.walkthrough_4, R.drawable.walkthrough_5 };
 
     // Text resources
     private static final int[] TITLES_RES_IDS = {
             R.string.app_name, R.string.app_name, R.string.app_name, R.string.app_name, R.string.app_name };
-
+*/
     public TutorialPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
     @Override
     public Fragment getItem(int position) {
-        return TutorialScreenFragment.newInstance(IMAGE_RES_IDS[position], TITLES_RES_IDS[position]);
+        return null ;//TutorialScreenFragment.newInstance(IMAGE_RES_IDS[position], TITLES_RES_IDS[position]);
     }
 
     @Override

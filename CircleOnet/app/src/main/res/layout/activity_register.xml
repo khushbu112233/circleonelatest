@@ -336,6 +336,17 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"/>
 
+        <com.circle8.circleOne.Utils.HelveticaLightEditText
+            android:id="@+id/etDOB"
+            android:layout_marginTop="3dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="15dp"
+            android:backgroundTint="@color/textColor"
+            android:textColorHint="@color/colorPrimary"
+            android:hint="DOB ( dd/mm/yyyy )"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"/>
 
         <com.circle8.circleOne.Utils.HelveticaLightEditText
             android:id="@+id/etReferrelCode"

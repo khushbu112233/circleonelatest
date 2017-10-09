@@ -99,8 +99,6 @@ dependencies {
     compile 'com.hbb20:ccp:2.0.2'
     compile 'com.stripe:stripe-java:1.47.0'
     compile 'com.stripe:stripe-android:1.0.4'
-    compile 'com.codinguser.android:contactpicker:3.0.0@aar'
-    compile 'io.scanbot:sdk-package-1:1.25.1'
     compile 'com.theartofdev.edmodo:android-image-cropper:2.5.+'
     compile 'com.neovisionaries:nv-i18n:1.22'
     testCompile 'junit:junit:4.12'

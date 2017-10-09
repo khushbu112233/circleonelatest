@@ -11,8 +11,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.circle8.circleOne.Fragments.CameraDialogFragment;
-
 public class MainActivity extends AppCompatActivity {
     private static final int PERMISSIONS_REQUEST_CAMERA = 314;
 
@@ -64,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         ft.addToBackStack(null);
 
         // Create and show the dialog.
-        DialogFragment newFragment = CameraDialogFragment.newInstance();
-        newFragment.show(ft, "dialog");
+       /* DialogFragment newFragment = CameraDialogFragment.newInstance();
+        newFragment.show(ft, "dialog");*/
     }
 }

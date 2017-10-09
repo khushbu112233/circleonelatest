@@ -311,9 +311,9 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                     userChoosenTask = "Take Photo";
                     if (result1) {
 
-                        Intent intent1 = new Intent(getApplicationContext(), ScanbotCamera.class);
+                        /*Intent intent1 = new Intent(getApplicationContext(), ScanbotCamera.class);
                         intent1.putExtra("from", "newcard");
-                        startActivity(intent1);
+                        startActivity(intent1);*/
                     }
                 } else if (items[item].equals("Choose from Library")) {
                     userChoosenTask = "Choose from Library";
@@ -395,10 +395,10 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                 bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
                 originalBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
 
-                Intent intent = new Intent(getApplicationContext(), com.circle8.circleOne.ScanBotGallery.MainActivity.class);
+                /*Intent intent = new Intent(getApplicationContext(), com.circle8.circleOne.ScanBotGallery.MainActivity.class);
                 intent.putExtra("bitmap", originalBitmap);
                 intent.putExtra("from", "newcard");
-                startActivity(intent);
+                startActivity(intent);*/
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
