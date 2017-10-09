@@ -95,7 +95,7 @@ import static com.circle8.circleOne.Utils.Validation.validate;
 public class MyAccountActivity extends AppCompatActivity implements View.OnClickListener
 {
     private EditText etUserName, etFirstName, etLastName, etPassword,
-            etPasswordAgain, etEmail, etDOB, etAddress1 , etAddress2, etPhone ;
+            etPasswordAgain, etEmail, etAddress1 , etAddress2, etPhone ;
     private CircleImageView imgProfile ;
     private TextView tvSave, tvCancel, txtGender ;
     private ImageView ivFemaleround, ivFemaleImg, ivConnect, ivMiniCamera,
@@ -127,6 +127,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     int motionLength;
     int roundWidth = 0, lineWidth = 0;
     CountryCodePicker ccp;
+    EditText etDOB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -152,7 +153,6 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         etPassword = (EditText)findViewById(R.id.etPassword);
         etPasswordAgain = (EditText)findViewById(R.id.etPasswordAgain);
         etEmail = (EditText)findViewById(R.id.etEmail);
-        etDOB = (EditText)findViewById(R.id.etDob);
         etAddress1 = (EditText)findViewById(R.id.etAddress1);
         etAddress2 = (EditText)findViewById(R.id.etAddress2);
         etPhone = (EditText)findViewById(R.id.etPhone);
@@ -161,7 +161,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         tvCancel = (TextView)findViewById(R.id.tvCancel);
         txtGender = (TextView)findViewById(R.id.txtGender);
         ccp = (CountryCodePicker) findViewById(R.id.ccp);
-
+        etDOB = (EditText) findViewById(R.id.etDOB);
         rlMale = (RelativeLayout)findViewById(R.id.ivMale);
         rlFemale = (RelativeLayout)findViewById(R.id.ivFemale);
 
@@ -404,6 +404,10 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             else if (phone_no.equals(""))
             {
                 Toast.makeText(getApplicationContext(), "Enter Contact Number", Toast.LENGTH_SHORT).show();
+            }
+            else if (etDOB.getText().toString().equals(""))
+            {
+                Toast.makeText(getApplicationContext(), "Enter DOB", Toast.LENGTH_SHORT).show();
             }
             else if (gender.equals(""))
             {
@@ -1067,6 +1071,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             jsonObject.accumulate("Photo_String",register_img);
             jsonObject.accumulate("UserId", user_id );
             jsonObject.accumulate("UserName", email_id);
+            jsonObject.accumulate("dob", etDOB.getText().toString());
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();

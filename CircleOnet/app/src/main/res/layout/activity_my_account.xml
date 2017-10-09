@@ -476,6 +476,23 @@
                     android:textSize="13sp"
                     android:enabled="false"/>
             </LinearLayout>
+
+            <com.circle8.circleOne.Utils.HelveticaLightEditText
+                android:id="@+id/etDOB"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:hint="DOB ( dd/mm/yyyy) "
+                android:backgroundTint="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimary"
+                android:textColor="@color/colorPrimary"
+                android:textSize="13sp"
+                android:inputType="textPassword"
+                android:enabled="false"/>
             <com.circle8.circleOne.Utils.HelveticaLightTextView
                 android:visibility="gone"
                 android:id="@+id/tvPhoneInfo"
