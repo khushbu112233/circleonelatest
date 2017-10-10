@@ -229,7 +229,8 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
+            public void onTabUnselected(TabLayout.Tab tab)
+            {
                 int i = tab.getPosition();
                 if (i == 0) {
                     View view = tab.getCustomView();
@@ -241,14 +242,12 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                 } else if (i == 1) {
                     //   View view1 = getLayoutInflater().inflate(R.layout.tab_view, null);
                     // view1.findViewById(R.id.icon).set(R.drawable.ic_icon1);
-
                     View view = tab.getCustomView();
                     ImageView imageView = (ImageView) view.findViewById(R.id.icon);
                     imageView.setImageResource(R.drawable.ic_icon2);
                     TextView textView = (TextView) view.findViewById(R.id.txtTab);
                     textView.setText("Connect");
                     textView.setTextColor(getResources().getColor(R.color.unselected));
-
                 } else if (i == 2) {
                     View view = tab.getCustomView();
                     ImageView imageView = (ImageView) view.findViewById(R.id.icon);
@@ -489,7 +488,8 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         tabLayout.getTabAt(3).setCustomView(tabThree1);
     }*/
 
-    public void showDialog(Context context, int x, int y) {
+    public void showDialog(Context context, int x, int y)
+    {
         // x -->  X-Cordinate
         // y -->  Y-Cordinate
         final Dialog dialog = new Dialog(context, R.style.PauseDialog);
