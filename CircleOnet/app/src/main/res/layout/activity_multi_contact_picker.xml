@@ -9,7 +9,6 @@
     <FrameLayout
         android:id="@+id/toolbar_container"
         android:layout_width="match_parent"
-
         android:layout_height="wrap_content"
         android:visibility="visible">
 
@@ -20,16 +19,15 @@
             android:background="?colorPrimary"
             app:theme="?mcpToolbarTheme"
             app:popupTheme="?mcpListPopupWindowStyleTheme">
-
-            <com.circle8.circleOne.Utils.cgTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Select Contact"
-                android:textSize="17dp"
-                android:textColor="@color/white"/>
-
             </android.support.v7.widget.Toolbar>
-
+        <com.circle8.circleOne.Utils.cgTextView
+            android:gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Select Contact"
+            android:textSize="17dp"
+            android:textColor="@color/white"/>
         <com.miguelcatalan.materialsearchview.MaterialSearchView
             android:id="@+id/search_view"
             android:layout_width="match_parent"
@@ -41,7 +39,7 @@
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.wafflecopter.multicontactpicker.MultiContactPickerActivity">
+        tools:context=".MultiContactPickerActivity">
 
         <FrameLayout
             android:layout_width="match_parent"

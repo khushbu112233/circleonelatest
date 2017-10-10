@@ -81,7 +81,6 @@ public class MultiContactPickerActivity extends AppCompatActivity implements Mat
         setContentView(R.layout.activity_multi_contact_picker);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Select Contact");
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         tvSelectBtn = (TextView) findViewById(R.id.tvSelect);
