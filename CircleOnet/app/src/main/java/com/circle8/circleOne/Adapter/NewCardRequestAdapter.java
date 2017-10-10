@@ -14,9 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.circle8.circleOne.Activity.ImageZoom;
-import com.circle8.circleOne.Activity.NewCardRequestActivity;
-import com.circle8.circleOne.Activity.Profile;
-import com.circle8.circleOne.Model.NewCardModel;
+
 import com.circle8.circleOne.Model.ProfileModel;
 import com.circle8.circleOne.R;
 import com.squareup.picasso.Picasso;

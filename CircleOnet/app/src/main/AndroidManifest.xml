@@ -70,10 +70,6 @@
             android:name=".Activity.EventsSelectOption"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.Profile"
-            android:screenOrientation="portrait"
-            android:theme="@style/NoActionbar" />
-        <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
@@ -113,9 +109,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.NFCDemo"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Activity.VolleyDemo"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.MainActivity"
