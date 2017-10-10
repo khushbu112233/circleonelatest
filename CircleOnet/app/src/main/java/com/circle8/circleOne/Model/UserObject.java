@@ -10,9 +10,11 @@ public class UserObject {
     private String gender;
     private String image;
     private String profileid;
+    private String dob;
+    private String phone;
     private boolean loginOption;
 
-    public UserObject(String profileid, String username, String email, String password, String userId, String gender, String image, boolean loginOption) {
+    public UserObject(String profileid, String username, String email, String password, String userId, String gender, String image, String dob, String phone, boolean loginOption) {
         this.profileid = profileid;
         this.username = username;
         this.email = email;
@@ -20,7 +22,25 @@ public class UserObject {
         this.userId = userId;
         this.gender = gender;
         this.image = image;
+        this.dob = dob;
+        this.phone = phone;
         this.loginOption = loginOption;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
     }
 
     public String getProfileid() {

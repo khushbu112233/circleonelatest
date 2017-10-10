@@ -491,7 +491,7 @@
                 android:textColorHint="@color/colorPrimary"
                 android:textColor="@color/colorPrimary"
                 android:textSize="13sp"
-                android:inputType="textPassword"
+                android:inputType="date"
                 android:enabled="false"/>
             <com.circle8.circleOne.Utils.HelveticaLightTextView
                 android:visibility="gone"

@@ -1,28 +1,37 @@
 package com.circle8.circleOne.Activity;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcManager;
 import android.nfc.Tag;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.util.Log;
 import android.util.TypedValue;
@@ -42,6 +51,7 @@ import com.circle8.circleOne.Fragments.List1Fragment;
 import com.circle8.circleOne.Fragments.ProfileFragment;
 import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
+import com.circle8.circleOne.MultiContactPicker;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.CircularTextView;
 import com.circle8.circleOne.Utils.CustomViewPager;
@@ -119,6 +129,8 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
     CircularTextView txtNotificationCount;
     String UserId= "", NotificationCount ;
     boolean doubleBackToExitPressedOnce = false;
+    private static final int CONTACT_PICKER_REQUEST = 991;
+    private static final int PERMISSION_REQUEST_CONTACT = 111;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -518,9 +530,22 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         lnrSyncContacts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ContactsImportActivity.class);
-                startActivity(intent);
-                dialog.dismiss();
+                /*Intent intent = new Intent(getApplicationContext(), ContactsImportActivity.class);
+                startActivity(intent);*/
+                if (ContextCompat.checkSelfPermission(CardsActivity.this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+                    new MultiContactPicker.Builder(CardsActivity.this) //Activity/fragment context
+                            .theme(R.style.MyCustomPickerTheme) //Optional - default: MultiContactPicker.Azure
+                            .hideScrollbar(false) //Optional - default: false
+                            .showTrack(true) //Optional - default: true
+                            .searchIconColor(Color.WHITE) //Option - default: White
+                            .handleColor(ContextCompat.getColor(CardsActivity.this, R.color.colorPrimary)) //Optional - default: Azure Blue
+                            .bubbleColor(ContextCompat.getColor(CardsActivity.this, R.color.colorPrimary)) //Optional - default: Azure Blue
+                            .bubbleTextColor(Color.WHITE) //Optional - default: White
+                            .showPickerForResult(CONTACT_PICKER_REQUEST);
+                }else{
+                    askForContactPermission();
+                }
+                //dialog.dismiss();
             }
         });
 
@@ -694,6 +719,110 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         dialog.getWindow().setAttributes(lp);
 
     }
+
+    public void askForContactPermission()
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+        {
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED)
+            {
+                // Should we show an explanation?
+                if (ActivityCompat.shouldShowRequestPermissionRationale(CardsActivity.this,
+                        Manifest.permission.READ_CONTACTS))
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(CardsActivity.this);
+                    builder.setTitle("Contacts access needed");
+                    builder.setPositiveButton(android.R.string.ok, null);
+                    builder.setMessage("please confirm Contacts access");//TODO put real question
+                    builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @TargetApi(Build.VERSION_CODES.M)
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            requestPermissions(
+                                    new String[]
+                                            {Manifest.permission.READ_CONTACTS}
+                                    , PERMISSION_REQUEST_CONTACT);
+                        }
+                    });
+                    builder.show();
+                    // Show an expanation to the user *asynchronously* -- don't block
+                    // this thread waiting for the user's response! After the user
+                    // sees the explanation, try again to request the permission.
+
+                }
+                else
+                {
+                    // No explanation needed, we can request the permission.
+                    ActivityCompat.requestPermissions(CardsActivity.this,
+                            new String[]{Manifest.permission.READ_CONTACTS}, PERMISSION_REQUEST_CONTACT);
+
+                    // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                    // app-defined int constant. The callback method gets the
+                    // result of the request.
+                }
+            }
+            else
+            {
+                new MultiContactPicker.Builder(CardsActivity.this) //Activity/fragment context
+                        .theme(R.style.MyCustomPickerTheme) //Optional - default: MultiContactPicker.Azure
+                        .hideScrollbar(false) //Optional - default: false
+                        .showTrack(true) //Optional - default: true
+                        .searchIconColor(Color.WHITE) //Option - default: White
+                        .handleColor(ContextCompat.getColor(CardsActivity.this, R.color.colorPrimary)) //Optional - default: Azure Blue
+                        .bubbleColor(ContextCompat.getColor(CardsActivity.this, R.color.colorPrimary)) //Optional - default: Azure Blue
+                        .bubbleTextColor(Color.WHITE) //Optional - default: White
+                        .showPickerForResult(CONTACT_PICKER_REQUEST);
+            }
+        }
+        else
+        {
+            new MultiContactPicker.Builder(CardsActivity.this) //Activity/fragment context
+                    .theme(R.style.MyCustomPickerTheme) //Optional - default: MultiContactPicker.Azure
+                    .hideScrollbar(false) //Optional - default: false
+                    .showTrack(true) //Optional - default: true
+                    .searchIconColor(Color.WHITE) //Option - default: White
+                    .handleColor(ContextCompat.getColor(CardsActivity.this, R.color.colorPrimary)) //Optional - default: Azure Blue
+                    .bubbleColor(ContextCompat.getColor(CardsActivity.this, R.color.colorPrimary)) //Optional - default: Azure Blue
+                    .bubbleTextColor(Color.WHITE) //Optional - default: White
+                    .showPickerForResult(CONTACT_PICKER_REQUEST);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
+    {
+        switch (requestCode)
+        {
+            case PERMISSION_REQUEST_CONTACT:
+            {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
+                    new MultiContactPicker.Builder(CardsActivity.this) //Activity/fragment context
+                            .theme(R.style.MyCustomPickerTheme) //Optional - default: MultiContactPicker.Azure
+                            .hideScrollbar(false) //Optional - default: false
+                            .showTrack(true) //Optional - default: true
+                            .searchIconColor(Color.WHITE) //Option - default: White
+                            .handleColor(ContextCompat.getColor(CardsActivity.this, R.color.colorPrimary)) //Optional - default: Azure Blue
+                            .bubbleColor(ContextCompat.getColor(CardsActivity.this, R.color.colorPrimary)) //Optional - default: Azure Blue
+                            .bubbleTextColor(Color.WHITE) //Optional - default: White
+                            .showPickerForResult(CONTACT_PICKER_REQUEST);
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "No permission for contacts", Toast.LENGTH_LONG).show();
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+
 
     public static void setActionBarTitle(String title) {
         textView.setText(title);

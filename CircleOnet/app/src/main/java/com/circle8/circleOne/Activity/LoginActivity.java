@@ -885,6 +885,11 @@ public class LoginActivity extends AppCompatActivity implements
                         LastName = jsonArray.getString("LastName");
                         UserPhoto = jsonArray.getString("UserPhoto");
                         String Status = jsonArray.getString("Status");
+                        String Gender = jsonArray.getString("Gender");
+                        String Phone = jsonArray.getString("Phone");
+                        String UserName = jsonArray.getString("UserName");
+                        String dob = jsonArray.getString("dob");
+
 
                         try {
                             ReferrenceCode = jsonArray.getString("ReferrenceCode");
@@ -894,12 +899,12 @@ public class LoginActivity extends AppCompatActivity implements
                         if (Status.equalsIgnoreCase("Verified")) {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                 Gson gson = ((MyApplication) getApplication()).getGsonObject();
-                                UserObject userData = new UserObject(profileid, FirstName + " " + LastName, userName, userPassword, UserID, "", UserPhoto, false);
+                                UserObject userData = new UserObject(profileid, FirstName + " " + LastName, UserName, userPassword, UserID, Gender, UserPhoto, dob, Phone, false);
                                 String userDataString = gson.toJson(userData);
                                 CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
                                 pref.setUserData(userDataString);
 
-                                loginSession.createLoginSession(profileid, UserID, "", userName, "", "", userPassword);
+                                loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone);
                                 if (prefs.getBoolean("firstrun", true)) {
                                     // Do first run stuff here then set 'firstrun' as false
                                     // using the following line to edit/commit prefs
@@ -967,7 +972,7 @@ public class LoginActivity extends AppCompatActivity implements
                             } else {
                                 // imgFinger.setVisibility(View.GONE);
 //                                loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, final_email, UserPhoto, "");
-                                loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, userName, UserPhoto, "", userPassword);
+                                loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone);
 
                                 if (prefs.getBoolean("firstrun", true)) {
                                     // Do first run stuff here then set 'firstrun' as false
@@ -1710,19 +1715,23 @@ public class LoginActivity extends AppCompatActivity implements
                         LastName = jsonArray.getString("LastName");
                         UserPhoto = jsonArray.getString("UserPhoto");
                         String Status = jsonArray.getString("Status");
+                        String Gender = jsonArray.getString("Gender");
+                        String Phone = jsonArray.getString("Phone");
+                        String UserName = jsonArray.getString("UserName");
+                        String dob = jsonArray.getString("dob");
 
                         if (Status.equalsIgnoreCase("Verified")) {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
 
                                 Gson gson = ((MyApplication) getApplication()).getGsonObject();
-                                UserObject userData = new UserObject(profileid, FirstName + " " + LastName, userName, userPassword, UserID, "", UserPhoto, false);
+                                UserObject userData = new UserObject(profileid, FirstName + " " + LastName, UserName, "", UserID, Gender, UserPhoto, dob, Phone, false);
                                 String userDataString = gson.toJson(userData);
                                 CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
                                 pref.setUserData(userDataString);
 
                                // Toast.makeText(getApplicationContext(), userName + " " + userPassword, Toast.LENGTH_LONG).show();
-                                loginSession.createLoginSession(profileid, UserID, "", final_email, "", "", "");
+                                loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone);
                                 if (prefs.getBoolean("firstrun", true)) {
                                     // Do first run stuff here then set 'firstrun' as false
                                     // using the following line to edit/commit prefs
@@ -1786,7 +1795,7 @@ public class LoginActivity extends AppCompatActivity implements
                                 }*/
                             } else {
                                 // imgFinger.setVisibility(View.GONE);
-                                loginSession.createLoginSession(profileid, UserID, "", final_email, "", "", "");
+                                loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone);
                                 if (prefs.getBoolean("firstrun", true)) {
                                     // Do first run stuff here then set 'firstrun' as false
                                     // using the following line to edit/commit prefs

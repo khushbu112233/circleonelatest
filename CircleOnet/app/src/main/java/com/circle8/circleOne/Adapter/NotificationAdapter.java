@@ -153,17 +153,17 @@ public class NotificationAdapter extends BaseAdapter
             {
                 Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgTestRec);
             }
-            if (testimonialModels.get(position).getStatus().equalsIgnoreCase("Requested"))
+           /* if (testimonialModels.get(position).getStatus().equalsIgnoreCase("Requested"))
             {
                 holder.btnTestAcceptRec.setVisibility(View.GONE);
                 holder.btnTestRejectRec.setVisibility(View.GONE);
                 holder.txtRequestedTestRec.setVisibility(View.VISIBLE);
-            }
+            }*/
             holder.txtTestPurposeRec.setText(purpose);
             holder.txtTestNameRec.setText(testimonialModels.get(position).getFirstName());
         }
 
-        else if (purpose.equalsIgnoreCase("Connection Accepted"))
+        /*else if (purpose.equalsIgnoreCase("Connection Accepted"))
         {
             lnrFriend.setVisibility(View.VISIBLE);
             lnrTestReq.setVisibility(View.GONE);
@@ -185,33 +185,9 @@ public class NotificationAdapter extends BaseAdapter
             }
             holder.txtFriendPurpose.setText(purpose);
             holder.txtFriendName.setText(testimonialModels.get(position).getFirstName());
-        }
+        }*/
 
-        else if (purpose.equalsIgnoreCase("Connection Accepted"))
-        {
-            lnrFriend.setVisibility(View.VISIBLE);
-            lnrTestReq.setVisibility(View.GONE);
-            lnrTestRec.setVisibility(View.GONE);
-            if (testimonialModels.get(position).getUserPhoto().equals(""))
-            {
-                holder.imgFriend.setImageResource(R.drawable.usr);
-            }
-            else
-            {
-                Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgFriend);
-            }
-            if (testimonialModels.get(position).getStatus().equalsIgnoreCase("Accepted"))
-            {
-                holder.btnAcceptFriend.setVisibility(View.GONE);
-                holder.btnRejectFriend.setVisibility(View.GONE);
-                holder.txtRequested.setVisibility(View.VISIBLE);
-                holder.txtRequested.setText("Accepted");
-            }
-            holder.txtFriendPurpose.setText(purpose);
-            holder.txtFriendName.setText(testimonialModels.get(position).getFirstName());
-        }
-
-        else if (purpose.equalsIgnoreCase("Access Right Accepted"))
+        /*else if (purpose.equalsIgnoreCase("Access Right Accepted"))
         {
             lnrFriend.setVisibility(View.VISIBLE);
             lnrTestReq.setVisibility(View.GONE);
@@ -231,9 +207,9 @@ public class NotificationAdapter extends BaseAdapter
             holder.txtRequested.setText("Accepted");
             holder.txtFriendPurpose.setText(purpose);
             holder.txtFriendName.setText(testimonialModels.get(position).getFirstName());
-        }
+        }*/
 
-        else if (purpose.equalsIgnoreCase("Access Right Requested"))
+        else if (purpose.equalsIgnoreCase("Access Right Requested") || purpose.equalsIgnoreCase("Connection Requested"))
         {
             lnrFriend.setVisibility(View.VISIBLE);
             lnrTestReq.setVisibility(View.GONE);
@@ -246,12 +222,14 @@ public class NotificationAdapter extends BaseAdapter
             {
                 Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgFriend);
             }
-            if (testimonialModels.get(position).getStatus().equalsIgnoreCase("Requested"))
+            holder.btnAcceptFriend.setVisibility(View.VISIBLE);
+            holder.btnRejectFriend.setVisibility(View.VISIBLE);
+            /*if (testimonialModels.get(position).getStatus().equalsIgnoreCase("Requested"))
             {
                 holder.btnAcceptFriend.setVisibility(View.GONE);
                 holder.btnRejectFriend.setVisibility(View.GONE);
                 holder.txtRequested.setVisibility(View.VISIBLE);
-            }
+            }*/
             holder.txtFriendPurpose.setText(purpose);
             holder.txtFriendName.setText(testimonialModels.get(position).getFirstName());
         }
@@ -270,16 +248,16 @@ public class NotificationAdapter extends BaseAdapter
                 Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgTestReq);
             }
 
-            if (testimonialModels.get(position).getStatus().equals("Requested")){
+            /*if (testimonialModels.get(position).getStatus().equals("Requested")){
                 holder.btnTestReject.setVisibility(View.GONE);
                 holder.btnTestWrite.setVisibility(View.GONE);
                 holder.txtRequestedTestReq.setVisibility(View.VISIBLE);
-            }
+            }*/
 
             holder.txtTestPurpose.setText(purpose);
             holder.txtTestName.setText(testimonialModels.get(position).getFirstName());
         }
-        else if (purpose.equalsIgnoreCase("Sent Testimonial Request"))
+        /*else if (purpose.equalsIgnoreCase("Sent Testimonial Request"))
         {
             lnrFriend.setVisibility(View.GONE);
             lnrTestReq.setVisibility(View.VISIBLE);
@@ -301,7 +279,7 @@ public class NotificationAdapter extends BaseAdapter
 
             holder.txtTestPurpose.setText(purpose);
             holder.txtTestName.setText(testimonialModels.get(position).getFirstName());
-        }
+        }*/
         else
         {
             lnrFriend.setVisibility(View.VISIBLE);
@@ -315,13 +293,10 @@ public class NotificationAdapter extends BaseAdapter
             {
                 Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgFriend);
             }
-            if (testimonialModels.get(position).getStatus().equalsIgnoreCase("Accepted"))
-            {
-                holder.btnAcceptFriend.setVisibility(View.GONE);
-                holder.btnRejectFriend.setVisibility(View.GONE);
-                holder.txtRequested.setVisibility(View.VISIBLE);
-                holder.txtRequested.setText("Accepted");
-            }
+            holder.btnAcceptFriend.setVisibility(View.GONE);
+            holder.btnRejectFriend.setVisibility(View.GONE);
+            holder.txtRequested.setVisibility(View.GONE);
+            holder.txtRequested.setText("Accepted");
             holder.txtFriendPurpose.setText(purpose);
             holder.txtFriendName.setText(testimonialModels.get(position).getFirstName());
         }

@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.github.dcendents.android-maven'
+group='com.github.xbroak'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
@@ -101,6 +102,9 @@ dependencies {
     compile 'com.stripe:stripe-android:1.0.4'
     compile 'com.theartofdev.edmodo:android-image-cropper:2.5.+'
     compile 'com.neovisionaries:nv-i18n:1.22'
+    compile 'com.l4digital.fastscroll:fastscroll:1.0.4'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'com.miguelcatalan:materialsearchview:1.4.0'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

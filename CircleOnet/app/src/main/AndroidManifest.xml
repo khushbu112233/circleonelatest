@@ -239,6 +239,9 @@
             android:theme="@style/NoActionbar"/>
         <activity android:name=".Activity.TestimonialCardDetail"
             android:screenOrientation="portrait"/>
+        <activity android:name=".MultiContactPickerActivity"
+            android:label="@string/picker_title">
+        </activity>
     </application>
 
 </manifest>
