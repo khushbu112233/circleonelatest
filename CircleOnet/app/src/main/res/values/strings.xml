@@ -62,5 +62,8 @@
     <string name="add_group_member">Please add members</string>
 
     <string name="delete">Delete</string>
+    <string name="picker_title">Select Contacts</string>
+    <string name="tv_select_btn_text_disabled">Select</string>
+    <string name="tv_select_btn_text_enabled">Select(%1$s)</string>
 
 </resources>

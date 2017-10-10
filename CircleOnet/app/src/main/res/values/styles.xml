@@ -56,11 +56,42 @@
         <item name="windowActionBar">false</item>
     </style>
 
+
+    <style name="MyCustomPickerTheme" parent="MultiContactPicker.Azure">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="mcpToolbarTheme">@style/MyCustomToolbarTheme</item>
+        <item name="mcpListPopupWindowStyleTheme">@style/MyCustomToolbarTheme</item>
+    </style>
+
+    <style name="MyCustomToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textColorPrimary">@color/colorAccent</item>
+        <item name="android:textColorSecondary">@color/colorAccent</item>
+    </style>
+
     <style name="Blue_AlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:colorAccent">@color/white</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textColorPrimary">@color/white</item>
+    </style>
+
+    <style name="MultiContactPicker.Azure" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowActionBar">false</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/azureColorPrimary</item>
+        <item name="colorPrimaryDark">@color/azureColorPrimaryDark</item>
+        <item name="mcpToolbarTheme">@style/Toolbar.Azure</item>
+        <item name="mcpListPopupWindowStyleTheme">@style/Popup.Azure</item>
+    </style>
+
+    <style name="Toolbar.Azure" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+
+    </style>
+
+    <style name="Popup.Azure" parent="Widget.AppCompat.Light.ListPopupWindow">
+
     </style>
 
 </resources>
