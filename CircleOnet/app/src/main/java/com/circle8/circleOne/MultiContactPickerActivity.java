@@ -56,7 +56,7 @@ public class MultiContactPickerActivity extends AppCompatActivity implements Mat
     public static final String EXTRA_RESULT_SELECTION = "extra_result_selection";
     private FastScrollRecyclerView recyclerView;
     private List<Contact> contactList = new ArrayList<>();
-    private TextView tvSelectBtn;
+    private TextView tvSelectBtn, tvCancel;
     private MultiContactPickerAdapter adapter;
     private Toolbar toolbar;
     private MaterialSearchView searchView;
@@ -84,6 +84,7 @@ public class MultiContactPickerActivity extends AppCompatActivity implements Mat
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         tvSelectBtn = (TextView) findViewById(R.id.tvSelect);
+        tvCancel = (TextView) findViewById(R.id.tvCancel);
         recyclerView = (FastScrollRecyclerView) findViewById(R.id.recyclerView);
         loginSession = new LoginSession(getApplicationContext());
         HashMap<String, String> user = loginSession.getUserDetails();
@@ -140,6 +141,14 @@ public class MultiContactPickerActivity extends AppCompatActivity implements Mat
                 new HttpAsyncTaskImportContacts().execute("http://circle8.asia:8999/Onet.svc/ImportContacts");
                // setResult(RESULT_OK, result);
                // finish();
+            }
+        });
+
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MultiContactPickerActivity.this, CardsActivity.class));
+                finish();
             }
         });
 
