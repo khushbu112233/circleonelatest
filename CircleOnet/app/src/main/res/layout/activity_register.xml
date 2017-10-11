@@ -284,7 +284,7 @@
             android:id="@+id/tvAgainPasswordInfo"
             android:textColor="@color/unselected"
             android:textSize="10sp"
-            android:text="Enter Re-Password"
+            android:text="Repeat Password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"/>

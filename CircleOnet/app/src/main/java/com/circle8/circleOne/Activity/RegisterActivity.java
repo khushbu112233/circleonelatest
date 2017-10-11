@@ -20,6 +20,8 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -288,6 +290,22 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
+        etConfirmPass.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                String strPass1 = etPassword.getText().toString();
+                String strPass2 = etConfirmPass.getText().toString();
+                if (strPass1.startsWith(strPass2)) {
+                    tvRePasswordInfo.setVisibility(View.GONE);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Password does not match", Toast.LENGTH_LONG).show();
+                    tvRePasswordInfo.setVisibility(View.VISIBLE);
+                    tvRePasswordInfo.setText("Password does not match");
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
 
         ivMaleRound.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             public void onGlobalLayout() {
