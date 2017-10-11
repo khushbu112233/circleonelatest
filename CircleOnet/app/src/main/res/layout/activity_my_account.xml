@@ -152,7 +152,7 @@
                         <de.hdodenhof.circleimageview.CircleImageView
                             app:civ_border_width="1dp"
                             app:civ_border_color="@color/white"
-                            android:src="@drawable/usr"
+                            android:src="@drawable/usr_white"
                             android:id="@+id/imgProfile"
                             android:layout_width="70dp"
                             android:layout_height="70dp" />
@@ -160,7 +160,7 @@
                             android:id="@+id/ivMiniCamera"
                             android:layout_width="18dp"
                             android:layout_height="18dp"
-                            android:src="@drawable/mini_camera_blue"
+                            android:src="@drawable/ic_white_camera"
                             android:layout_alignParentRight="false"
                             android:layout_marginTop="50dp"
                             android:layout_marginLeft="50dp"/>
@@ -477,22 +477,37 @@
                     android:enabled="false"/>
             </LinearLayout>
 
-            <com.circle8.circleOne.Utils.HelveticaLightEditText
-                android:id="@+id/etDOB"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="15dp"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="0dp"
                 android:gravity="center_vertical"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:hint="DOB ( dd/mm/yyyy) "
-                android:backgroundTint="@color/colorPrimary"
-                android:textColorHint="@color/colorPrimary"
-                android:textColor="@color/colorPrimary"
-                android:textSize="13sp"
-                android:inputType="date"
-                android:enabled="false"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="*"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginRight="0dp" />
+                <com.circle8.circleOne.Utils.HelveticaLightEditText
+                    android:textStyle="bold"
+                    android:id="@+id/etDOB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:hint="DOB ( dd/mm/yyyy) "
+                    android:backgroundTint="@color/colorPrimary"
+                    android:textColorHint="@color/colorPrimary"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13sp"
+                    android:inputType="date"
+                    android:enabled="false"/>
+            </LinearLayout>
+
             <com.circle8.circleOne.Utils.HelveticaLightTextView
                 android:visibility="gone"
                 android:id="@+id/tvPhoneInfo"

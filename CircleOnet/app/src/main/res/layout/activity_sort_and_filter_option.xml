@@ -145,7 +145,7 @@
                 <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sort by Recently Added"
+                    android:text="Sort by recently added"
                     android:id="@+id/textDrawer3"
                     android:textSize="14dp"
                     android:layout_marginLeft="20dp"
@@ -175,7 +175,7 @@
                 <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sort by Name"
+                    android:text="Sort by name"
                     android:id="@+id/textDrawer4"
                     android:textSize="14dp"
                     android:layout_marginLeft="20dp"
@@ -204,7 +204,7 @@
                 <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sort by Company Name"
+                    android:text="Sort by company name"
                     android:id="@+id/textDrawer5"
                     android:textSize="14dp"
                     android:layout_marginLeft="20dp"
@@ -233,7 +233,7 @@
                 <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="by Company"
+                    android:text="By company"
                     android:id="@+id/textDrawer6"
                     android:textSize="14dp"
                     android:layout_marginLeft="20dp"
@@ -262,7 +262,7 @@
                 <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="by Title"
+                    android:text="By title"
                     android:id="@+id/textDrawer7"
                     android:textSize="14dp"
                     android:layout_marginLeft="20dp"
@@ -291,7 +291,7 @@
                 <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="by Industry"
+                    android:text="By industry"
                     android:id="@+id/textDrawer8"
                     android:textSize="14dp"
                     android:layout_marginLeft="20dp"
@@ -320,7 +320,7 @@
                 <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="by Association"
+                    android:text="By Association"
                     android:id="@+id/textDrawer9"
                     android:textSize="14dp"
                     android:layout_marginLeft="20dp"

@@ -1677,5 +1677,25 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(RegisterActivity.this, R.style.Blue_AlertDialog);
+        alert.setMessage("Are you sure you want to leave this page");
+        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //do your work here
+                dialog.dismiss();
+                finish();
+            }
+        });
+        alert.setNegativeButton("No", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alert.show();
+    }
 }
