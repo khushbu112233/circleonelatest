@@ -209,7 +209,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:layout_marginTop="8dp"
-                                        android:text="Person"
+                                        android:text="Name"
                                         android:textAlignment="center"
                                         android:textColor="@color/white"
                                         android:textSize="17dp"
@@ -1467,7 +1467,7 @@
                                     android:background="@drawable/txt_box_blue"
                                     android:gravity="start"
                                     android:padding="10dp"
-                                    android:hint="Link Address"
+                                    android:hint="Link URL"
                                     android:textSize="12sp" />
                             </RelativeLayout>
                         </LinearLayout>
@@ -1533,7 +1533,7 @@
                                     android:background="@drawable/txt_box_blue"
                                     android:gravity="start"
                                     android:padding="10dp"
-                                    android:hint="Link Address"
+                                    android:hint="Link URL"
                                     android:textSize="12sp" />
                             </RelativeLayout>
 

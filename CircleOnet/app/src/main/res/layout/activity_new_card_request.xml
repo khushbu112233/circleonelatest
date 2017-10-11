@@ -33,7 +33,7 @@
             android:layout_marginTop="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Request a New Card"
+            android:text="New Card Request"
             android:textColor="@color/white"/>
 
         <com.circle8.circleOne.Utils.cgTextView
@@ -44,7 +44,7 @@
             android:layout_marginBottom="3dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Please choose the profile for the new card(s)"
+            android:text="Select profile you wish to make the request for"
             android:textColor="@color/white"/>
 
         <ImageView

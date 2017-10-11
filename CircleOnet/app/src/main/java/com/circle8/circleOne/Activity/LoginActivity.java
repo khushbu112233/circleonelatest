@@ -1011,10 +1011,10 @@ public class LoginActivity extends AppCompatActivity implements
                         }
 
                     } else {
-                        Toast.makeText(getBaseContext(), "Unable to Login..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), "Incorrect username of password..", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(getBaseContext(), "Not able to Login..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Incorrect username of password..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {

@@ -74,7 +74,7 @@
                     android:id="@+id/tvRewardName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="CIRCLE1 REWARDS POINTS"
+                    android:text="CircleOne Reward Points"
                     android:textAlignment="textStart"
                     android:textColor="@android:color/white"
                     android:textSize="13dp"
@@ -95,7 +95,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvLine"
                     android:layout_marginTop="5dp"
-                    android:text="TYPE THE CARD FOR DETAILS"
+                    android:textAllCaps="true"
+                    android:text="Tap the card for details"
                     android:textAlignment="textStart"
                     android:textColor="@android:color/white"
                     android:textSize="09dp" />

@@ -36,10 +36,7 @@
     <string name="female">Gender: <strike>Male</strike> / Female </string>
     <string name="male">Gender: Male / <strike>Female</strike> </string>
 
-    <string name="earn_point_detail">Are you an active sharer on social media, with a highly engaged
-                                        network of friends and/or family? If so, By sharing CIRCLE1 APP to
-                                        your 100 contacts, you will earn 100 CIRCLE Points, which can be
-                                        used to any CIRCLE Merchant and more discount than others.</string>
+    <string name="earn_point_detail">Do you share actively on social media to a highly engaged network? If so, you’re in for a deal. Sharing the CircleOne app to a group of 100 contacts will earn you 100 Circle Points. You’ll then be able to spend your CIRCLE Points on discounts and more at any of our participating CIRCLE Merchant outlets.</string>
 
     <integer name="viewfinder_border_width">4</integer>
     <integer name="viewfinder_border_length">60</integer>
@@ -49,8 +46,8 @@
     <string name="successful_request_sent">Notification has been sent to your selected contact group</string>
     <string name="no_connection">You do not have any connections</string>
     <string name="btn_add_profile_text">Please touch the plus button to add new profile</string>
-    <string name="msg_edit_profile">Click on profile to edit</string>
-    <string name="msg_delete_profile">Tap and Hold on the profile to delete</string>
+    <string name="msg_edit_profile">Tap on profile to edit</string>
+    <string name="msg_delete_profile">Tap and hold profile to delete</string>
     <string name="upload_doc">Upload Document</string>
     <string name="front_card">Front Card</string>
     <string name="back_card">Back Card</string>

@@ -127,7 +127,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
-                    android:text="Photo Upload"
+                    android:text="Upload Photo"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="15dp" />
@@ -160,7 +160,7 @@
             android:textSize="15dp"
             android:backgroundTint="@color/colorPrimary"
             android:textColorHint="@color/colorPrimary"
-            android:hint="* Email"
+            android:hint="* Email(Username)"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"/>
@@ -261,7 +261,7 @@
             android:textSize="15dp"
             android:backgroundTint="@color/colorPrimary"
             android:textColorHint="@color/colorPrimary"
-            android:hint="* Password again"
+            android:hint="* Re-enter Password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"/>
@@ -279,6 +279,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+            <com.circle8.circleOne.Utils.HelveticaLightTextView
+                android:layout_marginTop="3dp"
+                android:textColor="@color/textColor"
+                android:textSize="15dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimary"
+                android:text="*"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
             <com.hbb20.CountryCodePicker
                 app:ccp_defaultPhoneCode="65"
                 android:visibility="visible"
@@ -291,7 +302,7 @@
                 app:ccp_showPhoneCode="true"
                 app:ccp_contentColor="@color/colorPrimary"
                 app:ccp_showFlag="false"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="2dp"
                 android:id="@+id/ccp"
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
@@ -308,7 +319,7 @@
                     android:textSize="15dp"
                     android:backgroundTint="@color/colorPrimary"
                     android:textColorHint="@color/colorPrimary"
-                    android:hint="* Phone"
+                    android:hint=" Phone"
                     android:layout_gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

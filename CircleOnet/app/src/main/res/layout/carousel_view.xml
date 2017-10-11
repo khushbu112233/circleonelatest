@@ -27,7 +27,6 @@
             app:sl_shadowRadius="4dp">
 
             <ImageView
-                android:src="@drawable/blue_card"
                 android:id="@+id/image1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

@@ -454,7 +454,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
 
             if (!validate(user_name, first_name, last_name, password, c_password, phone_no, email)) {
-//                Toast.makeText(getApplicationContext(), "Something Wrong!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Please fill all required fields", Toast.LENGTH_SHORT).show();
             }
            /* else if (refferelCode.equals("")){
                 Toast.makeText(getApplicationContext(), "Enter Referral Code", Toast.LENGTH_SHORT).show();
