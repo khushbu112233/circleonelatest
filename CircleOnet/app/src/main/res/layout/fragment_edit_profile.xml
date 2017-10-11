@@ -198,13 +198,20 @@
                                             android:id="@+id/imgProfile"
                                             android:layout_width="70dp"
                                             android:layout_height="70dp"
-                                            android:src="@drawable/usr"
+                                            android:src="@drawable/usr_white"
                                             app:civ_border_color="@color/colorPrimary"
                                             app:civ_border_width="0dp"
                                             android:layout_alignParentTop="true"
                                             android:layout_alignParentLeft="true"
                                             android:layout_alignParentStart="true" />
-
+                                        <ImageView
+                                            android:id="@+id/ivMiniCamera"
+                                            android:layout_width="18dp"
+                                            android:layout_height="18dp"
+                                            android:src="@drawable/mini_camera_blue"
+                                            android:layout_alignParentRight="false"
+                                            android:layout_marginTop="50dp"
+                                            android:layout_marginLeft="50dp"/>
                                     </RelativeLayout>
 
                                     <com.circle8.circleOne.Utils.orkebyBoldTextView

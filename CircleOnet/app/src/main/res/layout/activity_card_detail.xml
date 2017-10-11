@@ -304,8 +304,8 @@
                                 android:id="@+id/imgProfileCard"
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
-                                android:src="@drawable/usr"
-                                app:civ_border_color="@color/colorPrimary"
+                                android:src="@drawable/usr_white"
+                                app:civ_border_color="@color/white"
                                 app:civ_border_width="2dp" />
 
                             <com.circle8.circleOne.Utils.orkebyBoldTextView
