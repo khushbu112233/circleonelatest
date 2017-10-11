@@ -74,7 +74,7 @@
                 android:layout_marginLeft="45dp"
                 android:layout_marginRight="45dp"
                 android:background="@drawable/edit_back"
-                android:hint="circle8@gmail.com"
+                android:hint="Email (Username)"
                 android:paddingBottom="10dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
