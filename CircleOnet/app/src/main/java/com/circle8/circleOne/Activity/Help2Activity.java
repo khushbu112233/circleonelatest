@@ -44,6 +44,25 @@ public class Help2Activity extends AppCompatActivity
                 finish();
             }
         });
+
+        expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener()
+        {
+            // Keep track of previous expanded parent
+            int previousGroup = -1;
+            boolean flag = false;
+
+            @Override
+            public void onGroupExpand(int groupPosition)
+            {
+                // Collapse previous parent if expanded.
+                if ((previousGroup != -1) && (groupPosition != previousGroup))
+                {
+                    expListView.collapseGroup(previousGroup);
+                }
+                previousGroup = groupPosition;
+                flag = true;
+            }
+        });
     }
 
     private void setGroupIndicatorToRight()

@@ -10,8 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:scrollbars="none"
-        android:groupIndicator="@drawable/group_indicator"
-        android:transcriptMode="alwaysScroll">
+        android:groupIndicator="@drawable/group_indicator">
 
     </ExpandableListView>
 
