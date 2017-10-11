@@ -3459,16 +3459,19 @@ public class EditProfileActivity extends AppCompatActivity implements
                  //   edtFax1.setText(Fax1);
                   //  edtFax2.setText(Fax2);
                     edtWebsite.setText(Website);
-                    edtAddress1.setText(Address1 + " " + Address2);
-                    edtAddress2.setText(Address3 + " " + Address4);
+                   /* edtAddress1.setText(Address1 + " " + Address2);
+                    edtAddress2.setText(Address3 + " " + Address4);*/
+                    edtAddress1.setText(Address1);
+                    edtAddress2.setText(Address2);
                     edtAddress3.setText(City);
                     edtAddress4.setText(State);
+                    edtAddress6.setText(Postalcode);
                     try {
                         String code = CountryCode.findByName(Country).get(0).name();
                         ccpCountry.setCountryForNameCode(code);
                     }catch (Exception e){}
                  //   edtAddress5.setText(Country);
-                    edtAddress6.setText(Postalcode);
+
                     etAttachFile.setText(Attachment_FileName);
 
                     if (Card_Front.equalsIgnoreCase("") || Card_Back.equalsIgnoreCase("")) {

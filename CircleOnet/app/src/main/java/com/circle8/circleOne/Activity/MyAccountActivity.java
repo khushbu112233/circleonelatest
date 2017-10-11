@@ -145,7 +145,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         user_pass = user.get(LoginSession.KEY_PASSWORD);
         profile_id = user.get(LoginSession.KEY_PROFILEID);
 
-        Toast.makeText(getApplicationContext(),email_id+" "+user_pass,Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(),email_id+" "+user_pass,Toast.LENGTH_LONG).show();
 
         imgProfile = (CircleImageView)findViewById(R.id.imgProfile);
         etUserName = (EditText)findViewById(R.id.etUserName);
