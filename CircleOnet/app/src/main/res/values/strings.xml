@@ -43,7 +43,7 @@
 
     <string name="registration_success">Please check your email to \n activate your account</string>
     <string name="no_friend_connection">No CircleOne name cards collected \n Start Tapping</string>
-    <string name="successful_request_sent">Notification has been sent to your selected contact group</string>
+    <string name="successful_request_sent">Contact has been successfully added to your cards \n A request has been sent to connect</string>
     <string name="no_connection">You do not have any connections</string>
     <string name="btn_add_profile_text">Please touch the plus button to add new profile</string>
     <string name="msg_edit_profile">Tap on profile to edit</string>
