@@ -206,7 +206,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     CountryCodePicker ccpCountry;
     private ExpandableHeightGridView gridView, gridViewAdded;
     private String[] array;
-    private TextView etAttachFile;
+    private EditText etAttachFile;
     private ImageView ivAttachFile;
     private CharSequence[] items;
     private String userChoosenTask;
@@ -317,8 +317,6 @@ public class EditProfileActivity extends AppCompatActivity implements
         activity = EditProfileActivity.this;
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-
-
         recyclerEvents = (RecyclerView) findViewById(R.id.recyclerEvents);
         edtProfileName = (EditText) findViewById(R.id.edtProfileName);
         ivProfileDelete = (ImageView) findViewById(R.id.ivProfileDelete);
@@ -360,7 +358,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         autoCompleteIndustry = (AutoCompleteTextView) findViewById(R.id.autoCompleteIndustry);
         gridView = (ExpandableHeightGridView) findViewById(R.id.gridView);
         gridViewAdded = (ExpandableHeightGridView) findViewById(R.id.gridViewAdded);
-        etAttachFile = (TextView) findViewById(R.id.etAttachFile);
+        etAttachFile = (EditText) findViewById(R.id.etAttachFile);
         ivAttachFile = (ImageView) findViewById(R.id.ivAttachFile);
         session = new LoginSession(getApplicationContext());
         imgDone = (TextView) findViewById(R.id.imgDone);
@@ -2784,6 +2782,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         } else {
+           // ivAttachFile.setEnabled(false);
             etAttachFile.setText(fileName);
             File imgFile = new File(fileName);
             new HttpAsyncTaskDocUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
