@@ -207,17 +207,26 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
 
         etFirstName.setText(kept1);
         etLastName.setText(remainder1);
-        if (user.get(LoginSession.KEY_PHONE).contains(" ")){
-            String name = user.get(LoginSession.KEY_PHONE);
-            String kept = name.substring(0, name.indexOf(" "));
-            String remainder = name.substring(name.indexOf(" ") + 1, name.length());
-            kept = kept.replaceAll("//+", "");
-            ccp.setCountryForPhoneCode(Integer.parseInt(kept));
-            etPhone.setText(remainder);
+
+        try
+        {
+            if (user.get(LoginSession.KEY_PHONE).contains(" ")){
+                String name = user.get(LoginSession.KEY_PHONE);
+                String kept = name.substring(0, name.indexOf(" "));
+                String remainder = name.substring(name.indexOf(" ") + 1, name.length());
+                kept = kept.replaceAll("//+", "");
+                ccp.setCountryForPhoneCode(Integer.parseInt(kept));
+                etPhone.setText(remainder);
+            }
+            else {
+                etPhone.setText(user.get(LoginSession.KEY_PHONE));
+            }
         }
-        else {
-            etPhone.setText(user.get(LoginSession.KEY_PHONE));
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
+
         //etPhone.setText(profile.getString("Phone"));
         etPassword.setText(user_pass);
         etPasswordAgain.setText(user_pass);

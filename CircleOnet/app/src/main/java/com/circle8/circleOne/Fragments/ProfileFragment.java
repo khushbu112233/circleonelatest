@@ -621,6 +621,8 @@ public class ProfileFragment extends Fragment
                                     tvCompanyName.setText(allTags.get(i).getCompanyName());
                                     tvDesi.setText(allTags.get(i).getDesignation());
                                     tvMob.setText(allTags.get(i).getMobile1());
+                                    tvWork.setText(allTags.get(i).getPhone1());
+
                                     tvAddress.setText(allTags.get(i).getAddress1()+ " "+allTags.get(i).getAddress2() + " "
                                            + allTags.get(i).getAddress3()  + " "
                                             + allTags.get(i).getAddress4() + " "
@@ -1223,8 +1225,8 @@ public class ProfileFragment extends Fragment
 
                     tvProfileName.setText(allTags.get(profileIndex).getProfile());
 
-
-                    try {
+                    try
+                    {
                         JSONObject object = jsonArray.getJSONObject(profileIndex);
                         array = object.getJSONArray("Association_Name");
                         arrayEvents = object.getJSONArray("Event_Cat_Name");
@@ -1234,13 +1236,11 @@ public class ProfileFragment extends Fragment
                         for (int i1 = 0; i1 < arrayEvents.length(); i1++) {
 
                             listEvents.add(arrayEvents.getString(i1));
-
                         }
 
                         for (int i1 = 0; i1 < array.length(); i1++) {
 
                             listAssociation.add(array.getString(i1));
-
                         }
 
                         int countAssociation;
@@ -1337,8 +1337,6 @@ public class ProfileFragment extends Fragment
                         strlinkedInUrl = allTags.get(profileIndex).getLinkedin().toString();
                     }
 
-
-
 //                    tvDesignation.setText(allTags.get(0).getDesignation());
 //                    tvDesi.setText(allTags.get(0).getDesignation());
                     if(allTags.get(profileIndex).getDesignation().equalsIgnoreCase("")
@@ -1366,14 +1364,14 @@ public class ProfileFragment extends Fragment
                         tvCompanyName.setText(allTags.get(profileIndex).getCompanyName());
                     }
 //                    tvMob.setText(allTags.get(0).getPhone());
-                    if(allTags.get(profileIndex).getPhone1().equalsIgnoreCase("")
-                            || allTags.get(profileIndex).getPhone1().equalsIgnoreCase("null"))
+                    if(allTags.get(profileIndex).getMobile1().equalsIgnoreCase("")
+                            || allTags.get(profileIndex).getMobile1().equalsIgnoreCase("null"))
                     {
                         lnrMob.setVisibility(View.GONE);
                     }
                     else
                     {
-                        tvMob.setText(allTags.get(profileIndex).getPhone1());
+                        tvMob.setText(allTags.get(profileIndex).getMobile1());
                     }
 //                    tvWebsite.setText(allTags.get(0).getWebsite());
                     if(allTags.get(profileIndex).getWebsite().equalsIgnoreCase("")
@@ -1404,14 +1402,14 @@ public class ProfileFragment extends Fragment
                     {
                         tvAssociation.setText(allTags.get(profileIndex).getAssociation());
                     }
-                    if(allTags.get(profileIndex).getFax1().equalsIgnoreCase("")
-                            || allTags.get(profileIndex).getFax1().equalsIgnoreCase("null"))
+                    if(allTags.get(profileIndex).getPhone1().equalsIgnoreCase("")
+                            || allTags.get(profileIndex).getPhone1().equalsIgnoreCase("null"))
                     {
                         lnrWork.setVisibility(View.GONE);
                     }
                     else
                     {
-                        tvWork.setText(allTags.get(profileIndex).getFax1());
+                        tvWork.setText(allTags.get(profileIndex).getPhone1());
                     }
                   /*  if(allTags.get(0).getIndustry().equalsIgnoreCase("")
                             || allTags.get(0).getIndustry().equalsIgnoreCase("null"))
