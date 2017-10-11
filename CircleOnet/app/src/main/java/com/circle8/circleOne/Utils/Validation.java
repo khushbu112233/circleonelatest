@@ -102,7 +102,7 @@ public class Validation
 
         if(rePassword.isEmpty())
         {
-            RegisterActivity.tvRePasswordInfo.setText("Enter Re-Password");
+            RegisterActivity.tvRePasswordInfo.setText("Repeat password");
             RegisterActivity.tvRePasswordInfo.setVisibility(View.VISIBLE);
             valid = false;
         }

@@ -248,7 +248,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
 
     private void selectCardType()
     {
-        type = new CharSequence[]{"Add Front Card", "Add Back Card", "Done"};
+        type = new CharSequence[]{"Add Front Card", "Add Back Card", "Next"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(NewCardRequestDetailActivity.this);
         builder.setTitle("Add Card");
@@ -271,7 +271,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                             .setGuidelines(CropImageView.Guidelines.ON)
                             .start(NewCardRequestDetailActivity.this);
                    // selectImage();
-                } else if (type[item].equals("Done")) {
+                } else if (type[item].equals("Next")) {
                     if (CardFront.equals("")){
                         Toast.makeText(getApplicationContext(), "Please Upload Front Card Image.", Toast.LENGTH_LONG).show();
                     }else if (CardBack.equals("")){

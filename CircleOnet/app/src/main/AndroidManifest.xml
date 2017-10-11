@@ -141,6 +141,7 @@
             android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.FingerPrintLogin"
+            android:label="CircleOne"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.GroupTag"
@@ -216,6 +217,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".Activity.UpdateGroupActivity"
             android:theme="@style/ThemeDialog" />
         <activity
@@ -233,6 +235,7 @@
         <activity android:name=".Activity.TestimonialCardDetail"
             android:screenOrientation="portrait"/>
         <activity android:name=".MultiContactPickerActivity"
+            android:screenOrientation="portrait"
             android:label="@string/picker_title">
         </activity>
     </application>

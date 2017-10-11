@@ -49,8 +49,8 @@
     <string name="successful_request_sent">Notification has been sent to your selected contact group</string>
     <string name="no_connection">You do not have any connections</string>
     <string name="btn_add_profile_text">Please touch the plus button to add new profile</string>
-    <string name="msg_edit_profile">Click on profile to edit</string>
-    <string name="msg_delete_profile">Tap and Hold on the profile to delete</string>
+    <string name="msg_edit_profile">Tap on profile to edit</string>
+    <string name="msg_delete_profile">Tap and hold profile to delete</string>
     <string name="upload_doc">Upload Document</string>
     <string name="front_card">Front Card</string>
     <string name="back_card">Back Card</string>

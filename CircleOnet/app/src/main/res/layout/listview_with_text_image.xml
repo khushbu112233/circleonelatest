@@ -74,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:text="Add by QR Code"
+                android:text="Scan QR code"
                 android:textColor="@android:color/white"
                 android:textSize="15dp" />
 
@@ -125,7 +125,7 @@
         <com.circle8.circleOne.Utils.orkebyTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Request a New Card         "
+            android:text="New Card Request         "
             android:id="@+id/textDrawer3"
             android:textSize="15dp"
             android:layout_marginLeft="20dp"

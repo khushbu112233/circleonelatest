@@ -174,7 +174,7 @@
                                 android:layout_marginTop="8dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Request a New Card"
+                                android:text="New Card Request"
                                 android:textColor="@color/white"/>
                             <com.circle8.circleOne.Utils.cgTextView
                                 android:layout_below="@+id/tvBarTitle"
@@ -184,7 +184,7 @@
                                 android:layout_marginBottom="3dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="slide down to check the front &amp; back"
+                                android:text="Slide down to view the front &amp; back card images"
                                 android:textColor="@color/white"/>
 
                             <LinearLayout
@@ -295,7 +295,7 @@
                             <com.circle8.circleOne.Utils.cgTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Please Confirm or Update the delivery info"
+                                android:text="Please ensure all delivery details are correct"
                                 android:textColor="@color/colorPrimary"
                                 android:layout_centerVertical="true"/>
                             <ImageView
@@ -428,7 +428,7 @@
                             android:textSize="15dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Please choose methods of printing"
+                            android:text="Please choose card type"
                             android:textColor="@color/colorPrimary"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"

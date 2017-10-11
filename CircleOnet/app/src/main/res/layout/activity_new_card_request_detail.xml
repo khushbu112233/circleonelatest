@@ -172,7 +172,7 @@
                             android:layout_marginTop="8dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Request a New Card"
+                            android:text="New Card Request"
                             android:textColor="@color/white"/>
                         <com.circle8.circleOne.Utils.cgTextView
                             android:layout_below="@+id/tvBarTitle"
@@ -182,7 +182,7 @@
                             android:layout_marginBottom="3dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Slide down to check the front &amp; back"
+                            android:text="Slide down to view the front &amp; back card images"
                             android:textColor="@color/white"/>
 
                         <LinearLayout
@@ -211,7 +211,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:textAlignment="center"
-                                android:text="Person"
+                                android:text="Name"
                                 android:textStyle="bold"
                                 android:textColor="@color/white"/>
                             <com.circle8.circleOne.Utils.orkebyTextView
@@ -279,7 +279,7 @@
                         android:id="@+id/txtUse1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="your previously uploaded"
+                        android:text="a previous design"
                         android:textColor="@color/colorPrimary"/>
                 </LinearLayout>
 
