@@ -207,7 +207,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     CountryCodePicker ccpCountry;
     private ExpandableHeightGridView gridView, gridViewAdded;
     private String[] array;
-    private EditText etAttachFile;
+    private TextView etAttachFile;
     private ImageView ivAttachFile;
     private CharSequence[] items;
     private String userChoosenTask;
@@ -270,7 +270,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
     private boolean LinkedInFlag = false;
     private ProgressDialog progress;
-
+    TextView txtAttachDelete;
     private static final String host = "api.linkedin.com";
     private static final String topCardUrl = "https://" + host + "/v1/people/~:" +
             "(id,email-address,formatted-name,phone-numbers,public-profile-url,picture-url,picture-urls::(original))";
@@ -319,7 +319,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         setContentView(R.layout.fragment_edit_profile);
         activity = EditProfileActivity.this;
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
+        txtAttachDelete = (TextView) findViewById(R.id.txtAttachDelete);
         recyclerEvents = (RecyclerView) findViewById(R.id.recyclerEvents);
         edtProfileName = (EditText) findViewById(R.id.edtProfileName);
         ivProfileDelete = (ImageView) findViewById(R.id.ivProfileDelete);
@@ -361,7 +361,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         autoCompleteIndustry = (AutoCompleteTextView) findViewById(R.id.autoCompleteIndustry);
         gridView = (ExpandableHeightGridView) findViewById(R.id.gridView);
         gridViewAdded = (ExpandableHeightGridView) findViewById(R.id.gridViewAdded);
-        etAttachFile = (EditText) findViewById(R.id.etAttachFile);
+        etAttachFile = (TextView) findViewById(R.id.etAttachFile);
         ivAttachFile = (ImageView) findViewById(R.id.ivAttachFile);
         session = new LoginSession(getApplicationContext());
         imgDone = (TextView) findViewById(R.id.imgDone);
@@ -517,6 +517,12 @@ public class EditProfileActivity extends AppCompatActivity implements
             }
         });
 
+        txtAttachDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etAttachFile.setText("");
+            }
+        });
 
         imgFb.setOnClickListener(new View.OnClickListener() {
             @Override

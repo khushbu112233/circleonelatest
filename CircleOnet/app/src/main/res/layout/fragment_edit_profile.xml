@@ -1590,6 +1590,9 @@
                             android:layout_marginTop="10dp"
                             android:orientation="vertical">
 
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
                             <com.circle8.circleOne.Utils.orkebyTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -1599,12 +1602,25 @@
                                 android:textSize="15sp"
                                 android:textStyle="normal" />
 
+                                <com.circle8.circleOne.Utils.orkebyBoldTextView
+                                    android:id="@+id/txtAttachDelete"
+                                    android:layout_width="80dp"
+                                    android:gravity="right"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="monospace"
+                                    android:layout_marginRight="5dp"
+                                    android:layout_alignParentRight="true"
+                                    android:text="X"
+                                    android:textColor="@color/colorPrimary"
+                                    android:textSize="15sp"
+                                    android:textStyle="normal" />
+                            </RelativeLayout>
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp">
 
-                                <com.circle8.circleOne.Utils.cgEditView
+                                <com.circle8.circleOne.Utils.cgTextView
                                     android:id="@+id/etAttachFile"
                                     android:layout_width="200dp"
                                     android:layout_height="35dp"
