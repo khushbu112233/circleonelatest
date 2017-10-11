@@ -1604,7 +1604,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp">
 
-                                <com.circle8.circleOne.Utils.cgTextView
+                                <com.circle8.circleOne.Utils.cgEditView
                                     android:id="@+id/etAttachFile"
                                     android:layout_width="200dp"
                                     android:layout_height="35dp"
