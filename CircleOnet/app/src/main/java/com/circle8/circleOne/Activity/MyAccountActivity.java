@@ -486,6 +486,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         }
         if ( v == ivEditImg)
         {
+            Toast.makeText(getApplicationContext(), "Now You can edit your information", Toast.LENGTH_LONG).show();
             etFirstName.setEnabled(true);
             etLastName.setEnabled(true);
             etPassword.setEnabled(true);
