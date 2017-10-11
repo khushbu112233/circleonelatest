@@ -65,6 +65,7 @@ import com.circle8.circleOne.Model.TestimonialModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.ExpandableHeightGridView;
 import com.circle8.circleOne.Utils.ExpandableHeightListView;
+import com.circle8.circleOne.Utils.StickyScrollView;
 import com.circle8.circleOne.Utils.Utility;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -291,6 +292,8 @@ public class EditProfileActivity extends AppCompatActivity implements
     ImageView ivTeleAdd, ivMobAdd, ivFaxAdd ;
     String fromActivity = "";
 
+    StickyScrollView stickyScrollView ;
+
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line = "";
@@ -402,6 +405,7 @@ public class EditProfileActivity extends AppCompatActivity implements
        // ivAddAssociate = (ImageView) findViewById(R.id.ivAddAssociate);
         //  etAssociationName = (EditText)findViewById(R.id.etAssociationName);
         spnAssociation = (Spinner) findViewById(R.id.spnAssociation);
+        stickyScrollView = (StickyScrollView)findViewById(R.id.scroll);
 
         imgYoutube = (ImageView) findViewById(R.id.imgYoutube);
         imgGoogle = (ImageView) findViewById(R.id.imgGoogle);
@@ -641,11 +645,14 @@ public class EditProfileActivity extends AppCompatActivity implements
         ivArrowImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (arrowStatus.equalsIgnoreCase("RIGHT")) {
+                if (arrowStatus.equalsIgnoreCase("RIGHT"))
+                {
                     ivArrowImg.setImageResource(R.drawable.ic_down_arrow_blue);
                     recyclerEvents.setVisibility(View.VISIBLE);
                     arrowStatus = "DOWN";
-                } else if (arrowStatus.equalsIgnoreCase("DOWN")) {
+                }
+                else if (arrowStatus.equalsIgnoreCase("DOWN"))
+                {
                     ivArrowImg.setImageResource(R.drawable.ic_right_arrow_blue);
                     recyclerEvents.setVisibility(View.GONE);
                     arrowStatus = "RIGHT";

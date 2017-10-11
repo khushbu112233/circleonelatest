@@ -15,6 +15,8 @@ import com.circle8.circleOne.R;
 import java.util.List;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by ample-arch on 8/17/2017.
  */
@@ -42,17 +44,33 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 
 
     public View getChildView(final int groupPosition, final int childPosition,
-                             boolean isLastChild, View convertView, ViewGroup parent) {
-        final String laptop = (String) getChild(groupPosition, childPosition);
-        LayoutInflater inflater = context.getLayoutInflater();
+                             boolean isLastChild, View convertView, ViewGroup parent)
+    {
+        View row = convertView;
+        ViewHolder holder = null;
 
-        if (convertView == null) {
-            convertView = inflater.inflate(R.layout.expand_child_item, null);
+        final String laptop = (String) getChild(groupPosition, childPosition);
+
+        if (convertView == null)
+        {
+            LayoutInflater inflater = context.getLayoutInflater();
+            row = inflater.inflate(R.layout.expand_child_item, null);
+            holder = new ViewHolder();
+
+            holder.item1 = (TextView)row.findViewById(R.id.tvUtility);
+
+            row.setTag(holder);
+        }
+        else
+        {
+            holder = (ViewHolder)row.getTag();
         }
 
-        TextView item = (TextView) convertView.findViewById(R.id.tvUtility);
+        holder.item1.setText(laptop);
 
-        ImageView delete = (ImageView) convertView.findViewById(R.id.delete);
+       /* TextView item = (TextView) convertView.findViewById(R.id.tvUtility);
+
+        ImageView delete = (ImageView) convertView.findViewById(R.id.delete);*/
 /*
         delete.setOnClickListener(new View.OnClickListener() {
 
@@ -80,9 +98,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
             }
         });
 */
-
-        item.setText(laptop);
-        return convertView;
+//        item.setText(laptop);
+        return row;
     }
 
     public int getChildrenCount(int groupPosition) {
@@ -103,17 +120,40 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent)
     {
+        View row = convertView;
+        ViewHolder holder = null;
+
         String laptopName = (String) getGroup(groupPosition);
+
         if (convertView == null)
         {
-            LayoutInflater infalInflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.expand_group_item, null);
+            LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            row = infalInflater.inflate(R.layout.expand_group_item, null);
+            holder = new ViewHolder();
+
+            holder.item = (TextView)row.findViewById(R.id.tvUtility);
+
+            row.setTag(holder);
         }
+        else
+        {
+            holder = (ViewHolder)row.getTag();
+        }
+
+        holder.item.setTypeface(null, Typeface.BOLD);
+        holder.item.setText(laptopName);
+
+/*
         TextView item = (TextView) convertView.findViewById(R.id.tvUtility);
         item.setTypeface(null, Typeface.BOLD);
         item.setText(laptopName);
-        return convertView;
+*/
+        return row;
+    }
+
+    static class ViewHolder
+    {
+        TextView item, item1 ;
     }
 
     public boolean hasStableIds() {
