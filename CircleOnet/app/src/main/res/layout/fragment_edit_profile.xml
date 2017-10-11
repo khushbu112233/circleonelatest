@@ -360,7 +360,7 @@
                                 android:layout_height="wrap_content"
                                 android:ems="10"
                                 android:gravity="center_vertical"
-                                android:hint="Designation"
+                                android:hint="Title"
                                 android:paddingBottom="10dp"
                                 android:paddingLeft="10dp"
                                 android:textSize="13sp"
@@ -470,7 +470,7 @@
                                     android:gravity="center_vertical"
                                     android:paddingBottom="10dp"
                                     android:paddingLeft="10dp"
-                                    android:hint="phone1"
+                                    android:hint="Phone1"
                                     android:inputType="number"
                                     android:textSize="13sp"
                                     android:layout_weight="0.8"
@@ -536,7 +536,7 @@
                                     android:paddingBottom="10dp"
                                     android:inputType="number"
                                     android:paddingLeft="10dp"
-                                    android:hint="phone2"
+                                    android:hint="Phone2"
                                     android:textSize="13sp"
                                     android:layout_weight="0.8"
                                     android:layout_marginRight="10dp"
@@ -598,7 +598,7 @@
                                     android:gravity="center_vertical"
                                     android:paddingBottom="10dp"
                                     android:paddingLeft="10dp"
-                                    android:hint="mobile1"
+                                    android:hint="Mobile1"
                                     android:textSize="13sp"
                                     android:layout_weight="0.8"
                                     android:layout_marginRight="10dp"
@@ -663,7 +663,7 @@
                                     android:gravity="center_vertical"
                                     android:paddingBottom="10dp"
                                     android:paddingLeft="10dp"
-                                    android:hint="mobile2"
+                                    android:hint="Mobile2"
                                     android:textSize="13sp"
                                     android:layout_weight="0.8"
                                     android:layout_marginRight="10dp"
@@ -828,7 +828,7 @@
                                 android:gravity="center_vertical"
                                 android:paddingBottom="10dp"
                                 android:paddingLeft="10dp"
-                                android:hint="email1"
+                                android:hint="Email1"
                                 android:textSize="13sp"
                                 android:backgroundTint="@color/colorPrimary"/>
                         </LinearLayout>
@@ -854,7 +854,7 @@
                                 android:layout_height="wrap_content"
                                 android:backgroundTint="@color/colorPrimary"
                                 android:gravity="center_vertical"
-                                android:hint="email2"
+                                android:hint="Email2"
                                 android:paddingBottom="10dp"
                                 android:paddingLeft="10dp"
                                 android:textSize="13sp" />
@@ -906,7 +906,7 @@
                                     android:gravity="center_vertical"
                                     android:paddingBottom="10dp"
                                     android:paddingLeft="10dp"
-                                    android:hint="fax1"
+                                    android:hint="Fax1"
                                     android:inputType="number"
                                     android:textSize="13sp"
                                     android:layout_weight="0.8"
@@ -919,7 +919,7 @@
                                     android:layout_height="20dp"
                                     android:src="@drawable/ic_plus_blue"
                                     android:layout_weight="0.2"
-                                    android:visibility="gone"/>
+                                    android:visibility="visible"/>
 
                             </LinearLayout>
 
@@ -973,7 +973,7 @@
                                     android:gravity="center_vertical"
                                     android:paddingBottom="10dp"
                                     android:paddingLeft="10dp"
-                                    android:hint="fax2"
+                                    android:hint="Fax2"
                                     android:textSize="13sp"
                                     android:layout_weight="0.8"
                                     android:layout_marginRight="10dp"
@@ -1073,7 +1073,7 @@
                                 android:gravity="center_vertical"
                                 android:paddingBottom="10dp"
                                 android:paddingLeft="10dp"
-                                android:hint="address"
+                                android:hint="Address"
                                 android:textSize="13sp"
                                 android:backgroundTint="@color/colorPrimary"/>
                         </LinearLayout>
@@ -1165,7 +1165,7 @@
                                     android:gravity="center_vertical"
                                     android:paddingBottom="10dp"
                                     android:paddingLeft="10dp"
-                                    android:hint="state"
+                                    android:hint="State"
                                     android:textSize="13sp"
                                     android:backgroundTint="@color/colorPrimary"/>
                             </LinearLayout>
@@ -1201,7 +1201,7 @@
                                     android:gravity="center_vertical"
                                     android:paddingBottom="10dp"
                                     android:paddingLeft="10dp"
-                                    android:hint="city"
+                                    android:hint="City"
                                     android:textSize="13sp"
                                     android:backgroundTint="@color/colorPrimary"/>
                             </LinearLayout>
@@ -1226,7 +1226,7 @@
                                     android:gravity="center_vertical"
                                     android:paddingBottom="10dp"
                                     android:paddingLeft="10dp"
-                                    android:hint="postcode"
+                                    android:hint="Postcode"
                                     android:textSize="13sp"
                                     android:backgroundTint="@color/colorPrimary"/>
                             </LinearLayout>
@@ -1255,7 +1255,7 @@
                                 android:gravity="center_vertical"
                                 android:paddingBottom="10dp"
                                 android:paddingLeft="10dp"
-                                android:hint="website"
+                                android:hint="Website"
                                 android:textSize="13sp"
                                 android:backgroundTint="@color/colorPrimary"/>
                         </LinearLayout>
@@ -1448,7 +1448,7 @@
                                     android:background="@drawable/txt_box_blue"
                                     android:gravity="start"
                                     android:padding="10dp"
-                                    android:hint="link name"
+                                    android:hint="Link Name"
                                     android:textSize="12sp" />
 
                                 <ImageView
@@ -1467,7 +1467,7 @@
                                     android:background="@drawable/txt_box_blue"
                                     android:gravity="start"
                                     android:padding="10dp"
-                                    android:hint="link address"
+                                    android:hint="Link Address"
                                     android:textSize="12sp" />
                             </RelativeLayout>
                         </LinearLayout>
@@ -1514,7 +1514,7 @@
                                     android:background="@drawable/txt_box_blue"
                                     android:gravity="start"
                                     android:padding="10dp"
-                                    android:hint="link name"
+                                    android:hint="Link Name"
                                     android:textSize="12sp" />
 
                                 <ImageView
@@ -1533,7 +1533,7 @@
                                     android:background="@drawable/txt_box_blue"
                                     android:gravity="start"
                                     android:padding="10dp"
-                                    android:hint="link address"
+                                    android:hint="Link Address"
                                     android:textSize="12sp" />
                             </RelativeLayout>
 
@@ -1623,7 +1623,7 @@
                                     android:background="@drawable/txt_box_blue"
                                     android:gravity="start"
                                     android:padding="10dp"
-                                    android:hint="Front Card"
+                                    android:hint="Add Image"
                                     android:textSize="12sp" />
 
                                 <com.circle8.circleOne.Utils.cgTextView
@@ -1678,7 +1678,7 @@
                                     android:background="@drawable/txt_box_blue"
                                     android:gravity="start"
                                     android:padding="10dp"
-                                    android:hint="Back Card"
+                                    android:hint="Add Image"
                                     android:textSize="12sp" />
 
                                 <com.circle8.circleOne.Utils.cgTextView

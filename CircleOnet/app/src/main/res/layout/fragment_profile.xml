@@ -686,6 +686,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                     <com.circle8.circleOne.Utils.orkebyTextView
                         android:id="@+id/txtTestLbl"
                         android:layout_marginTop="15dp"
@@ -722,20 +723,21 @@
                         android:textColor="@color/colorPrimary"/>
                     </RelativeLayout>
 
+                    <com.circle8.circleOne.Utils.orkebyTextView
+                        android:visibility="visible"
+                        android:id="@+id/txtTestimonial"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_centerVertical="true"
+                        android:textSize="13sp"
+                        android:textColor="@android:color/black"
+                        android:text="You do not have any testimonials"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" />
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-
-                        <com.circle8.circleOne.Utils.cgTextView
-                            android:visibility="visible"
-                            android:id="@+id/txtTestimonial"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_centerVertical="true"
-                            android:textSize="13sp"
-                            android:text="You do not have any testimonials"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent" />
 
                     <com.circle8.circleOne.Utils.ExpandableHeightListView
                         android:nestedScrollingEnabled="true"

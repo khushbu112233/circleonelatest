@@ -116,9 +116,8 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     public static TextView tvFirstNameInfo, tvLastNameInfo, tvPasswordInfo, tvAgainPasswordInfo, tvPhoneInfo ;
 
     private LoginSession session;
-    private String user_id, email_id, user_img, user_pass ;
+    private String user_id, email_id, user_img, user_pass, user_Gender, user_Photo ;
     private String encodedImageData, register_img;
-    private String user_Photo ;
 
     private RelativeLayout rlProgressDialog ;
     private TextView tvProgressing ;
@@ -228,22 +227,40 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         }
 
         //etPhone.setText(profile.getString("Phone"));
-        etPassword.setText(user_pass);
-        etPasswordAgain.setText(user_pass);
-        String user_Gender = user.get(LoginSession.KEY_GENDER);
-        user_Photo = user.get(LoginSession.KEY_IMAGE);
 
-        if (user_Photo.equals(""))
+        try
         {
-            imgProfile.setImageResource(R.drawable.usr_1);
+            etPassword.setText(user_pass);
+            etPasswordAgain.setText(user_pass);
         }
-        else
+        catch (Exception e)
         {
-            Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+user_Photo).placeholder(R.drawable.usr_1).into(imgProfile);
+            e.printStackTrace();
         }
 
-        if (user_Gender.equals("M"))
+        try
         {
+            user_Photo = user.get(LoginSession.KEY_IMAGE);
+            if (user_Photo.equals(""))
+            {
+                imgProfile.setImageResource(R.drawable.usr_1);
+            }
+            else
+            {
+                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+user_Photo).placeholder(R.drawable.usr_1).into(imgProfile);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        try
+        {
+            user_Gender = user.get(LoginSession.KEY_GENDER);
+
+            if (user_Gender.equals("M"))
+            {
                             /*//first things
                             line_view2.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
                             ivFemaleImg.setImageResource(R.drawable.ic_female_gray);
@@ -254,22 +271,22 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                             ivMaleRound.setImageResource(R.drawable.round_blue);
                             gender = "M";
                             txtGender.setText(R.string.male);*/
-            line_view1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            ivMaleRound.setImageResource(R.drawable.ic_man_blue);
-            ivFemaleround.setImageResource(R.drawable.ic_girl_gray);
-            ivConnect.setVisibility(View.INVISIBLE);
-            //second things
-            line_view1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                line_view1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                ivMaleRound.setImageResource(R.drawable.ic_man_blue);
+                ivFemaleround.setImageResource(R.drawable.ic_girl_gray);
+                ivConnect.setVisibility(View.INVISIBLE);
+                //second things
+                line_view1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
-            gender = "M";
-            txtGender.setText("Gender: Male");
-        }
-        else if (user_Gender.equals("F"))
-        {
+                gender = "M";
+                txtGender.setText("Gender: Male");
+            }
+            else if (user_Gender.equals("F"))
+            {
                             /*//first things
                             line_view1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
                             ivMaleImg.setImageResource(R.drawable.ic_male_gray);
@@ -280,25 +297,29 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                             ivFemaleround.setImageResource(R.drawable.round_blue);
                             gender = "F";
                             txtGender.setText(R.string.female);*/
-            line_view1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            ivFemaleround.setImageResource(R.drawable.ic_girl_blue);
-            ivConnect.setVisibility(View.INVISIBLE);
-            ivMaleRound.setImageResource(R.drawable.ic_man_gray);
+                line_view1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                ivFemaleround.setImageResource(R.drawable.ic_girl_blue);
+                ivConnect.setVisibility(View.INVISIBLE);
+                ivMaleRound.setImageResource(R.drawable.ic_man_gray);
 
-            line_view1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                line_view1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
-            gender = "F";
-            txtGender.setText("Gender: Female");
+                gender = "F";
+                txtGender.setText("Gender: Female");
+            }
+            else
+            {
+
+            }
         }
-        else
+        catch (Exception e)
         {
-
+            e.printStackTrace();
         }
-
 
 //        new HttpAsyncTaskProfiles().execute("http://circle8.asia:8999/Onet.svc/MyProfiles");
 
