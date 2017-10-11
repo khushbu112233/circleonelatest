@@ -213,7 +213,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:textAlignment="center"
-                                    android:text="Person"
+                                    android:text="Name"
                                     android:textStyle="bold"
                                     android:textColor="@color/white"/>
                                 <com.circle8.circleOne.Utils.orkebyTextView
