@@ -968,6 +968,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         ccp3 = (CountryCodePicker) findViewById(R.id.ccp3);
         ccp4 = (CountryCodePicker) findViewById(R.id.ccp4);
         ccp5 = (CountryCodePicker) findViewById(R.id.ccp5);
+        ccp6 = (CountryCodePicker) findViewById(R.id.ccp6);
         ivTeleAdd = (ImageView)findViewById(R.id.ivTeleAdd);
         ivMobAdd = (ImageView)findViewById(R.id.ivMobAdd);
         ivFaxAdd = (ImageView)findViewById(R.id.ivFaxAdd);
