@@ -623,11 +623,13 @@ public class ProfileFragment extends Fragment
                                     tvMob.setText(allTags.get(i).getMobile1());
                                     tvWork.setText(allTags.get(i).getPhone1());
 
-                                    tvAddress.setText(allTags.get(i).getAddress1()+ " "+allTags.get(i).getAddress2() + " "
-                                           + allTags.get(i).getAddress3()  + " "
-                                            + allTags.get(i).getAddress4() + " "
+                                    tvAddress.setText(
+                                              allTags.get(i).getAddress1()+ " "
+                                            + allTags.get(i).getAddress2() + "\n"
+                                            + allTags.get(i).getAddress3()  + " "
+                                            + allTags.get(i).getAddress4() + "\n"
                                             + allTags.get(i).getCity() + " "
-                                            + allTags.get(i).getState() + " "
+                                            + allTags.get(i).getState() + "\n"
                                             + allTags.get(i).getCountry() + " "
                                             + allTags.get(i).getPostalcode());
                                     tvWebsite.setText(allTags.get(i).getWebsite());
@@ -1427,9 +1429,11 @@ public class ProfileFragment extends Fragment
                             + allTags.get(0).getState() + " "
                             + allTags.get(0).getCountry() + " "
                             + allTags.get(0).getPostalcode());*/
-                    personAddress = allTags.get(profileIndex).getAddress1()+ " "+allTags.get(profileIndex).getAddress2() + " "
-                            + allTags.get(profileIndex).getAddress3()  + " "
-                            + allTags.get(profileIndex).getAddress4() + " "
+                    personAddress =
+                            allTags.get(profileIndex).getAddress1()+ " "
+                            +allTags.get(profileIndex).getAddress2() + " "
+                            /*+ allTags.get(profileIndex).getAddress3()  + " "
+                            + allTags.get(profileIndex).getAddress4() + " "*/
                             + allTags.get(profileIndex).getCity() + " "
                             + allTags.get(profileIndex).getState() + " "
                             + allTags.get(profileIndex).getCountry() + " "
