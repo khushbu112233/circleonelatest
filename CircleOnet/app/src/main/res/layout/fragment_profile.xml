@@ -282,7 +282,7 @@
                             android:layout_marginRight="20dp"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@drawable/ic_profile_gray"/>
+                            android:src="@drawable/ic_icon4b"/>
 
                         <com.circle8.circleOne.Utils.cgTextView
                             android:id="@+id/tvProfileName"
@@ -332,7 +332,7 @@
                             android:layout_marginLeft="8dp"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@drawable/barcode_scanner"/>
+                            android:src="@drawable/barcode_scanner1"/>
                         </RelativeLayout>
                     </LinearLayout>
 

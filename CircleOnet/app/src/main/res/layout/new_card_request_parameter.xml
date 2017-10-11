@@ -93,6 +93,27 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:src="@drawable/ic_mob_blue"
+                android:layout_marginRight="15dp"/>
+            <com.circle8.circleOne.Utils.cgTextView
+                android:id="@+id/tvPhone"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:textColor="#6b6c6e"
+                android:textSize="13sp"
+                android:text="Phone No."
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:src="@drawable/ic_mail_blue"
                 android:layout_marginRight="15dp"/>
             <com.circle8.circleOne.Utils.cgTextView
@@ -106,26 +127,6 @@
                 android:layout_height="match_parent" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="5dp">
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_mob_blue"
-                android:layout_marginRight="15dp"/>
-            <com.circle8.circleOne.Utils.cgTextView
-                android:id="@+id/tvPhone"
-                android:textAlignment="center"
-                android:gravity="center"
-                android:textColor="#6b6c6e"
-                android:textSize="13sp"
-                android:text="Phone No."
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
-        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout

@@ -1371,7 +1371,7 @@ public class ProfileFragment extends Fragment
                     }
                     else
                     {
-                        tvMob.setText(allTags.get(profileIndex).getMobile1());
+                        tvMob.setText(allTags.get(profileIndex).getMobile1()+"   "+allTags.get(profileIndex).getMobile2());
                     }
 //                    tvWebsite.setText(allTags.get(0).getWebsite());
                     if(allTags.get(profileIndex).getWebsite().equalsIgnoreCase("")
@@ -1409,7 +1409,7 @@ public class ProfileFragment extends Fragment
                     }
                     else
                     {
-                        tvWork.setText(allTags.get(profileIndex).getPhone1());
+                        tvWork.setText(allTags.get(profileIndex).getPhone1()+"   "+allTags.get(profileIndex).getPhone2());
                     }
                   /*  if(allTags.get(0).getIndustry().equalsIgnoreCase("")
                             || allTags.get(0).getIndustry().equalsIgnoreCase("null"))
