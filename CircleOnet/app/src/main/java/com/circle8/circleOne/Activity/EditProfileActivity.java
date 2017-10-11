@@ -189,7 +189,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     String ProfileDesc = "";
     String Status = "";
     String Address1 = "", Address2 = "", Address3 = "", Address4 = "", City = "", State = "", Country = "", Postalcode = "", Website = "", Attachment_FileName = "";
-    EditText edtUserName, edtWork, edtPrimary, edtEmail, edtProfileDesc, edtCompanyDesc;
+    EditText edtUserName, edtWork, edtPrimary, edtEmail, edtProfileDesc, edtCompanyDesc, edtFirstName, edtLastName;
     public static ViewPager mViewPager, viewPager1;
     CircleImageView imgProfile;
     TextView tvPersonName, tvDesignation, tvCompany;
@@ -365,7 +365,9 @@ public class EditProfileActivity extends AppCompatActivity implements
         session = new LoginSession(getApplicationContext());
         imgDone = (TextView) findViewById(R.id.imgDone);
         imgBack = (ImageView) findViewById(R.id.imgBack);
-        edtUserName = (EditText) findViewById(R.id.edtUserName);
+//        edtUserName = (EditText) findViewById(R.id.edtUserName);
+        edtFirstName = (EditText)findViewById(R.id.edtFirstName);
+        edtLastName = (EditText)findViewById(R.id.edtLastName);
         edtAddress1 = (EditText) findViewById(R.id.edtAddress1);
         edtAddress2 = (EditText) findViewById(R.id.edtAddress2);
         edtAddress3 = (EditText) findViewById(R.id.edtAddress3);
@@ -782,50 +784,47 @@ public class EditProfileActivity extends AppCompatActivity implements
                 List<AssociationModel> stList = ((CardViewDataAdapter) mAdapter)
                         .getStudentist();
 
-                for (int i = 0; i < stList.size(); i++) {
+                for (int i = 0; i < stList.size(); i++)
+                {
                     AssociationModel singleStudent = stList.get(i);
-                    if (singleStudent.isSelected() == true) {
-
+                    if (singleStudent.isSelected() == true)
+                    {
                         data = data + "\n" + singleStudent.getId().toString();
                         arrayAssociation.put(Integer.parseInt(singleStudent.getId().toString()));
-      /*
-       * Toast.makeText( CardViewActivity.this, " " +
-       * singleStudent.getName() + " " +
-       * singleStudent.getEmailId() + " " +
-       * singleStudent.isSelected(),
-       * Toast.LENGTH_SHORT).show();
-       */
+                          /*
+                           * Toast.makeText( CardViewActivity.this, " " +
+                           * singleStudent.getName() + " " +
+                           * singleStudent.getEmailId() + " " +
+                           * singleStudent.isSelected(),
+                           * Toast.LENGTH_SHORT).show();
+                           */
                     }
-
                 }
 
                 arrayEvents = new JSONArray();
                 String data1 = "";
-                List<AssociationModel> stList1 = ((CardViewDataAdapter) mAdapter1)
-                        .getStudentist();
+                List<AssociationModel> stList1 = ((CardViewDataAdapter) mAdapter1).getStudentist();
 
-                for (int i = 0; i < stList1.size(); i++) {
+                for (int i = 0; i < stList1.size(); i++)
+                {
                     AssociationModel singleStudent = stList1.get(i);
-                    if (singleStudent.isSelected() == true) {
-
+                    if (singleStudent.isSelected() == true)
+                    {
                         data1 = data1 + "\n" + singleStudent.getId().toString();
                         arrayEvents.put(Integer.parseInt(singleStudent.getId().toString()));
-      /*
-       * Toast.makeText( CardViewActivity.this, " " +
-       * singleStudent.getName() + " " +
-       * singleStudent.getEmailId() + " " +
-       * singleStudent.isSelected(),
-       * Toast.LENGTH_SHORT).show();
-       */
+                          /*
+                           * Toast.makeText( CardViewActivity.this, " " +
+                           * singleStudent.getName() + " " +
+                           * singleStudent.getEmailId() + " " +
+                           * singleStudent.isSelected(),
+                           * Toast.LENGTH_SHORT).show();
+                           */
                     }
-
                 }
 
-
                /* Toast.makeText(EditProfileActivity.this,
-                        "Selected Students: \n" + arrayEvents, Toast.LENGTH_LONG)
-                        .show();
-*/
+                     "Selected Students: \n" + arrayEvents, Toast.LENGTH_LONG)
+                        .show();*/
 
                if (!edtWork.getText().toString().equals("")) {
                    try {
@@ -1473,7 +1472,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             JSONArray jsonArray = new JSONArray();
             jsonArray.put(1011);
 
-            String name = edtUserName.getText().toString();
+            String name = edtFirstName.getText().toString()+" "+edtLastName.getText().toString();
             String kept = name.substring(0, name.indexOf(" "));
             String remainder = name.substring(name.indexOf(" ") + 1, name.length());
             JSONArray jsonArray1 = new JSONArray();
@@ -1523,8 +1522,8 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("Event_Cat_IDs", arrayEvents);
             jsonObject.accumulate("ProfileName", edtProfileName.getText().toString());
             jsonObject.accumulate("UserPhoto", UserPhoto);
-            jsonObject.accumulate("FirstName", kept);
-            jsonObject.accumulate("LastName", remainder);
+            jsonObject.accumulate("FirstName", edtFirstName.getText().toString());
+            jsonObject.accumulate("LastName", edtLastName.getText().toString());
 
 
          /*   jsonObject.accumulate("Facebook", strFB);
@@ -2030,7 +2029,8 @@ public class EditProfileActivity extends AppCompatActivity implements
             JSONArray jsonArray = new JSONArray();
             jsonArray.put(1011);
 
-            String name = edtUserName.getText().toString();
+//            String name = edtUserName.getText().toString();
+            String name = edtFirstName.getText().toString()+" "+edtLastName.getText().toString();
             String kept = name.substring(0, name.indexOf(" "));
             String remainder = name.substring(name.indexOf(" ") + 1, name.length());
             JSONArray jsonArray1 = new JSONArray();
@@ -2079,8 +2079,8 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("Event_Cat_IDs", arrayEvents);
             jsonObject.accumulate("ProfileName", edtProfileName.getText().toString());
             jsonObject.accumulate("UserPhoto", UserPhoto);
-            jsonObject.accumulate("FirstName", kept);
-            jsonObject.accumulate("LastName", remainder);
+            jsonObject.accumulate("FirstName", edtFirstName.getText().toString());
+            jsonObject.accumulate("LastName", edtLastName.getText().toString());
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -3446,15 +3446,17 @@ public class EditProfileActivity extends AppCompatActivity implements
                     autoCompleteCompany.setText(CompanyName);
                     autoCompleteIndustry.setText(IndustryName);
                     autoCompleteDesignation.setText(Designation);
-                    edtUserName.setText(FirstName + " " + LastName);
+                    edtFirstName.setText(FirstName);
+                    edtLastName.setText(LastName);
+//                    edtUserName.setText(FirstName + " " + LastName);
                     edtCompanyDesc.setText(CompanyProfile);
                     edtProfileDesc.setText(ProfileDesc);
                     edtEmail.setText(Email1);
+                    edtEmail2.setText(Email2);
                   //  edtPrimary.setText(Mobile1);
                   //  edtWork.setText(Phone1);
                    // edtWork2.setText(Phone2);
                    // edtPrimary2.setText(Mobile2);
-                    edtEmail2.setText(Email2);
                  //   edtFax1.setText(Fax1);
                   //  edtFax2.setText(Fax2);
                     edtWebsite.setText(Website);

@@ -298,10 +298,10 @@
 
                             <ImageView
                                 android:tint="@color/colorPrimary"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:layout_marginRight="20dp"
-                                android:src="@drawable/ic_profile_gray" />
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_marginRight="15dp"
+                                android:src="@drawable/ic_icon4b" />
 
                             <com.circle8.circleOne.Utils.cgEditView
                                 android:id="@+id/edtProfileName"
@@ -330,6 +330,37 @@
                                 android:layout_marginRight="20dp"
                                 android:src="@drawable/ic_acc_blue" />
 
+                            <LinearLayout
+                                android:layout_marginTop="0dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:weightSum="1">
+
+                                <com.circle8.circleOne.Utils.cgEditView
+                                    android:id="@+id/edtFirstName"
+                                    android:layout_weight="0.5"
+                                    android:textSize="13sp"
+                                    android:backgroundTint="@color/colorPrimary"
+                                    android:hint="First Name"
+                                    android:paddingLeft="10dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textPersonName|text"/>
+
+                                <com.circle8.circleOne.Utils.cgEditView
+                                    android:id="@+id/edtLastName"
+                                    android:layout_weight="0.5"
+                                    android:textSize="13sp"
+                                    android:backgroundTint="@color/colorPrimary"
+                                    android:hint="Last Name"
+                                    android:paddingLeft="10dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textPersonName|text"/>
+                            </LinearLayout>
+
+<!--
                             <com.circle8.circleOne.Utils.cgEditView
                                 android:id="@+id/edtUserName"
                                 android:layout_width="match_parent"
@@ -340,6 +371,7 @@
                                 android:hint="Full Name"
                                 android:textSize="13sp"
                                 android:backgroundTint="@color/colorPrimary"/>
+-->
                         </LinearLayout>
 
                         <LinearLayout
