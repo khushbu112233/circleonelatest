@@ -457,7 +457,7 @@
                                     android:id="@+id/txtLaserCost"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="$ 65.00/PCE"
+                                    android:text="$ 50.00/PC"
                                     android:textColor="@color/colorPrimary"
                                     android:layout_gravity="center_horizontal"/>
                                 <ImageView
@@ -468,7 +468,7 @@
                                     android:id="@+id/txtLaserDesc"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Special offset printing"
+                                    android:text="Premium"
                                     android:textColor="@color/colorPrimary"
                                     android:layout_gravity="center_horizontal"/>
                             </LinearLayout>
@@ -484,7 +484,7 @@
                                     android:id="@+id/txtNormalCost"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="$ 25.00/PCE"
+                                    android:text="$ 25.00/PC"
                                     android:textColor="@color/colorPrimary"
                                     android:layout_gravity="center_horizontal"/>
                                 <ImageView
@@ -495,7 +495,7 @@
                                     android:id="@+id/txtNormalDesc"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Normal digital printing"
+                                    android:text="Standard"
                                     android:textColor="@color/colorPrimary"
                                     android:layout_gravity="center_horizontal"/>
                             </LinearLayout>
@@ -515,7 +515,7 @@
                             android:layout_marginBottom="10dp"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
-                            android:text="PS: Here at Unico Creative, we strive for success and client satisfaction, no matter how big or small your project may be."/>
+                            android:text="Here at CircleOne, we appreciate your support and will get back to you as quickly as we can."/>
 
 
                         <RelativeLayout

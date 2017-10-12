@@ -252,8 +252,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
         AlertDialog.Builder builder = new AlertDialog.Builder(NewCardRequestDetailActivity.this);
         builder.setTitle("Add Card");
         builder.setCancelable(false);
-        builder.setItems(type, new DialogInterface.OnClickListener()
-        {
+        builder.setItems(type, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item)
             {
@@ -375,6 +374,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                     final_ImgBase64 = BitMapToString(bitmap);
                     //   Upload();
                     CardSwipe.imageView.setImageBitmap(bitmap);
+                    myPager.notifyDataSetChanged();
                     if (cardType.equals("front"))
                         new HttpAsyncTaskFrontUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
                     else if (cardType.equals("back"))

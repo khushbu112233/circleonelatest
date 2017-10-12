@@ -506,7 +506,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         });
 
 
-        imgProfile.setOnClickListener(new View.OnClickListener() {
+        /*imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -516,7 +516,7 @@ public class EditProfileActivity extends AppCompatActivity implements
 
             }
         });
-
+*/
         txtAttachDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
