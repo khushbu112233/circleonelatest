@@ -57,18 +57,19 @@ public class SearchGroupMembers extends AppCompatActivity
 {
 
     public static CustomViewPager mViewPager;
-    TabLayout tabLayout;
+    private ImageView imgBack ;
+    private TabLayout tabLayout;
     private TextView txtAdd, mytext;
     public static JSONArray selectedStrings = new JSONArray();
-    String user_id = "";
+    private String user_id = "";
     private LoginSession loginSession;
-    String GroupId = "", from, ProfileId;
+    private String GroupId = "", from, ProfileId;
 
     private RelativeLayout rlProgressDialog ;
     private TextView tvProgressing ;
     private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
 
-    String profileId = "";
+    private String profileId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -82,6 +83,7 @@ public class SearchGroupMembers extends AppCompatActivity
         getSupportActionBar().setShowHideAnimationEnabled(false);
         txtAdd = (TextView) findViewById(R.id.mytext1);
         mytext = (TextView) findViewById(R.id.mytext);
+        imgBack = (ImageView)findViewById(R.id.imgBack);
         rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
         tvProgressing = (TextView)findViewById(R.id.txtProgressing);
         ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
@@ -117,8 +119,6 @@ public class SearchGroupMembers extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-
-
                 if (from.equalsIgnoreCase("group")){
                     if (selectedStrings == null)
                     {
@@ -144,6 +144,13 @@ public class SearchGroupMembers extends AppCompatActivity
                     }
                 }
 
+            }
+        });
+
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 
