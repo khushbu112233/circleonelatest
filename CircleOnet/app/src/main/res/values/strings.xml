@@ -45,6 +45,7 @@
     <string name="no_friend_connection">No CircleOne name cards collected \n Start Tapping</string>
     <string name="successful_request_sent">Contact has been successfully added to your cards \n A request has been sent to connect</string>
     <string name="no_connection">You do not have any connections</string>
+    <string name="no_connection1">You will only be able to “Add” a user directly if you work for the same company, belong to a same association or have the contact details of the user saved on your mobile device</string>
     <string name="btn_add_profile_text">Please touch the plus button to add new profile</string>
     <string name="msg_edit_profile">Tap on profile to edit</string>
     <string name="msg_delete_profile">Tap and hold profile to delete</string>
@@ -54,7 +55,7 @@
     <string name="attch_file">Attach file</string>
     <string name="take_photo">Take Photo</string>
     <string name="larger_file">Sorry : Please select a file not more than 3MB</string>
-    <string name="msg_create_group">Please touch the plus "+" button to create new circle</string>
+    <string name="msg_create_group">Tap + to create a new circle</string>
     <string name="take_photo_group">Take Photo</string>
     <string name="add_group_member">Please add members</string>
 
