@@ -243,7 +243,6 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                 }
             }
         });
-
     }
 
     private void selectCardType()
@@ -253,30 +252,40 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
         AlertDialog.Builder builder = new AlertDialog.Builder(NewCardRequestDetailActivity.this);
         builder.setTitle("Add Card");
         builder.setCancelable(false);
-        builder.setItems(type, new DialogInterface.OnClickListener() {
+        builder.setItems(type, new DialogInterface.OnClickListener()
+        {
             @Override
-            public void onClick(DialogInterface dialog, int item) {
+            public void onClick(DialogInterface dialog, int item)
+            {
                 boolean result = Utility.checkStoragePermission(NewCardRequestDetailActivity.this);
                 boolean result1 = Utility.checkCameraPermission(NewCardRequestDetailActivity.this);
-                if (type[item].equals("Add Front Card")) {
+                if (type[item].equals("Add Front Card"))
+                {
                     cardType = "front";
-                    CropImage.activity(null)
-                            .setGuidelines(CropImageView.Guidelines.ON)
+                    CropImage.activity(null).setGuidelines(CropImageView.Guidelines.ON)
                             .start(NewCardRequestDetailActivity.this);
                    // selectImage();
-                } else if (type[item].equals("Add Back Card")) {
+                }
+                else if (type[item].equals("Add Back Card"))
+                {
                     cardType = "back";
 
-                    CropImage.activity(null)
-                            .setGuidelines(CropImageView.Guidelines.ON)
+                    CropImage.activity(null).setGuidelines(CropImageView.Guidelines.ON)
                             .start(NewCardRequestDetailActivity.this);
                    // selectImage();
-                } else if (type[item].equals("Next")) {
-                    if (CardFront.equals("")){
+                }
+                else if (type[item].equals("Next"))
+                {
+                    if (CardFront.equals(""))
+                    {
                         Toast.makeText(getApplicationContext(), "Please Upload Front Card Image.", Toast.LENGTH_LONG).show();
-                    }else if (CardBack.equals("")){
+                    }
+                    else if (CardBack.equals(""))
+                    {
                         Toast.makeText(getApplicationContext(), "Please Upload Back Card Image.", Toast.LENGTH_LONG).show();
-                    }else {
+                    }
+                    else
+                    {
                         Toast.makeText(getApplicationContext(), "Successfully Uploaded Card..", Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                         Intent i = new Intent(getApplicationContext(), NewCardRequestActivity1.class);
@@ -297,7 +306,8 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
         builder.show();
     }
 
-    private void selectImage() {
+    private void selectImage()
+    {
         items = new CharSequence[]{"Take Photo", "Choose from Library", "Cancel"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(NewCardRequestDetailActivity.this);
@@ -585,20 +595,27 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-            try {
-                if (result != null) {
+            try
+            {
+                if (result != null)
+                {
                     JSONObject jsonObject = new JSONObject(result);
                     String ImgName = jsonObject.getString("ImgName").toString();
                     String success = jsonObject.getString("success").toString();
 
-                    if (success.equals("1") && ImgName != null) {
+                    if (success.equals("1") && ImgName != null)
+                    {
                         /*Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(intent);
                         finish();*/
                         Toast.makeText(activity, "Front Card Uploaded Successfully. Add Back Card..", Toast.LENGTH_LONG).show();
                         CardFront = ImgName;
-                    } else {
+
+
+                    }
+                    else
+                    {
                         Toast.makeText(activity, "Error While Uploading Image..", Toast.LENGTH_LONG).show();
                     }
                 } else {
