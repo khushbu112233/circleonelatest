@@ -3,6 +3,7 @@ package com.circle8.circleOne.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Adapter.CardSwipe;
+import com.circle8.circleOne.Adapter.CardSwipeBitmap;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.R;
 import com.squareup.picasso.Picasso;
@@ -51,6 +53,9 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.R.attr.bitmap;
+import static com.circle8.circleOne.Activity.EditProfileActivity.BitMapToString;
+
 public class NewCardRequestActivity1 extends AppCompatActivity
 {
     private CircleImageView imgProfile;
@@ -59,7 +64,9 @@ public class NewCardRequestActivity1 extends AppCompatActivity
     private EditText etPerson, etCompany, etPhone, etAddress1, etAddress2;
 
     private CardSwipe myPager;
+    CardSwipeBitmap swipeBitmap;
     private ArrayList<String> swipe_image = new ArrayList<>();
+    private ArrayList<Bitmap> swipe_imageBmp = new ArrayList<>();
     String recycle_image1, recycle_image2;
     ViewPager mViewPager1, mViewPager2;
     private String image;
@@ -70,15 +77,16 @@ public class NewCardRequestActivity1 extends AppCompatActivity
     Token tok;
     AlertDialog alertDialog;
     ImageView imgBack;
-    String card_front = "", card_back = "", Type, Description, Cost, PhysicalCardLaserId, PhysicalCardNormalId;
+    String card_front = "", card_back = "", Type, Description, Cost, PhysicalCardLaserId, PhysicalCardNormalId, type;
     TextView txtLaserCost, txtLaserDesc, txtNormalCost, txtNormalDesc;
     String PhysicalCardTypeID;
     LoginSession session;
     private String profileId, userID;
-
+    Bitmap cardFrontBmp, cardBackBmp;
     private static RelativeLayout rlProgressDialog ;
     private static TextView tvProgressing ;
     private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+    private String final_ImgBase64Front, final_ImgBase64Back;
 
     String numberOnCard, nameOnCard, exYearOnCard, exMonthOnCard, cvvOnCard, mobileNoOnCard, strToken ;
 
@@ -124,26 +132,48 @@ public class NewCardRequestActivity1 extends AppCompatActivity
 
         Intent i = getIntent();
         image = i.getStringExtra("image");
-        card_front = i.getStringExtra("card_front");
-        card_back = i.getStringExtra("card_back");
+        type = i.getStringExtra("type");
         profileId = i.getStringExtra("profileID");
+        if (type.equals("string")) {
+            card_back = i.getStringExtra("card_back");
+            card_front = i.getStringExtra("card_front");
+            recycle_image1 = "http://circle8.asia/App_ImgLib/Cards/"+card_front;
+            recycle_image2 = "http://circle8.asia/App_ImgLib/Cards/"+card_back;
+            swipe_image.add(recycle_image1);
+            swipe_image.add(recycle_image2);
+            myPager = new CardSwipe(getApplicationContext(), swipe_image);
 
-        recycle_image1 = "http://circle8.asia/App_ImgLib/Cards/"+card_front;
-        recycle_image2 = "http://circle8.asia/App_ImgLib/Cards/"+card_back;
-        swipe_image.add(recycle_image1);
-        swipe_image.add(recycle_image2);
-        myPager = new CardSwipe(getApplicationContext(), swipe_image);
+            mViewPager1.setClipChildren(false);
+            mViewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+            mViewPager1.setOffscreenPageLimit(1);
+            mViewPager1.setAdapter(myPager);
+
+            mViewPager2.setClipChildren(false);
+            mViewPager2.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+            mViewPager2.setOffscreenPageLimit(1);
+            mViewPager2.setAdapter(myPager);
+        }
+        else {
+            cardBackBmp = (Bitmap) i.getParcelableExtra("card_back");
+            cardFrontBmp = (Bitmap) i.getParcelableExtra("card_front");
+
+            swipe_imageBmp.add(cardFrontBmp);
+            swipe_imageBmp.add(cardBackBmp);
+            swipeBitmap = new CardSwipeBitmap(getApplicationContext(), swipe_imageBmp);
+
+            mViewPager1.setClipChildren(false);
+            mViewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+            mViewPager1.setOffscreenPageLimit(1);
+            mViewPager1.setAdapter(swipeBitmap);
+
+            mViewPager2.setClipChildren(false);
+            mViewPager2.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+            mViewPager2.setOffscreenPageLimit(1);
+            mViewPager2.setAdapter(swipeBitmap);
+        }
+
         new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/Physical_Card/GetType");
 
-        mViewPager1.setClipChildren(false);
-        mViewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
-        mViewPager1.setOffscreenPageLimit(1);
-        mViewPager1.setAdapter(myPager);
-
-        mViewPager2.setClipChildren(false);
-        mViewPager2.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
-        mViewPager2.setOffscreenPageLimit(1);
-        mViewPager2.setAdapter(myPager);
 
         if (image.equals(""))
         {
@@ -175,6 +205,13 @@ public class NewCardRequestActivity1 extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+
+                if (card_back.equals("") && card_front.equals("")) {
+                    final_ImgBase64Back = BitMapToString(cardBackBmp);
+                    final_ImgBase64Front = BitMapToString(cardFrontBmp);
+                    new HttpAsyncTaskFrontUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                    new HttpAsyncTaskBackUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                }
                 try
                 {
                     stripe = new Stripe("pk_test_6fZCC6Gu2kwYLUQxJhGte65l");
@@ -314,6 +351,237 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                 }
             }
         });
+    }
+
+    private class HttpAsyncTaskFrontUpload extends AsyncTask<String, Void, String> {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+           /* dialog = new ProgressDialog(activity);
+            dialog.setMessage("Uploading...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+
+            String loading = "Uploading" ;
+          //  CustomProgressDialog(loading);
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return POST8(urls[0]);
+        }
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+          //  rlProgressDialog.setVisibility(View.GONE);
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            try
+            {
+                if (result != null)
+                {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String ImgName = jsonObject.getString("ImgName").toString();
+                    String success = jsonObject.getString("success").toString();
+
+                    if (success.equals("1") && ImgName != null)
+                    {
+                        /*Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(intent);
+                        finish();*/
+                     //   Toast.makeText(getApplicationContext(), "Front Card Uploaded Successfully. Add Back Card..", Toast.LENGTH_LONG).show();
+                        card_front = ImgName;
+
+
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(), "Error While Uploading Image..", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Not able to Register..", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    public String POST7(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("ImgBase64", final_ImgBase64Back );
+            jsonObject.accumulate("classification", "card" );
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    public String POST8(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("ImgBase64", final_ImgBase64Front );
+            jsonObject.accumulate("classification", "card" );
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    private class HttpAsyncTaskBackUpload extends AsyncTask<String, Void, String> {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            /*dialog = new ProgressDialog(activity);
+            dialog.setMessage("Uploading...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+
+            String loading = "Uploading" ;
+            //CustomProgressDialog(loading);
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return POST7(urls[0]);
+        }
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            //rlProgressDialog.setVisibility(View.GONE);
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            try {
+                if (result != null) {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String ImgName = jsonObject.getString("ImgName").toString();
+                    String success = jsonObject.getString("success").toString();
+
+                    if (success.equals("1") && ImgName != null) {
+                        /*Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(intent);
+                        finish();*/
+                        // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "Back Card Uploaded Successfully.", Toast.LENGTH_LONG).show();
+                         card_back = ImgName;
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Error While Uploading Image..", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Not able to Register..", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
+        }
     }
 
     public String POST(String url) {
