@@ -16,7 +16,7 @@
             android:orientation="vertical"
             android:paddingBottom="10dp"
             android:paddingTop="0dp"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <RelativeLayout
                 android:id="@+id/rlLeftConnection"
@@ -119,12 +119,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/llPackageDetails"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:background="@color/white"
             android:orientation="vertical"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="50dp">
+            android:layout_marginBottom="10dp">
 
             <LinearLayout
                 android:layout_marginLeft="20dp"
