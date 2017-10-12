@@ -77,8 +77,8 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
     private String userChoosenTask;
     private int SELECT_GALLERY_CARD = 500;
     private Bitmap originalBitmap;
-    public static String CardFront = "";
-    public static String CardBack = "";
+    public static Bitmap CardFront;
+    public static Bitmap CardBack;
     public static Activity activity;
     private String profileID , Card_Front = "", Card_Back = "";
     ImageView imgUse;
@@ -198,6 +198,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                 i.putExtra("profileID",profileID);
                 i.putExtra("card_front", Card_Front);
                 i.putExtra("card_back", Card_Back);
+                i.putExtra("type", "string");
                 startActivity(i);
             }
         });
@@ -275,11 +276,11 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                 }
                 else if (type[item].equals("Next"))
                 {
-                    if (CardFront.equals(""))
+                    if (CardFront==null)
                     {
                         Toast.makeText(getApplicationContext(), "Please Upload Front Card Image.", Toast.LENGTH_LONG).show();
                     }
-                    else if (CardBack.equals(""))
+                    else if (CardBack == null)
                     {
                         Toast.makeText(getApplicationContext(), "Please Upload Back Card Image.", Toast.LENGTH_LONG).show();
                     }
@@ -296,6 +297,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                         i.putExtra("phone",profile);
                         i.putExtra("card_front", CardFront);
                         i.putExtra("card_back", CardBack);
+                        i.putExtra("type", "bitmap");
                         i.putExtra("profileID",profileID);
                         startActivity(i);
                     }
@@ -371,14 +373,19 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(result.getUri()));
                     // originalBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
 
-                    final_ImgBase64 = BitMapToString(bitmap);
+                  //  final_ImgBase64 = BitMapToString(bitmap);
                     //   Upload();
                     CardSwipe.imageView.setImageBitmap(bitmap);
                     myPager.notifyDataSetChanged();
                     if (cardType.equals("front"))
-                        new HttpAsyncTaskFrontUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
-                    else if (cardType.equals("back"))
-                        new HttpAsyncTaskBackUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                    {
+                        CardFront = bitmap;
+                    }
+                        //new HttpAsyncTaskFrontUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                    else if (cardType.equals("back")) {
+                     //   new HttpAsyncTaskBackUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                        CardBack = bitmap;
+                    }
                 }
                 catch (FileNotFoundException e) {
                     // TODO Auto-generated catch block
@@ -483,7 +490,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                         finish();*/
                         // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                         Toast.makeText(activity, "Back Card Uploaded Successfully.", Toast.LENGTH_LONG).show();
-                        CardBack = ImgName;
+                       // CardBack = ImgName;
                     } else {
                         Toast.makeText(activity, "Error While Uploading Image..", Toast.LENGTH_LONG).show();
                     }
@@ -610,7 +617,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                         startActivity(intent);
                         finish();*/
                         Toast.makeText(activity, "Front Card Uploaded Successfully. Add Back Card..", Toast.LENGTH_LONG).show();
-                        CardFront = ImgName;
+                       // CardFront = ImgName;
 
 
                     }
