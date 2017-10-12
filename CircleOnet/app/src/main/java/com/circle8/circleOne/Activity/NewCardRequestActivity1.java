@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.PixelFormat;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -86,6 +87,8 @@ public class NewCardRequestActivity1 extends AppCompatActivity
     private static TextView tvProgressing ;
     private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
     private String final_ImgBase64Front, final_ImgBase64Back;
+
+    String numberOnCard, nameOnCard, exYearOnCard, exMonthOnCard, cvvOnCard, mobileNoOnCard, strToken ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -218,18 +221,89 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                     e.printStackTrace();
                 }
 
-                alertDialog = new AlertDialog.Builder(NewCardRequestActivity1.this).create();
+               /* alertDialog = new AlertDialog.Builder(NewCardRequestActivity1.this).create();
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View dialogView = inflater.inflate(R.layout.activity_stripe_1, null);
-
                 cardNumberField = (TextView) dialogView.findViewById(R.id.cardNumber);
                 monthField = (TextView) dialogView.findViewById(R.id.month);
                 yearField = (TextView) dialogView.findViewById(R.id.year);
                 cvcField = (TextView) dialogView.findViewById(R.id.cvc);
+                alertDialog.setView(dialogView);
+                alertDialog.show();*/
+
+                // new payment mode
+                alertDialog = new AlertDialog.Builder(NewCardRequestActivity1.this).create();
+                LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View dialogView = inflater.inflate(R.layout.stripe_payment_screen1, null);
+
+                LinearLayout llCardValues = (LinearLayout)dialogView.findViewById(R.id.llCardValues);
+                LinearLayout llPackageDetails = (LinearLayout)dialogView.findViewById(R.id.llPackageDetails);
+
+                final EditText etCardNumber = (EditText)dialogView.findViewById(R.id.etCardNumber);
+                final EditText etCardHolderName = (EditText)dialogView.findViewById(R.id.etCardHolderName);
+                final EditText etExMonth = (EditText)dialogView.findViewById(R.id.etExMonth);
+                final EditText etExYear = (EditText)dialogView.findViewById(R.id.etExYear);
+                final EditText etSecurityCode = (EditText)dialogView.findViewById(R.id.etSecurityCode);
+                final EditText etMobileNumber = (EditText)dialogView.findViewById(R.id.etMobileNumber);
+                TextView tvPay = (TextView)dialogView.findViewById(R.id.tvPay);
+                TextView tvCancel = (TextView)dialogView.findViewById(R.id.tvCancel);
+
+                tvPay.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        numberOnCard = etCardNumber.getText().toString();
+                        nameOnCard = etCardHolderName.getText().toString();
+                        exYearOnCard = etExYear.getText().toString();
+                        exMonthOnCard = etExMonth.getText().toString();
+                        cvvOnCard = etSecurityCode.getText().toString();
+                        mobileNoOnCard = etMobileNumber.getText().toString();
+
+                        if (numberOnCard.isEmpty())
+                        {
+                            Toast.makeText(NewCardRequestActivity1.this,"Enter Card No.",Toast.LENGTH_SHORT).show();
+                        }
+                        else if (nameOnCard.isEmpty())
+                        {
+                            Toast.makeText(NewCardRequestActivity1.this,"Enter Holder Name",Toast.LENGTH_SHORT).show();
+                        }
+                        else if (exMonthOnCard.isEmpty())
+                        {
+                            Toast.makeText(NewCardRequestActivity1.this,"Enter Expiry Month",Toast.LENGTH_SHORT).show();
+                        }
+                        else if (exYearOnCard.isEmpty())
+                        {
+                            Toast.makeText(NewCardRequestActivity1.this,"Enter Expiry Month",Toast.LENGTH_SHORT).show();
+                        }
+                        else if (cvvOnCard.isEmpty())
+                        {
+                            Toast.makeText(NewCardRequestActivity1.this,"Enter CVV No.",Toast.LENGTH_SHORT).show();
+                        }
+                        else if (mobileNoOnCard.isEmpty())
+                        {
+                            Toast.makeText(NewCardRequestActivity1.this,"Enter Mobile No.",Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            cardPayment();
+                            alertDialog.dismiss();
+                        }
+                    }
+                });
+
+                tvCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        alertDialog.dismiss();
+                    }
+                });
 
                 alertDialog.setView(dialogView);
-
+                alertDialog.setCancelable(false);
+                alertDialog.getWindow().setFormat(PixelFormat.TRANSLUCENT);
                 alertDialog.show();
+
             }
         });
 
@@ -324,7 +398,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(intent);
                         finish();*/
-                        Toast.makeText(getApplicationContext(), "Front Card Uploaded Successfully. Add Back Card..", Toast.LENGTH_LONG).show();
+                     //   Toast.makeText(getApplicationContext(), "Front Card Uploaded Successfully. Add Back Card..", Toast.LENGTH_LONG).show();
                         card_front = ImgName;
 
 
@@ -497,7 +571,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                         startActivity(intent);
                         finish();*/
                         // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
-                        Toast.makeText(getApplicationContext(), "Back Card Uploaded Successfully.", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "Back Card Uploaded Successfully.", Toast.LENGTH_LONG).show();
                          card_back = ImgName;
                     } else {
                         Toast.makeText(getApplicationContext(), "Error While Uploading Image..", Toast.LENGTH_LONG).show();
@@ -601,8 +675,6 @@ public class NewCardRequestActivity1 extends AppCompatActivity
             jsonObject.accumulate("PhysicalCard_front_image", card_front );
             jsonObject.accumulate("ProfileId", profileId );
             jsonObject.accumulate("UserId", userID );
-
-
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -764,8 +836,40 @@ public class NewCardRequestActivity1 extends AppCompatActivity
         }
     }
 
+    public void cardPayment()
+    {
+        card = new Card
+                (
+                        numberOnCard,
+                        Integer.valueOf(exMonthOnCard),
+                        Integer.valueOf(exYearOnCard),
+                        cvvOnCard
+                );
 
-    public void submitCard(View view) {
+        card.setCurrency("sgd");
+        card.setName(nameOnCard);
+
+        stripe.createToken(card, "pk_live_d0uXEesOC2Qg5919ul4t7Ocl", new TokenCallback() {
+            public void onSuccess(Token token) {
+                // TODO: Send Token information to your backend to initiate a charge
+                Toast.makeText(getApplicationContext(), "Token created: " + token.getId(), Toast.LENGTH_LONG).show();
+                tok = token;
+                strToken = token.getId();
+                //  new StripeCharge(token.getId()).execute();
+//                new HttpAsyncTokenTask().execute("https://circle8.asia/Checkout/pay");
+                new HttpAsyncRequestTask().execute("http://circle8.asia:8999/Onet.svc/Physical_Card/Order");
+                alertDialog.cancel();
+            }
+
+            public void onError(Exception error) {
+                Log.d("Stripe", error.getLocalizedMessage());
+            }
+        });
+    }
+
+    public void submitCard(View view)
+    {
+
         // TODO: replace with your own test key
 
         card = new Card(
@@ -784,7 +888,6 @@ public class NewCardRequestActivity1 extends AppCompatActivity
         card.setExpYear(19);
         card.setCVC("123");
         */
-
 
         stripe.createToken(card, "pk_test_6fZCC6Gu2kwYLUQxJhGte65l", new TokenCallback() {
             public void onSuccess(Token token) {

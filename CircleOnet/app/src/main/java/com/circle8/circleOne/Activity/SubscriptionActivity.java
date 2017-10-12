@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -150,6 +151,9 @@ public class SubscriptionActivity extends AppCompatActivity
                 LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View dialogView = inflater.inflate(R.layout.stripe_payment_screen, null);
 
+                LinearLayout llCardValues = (LinearLayout)dialogView.findViewById(R.id.llCardValues);
+                LinearLayout llPackageDetails = (LinearLayout)dialogView.findViewById(R.id.llPackageDetails);
+
                 TextView tvPackageName = (TextView)dialogView.findViewById(R.id.tvPackageName);
                 TextView tvConnect_Group = (TextView)dialogView.findViewById(R.id.tvContact_Group);
                 TextView tvConnection = (TextView)dialogView.findViewById(R.id.tvConnection);
@@ -270,7 +274,6 @@ public class SubscriptionActivity extends AppCompatActivity
                 Log.d("Stripe", error.getLocalizedMessage());
             }
         });
-
     }
 
 
