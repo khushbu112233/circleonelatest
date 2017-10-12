@@ -164,12 +164,10 @@ public class ConnectActivity extends AppCompatActivity
                 int width = rlConnect.getWidth();
                 left = rlConnect.getLeft();
                 right = rlConnect.getTop();
-
                 //don't forget to remove the listener to prevent being called again by future layout events:
                 rlConnect.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
-
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         {
@@ -179,7 +177,6 @@ public class ConnectActivity extends AppCompatActivity
         {
             motionLength = 180 ;
         }
-
 
         /*Rect loc = new Rect();
         int[] location = new int[2];

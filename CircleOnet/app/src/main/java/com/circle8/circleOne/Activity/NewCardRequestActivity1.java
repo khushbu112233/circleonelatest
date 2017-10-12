@@ -266,7 +266,6 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                 alertDialog.setCancelable(false);
                 alertDialog.getWindow().setFormat(PixelFormat.TRANSLUCENT);
                 alertDialog.show();
-
             }
         });
 
@@ -279,7 +278,6 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                 //llBlueCardSample.setEnabled(false);
             }
         });
-
 
         llBlueCardSample.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -316,7 +314,6 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                 }
             }
         });
-
     }
 
     public String POST(String url) {

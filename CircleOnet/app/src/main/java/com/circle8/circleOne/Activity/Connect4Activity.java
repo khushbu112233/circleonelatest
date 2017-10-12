@@ -1,14 +1,26 @@
 package com.circle8.circleOne.Activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.PixelFormat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.circle8.circleOne.R;
 import com.squareup.picasso.Picasso;
+import com.stripe.android.Stripe;
+import com.stripe.android.TokenCallback;
+import com.stripe.android.model.Card;
+import com.stripe.android.model.Token;
 
 public class Connect4Activity extends AppCompatActivity
 {
@@ -24,6 +36,12 @@ public class Connect4Activity extends AppCompatActivity
     String userPhoto1 = "", userPhoto2 = "", userPhoto3 = "", userPhoto4 = "", userPhoto5 = "", userPhoto6 = "", userPhoto7 = "" ;
     String userProfileId1 = "", userProfileId2 = "", userProfileId3 = "", userProfileId4 = "", userProfileId5 = "",
             userProfileId6 = "", userProfileId7 = "";
+
+    Stripe stripe;
+    Card card;
+    Token tok;
+    AlertDialog alertDialog;
+    String numberOnCard, nameOnCard, exYearOnCard, exMonthOnCard, cvvOnCard, mobileNoOnCard, strToken ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -182,8 +200,9 @@ public class Connect4Activity extends AppCompatActivity
 
             txtAsk.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    Intent go = new Intent(getApplicationContext(), StripeActivity.class);
+                public void onClick(View v)
+                {
+                   /* Intent go = new Intent(getApplicationContext(), StripeActivity.class);
                     go.putExtra("level", level);
                     go.putExtra("profile", profile);
                     go.putExtra("connectLevel", connectLevel);
@@ -209,7 +228,79 @@ public class Connect4Activity extends AppCompatActivity
                     go.putExtra("userPhoto7",userPhoto7);
                     go.putExtra("userProfileId7",userProfileId7);
                     startActivity(go);
-                    finish();
+                    finish();*/
+
+                    alertDialog = new AlertDialog.Builder(Connect4Activity.this).create();
+                    LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    View dialogView = inflater.inflate(R.layout.stripe_payment_screen1, null);
+
+                    LinearLayout llCardValues = (LinearLayout)dialogView.findViewById(R.id.llCardValues);
+                    LinearLayout llPackageDetails = (LinearLayout)dialogView.findViewById(R.id.llPackageDetails);
+
+                    final EditText etCardNumber = (EditText)dialogView.findViewById(R.id.etCardNumber);
+                    final EditText etCardHolderName = (EditText)dialogView.findViewById(R.id.etCardHolderName);
+                    final EditText etExMonth = (EditText)dialogView.findViewById(R.id.etExMonth);
+                    final EditText etExYear = (EditText)dialogView.findViewById(R.id.etExYear);
+                    final EditText etSecurityCode = (EditText)dialogView.findViewById(R.id.etSecurityCode);
+                    final EditText etMobileNumber = (EditText)dialogView.findViewById(R.id.etMobileNumber);
+                    TextView tvPay = (TextView)dialogView.findViewById(R.id.tvPay);
+                    TextView tvCancel = (TextView)dialogView.findViewById(R.id.tvCancel);
+
+                    tvPay.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v)
+                        {
+                            numberOnCard = etCardNumber.getText().toString();
+                            nameOnCard = etCardHolderName.getText().toString();
+                            exYearOnCard = etExYear.getText().toString();
+                            exMonthOnCard = etExMonth.getText().toString();
+                            cvvOnCard = etSecurityCode.getText().toString();
+                            mobileNoOnCard = etMobileNumber.getText().toString();
+
+                            if (numberOnCard.isEmpty())
+                            {
+                                Toast.makeText(Connect4Activity.this,"Enter Card No.",Toast.LENGTH_SHORT).show();
+                            }
+                            else if (nameOnCard.isEmpty())
+                            {
+                                Toast.makeText(Connect4Activity.this,"Enter Holder Name",Toast.LENGTH_SHORT).show();
+                            }
+                            else if (exMonthOnCard.isEmpty())
+                            {
+                                Toast.makeText(Connect4Activity.this,"Enter Expiry Month",Toast.LENGTH_SHORT).show();
+                            }
+                            else if (exYearOnCard.isEmpty())
+                            {
+                                Toast.makeText(Connect4Activity.this,"Enter Expiry Month",Toast.LENGTH_SHORT).show();
+                            }
+                            else if (cvvOnCard.isEmpty())
+                            {
+                                Toast.makeText(Connect4Activity.this,"Enter CVV No.",Toast.LENGTH_SHORT).show();
+                            }
+                            else if (mobileNoOnCard.isEmpty())
+                            {
+                                Toast.makeText(Connect4Activity.this,"Enter Mobile No.",Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                cardPayment();
+                                alertDialog.dismiss();
+                            }
+                        }
+                    });
+
+                    tvCancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v)
+                        {
+                            alertDialog.dismiss();
+                        }
+                    });
+
+                    alertDialog.setView(dialogView);
+                    alertDialog.setCancelable(false);
+                    alertDialog.getWindow().setFormat(PixelFormat.TRANSLUCENT);
+                    alertDialog.show();
                 }
             });
 
@@ -282,6 +373,68 @@ public class Connect4Activity extends AppCompatActivity
                 }
             });
     }
+
+    public void cardPayment()
+    {
+        card = new Card
+                (
+                        numberOnCard,
+                        Integer.valueOf(exMonthOnCard),
+                        Integer.valueOf(exYearOnCard),
+                        cvvOnCard
+                );
+
+        card.setCurrency("sgd");
+        card.setName(nameOnCard);
+
+        stripe.createToken(card, "pk_live_d0uXEesOC2Qg5919ul4t7Ocl", new TokenCallback() {
+            public void onSuccess(Token token)
+            {
+                // TODO: Send Token information to your backend to initiate a charge
+                Toast.makeText(getApplicationContext(), "Token created: " + token.getId(), Toast.LENGTH_LONG).show();
+                tok = token;
+                strToken = token.getId();
+                //  new StripeCharge(token.getId()).execute();
+//                new HttpAsyncTokenTask().execute("https://circle8.asia/Checkout/pay");
+//                new HttpAsyncRequestTask().execute("http://circle8.asia:8999/Onet.svc/Physical_Card/Order");
+
+                Intent go = new Intent(getApplicationContext(), Connect5Activity.class);
+                go.putExtra("level", level);
+                go.putExtra("profile", profile);
+                go.putExtra("connectLevel", connectLevel);
+                go.putExtra("userName1",userName1);
+                go.putExtra("userPhoto1",userPhoto1);
+                go.putExtra("userProfileId1",userProfileId1);
+                go.putExtra("userName2",userName2);
+                go.putExtra("userPhoto2",userPhoto2);
+                go.putExtra("userProfileId2",userProfileId2);
+                go.putExtra("userName3",userName3);
+                go.putExtra("userPhoto3",userPhoto3);
+                go.putExtra("userProfileId3",userProfileId3);
+                go.putExtra("userName4",userName4);
+                go.putExtra("userPhoto4",userPhoto4);
+                go.putExtra("userProfileId4",userProfileId4);
+                go.putExtra("userName5",userName5);
+                go.putExtra("userPhoto5",userPhoto5);
+                go.putExtra("userProfileId5",userProfileId5);
+                go.putExtra("userName6",userName6);
+                go.putExtra("userPhoto6",userPhoto6);
+                go.putExtra("userProfileId6",userProfileId6);
+                go.putExtra("userName7",userName7);
+                go.putExtra("userPhoto7",userPhoto7);
+                go.putExtra("userProfileId7",userProfileId7);
+                startActivity(go);
+                finish();
+
+                alertDialog.cancel();
+            }
+
+            public void onError(Exception error) {
+                Log.d("Stripe", error.getLocalizedMessage());
+            }
+        });
+    }
+
 }
 
 

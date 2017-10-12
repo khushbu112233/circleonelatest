@@ -103,7 +103,6 @@ public class StripeActivity extends AppCompatActivity
         card.setCVC("123");
         */
 
-
         stripe.createToken(card, "pk_test_6fZCC6Gu2kwYLUQxJhGte65l", new TokenCallback() {
             public void onSuccess(Token token) {
                 // TODO: Send Token information to your backend to initiate a charge

@@ -212,14 +212,14 @@
                     <com.circle8.circleOne.Utils.cgTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Name"
+                        android:text="Name of"
                         android:textSize="12sp"
                         android:textColor="@color/unselected"
                         android:layout_marginRight="0dp" />
                     <com.circle8.circleOne.Utils.cgTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="On the card"
+                        android:text="Card Holder"
                         android:textSize="10sp"
                         android:textColor="@color/unselected"
                         android:layout_marginRight="0dp" />
@@ -318,7 +318,7 @@
                 <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Security code: "
+                    android:text="CVV: "
                     android:textSize="12sp"
                     android:textColor="@color/unselected"
                     android:layout_marginRight="0dp"

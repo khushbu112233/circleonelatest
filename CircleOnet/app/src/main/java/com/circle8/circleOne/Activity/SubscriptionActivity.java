@@ -175,7 +175,7 @@ public class SubscriptionActivity extends AppCompatActivity
                 tvPackageName.setText(package_Name);
                 tvConnect_Group.setText(contacts_limit+" contacts, up to "+groups_limit+" circles,");
                 tvConnection.setText("up to "+month_connect_limit+" connections per month.");
-                tvAmount.setText("S$"+price);
+                tvAmount.setText("SGD $"+price);
 
                 /*cardNumberField = (TextView) dialogView.findViewById(R.id.cardNumber);
                 monthField = (TextView) dialogView.findViewById(R.id.month);
