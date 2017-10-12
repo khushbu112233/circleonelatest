@@ -9,7 +9,7 @@
     <com.circle8.circleOne.Utils.cgBoldTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="RM 1 = 1 Point"
+        android:text="SGD 1 = 1 Point"
         android:textStyle="bold"
         android:textColor="@color/colorPrimary"/>
 
@@ -23,7 +23,7 @@
        <com.circle8.circleOne.Utils.cgTextView
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:text="1. CIRCLE1 Share &amp; Earn"
+           android:text="1. CircleOne Share &amp; Earn"
            android:textColor="@color/colorPrimary"
            android:layout_weight="1"
            android:gravity="left"/>
@@ -66,7 +66,7 @@
     <com.circle8.circleOne.Utils.cgBoldTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="RM 1 = 1 Point"
+        android:text="SGD 1 = 1 Point"
         android:textStyle="bold"
         android:textColor="@color/colorPrimary"
         android:layout_marginTop="15dp"/>
