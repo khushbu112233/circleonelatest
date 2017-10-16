@@ -224,10 +224,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             }
                         });
             } else {
-                civProfilePic.setImageResource(R.drawable.usr);
+                civProfilePic.setImageResource(R.drawable.usr_white1);
             }
         } catch (Exception e) {
-            civProfilePic.setImageResource(R.drawable.usr);
+            civProfilePic.setImageResource(R.drawable.usr_white1);
         }
 
         ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {

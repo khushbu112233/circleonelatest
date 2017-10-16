@@ -199,12 +199,20 @@
                                             android:id="@+id/imgProfile"
                                             android:layout_width="70dp"
                                             android:layout_height="70dp"
-                                            android:src="@drawable/usr_white"
+                                            android:src="@drawable/usr_white1"
                                             app:civ_border_color="@color/colorPrimary"
                                             app:civ_border_width="0dp"
                                             android:layout_alignParentTop="true"
                                             android:layout_alignParentLeft="true"
                                             android:layout_alignParentStart="true" />
+
+                                        <ImageView
+                                            android:layout_centerInParent="true"
+                                            android:layout_width="70dp"
+                                            android:layout_height="70dp"
+                                            android:src="@drawable/round_white_profile"
+                                            />
+
                                         <ImageView
                                             android:id="@+id/ivMiniCamera"
                                             android:layout_width="18dp"

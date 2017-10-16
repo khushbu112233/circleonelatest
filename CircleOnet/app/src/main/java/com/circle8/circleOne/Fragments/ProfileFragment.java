@@ -254,7 +254,7 @@ public class ProfileFragment extends Fragment
                 ImageView ivViewImage = (ImageView)dialog.findViewById(R.id.ivViewImage);
                 if (displayProfile.equals(""))
                 {
-                    ivViewImage.setImageResource(R.drawable.usr_1);
+                    ivViewImage.setImageResource(R.drawable.usr_white1);
                 }
                 else
                 {
@@ -705,7 +705,7 @@ public class ProfileFragment extends Fragment
 
                                     if (allTags.get(i).getUserPhoto().equals(""))
                                     {
-                                        imgProfile.setImageResource(R.drawable.usr);
+                                        imgProfile.setImageResource(R.drawable.usr_white1);
                                     }
                                     else {
                                         Picasso.with(getContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+allTags.get(i).getUserPhoto()).into(imgProfile);
@@ -1452,7 +1452,7 @@ public class ProfileFragment extends Fragment
                     image = new ArrayList<>();
                     if (allTags.get(profileIndex).getUserPhoto().equals(""))
                     {
-                        imgProfile.setImageResource(R.drawable.usr);
+                        imgProfile.setImageResource(R.drawable.usr_white1);
                     }
                     else {
                         Picasso.with(getContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+allTags.get(profileIndex).getUserPhoto()).into(imgProfile);

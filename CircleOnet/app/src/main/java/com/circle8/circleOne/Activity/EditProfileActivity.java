@@ -3496,7 +3496,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                     txtCardFront.setText(Card_Front);
                     txtCardBack.setText(Card_Back);
                     if (UserPhoto.equals("")) {
-                        imgProfile.setImageResource(R.drawable.usr);
+                        imgProfile.setImageResource(R.drawable.usr_white1);
                     } else {
                         Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/" + UserPhoto).into(imgProfile);
                     }

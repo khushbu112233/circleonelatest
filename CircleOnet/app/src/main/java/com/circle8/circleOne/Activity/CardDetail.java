@@ -1483,7 +1483,7 @@ public class CardDetail extends NfcActivity
                     }
 
                     if (userImg.equalsIgnoreCase("")) {
-                        imgProfileCard.setImageResource(R.drawable.usr);
+                        imgProfileCard.setImageResource(R.drawable.usr_white1);
                         displayProfile = "";
                     } else {
                         Picasso.with(CardDetail.this).load("http://circle8.asia/App_ImgLib/UserProfile/" + userImg).into(imgProfileCard);

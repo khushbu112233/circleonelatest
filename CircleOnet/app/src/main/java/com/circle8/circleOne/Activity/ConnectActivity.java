@@ -832,7 +832,7 @@ public class ConnectActivity extends AppCompatActivity
                     displayProfile = profile.getString("UserPhoto");
                     if(profile.getString("UserPhoto").equalsIgnoreCase(""))
                     {
-                        ivProfileImage.setImageResource(R.drawable.usr);
+                        ivProfileImage.setImageResource(R.drawable.usr_white1);
                     }
                     else
                     {

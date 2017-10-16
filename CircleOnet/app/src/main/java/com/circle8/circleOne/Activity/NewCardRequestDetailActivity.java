@@ -172,7 +172,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
       //  imgProfile.setImageResource(Integer.parseInt(i.getStringExtra("image")));
         if (image.equals(""))
         {
-            imgProfile.setImageResource(R.drawable.usr_1);
+            imgProfile.setImageResource(R.drawable.usr_white1);
         }
         else {
             Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+image).into(imgProfile);
