@@ -398,7 +398,7 @@ public class CardDetail extends NfcActivity
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder;
-                builder = new AlertDialog.Builder(CardDetail.this);
+                builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
 
                 builder.setTitle("Redirect to Web Browser")
                         .setMessage("Are you sure you want to redirect to Web Browser ?")
@@ -432,7 +432,7 @@ public class CardDetail extends NfcActivity
 
                 } else {
                     AlertDialog.Builder builder;
-                    builder = new AlertDialog.Builder(CardDetail.this);
+                    builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
                     builder.setTitle("Mail to " + txtName.getText().toString())
                             .setMessage("Are you sure you want to drop Mail ?")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -490,7 +490,7 @@ public class CardDetail extends NfcActivity
 
                 if (!txtMob.getText().toString().equals("")) {
                     AlertDialog.Builder builder;
-                    builder = new AlertDialog.Builder(CardDetail.this);
+                    builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
 
                     builder.setTitle("Call to " + txtName.getText().toString())
                             .setMessage("Are you sure you want to make a Call ?")
@@ -512,7 +512,7 @@ public class CardDetail extends NfcActivity
                             .show();
                 } else if (!txtWork.getText().toString().equals("")) {
                     AlertDialog.Builder builder;
-                    builder = new AlertDialog.Builder(CardDetail.this);
+                    builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
 
                     builder.setTitle("Call to " + txtName.getText().toString())
                             .setMessage("Are you sure you want to make a Call ?")
@@ -534,7 +534,7 @@ public class CardDetail extends NfcActivity
                             .show();
                 } else if (!txtPH.getText().toString().equals("")) {
                     AlertDialog.Builder builder;
-                    builder = new AlertDialog.Builder(CardDetail.this);
+                    builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
 
                     builder.setTitle("Call to " + txtName.getText().toString())
                             .setMessage("Are you sure you want to make a Call ?")
@@ -565,7 +565,7 @@ public class CardDetail extends NfcActivity
 
                 } else {
                     AlertDialog.Builder builder;
-                    builder = new AlertDialog.Builder(CardDetail.this);
+                    builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
                     builder.setTitle("Mail to " + txtName.getText().toString())
                             .setMessage("Are you sure you want to drop Mail ?")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -598,7 +598,7 @@ public class CardDetail extends NfcActivity
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder;
-                builder = new AlertDialog.Builder(CardDetail.this);
+                builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
 
                 builder.setTitle("Call to " + txtName.getText().toString())
                         .setMessage("Are you sure you want to make a Call ?")
@@ -625,7 +625,7 @@ public class CardDetail extends NfcActivity
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder;
-                builder = new AlertDialog.Builder(CardDetail.this);
+                builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
 
                 builder.setTitle("Call to " + txtName.getText().toString())
                         .setMessage("Are you sure you want to make a Call ?")
@@ -819,7 +819,7 @@ public class CardDetail extends NfcActivity
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder;
-                builder = new AlertDialog.Builder(CardDetail.this);
+                builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
 
                 builder.setTitle("Google Map")
                         .setMessage("Are you sure you want to redirect to Google Map ?")

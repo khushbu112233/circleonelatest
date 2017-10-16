@@ -345,7 +345,7 @@ public class ProfileFragment extends Fragment
             public void onClick(View v) {
 
                 AlertDialog.Builder builder;
-                builder = new AlertDialog.Builder(getContext());
+                builder = new AlertDialog.Builder(getContext(), R.style.Blue_AlertDialog);
 
                 builder.setTitle("Google Map")
                         .setMessage("Are you sure you want to redirect to Google Map ?")
@@ -414,7 +414,7 @@ public class ProfileFragment extends Fragment
             public void onClick(View v) {
 
                 AlertDialog.Builder builder;
-                builder = new AlertDialog.Builder(getContext());
+                builder = new AlertDialog.Builder(getContext(), R.style.Blue_AlertDialog);
 
                 builder.setTitle("Call to "+ tvPersonName.getText().toString())
                         .setMessage("Are you sure you want to make a Call ?")
@@ -469,7 +469,7 @@ public class ProfileFragment extends Fragment
             public void onClick(View v)
             {
                 AlertDialog.Builder builder;
-                builder = new AlertDialog.Builder(getContext());
+                builder = new AlertDialog.Builder(getContext(), R.style.Blue_AlertDialog);
 
                 builder.setTitle("Redirect to Web Browser")
                         .setMessage("Are you sure you want to redirect to Web Browser ?")
@@ -502,7 +502,7 @@ public class ProfileFragment extends Fragment
             {
                 AlertDialog.Builder builder;
 
-                builder = new AlertDialog.Builder(getContext());
+                builder = new AlertDialog.Builder(getContext(), R.style.Blue_AlertDialog);
 
                 builder.setTitle("Call to "+ tvPersonName.getText().toString())
                         .setMessage("Are you sure you want to make a Call ?")
@@ -535,7 +535,7 @@ public class ProfileFragment extends Fragment
                 else
                 {
                     AlertDialog.Builder builder;
-                    builder = new AlertDialog.Builder(getContext());
+                    builder = new AlertDialog.Builder(getContext(), R.style.Blue_AlertDialog);
                     builder.setTitle("Mail to "+ tvPersonName.getText().toString())
                             .setMessage("Are you sure you want to drop Mail ?")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
