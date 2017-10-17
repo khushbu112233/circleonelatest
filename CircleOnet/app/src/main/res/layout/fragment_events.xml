@@ -21,16 +21,17 @@
             android:paddingRight="10dp"
             android:layout_toLeftOf="@+id/imgSearch"
             android:paddingLeft="10dp"
-            android:hint="Search in event"
+            android:hint="Search event"
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:textColor="#9FA0A0"
+            android:textColorHint="#9FA0A0"
             android:textSize="12dp"
             android:focusableInTouchMode="true"
             android:imeOptions="actionSearch"
-            android:inputType="textAutoComplete|textAutoCorrect"
-            android:textColor="#dbdada" />
+            android:inputType="textAutoComplete|textAutoCorrect" />
 
         <ImageView
             android:layout_marginRight="10dp"

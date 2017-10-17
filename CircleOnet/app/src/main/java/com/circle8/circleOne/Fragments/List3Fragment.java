@@ -746,7 +746,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Type", SortAndFilterOption.SortType );
-            jsonObject.accumulate("numofrecords", "3" );
+            jsonObject.accumulate("numofrecords", "10" );
             jsonObject.accumulate("pageno", pageno );
             jsonObject.accumulate("userid", UserId );
 

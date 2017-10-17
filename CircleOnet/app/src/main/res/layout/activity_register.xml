@@ -132,7 +132,7 @@
                         />
 
                     <ImageView
-                        android:layout_marginRight="2dp"
+                        android:layout_marginRight="3dp"
                         android:layout_marginBottom="5dp"
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentRight="true"
@@ -181,7 +181,7 @@
             android:textSize="15dp"
             android:backgroundTint="@color/colorPrimary"
             android:textColorHint="@color/colorPrimary"
-            android:hint="* Email(Username)"
+            android:hint="* Email (User Name)"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"/>
@@ -307,6 +307,7 @@
                 android:backgroundTint="@color/colorPrimary"
                 android:textColorHint="@color/colorPrimary"
                 android:text="*"
+                android:visibility="gone"
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -368,18 +369,86 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"/>
 
-        <com.circle8.circleOne.Utils.HelveticaLightEditText
-            android:id="@+id/etDOB"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <com.circle8.circleOne.Utils.HelveticaLightTextView
             android:layout_marginTop="3dp"
             android:textColor="@color/colorPrimary"
             android:textSize="15dp"
             android:backgroundTint="@color/textColor"
             android:textColorHint="@color/colorPrimary"
-            android:hint="DOB ( dd/mm/yyyy )"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"/>
+            android:text="DOB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
+            <com.circle8.circleOne.Utils.HelveticaLightEditText
+                android:layout_marginLeft="20dp"
+                android:id="@+id/etDD"
+                android:layout_marginTop="3dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15dp"
+                android:backgroundTint="@color/textColor"
+                android:textColorHint="@color/colorPrimary"
+                android:hint="DD"
+                android:maxLength="2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="date"/>
+
+            <com.circle8.circleOne.Utils.HelveticaLightTextView
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="3dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15dp"
+                android:backgroundTint="@color/textColor"
+                android:textColorHint="@color/colorPrimary"
+                android:text="/"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.circle8.circleOne.Utils.HelveticaLightEditText
+                android:layout_marginLeft="10dp"
+                android:id="@+id/etMM"
+                android:layout_marginTop="3dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15dp"
+                android:backgroundTint="@color/textColor"
+                android:textColorHint="@color/colorPrimary"
+                android:hint="MM"
+                android:maxLength="2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="date"/>
+
+            <com.circle8.circleOne.Utils.HelveticaLightTextView
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="3dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15dp"
+                android:backgroundTint="@color/textColor"
+                android:textColorHint="@color/colorPrimary"
+                android:text="/"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.circle8.circleOne.Utils.HelveticaLightEditText
+                android:layout_marginLeft="10dp"
+                android:id="@+id/etYYYY"
+                android:layout_marginTop="3dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15dp"
+                android:backgroundTint="@color/textColor"
+                android:textColorHint="@color/colorPrimary"
+                android:hint="YYYY"
+                android:maxLength="4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="date"/>
+
+        </LinearLayout>
         <com.circle8.circleOne.Utils.HelveticaLightEditText
             android:id="@+id/etReferrelCode"
             android:layout_marginTop="3dp"
