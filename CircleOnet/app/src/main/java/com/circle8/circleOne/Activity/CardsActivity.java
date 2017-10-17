@@ -525,6 +525,12 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         LinearLayout lnrHistory = (LinearLayout)dialog.findViewById(R.id.lnrHistory);
         txtNotificationCount = (CircularTextView) dialog.findViewById(R.id.txtNotificationCount);
 
+        if (NotificationCount.equals("0")){
+            txtNotificationCount.setVisibility(View.GONE);
+        }
+        else {
+            txtNotificationCount.setVisibility(View.VISIBLE);
+        }
         txtNotificationCount.setText(NotificationCount);
 
         lnrSyncContacts.setOnClickListener(new View.OnClickListener() {
@@ -1160,8 +1166,15 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
 
                     if (success.equals("1")) {
                         NotificationCount = Count;
+                        if (NotificationCount.equals("0")) {
+                            txtNotificationCountAction.setVisibility(View.GONE);
+                        }
+                        else {
+                            txtNotificationCountAction.setVisibility(View.VISIBLE);
+                        }
                         txtNotificationCountAction.setText(NotificationCount);
                     } else {
+                        txtNotificationCountAction.setVisibility(View.GONE);
                         NotificationCount = "0";
                         txtNotificationCountAction.setText(NotificationCount);
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
