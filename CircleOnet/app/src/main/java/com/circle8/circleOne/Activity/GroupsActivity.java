@@ -232,6 +232,7 @@ public class GroupsActivity extends AppCompatActivity
                     public void onClick(View v) {
                         CropImage.activity(null)
                                 .setGuidelines(CropImageView.Guidelines.ON)
+                                .setCropMenuCropButtonTitle("Save")
                                 .start(GroupsActivity.this);
                     }
                 });
