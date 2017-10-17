@@ -243,7 +243,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             user_Photo = user.get(LoginSession.KEY_IMAGE);
             if (user_Photo.equals(""))
             {
-                imgProfile.setImageResource(R.drawable.usr_1);
+                imgProfile.setImageResource(R.drawable.usr_white1);
             }
             else
             {

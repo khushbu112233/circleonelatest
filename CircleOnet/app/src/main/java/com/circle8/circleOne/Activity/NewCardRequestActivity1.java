@@ -177,7 +177,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
 
         if (image.equals(""))
         {
-            imgProfile.setImageResource(R.drawable.usr_1);
+            imgProfile.setImageResource(R.drawable.usr_white1);
         }
         else
         {

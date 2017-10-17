@@ -120,9 +120,9 @@ public class ConnectListAdapter extends BaseAdapter
                 holder.descText.setText(connectLists.get(position).getDesignation());
             }
 
-            designation = company + "\n" + email + "\n" + website;
+            designation = company + "\n" + website;
 
-            holder.detailText.setText(company + "\n" + email + "\n" + website);
+            holder.detailText.setText(company + "\n" + website);
 
 
             if (connectLists.get(position).getUserphoto().equalsIgnoreCase("")) {

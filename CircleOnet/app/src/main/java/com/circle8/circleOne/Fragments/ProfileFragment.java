@@ -254,7 +254,7 @@ public class ProfileFragment extends Fragment
                 ImageView ivViewImage = (ImageView)dialog.findViewById(R.id.ivViewImage);
                 if (displayProfile.equals(""))
                 {
-                    ivViewImage.setImageResource(R.drawable.usr_1);
+                    ivViewImage.setImageResource(R.drawable.usr_white1);
                 }
                 else
                 {
@@ -345,7 +345,7 @@ public class ProfileFragment extends Fragment
             public void onClick(View v) {
 
                 AlertDialog.Builder builder;
-                builder = new AlertDialog.Builder(getContext());
+                builder = new AlertDialog.Builder(getContext(), R.style.Blue_AlertDialog);
 
                 builder.setTitle("Google Map")
                         .setMessage("Are you sure you want to redirect to Google Map ?")
@@ -414,7 +414,7 @@ public class ProfileFragment extends Fragment
             public void onClick(View v) {
 
                 AlertDialog.Builder builder;
-                builder = new AlertDialog.Builder(getContext());
+                builder = new AlertDialog.Builder(getContext(), R.style.Blue_AlertDialog);
 
                 builder.setTitle("Call to "+ tvPersonName.getText().toString())
                         .setMessage("Are you sure you want to make a Call ?")
@@ -469,7 +469,7 @@ public class ProfileFragment extends Fragment
             public void onClick(View v)
             {
                 AlertDialog.Builder builder;
-                builder = new AlertDialog.Builder(getContext());
+                builder = new AlertDialog.Builder(getContext(), R.style.Blue_AlertDialog);
 
                 builder.setTitle("Redirect to Web Browser")
                         .setMessage("Are you sure you want to redirect to Web Browser ?")
@@ -502,7 +502,7 @@ public class ProfileFragment extends Fragment
             {
                 AlertDialog.Builder builder;
 
-                builder = new AlertDialog.Builder(getContext());
+                builder = new AlertDialog.Builder(getContext(), R.style.Blue_AlertDialog);
 
                 builder.setTitle("Call to "+ tvPersonName.getText().toString())
                         .setMessage("Are you sure you want to make a Call ?")
@@ -535,7 +535,7 @@ public class ProfileFragment extends Fragment
                 else
                 {
                     AlertDialog.Builder builder;
-                    builder = new AlertDialog.Builder(getContext());
+                    builder = new AlertDialog.Builder(getContext(), R.style.Blue_AlertDialog);
                     builder.setTitle("Mail to "+ tvPersonName.getText().toString())
                             .setMessage("Are you sure you want to drop Mail ?")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -705,7 +705,7 @@ public class ProfileFragment extends Fragment
 
                                     if (allTags.get(i).getUserPhoto().equals(""))
                                     {
-                                        imgProfile.setImageResource(R.drawable.usr);
+                                        imgProfile.setImageResource(R.drawable.usr_white1);
                                     }
                                     else {
                                         Picasso.with(getContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+allTags.get(i).getUserPhoto()).into(imgProfile);
@@ -1452,7 +1452,7 @@ public class ProfileFragment extends Fragment
                     image = new ArrayList<>();
                     if (allTags.get(profileIndex).getUserPhoto().equals(""))
                     {
-                        imgProfile.setImageResource(R.drawable.usr);
+                        imgProfile.setImageResource(R.drawable.usr_white1);
                     }
                     else {
                         Picasso.with(getContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+allTags.get(profileIndex).getUserPhoto()).into(imgProfile);

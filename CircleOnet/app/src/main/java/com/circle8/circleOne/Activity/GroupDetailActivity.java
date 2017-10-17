@@ -172,7 +172,7 @@ public class GroupDetailActivity extends AppCompatActivity
 
         if (group_Img.equals(""))
         {
-            imgProfile.setImageResource(R.drawable.usr_1);
+            imgProfile.setImageResource(R.drawable.usr_white1);
         }
         else
         {
@@ -870,7 +870,7 @@ public class GroupDetailActivity extends AppCompatActivity
 
                         if (GroupImage.equals(""))
                         {
-                            imgProfile.setImageResource(R.drawable.usr_1);
+                            imgProfile.setImageResource(R.drawable.usr_white1);
                         }
                         else
                         {

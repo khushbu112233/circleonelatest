@@ -28,8 +28,6 @@ public class CustomAdapter extends BaseAdapter
         activity = a;
         this.testimonialModels = testimonialModels;
 
-        inflater = (LayoutInflater) activity
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     }
 
@@ -55,7 +53,8 @@ public class CustomAdapter extends BaseAdapter
     {
         View row = convertView;
         ViewHolder holder = null;
-
+        inflater = (LayoutInflater) activity
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null)
         {
             row = inflater.inflate(R.layout.testimonial_row, null);

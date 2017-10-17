@@ -199,10 +199,17 @@
                                 <de.hdodenhof.circleimageview.CircleImageView
                                     app:civ_border_width="1dp"
                                     app:civ_border_color="@color/white"
-                                    android:src="@drawable/usr_white"
+                                    android:src="@drawable/usr_white1"
                                     android:id="@+id/imgProfile"
                                     android:layout_width="70dp"
                                     android:layout_height="70dp" />
+
+                                <ImageView
+                                    android:layout_centerInParent="true"
+                                    android:layout_width="70dp"
+                                    android:layout_height="70dp"
+                                    android:src="@drawable/round_white_profile"
+                                    />
                             </RelativeLayout>
                             <com.circle8.circleOne.Utils.orkebyBoldTextView
                                 android:id="@+id/tvPersonName"

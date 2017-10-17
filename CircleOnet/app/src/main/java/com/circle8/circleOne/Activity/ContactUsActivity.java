@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.RxContacts.Contact;
 
 public class ContactUsActivity extends AppCompatActivity implements View.OnClickListener
 {
@@ -40,11 +41,13 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
         lnrEmail = (LinearLayout)findViewById(R.id.llMailBox);
         lnrContact = (LinearLayout)findViewById(R.id.lnrPhone);
         lnrWebsite = (LinearLayout)findViewById(R.id.lnrWebsite);
+        ivMessage = (ImageView) findViewById(R.id.ivMessage);
+        ivPhone = (ImageView) findViewById(R.id.ivPhone);
 
         imgBack.setOnClickListener(this);
         lnrAddress.setOnClickListener(this);
-        lnrEmail.setOnClickListener(this);
-        lnrContact.setOnClickListener(this);
+        ivMessage.setOnClickListener(this);
+        ivPhone.setOnClickListener(this);
         lnrWebsite.setOnClickListener(this);
 
     }
@@ -59,7 +62,7 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
         if ( v == lnrAddress)
         {
             AlertDialog.Builder builder;
-            builder = new AlertDialog.Builder(getApplicationContext());
+            builder = new AlertDialog.Builder(ContactUsActivity.this, R.style.Blue_AlertDialog);
 
             builder.setTitle("Google Map")
                     .setMessage("Are you sure you want to redirect to Google Map ?")
@@ -80,10 +83,10 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
                     .setIcon(android.R.drawable.ic_dialog_map)
                     .show();
         }
-        if ( v == lnrEmail)
+        if ( v == ivMessage)
         {
             AlertDialog.Builder builder;
-            builder = new AlertDialog.Builder(getApplicationContext());
+            builder = new AlertDialog.Builder(ContactUsActivity.this, R.style.Blue_AlertDialog);
             builder.setTitle("Mail to "+ tvCompany.getText().toString())
                     .setMessage("Are you sure you want to drop Mail ?")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -112,10 +115,10 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
                     .setIcon(android.R.drawable.ic_dialog_email)
                     .show();
         }
-        if ( v == lnrContact)
+        if ( v == ivPhone)
         {
             AlertDialog.Builder builder;
-            builder = new AlertDialog.Builder(getApplicationContext());
+            builder = new AlertDialog.Builder(ContactUsActivity.this, R.style.Blue_AlertDialog);
 
             builder.setTitle("Call to "+ tvCompany.getText().toString())
                     .setMessage("Are you sure you want to make a Call ?")
@@ -139,7 +142,7 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
         if ( v == lnrWebsite)
         {
             AlertDialog.Builder builder;
-            builder = new AlertDialog.Builder(getApplicationContext());
+            builder = new AlertDialog.Builder(ContactUsActivity.this, R.style.Blue_AlertDialog);
 
             builder.setTitle("Redirect to Web Browser")
                     .setMessage("Are you sure you want to redirect to Web Browser ?")
