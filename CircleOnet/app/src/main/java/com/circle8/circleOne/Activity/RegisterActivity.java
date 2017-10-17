@@ -135,7 +135,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private RelativeLayout rlProgressDialog ;
     private TextView tvProgressing ;
-    EditText etDOB;
+    EditText etDD, etMM, etYYYY;
     private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
 
     @Override
@@ -166,7 +166,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         line_view1 = (View) findViewById(R.id.vwDrag1);
         line_view2 = (View) findViewById(R.id.vwDrag2);
         imgBack = (ImageView) findViewById(R.id.imgBack);
-        etDOB = (EditText) findViewById(R.id.etDOB);
+        etDD = (EditText) findViewById(R.id.etDD);
+        etMM = (EditText) findViewById(R.id.etMM);
+        etYYYY = (EditText) findViewById(R.id.etYYYY);
         imgBack.setOnClickListener(this);
         pDialog = new ProgressDialog(this);
         civProfilePic = (CircleImageView) findViewById(R.id.imgProfileCard);
@@ -477,12 +479,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
            /* else if (refferelCode.equals("")){
                 Toast.makeText(getApplicationContext(), "Enter Referral Code", Toast.LENGTH_SHORT).show();
             }*/
-            else if (phone_no.equals("")) {
+           /* else if (phone_no.equals("")) {
                 Toast.makeText(getApplicationContext(), "Enter Contact Number", Toast.LENGTH_SHORT).show();
             }
             else if (etDOB.getText().toString().equals("")) {
                 Toast.makeText(getApplicationContext(), "Enter DOB", Toast.LENGTH_SHORT).show();
-            }
+            }*/
             else if (gender.equals("")) {
                 Toast.makeText(getApplicationContext(), "Select Gender", Toast.LENGTH_SHORT).show();
             }
@@ -989,7 +991,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             // 2. make POST request to the given URL
             HttpPost httpPost = new HttpPost(url);
             String json = "";
-
+            String date_DOB = "";
+            if (etDD.getText().toString().equals("") || etMM.getText().toString().equals("") || etYYYY.getText().toString().equals("")){
+                date_DOB = "";
+            }
+            else {
+                date_DOB = etDD.getText().toString() + "/" + etMM.getText().toString() + "/" + etYYYY.getText().toString();
+            }
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Facebook", Facebook);
@@ -1006,7 +1014,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             jsonObject.accumulate("Token", LoginActivity.pushToken);
             jsonObject.accumulate("Twitter", Twitter);
             jsonObject.accumulate("UserName", email);
-            jsonObject.accumulate("dob", etDOB.getText().toString());
+            jsonObject.accumulate("dob", date_DOB);
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();

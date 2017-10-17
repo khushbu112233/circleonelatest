@@ -24,7 +24,7 @@
                 android:textSize="12dp"
                 android:layout_toLeftOf="@+id/imgSearch"
                 android:paddingLeft="10dp"
-                android:hint="search in contacts"
+                android:hint="Search contacts"
                 android:id="@+id/searchView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -32,8 +32,8 @@
                 android:focusableInTouchMode="true"
                 android:imeOptions="actionSearch"
                 android:inputType="textAutoComplete|textAutoCorrect"
-                android:textColor="#626567"
-                android:textColorHint="#626567"/>
+                android:textColor="#9FA0A0"
+                android:textColorHint="#9FA0A0"/>
             <ImageView
                 android:layout_marginRight="10dp"
                 android:layout_centerVertical="true"

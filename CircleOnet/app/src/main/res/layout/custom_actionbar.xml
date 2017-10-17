@@ -22,16 +22,16 @@
             android:visibility="gone"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/imgLogo"
-            android:layout_marginLeft="0dp"
+            android:layout_marginLeft="-5dp"
             android:id="@+id/txtNotificationCountAction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"
+            android:padding="1dp"
             android:textSize="8sp"
             android:gravity="center"
             android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
-            android:padding="2dp"/>
+            android:textColor="@color/colorPrimary" />
 
         </RelativeLayout>
     <com.circle8.circleOne.Utils.cgTextView

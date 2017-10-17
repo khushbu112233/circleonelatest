@@ -88,7 +88,7 @@ public class CustomDate extends AppCompatActivity {
 
 
 // Print what date is today!
-                        dateSelect.setText("Selected Dates are = " + df.format(date2) + " and " + df.format(date1) + "\nSelected Days = " + String.valueOf(diff));
+                        dateSelect.setText("View events within period : \n" + "From - "+ df.format(date2) + " To - " + df.format(date1) + "\nSelected Days = " + String.valueOf(diff));
                        // Toast.makeText(getApplicationContext(), String.valueOf(diff), Toast.LENGTH_LONG).show();
                     }
                 } catch (Exception e){

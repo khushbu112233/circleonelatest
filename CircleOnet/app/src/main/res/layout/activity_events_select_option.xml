@@ -25,11 +25,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:textColor="#9FA0A0"
+            android:textColorHint="#9FA0A0"
             android:textSize="12dp"
             android:focusableInTouchMode="true"
             android:imeOptions="actionSearch"
-            android:inputType="textAutoComplete|textAutoCorrect"
-            android:textColor="#dbdada" />
+            android:inputType="textAutoComplete|textAutoCorrect" />
 
 
         <ImageView
@@ -264,6 +265,20 @@
                     android:layout_marginLeft="20dp"
                     android:textColor="@color/colorAccent" />
 
+                <RelativeLayout
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_alignParentRight="true"
+                        android:tint="@color/colorPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_keyboard_arrow_left_black_24dp"/>
+
+                </RelativeLayout>
+
 
             </LinearLayout>
 
@@ -293,6 +308,19 @@
                     android:textSize="14dp"
                     android:layout_marginLeft="20dp"
                     android:textColor="@color/colorAccent" />
+                <RelativeLayout
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_alignParentRight="true"
+                        android:tint="@color/colorPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_keyboard_arrow_left_black_24dp"/>
+
+                </RelativeLayout>
 
 
             </LinearLayout>
