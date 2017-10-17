@@ -452,6 +452,7 @@
                     app:ccpDialog_searchEditTextTint="@color/colorPrimary"
                     app:ccp_textSize="15dp"
                     app:ccpDialog_textColor="@color/colorPrimary"
+                    app:ccp_contentColor="@color/colorPrimary"
                     android:textColor="@color/colorPrimary"
                     android:textSize="15dp"
                     app:ccp_showNameCode="false"
@@ -462,13 +463,6 @@
                     android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="*"
-                    android:textColor="@color/colorPrimary"
-                    android:layout_marginRight="0dp" />
                 <com.circle8.circleOne.Utils.HelveticaLightEditText
                     android:id="@+id/etPhone"
                     android:layout_width="match_parent"
@@ -486,34 +480,86 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="0dp"
-                android:gravity="center_vertical"
                 android:orientation="horizontal">
-                <TextView
+
+                <com.circle8.circleOne.Utils.HelveticaLightTextView
+                    android:layout_marginTop="3dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="15dp"
+                    android:backgroundTint="@color/textColor"
+                    android:textColorHint="@color/colorPrimary"
+                    android:text="DOB :"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <com.circle8.circleOne.Utils.HelveticaLightEditText
+                    android:layout_marginLeft="20dp"
+                    android:id="@+id/etDD"
+                    android:layout_marginTop="3dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="15dp"
+                    android:backgroundTint="@color/textColor"
+                    android:textColorHint="@color/colorPrimary"
+                    android:hint="DD"
+                    android:maxLength="2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="*"
+                    android:inputType="date"/>
+
+                <com.circle8.circleOne.Utils.HelveticaLightTextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="3dp"
                     android:textColor="@color/colorPrimary"
-                    android:layout_marginRight="0dp" />
-                <com.circle8.circleOne.Utils.HelveticaLightEditText
-                    android:textStyle="bold"
-                    android:id="@+id/etDOB"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:hint="DOB ( dd/mm/yyyy) "
-                    android:backgroundTint="@color/colorPrimary"
+                    android:textSize="15dp"
+                    android:backgroundTint="@color/textColor"
                     android:textColorHint="@color/colorPrimary"
+                    android:text="/"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <com.circle8.circleOne.Utils.HelveticaLightEditText
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/etMM"
+                    android:layout_marginTop="3dp"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="13sp"
-                    android:inputType="date"
-                    android:enabled="false"/>
+                    android:textSize="15dp"
+                    android:backgroundTint="@color/textColor"
+                    android:textColorHint="@color/colorPrimary"
+                    android:hint="MM"
+                    android:maxLength="2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="date"/>
+
+                <com.circle8.circleOne.Utils.HelveticaLightTextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="3dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="15dp"
+                    android:backgroundTint="@color/textColor"
+                    android:textColorHint="@color/colorPrimary"
+                    android:text="/"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <com.circle8.circleOne.Utils.HelveticaLightEditText
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/etYYYY"
+                    android:layout_marginTop="3dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="15dp"
+                    android:backgroundTint="@color/textColor"
+                    android:textColorHint="@color/colorPrimary"
+                    android:hint="YYYY"
+                    android:maxLength="4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="date"/>
+
             </LinearLayout>
 
             <com.circle8.circleOne.Utils.HelveticaLightTextView

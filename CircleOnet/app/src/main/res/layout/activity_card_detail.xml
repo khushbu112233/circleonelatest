@@ -806,6 +806,29 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_map" />
 
+                <com.circle8.circleOne.Utils.orkebyTextView
+                    android:id="@+id/lblAttachment"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13sp"
+                    android:text="Attachment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+
+                <com.circle8.circleOne.Utils.orkebyTextView
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/txtAttachment"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_centerVertical="true"
+                    android:textColor="@android:color/black"
+                    android:textSize="13sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+
 
                 <RelativeLayout
                     android:id="@+id/rltTestimonial"

@@ -221,8 +221,8 @@ public class EditProfileActivity extends AppCompatActivity implements
     private LinearLayout llEventBox;
     private ImageView ivArrowImg, ivArrowImg1;
     RecyclerView recyclerEvents;
-    private String arrowStatus = "RIGHT";
-    private String arrowStatus1 = "RIGHT";
+    private String arrowStatus = "DOWN";
+    private String arrowStatus1 = "DOWN";
     private LoginSession session;
     private int SELECT_GALLERY_CARD = 500;
     private int REQUEST_CAMERA_CARD = 501;
@@ -293,7 +293,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     String fromActivity = "";
 
     StickyScrollView stickyScrollView ;
-
+    String cropType = "";
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line = "";
@@ -497,7 +497,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                cropType = "profile";
                 CropImage.activity(null)
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .start(EditProfileActivity.this);
@@ -1282,7 +1282,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                         String personPhotoUrl = currentPerson.getImage().getUrl();
                         Log.e("TAG", "Name: " + personName + ", email: " + email
                         );
-                        strGoogle = "https://plus.google.com/" + acct.getId();
+                        strGoogle = "https://plus.google.com/" + acct.getId()+"/";
                         imgGoogle.setImageResource(R.drawable.icon_google);
                     }
                 }
@@ -1319,7 +1319,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                             Log.e("response: ", response + "");
                             Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
                             try {
-                                strFB = "https://www.facebook.com/profile.php?id=" + object.getString("id").toString();
+                                strFB = "http://www.facebook.com/" + object.getString("id").toString();
                                 Toast.makeText(getApplicationContext(), strFB, Toast.LENGTH_LONG).show();
                                 imgFb.setImageResource(R.drawable.icon_fb);
                             } catch (Exception e) {
@@ -2136,7 +2136,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     }
 
     private void selectFile() {
-        items = new CharSequence[]{"Upload Document", "Take Photo", "Choose from Media", "Take Audio", "Cancel"};
+        items = new CharSequence[]{"Upload Document", "Take Photo","Cancel"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(EditProfileActivity.this);
         builder.setTitle("Attach File");
@@ -2150,24 +2150,30 @@ public class EditProfileActivity extends AppCompatActivity implements
                     if (result) {
                         cameraIntent();
                     }
-                } else if (items[item].equals("Choose from Media")) {
+                } /*else if (items[item].equals("Choose from Media")) {
                     userChoosenTask = "Choose from Media";
                     if (result) {
-                        galleryIntent();
+
+                        cropType = "attachment";
+                        CropImage.activity(null)
+                                .setGuidelines(CropImageView.Guidelines.ON)
+                                .start(EditProfileActivity.this);
+
+                       // galleryIntent();
                     }
-                } else if (items[item].equals("Cancel")) {
+                } */else if (items[item].equals("Cancel")) {
                     dialog.dismiss();
                 } else if (items[item].equals("Upload Document")) {
                     userChoosenTask = "Upload Document";
                     if (result) {
                         documentIntent();
                     }
-                } else if (items[item].equals("Take Audio")) {
+                }/* else if (items[item].equals("Take Audio")) {
                     userChoosenTask = "Take Audio";
                     if (result) {
                         audioIntent();
                     }
-                }
+                }*/
             }
         });
         builder.show();
@@ -2346,6 +2352,16 @@ public class EditProfileActivity extends AppCompatActivity implements
                         CardSwipe.imageView.setImageBitmap(bitmap);
                         new HttpAsyncTaskBackUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
                     }
+                   /* else if (cropType.equals("attachment")){
+                        Uri imgUri = getImageUri(getApplicationContext(), bitmap);
+                        // CALL THIS METHOD TO GET THE ACTUAL PATH
+                        File imgFile = new File(getRealPathFromURI(imgUri));
+
+                        String imgPath = getRealPathFromURI(imgUri);
+                        size_calculate(imgPath);
+
+                      //  size_calculate(picturePath);
+                    }*/
                     else {
                         imgProfile.setImageBitmap(bitmap);
                         new HttpAsyncTaskUserUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
@@ -2597,15 +2613,27 @@ public class EditProfileActivity extends AppCompatActivity implements
     }
 
     private void onSelectFromGalleryResult(Intent data) {
-        Uri selectedImageUri = data.getData();
+       /* Uri selectedImageUri = data.getData();
         String imgPath = getPath(selectedImageUri);
 
         File imgFile = new File(imgPath);
         String imgName = imgFile.getName();
-
+*/
 //        etAttachFile.setText(imgName);
         //call method
-        size_calculate(imgPath);
+
+
+        Uri selectedImage = data.getData();
+        String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+        Cursor cursor = getContentResolver().query(selectedImage,
+                filePathColumn, null, null, null);
+        cursor.moveToFirst();
+
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        String picturePath = cursor.getString(columnIndex);
+        size_calculate(picturePath);
+        cursor.close();
 
 
         Bitmap bm = null;

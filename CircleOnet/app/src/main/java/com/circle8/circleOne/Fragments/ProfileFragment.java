@@ -154,6 +154,7 @@ public class ProfileFragment extends Fragment
     String barName;
     JSONArray jsonArray;
     public static int profileIndex = 0;
+    TextView txtAttachment, lblAttachment;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -211,6 +212,8 @@ public class ProfileFragment extends Fragment
         txtTestimonial = (TextView) view.findViewById(R.id.txtTestimonial);
         txtMore = (TextView) view.findViewById(R.id.txtMore);
         imgBack = (ImageView) view.findViewById(R.id.imgBack);
+        txtAttachment = (TextView) view.findViewById(R.id.txtAttachment);
+        lblAttachment = (TextView) view.findViewById(R.id.lblAttachment);
         recyclerAssociation = (RecyclerView) view.findViewById(R.id.recyclerAssociation);
         recyclerEvents = (RecyclerView) view.findViewById(R.id.recyclerEvents);
         progressDialog = new ProgressDialog(getActivity());
@@ -340,7 +343,7 @@ public class ProfileFragment extends Fragment
         });
 
         allTaggs = new ArrayList<>();
-        lnrMap.setOnClickListener(new View.OnClickListener() {
+       /* lnrMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -366,7 +369,7 @@ public class ProfileFragment extends Fragment
                         .setIcon(android.R.drawable.ic_dialog_map)
                         .show();
             }
-        });
+        });*/
 
         txtMore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -409,7 +412,7 @@ public class ProfileFragment extends Fragment
             }
         });
 
-        lnrMob.setOnClickListener(new View.OnClickListener() {
+      /*  lnrMob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -435,7 +438,7 @@ public class ProfileFragment extends Fragment
                         .setIcon(android.R.drawable.ic_menu_call)
                         .show();
             }
-        });
+        });*/
 
         viewPager1.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -464,7 +467,7 @@ public class ProfileFragment extends Fragment
         });
 
 
-        lnrWebsite.setOnClickListener(new View.OnClickListener() {
+       /* lnrWebsite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -494,9 +497,9 @@ public class ProfileFragment extends Fragment
                         .setIcon(android.R.drawable.ic_menu_set_as)
                         .show();
             }
-        });
+        });*/
 
-        lnrWork.setOnClickListener(new View.OnClickListener() {
+       /* lnrWork.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -565,7 +568,7 @@ public class ProfileFragment extends Fragment
                             .show();
                 }
             }
-        });
+        });*/
         imgProfileShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -623,6 +626,18 @@ public class ProfileFragment extends Fragment
                                     tvMob.setText(allTags.get(i).getMobile1());
                                     tvWork.setText(allTags.get(i).getPhone1());
 
+                                    if (allTags.get(i).getAttachment_FileName().toString().equals("") || allTags.get(i).getAttachment_FileName().toString() == null ||
+                                            allTags.get(i).getAttachment_FileName().toString().equals("null")) {
+
+                                        txtAttachment.setVisibility(View.GONE);
+                                        lblAttachment.setVisibility(View.GONE);
+                                    }
+                                    else {
+                                        txtAttachment.setVisibility(View.VISIBLE);
+                                        lblAttachment.setVisibility(View.VISIBLE);
+
+                                        txtAttachment.setText(allTags.get(i).getAttachment_FileName());
+                                    }
                                     tvAddress.setText(
                                               allTags.get(i).getAddress1()+ " "
                                             + allTags.get(i).getAddress2() + "\n"
@@ -1154,8 +1169,13 @@ public class ProfileFragment extends Fragment
                     {
                         JSONObject object = jsonArray.getJSONObject(i);
                         //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
-                        profile_array.add(object.getString("ProfileName")+ " " + object.getString("CompanyName")+ " " + object.getString("FirstName") + " " + object.getString("LastName")
-                        + " " + object.getString("Designation") );
+                        if (object.getString("ProfileName").toString().equals("")){
+                            profile_array.add(object.getString("FirstName") + " " + object.getString("LastName"));
+                        }
+                        else {
+                            profile_array.add(object.getString("ProfileName"));
+                        }
+
                         NameArray.add(object.getString("FirstName") + " " + object.getString("LastName"));
                         DesignationArray.add(object.getString("Designation"));
 
@@ -1226,6 +1246,19 @@ public class ProfileFragment extends Fragment
                     }
 
                     tvProfileName.setText(allTags.get(profileIndex).getProfile());
+
+                    if (allTags.get(profileIndex).getAttachment_FileName().toString().equals("") || allTags.get(profileIndex).getAttachment_FileName().toString() == null ||
+                            allTags.get(profileIndex).getAttachment_FileName().toString().equals("null")) {
+
+                        txtAttachment.setVisibility(View.GONE);
+                        lblAttachment.setVisibility(View.GONE);
+                    }
+                    else {
+                        txtAttachment.setVisibility(View.VISIBLE);
+                        lblAttachment.setVisibility(View.VISIBLE);
+
+                        txtAttachment.setText(allTags.get(profileIndex).getAttachment_FileName());
+                    }
 
                     try
                     {

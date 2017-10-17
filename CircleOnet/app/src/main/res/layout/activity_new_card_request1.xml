@@ -435,7 +435,7 @@
                             android:textSize="15dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Please choose card type"
+                            android:text="Please Choose Card Type"
                             android:textColor="@color/colorPrimary"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
@@ -464,7 +464,7 @@
                                     android:id="@+id/txtLaserCost"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="$ 50.00/PC"
+                                    android:text="SGD $50/pc"
                                     android:textColor="@color/colorPrimary"
                                     android:layout_gravity="center_horizontal"/>
                                 <ImageView
@@ -491,7 +491,7 @@
                                     android:id="@+id/txtNormalCost"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="$ 25.00/PC"
+                                    android:text="SGD $25/pc"
                                     android:textColor="@color/colorPrimary"
                                     android:layout_gravity="center_horizontal"/>
                                 <ImageView

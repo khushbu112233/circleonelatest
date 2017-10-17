@@ -52,7 +52,7 @@ public class CustomDate extends AppCompatActivity {
         imgLogo = (ImageView) findViewById(R.id.imgLogo);
         dateSelect = (TextView) findViewById(R.id.dateSelect);
         actionText.setText("Events");
-
+        imgLogo.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
         calendarView = (CustomCalendarView) findViewById(R.id.calendar_view);
 
         //Initialize calendar with date
@@ -110,24 +110,18 @@ public class CustomDate extends AppCompatActivity {
 
                 //Toast.makeText(getApplicationContext(), "Hello", Toast.LENGTH_LONG).show();
 
-                TypedValue tv = new TypedValue();
-                if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
-                    actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
-                }
-
-                showDialog(CustomDate.this, 0, actionBarHeight);
-            }
+                finish();            }
         });
 
         imgDrawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent go = new Intent(getApplicationContext(),EventsSelectOption.class);
+               /* Intent go = new Intent(getApplicationContext(),EventsSelectOption.class);
 
                 // you pass the position you want the viewpager to show in the extra,
                 // please don't forget to define and initialize the position variable
                 // properly
-                startActivity(go);
+                startActivity(go);*/
                 finish();
             }
         });

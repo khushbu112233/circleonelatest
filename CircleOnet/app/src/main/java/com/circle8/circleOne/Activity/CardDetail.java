@@ -125,7 +125,7 @@ public class CardDetail extends NfcActivity
     private RelativeLayout rlProgressDialog ;
     private TextView tvProgressing ;
     private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
-
+    TextView txtAttachment, lblAttachment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -186,7 +186,8 @@ public class CardDetail extends NfcActivity
         listGroupId = new ArrayList<String>();
         txtTestimonial = (TextView) findViewById(R.id.txtTestimonial);
         tvDateInitiated = (TextView)findViewById(R.id.tvDateInitiated);
-
+        txtAttachment = (TextView) findViewById(R.id.txtAttachment);
+        lblAttachment = (TextView) findViewById(R.id.lblAttachment);
         rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
         tvProgressing = (TextView)findViewById(R.id.txtProgressing);
         ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
@@ -1321,6 +1322,20 @@ public class CardDetail extends NfcActivity
                     strgoogleUrl = jsonObject.getString("Google");
                     frontCardImg = jsonObject.getString("Card_Front");
                     backCardImg = jsonObject.getString("Card_Back");
+
+
+                    if (jsonObject.getString("Attachment_FileName").toString().equals("") || jsonObject.getString("Attachment_FileName").toString() == null ||
+                            jsonObject.getString("Attachment_FileName").toString().equals("null")) {
+
+                        txtAttachment.setVisibility(View.GONE);
+                        lblAttachment.setVisibility(View.GONE);
+                    }
+                    else {
+                        txtAttachment.setVisibility(View.VISIBLE);
+                        lblAttachment.setVisibility(View.VISIBLE);
+
+                        txtAttachment.setText(jsonObject.getString("Attachment_FileName").toString());
+                    }
 
                     if (strfbUrl.equals("") || strfbUrl.equals(null))
                     {

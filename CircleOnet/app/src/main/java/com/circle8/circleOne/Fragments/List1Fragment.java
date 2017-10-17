@@ -686,14 +686,16 @@ public class List1Fragment extends Fragment
                         nfcModelTag.setName(object.getString("FirstName") + " " + object.getString("LastName"));
                         nfcModelTag.setCompany(object.getString("CompanyName"));
                         nfcModelTag.setEmail(object.getString("UserName"));
-                        nfcModelTag.setWebsite("");
-                        nfcModelTag.setMob_no(object.getString("Phone"));
+                        nfcModelTag.setWebsite(object.getString("Website"));
+                        nfcModelTag.setPh_no(object.getString("Phone"));
                         nfcModelTag.setDesignation(object.getString("Designation"));
                         nfcModelTag.setCard_front(object.getString("Card_Front"));
                         nfcModelTag.setCard_back(object.getString("Card_Back"));
                         nfcModelTag.setUser_image(object.getString("UserPhoto"));
                         nfcModelTag.setProfile_id(object.getString("ProfileId"));
                         nfcModelTag.setDateInitiated(object.getString("DateInitiated"));
+                        nfcModelTag.setAddress(object.getString("Address1") + " " + object.getString("Address2")
+                         + " " + object.getString("Address3") + " " + object.getString("Address4"));
 //                        Toast.makeText(getActivity(),"Profile_id"+object.getString("ProfileId"),Toast.LENGTH_SHORT).show();
                         nfcModelTag.setNfc_tag("en000000001");
                         allTags.add(nfcModelTag);

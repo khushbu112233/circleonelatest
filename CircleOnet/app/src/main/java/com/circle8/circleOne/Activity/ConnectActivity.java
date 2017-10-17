@@ -846,6 +846,7 @@ public class ConnectActivity extends AppCompatActivity
                       //  tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
                         tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted));
                         rlAdd.setEnabled(true);
+
                     }
                     else if (Matched.equals("0"))
                     {
@@ -854,6 +855,13 @@ public class ConnectActivity extends AppCompatActivity
                        // tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
                         tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
                         rlAdd.setEnabled(false);
+
+                        Intent intent = new Intent(getApplicationContext(), CardDetail.class);
+                        intent.putExtra("tag_id", "");
+                        intent.putExtra("profile_id", friendProfile_id);
+                        intent.putExtra("DateInitiated","");
+                        startActivity(intent);
+                        finish();
                     }
                     else if (Matched.equals("-1"))
                     {

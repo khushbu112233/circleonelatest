@@ -126,7 +126,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     int motionLength;
     int roundWidth = 0, lineWidth = 0;
     CountryCodePicker ccp;
-    EditText etDOB;
+    EditText etDD, etMM, etYYYY;
     String user_name, dob, profile_id;
 
     @Override
@@ -162,7 +162,9 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         tvCancel = (TextView)findViewById(R.id.tvCancel);
         txtGender = (TextView)findViewById(R.id.txtGender);
         ccp = (CountryCodePicker) findViewById(R.id.ccp);
-        etDOB = (EditText) findViewById(R.id.etDOB);
+        etDD = (EditText) findViewById(R.id.etDD);
+        etMM = (EditText) findViewById(R.id.etMM);
+        etYYYY = (EditText) findViewById(R.id.etYYYY);
         rlMale = (RelativeLayout)findViewById(R.id.ivMale);
         rlFemale = (RelativeLayout)findViewById(R.id.ivFemale);
 
@@ -198,7 +200,17 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
 
 
         etUserName.setText(user.get(LoginSession.KEY_EMAIL));
-        etDOB.setText(user.get(LoginSession.KEY_DOB));
+
+        try {
+            String str[] = user.get(LoginSession.KEY_DOB).split("/");
+            String day = str[0];
+            String month = str[1];
+            String year = str[2];
+            etDD.setText(day);
+            etMM.setText(month);
+            etYYYY.setText(year);
+        }
+        catch (Exception e){}
 
         String name1 = user.get(LoginSession.KEY_NAME);
         String kept1 = name1.substring(0, name1.indexOf(" "));
@@ -492,7 +504,10 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             etPassword.setEnabled(true);
             etPasswordAgain.setEnabled(true);
             etPhone.setEnabled(true);
-            etDOB.setEnabled(true);
+            etDD.setEnabled(true);
+            etMM.setEnabled(true);
+            etYYYY.setEnabled(true);
+
         }
         if ( v == imgBack)
         {
@@ -531,14 +546,14 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             {
 //                Toast.makeText(getApplicationContext(), "Something Wrong!", Toast.LENGTH_SHORT).show();
             }
-            else if (phone_no.equals(""))
+            /*else if (phone_no.equals(""))
             {
                 Toast.makeText(getApplicationContext(), "Enter Contact Number", Toast.LENGTH_SHORT).show();
             }
             else if (etDOB.getText().toString().equals(""))
             {
                 Toast.makeText(getApplicationContext(), "Enter DOB", Toast.LENGTH_SHORT).show();
-            }
+            }*/
             else if (gender.equals(""))
             {
                 Toast.makeText(getApplicationContext(), "Select Gender", Toast.LENGTH_SHORT).show();
@@ -1158,6 +1173,14 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                     String message = jsonObject.getString("message").toString();
                     String userId = jsonObject.getString("userId").toString();
 
+                    String date_DOB = "";
+                    if (etDD.getText().toString().equals("") || etMM.getText().toString().equals("") || etYYYY.getText().toString().equals("")){
+                        date_DOB = "";
+                    }
+                    else {
+                        date_DOB = etDD.getText().toString() + "/" + etMM.getText().toString() + "/" + etYYYY.getText().toString();
+                    }
+
                     if (success.equals("1"))
                     {
 
@@ -1169,10 +1192,10 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                         jsonObject.accumulate("Photo_String",register_img);
                         jsonObject.accumulate("UserId", user_id );
                         jsonObject.accumulate("UserName", email_id);
-                        jsonObject.accumulate("dob", etDOB.getText().toString());
+                        jsonObject.accumulate("dob", date_DOB);
 
 
-                        session.createLoginSession(profile_id, user_id, first_name + " " + last_name, email_id, register_img, gender, password, etDOB.getText().toString(), phone_no);
+                        session.createLoginSession(profile_id, user_id, first_name + " " + last_name, email_id, register_img, gender, password, date_DOB, phone_no);
                         Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
                     }
                     else
@@ -1204,6 +1227,14 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             HttpPost httpPost = new HttpPost(url);
             String json = "";
 
+            String date_DOB = "";
+            if (etDD.getText().toString().equals("") || etMM.getText().toString().equals("") || etYYYY.getText().toString().equals("")){
+                date_DOB = "";
+            }
+            else {
+                date_DOB = etDD.getText().toString() + "/" + etMM.getText().toString() + "/" + etYYYY.getText().toString();
+            }
+
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("FirstName", first_name );
@@ -1214,7 +1245,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             jsonObject.accumulate("Photo_String",register_img);
             jsonObject.accumulate("UserId", user_id );
             jsonObject.accumulate("UserName", email_id);
-            jsonObject.accumulate("dob", etDOB.getText().toString());
+            jsonObject.accumulate("dob", date_DOB);
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();

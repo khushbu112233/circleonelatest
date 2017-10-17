@@ -14,21 +14,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <AutoCompleteTextView
+        <com.circle8.circleOne.Utils.MyRiadProAutoComplete
             android:layout_centerVertical="true"
             android:background="@drawable/txt_back"
             android:paddingRight="10dp"
             android:layout_toLeftOf="@+id/imgSearch"
             android:paddingLeft="10dp"
-            android:hint="Filter by Key Words"
+            android:hint="Filter by keywords"
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:textColor="#9FA0A0"
+            android:textColorHint="#9FA0A0"
+            android:textSize="12dp"
             android:focusableInTouchMode="true"
             android:imeOptions="actionSearch"
-            android:inputType="textAutoComplete|textAutoCorrect"
-            android:textColor="@android:color/black" />
+            android:inputType="textAutoComplete|textAutoCorrect" />
+
 
         <ImageView
             android:layout_marginRight="10dp"
@@ -80,7 +83,7 @@
                     android:contentDescription="Home!"
                     android:layout_marginTop="0dp" />
 
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Filter by Date"

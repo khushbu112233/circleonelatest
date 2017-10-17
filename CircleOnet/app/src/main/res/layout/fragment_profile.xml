@@ -209,7 +209,7 @@
                                         android:layout_centerInParent="true"
                                         android:layout_width="70dp"
                                         android:layout_height="70dp"
-                                        android:src="@drawable/round_blue_profile"
+                                        android:src="@drawable/round_white_profile"
                                         />
 
                                 </RelativeLayout>
@@ -690,6 +690,29 @@
                         android:textColor="@android:color/black"
                         android:textSize="13sp"
                         android:text="Company Profile Details"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" />
+
+
+                    <com.circle8.circleOne.Utils.orkebyTextView
+                        android:id="@+id/lblAttachment"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13sp"
+                        android:text="Attachment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" />
+
+                    <com.circle8.circleOne.Utils.orkebyTextView
+                        android:id="@+id/txtAttachment"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_centerVertical="true"
+                        android:textColor="@android:color/black"
+                        android:textSize="13sp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" />
 
