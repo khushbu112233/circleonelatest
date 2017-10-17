@@ -339,6 +339,7 @@ public class GridViewAdapter extends BaseSwipeAdapter
 
                     if(success.equals("1"))
                     {
+                        List1Fragment.progressStatus = "DELETE";
                         List2Fragment.progressStatus = "DELETE";
                         List3Fragment.progressStatus = "DELETE";
                         List4Fragment.progressStatus = "DELETE";
