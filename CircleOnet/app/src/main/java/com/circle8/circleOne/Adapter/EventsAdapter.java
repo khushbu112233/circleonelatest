@@ -79,7 +79,7 @@ public class EventsAdapter extends ArrayAdapter
         holder.txtDesc.setText(desc.get(position));*/
 
         holder.txtTitle.setText(eventModelArrayList.get(position).getEvent_Name());
-        holder.txtDesc.setText(eventModelArrayList.get(position).getEvent_StartDate()+" to "
+        holder.txtDesc.setText(eventModelArrayList.get(position).getEvent_StartDate()+" To "
                 +eventModelArrayList.get(position).getEvent_EndDate());
 
         if(eventModelArrayList.get(position).getEvent_Image().equalsIgnoreCase("")

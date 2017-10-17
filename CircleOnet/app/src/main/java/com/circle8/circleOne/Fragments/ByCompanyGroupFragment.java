@@ -86,7 +86,7 @@ public class ByCompanyGroupFragment extends Fragment
         searchText = (AutoCompleteTextView)view.findViewById(R.id.searchView);
         listView = (ListView) view.findViewById(R.id.listViewType4);
         imgSearch = (ImageView) view.findViewById(R.id.imgSearch);
-        searchText.setHint("Search by company");
+        searchText.setHint("Search by company name");
 
         listView.setVisibility(View.GONE);
 

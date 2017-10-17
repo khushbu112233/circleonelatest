@@ -85,7 +85,7 @@ public class ByCompanyFragment  extends Fragment
         searchText = (AutoCompleteTextView)view.findViewById(R.id.searchView);
         listView = (ListView) view.findViewById(R.id.listViewType4);
         imgSearch = (ImageView) view.findViewById(R.id.imgSearch);
-        searchText.setHint("Search by company");
+        searchText.setHint("Search by company name");
 
         rlProgressDialog = (RelativeLayout)view.findViewById(R.id.rlProgressDialog);
         tvProgressing = (TextView)view.findViewById(R.id.txtProgressing);

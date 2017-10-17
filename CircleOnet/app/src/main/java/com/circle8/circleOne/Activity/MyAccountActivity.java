@@ -419,6 +419,9 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         imgBack.setOnClickListener(this);
         ivEditImg.setOnClickListener(this);
         imgProfile.setOnClickListener(this);
+
+        rlFemale.setEnabled(false);
+        rlMale.setEnabled(false);
     }
 
     @Override
@@ -493,6 +496,9 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             etPasswordAgain.setEnabled(true);
             etPhone.setEnabled(true);
             etDOB.setEnabled(true);
+            rlFemale.setEnabled(true);
+            rlMale.setEnabled(true);
+            ivEditImg.setImageResource(R.drawable.ic_edit_white);
         }
         if ( v == imgBack)
         {
