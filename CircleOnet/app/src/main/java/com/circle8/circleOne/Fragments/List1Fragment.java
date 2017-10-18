@@ -116,7 +116,7 @@ public class List1Fragment extends Fragment
 
     public static Context mContext;
 
-    static String comeAtTime = "FIRST";
+    public static String progressStatus = "FIRST";
 
     static int number_cards = 0;
 
@@ -625,8 +625,26 @@ public class List1Fragment extends Fragment
             CustomProgressBar(loading, status);*/
 
 //            rlProgressDialog.setVisibility(View.VISIBLE);
-            String loading = "Fetching Cards" ;
-            CustomProgressDialog(loading);
+            if (progressStatus.equalsIgnoreCase("FIRST"))
+            {
+                String loading = "Fetching Cards" ;
+                CustomProgressDialog(loading);
+
+                progressStatus = "SECOND";
+            }
+            else if (progressStatus.equalsIgnoreCase("SECOND"))
+            {
+
+            }
+            else if (progressStatus.equalsIgnoreCase("DELETE"))
+            {
+                String loading = "Refreshing Cards" ;
+                CustomProgressDialog(loading);
+            }
+            else
+            {
+
+            }
         }
 
         @Override
