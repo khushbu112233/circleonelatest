@@ -35,9 +35,9 @@ public class GalleryAdapter1 extends RecyclerView.Adapter<GalleryAdapter1.MyView
     ArrayList<FriendConnection> nfcModelListFilter = new ArrayList<>();
     public static int posi = 0;
     public static ImageView imageView ;
-    RelativeLayout defaultCard;
+    RelativeLayout defaultCard1, defaultCard;
 
-    private static TextView tvPersonName, tvPersonProfile, tvPersonWebsite, tvPersonAddress, tvPersonContact;
+    private static TextView tvPersonWebsite, tvCompany;
 
     public class MyViewHolder extends RecyclerView.ViewHolder
     {
@@ -45,12 +45,10 @@ public class GalleryAdapter1 extends RecyclerView.Adapter<GalleryAdapter1.MyView
         {
             super(itemView);
             imageView = (ImageView)itemView.findViewById(R.id.image1);
+            defaultCard1 = (RelativeLayout) itemView.findViewById(R.id.rltDefaultCard1);
             defaultCard = (RelativeLayout) itemView.findViewById(R.id.rltDefaultCard);
-            tvPersonName = (TextView)itemView.findViewById(R.id.tvPersonName);
-            tvPersonProfile = (TextView)itemView.findViewById(R.id.tvPersonProfile);
-            tvPersonWebsite = (TextView)itemView.findViewById(R.id.tvPersonWebsite);
-            tvPersonAddress = (TextView)itemView.findViewById(R.id.tvPersonAddress);
-            tvPersonContact = (TextView)itemView.findViewById(R.id.tvPersonContact);
+            tvCompany = (TextView)itemView.findViewById(R.id.tvComName);
+            tvPersonWebsite = (TextView)itemView.findViewById(R.id.tvweb);
         }
     }
 
@@ -93,14 +91,28 @@ public class GalleryAdapter1 extends RecyclerView.Adapter<GalleryAdapter1.MyView
         if (nfcModelList.get(position).getCard_back().equals(""))
         {
             imageView.setTag(position);
-            imageView.setVisibility(View.VISIBLE);
+            imageView.setVisibility(View.GONE);
             defaultCard.setVisibility(View.GONE);
+            defaultCard1.setVisibility(View.VISIBLE);
 
-          /*  tvPersonName.setText(nfcModelList.get(position).getName());
-            tvPersonProfile.setText(nfcModelList.get(position).getDesignation());
+            if (nfcModelList.get(position).getWebsite().equals("") || nfcModelList.get(position).getWebsite().toString() == null ||
+                    nfcModelList.get(position).getWebsite().equalsIgnoreCase("null")){
+                tvPersonWebsite.setVisibility(View.GONE);
+            }
+            else {
+                tvPersonWebsite.setVisibility(View.VISIBLE);
+            }
+
+            if (nfcModelList.get(position).getCompany().equals("") || nfcModelList.get(position).getCompany().toString() == null ||
+                    nfcModelList.get(position).getCompany().equalsIgnoreCase("null")){
+                tvCompany.setVisibility(View.GONE);
+            }
+            else {
+                tvCompany.setVisibility(View.VISIBLE);
+            }
             tvPersonWebsite.setText(nfcModelList.get(position).getWebsite());
-            tvPersonAddress.setText(nfcModelList.get(position).getAddress());
-            tvPersonContact.setText(nfcModelList.get(position).getPh_no());*/
+            tvCompany.setText(nfcModelList.get(position).getCompany());
+
           imageView.setImageResource(R.drawable.profile_final4b);
         }
         else
@@ -108,11 +120,12 @@ public class GalleryAdapter1 extends RecyclerView.Adapter<GalleryAdapter1.MyView
             imageView.setTag(position);
             imageView.setVisibility(View.VISIBLE);
             defaultCard.setVisibility(View.GONE);
+            defaultCard1.setVisibility(View.GONE);
             //imageView.setImageResource(nfcModelList.get(position).getCard_front());
             Picasso.with(mContext).load("http://circle8.asia/App_ImgLib/Cards/"+nfcModelList.get(position).getCard_back()).into(imageView);
 
         }
-        defaultCard.setOnTouchListener(new View.OnTouchListener() {
+        defaultCard1.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 posi = position;

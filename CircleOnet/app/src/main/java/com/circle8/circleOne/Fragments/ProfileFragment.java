@@ -48,6 +48,8 @@ import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.Adapter.CustomAdapter;
 import com.circle8.circleOne.Adapter.TextRecyclerAdapter;
 import com.circle8.circleOne.Helper.LoginSession;
+import com.circle8.circleOne.Helper.ProfileSession;
+import com.circle8.circleOne.Helper.ReferralCodeSession;
 import com.circle8.circleOne.Model.ProfileModel;
 import com.circle8.circleOne.Model.TestimonialModel;
 import com.circle8.circleOne.R;
@@ -109,7 +111,7 @@ public class ProfileFragment extends Fragment
     public final static int QRcodeWidth = 500 ;
     Bitmap bitmap ;
     ProgressDialog progressDialog ;
-    ArrayList<String> profile_array, NameArray, DesignationArray;
+    ArrayList<String> profile_array, NameArray, DesignationArray, profileid_array;
     private LoginButton loginButton;
     private LoginSession session;
     private String UserID = "";
@@ -153,8 +155,12 @@ public class ProfileFragment extends Fragment
     RecyclerView recyclerAssociation, recyclerEvents;
     String barName;
     JSONArray jsonArray;
-    public static int profileIndex = 0;
+    public static int profileIndex;
     TextView txtAttachment, lblAttachment;
+    ProfileSession profileSession;
+    ReferralCodeSession referralCodeSession;
+    private String refer;
+
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -176,6 +182,7 @@ public class ProfileFragment extends Fragment
       //  ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
         callbackManager = CallbackManager.Factory.create();
+        profileSession = new ProfileSession(getContext());
         llNameBox = (LinearLayout)view.findViewById(R.id.llNameBox);
         llCompanyBox = (LinearLayout)view.findViewById(R.id.llCompanyBox);
         llIndustryBox = (LinearLayout)view.findViewById(R.id.llIndustryBox);
@@ -220,6 +227,12 @@ public class ProfileFragment extends Fragment
         progressDialog.setMessage("Generating Qr Code...");
         progressDialog.setCancelable(false);
         allTags = new ArrayList<>();
+        referralCodeSession = new ReferralCodeSession(getContext());
+        HashMap<String, String> referral = referralCodeSession.getReferralDetails();
+        refer = referral.get(ReferralCodeSession.KEY_REFERRAL);
+        HashMap<String, String> profile = profileSession.getProfileDetails();
+        profileIndex = Integer.parseInt(profile.get(ProfileSession.KEY_PROFILE_INDEX));
+
         listAssociation = new ArrayList<>();
         imgQR = (ImageView) view.findViewById(R.id.imgQR);
         imgAdd = (ImageView) view.findViewById(R.id.imgAdd);
@@ -572,8 +585,8 @@ public class ProfileFragment extends Fragment
         imgProfileShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String shareBody = "I'm giving you a free redemption points on the Circle app (up to ₹25). To accept, use code '"+ LoginActivity.ReferrenceCode+"' to sign up. Enjoy!"
-                        +System.lineSeparator() + "Details: https://www.circle8.asia/invite/"+LoginActivity.ReferrenceCode;
+                String shareBody = "I'm giving you a free redemption points on the Circle app (up to ₹25). To accept, use code '"+ refer+"' to sign up. Enjoy!"
+                        +System.lineSeparator() + "Details: https://www.circle8.asia/invite/"+refer;
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, tvPersonName.getText().toString());
@@ -614,6 +627,7 @@ public class ProfileFragment extends Fragment
                             {
                                 if (item.getTitle().toString().equals(profile_array.get(i).toString()))
                                 {
+                                    profileSession.createProfileSession(String.valueOf(i));
                                     profileIndex = i;
 //                                    Toast.makeText(getContext(), profile_array.get(i).toString(), Toast.LENGTH_LONG).show();
                                     tvProfileName.setText(allTags.get(i).getProfile());
@@ -649,6 +663,24 @@ public class ProfileFragment extends Fragment
                                             + allTags.get(i).getPostalcode());
                                     tvWebsite.setText(allTags.get(i).getWebsite());
                                     TestimonialProfileId = allTags.get(i).getProfileID();
+
+                                    HashMap<String, String> user = session.getUserDetails();
+                                    String user_id = user.get(LoginSession.KEY_USERID);
+                                    String email_id = user.get(LoginSession.KEY_EMAIL);
+                                    String user_img = user.get(LoginSession.KEY_IMAGE);
+                                    String user_pass = user.get(LoginSession.KEY_PASSWORD);
+                                    String name = user.get(LoginSession.KEY_NAME);
+                                    String kept1 = name.substring(0, name.indexOf(" "));
+                                    String remainder1 = name.substring(name.indexOf(" ") + 1, name.length());
+
+                                    String first_name = kept1;
+                                    String last_name = remainder1;
+
+                                    String gender = user.get(LoginSession.KEY_GENDER);
+                                    String date_DOB = user.get(LoginSession.KEY_DOB);
+                                    String phone_no = user.get(LoginSession.KEY_PHONE);
+
+                                    session.createLoginSession(allTags.get(i).getProfileID(), user_id, first_name + " " + last_name, email_id, user_img, gender, user_pass, date_DOB, phone_no);
 
                                     try {
                                         JSONObject object = jsonArray.getJSONObject(i);
@@ -1787,75 +1819,6 @@ public class ProfileFragment extends Fragment
         // 11. return result
         return result;
     }
-
-    private class HttpAsyncTaskAddProfile extends AsyncTask<String, Void, String>
-    {
-        ProgressDialog dialog;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            dialog = new ProgressDialog(getActivity());
-            dialog.setMessage("Loading..");
-            //dialog.setTitle("Saving Reminder");
-            dialog.show();
-            dialog.setCancelable(false);
-            //  nfcModel = new ArrayList<>();
-            //   allTags = new ArrayList<>();
-
-        }
-
-        @Override
-        protected String doInBackground(String... urls)
-        {
-            return POST4(urls[0]);
-        }
-        // onPostExecute displays the results of the AsyncTask.
-        @Override
-        protected void onPostExecute(String result)
-        {
-            dialog.dismiss();
-//            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
-          /*  try {
-                if (result != null) {
-                    JSONObject jsonObject = new JSONObject(result);
-                    JSONArray jsonArray = jsonObject.getJSONArray("connection");
-                    //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
-
-                    for (int i = 0; i < jsonArray.length(); i++){
-
-                        JSONObject object = jsonArray.getJSONObject(i);
-                        //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
-
-
-
-                        FriendConnection nfcModelTag = new FriendConnection();
-                        nfcModelTag.setName(object.getString("FirstName") + " " + object.getString("LastName"));
-                        nfcModelTag.setCompany(object.getString("CompanyName"));
-                        nfcModelTag.setEmail(object.getString("UserName"));
-                        nfcModelTag.setWebsite("");
-                        nfcModelTag.setMob_no(object.getString("Phone"));
-                        nfcModelTag.setDesignation(object.getString("Designation"));
-                        *//*nfcModelTag.setCard_front(object.getString("Card_Front"));
-                        nfcModelTag.setCard_back(object.getString("Card_Back"));*//*
-                        nfcModelTag.setCard_front("000000002.jpg");
-                        nfcModelTag.setCard_back("000000006.jpg");
-
-
-                        nfcModelTag.setNfc_tag("en000000001");
-                        allTags.add(nfcModelTag);
-                        GetData(getContext());
-                    }
-                }else {
-                    Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
-                }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }*/
-        }
-    }
-
 
     public  String POST(String url)
     {

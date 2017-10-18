@@ -9,10 +9,10 @@ import com.circle8.circleOne.Activity.LoginActivity;
 import java.util.HashMap;
 
 /**
- * Created by admin on 07/20/2017.
+ * Created by admin on 10/18/2017.
  */
 
-public class LoginSession {
+public class ProfileSession {
     SharedPreferences pref;
 
     // Editor for Shared preferences
@@ -25,27 +25,16 @@ public class LoginSession {
     int PRIVATE_MODE = 0;
 
     // Sharedpref file name
-    private static final String PREF_NAME = "LoginSession";
+    private static final String PREF_NAME = "ProfileSession";
 
     // All Shared Preferences Keys
     private static final String IS_LOGIN = "IsLoggedIn";
 
     // User name (make variable public to access from outside)
-    public static final String KEY_NAME = "name";
-    public static final String KEY_USERID = "userid";
-    public static final String KEY_PASSWORD = "password" ;
-
-    // Email address (make variable public to access from outside)
-    public static final String KEY_EMAIL = "email";
-
-    public static final String KEY_IMAGE = "image";
-    public static final String KEY_GENDER = "gender";
-    public static final String KEY_PROFILEID = "profile_id";
-    public static final String KEY_DOB = "dob";
-    public static final String KEY_PHONE = "phone";
+    public static final String KEY_PROFILE_INDEX = "index";
 
     // Constructor
-    public LoginSession(Context context){
+    public ProfileSession(Context context){
         this._context = context;
         pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = pref.edit();
@@ -54,22 +43,13 @@ public class LoginSession {
     /**
      * Create login session
      * */
-    public void createLoginSession(String profileid, String userid, String name, String email, String image, String gender, String password, String dob, String phone){
+    public void createProfileSession(String profileid){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
         // Storing name in pref
-        editor.putString(KEY_PROFILEID, profileid);
-        editor.putString(KEY_USERID, userid);
-        editor.putString(KEY_NAME, name);
+        editor.putString(KEY_PROFILE_INDEX, profileid);
 
-        // Storing email in pref
-        editor.putString(KEY_EMAIL, email);
-        editor.putString(KEY_IMAGE, image);
-        editor.putString(KEY_GENDER, gender);
-        editor.putString(KEY_PASSWORD, password);
-        editor.putString(KEY_DOB, dob);
-        editor.putString(KEY_PHONE, phone);
         // commit changes
         editor.commit();
     }
@@ -101,21 +81,10 @@ public class LoginSession {
     /**
      * Get stored session data
      * */
-    public HashMap<String, String> getUserDetails(){
+    public HashMap<String, String> getProfileDetails(){
         HashMap<String, String> user = new HashMap<String, String>();
         // user name
-        user.put(KEY_NAME, pref.getString(KEY_NAME, null));
-        user.put(KEY_USERID, pref.getString(KEY_USERID, null));
-
-        // user email id
-        user.put(KEY_EMAIL, pref.getString(KEY_EMAIL, null));
-
-        user.put(KEY_IMAGE, pref.getString(KEY_IMAGE, null));
-        user.put(KEY_GENDER, pref.getString(KEY_GENDER, null));
-        user.put(KEY_PROFILEID, pref.getString(KEY_PROFILEID, null));
-        user.put(KEY_PASSWORD, pref.getString(KEY_PASSWORD, null));
-        user.put(KEY_DOB, pref.getString(KEY_DOB, null));
-        user.put(KEY_PHONE, pref.getString(KEY_PHONE, null));
+        user.put(KEY_PROFILE_INDEX, pref.getString(KEY_PROFILE_INDEX, null));
 
         // return user
         return user;
@@ -126,8 +95,7 @@ public class LoginSession {
      * */
     public void logoutUser(){
         // Clearing all data from Shared Preferences
-       // editor.clear();
-        editor.putBoolean(IS_LOGIN, false);
+        editor.clear();
         editor.commit();
 
         // After logout redirect user to Loing Activity

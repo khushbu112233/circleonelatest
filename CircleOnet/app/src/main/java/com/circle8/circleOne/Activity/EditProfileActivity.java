@@ -59,6 +59,7 @@ import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.Adapter.CardViewDataAdapter;
 import com.circle8.circleOne.Adapter.CustomAdapter;
 import com.circle8.circleOne.Helper.LoginSession;
+import com.circle8.circleOne.Helper.ReferralCodeSession;
 import com.circle8.circleOne.Model.AssociationModel;
 import com.circle8.circleOne.Model.EventModel;
 import com.circle8.circleOne.Model.TestimonialModel;
@@ -294,6 +295,9 @@ public class EditProfileActivity extends AppCompatActivity implements
 
     StickyScrollView stickyScrollView ;
     String cropType = "";
+    ReferralCodeSession referralCodeSession;
+    private String refer;
+
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line = "";
@@ -324,6 +328,9 @@ public class EditProfileActivity extends AppCompatActivity implements
         edtProfileName = (EditText) findViewById(R.id.edtProfileName);
         ivProfileDelete = (ImageView) findViewById(R.id.ivProfileDelete);
         imgProfileShare = (ImageView) findViewById(R.id.imgProfileShare);
+        referralCodeSession = new ReferralCodeSession(getApplicationContext());
+        HashMap<String, String> referral = referralCodeSession.getReferralDetails();
+        refer = referral.get(ReferralCodeSession.KEY_REFERRAL);
         mAuth = FirebaseAuth.getInstance();
         // editPolygonView.setImageResource(R.drawable.test_receipt);
         //    originalBitmap = ((BitmapDrawable) editPolygonView.getDrawable()).getBitmap();
@@ -340,8 +347,8 @@ public class EditProfileActivity extends AppCompatActivity implements
         imgProfileShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String shareBody = "I'm giving you a free redemption points on the Circle app (up to ₹25). To accept, use code '" + LoginActivity.ReferrenceCode + "' to sign up. Enjoy!"
-                        + System.lineSeparator() + "Details: https://www.circle8.asia/invite/" + LoginActivity.ReferrenceCode;
+                String shareBody = "I'm giving you a free redemption points on the Circle app (up to ₹25). To accept, use code '" + refer + "' to sign up. Enjoy!"
+                        + System.lineSeparator() + "Details: https://www.circle8.asia/invite/" + refer;
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, tvPersonName.getText().toString());

@@ -47,6 +47,8 @@ import com.circle8.circleOne.ApplicationUtils.MyApplication;
 import com.circle8.circleOne.Helper.CustomSharedPreference;
 import com.circle8.circleOne.Helper.FingerPrintSession;
 import com.circle8.circleOne.Helper.LoginSession;
+import com.circle8.circleOne.Helper.ProfileSession;
+import com.circle8.circleOne.Helper.ReferralCodeSession;
 import com.circle8.circleOne.Model.User;
 import com.circle8.circleOne.Model.UserObject;
 import com.circle8.circleOne.R;
@@ -119,6 +121,7 @@ import java.security.KeyStoreException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.util.HashMap;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -134,7 +137,6 @@ public class LoginActivity extends AppCompatActivity implements
         TextWatcher,
         CompoundButton.OnCheckedChangeListener {
 
-    public static String ReferrenceCode = "";
     Button btnSimpleLogin, btnRegister;
     //Boolean isConnected = false;
     private CallbackManager callbackManager;
@@ -160,6 +162,7 @@ public class LoginActivity extends AppCompatActivity implements
     private TwitterLoginButton mLoginButton;
 
     LoginSession loginSession;
+    ProfileSession profileSession;
     FingerPrintSession fingerPrintSession;
 
     private static final String TAG = LoginActivity.class.getSimpleName();
@@ -205,6 +208,7 @@ public class LoginActivity extends AppCompatActivity implements
     private static RelativeLayout rlProgressDialog;
     private static TextView tvProgressing;
     private static ImageView ivConnecting1, ivConnecting2, ivConnecting3;
+    ReferralCodeSession referralCodeSession;
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -218,6 +222,7 @@ public class LoginActivity extends AppCompatActivity implements
         Fabric.with(this, new Twitter(authConfig));
 
         loginSession = new LoginSession(getApplicationContext());
+        profileSession = new ProfileSession(getApplicationContext());
         fingerPrintSession = new FingerPrintSession(getApplicationContext());
         setContentView(R.layout.activity_login);
         imgForgotPass = (ImageView) findViewById(R.id.imgForgotPass);
@@ -232,7 +237,7 @@ public class LoginActivity extends AppCompatActivity implements
         etLoginUser = (EditText) findViewById(R.id.etLoginUser);
         btnLoginTwitter = (ImageView) findViewById(R.id.btnLoginTwitter);
         login_linkedin_btn = (ImageView) findViewById(R.id.login_button_linkedin);
-
+        referralCodeSession = new ReferralCodeSession(getApplicationContext());
         tvUsernameInfo = (TextView) findViewById(R.id.tvUserInfo);
         tvPasswordInfo = (TextView) findViewById(R.id.tvPasswordInfo);
 
@@ -892,19 +897,44 @@ public class LoginActivity extends AppCompatActivity implements
 
 
                         try {
-                            ReferrenceCode = jsonArray.getString("ReferrenceCode");
+                            referralCodeSession.createReferral(jsonArray.getString("ReferrenceCode"));
                         } catch (Exception e) {
                         }
 
                         if (Status.equalsIgnoreCase("Verified")) {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                 Gson gson = ((MyApplication) getApplication()).getGsonObject();
-                                UserObject userData = new UserObject(profileid, FirstName + " " + LastName, UserName, userPassword, UserID, Gender, UserPhoto, dob, Phone, false);
-                                String userDataString = gson.toJson(userData);
-                                CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
-                                pref.setUserData(userDataString);
 
-                                loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone);
+                                HashMap<String, String> user = loginSession.getUserDetails();
+                                try {
+                                    if ((user.get(LoginSession.KEY_EMAIL).equalsIgnoreCase(UserName)) && (user.get(LoginSession.KEY_PASSWORD).equalsIgnoreCase(userPassword))) {
+                                        UserObject userData = new UserObject(user.get(LoginSession.KEY_PROFILEID), user.get(LoginSession.KEY_NAME), user.get(LoginSession.KEY_EMAIL), user.get(LoginSession.KEY_PASSWORD), UserID, Gender, UserPhoto, dob, Phone, false);
+                                        String userDataString = gson.toJson(userData);
+                                        CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
+                                        pref.setUserData(userDataString);
+
+                                        loginSession.createLoginSession(user.get(LoginSession.KEY_PROFILEID), UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone);
+                                        HashMap<String, String> profile = profileSession.getProfileDetails();
+                                        profileSession.createProfileSession(profile.get(ProfileSession.KEY_PROFILE_INDEX));
+                                    } else {
+                                        UserObject userData = new UserObject(profileid, FirstName + " " + LastName, UserName, userPassword, UserID, Gender, UserPhoto, dob, Phone, false);
+                                        String userDataString = gson.toJson(userData);
+                                        CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
+                                        pref.setUserData(userDataString);
+
+                                        loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone);
+                                        profileSession.createProfileSession("0");
+                                    }
+                                }
+                                catch (Exception e){
+                                    UserObject userData = new UserObject(profileid, FirstName + " " + LastName, UserName, userPassword, UserID, Gender, UserPhoto, dob, Phone, false);
+                                    String userDataString = gson.toJson(userData);
+                                    CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
+                                    pref.setUserData(userDataString);
+
+                                    loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone);
+                                    profileSession.createProfileSession("0");
+                                }
                                 if (prefs.getBoolean("firstrun", true)) {
                                     // Do first run stuff here then set 'firstrun' as false
                                     // using the following line to edit/commit prefs
@@ -972,8 +1002,26 @@ public class LoginActivity extends AppCompatActivity implements
                             } else {
                                 // imgFinger.setVisibility(View.GONE);
 //                                loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, final_email, UserPhoto, "");
-                                loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone);
 
+                                HashMap<String, String> user = loginSession.getUserDetails();
+                                try {
+                                    if ((user.get(LoginSession.KEY_EMAIL).equalsIgnoreCase(UserName)) && (user.get(LoginSession.KEY_PASSWORD).equalsIgnoreCase(userPassword))) {
+
+                                        loginSession.createLoginSession(user.get(LoginSession.KEY_PROFILEID), UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone);
+                                        HashMap<String, String> profile = profileSession.getProfileDetails();
+                                        profileSession.createProfileSession(profile.get(ProfileSession.KEY_PROFILE_INDEX));
+
+                                    } else {
+                                        loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone);
+                                        // HashMap<String, String> profile = profileSession.getProfileDetails();
+                                        profileSession.createProfileSession("0");
+
+                                    }
+                                }catch (Exception e){
+                                    loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone);
+                                    // HashMap<String, String> profile = profileSession.getProfileDetails();
+                                    profileSession.createProfileSession("0");
+                                }
                                 if (prefs.getBoolean("firstrun", true)) {
                                     // Do first run stuff here then set 'firstrun' as false
                                     // using the following line to edit/commit prefs
@@ -1719,20 +1767,53 @@ public class LoginActivity extends AppCompatActivity implements
                         String Phone = jsonArray.getString("Phone");
                         String UserName = jsonArray.getString("UserName");
                         String dob = jsonArray.getString("dob");
-
+                        referralCodeSession.createReferral(jsonArray.getString("ReferrenceCode"));
                         if (Status.equalsIgnoreCase("Verified")) {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
 
                                 Gson gson = ((MyApplication) getApplication()).getGsonObject();
-                                UserObject userData = new UserObject(profileid, FirstName + " " + LastName, UserName, "", UserID, Gender, UserPhoto, dob, Phone, false);
+
+                                HashMap<String, String> user = loginSession.getUserDetails();
+                                try {
+
+                                    if ((user.get(LoginSession.KEY_EMAIL).equalsIgnoreCase(UserName))) {
+                                        UserObject userData = new UserObject(user.get(LoginSession.KEY_PROFILEID), user.get(LoginSession.KEY_NAME), user.get(LoginSession.KEY_EMAIL), "", UserID, Gender, UserPhoto, dob, Phone, false);
+                                        String userDataString = gson.toJson(userData);
+                                        CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
+                                        pref.setUserData(userDataString);
+
+                                        loginSession.createLoginSession(user.get(LoginSession.KEY_PROFILEID), UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone);
+                                        HashMap<String, String> profile = profileSession.getProfileDetails();
+                                        profileSession.createProfileSession(profile.get(ProfileSession.KEY_PROFILE_INDEX));
+                                    } else {
+                                        UserObject userData = new UserObject(profileid, FirstName + " " + LastName, UserName, "", UserID, Gender, UserPhoto, dob, Phone, false);
+                                        String userDataString = gson.toJson(userData);
+                                        CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
+                                        pref.setUserData(userDataString);
+
+                                        loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone);
+                                        profileSession.createProfileSession("0");
+                                    }
+                                }
+                                catch (Exception e){
+                                    UserObject userData = new UserObject(profileid, FirstName + " " + LastName, UserName, "", UserID, Gender, UserPhoto, dob, Phone, false);
+                                    String userDataString = gson.toJson(userData);
+                                    CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
+                                    pref.setUserData(userDataString);
+
+                                    loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone);
+                                    profileSession.createProfileSession("0");
+                                }
+
+                              /*  UserObject userData = new UserObject(profileid, FirstName + " " + LastName, UserName, "", UserID, Gender, UserPhoto, dob, Phone, false);
                                 String userDataString = gson.toJson(userData);
                                 CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
                                 pref.setUserData(userDataString);
 
                                // Toast.makeText(getApplicationContext(), userName + " " + userPassword, Toast.LENGTH_LONG).show();
                                 loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone);
-                                if (prefs.getBoolean("firstrun", true)) {
+                              */  if (prefs.getBoolean("firstrun", true)) {
                                     // Do first run stuff here then set 'firstrun' as false
                                     // using the following line to edit/commit prefs
                                     Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
@@ -1795,7 +1876,30 @@ public class LoginActivity extends AppCompatActivity implements
                                 }*/
                             } else {
                                 // imgFinger.setVisibility(View.GONE);
-                                loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone);
+
+
+                                HashMap<String, String> user = loginSession.getUserDetails();
+                                try {
+                                    if ((user.get(LoginSession.KEY_EMAIL).equalsIgnoreCase(UserName))) {
+
+                                        loginSession.createLoginSession(user.get(LoginSession.KEY_PROFILEID), UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone);
+                                        HashMap<String, String> profile = profileSession.getProfileDetails();
+                                        profileSession.createProfileSession(profile.get(ProfileSession.KEY_PROFILE_INDEX));
+
+                                    } else {
+                                        loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone);
+                                        // HashMap<String, String> profile = profileSession.getProfileDetails();
+                                        profileSession.createProfileSession("0");
+
+                                    }
+                                }
+                                catch (Exception e){
+                                    loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone);
+                                    // HashMap<String, String> profile = profileSession.getProfileDetails();
+                                    profileSession.createProfileSession("0");
+                                }
+
+                                //loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone);
                                 if (prefs.getBoolean("firstrun", true)) {
                                     // Do first run stuff here then set 'firstrun' as false
                                     // using the following line to edit/commit prefs

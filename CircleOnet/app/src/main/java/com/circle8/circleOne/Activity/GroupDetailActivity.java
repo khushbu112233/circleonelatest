@@ -206,7 +206,7 @@ public class GroupDetailActivity extends AppCompatActivity
                        if (item.getTitle().toString().equals("Delete Circle"))
                        {
                            AlertDialog.Builder alert = new AlertDialog.Builder(GroupDetailActivity.this, R.style.Blue_AlertDialog);
-                           alert.setMessage("Do you want to Delete Member(s) from Circle");
+                           alert.setMessage("Do you want to delete this Circle");
                            alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
                                @Override
@@ -265,7 +265,7 @@ public class GroupDetailActivity extends AppCompatActivity
 
                     listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
                     ivShareImg.setImageResource(R.drawable.group_selected);
-                    Toast.makeText(getApplicationContext(), "Long Press and select members to delete from circle", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "select member to be removed from circle", Toast.LENGTH_LONG).show();
                   //  GroupDetailAdapter.chCheckBox.setVisibility(View.GONE);
                 }
 

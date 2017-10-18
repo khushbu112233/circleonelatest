@@ -15,10 +15,11 @@
         android:layout_centerVertical="true"/>
 
     <com.circle8.circleOne.Utils.cgTextView
+        android:layout_toLeftOf="@+id/mytext1"
         android:layout_centerVertical="true"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select User to add into Circle"
+        android:text="Select user to add in circle"
         android:textColor="#ffffff"
         android:id="@+id/mytext"
         android:textSize="14sp"

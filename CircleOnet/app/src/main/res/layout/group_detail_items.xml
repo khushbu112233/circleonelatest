@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     swipe:leftEdgeSwipeOffset="0dp"
     swipe:rightEdgeSwipeOffset="0dp"
-    android:background="?android:attr/activatedBackgroundIndicator">
+    android:background="@drawable/bg_key">
 
     <LinearLayout
         android:layout_width="match_parent"

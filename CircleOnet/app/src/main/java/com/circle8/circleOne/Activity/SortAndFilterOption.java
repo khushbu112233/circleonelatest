@@ -58,7 +58,7 @@ public class SortAndFilterOption extends AppCompatActivity
     private int actionBarHeight;
     LinearLayout lnrSortRecent, lnrSortName, lnrSortCompany;
     DatabaseHelper db;
-    public static String SortType = "asc";
+    public static String SortType = "desc";
     LinearLayout lnrAllCards;
     ExpandableHeightListView listView ;
     private LoginSession session;

@@ -95,7 +95,7 @@ public class SearchGroupMembers extends AppCompatActivity
 
         if (from.equalsIgnoreCase("group")){
             GroupId = intent.getStringExtra("GroupId");
-            mytext.setText("Select User to add into Circle");
+            mytext.setText("Select user to add in circle");
         }
         else if (from.equalsIgnoreCase("profile")) {
             ProfileId = intent.getStringExtra("ProfileId");
@@ -119,10 +119,11 @@ public class SearchGroupMembers extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+               // Toast.makeText(getApplicationContext(), selectedStrings.toString(), Toast.LENGTH_LONG).show();
                 if (from.equalsIgnoreCase("group")){
-                    if (selectedStrings == null)
+                    if (selectedStrings == null || selectedStrings.length() <= 0)
                     {
-                        Toast.makeText(getApplicationContext(), "Select Connection to add into Circle", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "You haven’t selected member", Toast.LENGTH_LONG).show();
                     }
                     else
                     {
@@ -131,15 +132,12 @@ public class SearchGroupMembers extends AppCompatActivity
                     }
                 }
                 else if (from.equalsIgnoreCase("profile")) {
-                    if (selectedStrings == null)
+                    if (selectedStrings == null || selectedStrings.length() <= 0)
                     {
-                        Toast.makeText(getApplicationContext(), "Select Connection to send Testimonial Request", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "You haven’t selected member", Toast.LENGTH_LONG).show();
                     }
                     else
                     {
-                        //Toast.makeText(getApplicationContext(), selectedStrings.toString(), Toast.LENGTH_LONG).show();
-                       // new HttpAsyncTaskGroupAddFriend().execute("http://circle8.asia:8999/Onet.svc/Group/AddFriend");
-                       // finish();
                         new HttpAsyncTaskTestimonialRequest().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Request");
                     }
                 }
