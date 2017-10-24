@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.circle8.circleOne.Activity.CardDetail;
 import com.circle8.circleOne.Model.GroupModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -119,7 +120,7 @@ public class EditGroupAdapter extends BaseAdapter
         }
         else
         {
-            Picasso.with(context).load("http://circle8.asia/App_ImgLib/Group/"+groupPhoto.get(position)).into(holder.imgGroup);
+            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Group/"+groupPhoto.get(position)).into(holder.imgGroup);
         }
 
         return row;

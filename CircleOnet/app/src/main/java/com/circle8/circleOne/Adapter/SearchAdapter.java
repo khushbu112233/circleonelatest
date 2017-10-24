@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Model.ConnectList;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -121,7 +122,7 @@ public class SearchAdapter extends BaseAdapter
         }
         else
         {
-            Picasso.with(context).load("http://circle8.asia/App_ImgLib/Cards/"+connectLists.get(position).getUserphoto()).into(circleImageView);
+            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Cards/"+connectLists.get(position).getUserphoto()).into(circleImageView);
         }
 
         return convertView;

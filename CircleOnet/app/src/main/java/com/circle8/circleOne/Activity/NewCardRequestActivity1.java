@@ -138,8 +138,8 @@ public class NewCardRequestActivity1 extends AppCompatActivity
         if (type.equals("string")) {
             card_back = i.getStringExtra("card_back");
             card_front = i.getStringExtra("card_front");
-            recycle_image1 = "http://circle8.asia/App_ImgLib/Cards/"+card_front;
-            recycle_image2 = "http://circle8.asia/App_ImgLib/Cards/"+card_back;
+            recycle_image1 = Utility.BASE_IMAGE_URL+"Cards/"+card_front;
+            recycle_image2 = Utility.BASE_IMAGE_URL+"Cards/"+card_back;
             swipe_image.add(recycle_image1);
             swipe_image.add(recycle_image2);
             myPager = new CardSwipe(getApplicationContext(), swipe_image);
@@ -182,7 +182,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
         }
         else
         {
-            Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/" + image).into(imgProfile);
+            Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/" + image).into(imgProfile);
         }
         tvPerson.setText(i.getStringExtra("person"));
         tvDesignation.setText(i.getStringExtra("designation"));

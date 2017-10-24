@@ -118,7 +118,7 @@ public class UpdateGroupActivity extends AppCompatActivity
         if (groupPhoto.equals("")) {
             ivGroupImage.setImageResource(R.drawable.usr_1);
         } else {
-            Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/Group/" + groupPhoto).placeholder(R.drawable.usr_1).into(ivGroupImage);
+            Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"Group/" + groupPhoto).placeholder(R.drawable.usr_1).into(ivGroupImage);
         }
 
         ivGroupImage.setOnClickListener(new View.OnClickListener() {

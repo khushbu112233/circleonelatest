@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.circle8.circleOne.Activity.SearchGroupMembers;
 import com.circle8.circleOne.Model.ConnectList;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -147,7 +148,7 @@ public class SearchGroupMemberAdapter extends BaseAdapter
         }
         else
         {
-            Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/"+connectLists.get(position).getUserphoto()).into(holder.circleImageView);
+            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+connectLists.get(position).getUserphoto()).into(holder.circleImageView);
         }
 
         holder.chCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

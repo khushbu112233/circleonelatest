@@ -278,7 +278,7 @@ public class ProfileFragment extends Fragment
                 }
                 else
                 {
-                    Picasso.with(getActivity()).load("http://circle8.asia/App_ImgLib/UserProfile/"+displayProfile).placeholder(R.drawable.usr_1).into(ivViewImage);
+                    Picasso.with(getActivity()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+displayProfile).placeholder(R.drawable.usr_1).into(ivViewImage);
                 }
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -287,7 +287,7 @@ public class ProfileFragment extends Fragment
                     public void onClick(View v) {
                         dialog.dismiss();
                         Intent intent = new Intent(getContext(), ImageZoom.class);
-                        intent.putExtra("displayProfile", "http://circle8.asia/App_ImgLib/UserProfile/"+displayProfile);
+                        intent.putExtra("displayProfile", Utility.BASE_IMAGE_URL+"UserProfile/"+displayProfile);
                         startActivity(intent);
                     }
                 });
@@ -763,7 +763,7 @@ public class ProfileFragment extends Fragment
                                         imgProfile.setImageResource(R.drawable.usr_white1);
                                     }
                                     else {
-                                        Picasso.with(getContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+allTags.get(i).getUserPhoto()).into(imgProfile);
+                                        Picasso.with(getContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+allTags.get(i).getUserPhoto()).into(imgProfile);
                                     }
 
                                     if (allTags.get(i).getCard_Front().equalsIgnoreCase("") && allTags.get(i).getCard_Back().equalsIgnoreCase("")) {
@@ -822,32 +822,32 @@ public class ProfileFragment extends Fragment
                                     {
                                         if(allTags.get(i).getCard_Front().equals(""))
                                         {
-                                            recycle_image1 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
+                                            recycle_image1 =Utility.BASE_IMAGE_URL+"Cards/Back_for_all.jpg";
                                         }
                                         else
                                         {
-                                            recycle_image1 = "http://circle8.asia/App_ImgLib/Cards/"+allTags.get(i).getCard_Front();
+                                            recycle_image1 = Utility.BASE_IMAGE_URL+"Cards/"+allTags.get(i).getCard_Front();
                                         }
                                     }
                                     catch (Exception e)
                                     {
-                                        recycle_image1 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
+                                        recycle_image1 =Utility.BASE_IMAGE_URL+"Cards/Back_for_all.jpg";
                                     }
 
                                     try
                                     {
                                         if(allTags.get(i).getCard_Back().equals(""))
                                         {
-                                            recycle_image2 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
+                                            recycle_image2 =Utility.BASE_IMAGE_URL+"Cards/Back_for_all.jpg";
                                         }
                                         else
                                         {
-                                            recycle_image2 = "http://circle8.asia/App_ImgLib/Cards/"+allTags.get(i).getCard_Back();
+                                            recycle_image2 = Utility.BASE_IMAGE_URL+"Cards/"+allTags.get(i).getCard_Back();
                                         }
                                     }
                                     catch (Exception e)
                                     {
-                                        recycle_image2 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
+                                        recycle_image2 =Utility.BASE_IMAGE_URL+"Cards/Back_for_all.jpg";
                                     }
 
                                     image = new ArrayList<>();
@@ -1534,7 +1534,7 @@ public class ProfileFragment extends Fragment
                         imgProfile.setImageResource(R.drawable.usr_white1);
                     }
                     else {
-                        Picasso.with(getContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+allTags.get(profileIndex).getUserPhoto()).into(imgProfile);
+                        Picasso.with(getContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+allTags.get(profileIndex).getUserPhoto()).into(imgProfile);
                     }
 
                     new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");
@@ -1543,32 +1543,32 @@ public class ProfileFragment extends Fragment
                     {
                         if(allTags.get(profileIndex).getCard_Front().equals(""))
                         {
-                            recycle_image1 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
+                            recycle_image1 =Utility.BASE_IMAGE_URL+"Cards/Back_for_all.jpg";
                         }
                         else
                         {
-                            recycle_image1 = "http://circle8.asia/App_ImgLib/Cards/"+allTags.get(profileIndex).getCard_Front();
+                            recycle_image1 = Utility.BASE_IMAGE_URL+"Cards/"+allTags.get(profileIndex).getCard_Front();
                         }
                     }
                     catch (Exception e)
                     {
-                        recycle_image1 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
+                        recycle_image1 =Utility.BASE_IMAGE_URL+"Cards/Back_for_all.jpg";
                     }
 
                     try
                     {
                         if(allTags.get(profileIndex).getCard_Back().equals(""))
                         {
-                            recycle_image2 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
+                            recycle_image2 =Utility.BASE_IMAGE_URL+"Cards/Back_for_all.jpg";
                         }
                         else
                         {
-                            recycle_image2 = "http://circle8.asia/App_ImgLib/Cards/"+allTags.get(profileIndex).getCard_Back();
+                            recycle_image2 = Utility.BASE_IMAGE_URL+"Cards/"+allTags.get(profileIndex).getCard_Back();
                         }
                     }
                     catch (Exception e)
                     {
-                        recycle_image2 ="http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
+                        recycle_image2 =Utility.BASE_IMAGE_URL+"Cards/Back_for_all.jpg";
                     }
 
                     image.add(recycle_image1);

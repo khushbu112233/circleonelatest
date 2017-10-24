@@ -115,9 +115,9 @@ public class Connect4Activity extends AppCompatActivity
 
             if (level.equals("0"))
             {
-                txtCongratulations.setVisibility(View.GONE);
+              //  txtCongratulations.setVisibility(View.GONE);
                 txtAsk.setVisibility(View.GONE);
-                txtLink.setText("You don’t have any connections");
+                txtLink.setText("You have no established connections");
                 level1.setVisibility(View.GONE);
                 level2.setVisibility(View.GONE);
                 level3.setVisibility(View.GONE);
@@ -127,9 +127,9 @@ public class Connect4Activity extends AppCompatActivity
             }
             else if (level.equals("1"))
             {
-                txtCongratulations.setVisibility(View.VISIBLE);
+               // txtCongratulations.setVisibility(View.VISIBLE);
                 txtAsk.setVisibility(View.VISIBLE);
-                txtLink.setText("You have a 1st level connection.");
+                txtLink.setText("you are now 1 connection away");
                 level1.setVisibility(View.VISIBLE);
                 level2.setVisibility(View.GONE);
                 level3.setVisibility(View.GONE);
@@ -139,9 +139,9 @@ public class Connect4Activity extends AppCompatActivity
             }
             else if (level.equals("2"))
             {
-                txtCongratulations.setVisibility(View.VISIBLE);
+              //  txtCongratulations.setVisibility(View.VISIBLE);
                 txtAsk.setVisibility(View.VISIBLE);
-                txtLink.setText("You have a 2nd level connection.");
+                txtLink.setText("you are now 2 connections away");
                 level1.setVisibility(View.VISIBLE);
                 level2.setVisibility(View.VISIBLE);
                 level3.setVisibility(View.GONE);
@@ -151,9 +151,9 @@ public class Connect4Activity extends AppCompatActivity
             }
             else if (level.equals("3"))
             {
-                txtCongratulations.setVisibility(View.VISIBLE);
+              //  txtCongratulations.setVisibility(View.VISIBLE);
                 txtAsk.setVisibility(View.VISIBLE);
-                txtLink.setText("You have a 3rd level connection.");
+                txtLink.setText("you are now 3 connections away");
                 level1.setVisibility(View.VISIBLE);
                 level2.setVisibility(View.VISIBLE);
                 level3.setVisibility(View.VISIBLE);
@@ -163,9 +163,9 @@ public class Connect4Activity extends AppCompatActivity
             }
             else if (level.equals("4"))
             {
-                txtCongratulations.setVisibility(View.VISIBLE);
+              //  txtCongratulations.setVisibility(View.VISIBLE);
                 txtAsk.setVisibility(View.VISIBLE);
-                txtLink.setText("You have a 4th level connection.");
+                txtLink.setText("you are now 4 connections away");
                 level1.setVisibility(View.VISIBLE);
                 level2.setVisibility(View.VISIBLE);
                 level3.setVisibility(View.VISIBLE);
@@ -175,9 +175,9 @@ public class Connect4Activity extends AppCompatActivity
             }
             else if (level.equals("5"))
             {
-                txtCongratulations.setVisibility(View.VISIBLE);
+               // txtCongratulations.setVisibility(View.VISIBLE);
                 txtAsk.setVisibility(View.VISIBLE);
-                txtLink.setText("You have a 5th level connection.");
+                txtLink.setText("you are now 5 connections away");
                 level1.setVisibility(View.VISIBLE);
                 level2.setVisibility(View.VISIBLE);
                 level3.setVisibility(View.VISIBLE);
@@ -187,9 +187,9 @@ public class Connect4Activity extends AppCompatActivity
             }
             else if (level.equals("6"))
             {
-                txtCongratulations.setVisibility(View.VISIBLE);
+              //  txtCongratulations.setVisibility(View.VISIBLE);
                 txtAsk.setVisibility(View.VISIBLE);
-                txtLink.setText("You have a 6th level connection.");
+                txtLink.setText("you are now 6 connections away");
                 level1.setVisibility(View.VISIBLE);
                 level2.setVisibility(View.VISIBLE);
                 level3.setVisibility(View.VISIBLE);

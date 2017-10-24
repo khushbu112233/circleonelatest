@@ -8,6 +8,8 @@ public class NotificationModel {
 
     String FriendUserID = "";
     String FriendProfileID = "";
+    String MyUserID = "";
+    String MyProfileID = "";
     String FirstName = "";
     String LastName = "";
     String UserPhoto = "";
@@ -15,8 +17,51 @@ public class NotificationModel {
     String Testimonial_ID = "";
     String NotificationID = "";
     String Status = "";
+    String Shared_UserID = "";
+    String Shared_ProfileID = "";
+    String Viewed_Flag = "";
 
     public NotificationModel() {
+    }
+
+    public String getMyUserID() {
+        return MyUserID;
+    }
+
+    public void setMyUserID(String myUserID) {
+        MyUserID = myUserID;
+    }
+
+    public String getMyProfileID() {
+        return MyProfileID;
+    }
+
+    public void setMyProfileID(String myProfileID) {
+        MyProfileID = myProfileID;
+    }
+
+    public String getShared_UserID() {
+        return Shared_UserID;
+    }
+
+    public void setShared_UserID(String shared_UserID) {
+        Shared_UserID = shared_UserID;
+    }
+
+    public String getShared_ProfileID() {
+        return Shared_ProfileID;
+    }
+
+    public void setShared_ProfileID(String shared_ProfileID) {
+        Shared_ProfileID = shared_ProfileID;
+    }
+
+    public String getViewed_Flag() {
+        return Viewed_Flag;
+    }
+
+    public void setViewed_Flag(String viewed_Flag) {
+        Viewed_Flag = viewed_Flag;
     }
 
     public String getNotificationID() {

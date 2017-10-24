@@ -128,8 +128,8 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
         Card_Front = i.getStringExtra("Card_Front");
         Card_Back = i.getStringExtra("Card_Back");
 
-        recycle_image1 ="http://circle8.asia/App_ImgLib/Cards/"+Card_Front ;
-        recycle_image2 ="http://circle8.asia/App_ImgLib/Cards/"+Card_Back ;
+        recycle_image1 =Utility.BASE_IMAGE_URL+"Cards/"+Card_Front ;
+        recycle_image2 =Utility.BASE_IMAGE_URL+"Cards/"+Card_Back ;
 
         swipe_image.add(recycle_image1);
         swipe_image.add(recycle_image2);
@@ -175,7 +175,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
             imgProfile.setImageResource(R.drawable.usr_white1);
         }
         else {
-            Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+image).into(imgProfile);
+            Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+image).into(imgProfile);
         }
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override

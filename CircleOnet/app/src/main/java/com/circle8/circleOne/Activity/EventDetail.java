@@ -315,7 +315,7 @@ public class EventDetail extends AppCompatActivity
                     }
                     else
                     {
-                        Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/Events/"+eventDetail.getString("Event_Image")).into(imgEvent);
+                        Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"Events/"+eventDetail.getString("Event_Image")).into(imgEvent);
                     }
 
                     tvEventDate.setText(eventDetail.getString("Event_StartDate")

@@ -18,6 +18,21 @@ public class Utility
     public static final int MY_PERMISSIONS_REQUEST_READ_CONTACT = 122;
     public static final int MY_PERMISSIONS_REQUEST_SMS = 124;
     public static final String BASE_URL = "http://circle8.asia:8082/Onet.svc/";
+    /**
+     * for 8082
+     */
+    public static final String BASE_IMAGE_URL = "http://circle8.asia:8083/";
+
+    /**
+     * for 8081
+     */
+  //  public static final String BASE_IMAGE_URL = "http://circle8.asia:8083/";
+
+
+    /**
+     * for 8999
+     */
+    //public static final String BASE_IMAGE_URL = "http://circle8.asia/App_imgLib/";
 
     public static boolean checkStoragePermission(final Context context)
     {

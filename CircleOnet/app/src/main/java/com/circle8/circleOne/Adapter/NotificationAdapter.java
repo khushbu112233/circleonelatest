@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.circle8.circleOne.Activity.ConnectActivity;
 import com.circle8.circleOne.Activity.ImageZoom;
 import com.circle8.circleOne.Activity.Notification;
 import com.circle8.circleOne.Activity.WriteTestimonialActivity;
@@ -57,7 +58,7 @@ public class NotificationAdapter extends BaseAdapter
     private Context activity;
     ArrayList<NotificationModel> testimonialModels;
     private static LayoutInflater inflater = null;
-    LinearLayout lnrTestReq, lnrTestRec, lnrFriend;
+    LinearLayout lnrTestReq, lnrTestRec, lnrFriend, lnrShare, lnrNFC;
     private int posi = 0;
     LoginSession loginSession;
     String profileId = "", UserId = "";
@@ -87,9 +88,9 @@ public class NotificationAdapter extends BaseAdapter
 
     static class ViewHolder
     {
-        CircleImageView imgTestReq, imgTestRec, imgFriend;
-        TextView txtTestPurpose, txtTestName, txtTestPurposeRec, txtTestNameRec, txtFriendPurpose, txtFriendName, txtRequested, txtRequestedTestReq, txtRequestedTestRec;
-        Button btnTestWrite, btnTestReject, btnTestAcceptRec, btnTestRejectRec, btnAcceptFriend, btnRejectFriend;
+        CircleImageView imgTestReq, imgTestRec, imgFriend, imgShare, imgNfc;
+        TextView txtNfcPurpose, txtNfcName, txtSharePurpose, txtShareName, txtTestPurpose, txtTestName, txtTestPurposeRec, txtTestNameRec, txtFriendPurpose, txtFriendName, txtRequested, txtRequestedTestReq, txtRequestedTestRec;
+        Button btnAllowNfc, btnNfcCancel, btnTestWrite, btnTestReject, btnTestAcceptRec, btnTestRejectRec, btnAcceptFriend, btnRejectFriend, btnShareRequest, btnShareCancel;
     }
 
     public View getView(final int position, View convertView, ViewGroup parent)
@@ -101,7 +102,7 @@ public class NotificationAdapter extends BaseAdapter
         {
             vi = inflater.inflate(R.layout.notification_item, null);
             holder = new ViewHolder();
-
+            holder.imgShare = (CircleImageView) vi.findViewById(R.id.imgShare);
             holder.imgTestReq = (CircleImageView) vi.findViewById(R.id.imgTestReq);
             holder.imgTestRec = (CircleImageView) vi.findViewById(R.id.imgTestRec);
             holder.imgFriend = (CircleImageView) vi.findViewById(R.id.imgFriend);
@@ -120,6 +121,15 @@ public class NotificationAdapter extends BaseAdapter
             holder.btnTestRejectRec = (Button) vi.findViewById(R.id.btnTestRejectRec);
             holder.btnAcceptFriend = (Button) vi.findViewById(R.id.btnAcceptFriend);
             holder.btnRejectFriend = (Button) vi.findViewById(R.id.btnRejectFriend);
+            holder.txtShareName = (TextView) vi.findViewById(R.id.txtShareName);
+            holder.txtSharePurpose = (TextView) vi.findViewById(R.id.txtSharePurpose);
+            holder.btnShareRequest = (Button) vi.findViewById(R.id.btnReqShare);
+            holder.btnShareCancel = (Button) vi.findViewById(R.id.btnShareCancel);
+            holder.txtNfcName = (TextView) vi.findViewById(R.id.txtNfcName);
+            holder.txtNfcPurpose = (TextView) vi.findViewById(R.id.txtNfcPurpose);
+            holder.btnAllowNfc = (Button) vi.findViewById(R.id.btnAllowNfc);
+            holder.btnNfcCancel = (Button) vi.findViewById(R.id.btnNfcCancel);
+            holder.imgNfc = (CircleImageView) vi.findViewById(R.id.imgNfc);
 
             vi.setTag(holder);
         }
@@ -136,12 +146,16 @@ public class NotificationAdapter extends BaseAdapter
         lnrFriend = (LinearLayout) vi.findViewById(R.id.lnrFriend);
         lnrTestReq = (LinearLayout) vi.findViewById(R.id.lnrTestReq);
         lnrTestRec = (LinearLayout) vi.findViewById(R.id.lnrTestRec);
+        lnrShare = (LinearLayout) vi.findViewById(R.id.lnrShare);
+        lnrNFC = (LinearLayout) vi.findViewById(R.id.lnrNFC);
 
         posi = position;
         String purpose = testimonialModels.get(position).getPurpose();
 
         if (purpose.equalsIgnoreCase("Recieved Testimonial"))
         {
+            lnrNFC.setVisibility(View.GONE);
+            lnrShare.setVisibility(View.GONE);
             lnrTestRec.setVisibility(View.VISIBLE);
             lnrTestReq.setVisibility(View.GONE);
             lnrFriend.setVisibility(View.GONE);
@@ -152,7 +166,7 @@ public class NotificationAdapter extends BaseAdapter
             }
             else
             {
-                Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgTestRec);
+                Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgTestRec);
             }
            /* if (testimonialModels.get(position).getStatus().equalsIgnoreCase("Requested"))
             {
@@ -212,6 +226,8 @@ public class NotificationAdapter extends BaseAdapter
 
         else if (purpose.equalsIgnoreCase("Access Right Requested") || purpose.equalsIgnoreCase("Connection Requested"))
         {
+            lnrNFC.setVisibility(View.GONE);
+            lnrShare.setVisibility(View.GONE);
             lnrFriend.setVisibility(View.VISIBLE);
             lnrTestReq.setVisibility(View.GONE);
             lnrTestRec.setVisibility(View.GONE);
@@ -221,7 +237,7 @@ public class NotificationAdapter extends BaseAdapter
             }
             else
             {
-                Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgFriend);
+                Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgFriend);
             }
             holder.btnAcceptFriend.setVisibility(View.VISIBLE);
             holder.btnRejectFriend.setVisibility(View.VISIBLE);
@@ -237,6 +253,8 @@ public class NotificationAdapter extends BaseAdapter
 
         else if (purpose.equalsIgnoreCase("Recieved Testimonial Request"))
         {
+            lnrNFC.setVisibility(View.GONE);
+            lnrShare.setVisibility(View.GONE);
             lnrFriend.setVisibility(View.GONE);
             lnrTestReq.setVisibility(View.VISIBLE);
             lnrTestRec.setVisibility(View.GONE);
@@ -246,7 +264,7 @@ public class NotificationAdapter extends BaseAdapter
             }
             else
             {
-                Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgTestReq);
+                Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgTestReq);
             }
 
             /*if (testimonialModels.get(position).getStatus().equals("Requested")){
@@ -258,6 +276,58 @@ public class NotificationAdapter extends BaseAdapter
             holder.txtTestPurpose.setText(purpose);
             holder.txtTestName.setText(testimonialModels.get(position).getFirstName());
         }
+
+        else if (purpose.equalsIgnoreCase("Card Shared"))
+        {
+            lnrNFC.setVisibility(View.GONE);
+            lnrShare.setVisibility(View.VISIBLE);
+            lnrFriend.setVisibility(View.GONE);
+            lnrTestReq.setVisibility(View.GONE);
+            lnrTestRec.setVisibility(View.GONE);
+            if (testimonialModels.get(position).getUserPhoto().equals(""))
+            {
+                holder.imgShare.setImageResource(R.drawable.usr);
+            }
+            else
+            {
+                Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgShare);
+            }
+
+            /*if (testimonialModels.get(position).getStatus().equals("Requested")){
+                holder.btnTestReject.setVisibility(View.GONE);
+                holder.btnTestWrite.setVisibility(View.GONE);
+                holder.txtRequestedTestReq.setVisibility(View.VISIBLE);
+            }*/
+
+            holder.txtSharePurpose.setText(purpose);
+            holder.txtShareName.setText(testimonialModels.get(position).getFirstName());
+        }
+        else if (purpose.equalsIgnoreCase("Connection Card Access Request"))
+        {
+            lnrNFC.setVisibility(View.VISIBLE);
+            lnrShare.setVisibility(View.GONE);
+            lnrFriend.setVisibility(View.GONE);
+            lnrTestReq.setVisibility(View.GONE);
+            lnrTestRec.setVisibility(View.GONE);
+            if (testimonialModels.get(position).getUserPhoto().equals(""))
+            {
+                holder.imgNfc.setImageResource(R.drawable.usr);
+            }
+            else
+            {
+                Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgNfc);
+            }
+
+            /*if (testimonialModels.get(position).getStatus().equals("Requested")){
+                holder.btnTestReject.setVisibility(View.GONE);
+                holder.btnTestWrite.setVisibility(View.GONE);
+                holder.txtRequestedTestReq.setVisibility(View.VISIBLE);
+            }*/
+
+            holder.txtNfcPurpose.setText(purpose);
+            holder.txtNfcName.setText(testimonialModels.get(position).getFirstName());
+        }
+
         /*else if (purpose.equalsIgnoreCase("Sent Testimonial Request"))
         {
             lnrFriend.setVisibility(View.GONE);
@@ -283,6 +353,8 @@ public class NotificationAdapter extends BaseAdapter
         }*/
         else
         {
+            lnrNFC.setVisibility(View.GONE);
+            lnrShare.setVisibility(View.GONE);
             lnrFriend.setVisibility(View.VISIBLE);
             lnrTestReq.setVisibility(View.GONE);
             lnrTestRec.setVisibility(View.GONE);
@@ -292,7 +364,7 @@ public class NotificationAdapter extends BaseAdapter
             }
             else
             {
-                Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgFriend);
+                Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgFriend);
             }
             holder.btnAcceptFriend.setVisibility(View.GONE);
             holder.btnRejectFriend.setVisibility(View.GONE);
@@ -350,6 +422,38 @@ public class NotificationAdapter extends BaseAdapter
             }
         });
 
+        holder.btnNfcCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //  new HttpAsyncTaskAcceptFriend().execute(Utility.BASE_URL+"ShareProfile/Request");
+            }
+        });
+
+        holder.btnAllowNfc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new HttpAsyncTaskRequestFriend().execute(Utility.BASE_URL+"FriendConnection_Operation");
+            }
+        });
+        holder.btnShareRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              //  new HttpAsyncTaskAcceptFriend().execute(Utility.BASE_URL+"ShareProfile/Request");
+                Intent intent = new Intent(activity, ConnectActivity.class);
+                intent.putExtra("friendProfileID", testimonialModels.get(position).getFriendProfileID());
+                intent.putExtra("friendUserID", testimonialModels.get(position).getFriendUserID());
+                intent.putExtra("ProfileID", profileId);
+                activity.startActivity(intent);
+            }
+        });
+
+        holder.btnShareCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //  new HttpAsyncTaskAcceptFriend().execute(Utility.BASE_URL+"ShareProfile/Request");
+            }
+        });
+
         holder.btnAcceptFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -401,7 +505,7 @@ public class NotificationAdapter extends BaseAdapter
                 }
                 else
                 {
-                    Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/"+testimonialModels.get(position).getUserPhoto()).placeholder(R.drawable.usr_1).into(ivViewImage);
+                    Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/"+testimonialModels.get(position).getUserPhoto()).placeholder(R.drawable.usr_1).into(ivViewImage);
                 }
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -411,7 +515,7 @@ public class NotificationAdapter extends BaseAdapter
                     public void onClick(View v) {
                         dialog.dismiss();
                         Intent intent = new Intent(activity, ImageZoom.class);
-                        intent.putExtra("displayProfile", "http://circle8.asia/App_ImgLib/UserProfile/"+testimonialModels.get(position).getUserPhoto());
+                        intent.putExtra("displayProfile", Utility.BASE_IMAGE_URL+"UserProfile/"+testimonialModels.get(position).getUserPhoto());
                         activity.startActivity(intent);
                     }
                 });
@@ -436,7 +540,7 @@ public class NotificationAdapter extends BaseAdapter
                 }
                 else
                 {
-                    Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/"+testimonialModels.get(position).getUserPhoto()).placeholder(R.drawable.usr_1).into(ivViewImage);
+                    Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/"+testimonialModels.get(position).getUserPhoto()).placeholder(R.drawable.usr_1).into(ivViewImage);
                 }
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -445,7 +549,7 @@ public class NotificationAdapter extends BaseAdapter
                     public void onClick(View v) {
                         dialog.dismiss();
                         Intent intent = new Intent(activity, ImageZoom.class);
-                        intent.putExtra("displayProfile", "http://circle8.asia/App_ImgLib/UserProfile/"+testimonialModels.get(position).getUserPhoto());
+                        intent.putExtra("displayProfile", Utility.BASE_IMAGE_URL+"UserProfile/"+testimonialModels.get(position).getUserPhoto());
                         activity.startActivity(intent);
                     }
                 });
@@ -470,7 +574,7 @@ public class NotificationAdapter extends BaseAdapter
                 }
                 else
                 {
-                    Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/"+testimonialModels.get(position).getUserPhoto()).placeholder(R.drawable.usr_1).into(ivViewImage);
+                    Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/"+testimonialModels.get(position).getUserPhoto()).placeholder(R.drawable.usr_1).into(ivViewImage);
                 }
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -479,7 +583,7 @@ public class NotificationAdapter extends BaseAdapter
                     public void onClick(View v) {
                         dialog.dismiss();
                         Intent intent = new Intent(activity, ImageZoom.class);
-                        intent.putExtra("displayProfile", "http://circle8.asia/App_ImgLib/UserProfile/"+testimonialModels.get(position).getUserPhoto());
+                        intent.putExtra("displayProfile", Utility.BASE_IMAGE_URL+"UserProfile/"+testimonialModels.get(position).getUserPhoto());
                         activity.startActivity(intent);
                     }
                 });
@@ -673,6 +777,62 @@ public class NotificationAdapter extends BaseAdapter
         }
     }
 
+    private class HttpAsyncTaskRequestFriend extends AsyncTask<String, Void, String> {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            /*dialog = new ProgressDialog(activity);
+            dialog.setMessage("Accepting Friend Request..");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+            String loading = "Requesting";
+            Notification.CustomProgressDialog(loading);
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return POST5(urls[0]);
+        }
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            Notification.rlProgressDialog.setVisibility(View.GONE);
+
+//            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+            try {
+                if (result.equals("")) {
+                    Toast.makeText(activity, "Check Internet Connection", Toast.LENGTH_LONG).show();
+                } else {
+                    JSONObject response = new JSONObject(result);
+                    String message = response.getString("message");
+                    String success = response.getString("success");
+
+                    if (success.equals("1"))
+                    {
+                        Toast.makeText(activity, "Connection Request sent..", Toast.LENGTH_LONG).show();
+                        Notification.webCall();
+                    }
+                    else
+                    {
+                        Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
+                    }
+
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     private class HttpAsyncTaskAcceptFriend extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
@@ -745,6 +905,63 @@ public class NotificationAdapter extends BaseAdapter
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Operation", "Accept");
+            jsonObject.accumulate("RequestType", "");
+            jsonObject.accumulate("friendProfileId", testimonialModels.get(posi).getFriendProfileID());
+            jsonObject.accumulate("myProfileId", profileId);
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    public String POST5(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("Operation", "Request");
             jsonObject.accumulate("RequestType", "");
             jsonObject.accumulate("friendProfileId", testimonialModels.get(posi).getFriendProfileID());
             jsonObject.accumulate("myProfileId", profileId);

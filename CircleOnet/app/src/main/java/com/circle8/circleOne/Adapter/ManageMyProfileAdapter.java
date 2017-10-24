@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.circle8.circleOne.Activity.ManageMyProfile;
 import com.circle8.circleOne.Model.ProfileModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -82,7 +83,7 @@ public class ManageMyProfileAdapter extends BaseAdapter
             }
             else
             {
-                Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/"+newCardModelArrayList.get(position).getUserPhoto()).into(ivProfile);
+                Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+newCardModelArrayList.get(position).getUserPhoto()).into(ivProfile);
             }
 
         }

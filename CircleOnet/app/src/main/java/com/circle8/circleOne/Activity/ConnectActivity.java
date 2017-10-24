@@ -294,7 +294,7 @@ public class ConnectActivity extends AppCompatActivity
                 }
                 else
                 {
-                    Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+displayProfile).placeholder(R.drawable.usr_1).into(ivViewImage);
+                    Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+displayProfile).placeholder(R.drawable.usr_1).into(ivViewImage);
                 }
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -303,7 +303,7 @@ public class ConnectActivity extends AppCompatActivity
                     public void onClick(View v) {
                         dialog.dismiss();
                         Intent intent = new Intent(getApplicationContext(), ImageZoom.class);
-                        intent.putExtra("displayProfile", "http://circle8.asia/App_ImgLib/UserProfile/"+displayProfile);
+                        intent.putExtra("displayProfile", Utility.BASE_IMAGE_URL+"UserProfile/"+displayProfile);
                         startActivity(intent);
                     }
                 });
@@ -828,7 +828,7 @@ public class ConnectActivity extends AppCompatActivity
                     Mobile2 = profile.getString("Mobile2");
                     tvPersonDesignation.setText(profile.getString("Designation"));
 
-                    profileImg = "http://circle8.asia/App_ImgLib/UserProfile/"+profile.getString("UserPhoto");
+                    profileImg = Utility.BASE_IMAGE_URL+"UserProfile/"+profile.getString("UserPhoto");
                     displayProfile = profile.getString("UserPhoto");
                     if(profile.getString("UserPhoto").equalsIgnoreCase(""))
                     {
@@ -836,7 +836,7 @@ public class ConnectActivity extends AppCompatActivity
                     }
                     else
                     {
-                        Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+profile.getString("UserPhoto")).into(ivProfileImage);
+                        Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+profile.getString("UserPhoto")).into(ivProfileImage);
                     }
 
                     if (Matched.equals("1"))

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.circle8.circleOne.Activity.CardDetail;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -90,7 +91,7 @@ public class GroupsInCardDetailAdapter extends BaseAdapter
         }
         else
         {
-            Picasso.with(context).load("http://circle8.asia/App_ImgLib/Group/"+img.get(position)).placeholder(R.drawable.usr_1).into(holder.groupImg);
+            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Group/"+img.get(position)).placeholder(R.drawable.usr_1).into(holder.groupImg);
         }
 
         return vi;

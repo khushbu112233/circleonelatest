@@ -17,6 +17,7 @@ import com.circle8.circleOne.Fragments.CardsFragment;
 import com.circle8.circleOne.Fragments.List1Fragment;
 import com.circle8.circleOne.Model.FriendConnection;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -139,7 +140,7 @@ public class GalleryAdapter1 extends RecyclerView.Adapter<GalleryAdapter1.MyView
             defaultCard.setVisibility(View.GONE);
             defaultCard1.setVisibility(View.GONE);
             //imageView.setImageResource(nfcModelList.get(position).getCard_front());
-            Picasso.with(mContext).load("http://circle8.asia/App_ImgLib/Cards/"+nfcModelList.get(position).getCard_back()).into(imageView);
+            Picasso.with(mContext).load(Utility.BASE_IMAGE_URL+"Cards/"+nfcModelList.get(position).getCard_back()).into(imageView);
 
         }
         defaultCard1.setOnTouchListener(new View.OnTouchListener() {

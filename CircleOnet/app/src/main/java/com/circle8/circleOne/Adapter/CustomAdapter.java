@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.circle8.circleOne.Model.TestimonialModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -77,7 +78,7 @@ public class CustomAdapter extends BaseAdapter
         }
         else
         {
-            Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.circleImageView);
+            Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.circleImageView);
         }
 
         holder.txtName.setText(testimonialModels.get(position).getFirstName() + " " + testimonialModels.get(position).getLastName());

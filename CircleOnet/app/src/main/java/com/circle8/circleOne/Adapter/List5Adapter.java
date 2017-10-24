@@ -17,6 +17,7 @@ import com.circle8.circleOne.Model.ConnectList;
 import com.circle8.circleOne.Model.FriendConnection;
 import com.circle8.circleOne.Model.NFCModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.daimajia.swipe.SimpleSwipeListener;
@@ -233,7 +234,7 @@ public class List5Adapter extends BaseSwipeAdapter
             }
             else
             {
-                Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/"+connectLists.get(position).getUserphoto()).into(holder.image);
+                Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+connectLists.get(position).getUserphoto()).into(holder.image);
             }
         }
         catch (Exception e)

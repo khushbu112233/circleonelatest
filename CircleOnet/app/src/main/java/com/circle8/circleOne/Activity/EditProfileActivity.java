@@ -3533,12 +3533,12 @@ public class EditProfileActivity extends AppCompatActivity implements
                     if (UserPhoto.equals("")) {
                         imgProfile.setImageResource(R.drawable.usr_white1);
                     } else {
-                        Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/" + UserPhoto).into(imgProfile);
+                        Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/" + UserPhoto).into(imgProfile);
                     }
 
                     image = new ArrayList<>();
-                    image.add("http://circle8.asia/App_ImgLib/Cards/" + Card_Front);
-                    image.add("http://circle8.asia/App_ImgLib/Cards/" + Card_Back);
+                    image.add(Utility.BASE_IMAGE_URL+"Cards/" + Card_Front);
+                    image.add(Utility.BASE_IMAGE_URL+"Cards/" + Card_Back);
                     myPager = new CardSwipe(getApplicationContext(), image);
 
                     mViewPager.setClipChildren(false);

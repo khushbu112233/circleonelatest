@@ -259,7 +259,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             }
             else
             {
-                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+user_Photo).placeholder(R.drawable.usr_1).into(imgProfile);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+user_Photo).placeholder(R.drawable.usr_1).into(imgProfile);
             }
         }
         catch (Exception e)

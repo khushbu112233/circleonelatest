@@ -144,7 +144,7 @@ public class GroupsItemsAdapter1 extends BaseAdapter
             }
             else
             {
-                Picasso.with(context).load("http://circle8.asia/App_ImgLib/Group/"+groupModelsList.get(position).getGroup_Photo()).placeholder(R.drawable.usr_1).into(imgGroup);
+                Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Group/"+groupModelsList.get(position).getGroup_Photo()).placeholder(R.drawable.usr_1).into(imgGroup);
             }
 
             for (int i = 1; i <= groupID.length() ; i++)

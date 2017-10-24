@@ -255,7 +255,7 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
         }
         else
         {
-            Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/"+groupDetailModelArrayList.get(position).getImgProfile()).placeholder(R.drawable.usr_1).into(holder.personImage);
+            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+groupDetailModelArrayList.get(position).getImgProfile()).placeholder(R.drawable.usr_1).into(holder.personImage);
         }
 
         holder.personImage.setOnClickListener(new View.OnClickListener() {
@@ -272,7 +272,7 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
                 }
                 else
                 {
-                    Picasso.with(context).load("http://circle8.asia/App_ImgLib/UserProfile/"+groupDetailModelArrayList.get(position).getImgProfile()).placeholder(R.drawable.usr_1).into(ivViewImage);
+                    Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+groupDetailModelArrayList.get(position).getImgProfile()).placeholder(R.drawable.usr_1).into(ivViewImage);
                 }
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -282,7 +282,7 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
                     public void onClick(View v) {
                         dialog.dismiss();
                         Intent intent = new Intent(context, ImageZoom.class);
-                        intent.putExtra("displayProfile", "http://circle8.asia/App_ImgLib/UserProfile/"+groupDetailModelArrayList.get(position).getImgProfile());
+                        intent.putExtra("displayProfile", Utility.BASE_IMAGE_URL+"UserProfile/"+groupDetailModelArrayList.get(position).getImgProfile());
                         context.startActivity(intent);
                     }
                 });

@@ -176,7 +176,7 @@ public class GroupDetailActivity extends AppCompatActivity
         }
         else
         {
-            Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/Group/"+group_Img).placeholder(R.drawable.usr_1).into(imgProfile);
+            Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"Group/"+group_Img).placeholder(R.drawable.usr_1).into(imgProfile);
         }
 
         View v = LayoutInflater.from(getApplicationContext()).inflate(R.layout.group_detail_items, null);
@@ -527,7 +527,7 @@ public class GroupDetailActivity extends AppCompatActivity
                 }
                 else
                 {
-                    Picasso.with(GroupDetailActivity.this).load("http://circle8.asia/App_ImgLib/Group/"+group_Img).placeholder(R.drawable.usr_1).into(ivViewImage);
+                    Picasso.with(GroupDetailActivity.this).load(Utility.BASE_IMAGE_URL+"Group/"+group_Img).placeholder(R.drawable.usr_1).into(ivViewImage);
                 }
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -536,7 +536,7 @@ public class GroupDetailActivity extends AppCompatActivity
                     public void onClick(View v) {
                         dialog.dismiss();
                         Intent intent = new Intent(getApplicationContext(), ImageZoom.class);
-                        intent.putExtra("displayProfile", "http://circle8.asia/App_ImgLib/Group/"+group_Img);
+                        intent.putExtra("displayProfile", Utility.BASE_IMAGE_URL+"Group/"+group_Img);
                         startActivity(intent);
                     }
                 });
@@ -876,7 +876,7 @@ public class GroupDetailActivity extends AppCompatActivity
                         }
                         else
                         {
-                            Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/Group/"+GroupImage).placeholder(R.drawable.usr_1).into(imgProfile);
+                            Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"Group/"+GroupImage).placeholder(R.drawable.usr_1).into(imgProfile);
                         }
 
                     }

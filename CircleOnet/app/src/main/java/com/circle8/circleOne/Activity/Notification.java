@@ -224,12 +224,17 @@ public class Notification extends AppCompatActivity
                         NotificationModel nfcModelTag = new NotificationModel();
                         nfcModelTag.setFriendUserID(object.getString("FriendUserID"));
                         nfcModelTag.setFriendProfileID(object.getString("FriendProfileID"));
+                        nfcModelTag.setMyUserID(object.getString("MyUserID"));
+                        nfcModelTag.setMyProfileID(object.getString("MyProfileID"));
                         nfcModelTag.setFirstName(object.getString("FirstName"));
                         nfcModelTag.setLastName(object.getString("LastName"));
                         nfcModelTag.setUserPhoto(object.getString("UserPhoto"));
                         nfcModelTag.setPurpose(object.getString("Purpose"));
                         nfcModelTag.setNotificationID(object.getString("NotificationID"));
                         nfcModelTag.setStatus(object.getString("Status"));
+                        nfcModelTag.setShared_UserID(object.getString("Shared_UserID"));
+                        nfcModelTag.setShared_ProfileID(object.getString("Shared_ProfileID"));
+                        nfcModelTag.setViewed_Flag(object.getString("Viewed_Flag"));
                         allTags.add(nfcModelTag);
                     }
 

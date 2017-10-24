@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.circle8.circleOne.Model.HistoryModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -86,7 +87,7 @@ public class HistoryAdapter extends BaseAdapter
         }
         else
         {
-            Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/"+historyModelArrayList.get(position).getUserPhoto()).into(holder.imgProfile);
+            Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/"+historyModelArrayList.get(position).getUserPhoto()).into(holder.imgProfile);
         }
 
         return row;

@@ -260,7 +260,7 @@ public class CardDetail extends NfcActivity
                 }
                 else
                 {
-                    Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+displayProfile).placeholder(R.drawable.usr_1).into(ivViewImage);
+                    Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+displayProfile).placeholder(R.drawable.usr_1).into(ivViewImage);
                 }
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -269,7 +269,7 @@ public class CardDetail extends NfcActivity
                     public void onClick(View v) {
                         dialog.dismiss();
                         Intent intent = new Intent(getApplicationContext(), ImageZoom.class);
-                        intent.putExtra("displayProfile", "http://circle8.asia/App_ImgLib/UserProfile/"+displayProfile);
+                        intent.putExtra("displayProfile", Utility.BASE_IMAGE_URL+"UserProfile/"+displayProfile);
                         startActivity(intent);
                     }
                 });
@@ -1502,7 +1502,7 @@ public class CardDetail extends NfcActivity
                         imgProfileCard.setImageResource(R.drawable.usr_white1);
                         displayProfile = "";
                     } else {
-                        Picasso.with(CardDetail.this).load("http://circle8.asia/App_ImgLib/UserProfile/" + userImg).into(imgProfileCard);
+                        Picasso.with(CardDetail.this).load(Utility.BASE_IMAGE_URL+"UserProfile/" + userImg).into(imgProfileCard);
                         displayProfile = userImg;
                     }
 
@@ -1513,15 +1513,15 @@ public class CardDetail extends NfcActivity
                     }
 
                     if (frontCardImg.equalsIgnoreCase("")) {
-                        recycle_image1 = "http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
+                        recycle_image1 = Utility.BASE_IMAGE_URL+"Cards/Back_for_all.jpg";
                     } else {
-                        recycle_image1 = "http://circle8.asia/App_ImgLib/Cards/" + frontCardImg;
+                        recycle_image1 = Utility.BASE_IMAGE_URL+"Cards/" + frontCardImg;
                     }
 
                     if (backCardImg.equalsIgnoreCase("")) {
-                        recycle_image2 = "http://circle8.asia/App_ImgLib/Cards/Back_for_all.jpg";
+                        recycle_image2 = Utility.BASE_IMAGE_URL+"Cards/Back_for_all.jpg";
                     } else {
-                        recycle_image2 = "http://circle8.asia/App_ImgLib/Cards/" + backCardImg;
+                        recycle_image2 = Utility.BASE_IMAGE_URL+"Cards/" + backCardImg;
                     }
 
                     image.add(recycle_image1);

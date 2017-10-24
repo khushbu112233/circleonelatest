@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -137,8 +138,8 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
 
         if (level.equals("0"))
         {
-            txtCongratulations.setVisibility(View.GONE);
-            txtLink.setText("You are not having any Connection.");
+          //  txtCongratulations.setVisibility(View.GONE);
+            txtLink.setText("You have no established connections");
             rltLevel1.setVisibility(View.INVISIBLE);
             rltLevel2.setVisibility(View.INVISIBLE);
             rltLevel3.setVisibility(View.INVISIBLE);
@@ -157,8 +158,8 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         }
         if (level.equals("1"))
         {
-            txtCongratulations.setVisibility(View.VISIBLE);
-            txtLink.setText("You have a 1st level connection.");
+          //  txtCongratulations.setVisibility(View.VISIBLE);
+            txtLink.setText("you are now 1 connection away");
             rltLevel1.setVisibility(View.VISIBLE);
             rltLevel2.setVisibility(View.INVISIBLE);
             rltLevel3.setVisibility(View.INVISIBLE);
@@ -182,13 +183,13 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             }
             else
             {
-                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+userPhoto1).into(ivProfile1);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).into(ivProfile1);
             }
         }
         else if (level.equals("2"))
         {
-            txtCongratulations.setVisibility(View.VISIBLE);
-            txtLink.setText("You have a 2nd level connection.");
+          //  txtCongratulations.setVisibility(View.VISIBLE);
+            txtLink.setText("you are now 2 connections away");
             rltLevel1.setVisibility(View.VISIBLE);
             rltLevel2.setVisibility(View.VISIBLE);
             rltLevel3.setVisibility(View.INVISIBLE);
@@ -215,14 +216,14 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             }
             else
             {
-                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+userPhoto1).into(ivProfile1);
-                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+userPhoto2).into(ivProfile2);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).into(ivProfile1);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).into(ivProfile2);
             }
         }
         else if (level.equals("3"))
         {
-            txtCongratulations.setVisibility(View.VISIBLE);
-            txtLink.setText("You have a 3rd level connection.");
+            //txtCongratulations.setVisibility(View.VISIBLE);
+            txtLink.setText("you are now 3 connections away");
             rltLevel1.setVisibility(View.VISIBLE);
             rltLevel2.setVisibility(View.VISIBLE);
             rltLevel3.setVisibility(View.VISIBLE);
@@ -251,15 +252,15 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             }
             else
             {
-                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+userPhoto1).into(ivProfile1);
-                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+userPhoto2).into(ivProfile2);
-                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+userPhoto3).into(ivProfile3);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).into(ivProfile1);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).into(ivProfile2);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).into(ivProfile3);
             }
         }
         else if (level.equals("4"))
         {
-            txtCongratulations.setVisibility(View.VISIBLE);
-            txtLink.setText("You have a 4th level connection.");
+           // txtCongratulations.setVisibility(View.VISIBLE);
+            txtLink.setText("you are now 4 connections away");
             rltLevel1.setVisibility(View.VISIBLE);
             rltLevel2.setVisibility(View.VISIBLE);
             rltLevel3.setVisibility(View.VISIBLE);
@@ -290,16 +291,16 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             }
             else
             {
-                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+userPhoto1).into(ivProfile1);
-                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+userPhoto2).into(ivProfile2);
-                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+userPhoto3).into(ivProfile3);
-                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+userPhoto4).into(ivProfile4);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).into(ivProfile1);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).into(ivProfile2);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).into(ivProfile3);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4).into(ivProfile4);
             }
         }
         else if (level.equals("5"))
         {
-            txtCongratulations.setVisibility(View.VISIBLE);
-            txtLink.setText("You have a 5th level connection.");
+          //  txtCongratulations.setVisibility(View.VISIBLE);
+            txtLink.setText("you are now 5 connections away");
             rltLevel1.setVisibility(View.VISIBLE);
             rltLevel2.setVisibility(View.VISIBLE);
             rltLevel3.setVisibility(View.VISIBLE);
@@ -333,17 +334,17 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             }
             else
             {
-                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+userPhoto1).into(ivProfile1);
-                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+userPhoto2).into(ivProfile2);
-                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+userPhoto3).into(ivProfile3);
-                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+userPhoto4).into(ivProfile4);
-                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+userPhoto5).into(ivProfile5);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).into(ivProfile1);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).into(ivProfile2);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).into(ivProfile3);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4).into(ivProfile4);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto5).into(ivProfile5);
             }
         }
         else if (level.equals("6"))
         {
-            txtCongratulations.setVisibility(View.VISIBLE);
-            txtLink.setText("You have a 6th level connection.");
+          //  txtCongratulations.setVisibility(View.VISIBLE);
+            txtLink.setText("you are now 6 connections away");
             rltLevel1.setVisibility(View.VISIBLE);
             rltLevel2.setVisibility(View.VISIBLE);
             rltLevel3.setVisibility(View.VISIBLE);
@@ -379,19 +380,19 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             }
             else
             {
-                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+userPhoto1).into(ivProfile1);
-                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+userPhoto2).into(ivProfile2);
-                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+userPhoto3).into(ivProfile3);
-                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+userPhoto4).into(ivProfile4);
-                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+userPhoto5).into(ivProfile5);
-                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+userPhoto6).into(ivProfile6);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).into(ivProfile1);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).into(ivProfile2);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).into(ivProfile3);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4).into(ivProfile4);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto5).into(ivProfile5);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto6).into(ivProfile6);
             }
 
         }
         else if (level.equals("7"))
         {
-            txtCongratulations.setVisibility(View.VISIBLE);
-            txtLink.setText("You have a 7th level connection.");
+          //  txtCongratulations.setVisibility(View.VISIBLE);
+            txtLink.setText("you are now 7 connections away");
             rltLevel1.setVisibility(View.VISIBLE);
             rltLevel2.setVisibility(View.VISIBLE);
             rltLevel3.setVisibility(View.VISIBLE);
@@ -429,13 +430,13 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             }
             else
             {
-                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+userPhoto1).into(ivProfile1);
-                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+userPhoto2).into(ivProfile2);
-                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+userPhoto3).into(ivProfile3);
-                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+userPhoto4).into(ivProfile4);
-                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+userPhoto5).into(ivProfile5);
-                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+userPhoto6).into(ivProfile6);
-                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+userPhoto7).into(ivProfile7);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).into(ivProfile1);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).into(ivProfile2);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).into(ivProfile3);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4).into(ivProfile4);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto5).into(ivProfile5);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto6).into(ivProfile6);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto7).into(ivProfile7);
             }
         }
 
