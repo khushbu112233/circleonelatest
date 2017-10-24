@@ -148,6 +148,9 @@ public class GroupsActivity extends AppCompatActivity
 
                 ivAlphaImg.setVisibility(View.VISIBLE);
 
+                Intent in = new Intent(GroupsActivity.this, CreateGroupActivity.class);
+                startActivity(in);
+
                 /*LayoutInflater factory = LayoutInflater.from(GroupsActivity.this);
                 LinearLayout layout = new LinearLayout(GroupsActivity.this);
                 layout.setOrientation(LinearLayout.VERTICAL);
@@ -219,93 +222,93 @@ public class GroupsActivity extends AppCompatActivity
 //                final Dialog dialog = new Dialog(GroupsActivity.this);
 //                dialog.setContentView(R.layout.create_or_update_popup);
 
-                final AlertDialog dialog = new AlertDialog.Builder(GroupsActivity.this).create();
-                LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                final View dialogView = inflater.inflate(R.layout.create_or_update_popup, null);
-                dialog.setCancelable(false);
+            /*final AlertDialog dialog = new AlertDialog.Builder(GroupsActivity.this).create();
+            LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            final View dialogView = inflater.inflate(R.layout.create_or_update_popup, null);
+            dialog.setCancelable(false);
 
-                ivGroupImage = (CircleImageView)dialogView.findViewById(R.id.imgProfile);
-                ImageView ivMiniCamera = (ImageView)dialogView.findViewById(R.id.imgCamera);
-                final EditText etCircleName = (EditText)dialogView.findViewById(R.id.etCircleName);
-                final EditText etCircleDesc = (EditText)dialogView.findViewById(R.id.etCircleDesc);
-                TextView tvCreateOrUpdate = (TextView)dialogView.findViewById(R.id.tvCreateOrUpdate);
-                TextView tvCancel = (TextView)dialogView.findViewById(R.id.tvCancel);
-                final TextView tvCircleNameInfo = (TextView)dialogView.findViewById(R.id.tvCircleNameInfo);
-                final TextView tvCircleDescInfo = (TextView)dialogView.findViewById(R.id.tvCircleDescInfo);
-                final TextView tvProfileInfo = (TextView)dialogView.findViewById(R.id.tvProfileInfo);
-                tvCreateOrUpdate.setText("Create");
+            ivGroupImage = (CircleImageView)dialogView.findViewById(R.id.imgProfile);
+            ImageView ivMiniCamera = (ImageView)dialogView.findViewById(R.id.imgCamera);
+            final EditText etCircleName = (EditText)dialogView.findViewById(R.id.etCircleName);
+            final EditText etCircleDesc = (EditText)dialogView.findViewById(R.id.etCircleDesc);
+            TextView tvCreateOrUpdate = (TextView)dialogView.findViewById(R.id.tvCreateOrUpdate);
+            TextView tvCancel = (TextView)dialogView.findViewById(R.id.tvCancel);
+            final TextView tvCircleNameInfo = (TextView)dialogView.findViewById(R.id.tvCircleNameInfo);
+            final TextView tvCircleDescInfo = (TextView)dialogView.findViewById(R.id.tvCircleDescInfo);
+            final TextView tvProfileInfo = (TextView)dialogView.findViewById(R.id.tvProfileInfo);
+            tvCreateOrUpdate.setText("Create");
 
-                ivGroupImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        CropImage.activity(null)
-                                .setGuidelines(CropImageView.Guidelines.ON)
-                                .setCropMenuCropButtonTitle("Save")
-                                .start(GroupsActivity.this);
-                    }
-                });
+            ivGroupImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CropImage.activity(null)
+                            .setGuidelines(CropImageView.Guidelines.ON)
+                            .setCropMenuCropButtonTitle("Save")
+                            .start(GroupsActivity.this);
+                }
+            });
 
-                ivMiniCamera.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v)
+            ivMiniCamera.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    //selectImage();
+                    CropImage.activity(null)
+                            .setGuidelines(CropImageView.Guidelines.ON)
+                            .start(GroupsActivity.this);
+                }
+            });
+
+            tvCreateOrUpdate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    GroupName = etCircleName.getText().toString();
+                    GroupDesc = etCircleDesc.getText().toString();
+
+                    if (GroupName.equals(""))
                     {
-                        //selectImage();
-                        CropImage.activity(null)
-                                .setGuidelines(CropImageView.Guidelines.ON)
-                                .start(GroupsActivity.this);
-                    }
-                });
-
-                tvCreateOrUpdate.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        GroupName = etCircleName.getText().toString();
-                        GroupDesc = etCircleDesc.getText().toString();
-
-                        if (GroupName.equals(""))
-                        {
-                            Toast.makeText(getApplicationContext(), "Enter Circle Name", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Enter Circle Name", Toast.LENGTH_LONG).show();
 //                            tvCircleNameInfo.setVisibility(View.VISIBLE);
-                        }
-                        else if (GroupDesc.equals(""))
-                        {
-                            Toast.makeText(getApplicationContext(), "Enter Circle Description", Toast.LENGTH_LONG).show();
-//                            tvCircleDescInfo.setVisibility(View.VISIBLE);
-                        }
-                        else
-                        {
-                            dialog.dismiss();
-                            ivAlphaImg.setVisibility(View.GONE);
-
-                            if (final_ImgBase64.equals(""))
-                            {
-                                new HttpAsyncTaskGroupCreate().execute("http://circle8.asia:8999/Onet.svc/Group/Create");
-                                //Toast.makeText(getApplicationContext(), "Upload Circle Image", Toast.LENGTH_LONG).show();
-//                            tvProfileInfo.setVisibility(View.VISIBLE);
-                            }else {
-
-                                new HttpAsyncTaskPhotoUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
-                            }
-                            // new HttpAsyncTaskGroupCreate().execute("http://circle8.asia:8999/Onet.svc/Group/Create");
-                        }
                     }
-                });
-
-                tvCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v)
+                    else if (GroupDesc.equals(""))
+                    {
+                        Toast.makeText(getApplicationContext(), "Enter Circle Description", Toast.LENGTH_LONG).show();
+//                            tvCircleDescInfo.setVisibility(View.VISIBLE);
+                    }
+                    else
                     {
                         dialog.dismiss();
                         ivAlphaImg.setVisibility(View.GONE);
-                    }
-                });
 
-                dialog.setView(dialogView);
+                        if (final_ImgBase64.equals(""))
+                        {
+                            new HttpAsyncTaskGroupCreate().execute("http://circle8.asia:8999/Onet.svc/Group/Create");
+                            //Toast.makeText(getApplicationContext(), "Upload Circle Image", Toast.LENGTH_LONG).show();
+//                            tvProfileInfo.setVisibility(View.VISIBLE);
+                        }else {
+
+                            new HttpAsyncTaskPhotoUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                        }
+                        // new HttpAsyncTaskGroupCreate().execute("http://circle8.asia:8999/Onet.svc/Group/Create");
+                    }
+                }
+            });
+
+            tvCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    dialog.dismiss();
+                    ivAlphaImg.setVisibility(View.GONE);
+                }
+            });
+
+            dialog.setView(dialogView);
 //                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorAccent)));
-                dialog.show();
-                Window window = dialog.getWindow();
-                window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialog.show();
+            Window window = dialog.getWindow();
+            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);*/
             }
         });
 

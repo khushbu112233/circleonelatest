@@ -2,10 +2,11 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context="com.circle8.circleOne.Activity.CreateGroupActivity">
 
     <com.circle8.circleOne.Utils.cgBoldTextView
         android:id="@+id/tvTextView"
@@ -15,7 +16,8 @@
         android:textSize="18sp"
         android:textColor="@color/colorPrimary"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        />
 
     <RelativeLayout
         android:id="@+id/rlPhoto"
@@ -150,5 +152,6 @@
             android:layout_marginLeft="30dp"/>
 
     </LinearLayout>
+
 
 </RelativeLayout>
