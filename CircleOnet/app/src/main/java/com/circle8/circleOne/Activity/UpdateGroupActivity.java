@@ -152,8 +152,10 @@ public class UpdateGroupActivity extends AppCompatActivity
                 } else if (GroupDesc.equals("")) {
                     Toast.makeText(getApplicationContext(), "Enter Circle Description", Toast.LENGTH_LONG).show();
 //                            tvCircleDescInfo.setVisibility(View.VISIBLE);
-                } else {
-                    if (final_ImgBase64.equals("")) {
+                } else
+                {
+                    if (final_ImgBase64.equals(""))
+                    {
                         GroupImage = groupPhoto;
                         new HttpAsyncTaskGroupUpdate().execute("http://circle8.asia:8999/Onet.svc/Group/Update");
                        // Toast.makeText(getApplicationContext(), "Upload Circle Image", Toast.LENGTH_LONG).show();
@@ -168,8 +170,11 @@ public class UpdateGroupActivity extends AppCompatActivity
 
         tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
+                GroupsActivity.backStatus = "UpdateBack";
                 finish();
+                GroupsActivity.ivAlphaImg.setVisibility(View.GONE);
             }
         });
 
@@ -330,15 +335,22 @@ public class UpdateGroupActivity extends AppCompatActivity
 
             try
             {
-                if (result != null) {
+                if (result != null)
+                {
                     JSONObject jsonObject = new JSONObject(result);
                     String Success = jsonObject.getString("Success").toString();
                     String Message = jsonObject.getString("Message").toString();
-                    if (Success.equals("1")) {
+                    if (Success.equals("1"))
+                    {
                         Toast.makeText(getApplicationContext(), "Circle Updated..", Toast.LENGTH_LONG).show();
-                        if (type.equalsIgnoreCase("group")) {
+                        if (type.equalsIgnoreCase("group"))
+                        {
+                            GroupsActivity.backStatus = "UpdateGroup";
                             finish();
-                        }else if (type.equals("group_detail")){
+                            GroupsActivity.ivAlphaImg.setVisibility(View.GONE);
+                        }
+                        else if (type.equals("group_detail"))
+                        {
                             Intent intent = new Intent(getApplicationContext(), GroupDetailActivity.class);
                             intent.putExtra("group_id", group_id);
                             intent.putExtra("groupName", GroupName);

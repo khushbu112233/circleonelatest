@@ -15,6 +15,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.circle8.circleOne.Activity.GroupsActivity;
 import com.circle8.circleOne.Activity.ImageZoom;
 import com.circle8.circleOne.Activity.UpdateGroupActivity;
 import com.circle8.circleOne.Helper.LoginSession;
@@ -154,6 +155,8 @@ public class GroupDisplayAdapter extends BaseAdapter
             @Override
             public void onClick(View v)
             {
+                GroupsActivity.ivAlphaImg.setVisibility(View.VISIBLE);
+
                 Intent in = new Intent(context, UpdateGroupActivity.class);
                 in.putExtra("type", "group");
                 in.putExtra("GroupImage", groupModelsList.get(position).getGroup_Photo());
