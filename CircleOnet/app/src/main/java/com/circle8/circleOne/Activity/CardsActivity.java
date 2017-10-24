@@ -2,6 +2,7 @@ package com.circle8.circleOne.Activity;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
@@ -9,10 +10,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Location;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcManager;
@@ -51,6 +54,7 @@ import com.circle8.circleOne.Fragments.List1Fragment;
 import com.circle8.circleOne.Fragments.ProfileFragment;
 import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
+import com.circle8.circleOne.LocationUtil.PermissionUtils;
 import com.circle8.circleOne.MultiContactPicker;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.CircularTextView;
@@ -62,10 +66,18 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
+import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStates;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.plus.Plus;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -90,6 +102,7 @@ import java.security.GeneralSecurityException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -105,7 +118,9 @@ import be.appfoundry.nfclibrary.utilities.interfaces.NfcReadUtility;
 import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
 import io.fabric.sdk.android.Fabric;
 
-public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConnectionFailedListener
+public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks,
+        ActivityCompat.OnRequestPermissionsResultCallback,
+        PermissionUtils.PermissionResultCallback
 {
     public static CustomViewPager mViewPager;
     TabLayout tabLayout;
@@ -132,6 +147,25 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
     private static final int CONTACT_PICKER_REQUEST = 991;
     private static final int PERMISSION_REQUEST_CONTACT = 111;
 
+
+    private static final String TAG = CardsActivity.class.getSimpleName();
+
+    private final static int PLAY_SERVICES_REQUEST = 1000;
+    private final static int REQUEST_CHECK_SETTINGS = 2000;
+
+    public static Location mLastLocation;
+    GoogleSignInOptions gso;
+    // Google client to interact with Google API
+    public double latitude;
+    public double longitude;
+
+    // list of permissions
+
+    ArrayList<String> permissions=new ArrayList<>();
+    PermissionUtils permissionUtils;
+
+    public static boolean isPermissionGranted;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -149,13 +183,19 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         mAuth = FirebaseAuth.getInstance();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         Bundle extras = getIntent().getExtras();
+        permissionUtils=new PermissionUtils(CardsActivity.this);
+
+        permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+
+        permissionUtils.check_permission(permissions,"Need GPS permission for getting your location",1);
 
         if (extras != null) {
             position = extras.getInt("viewpager_position");
             nested_position = extras.getInt("nested_viewpager_position");
         }
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
 
@@ -170,12 +210,11 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         String gender = user.get(LoginSession.KEY_GENDER);
 //        Toast.makeText(getApplicationContext(), name + " " + email + " " + image + " " + gender, Toast.LENGTH_LONG).show();
 
+        if (checkPlayServices()) {
 
-        mGoogleApiClient = new GoogleApiClient.Builder(CardsActivity.this)
-                .enableAutoManage(this, this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .addApi(Plus.API, Plus.PlusOptions.builder().build())
-                .build();
+            // Building the GoogleApi client
+            buildGoogleApiClient();
+        }
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         NfcManager manager = (NfcManager) getSystemService(Context.NFC_SERVICE);
@@ -351,6 +390,88 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         });
     }
 
+
+    protected synchronized void buildGoogleApiClient() {
+
+       /* mGoogleApiClient = new GoogleApiClient.Builder(CardsActivity.this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .addApi(Plus.API, Plus.PlusOptions.builder().build())
+                .build();*/
+
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addConnectionCallbacks(this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .addApi(Plus.API, Plus.PlusOptions.builder().build())
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API).build();
+
+        mGoogleApiClient.connect();
+
+        LocationRequest mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(10000);
+        mLocationRequest.setFastestInterval(5000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                .addLocationRequest(mLocationRequest);
+
+        PendingResult<LocationSettingsResult> result =
+                LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build());
+
+        result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
+            @Override
+            public void onResult(LocationSettingsResult locationSettingsResult) {
+
+                final Status status = locationSettingsResult.getStatus();
+
+                switch (status.getStatusCode()) {
+                    case LocationSettingsStatusCodes.SUCCESS:
+                        // All location settings are satisfied. The client can initialize location requests here
+                        getLocation();
+                        break;
+                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                        try {
+                            // Show the dialog by calling startResolutionForResult(),
+                            // and check the result in onActivityResult().
+                            status.startResolutionForResult(CardsActivity.this, REQUEST_CHECK_SETTINGS);
+
+                        } catch (IntentSender.SendIntentException e) {
+                            // Ignore the error.
+                        }
+                        break;
+                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                        break;
+                }
+            }
+        });
+
+
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        final LocationSettingsStates states = LocationSettingsStates.fromIntent(data);
+        switch (requestCode) {
+            case REQUEST_CHECK_SETTINGS:
+                switch (resultCode) {
+                    case Activity.RESULT_OK:
+                        // All required changes were successfully made
+                        getLocation();
+                        break;
+                    case Activity.RESULT_CANCELED:
+                        // The user was asked to change settings, but chose not to
+                        break;
+                    default:
+                        break;
+                }
+                break;
+        }
+    }
+
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
@@ -402,7 +523,44 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
             //  updateUI(false);
         }
     }
+    public static void getLocation() {
 
+        if (isPermissionGranted) {
+
+            try
+            {
+                mLastLocation = LocationServices.FusedLocationApi
+                        .getLastLocation(mGoogleApiClient);
+            }
+            catch (SecurityException e)
+            {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+    private boolean checkPlayServices() {
+
+        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+
+        int resultCode = googleApiAvailability.isGooglePlayServicesAvailable(this);
+
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (googleApiAvailability.isUserResolvableError(resultCode)) {
+                googleApiAvailability.getErrorDialog(this,resultCode,
+                        PLAY_SERVICES_REQUEST).show();
+            } else {
+                Toast.makeText(getApplicationContext(),
+                        "This device is not supported.", Toast.LENGTH_LONG)
+                        .show();
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
 
     private class LoadDataForActivity extends AsyncTask<Void, Void, Void> {
         String data1;
@@ -797,6 +955,8 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
     {
+        permissionUtils.onRequestPermissionsResult(requestCode,permissions,grantResults);
+
         switch (requestCode)
         {
             case PERMISSION_REQUEST_CONTACT:
@@ -1008,8 +1168,46 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
     }
 
     @Override
+    public void onConnected(Bundle arg0) {
+
+        // Once connected with google api, get the location
+        getLocation();
+    }
+
+    @Override
+    public void onConnectionSuspended(int arg0) {
+        mGoogleApiClient.connect();
+    }
+
+
+    // Permission check functions
+
+    @Override
+    public void PermissionGranted(int request_code) {
+        Log.i("PERMISSION","GRANTED");
+        isPermissionGranted=true;
+    }
+
+    @Override
+    public void PartialPermissionGranted(int request_code, ArrayList<String> granted_permissions) {
+        Log.i("PERMISSION PARTIALLY","GRANTED");
+    }
+
+    @Override
+    public void PermissionDenied(int request_code) {
+        Log.i("PERMISSION","DENIED");
+    }
+
+    @Override
+    public void NeverAskAgain(int request_code) {
+        Log.i("PERMISSION","NEVER ASK AGAIN");
+    }
+
+
+    @Override
     public void onResume() {
         super.onResume();
+        checkPlayServices();
         getSupportActionBar().setShowHideAnimationEnabled(false);
         if (!done) {
             NdefMessage[] msgs = null;
@@ -1031,20 +1229,32 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
 //                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     message = message.substring(1, message.length());
                   // Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-                    try {
 
-                        nfcProfileId = decrypt(message, secretKey);
-                      //  Toast.makeText(getApplicationContext(), nfcProfileId, Toast.LENGTH_LONG).show();
+                    if (mLastLocation != null) {
+                        latitude = mLastLocation.getLatitude();
+                        longitude = mLastLocation.getLongitude();
+
+                        // Toast.makeText(getApplicationContext(), String.valueOf(latitude + " " + longitude), Toast.LENGTH_LONG).show();
                         try {
-                            new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
-                        } catch (Exception e) {
-                            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+
+                            nfcProfileId = decrypt(message, secretKey);
+                            //  Toast.makeText(getApplicationContext(), nfcProfileId, Toast.LENGTH_LONG).show();
+                            try {
+                                new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
+                            } catch (Exception e) {
+                                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                            }
+                        } catch (GeneralSecurityException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
-                    } catch (GeneralSecurityException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    } else {
+                        getLocation();
+                        Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
                     }
+
+
                 }
             }
         }
@@ -1087,19 +1297,29 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
             }
             id = bytesToHex(tagId);
             for (String data : mNfcReadUtility.readFromTagWithMap(paramIntent).values()) {
-                // Toast.makeText(getApplicationContext(), data, Toast.LENGTH_LONG).show();
-                try {
-                    nfcProfileId = decrypt(data, secretKey);
-                  //  Toast.makeText(getApplicationContext(), nfcProfileId, Toast.LENGTH_LONG).show();
+
+
+                if (mLastLocation != null) {
+                    latitude = mLastLocation.getLatitude();
+                    longitude = mLastLocation.getLongitude();
+
+                  //  Toast.makeText(getApplicationContext(), String.valueOf(latitude + " " + longitude), Toast.LENGTH_LONG).show();
                     try {
-                        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
-                    } catch (Exception e) {
-                        Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                        nfcProfileId = decrypt(data, secretKey);
+                        //  Toast.makeText(getApplicationContext(), nfcProfileId, Toast.LENGTH_LONG).show();
+                        try {
+                            new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                        }
+                    } catch (GeneralSecurityException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                } catch (GeneralSecurityException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } else {
+                    getLocation();
+                    Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
                 }
             }
         }
