@@ -4,9 +4,11 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.KeyguardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.CancellationSignal;
@@ -15,6 +17,8 @@ import android.security.keystore.KeyProperties;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +30,7 @@ import com.circle8.circleOne.ApplicationUtils.MyApplication;
 import com.circle8.circleOne.Helper.CustomSharedPreference;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.UserObject;
+import com.circle8.circleOne.MultiContactPicker;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Walkthrough.HelpActivity;
 import com.google.gson.Gson;
@@ -62,6 +67,8 @@ public class FingerPrintLogin extends AppCompatActivity {
     private static String userString;
     private static LoginSession loginSession;
     SharedPreferences prefs = null;
+    private static final int CONTACT_PICKER_REQUEST = 991;
+    private static final int PERMISSION_REQUEST_CONTACT = 111;
 
     @TargetApi(Build.VERSION_CODES.M)
     @Override
@@ -199,8 +206,23 @@ public class FingerPrintLogin extends AppCompatActivity {
                 if (prefs.getBoolean("firstrun", true)) {
                     // Do first run stuff here then set 'firstrun' as false
                     // using the following line to edit/commit prefs
-                    Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
-                    startActivity(intent);
+                   /* Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                    startActivity(intent);*/
+
+                    if (ContextCompat.checkSelfPermission(FingerPrintLogin.this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+                        new MultiContactPicker.Builder(FingerPrintLogin.this) //Activity/fragment context
+                                .theme(R.style.MyCustomPickerTheme) //Optional - default: MultiContactPicker.Azure
+                                .hideScrollbar(false) //Optional - default: false
+                                .showTrack(true) //Optional - default: true
+                                .searchIconColor(Color.WHITE) //Option - default: White
+                                .handleColor(ContextCompat.getColor(FingerPrintLogin.this, R.color.colorPrimary)) //Optional - default: Azure Blue
+                                .bubbleColor(ContextCompat.getColor(FingerPrintLogin.this, R.color.colorPrimary)) //Optional - default: Azure Blue
+                                .bubbleTextColor(Color.WHITE) //Optional - default: White
+                                .showPickerForResult(CONTACT_PICKER_REQUEST);
+                    }else{
+                        askForContactPermission();
+                    }
+
                     prefs.edit().putBoolean("firstrun", false).commit();
                 } else {
                     Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
@@ -212,6 +234,74 @@ public class FingerPrintLogin extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "You must register before login with fingerprint", Toast.LENGTH_LONG).show();
             }
             return null;
+        }
+    }
+
+    public void askForContactPermission()
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+        {
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED)
+            {
+                // Should we show an explanation?
+                if (ActivityCompat.shouldShowRequestPermissionRationale(FingerPrintLogin.this,
+                        Manifest.permission.READ_CONTACTS))
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(FingerPrintLogin.this);
+                    builder.setTitle("Contacts access needed");
+                    builder.setPositiveButton(android.R.string.ok, null);
+                    builder.setMessage("please confirm Contacts access");//TODO put real question
+                    builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @TargetApi(Build.VERSION_CODES.M)
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            requestPermissions(
+                                    new String[]
+                                            {Manifest.permission.READ_CONTACTS}
+                                    , PERMISSION_REQUEST_CONTACT);
+                        }
+                    });
+                    builder.show();
+                    // Show an expanation to the user *asynchronously* -- don't block
+                    // this thread waiting for the user's response! After the user
+                    // sees the explanation, try again to request the permission.
+
+                }
+                else
+                {
+                    // No explanation needed, we can request the permission.
+                    ActivityCompat.requestPermissions(FingerPrintLogin.this,
+                            new String[]{Manifest.permission.READ_CONTACTS}, PERMISSION_REQUEST_CONTACT);
+
+                    // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                    // app-defined int constant. The callback method gets the
+                    // result of the request.
+                }
+            }
+            else
+            {
+                new MultiContactPicker.Builder(FingerPrintLogin.this) //Activity/fragment context
+                        .theme(R.style.MyCustomPickerTheme) //Optional - default: MultiContactPicker.Azure
+                        .hideScrollbar(false) //Optional - default: false
+                        .showTrack(true) //Optional - default: true
+                        .searchIconColor(Color.WHITE) //Option - default: White
+                        .handleColor(ContextCompat.getColor(FingerPrintLogin.this, R.color.colorPrimary)) //Optional - default: Azure Blue
+                        .bubbleColor(ContextCompat.getColor(FingerPrintLogin.this, R.color.colorPrimary)) //Optional - default: Azure Blue
+                        .bubbleTextColor(Color.WHITE) //Optional - default: White
+                        .showPickerForResult(CONTACT_PICKER_REQUEST);
+            }
+        }
+        else
+        {
+            new MultiContactPicker.Builder(FingerPrintLogin.this) //Activity/fragment context
+                    .theme(R.style.MyCustomPickerTheme) //Optional - default: MultiContactPicker.Azure
+                    .hideScrollbar(false) //Optional - default: false
+                    .showTrack(true) //Optional - default: true
+                    .searchIconColor(Color.WHITE) //Option - default: White
+                    .handleColor(ContextCompat.getColor(FingerPrintLogin.this, R.color.colorPrimary)) //Optional - default: Azure Blue
+                    .bubbleColor(ContextCompat.getColor(FingerPrintLogin.this, R.color.colorPrimary)) //Optional - default: Azure Blue
+                    .bubbleTextColor(Color.WHITE) //Optional - default: White
+                    .showPickerForResult(CONTACT_PICKER_REQUEST);
         }
     }
 
@@ -233,7 +323,30 @@ public class FingerPrintLogin extends AppCompatActivity {
             } else {
                 Toast.makeText(this, R.string.permission_refused, Toast.LENGTH_LONG).show();
             }
-        } else {
+        }
+        else if (requestCode == PERMISSION_REQUEST_CONTACT){
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+                new MultiContactPicker.Builder(FingerPrintLogin.this) //Activity/fragment context
+                        .theme(R.style.MyCustomPickerTheme) //Optional - default: MultiContactPicker.Azure
+                        .hideScrollbar(false) //Optional - default: false
+                        .showTrack(true) //Optional - default: true
+                        .searchIconColor(Color.WHITE) //Option - default: White
+                        .handleColor(ContextCompat.getColor(FingerPrintLogin.this, R.color.colorPrimary)) //Optional - default: Azure Blue
+                        .bubbleColor(ContextCompat.getColor(FingerPrintLogin.this, R.color.colorPrimary)) //Optional - default: Azure Blue
+                        .bubbleTextColor(Color.WHITE) //Optional - default: White
+                        .showPickerForResult(CONTACT_PICKER_REQUEST);
+                // permission was granted, yay! Do the
+                // contacts-related task you need to do.
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(), "No permission for contacts", Toast.LENGTH_LONG).show();
+                // permission denied, boo! Disable the
+                // functionality that depends on this permission.
+            }
+            return;
+        }else {
             Toast.makeText(this, getString(R.string.Unknown_permission_request), Toast.LENGTH_LONG).show();
         }
     }
@@ -275,8 +388,23 @@ public class FingerPrintLogin extends AppCompatActivity {
                 if (prefs.getBoolean("firstrun", true)) {
                     // Do first run stuff here then set 'firstrun' as false
                     // using the following line to edit/commit prefs
-                    Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
-                    startActivity(intent);
+                    /*Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                    startActivity(intent);*/
+
+                    if (ContextCompat.checkSelfPermission(FingerPrintLogin.this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+                        new MultiContactPicker.Builder(FingerPrintLogin.this) //Activity/fragment context
+                                .theme(R.style.MyCustomPickerTheme) //Optional - default: MultiContactPicker.Azure
+                                .hideScrollbar(false) //Optional - default: false
+                                .showTrack(true) //Optional - default: true
+                                .searchIconColor(Color.WHITE) //Option - default: White
+                                .handleColor(ContextCompat.getColor(FingerPrintLogin.this, R.color.colorPrimary)) //Optional - default: Azure Blue
+                                .bubbleColor(ContextCompat.getColor(FingerPrintLogin.this, R.color.colorPrimary)) //Optional - default: Azure Blue
+                                .bubbleTextColor(Color.WHITE) //Optional - default: White
+                                .showPickerForResult(CONTACT_PICKER_REQUEST);
+                    }else{
+                        askForContactPermission();
+                    }
+
                     prefs.edit().putBoolean("firstrun", false).commit();
                 } else {
                     Intent userIntent = new Intent(context, CardsActivity.class);

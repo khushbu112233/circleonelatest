@@ -182,9 +182,9 @@ public class HelpActivity extends AppCompatActivity
 
     private void launchHomeScreen() {
 
-        /*startActivity(new Intent(HelpActivity.this, ContactsImportActivity.class));
-        finish();*/
-        if (ContextCompat.checkSelfPermission(HelpActivity.this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+        startActivity(new Intent(HelpActivity.this, LoginActivity.class));
+        finish();
+       /* if (ContextCompat.checkSelfPermission(HelpActivity.this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
             new MultiContactPicker.Builder(HelpActivity.this) //Activity/fragment context
                     .theme(R.style.MyCustomPickerTheme) //Optional - default: MultiContactPicker.Azure
                     .hideScrollbar(false) //Optional - default: false
@@ -196,7 +196,7 @@ public class HelpActivity extends AppCompatActivity
                     .showPickerForResult(CONTACT_PICKER_REQUEST);
         }else{
             askForContactPermission();
-        }
+        }*/
     }
 
     public void askForContactPermission()
