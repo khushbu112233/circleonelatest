@@ -38,6 +38,7 @@ public class GalleryAdapter1 extends RecyclerView.Adapter<GalleryAdapter1.MyView
     RelativeLayout defaultCard1, defaultCard;
 
     private static TextView tvPersonWebsite, tvCompany;
+    ImageView carousel_logo, imgTopLogo;
 
     public class MyViewHolder extends RecyclerView.ViewHolder
     {
@@ -49,6 +50,8 @@ public class GalleryAdapter1 extends RecyclerView.Adapter<GalleryAdapter1.MyView
             defaultCard = (RelativeLayout) itemView.findViewById(R.id.rltDefaultCard);
             tvCompany = (TextView)itemView.findViewById(R.id.tvComName);
             tvPersonWebsite = (TextView)itemView.findViewById(R.id.tvweb);
+            carousel_logo = (ImageView) itemView.findViewById(R.id.carousel_logo);
+            imgTopLogo = (ImageView) itemView.findViewById(R.id.imgTopLogo);
         }
     }
 
@@ -110,6 +113,20 @@ public class GalleryAdapter1 extends RecyclerView.Adapter<GalleryAdapter1.MyView
             else {
                 tvCompany.setVisibility(View.VISIBLE);
             }
+
+            if ((nfcModelList.get(position).getCompany().equals("") || nfcModelList.get(position).getCompany().toString() == null ||
+                    nfcModelList.get(position).getCompany().equalsIgnoreCase("null")) &&
+                    (nfcModelList.get(position).getWebsite().equals("") || nfcModelList.get(position).getWebsite().toString() == null ||
+                            nfcModelList.get(position).getWebsite().equalsIgnoreCase("null"))){
+
+                carousel_logo.setVisibility(View.VISIBLE);
+                imgTopLogo.setVisibility(View.GONE);
+            }
+            else {
+                carousel_logo.setVisibility(View.GONE);
+                imgTopLogo.setVisibility(View.VISIBLE);
+            }
+
             tvPersonWebsite.setText(nfcModelList.get(position).getWebsite());
             tvCompany.setText(nfcModelList.get(position).getCompany());
 

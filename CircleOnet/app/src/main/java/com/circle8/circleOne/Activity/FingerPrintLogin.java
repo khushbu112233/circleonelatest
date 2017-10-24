@@ -48,7 +48,7 @@ public class FingerPrintLogin extends AppCompatActivity {
     private KeyGenerator keyGenerator;
     private Cipher cipher;
     private FingerprintManager.CryptoObject cryptoObject;
-    TextView txtSkip;
+    TextView tvCancel;
 
     private FingerprintHandler fingerprintHandler;
 
@@ -71,7 +71,7 @@ public class FingerPrintLogin extends AppCompatActivity {
 
         mGson = ((MyApplication) getApplication()).getGsonObject();
         mPref = ((MyApplication) getApplication()).getShared();
-        txtSkip = (TextView) findViewById(R.id.txtSkip);
+        tvCancel = (TextView) findViewById(R.id.tvCancel);
         fingerprintHandler = new FingerprintHandler(this);
         loginSession = new LoginSession(getApplicationContext());
         fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
@@ -89,7 +89,15 @@ public class FingerPrintLogin extends AppCompatActivity {
             }
         }
         fingerprintHandler.completeFingerAuthentication(fingerprintManager, cryptoObject);
-        txtSkip.setOnClickListener(new View.OnClickListener() {
+
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+       /* txtSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 userString = mPref.getUserData();
@@ -115,7 +123,7 @@ public class FingerPrintLogin extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "You must register before login with fingerprint", Toast.LENGTH_LONG).show();
                 }
             }
-        });
+        });*/
 
     }
 

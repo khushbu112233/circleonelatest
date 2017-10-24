@@ -503,33 +503,40 @@ public class Connect3Activity extends AppCompatActivity
 //                    notificationAdapter = new NotificationAdapter(Notification.this, allTags);
 //                    listNotification.setAdapter(notificationAdapter);
 
-                    Intent go = new Intent(getApplicationContext(),Connect4Activity.class);
-                    go.putExtra("level", level);
-                    go.putExtra("profile", profile);
-                    go.putExtra("connectLevel", connectLevel);
-                    go.putExtra("userName1",userName1);
-                    go.putExtra("userPhoto1",userPhoto1);
-                    go.putExtra("userProfileId1",userProfileId1);
-                    go.putExtra("userName2",userName2);
-                    go.putExtra("userPhoto2",userPhoto2);
-                    go.putExtra("userProfileId2",userProfileId2);
-                    go.putExtra("userName3",userName3);
-                    go.putExtra("userPhoto3",userPhoto3);
-                    go.putExtra("userProfileId3",userProfileId3);
-                    go.putExtra("userName4",userName4);
-                    go.putExtra("userPhoto4",userPhoto4);
-                    go.putExtra("userProfileId4",userProfileId4);
-                    go.putExtra("userName5",userName5);
-                    go.putExtra("userPhoto5",userPhoto5);
-                    go.putExtra("userProfileId5",userProfileId5);
-                    go.putExtra("userName6",userName6);
-                    go.putExtra("userPhoto6",userPhoto6);
-                    go.putExtra("userProfileId6",userProfileId6);
-                    go.putExtra("userName7",userName7);
-                    go.putExtra("userPhoto7",userPhoto7);
-                    go.putExtra("userProfileId7",userProfileId7);
-                    startActivity(go);
-                    finish();
+                    if (new HttpAsyncTask().isCancelled())
+                    {
+                        return;
+                    }
+                    else {
+
+                        Intent go = new Intent(getApplicationContext(), Connect4Activity.class);
+                        go.putExtra("level", level);
+                        go.putExtra("profile", profile);
+                        go.putExtra("connectLevel", connectLevel);
+                        go.putExtra("userName1", userName1);
+                        go.putExtra("userPhoto1", userPhoto1);
+                        go.putExtra("userProfileId1", userProfileId1);
+                        go.putExtra("userName2", userName2);
+                        go.putExtra("userPhoto2", userPhoto2);
+                        go.putExtra("userProfileId2", userProfileId2);
+                        go.putExtra("userName3", userName3);
+                        go.putExtra("userPhoto3", userPhoto3);
+                        go.putExtra("userProfileId3", userProfileId3);
+                        go.putExtra("userName4", userName4);
+                        go.putExtra("userPhoto4", userPhoto4);
+                        go.putExtra("userProfileId4", userProfileId4);
+                        go.putExtra("userName5", userName5);
+                        go.putExtra("userPhoto5", userPhoto5);
+                        go.putExtra("userProfileId5", userProfileId5);
+                        go.putExtra("userName6", userName6);
+                        go.putExtra("userPhoto6", userPhoto6);
+                        go.putExtra("userProfileId6", userProfileId6);
+                        go.putExtra("userName7", userName7);
+                        go.putExtra("userPhoto7", userPhoto7);
+                        go.putExtra("userProfileId7", userProfileId7);
+                        startActivity(go);
+                        finish();
+                    }
                 }
                 else
                 {

@@ -1055,14 +1055,14 @@ public class LoginActivity extends AppCompatActivity implements
                                 LISessionManager.getInstance(getApplicationContext()).clearSession();
                             } catch (Exception e) {
                             }
-                            Toast.makeText(getBaseContext(), "You should verify your Account First..", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getBaseContext(), "You need to verify your account first.", Toast.LENGTH_LONG).show();
                         }
 
                     } else {
-                        Toast.makeText(getBaseContext(), "Incorrect username of password..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), "Incorrect username or password..", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(getBaseContext(), "Incorrect username of password..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Incorrect username or password..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -1944,7 +1944,7 @@ public class LoginActivity extends AppCompatActivity implements
                                 }
                             } catch (Exception e) {
                             }
-                            Toast.makeText(getBaseContext(), "You should verify your Account First..", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getBaseContext(), "You need to verify your account first.", Toast.LENGTH_LONG).show();
                         }
 
                     } else {

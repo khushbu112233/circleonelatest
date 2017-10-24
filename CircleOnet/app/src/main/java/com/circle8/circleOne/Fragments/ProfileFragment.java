@@ -116,7 +116,7 @@ public class ProfileFragment extends Fragment
     private LoginSession session;
     private String UserID = "";
     ImageView imgBack, imgAdd;
-
+    String associationString = "", eventString = "";
     public static ArrayList<ProfileModel> allTags ;
     JSONArray array, arrayEvents;
     List<String> listAssociation, listEvents;
@@ -160,6 +160,7 @@ public class ProfileFragment extends Fragment
     ProfileSession profileSession;
     ReferralCodeSession referralCodeSession;
     private String refer;
+    TextView txtAssociationList, txtEventsListFinal;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -223,6 +224,8 @@ public class ProfileFragment extends Fragment
         lblAttachment = (TextView) view.findViewById(R.id.lblAttachment);
         recyclerAssociation = (RecyclerView) view.findViewById(R.id.recyclerAssociation);
         recyclerEvents = (RecyclerView) view.findViewById(R.id.recyclerEvents);
+        txtAssociationList = (TextView) view.findViewById(R.id.txtAssociationList);
+        txtEventsListFinal = (TextView) view.findViewById(R.id.txtEventsListfinal);
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Generating Qr Code...");
         progressDialog.setCancelable(false);
@@ -690,9 +693,9 @@ public class ProfileFragment extends Fragment
                                             for (int i1 = 0; i1 < array.length(); i1++) {
 
                                                 listAssociation.add(array.getString(i1));
-
+                                                associationString += array.getString(i1) + " / ";
                                             }
-
+                                            txtAssociationList.setText(associationString);
                                             int countAssociation;
                                             if (array.length()>=5){
                                                 countAssociation = 5;
@@ -704,11 +707,13 @@ public class ProfileFragment extends Fragment
                                             recyclerAssociation.setLayoutManager(gridLayoutManager);
 
                                             if (listAssociation.size() == 0){
-                                                recyclerAssociation.setVisibility(View.GONE);
+                                                txtAssociationList.setVisibility(View.GONE);
+                                              //  recyclerAssociation.setVisibility(View.GONE);
                                                 txtNoAssociation.setVisibility(View.VISIBLE);
                                             }
                                             else {
-                                                recyclerAssociation.setVisibility(View.VISIBLE);
+                                                txtAssociationList.setVisibility(View.VISIBLE);
+                                               // recyclerAssociation.setVisibility(View.VISIBLE);
                                                 txtNoAssociation.setVisibility(View.GONE);
                                             }
                                         }catch (Exception e){}
@@ -721,9 +726,9 @@ public class ProfileFragment extends Fragment
                                             for (int i1 = 0; i1 < arrayEvents.length(); i1++) {
 
                                                 listEvents.add(arrayEvents.getString(i1));
-
+                                                eventString += arrayEvents.getString(i1) + " / ";
                                             }
-
+                                            txtEventsListFinal.setText(eventString);
                                             int countEvents;
                                             if (arrayEvents.length() >= 5) {
                                                 countEvents = 5;
@@ -737,10 +742,12 @@ public class ProfileFragment extends Fragment
 
 
                                             if (listEvents.size() == 0) {
-                                                recyclerEvents.setVisibility(View.GONE);
+                                                txtEventsListFinal.setVisibility(View.GONE);
+                                               // recyclerEvents.setVisibility(View.GONE);
                                                 txtNoEvent.setVisibility(View.VISIBLE);
                                             } else {
-                                                recyclerEvents.setVisibility(View.VISIBLE);
+                                                txtEventsListFinal.setVisibility(View.VISIBLE);
+                                               // recyclerEvents.setVisibility(View.VISIBLE);
                                                 txtNoEvent.setVisibility(View.GONE);
                                             }
 
@@ -1303,13 +1310,15 @@ public class ProfileFragment extends Fragment
                         for (int i1 = 0; i1 < arrayEvents.length(); i1++) {
 
                             listEvents.add(arrayEvents.getString(i1));
+                            eventString += arrayEvents.getString(i1) + " / ";
                         }
-
+                        txtEventsListFinal.setText(eventString);
                         for (int i1 = 0; i1 < array.length(); i1++) {
 
                             listAssociation.add(array.getString(i1));
+                            associationString += array.getString(i1) + " / ";
                         }
-
+                        txtAssociationList.setText(associationString);
                         int countAssociation;
                         if (array.length()>=5){
                             countAssociation = 5;
@@ -1332,20 +1341,24 @@ public class ProfileFragment extends Fragment
                         recyclerEvents.setAdapter(new TextRecyclerAdapter(listEvents));
                         recyclerEvents.setLayoutManager(gridLayoutManager1);
                         if (listAssociation.size() == 0){
-                            recyclerAssociation.setVisibility(View.GONE);
+                            txtAssociationList.setVisibility(View.GONE);
+                          // recyclerAssociation.setVisibility(View.GONE);
                             txtNoAssociation.setVisibility(View.VISIBLE);
                         }
                         else {
-                            recyclerAssociation.setVisibility(View.VISIBLE);
+                            txtAssociationList.setVisibility(View.VISIBLE);
+                           // recyclerAssociation.setVisibility(View.VISIBLE);
                             txtNoAssociation.setVisibility(View.GONE);
                         }
 
                         if (listEvents.size() == 0){
-                            recyclerEvents.setVisibility(View.GONE);
+                            txtEventsListFinal.setVisibility(View.GONE);
+                           // recyclerEvents.setVisibility(View.GONE);
                             txtNoEvent.setVisibility(View.VISIBLE);
                         }
                         else {
-                            recyclerEvents.setVisibility(View.VISIBLE);
+                            txtEventsListFinal.setVisibility(View.VISIBLE);
+                           // recyclerEvents.setVisibility(View.VISIBLE);
                             txtNoEvent.setVisibility(View.GONE);
                         }
 

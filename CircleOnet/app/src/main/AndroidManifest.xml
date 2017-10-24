@@ -83,7 +83,7 @@
         <activity
             android:name=".Activity.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionbar" />
+            android:theme="@style/NoActionbarSplash" />
         <activity
             android:name=".Activity.CardDetail"
             android:screenOrientation="portrait"
@@ -116,7 +116,7 @@
         <activity
             android:name=".Activity.SplashActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionbar">
+            android:theme="@style/NoActionbarSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -142,7 +142,8 @@
         <activity
             android:name=".Activity.FingerPrintLogin"
             android:label="CircleOne"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/ThemeDialog"/>
         <activity
             android:name=".Activity.GroupTag"
             android:screenOrientation="portrait" />
