@@ -1161,6 +1161,11 @@ public class GroupsActivity extends AppCompatActivity
             groupModelArrayList.clear();
             new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/Fetch");
         }
+        else if (backStatus.equals("GroupDeleteBack"))
+        {
+            groupModelArrayList.clear();
+            new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/Fetch");
+        }
         else
         {
 
