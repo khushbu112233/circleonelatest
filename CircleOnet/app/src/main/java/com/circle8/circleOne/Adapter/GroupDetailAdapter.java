@@ -26,6 +26,7 @@ import com.circle8.circleOne.Activity.GroupDetailActivity;
 import com.circle8.circleOne.Activity.ImageZoom;
 import com.circle8.circleOne.Model.GroupDetailModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.daimajia.swipe.SimpleSwipeListener;
@@ -174,7 +175,7 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
             {
                 deletePosi = position ;
                 swipeLayout.close();
-                new HttpAsyncTaskGroupDeleteMember().execute("http://circle8.asia:8999/Onet.svc/Group/DeleteMembers");
+                new HttpAsyncTaskGroupDeleteMember().execute(Utility.BASE_URL+"Group/DeleteMembers");
             }
         });
 

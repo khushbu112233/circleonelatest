@@ -217,25 +217,22 @@ public class CardDetail extends NfcActivity
         }
         else
         {
-            new CardDetail.HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetUserProfile");
+            new CardDetail.HttpAsyncTask().execute(Utility.BASE_URL+"GetUserProfile");
         }
 
-        new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/Fetch");
+        new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/Fetch");
 
-        new HttpAsyncTaskGroupsFetch().execute("http://circle8.asia:8999/Onet.svc/Group/MyGroupsTaggedWithFriendProfile");
+        new HttpAsyncTaskGroupsFetch().execute(Utility.BASE_URL+"Group/MyGroupsTaggedWithFriendProfile");
 
-        new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Fetch");
+        new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");
 
         imgProfileShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String shareBody = "I'm giving you a free redemption points on the Circle app (up to ₹25). To accept, use code '"+ refer+"' to sign up. Enjoy!"
-                        +System.lineSeparator() + "Details: https://www.circle8.asia/invite/"+refer;
-                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-                sharingIntent.setType("text/plain");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, txtName.getText().toString());
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-                startActivity(Intent.createChooser(sharingIntent, "Share Profile Via"));
+                Intent intent1 = new Intent(getApplicationContext(), SearchGroupMembers.class);
+                intent1.putExtra("from", "cardDetail");
+                intent1.putExtra("ProfileId", profile_id);
+                startActivity(intent1);
             }
         });
 
@@ -330,7 +327,7 @@ public class CardDetail extends NfcActivity
                         alertDialog.cancel();
                         // make selected item in the comma seprated string
                       //  Toast.makeText(getApplicationContext(), selectedStrings.toString(), Toast.LENGTH_LONG).show();
-                        new HttpAsyncTaskGroupAddFriend().execute("http://circle8.asia:8999/Onet.svc/AddMemberToGroups");
+                        new HttpAsyncTaskGroupAddFriend().execute(Utility.BASE_URL+"AddMemberToGroups");
                     }
                 });
                 alertDialog.setView(dialogView);

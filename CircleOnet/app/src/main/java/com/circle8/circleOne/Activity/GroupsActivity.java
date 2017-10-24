@@ -122,7 +122,7 @@ public class GroupsActivity extends AppCompatActivity
         ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
         ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
 
-        new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/Fetch");
+        new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/Fetch");
        /* groupName.add("Group 1");
         groupName.add("Group 2");
         groupName.add("Group 3");
@@ -278,12 +278,12 @@ public class GroupsActivity extends AppCompatActivity
 
                             if (final_ImgBase64.equals(""))
                             {
-                                new HttpAsyncTaskGroupCreate().execute("http://circle8.asia:8999/Onet.svc/Group/Create");
+                                new HttpAsyncTaskGroupCreate().execute(Utility.BASE_URL+"Group/Create");
                                 //Toast.makeText(getApplicationContext(), "Upload Circle Image", Toast.LENGTH_LONG).show();
 //                            tvProfileInfo.setVisibility(View.VISIBLE);
                             }else {
 
-                                new HttpAsyncTaskPhotoUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                                new HttpAsyncTaskPhotoUpload().execute(Utility.BASE_URL+"ImgUpload");
                             }
                             // new HttpAsyncTaskGroupCreate().execute("http://circle8.asia:8999/Onet.svc/Group/Create");
                         }
@@ -418,7 +418,7 @@ public class GroupsActivity extends AppCompatActivity
                         finish();*/
                         //   Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                         GroupImage = ImgName;
-                        new HttpAsyncTaskGroupCreate().execute("http://circle8.asia:8999/Onet.svc/Group/Create");
+                        new HttpAsyncTaskGroupCreate().execute(Utility.BASE_URL+"Group/Create");
 
                     } else {
                         Toast.makeText(getBaseContext(), "Error While Uploading Image..", Toast.LENGTH_LONG).show();
@@ -795,7 +795,7 @@ public class GroupsActivity extends AppCompatActivity
                     {
                         Toast.makeText(getApplicationContext(), "Circle Created..", Toast.LENGTH_LONG).show();
                         groupModelArrayList.clear();
-                        new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/Fetch");
+                        new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/Fetch");
                     }
                     else
                     {
@@ -824,12 +824,12 @@ public class GroupsActivity extends AppCompatActivity
         else if (backStatus.equals("UpdateGroup"))
         {
             groupModelArrayList.clear();
-            new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/Fetch");
+            new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/Fetch");
         }
         else if (backStatus.equals("DetailBack"))
         {
             groupModelArrayList.clear();
-            new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/Fetch");
+            new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/Fetch");
         }
         else
         {

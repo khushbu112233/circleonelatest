@@ -24,6 +24,7 @@ import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.FriendConnection;
 import com.circle8.circleOne.Model.NFCModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.daimajia.swipe.SimpleSwipeListener;
@@ -134,7 +135,7 @@ public class GridViewAdapter extends BaseSwipeAdapter
                 posi  = position ;
 //                Toast.makeText(context, "Friend Profile ID: "+ nfcModelList1.get(posi).getProfile_id(), Toast.LENGTH_SHORT).show();
 
-                new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
+                new HttpAsyncTask().execute(Utility.BASE_URL+"FriendConnection_Operation");
 
                 /*if (CardsActivity.mViewPager.getCurrentItem() == 0){
                     Intent go = new Intent(context,CardsActivity.class);

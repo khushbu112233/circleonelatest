@@ -16,6 +16,7 @@ import com.circle8.circleOne.Activity.TestimonialRequest;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.TestimonialModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.daimajia.swipe.SimpleSwipeListener;
@@ -172,7 +173,7 @@ public class TestimonialRequestAdapter extends BaseSwipeAdapter
         holder.txtRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new HttpAsyncTaskTestimonialRequest().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Request");
+                new HttpAsyncTaskTestimonialRequest().execute(Utility.BASE_URL+"Testimonial/Request");
             }
         });
 

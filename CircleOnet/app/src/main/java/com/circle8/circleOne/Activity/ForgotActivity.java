@@ -19,6 +19,7 @@ import com.circle8.circleOne.Helper.CustomSharedPreference;
 import com.circle8.circleOne.Model.UserObject;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.PrefUtils;
+import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.Walkthrough.HelpActivity;
 import com.facebook.login.LoginManager;
 import com.google.gson.Gson;
@@ -75,7 +76,7 @@ public class ForgotActivity extends AppCompatActivity
                 }
                 else
                 {
-                    new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/ForgotPassword");
+                    new HttpAsyncTask().execute(Utility.BASE_URL+"ForgotPassword");
                 }
             }
         });

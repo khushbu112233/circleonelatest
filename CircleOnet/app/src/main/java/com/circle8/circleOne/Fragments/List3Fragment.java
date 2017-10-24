@@ -37,6 +37,7 @@ import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.FriendConnection;
 import com.circle8.circleOne.Model.NFCModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 import com.daimajia.swipe.util.Attributes;
 
 import org.apache.http.HttpResponse;
@@ -328,7 +329,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                 {
                     e.printStackTrace();
                 }
-                new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
+                new HttpAsyncTaskSearch().execute(Utility.BASE_URL+"SearchConnect");
             }
         });
 
@@ -346,7 +347,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                 {
                     e.printStackTrace();
                 }
-                new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
+                new HttpAsyncTaskSearch().execute(Utility.BASE_URL+"SearchConnect");
 
                 return true;
             }
@@ -534,7 +535,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
 
     public static void callFirst()
     {
-        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
+        new HttpAsyncTask().execute(Utility.BASE_URL+"GetFriendConnection");
     }
 
     public static void webCall()
@@ -560,7 +561,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
             gridAdapter.notifyDataSetChanged();
         } catch (Exception e) {
         }
-        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
+        new HttpAsyncTask().execute(Utility.BASE_URL+"GetFriendConnection");
     }
 
     private static class HttpAsyncTask extends AsyncTask<String, Void, String>
@@ -701,7 +702,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                                     if (listView.getLastVisiblePosition() >= count - threshold)
                                     {
                                         rlLoadMore.setVisibility(View.VISIBLE);
-                                        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
+                                        new HttpAsyncTask().execute(Utility.BASE_URL+"GetFriendConnection");
                                     }
                                 }
                             }

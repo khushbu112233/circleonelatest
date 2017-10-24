@@ -59,6 +59,7 @@ import com.circle8.circleOne.Model.UserObject;
 import com.circle8.circleOne.MultiContactPicker;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.PrefUtils;
+import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.Walkthrough.HelpActivity;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -299,7 +300,7 @@ public class LoginActivity extends AppCompatActivity implements
                     if (!validateLogin(userName, userPassword)) {
                         Toast.makeText(getApplicationContext(), "All fields are require!", Toast.LENGTH_SHORT).show();
                     } else {
-                        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/UserLogin");
+                        new HttpAsyncTask().execute(Utility.BASE_URL+"UserLogin");
                     }
                 }
                 return false;
@@ -458,7 +459,7 @@ public class LoginActivity extends AppCompatActivity implements
                 if (!validateLogin(userName, userPassword)) {
 //                    Toast.makeText(getApplicationContext(), "Form Fill Invalid!", Toast.LENGTH_SHORT).show();
                 } else {
-                    new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/UserLogin");
+                    new HttpAsyncTask().execute(Utility.BASE_URL+"UserLogin");
                 }
             /* Create an Intent that will start the Menu-Activity. */
 
@@ -1300,7 +1301,7 @@ public class LoginActivity extends AppCompatActivity implements
                         SocialMedia_Type = "Google";
                         UserName = email;
 
-                        new HttpAsyncTaskSocialMedia().execute("http://circle8.asia:8999/Onet.svc/SocialMediaLogin");
+                        new HttpAsyncTaskSocialMedia().execute(Utility.BASE_URL+"SocialMediaLogin");
                         updateUI(true);
                     }
                 }
@@ -1330,7 +1331,7 @@ public class LoginActivity extends AppCompatActivity implements
                 SocialMedia_Type = "Google";
                 UserName = email;
 
-                new HttpAsyncTaskSocialMedia().execute("http://circle8.asia:8999/Onet.svc/SocialMediaLogin");
+                new HttpAsyncTaskSocialMedia().execute(Utility.BASE_URL+"SocialMediaLogin");
 
 
                 //  loginSession.createLoginSession("", personName, email, personPhotoUrl, "");
@@ -1464,7 +1465,7 @@ public class LoginActivity extends AppCompatActivity implements
                             SocialMedia_Type = "Twitter";
                             UserName = user.getEmail();
 
-                            new HttpAsyncTaskSocialMedia().execute("http://circle8.asia:8999/Onet.svc/SocialMediaLogin");
+                            new HttpAsyncTaskSocialMedia().execute(Utility.BASE_URL+"SocialMediaLogin");
 
 
 
@@ -1592,7 +1593,7 @@ public class LoginActivity extends AppCompatActivity implements
             SocialMedia_Type = "Linkedin";
             UserName = response.get("emailAddress").toString();
 
-            new HttpAsyncTaskSocialMedia().execute("http://circle8.asia:8999/Onet.svc/SocialMediaLogin");
+            new HttpAsyncTaskSocialMedia().execute(Utility.BASE_URL+"SocialMediaLogin");
 
 
 
@@ -1769,7 +1770,7 @@ public class LoginActivity extends AppCompatActivity implements
                                 SocialMedia_Type = "Facebook";
                                 UserName = user.email;
 
-                                new HttpAsyncTaskSocialMedia().execute("http://circle8.asia:8999/Onet.svc/SocialMediaLogin");
+                                new HttpAsyncTaskSocialMedia().execute(Utility.BASE_URL+"SocialMediaLogin");
 
                                /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                     // imgFinger.setVisibility(View.VISIBLE);

@@ -31,6 +31,7 @@ import com.circle8.circleOne.Model.ConnectList;
 import com.circle8.circleOne.Model.FriendConnection;
 import com.circle8.circleOne.Model.NFCModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -161,7 +162,7 @@ public class ConnectListFragment extends Fragment
 
                     listView.setVisibility(View.VISIBLE);
 //                    connectWithHttpPost(Findby, Search, rc_no, page_no);
-                    new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
+                    new HttpAsyncTask().execute(Utility.BASE_URL+"SearchConnect");
                 }
                /* else
                 {
@@ -214,7 +215,7 @@ public class ConnectListFragment extends Fragment
                 //    System.out.println("paramUsername is :" + paramUsername + " paramPassword is :" + paramPassword);
                 // Create an intermediate to connect with the Internet
                 HttpClient httpClient = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost("http://circle8.asia:8999/Onet.svc/SearchConnect");
+                HttpPost httpPost = new HttpPost(Utility.BASE_URL+"SearchConnect");
                 httpPost.setHeader(HTTP.CONTENT_TYPE, "application/json");
                 //Post Data
                 List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(4);

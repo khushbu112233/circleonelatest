@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpResponse;
@@ -124,7 +125,7 @@ public class WriteTestimonialActivity extends AppCompatActivity implements View.
             else
             {
 //                Toast.makeText(getApplicationContext(),"Written Testimonial",Toast.LENGTH_SHORT).show();
-                new HttpAsyncWriteTextimonial().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Write");
+                new HttpAsyncWriteTextimonial().execute(Utility.BASE_URL+"Testimonial/Write");
             }
 
         }

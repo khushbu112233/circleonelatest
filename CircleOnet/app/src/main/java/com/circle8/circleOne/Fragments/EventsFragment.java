@@ -27,6 +27,7 @@ import com.circle8.circleOne.Adapter.EventsAdapter;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.EventModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -86,7 +87,7 @@ public class EventsFragment extends Fragment
         ivConnecting2 = (ImageView)view.findViewById(R.id.imgConnecting2) ;
         ivConnecting3 = (ImageView)view.findViewById(R.id.imgConnecting3) ;
 
-        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/Events/List");
+        new HttpAsyncTask().execute(Utility.BASE_URL+"Events/List");
 
        /* ArrayList<Integer> image = new ArrayList<Integer>();
         image.add(R.drawable.events1);

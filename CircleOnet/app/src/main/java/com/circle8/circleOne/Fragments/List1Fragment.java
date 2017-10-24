@@ -45,6 +45,7 @@ import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.FriendConnection;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -457,7 +458,7 @@ public class List1Fragment extends Fragment
                     mAdapter1.notifyDataSetChanged();
                 } catch (Exception e) {
                 }
-                new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
+                new HttpAsyncTaskSearch().execute(Utility.BASE_URL+"SearchConnect");
             }
         });
 
@@ -476,7 +477,7 @@ public class List1Fragment extends Fragment
                     mAdapter1.notifyDataSetChanged();
                 } catch (Exception e) {
                 }
-                new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
+                new HttpAsyncTaskSearch().execute(Utility.BASE_URL+"SearchConnect");
 
                 return true;
             }
@@ -491,7 +492,7 @@ public class List1Fragment extends Fragment
         // tvNoCard.setVisibility(View.GONE);
         nfcModel.clear();
         pageno = 1;
-        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
+        new HttpAsyncTask().execute(Utility.BASE_URL+"GetFriendConnection");
     }
 
     public static void webCall()

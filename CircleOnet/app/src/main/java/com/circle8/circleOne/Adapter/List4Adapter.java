@@ -21,6 +21,7 @@ import com.circle8.circleOne.Model.ConnectList;
 import com.circle8.circleOne.Model.FriendConnection;
 import com.circle8.circleOne.Model.NFCModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.daimajia.swipe.SimpleSwipeListener;
@@ -142,7 +143,7 @@ public class List4Adapter extends BaseSwipeAdapter
 
                 posi  = position ;
 
-                new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
+                new HttpAsyncTask().execute(Utility.BASE_URL+"FriendConnection_Operation");
 
                 /*try
                 {

@@ -157,11 +157,11 @@ public class UpdateGroupActivity extends AppCompatActivity
                     if (final_ImgBase64.equals(""))
                     {
                         GroupImage = groupPhoto;
-                        new HttpAsyncTaskGroupUpdate().execute("http://circle8.asia:8999/Onet.svc/Group/Update");
+                        new HttpAsyncTaskGroupUpdate().execute(Utility.BASE_URL+"Group/Update");
                        // Toast.makeText(getApplicationContext(), "Upload Circle Image", Toast.LENGTH_LONG).show();
 //                            tvProfileInfo.setVisibility(View.VISIBLE);
                     }else {
-                        new HttpAsyncTaskPhotoUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                        new HttpAsyncTaskPhotoUpload().execute(Utility.BASE_URL+"ImgUpload");
                     }
                     // new HttpAsyncTaskGroupCreate().execute("http://circle8.asia:8999/Onet.svc/Group/Create");
                 }
@@ -221,7 +221,7 @@ public class UpdateGroupActivity extends AppCompatActivity
                         finish();*/
                         //   Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                         GroupImage = ImgName;
-                        new HttpAsyncTaskGroupUpdate().execute("http://circle8.asia:8999/Onet.svc/Group/Update");
+                        new HttpAsyncTaskGroupUpdate().execute(Utility.BASE_URL+"Group/Update");
 
                     } else {
                         Toast.makeText(getApplicationContext(), "Error While Uploading Image..", Toast.LENGTH_LONG).show();

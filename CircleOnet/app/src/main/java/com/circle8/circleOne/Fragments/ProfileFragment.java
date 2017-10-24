@@ -54,6 +54,7 @@ import com.circle8.circleOne.Model.ProfileModel;
 import com.circle8.circleOne.Model.TestimonialModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.ExpandableHeightListView;
+import com.circle8.circleOne.Utils.Utility;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -256,7 +257,7 @@ public class ProfileFragment extends Fragment
         ivConnecting3 = (ImageView)view.findViewById(R.id.imgConnecting3) ;
 
 //        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetUserProfile");
-        new HttpAsyncTaskProfiles().execute("http://circle8.asia:8999/Onet.svc/MyProfiles");
+        new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
 
         HashMap<String, String> user = session.getUserDetails();
         UserID = user.get(LoginSession.KEY_USERID);
@@ -815,7 +816,7 @@ public class ProfileFragment extends Fragment
                                         strlinkedInUrl = allTags.get(i).getLinkedin().toString();
                                     }
 
-                                    new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Fetch");
+                                    new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");
 
                                     try
                                     {
@@ -1536,7 +1537,7 @@ public class ProfileFragment extends Fragment
                         Picasso.with(getContext()).load("http://circle8.asia/App_ImgLib/UserProfile/"+allTags.get(profileIndex).getUserPhoto()).into(imgProfile);
                     }
 
-                    new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Fetch");
+                    new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");
 
                     try
                     {

@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.circle8.circleOne.Adapter.EventDetailAdapter;
 import com.circle8.circleOne.Model.EventModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpResponse;
@@ -91,7 +92,7 @@ public class EventDetail extends AppCompatActivity
         Intent i = getIntent();
         event_ID = i.getStringExtra("Event_ID");
 
-        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/Events/GetDetails");
+        new HttpAsyncTask().execute(Utility.BASE_URL+"Events/GetDetails");
 
         imgLogo.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.circle8.circleOne.Fragments.CardsFragment;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 import com.google.zxing.Result;
 
 import org.apache.http.HttpResponse;
@@ -183,7 +184,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
                     latitude = CardsActivity.mLastLocation.getLatitude();
                     longitude = CardsActivity.mLastLocation.getLongitude();
 
-                    new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
+                    new HttpAsyncTask().execute(Utility.BASE_URL+"FriendConnection_Operation");
                 } else {
                     CardsActivity.getLocation();
                     Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
@@ -222,7 +223,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
                 adialog.cancel();
                 mScannerView.stopCamera();
                 CameraScann();
-                new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
+                new HttpAsyncTask().execute(Utility.BASE_URL+"FriendConnection_Operation");
             }
         });
 //        alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {

@@ -30,6 +30,7 @@ import com.circle8.circleOne.Adapter.SearchGroupMemberAdapter;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.ConnectList;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -110,7 +111,7 @@ public class ByTitleGroupFragment extends Fragment
 
                 listView.setVisibility(View.VISIBLE);
                 connectTags.clear();
-                new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
+                new HttpAsyncTask().execute(Utility.BASE_URL+"SearchConnect");
             }
         });
 
@@ -120,7 +121,7 @@ public class ByTitleGroupFragment extends Fragment
             {
                 listView.setVisibility(View.VISIBLE);
                 connectTags.clear();
-                new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
+                new HttpAsyncTask().execute(Utility.BASE_URL+"SearchConnect");
                 return true;
             }
         });

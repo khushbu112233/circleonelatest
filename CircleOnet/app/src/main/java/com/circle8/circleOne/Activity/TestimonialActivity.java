@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.circle8.circleOne.Adapter.TestimonialAdapter;
 import com.circle8.circleOne.Model.TestimonialModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -120,14 +121,14 @@ public class TestimonialActivity extends AppCompatActivity
 
     private void callFirst()
     {
-        new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Fetch");
+        new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");
     }
 
     public static void webCall()
     {
         allTaggs.clear();
         adapter.notifyDataSetChanged();
-        new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Fetch");
+        new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");
     }
 
     private static class HttpAsyncTaskTestimonial extends AsyncTask<String, Void, String>

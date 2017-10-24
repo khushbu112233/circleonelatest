@@ -22,6 +22,7 @@ import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.EventModel;
 import com.circle8.circleOne.Model.HistoryModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -75,7 +76,7 @@ public class HistoryActivity extends AppCompatActivity
         ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
         ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
 
-        new HttpAsyncTaskHistoryList().execute("http://circle8.asia:8999/Onet.svc/Hisory");
+        new HttpAsyncTaskHistoryList().execute(Utility.BASE_URL+"Hisory");
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override

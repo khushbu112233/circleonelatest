@@ -426,7 +426,7 @@ public class Connect4Activity extends AppCompatActivity
                 strToken = token.getId();
                 //  new StripeCharge(token.getId()).execute();
 //                new HttpAsyncTokenTask().execute("https://circle8.asia/Checkout/pay");
-//                new HttpAsyncRequestTask().execute("http://circle8.asia:8999/Onet.svc/Physical_Card/Order");
+//                new HttpAsyncRequestTask().execute(Utility.BASE_URL+"Physical_Card/Order");
 
                 Intent go = new Intent(getApplicationContext(), Connect5Activity.class);
                 go.putExtra("level", level);

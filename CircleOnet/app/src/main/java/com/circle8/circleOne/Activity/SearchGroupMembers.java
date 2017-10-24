@@ -35,6 +35,7 @@ import com.circle8.circleOne.Fragments.ConnectFragment;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.CustomViewPager;
+import com.circle8.circleOne.Utils.Utility;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -101,6 +102,11 @@ public class SearchGroupMembers extends AppCompatActivity
             ProfileId = intent.getStringExtra("ProfileId");
             mytext.setText("Select User to send Testimonial Request");
         }
+        else if (from.equalsIgnoreCase("cardDetail")) {
+            ProfileId = intent.getStringExtra("ProfileId");
+            mytext.setText("Select User to send Profile Request to share");
+        }
+
 
         loginSession = new LoginSession(getApplicationContext());
         HashMap<String, String> user = loginSession.getUserDetails();
@@ -128,7 +134,7 @@ public class SearchGroupMembers extends AppCompatActivity
                     else
                     {
                         //Toast.makeText(getApplicationContext(), selectedStrings.toString(), Toast.LENGTH_LONG).show();
-                        new HttpAsyncTaskGroupAddFriend().execute("http://circle8.asia:8999/Onet.svc/Group/AddFriend");
+                        new HttpAsyncTaskGroupAddFriend().execute(Utility.BASE_URL+"Group/AddFriend");
                     }
                 }
                 else if (from.equalsIgnoreCase("profile")) {
@@ -138,7 +144,17 @@ public class SearchGroupMembers extends AppCompatActivity
                     }
                     else
                     {
-                        new HttpAsyncTaskTestimonialRequest().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Request");
+                        new HttpAsyncTaskTestimonialRequest().execute(Utility.BASE_URL+"Testimonial/Request");
+                    }
+                }
+                else if (from.equalsIgnoreCase("cardDetail")) {
+                    if (selectedStrings == null || selectedStrings.length() <= 0)
+                    {
+                        Toast.makeText(getApplicationContext(), "You haven’t selected member", Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                       // new HttpAsyncTaskShareRequest().execute(Utility.BASE_URL+"Testimonial/Request");
                     }
                 }
 

@@ -60,6 +60,7 @@ import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.CircularTextView;
 import com.circle8.circleOne.Utils.CustomViewPager;
 import com.circle8.circleOne.Utils.PrefUtils;
+import com.circle8.circleOne.Utils.Utility;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -235,7 +236,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
             }
         });*/
         getSupportActionBar().setShowHideAnimationEnabled(false);
-        new HttpAsyncTaskNotification().execute("http://circle8.asia:8999/Onet.svc/CountNewNotification");
+        new HttpAsyncTaskNotification().execute(Utility.BASE_URL+"CountNewNotification");
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -1240,7 +1241,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                             nfcProfileId = decrypt(message, secretKey);
                             //  Toast.makeText(getApplicationContext(), nfcProfileId, Toast.LENGTH_LONG).show();
                             try {
-                                new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
+                                new HttpAsyncTask().execute(Utility.BASE_URL+"FriendConnection_Operation");
                             } catch (Exception e) {
                                 Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                             }
@@ -1308,7 +1309,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                         nfcProfileId = decrypt(data, secretKey);
                         //  Toast.makeText(getApplicationContext(), nfcProfileId, Toast.LENGTH_LONG).show();
                         try {
-                            new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
+                            new HttpAsyncTask().execute(Utility.BASE_URL+"FriendConnection_Operation");
                         } catch (Exception e) {
                             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                         }
