@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.Level7thConnectionModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -92,7 +93,7 @@ public class Connect3Activity extends AppCompatActivity
             }, i);
         }*/
 
-        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/Connection7Level");
+        new HttpAsyncTask().execute(Utility.BASE_URL+"Connection7Level");
 
         /*Handler h = new Handler();
         h.postDelayed(new Runnable(){

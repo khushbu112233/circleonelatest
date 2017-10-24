@@ -213,7 +213,7 @@ public class GroupDetailActivity extends AppCompatActivity
                                public void onClick(DialogInterface dialog, int which) {
                                    //do your work here
                                    dialog.dismiss();
-                                   new HttpAsyncTaskGroupDelete().execute("http://circle8.asia:8999/Onet.svc/Group/Delete");
+                                   new HttpAsyncTaskGroupDelete().execute(Utility.BASE_URL+"Group/Delete");
 
                                }
                            });
@@ -508,7 +508,7 @@ public class GroupDetailActivity extends AppCompatActivity
                 {
                     selectArray1 = new JSONArray(selectedList);
 
-                    new HttpAsyncTaskGroupDeleteMember().execute("http://circle8.asia:8999/Onet.svc/Group/DeleteMembers");
+                    new HttpAsyncTaskGroupDeleteMember().execute(Utility.BASE_URL+"Group/DeleteMembers");
                 }
             }
         });
@@ -573,7 +573,7 @@ public class GroupDetailActivity extends AppCompatActivity
     public void callFirst()
     {
         loading = "Fetching Connections" ;
-        new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/FetchConnection");
+        new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/FetchConnection");
     }
 
     public static void webCall()
@@ -585,7 +585,7 @@ public class GroupDetailActivity extends AppCompatActivity
             groupDetailAdapter.notifyDataSetChanged();
         }catch (Exception e) { e.printStackTrace(); }
 
-        new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/FetchConnection");
+        new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/FetchConnection");
     }
 
     public  String POST1(String url)
@@ -750,7 +750,7 @@ public class GroupDetailActivity extends AppCompatActivity
                         finish();*/
                         //   Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                         GroupImage = ImgName;
-                        new HttpAsyncTaskGroupUpdate().execute("http://circle8.asia:8999/Onet.svc/Group/Update");
+                        new HttpAsyncTaskGroupUpdate().execute(Utility.BASE_URL+"Group/Update");
 
                     }
                     else

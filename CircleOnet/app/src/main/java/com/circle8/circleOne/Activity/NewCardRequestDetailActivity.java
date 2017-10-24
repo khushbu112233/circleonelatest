@@ -444,9 +444,9 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
         // Upload();
         CardSwipe.imageView.setImageBitmap(bitmap);
         if (cardType.equals("front"))
-            new HttpAsyncTaskFrontUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+            new HttpAsyncTaskFrontUpload().execute(Utility.BASE_URL+"ImgUpload");
         else if (cardType.equals("back"))
-            new HttpAsyncTaskBackUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+            new HttpAsyncTaskBackUpload().execute(Utility.BASE_URL+"ImgUpload");
     }
 
     private static class HttpAsyncTaskBackUpload extends AsyncTask<String, Void, String> {

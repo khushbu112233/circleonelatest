@@ -24,6 +24,7 @@ import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.NewCardModel;
 import com.circle8.circleOne.Model.ProfileModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -80,7 +81,7 @@ public class ManageMyProfile extends AppCompatActivity
         ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
         ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
 
-        new HttpAsyncTaskProfiles().execute("http://circle8.asia:8999/Onet.svc/MyProfiles");
+        new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,7 +125,7 @@ public class ManageMyProfile extends AppCompatActivity
                         //do your work here
                         ProfileID = allTags.get(position).getProfileID();
                         dialog.dismiss();
-                        new HttpAsyncTaskProfileDelete().execute("http://circle8.asia:8999/Onet.svc/DeleteProfile");
+                        new HttpAsyncTaskProfileDelete().execute(Utility.BASE_URL+"DeleteProfile");
 
                     }
                 });
@@ -376,7 +377,7 @@ public class ManageMyProfile extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        new HttpAsyncTaskProfiles().execute("http://circle8.asia:8999/Onet.svc/MyProfiles");
+        new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
     }
 
     private class HttpAsyncTaskProfileDelete extends AsyncTask<String, Void, String>
@@ -418,7 +419,7 @@ public class ManageMyProfile extends AppCompatActivity
                     String success = jsonObject.getString("success");
                     String message = jsonObject.getString("message");
                     if (success.equalsIgnoreCase("1")){
-                        new HttpAsyncTaskProfiles().execute("http://circle8.asia:8999/Onet.svc/MyProfiles");
+                        new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
                         Toast.makeText(getApplicationContext(), "Profile Deleted Successfully..", Toast.LENGTH_LONG).show();
                     }else {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();

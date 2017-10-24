@@ -23,6 +23,7 @@ import com.circle8.circleOne.Activity.ContactsImportActivity;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.RxContacts.Contact;
 import com.circle8.circleOne.RxContacts.RxContacts;
+import com.circle8.circleOne.Utils.Utility;
 import com.l4digital.fastscroll.FastScrollRecyclerView;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
@@ -138,7 +139,7 @@ public class MultiContactPickerActivity extends AppCompatActivity implements Mat
                     Log.d("MyTag", results.get(i).getPhoneNumbers().toString());
                 }
                 selectedStrings = new JSONArray(arrayList);
-                new HttpAsyncTaskImportContacts().execute("http://circle8.asia:8999/Onet.svc/ImportContacts");
+                new HttpAsyncTaskImportContacts().execute(Utility.BASE_URL+"ImportContacts");
                // setResult(RESULT_OK, result);
                // finish();
             }

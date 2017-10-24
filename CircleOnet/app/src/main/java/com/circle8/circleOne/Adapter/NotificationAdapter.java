@@ -26,6 +26,7 @@ import com.circle8.circleOne.Activity.WriteTestimonialActivity;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.NotificationModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpResponse;
@@ -333,7 +334,7 @@ public class NotificationAdapter extends BaseAdapter
                         {
                             etTextMonial.setText(null);
                             alertDialog.dismiss();
-                            new HttpAsyncWriteTextimonial().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Write");
+                            new HttpAsyncWriteTextimonial().execute(Utility.BASE_URL+"Testimonial/Write");
                         }
                     }
                 });
@@ -352,14 +353,14 @@ public class NotificationAdapter extends BaseAdapter
         holder.btnAcceptFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new HttpAsyncTaskAcceptFriend().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
+                new HttpAsyncTaskAcceptFriend().execute(Utility.BASE_URL+"FriendConnection_Operation");
             }
         });
 
         holder.btnRejectFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new HttpAsyncTaskRejectFriend().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
+                new HttpAsyncTaskRejectFriend().execute(Utility.BASE_URL+"FriendConnection_Operation");
             }
         });
 
@@ -367,7 +368,7 @@ public class NotificationAdapter extends BaseAdapter
             @Override
             public void onClick(View v) {
                 accept = "1";
-                new HttpAsyncTaskAcceptTestimonial().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Accept_Reject");
+                new HttpAsyncTaskAcceptTestimonial().execute(Utility.BASE_URL+"Testimonial/Accept_Reject");
             }
         });
 
@@ -375,7 +376,7 @@ public class NotificationAdapter extends BaseAdapter
             @Override
             public void onClick(View v) {
                 accept = "0";
-                new HttpAsyncTaskAcceptTestimonial().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Accept_Reject");
+                new HttpAsyncTaskAcceptTestimonial().execute(Utility.BASE_URL+"Testimonial/Accept_Reject");
             }
         });
 
@@ -383,7 +384,7 @@ public class NotificationAdapter extends BaseAdapter
             @Override
             public void onClick(View v) {
                 accept = "0";
-                new HttpAsyncTaskAcceptTestimonial().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Accept_Reject");
+                new HttpAsyncTaskAcceptTestimonial().execute(Utility.BASE_URL+"Testimonial/Accept_Reject");
             }
         });
 

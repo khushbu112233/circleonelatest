@@ -31,6 +31,7 @@ import com.circle8.circleOne.Adapter.SubscriptionAdapter;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.SubscriptionModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 import com.stripe.android.Stripe;
 import com.stripe.android.TokenCallback;
 import com.stripe.android.model.Card;
@@ -111,7 +112,7 @@ public class SubscriptionActivity extends AppCompatActivity
 //        tvPay = (TextView)findViewById(R.id.tvPay);
 //        tvCancel = (TextView)findViewById(R.id.tvCancel);
 
-        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/Subscription/GetPackageList");
+        new HttpAsyncTask().execute(Utility.BASE_URL+"Subscription/GetPackageList");
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -583,7 +584,7 @@ public class SubscriptionActivity extends AppCompatActivity
                     String success = response.getString("Status");
                     if (success.equals("success")){
                         Toast.makeText(getApplicationContext(), "Paied..", Toast.LENGTH_LONG).show();
-                        new HttpAsyncSubscriptTask().execute("http://circle8.asia:8999/Onet.svc/Subscription/AddUser");
+                        new HttpAsyncSubscriptTask().execute(Utility.BASE_URL+"Subscription/AddUser");
                     }else {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     }

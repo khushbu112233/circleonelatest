@@ -36,6 +36,7 @@ import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.FriendConnection;
 import com.circle8.circleOne.Model.NFCModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -308,7 +309,7 @@ public class List4Fragment extends Fragment
                 {
                     e.printStackTrace();
                 }
-                new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
+                new HttpAsyncTaskSearch().execute(Utility.BASE_URL+"SearchConnect");
             }
         });
 
@@ -326,7 +327,7 @@ public class List4Fragment extends Fragment
                 {
                     e.printStackTrace();
                 }
-                new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
+                new HttpAsyncTaskSearch().execute(Utility.BASE_URL+"SearchConnect");
 
                 return true;
             }
@@ -501,7 +502,7 @@ public class List4Fragment extends Fragment
 
     private static void callFirst()
     {
-        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
+        new HttpAsyncTask().execute(Utility.BASE_URL+"GetFriendConnection");
     }
 
     public static void webCall()
@@ -527,7 +528,7 @@ public class List4Fragment extends Fragment
             gridAdapter.notifyDataSetChanged();
         } catch (Exception e) {
         }
-        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
+        new HttpAsyncTask().execute(Utility.BASE_URL+"GetFriendConnection");
     }
 
 
@@ -656,7 +657,7 @@ public class List4Fragment extends Fragment
                                     if (listView.getLastVisiblePosition() >= count - threshold) {
                                         rlLoadMore.setVisibility(View.VISIBLE);
                                         // Execute LoadMoreDataTask AsyncTask
-                                        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
+                                        new HttpAsyncTask().execute(Utility.BASE_URL+"GetFriendConnection");
                                     }
                                 } else {
 

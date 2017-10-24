@@ -445,12 +445,12 @@ public class EditProfileActivity extends AppCompatActivity implements
         btnSignIn.setSize(SignInButton.SIZE_ICON_ONLY);
         btnSignIn.setScopes(gso.getScopeArray());
 
-        new HttpAsyncTaskAssociation().execute("http://circle8.asia:8999/Onet.svc/GetAssociationList");
+        new HttpAsyncTaskAssociation().execute(Utility.BASE_URL+"GetAssociationList");
 
         if (type.equals("edit"))
         {
-            new HttpAsyncTaskUserProfile().execute("http://circle8.asia:8999/Onet.svc/GetUserProfile");
-            new HttpAsyncTaskTestimonial().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Fetch");
+            new HttpAsyncTaskUserProfile().execute(Utility.BASE_URL+"GetUserProfile");
+            new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");
         }
 
         array = new String[]{"Accommodations", "Information", "Accounting", "Information technology", "Advertising",
@@ -701,7 +701,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                     public void onClick(DialogInterface dialog, int which) {
                         //do your work here
                         dialog.dismiss();
-                        new HttpAsyncTaskProfileDelete().execute("http://circle8.asia:8999/Onet.svc/DeleteProfile");
+                        new HttpAsyncTaskProfileDelete().execute(Utility.BASE_URL+"DeleteProfile");
                     }
                 });
                 alert.setNegativeButton("No", new DialogInterface.OnClickListener()
@@ -912,11 +912,11 @@ public class EditProfileActivity extends AppCompatActivity implements
 
                 if (type.equals("add"))
                 {
-                    new HttpAsyncTaskAddProfile().execute("http://circle8.asia:8999/Onet.svc/AddProfile");
+                    new HttpAsyncTaskAddProfile().execute(Utility.BASE_URL+"AddProfile");
                 }
                 else if (type.equals("edit"))
                 {
-                    new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/UpdateProfile");
+                    new HttpAsyncTask().execute(Utility.BASE_URL+"UpdateProfile");
                 }
             }
         });
@@ -2353,11 +2353,11 @@ public class EditProfileActivity extends AppCompatActivity implements
 
                     if (cardType.equals("front")) {
                         CardSwipe.imageView.setImageBitmap(bitmap);
-                        new HttpAsyncTaskFrontUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                        new HttpAsyncTaskFrontUpload().execute(Utility.BASE_URL+"ImgUpload");
                     }
                     else if (cardType.equals("back")) {
                         CardSwipe.imageView.setImageBitmap(bitmap);
-                        new HttpAsyncTaskBackUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                        new HttpAsyncTaskBackUpload().execute(Utility.BASE_URL+"ImgUpload");
                     }
                    /* else if (cropType.equals("attachment")){
                         Uri imgUri = getImageUri(getApplicationContext(), bitmap);
@@ -2371,7 +2371,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                     }*/
                     else {
                         imgProfile.setImageBitmap(bitmap);
-                        new HttpAsyncTaskUserUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                        new HttpAsyncTaskUserUpload().execute(Utility.BASE_URL+"ImgUpload");
                     }
                 } catch (FileNotFoundException e) {
                     // TODO Auto-generated catch block
@@ -2486,9 +2486,9 @@ public class EditProfileActivity extends AppCompatActivity implements
         //   Upload();
         CardSwipe.imageView.setImageBitmap(thumbnail);
         if (cardType.equals("front"))
-            new HttpAsyncTaskFrontUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+            new HttpAsyncTaskFrontUpload().execute(Utility.BASE_URL+"ImgUpload");
         else if (cardType.equals("back"))
-            new HttpAsyncTaskBackUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+            new HttpAsyncTaskBackUpload().execute(Utility.BASE_URL+"ImgUpload");
     }
 
     public static String BitMapToString(Bitmap bitmap) {
@@ -2560,9 +2560,9 @@ public class EditProfileActivity extends AppCompatActivity implements
         // Upload();
         CardSwipe.imageView.setImageBitmap(bitmap);
         if (cardType.equals("front"))
-            new HttpAsyncTaskFrontUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+            new HttpAsyncTaskFrontUpload().execute(Utility.BASE_URL+"ImgUpload");
         else if (cardType.equals("back"))
-            new HttpAsyncTaskBackUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+            new HttpAsyncTaskBackUpload().execute(Utility.BASE_URL+"ImgUpload");
     }
 
   public String POSTImage(String url) {
@@ -2833,7 +2833,7 @@ public class EditProfileActivity extends AppCompatActivity implements
            // ivAttachFile.setEnabled(false);
             etAttachFile.setText(fileName);
             File imgFile = new File(fileName);
-            new HttpAsyncTaskDocUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+            new HttpAsyncTaskDocUpload().execute(Utility.BASE_URL+"ImgUpload");
             try {
                 byte[] data = fileName.getBytes("UTF-8");
                 String base64 = Base64.encodeToString(data, Base64.DEFAULT);

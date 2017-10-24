@@ -28,6 +28,7 @@ import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.Adapter.CardSwipeBitmap;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 import com.squareup.picasso.Picasso;
 import com.stripe.android.Stripe;
 import com.stripe.android.TokenCallback;
@@ -172,7 +173,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
             mViewPager2.setAdapter(swipeBitmap);
         }
 
-        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/Physical_Card/GetType");
+        new HttpAsyncTask().execute(Utility.BASE_URL+"Physical_Card/GetType");
 
 
         if (image.equals(""))
@@ -209,8 +210,8 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                 if (card_back.equals("") && card_front.equals("")) {
                     final_ImgBase64Back = BitMapToString(cardBackBmp);
                     final_ImgBase64Front = BitMapToString(cardFrontBmp);
-                    new HttpAsyncTaskFrontUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
-                    new HttpAsyncTaskBackUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                    new HttpAsyncTaskFrontUpload().execute(Utility.BASE_URL+"ImgUpload");
+                    new HttpAsyncTaskBackUpload().execute(Utility.BASE_URL+"ImgUpload");
                 }
                 try
                 {
@@ -854,7 +855,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                 strToken = token.getId();
                 //  new StripeCharge(token.getId()).execute();
 //                new HttpAsyncTokenTask().execute("https://circle8.asia/Checkout/pay");
-                new HttpAsyncRequestTask().execute("http://circle8.asia:8999/Onet.svc/Physical_Card/Order");
+                new HttpAsyncRequestTask().execute(Utility.BASE_URL+"Physical_Card/Order");
                 alertDialog.cancel();
             }
 
@@ -893,7 +894,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                 tok = token;
                 //  new StripeCharge(token.getId()).execute();
                 alertDialog.cancel();
-                new HttpAsyncRequestTask().execute("http://circle8.asia:8999/Onet.svc/Physical_Card/Order");
+                new HttpAsyncRequestTask().execute(Utility.BASE_URL+"Physical_Card/Order");
 
              /*   Intent intent = new Intent(getApplicationContext(), NewCardRequestActivity.class);
                 startActivity(intent);

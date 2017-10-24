@@ -24,6 +24,7 @@ import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.NewCardModel;
 import com.circle8.circleOne.Model.ProfileModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpResponse;
@@ -74,7 +75,7 @@ public class NewCardRequestActivity extends AppCompatActivity
         UserID = user.get(LoginSession.KEY_USERID);
         allTags = new ArrayList<>();
         newCardModelArrayList = new ArrayList<>();
-        new HttpAsyncTaskProfiles().execute("http://circle8.asia:8999/Onet.svc/MyProfiles");
+        new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override

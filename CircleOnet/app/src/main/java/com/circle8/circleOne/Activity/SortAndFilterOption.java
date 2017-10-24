@@ -32,6 +32,7 @@ import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.GroupModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.ExpandableHeightListView;
+import com.circle8.circleOne.Utils.Utility;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -96,7 +97,7 @@ public class SortAndFilterOption extends AppCompatActivity
         user_id = user.get(LoginSession.KEY_USERID);
         groupModelArrayList = new ArrayList<>();
 
-        new HttpAsyncTaskfetchGroup().execute("http://circle8.asia:8999/Onet.svc/Group/Fetch");
+        new HttpAsyncTaskfetchGroup().execute(Utility.BASE_URL+"Group/Fetch");
 
         lnrAllCards.setOnClickListener(new View.OnClickListener() {
             @Override

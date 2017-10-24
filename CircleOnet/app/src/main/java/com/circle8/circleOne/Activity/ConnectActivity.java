@@ -207,11 +207,11 @@ public class ConnectActivity extends AppCompatActivity
         }
         else
         {
-            new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/ConnectProfile");
+            new HttpAsyncTask().execute(Utility.BASE_URL+"ConnectProfile");
         }
 
-        new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/Fetch");
-        new HttpAsyncTaskGroupsFetch().execute("http://circle8.asia:8999/Onet.svc/Group/MyGroupsTaggedWithFriendProfile");
+        new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/Fetch");
+        new HttpAsyncTaskGroupsFetch().execute(Utility.BASE_URL+"Group/MyGroupsTaggedWithFriendProfile");
 
 
 //        Toast.makeText(getApplicationContext(),"ProfileID & FriendID "+profile_id+" "+friendProfile_id,Toast.LENGTH_LONG).show();
@@ -335,7 +335,7 @@ public class ConnectActivity extends AppCompatActivity
                                 tvConnect.setTextColor(getResources().getColor(R.color.unselected));
                                // tvConnectLine2.setTextColor(getResources().getColor(R.color.unselected));
                                 tvConnectLine2.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
-                                new HttpAsyncAddFriendTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
+                                new HttpAsyncAddFriendTask().execute(Utility.BASE_URL+"FriendConnection_Operation");
 
                             }
                         }, 1600);
@@ -554,7 +554,7 @@ public class ConnectActivity extends AppCompatActivity
                         alertDialog.cancel();
                         // make selected item in the comma seprated string
                         //  Toast.makeText(getApplicationContext(), selectedStrings.toString(), Toast.LENGTH_LONG).show();
-                        new HttpAsyncTaskGroupAddFriend().execute("http://circle8.asia:8999/Onet.svc/AddMemberToGroups");
+                        new HttpAsyncTaskGroupAddFriend().execute(Utility.BASE_URL+"AddMemberToGroups");
                     }
                 });
                 alertDialog.setView(dialogView);
@@ -730,7 +730,7 @@ public class ConnectActivity extends AppCompatActivity
     protected void onResume()
     {
         super.onResume();
-        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/ConnectProfile");
+        new HttpAsyncTask().execute(Utility.BASE_URL+"ConnectProfile");
     }
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String>

@@ -22,6 +22,7 @@ import com.circle8.circleOne.Adapter.NotificationAdapter;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.NotificationModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -99,14 +100,14 @@ public class Notification extends AppCompatActivity
 
     private void callFirst()
     {
-        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/Notification");
+        new HttpAsyncTask().execute(Utility.BASE_URL+"Notification");
     }
 
     public static void webCall()
     {
         allTags.clear();
         notificationAdapter.notifyDataSetChanged();
-        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/Notification");
+        new HttpAsyncTask().execute(Utility.BASE_URL+"Notification");
     }
 
     public static String POST(String url)

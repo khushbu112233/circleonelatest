@@ -570,11 +570,11 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                 {
                    // Toast.makeText(getApplicationContext(), "Upload Image", Toast.LENGTH_SHORT).show();
                     register_img = user_img;
-                    new HttpAsyncTaskUpdateRegister().execute("http://circle8.asia:8999/Onet.svc/UpdateRegistration");
+                    new HttpAsyncTaskUpdateRegister().execute(Utility.BASE_URL+"UpdateRegistration");
                 }
                 else
                 {
-                    new HttpAsyncTaskPhotoUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                    new HttpAsyncTaskPhotoUpload().execute(Utility.BASE_URL+"ImgUpload");
                 }
             }
         }
@@ -791,11 +791,11 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
             {
-                new UploadFile().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "http://circle8.asia:8999/Onet.svc/ImgUpload");
+                new UploadFile().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, Utility.BASE_URL+"ImgUpload");
             }
             else
             {
-                new UploadFile().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                new UploadFile().execute(Utility.BASE_URL+"ImgUpload");
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -1065,7 +1065,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                         finish();*/
                         //   Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                         register_img = ImgName;
-                        new HttpAsyncTaskUpdateRegister().execute("http://circle8.asia:8999/Onet.svc/UpdateRegistration");
+                        new HttpAsyncTaskUpdateRegister().execute(Utility.BASE_URL+"UpdateRegistration");
 
                     }
                     else

@@ -15,6 +15,7 @@ import com.circle8.circleOne.Activity.TestimonialActivity;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.TestimonialModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.daimajia.swipe.SimpleSwipeListener;
@@ -107,7 +108,7 @@ public class TestimonialAdapter extends BaseSwipeAdapter
 //                Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_SHORT).show();
                 swipeLayout.close();
                 posi  = position ;
-                new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/Testimonial/Delete");
+                new HttpAsyncTask().execute(Utility.BASE_URL+"Testimonial/Delete");
             }
         });
 
