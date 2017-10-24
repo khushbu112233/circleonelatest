@@ -71,6 +71,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
     String profileId = "";
     private LoginSession session;
     public String secretKey = "1234567890234561";
+    private double latitude, longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -169,6 +170,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
 
 
 
+
         try {
 
             scanQr = decrypt(rawResult.getText().toString(), secretKey);
@@ -176,7 +178,17 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
             try {
                 mScannerView.stopCamera();
                 CameraScann();
-                new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
+
+                if (CardsActivity.mLastLocation != null) {
+                    latitude = CardsActivity.mLastLocation.getLatitude();
+                    longitude = CardsActivity.mLastLocation.getLongitude();
+
+                    new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
+                } else {
+                    CardsActivity.getLocation();
+                    Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
+                }
+
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
             }
