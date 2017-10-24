@@ -583,7 +583,8 @@ public class GroupDetailActivity extends AppCompatActivity
         try
         {
             groupDetailAdapter.notifyDataSetChanged();
-        }catch (Exception e) { e.printStackTrace(); }
+        }
+        catch (Exception e) { e.printStackTrace(); }
 
         new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/FetchConnection");
     }
@@ -687,7 +688,9 @@ public class GroupDetailActivity extends AppCompatActivity
                     JSONObject jsonObject = new JSONObject(result);
                     String success = jsonObject.getString("success");
                     String message = jsonObject.getString("message");
-                    if (success.equalsIgnoreCase("1")){
+                    if (success.equalsIgnoreCase("1"))
+                    {
+                        GroupsActivity.backStatus = "GroupDeleteBack";
                         finish();
                         Toast.makeText(getApplicationContext(), "Circle Deleted Successfully..", Toast.LENGTH_LONG).show();
                     }

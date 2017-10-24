@@ -234,12 +234,18 @@
             android:name=".Activity.HistoryActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar"/>
+
         <activity android:name=".Activity.TestimonialCardDetail"
             android:screenOrientation="portrait"/>
+
         <activity android:name=".MultiContactPickerActivity"
             android:screenOrientation="portrait"
             android:label="@string/picker_title">
         </activity>
+
+        <activity android:name=".Activity.CreateGroupActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionbar"/>
     </application>
 
 </manifest>

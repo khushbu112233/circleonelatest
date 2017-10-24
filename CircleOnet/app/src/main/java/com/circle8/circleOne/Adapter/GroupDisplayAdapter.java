@@ -44,6 +44,8 @@ public class GroupDisplayAdapter extends BaseAdapter
     private String userChoosenTask ;
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
 
+    public static String grpImg, grpName, grpDesc, grpID ;
+
     public GroupDisplayAdapter(Activity activity, ArrayList<GroupModel> groupModelArrayList)
     {
         this.context = activity ;
@@ -156,14 +158,41 @@ public class GroupDisplayAdapter extends BaseAdapter
             public void onClick(View v)
             {
                 GroupsActivity.ivAlphaImg.setVisibility(View.VISIBLE);
+                GroupsActivity.CreateOrUpdateStatus = "Update";
+                GroupsActivity.tvCreateOrUpdate.setText("Update");
+                GroupsActivity.tvTextView.setText("Update Circle");
+                GroupsActivity.rlLayTwo.setVisibility(View.VISIBLE);
+                GroupsActivity.listView.setEnabled(false);
 
-                Intent in = new Intent(context, UpdateGroupActivity.class);
+               /* GroupsActivity.grpImg = groupModelsList.get(position).getGroup_Photo();
+                GroupsActivity.grpName = groupModelsList.get(position).getGroup_Name();
+                GroupsActivity.grpDesc = groupModelsList.get(position).getGroup_Desc();
+                GroupsActivity.grpID = groupModelsList.get(position).getGroup_ID() ;*/
+
+               grpImg = groupModelsList.get(position).getGroup_Photo();
+               grpID =  groupModelsList.get(position).getGroup_ID() ;
+
+                GroupsActivity.etCircleName.setText(groupModelsList.get(position).getGroup_Name());
+                GroupsActivity.etCircleDesc.setText(groupModelsList.get(position).getGroup_Desc());
+
+                String grpImg = groupModelsList.get(position).getGroup_Photo();
+
+                if (grpImg.equals(""))
+                {
+                    GroupsActivity.ivGroupImage.setImageResource(R.drawable.user_2);
+                }
+                else
+                {
+                    Picasso.with(context).load("http://circle8.asia/App_ImgLib/Group/"+grpImg).placeholder(R.drawable.user_2).into(GroupsActivity.ivGroupImage);
+                }
+
+               /* Intent in = new Intent(context, UpdateGroupActivity.class);
                 in.putExtra("type", "group");
                 in.putExtra("GroupImage", groupModelsList.get(position).getGroup_Photo());
                 in.putExtra("GroupName", groupModelsList.get(position).getGroup_Name());
                 in.putExtra("GroupDesc", groupModelsList.get(position).getGroup_Desc());
-                in.putExtra("GroupID",groupModelsList.get(position).getGroup_ID());
-                context.startActivity(in);
+                in.putExtra("GroupID", groupModelsList.get(position).getGroup_ID());
+                context.startActivity(in);*/
             }
         });
 
