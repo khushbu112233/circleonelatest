@@ -82,7 +82,7 @@ public class GroupsActivity extends AppCompatActivity
 
     public static ArrayList<GroupModel> groupModelArrayList;
 
-    ImageView imgBack;
+    public static ImageView imgBack, ivAlphaImg;
     RelativeLayout llBottom;
     String GroupName, GroupDesc;
     private String GroupImage = "";
@@ -97,6 +97,8 @@ public class GroupsActivity extends AppCompatActivity
     private TextView tvProgressing ;
     private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
 
+    public static String backStatus = "" ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -110,6 +112,7 @@ public class GroupsActivity extends AppCompatActivity
         groupModelArrayList = new ArrayList<>();
 
         listView = (ListView)findViewById(R.id.listView);
+        ivAlphaImg = (ImageView)findViewById(R.id.ivAlphaImg);
         imgBack = (ImageView) findViewById(R.id.imgBack);
         llBottom = (RelativeLayout) findViewById(R.id.llBottom);
 
@@ -140,6 +143,9 @@ public class GroupsActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+
+                ivAlphaImg.setVisibility(View.VISIBLE);
+
                 /*LayoutInflater factory = LayoutInflater.from(GroupsActivity.this);
                 LinearLayout layout = new LinearLayout(GroupsActivity.this);
                 layout.setOrientation(LinearLayout.VERTICAL);
@@ -268,6 +274,7 @@ public class GroupsActivity extends AppCompatActivity
                         else
                         {
                             dialog.dismiss();
+                            ivAlphaImg.setVisibility(View.GONE);
 
                             if (final_ImgBase64.equals(""))
                             {
@@ -288,6 +295,7 @@ public class GroupsActivity extends AppCompatActivity
                     public void onClick(View v)
                     {
                         dialog.dismiss();
+                        ivAlphaImg.setVisibility(View.GONE);
                     }
                 });
 
@@ -805,10 +813,30 @@ public class GroupsActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onResume() {
+    protected void onResume()
+    {
         super.onResume();
-        groupModelArrayList.clear();
-        new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/Fetch");
+
+        if (backStatus.equals("UpdateBack"))
+        {
+
+        }
+        else if (backStatus.equals("UpdateGroup"))
+        {
+            groupModelArrayList.clear();
+            new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/Fetch");
+        }
+        else if (backStatus.equals("DetailBack"))
+        {
+            groupModelArrayList.clear();
+            new HttpAsyncTaskGroup().execute("http://circle8.asia:8999/Onet.svc/Group/Fetch");
+        }
+        else
+        {
+
+        }
+
+
     }
 
     private class HttpAsyncTaskGroup extends AsyncTask<String, Void, String>

@@ -7,6 +7,14 @@
     android:layout_height="match_parent"
     tools:context="com.circle8.circleOne.Activity.GroupsActivity">
 
+    <ImageView
+        android:id="@+id/ivAlphaImg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:alpha="0.8"
+        android:visibility="gone"/>
+
     <com.circle8.circleOne.Utils.cgTextView
         android:id="@+id/txtNoGroup"
         android:layout_centerInParent="true"

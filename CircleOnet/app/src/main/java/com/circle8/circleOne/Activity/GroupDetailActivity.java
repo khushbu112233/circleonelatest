@@ -551,7 +551,9 @@ public class GroupDetailActivity extends AppCompatActivity
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
+                GroupsActivity.backStatus = "DetailBack";
                 finish();
             }
         });
