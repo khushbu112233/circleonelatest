@@ -302,7 +302,8 @@ public class UpdateGroupActivity extends AppCompatActivity
         return result;
     }
 
-    private class HttpAsyncTaskGroupUpdate extends AsyncTask<String, Void, String> {
+    private class HttpAsyncTaskGroupUpdate extends AsyncTask<String, Void, String>
+    {
         ProgressDialog dialog;
 
         @Override

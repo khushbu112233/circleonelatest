@@ -45,6 +45,7 @@ import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.GroupModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
+import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -78,7 +79,7 @@ public class GroupsActivity extends AppCompatActivity
     ArrayList<String> groupName = new ArrayList<>();
     GroupsItemsAdapter groupsItemsAdapter ;
     TextView txtNoGroup;
-    ListView listView ;
+    public static ListView listView ;
     private LoginSession session;
     private String user_id ;
 
@@ -86,13 +87,13 @@ public class GroupsActivity extends AppCompatActivity
 
     public static ImageView imgBack, ivAlphaImg;
     RelativeLayout llBottom;
-    String GroupName, GroupDesc;
+    String GroupName, GroupDesc, group_id;
     private String GroupImage = "";
     CharSequence[] items ;
     private String userChoosenTask ;
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     String image;
-    CircleImageView ivGroupImage;
+    public static CircleImageView ivGroupImage;
     String final_ImgBase64 = "";
 
     private RelativeLayout rlProgressDialog ;
@@ -100,6 +101,13 @@ public class GroupsActivity extends AppCompatActivity
     private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
 
     public static String backStatus = "" ;
+
+    public static RelativeLayout rlLayOne, rlLayTwo ;
+    public static EditText etCircleName , etCircleDesc ;
+    public static TextView tvCreateOrUpdate, tvCancel, tvTextView ;
+    public static String CreateOrUpdateStatus = "";
+
+    public static String grpImg = "", grpName = "", grpDesc = "", grpID = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -117,6 +125,8 @@ public class GroupsActivity extends AppCompatActivity
         ivAlphaImg = (ImageView)findViewById(R.id.ivAlphaImg);
         imgBack = (ImageView) findViewById(R.id.imgBack);
         llBottom = (RelativeLayout) findViewById(R.id.llBottom);
+        rlLayOne = (RelativeLayout) findViewById(R.id.rlLayOne);
+        rlLayTwo = (RelativeLayout) findViewById(R.id.rlLayTwo);
 
         rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
         tvProgressing = (TextView)findViewById(R.id.txtProgressing);
@@ -125,6 +135,40 @@ public class GroupsActivity extends AppCompatActivity
         ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
 
         new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/Fetch");
+
+
+        // for create or update group
+        ivGroupImage = (CircleImageView)findViewById(R.id.imgProfile);
+        etCircleName = (EditText)findViewById(R.id.etCircleName);
+        etCircleDesc = (EditText)findViewById(R.id.etCircleDesc);
+        tvCreateOrUpdate = (TextView)findViewById(R.id.tvCreateOrUpdate);
+        tvCancel = (TextView)findViewById(R.id.tvCancel);
+        tvTextView = (TextView)findViewById(R.id.tvTextView);
+
+
+       /* if (CreateOrUpdateStatus.equalsIgnoreCase("Create"))
+        {
+
+        }
+        else if (CreateOrUpdateStatus.equalsIgnoreCase("Update"))
+        {
+            etCircleName.setText(grpName);
+            etCircleDesc.setText(grpDesc);
+
+            if (grpImg.equals(""))
+            {
+                ivGroupImage.setImageResource(R.drawable.usr_1);
+            }
+            else
+            {
+                Picasso.with(getApplicationContext()).load("http://circle8.asia/App_ImgLib/Group/"+grpImg).placeholder(R.drawable.usr_1).into(ivGroupImage);
+            }
+        }
+        else
+        {
+
+        }*/
+
        /* groupName.add("Group 1");
         groupName.add("Group 2");
         groupName.add("Group 3");
@@ -145,11 +189,20 @@ public class GroupsActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                CreateOrUpdateStatus = "Create";
+                tvCreateOrUpdate.setText("Create");
+                tvTextView.setText("Create New Circle");
+
+                etCircleName.setHint("Circle Name");
+                etCircleDesc.setHint("Description");
+                ivGroupImage.setImageResource(R.drawable.user_2);
 
                 ivAlphaImg.setVisibility(View.VISIBLE);
+                rlLayTwo.setVisibility(View.VISIBLE);
+                listView.setEnabled(false);
 
-                Intent in = new Intent(GroupsActivity.this, CreateGroupActivity.class);
-                startActivity(in);
+//                Intent in = new Intent(GroupsActivity.this, CreateGroupActivity.class);
+//                startActivity(in);
 
                 /*LayoutInflater factory = LayoutInflater.from(GroupsActivity.this);
                 LinearLayout layout = new LinearLayout(GroupsActivity.this);
@@ -317,6 +370,105 @@ public class GroupsActivity extends AppCompatActivity
             }
         });
 
+        ivGroupImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CropImage.activity(null)
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .setCropMenuCropButtonTitle("Save")
+                        .start(GroupsActivity.this);
+            }
+        });
+
+        tvCreateOrUpdate.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                if (CreateOrUpdateStatus.equalsIgnoreCase("Create"))
+                {
+                    GroupName = etCircleName.getText().toString();
+                    GroupDesc = etCircleDesc.getText().toString();
+
+                    if (GroupName.equals(""))
+                    {
+                        Toast.makeText(getApplicationContext(), "Enter Circle Name", Toast.LENGTH_LONG).show();
+                    }
+                    else if (GroupDesc.equals(""))
+                    {
+                        Toast.makeText(getApplicationContext(), "Enter Circle Description", Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        if (final_ImgBase64.equals(""))
+                        {
+                            new HttpAsyncTaskGroupCreate().execute(Utility.BASE_URL+"Group/Create");
+                            //Toast.makeText(getApplicationContext(), "Upload Circle Image", Toast.LENGTH_LONG).show();
+                        }
+                        else
+                        {
+//                            new HttpAsyncTaskPhotoUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                            new HttpAsyncTaskPhotoUpload().execute(Utility.BASE_URL+"ImgUpload");
+                        }
+                    }
+                }
+                else if (CreateOrUpdateStatus.equalsIgnoreCase("Update"))
+                {
+                    GroupName = etCircleName.getText().toString();
+                    GroupDesc = etCircleDesc.getText().toString();
+
+                    String grpImage = GroupDisplayAdapter.grpImg ;
+                    String grpIDD = GroupDisplayAdapter.grpID ;
+                    group_id = grpIDD ;
+//                    Toast.makeText(getApplicationContext(), grpImage+" "+grpIDD,Toast.LENGTH_SHORT).show();
+
+                    if (GroupName.equals(""))
+                    {
+                        Toast.makeText(getApplicationContext(), "Enter Circle Name", Toast.LENGTH_LONG).show();
+                    }
+                    else if (GroupDesc.equals(""))
+                    {
+                        Toast.makeText(getApplicationContext(), "Enter Circle Description", Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        if (final_ImgBase64.equals(""))
+                        {
+                            GroupImage = grpImage;
+                            new HttpAsyncTaskGroupUpdate().execute(Utility.BASE_URL+"Group/Update");
+//                            new HttpAsyncTaskGroupCreate().execute(Utility.BASE_URL+"Group/Create");
+//                            Toast.makeText(getApplicationContext(), "Upload Circle Image", Toast.LENGTH_LONG).show();
+                        }
+                        else
+                        {
+//                            Toast.makeText(getApplicationContext(), "Uploaded Circle Image", Toast.LENGTH_LONG).show();
+//                            new HttpAsyncTaskPhotoUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                            new HttpAsyncTaskPhotoUpload().execute(Utility.BASE_URL+"ImgUpload");
+                        }
+                    }
+                }
+                else
+                {
+
+                }
+
+            }
+        });
+
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                ivAlphaImg.setVisibility(View.GONE);
+                rlLayTwo.setVisibility(View.GONE);
+                listView.setEnabled(true);
+
+                etCircleName.setText(null);
+                etCircleDesc.setText(null);
+                ivGroupImage.setImageResource(R.drawable.user_2);
+            }
+        });
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
@@ -392,7 +544,8 @@ public class GroupsActivity extends AppCompatActivity
         ProgressDialog dialog;
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             super.onPreExecute();
             /*dialog = new ProgressDialog(GroupsActivity.this);
             dialog.setMessage("Uploading...");
@@ -400,7 +553,7 @@ public class GroupsActivity extends AppCompatActivity
             dialog.show();
             dialog.setCancelable(false);*/
 
-            String loading = "Creating" ;
+            String loading = "Uploading" ;
             CustomProgressDialog(loading);
         }
 
@@ -416,23 +569,37 @@ public class GroupsActivity extends AppCompatActivity
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-            try {
+            try
+            {
                 if (result != null)
                 {
                     JSONObject jsonObject = new JSONObject(result);
                     String ImgName = jsonObject.getString("ImgName").toString();
                     String success = jsonObject.getString("success").toString();
 
-                    if (success.equals("1") && ImgName!=null) {
+                    if (success.equals("1") && ImgName != null)
+                    {
                         /*Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(intent);
                         finish();*/
                         //   Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                         GroupImage = ImgName;
-                        new HttpAsyncTaskGroupCreate().execute(Utility.BASE_URL+"Group/Create");
+                        if (CreateOrUpdateStatus.equalsIgnoreCase("Create"))
+                        {
+                            new HttpAsyncTaskGroupCreate().execute(Utility.BASE_URL+"Group/Create");
+                        }
+                        else if (CreateOrUpdateStatus.equalsIgnoreCase("Update"))
+                        {
+                            new HttpAsyncTaskGroupUpdate().execute(Utility.BASE_URL+"Group/Update");
+                        }
+                        else
+                        {
 
-                    } else {
+                        }
+                    }
+                    else
+                    {
                         Toast.makeText(getBaseContext(), "Error While Uploading Image..", Toast.LENGTH_LONG).show();
                     }
                 }
@@ -808,6 +975,10 @@ public class GroupsActivity extends AppCompatActivity
                         Toast.makeText(getApplicationContext(), "Circle Created..", Toast.LENGTH_LONG).show();
                         groupModelArrayList.clear();
                         new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/Fetch");
+
+                        ivAlphaImg.setVisibility(View.GONE);
+                        listView.setEnabled(true);
+                        rlLayTwo.setVisibility(View.GONE);
                     }
                     else
                     {
@@ -822,6 +993,153 @@ public class GroupsActivity extends AppCompatActivity
                 e.printStackTrace();
             }
         }
+    }
+
+    private class HttpAsyncTaskGroupUpdate extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            /*dialog = new ProgressDialog(UpdateGroupActivity.this);
+            dialog.setMessage("Updating Circle...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+
+            String loading = "Updating Circle" ;
+            CustomProgressDialog(loading);
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return GroupUpdatePost(urls[0]);
+        }
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
+
+            try
+            {
+                if (result != null)
+                {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String Success = jsonObject.getString("Success").toString();
+                    String Message = jsonObject.getString("Message").toString();
+                    if (Success.equals("1"))
+                    {
+                        Toast.makeText(getApplicationContext(), "Circle Updated..", Toast.LENGTH_LONG).show();
+
+                        groupModelArrayList.clear();
+                        new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/Fetch");
+
+                        ivAlphaImg.setVisibility(View.GONE);
+                        listView.setEnabled(true);
+                        rlLayTwo.setVisibility(View.GONE);
+                        /*if (type.equalsIgnoreCase("group"))
+                        {
+                            GroupsActivity.backStatus = "UpdateGroup";
+                            finish();
+                            GroupsActivity.ivAlphaImg.setVisibility(View.GONE);
+                        }
+                        else if (type.equals("group_detail"))
+                        {
+                            Intent intent = new Intent(getApplicationContext(), GroupDetailActivity.class);
+                            intent.putExtra("group_id", group_id);
+                            intent.putExtra("groupName", GroupName);
+                            intent.putExtra("groupDesc", GroupDesc);
+                            intent.putExtra("groupImg", GroupImage);
+                            startActivity(intent);
+                            finish();
+                        }*/
+                       /* tvGroupName.setText(GroupName);
+                        tvGroupDesc.setText(GroupDesc);
+
+                        if (GroupImage.equals(""))
+                        {
+                            imgProfile.setImageResource(R.drawable.usr_1);
+                        }
+                        else
+                        {
+                            Picasso.with(context).load("http://circle8.asia/App_ImgLib/Group/"+GroupImage).placeholder(R.drawable.usr_1).into(imgProfile);
+                        }*/
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(), Message, Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Not able to create Circle..", Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public String GroupUpdatePost(String url) {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("GroupDesc", GroupDesc);
+            jsonObject.accumulate("GroupName", GroupName);
+            jsonObject.accumulate("GroupPhoto", GroupImage);
+            jsonObject.accumulate("UserId", user_id);
+            jsonObject.accumulate("GroupId", group_id);
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
     }
 
     @Override
@@ -847,8 +1165,6 @@ public class GroupsActivity extends AppCompatActivity
         {
 
         }
-
-
     }
 
     private class HttpAsyncTaskGroup extends AsyncTask<String, Void, String>
