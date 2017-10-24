@@ -55,9 +55,7 @@ import java.util.HashMap;
 public class SubscriptionActivity extends AppCompatActivity
 {
     private ListView listView ;
-    private ImageView ivBack ;
-    private RelativeLayout rlStripePayment, rlListView ;
-//    private TextView tvCancel, tvPay ;
+    private RelativeLayout  rlListView ;
 
     private ArrayList<SubscriptionModel> subscriptionModelArrayList ;
 
@@ -68,7 +66,7 @@ public class SubscriptionActivity extends AppCompatActivity
     Token tok;
     String strToken;
     AlertDialog alertDialog;
-    ImageView imgBack;
+    ImageView imgBack, ivAlphaImg ;
 
     private RelativeLayout rlProgressDialog ;
     private TextView tvProgressing ;
@@ -93,9 +91,9 @@ public class SubscriptionActivity extends AppCompatActivity
         width = manager.getDefaultDisplay().getWidth();
         height = manager.getDefaultDisplay().getHeight();
 
-        ivBack = (ImageView)findViewById(R.id.imgBack);
         listView = (ListView)findViewById(R.id.listView);
         imgBack = (ImageView) findViewById(R.id.imgBack);
+        ivAlphaImg = (ImageView) findViewById(R.id.ivAlphaImg);
         subscriptionModelArrayList = new ArrayList<>();
         session = new LoginSession(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
@@ -107,7 +105,6 @@ public class SubscriptionActivity extends AppCompatActivity
         ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
         ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
 
-        rlStripePayment = (RelativeLayout)findViewById(R.id.rlStripePayment);
         rlListView = (RelativeLayout)findViewById(R.id.rlListView);
 
 //        tvPay = (TextView)findViewById(R.id.tvPay);
@@ -126,6 +123,8 @@ public class SubscriptionActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
+                ivAlphaImg.setVisibility(View.VISIBLE);
+
                 String package_Name = subscriptionModelArrayList.get(position).getPackageName();
                 String contacts_limit = subscriptionModelArrayList.get(position).getConnectionLimit();
                 String groups_limit = subscriptionModelArrayList.get(position).getGroupLimit();
@@ -188,6 +187,8 @@ public class SubscriptionActivity extends AppCompatActivity
                     @Override
                     public void onClick(View v)
                     {
+
+
                         numberOnCard = etCardNumber.getText().toString();
                         nameOnCard = etCardHolderName.getText().toString();
                         exYearOnCard = etExYear.getText().toString();
@@ -223,6 +224,7 @@ public class SubscriptionActivity extends AppCompatActivity
                         {
                             cardPayment();
                             alertDialog.dismiss();
+                            ivAlphaImg.setVisibility(View.GONE);
                         }
                     }
                 });
@@ -232,6 +234,7 @@ public class SubscriptionActivity extends AppCompatActivity
                     public void onClick(View v)
                     {
                         alertDialog.dismiss();
+                        ivAlphaImg.setVisibility(View.GONE);
                     }
                 });
 
@@ -268,6 +271,7 @@ public class SubscriptionActivity extends AppCompatActivity
                 //  new StripeCharge(token.getId()).execute();
                 new HttpAsyncTokenTask().execute("https://circle8.asia/Checkout/pay");
                 alertDialog.cancel();
+                ivAlphaImg.setVisibility(View.GONE);
             }
 
             public void onError(Exception error) {
