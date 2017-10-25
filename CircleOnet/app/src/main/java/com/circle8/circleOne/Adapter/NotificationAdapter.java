@@ -450,7 +450,7 @@ public class NotificationAdapter extends BaseAdapter
         holder.btnShareCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //  new HttpAsyncTaskAcceptFriend().execute(Utility.BASE_URL+"ShareProfile/Request");
+                new HttpAsyncTaskShareCancel().execute(Utility.BASE_URL+"ShareProfile/CancelRequest");
             }
         });
 
@@ -833,6 +833,62 @@ public class NotificationAdapter extends BaseAdapter
         }
     }
 
+    private class HttpAsyncTaskShareCancel extends AsyncTask<String, Void, String> {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            /*dialog = new ProgressDialog(activity);
+            dialog.setMessage("Accepting Friend Request..");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+            String loading = "Cancelling";
+            Notification.CustomProgressDialog(loading);
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return POST6(urls[0]);
+        }
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            Notification.rlProgressDialog.setVisibility(View.GONE);
+
+//            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+            try {
+                if (result.equals("")) {
+                    Toast.makeText(activity, "Check Internet Connection", Toast.LENGTH_LONG).show();
+                } else {
+                    JSONObject response = new JSONObject(result);
+                    String message = response.getString("message");
+                    String success = response.getString("success");
+
+                    if (success.equals("1"))
+                    {
+                        Toast.makeText(activity, "Share Request Rejected..", Toast.LENGTH_LONG).show();
+                        Notification.webCall();
+                    }
+                    else
+                    {
+                        Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
+                    }
+
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     private class HttpAsyncTaskAcceptFriend extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
@@ -965,6 +1021,60 @@ public class NotificationAdapter extends BaseAdapter
             jsonObject.accumulate("RequestType", "");
             jsonObject.accumulate("friendProfileId", testimonialModels.get(posi).getFriendProfileID());
             jsonObject.accumulate("myProfileId", profileId);
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    public String POST6(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("SharingID", testimonialModels.get(posi).getShared_ProfileID());
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();

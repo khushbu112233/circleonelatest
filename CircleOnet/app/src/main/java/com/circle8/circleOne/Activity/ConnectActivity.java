@@ -730,7 +730,7 @@ public class ConnectActivity extends AppCompatActivity
     protected void onResume()
     {
         super.onResume();
-        new HttpAsyncTask().execute(Utility.BASE_URL+"ConnectProfile");
+        //new HttpAsyncTask().execute(Utility.BASE_URL+"ConnectProfile");
     }
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String>
