@@ -234,6 +234,8 @@ public class GridViewAdapter extends BaseSwipeAdapter
                 intent.putExtra("tag_id", nfcModelList1.get(position).getNfc_tag());
                 intent.putExtra("profile_id", nfcModelList1.get(position).getProfile_id());
                 intent.putExtra("DateInitiated", nfcModelList1.get(position).getDateInitiated());
+                intent.putExtra("lat", nfcModelList1.get(position).getLatitude());
+                intent.putExtra("long", nfcModelList1.get(position).getLongitude());
                 context.startActivity(intent);
             }
         });
@@ -246,6 +248,8 @@ public class GridViewAdapter extends BaseSwipeAdapter
                 intent.putExtra("tag_id", nfcModelList1.get(position).getNfc_tag());
                 intent.putExtra("profile_id", nfcModelList1.get(position).getProfile_id());
                 intent.putExtra("DateInitiated", nfcModelList1.get(position).getDateInitiated());
+                intent.putExtra("lat", nfcModelList1.get(position).getLatitude());
+                intent.putExtra("long", nfcModelList1.get(position).getLongitude());
                 context.startActivity(intent);
             }
         });

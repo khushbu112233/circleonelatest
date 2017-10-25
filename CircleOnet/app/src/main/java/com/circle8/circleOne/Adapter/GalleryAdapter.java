@@ -70,6 +70,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             Intent intent = new Intent(mContext, CardDetail.class);
             intent.putExtra("profile_id", nfcModelList.get(position).getProfile_id());
             intent.putExtra("DateInitiated",nfcModelList.get(position).getDateInitiated());
+            intent.putExtra("lat", nfcModelList.get(position).getLatitude());
+            intent.putExtra("long", nfcModelList.get(position).getLongitude());
             mContext.startActivity(intent);
         }
     }
@@ -184,6 +186,9 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, CardDetail.class);
                 intent.putExtra("profile_id", nfcModelList.get(position).getProfile_id());
+                intent.putExtra("DateInitiated",nfcModelList.get(position).getDateInitiated());
+                intent.putExtra("lat", nfcModelList.get(position).getLatitude());
+                intent.putExtra("long", nfcModelList.get(position).getLongitude());
                 mContext.startActivity(intent);
             }
         });
@@ -254,6 +259,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             Intent intent = new Intent(mContext, CardDetail.class);
             intent.putExtra("profile_id", nfcModelList.get(posi).getProfile_id());
             intent.putExtra("DateInitiated",nfcModelList.get(posi).getDateInitiated());
+            intent.putExtra("lat", nfcModelList.get(posi).getLatitude());
+            intent.putExtra("long", nfcModelList.get(posi).getLongitude());
             mContext.startActivity(intent);
             return true;
         }

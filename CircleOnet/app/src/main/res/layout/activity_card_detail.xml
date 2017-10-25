@@ -931,6 +931,7 @@
                 android:id="@+id/tvDateInitiated"/>
 
             <LinearLayout
+                android:id="@+id/lnrNfcLocation"
                 android:layout_marginTop="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -949,7 +950,7 @@
                     android:id="@+id/txtRemark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="246 Macpherson Road.Betime Building #03-04.Singapore 348578"
+                    android:hint=""
                     android:textColor="#6b6c6e"
                     android:textSize="13sp" />
             </LinearLayout>

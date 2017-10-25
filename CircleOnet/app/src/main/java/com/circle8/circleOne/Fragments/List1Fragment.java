@@ -722,6 +722,8 @@ public class List1Fragment extends Fragment
                          + " " + object.getString("Address3") + " " + object.getString("Address4"));
 //                        Toast.makeText(getActivity(),"Profile_id"+object.getString("ProfileId"),Toast.LENGTH_SHORT).show();
                         nfcModelTag.setNfc_tag("en000000001");
+                        nfcModelTag.setLatitude(object.getString("Latitude"));
+                        nfcModelTag.setLongitude(object.getString("Longitude"));
                         allTags.add(nfcModelTag);
 
                         GetData(mContext);
@@ -1118,6 +1120,8 @@ public class List1Fragment extends Fragment
                             connectModel.setGoogle_id(iCon.getString("Google"));
                             connectModel.setLinkedin_id(iCon.getString("LinkedIn"));
                             connectModel.setWebsite(iCon.getString("Website"));
+                            connectModel.setLatitude(iCon.getString("Latitude"));
+                            connectModel.setLongitude(iCon.getString("Longitude"));
                             allTags.add(connectModel);
 
                             GetData(mContext);
@@ -1211,6 +1215,8 @@ public class List1Fragment extends Fragment
             nfcModelTag.setNfc_tag(reTag.getNfc_tag());
             nfcModelTag.setProfile_id(reTag.getProfile_id());
             nfcModelTag.setDateInitiated(reTag.getDateInitiated());
+            nfcModelTag.setLatitude(reTag.getLatitude());
+            nfcModelTag.setLongitude(reTag.getLongitude());
             nfcModel.add(nfcModelTag);
         }
 

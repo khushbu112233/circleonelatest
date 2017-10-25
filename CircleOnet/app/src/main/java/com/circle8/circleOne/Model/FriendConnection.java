@@ -34,6 +34,8 @@ public class FriendConnection
     String FirstName = "";
     String LastName = "";
     String DateInitiated = "";
+    String Longitude = "";
+    String Latitude = "";
 
 
     public String getProfile_id() {
@@ -47,7 +49,7 @@ public class FriendConnection
     public FriendConnection() {
     }
 
-    public FriendConnection(String name, String company, String designation, String mob_no, String work_no, String ph_no, String email, String website, String address, String lat, String lng, String remark, String fb_id, String linkedin_id, String google_id, String twitter_id, String youtube_id, String card_front, String card_back, String active, String nfc_tag, String user_image, String date, String profile_id) {
+    public FriendConnection(String name, String company, String designation, String mob_no, String work_no, String ph_no, String email, String website, String address, String lat, String lng, String remark, String fb_id, String linkedin_id, String google_id, String twitter_id, String youtube_id, String card_front, String card_back, String active, String nfc_tag, String user_image, String date, String profile_id, String Latitude,  String Longitude) {
         this.name = name;
         this.company = company;
         this.designation = designation;
@@ -72,6 +74,24 @@ public class FriendConnection
         this.user_image = user_image;
         this.date = date;
         this.profile_id = profile_id ;
+        this.Latitude = Latitude;
+        this.Longitude = Longitude;
+    }
+
+    public String getLongitude() {
+        return Longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        Longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return Latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        Latitude = latitude;
     }
 
     public String getUserID() {

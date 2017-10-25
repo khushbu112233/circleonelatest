@@ -860,6 +860,8 @@ public class ConnectActivity extends AppCompatActivity
                         intent.putExtra("tag_id", "");
                         intent.putExtra("profile_id", friendProfile_id);
                         intent.putExtra("DateInitiated","");
+                        intent.putExtra("lat", "");
+                        intent.putExtra("long", "");
                         startActivity(intent);
                         finish();
                     }

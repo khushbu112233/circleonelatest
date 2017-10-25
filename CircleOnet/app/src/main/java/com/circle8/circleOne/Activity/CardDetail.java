@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
@@ -19,6 +21,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -70,6 +73,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import be.appfoundry.nfclibrary.activities.NfcActivity;
 import be.appfoundry.nfclibrary.utilities.interfaces.NfcReadUtility;
@@ -129,6 +133,8 @@ public class CardDetail extends NfcActivity
     TextView txtAttachment, lblAttachment;
     ReferralCodeSession referralCodeSession;
     String refer;
+    double Latitude, Longitude;
+    LinearLayout lnrNfcLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -153,6 +159,7 @@ public class CardDetail extends NfcActivity
         imgSMS = (ImageView) findViewById(R.id.imgSMS);
         imgMail = (ImageView) findViewById(R.id.imgMail);
         imgMap = (ImageView) findViewById(R.id.ivMap);
+        lnrNfcLocation = (LinearLayout) findViewById(R.id.lnrNfcLocation);
         imgProfileCard = (CircleImageView) findViewById(R.id.imgProfileCard);
         db = new DatabaseHelper(getApplicationContext());
         txtName = (TextView) findViewById(R.id.txtName);
@@ -203,7 +210,20 @@ public class CardDetail extends NfcActivity
         Intent intent = getIntent();
         profile_id = intent.getStringExtra("profile_id");
         DateInitiated = intent.getStringExtra("DateInitiated");
+        String lat = intent.getStringExtra("lat");
+        String lon = intent.getStringExtra("long");
 
+
+        if ((lat.equals("") || lat.equals("null") || lat == null || lat.isEmpty()) && (lon.equals("") || lon.equals("null") || lon == null || lon.isEmpty()))
+        {
+            lnrNfcLocation.setVisibility(View.GONE);
+
+        }else {
+            lnrNfcLocation.setVisibility(View.VISIBLE);
+            Latitude = Double.parseDouble(lat);
+            Longitude = Double.parseDouble(lon);
+            getAddress();
+        }
 //        Toast.makeText(getApplicationContext(), DateInitiated.toString(),Toast.LENGTH_SHORT).show();
 
 
@@ -845,6 +865,76 @@ public class CardDetail extends NfcActivity
         });
     }
 
+
+    public Address getAddress(double latitude, double longitude)
+    {
+        Geocoder geocoder;
+        List<Address> addresses;
+        geocoder = new Geocoder(this, Locale.getDefault());
+
+        try {
+            addresses = geocoder.getFromLocation(latitude,longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+            return addresses.get(0);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
+
+
+    public void getAddress()
+    {
+
+        Address locationAddress=getAddress(Latitude,Longitude);
+
+        if(locationAddress!=null)
+        {
+            String address = locationAddress.getAddressLine(0);
+            String address1 = locationAddress.getAddressLine(1);
+            String city = locationAddress.getLocality();
+            String state = locationAddress.getAdminArea();
+            String country = locationAddress.getCountryName();
+            String postalCode = locationAddress.getPostalCode();
+
+            String currentLocation;
+
+            if(!TextUtils.isEmpty(address))
+            {
+                currentLocation=address;
+
+                if (!TextUtils.isEmpty(address1))
+                    currentLocation+=" "+address1;
+
+                if (!TextUtils.isEmpty(city))
+                {
+                    currentLocation+=" "+city;
+
+                    if (!TextUtils.isEmpty(postalCode))
+                        currentLocation+=" - "+postalCode;
+                }
+                else
+                {
+                    if (!TextUtils.isEmpty(postalCode))
+                        currentLocation+=" "+postalCode;
+                }
+
+                if (!TextUtils.isEmpty(state))
+                    currentLocation+=" "+state;
+
+                if (!TextUtils.isEmpty(country))
+                    currentLocation+=" "+country;
+
+                txtRemark.setText(currentLocation);
+
+            }
+
+        }
+
+    }
+
     public String POST2(String url)
     {
         InputStream inputStream = null;
@@ -1418,7 +1508,7 @@ public class CardDetail extends NfcActivity
                             + " " + jsonObject.getString("City") + " " + jsonObject.getString("State")
                             + " " + jsonObject.getString("Country") + " " + jsonObject.getString("Postalcode");
 
-                    txtRemark.setText(personAddress);
+                   // txtRemark.setText(personAddress);
                     if (personName.equalsIgnoreCase("") || personName.equalsIgnoreCase(null)) {
                         txtName.setText("Person");
                     } else {
@@ -1727,7 +1817,7 @@ public class CardDetail extends NfcActivity
                             txtWork.setText(tag1.getWork_no());
                             txtMob.setText(tag1.getMob_no());
                             txtAddress.setText(tag1.getAddress());
-                            txtRemark.setText(tag1.getRemark());
+                          //  txtRemark.setText(tag1.getRemark());
                             txtDesi.setText(tag1.getDesignation());
                             image.add(String.valueOf(tag1.getCard_front()));   // its change from integer to string
                             image.add(String.valueOf(tag1.getCard_back()));    // its change from integer to string

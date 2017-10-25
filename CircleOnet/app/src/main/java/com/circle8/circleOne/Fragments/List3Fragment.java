@@ -161,6 +161,8 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                 intent.putExtra("tag_id", nfcModel1.get(position).getNfc_tag());
                 intent.putExtra("profile_id", nfcModel1.get(position).getProfile_id());
                 intent.putExtra("DateInitiated",nfcModel1.get(position).getDateInitiated());
+                intent.putExtra("lat", nfcModel1.get(position).getLatitude());
+                intent.putExtra("long", nfcModel1.get(position).getLongitude());
                 getContext().startActivity(intent);
             }
         });
@@ -516,6 +518,8 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                             connectModel.setGoogle_id(iCon.getString("Google"));
                             connectModel.setLinkedin_id(iCon.getString("LinkedIn"));
                             connectModel.setWebsite(iCon.getString("Website"));
+                            connectModel.setLatitude(iCon.getString("Latitude"));
+                            connectModel.setLongitude(iCon.getString("Longitude"));
                             allTaggs.add(connectModel);
 
                             gridAdapter = new List3Adapter(getContext(), R.layout.grid_list3_layout, allTaggs);
@@ -672,6 +676,8 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                                 + object.getString("Address3") + object.getString("Address4"));
                         nfcModelTag.setDateInitiated(object.getString("DateInitiated"));
                         nfcModelTag.setNfc_tag("en000000001");
+                        nfcModelTag.setLatitude(object.getString("Latitude"));
+                        nfcModelTag.setLongitude(object.getString("Longitude"));
                         allTaggs.add(nfcModelTag);
 
                        /* gridAdapter = new List3Adapter(mContext, R.layout.grid_list3_layout, allTaggs);
@@ -836,6 +842,8 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
             nfcModelTag.setProfile_id(reTag.getProfile_id());
             nfcModelTag.setAddress(reTag.getAddress());
             nfcModelTag.setDateInitiated(reTag.getDateInitiated());
+            nfcModelTag.setLatitude(reTag.getLatitude());
+            nfcModelTag.setLongitude(reTag.getLongitude());
             nfcModel1.add(nfcModelTag);
         }
 

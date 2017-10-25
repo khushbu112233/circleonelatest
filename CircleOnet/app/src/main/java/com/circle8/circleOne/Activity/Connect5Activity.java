@@ -524,6 +524,9 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         {
             Intent in = new Intent(Connect5Activity.this, CardDetail.class);
             in.putExtra("profile_id", userProfileId1);
+            in.putExtra("DateInitiated", "");
+            in.putExtra("lat", "");
+            in.putExtra("long", "");
             startActivity(in);
             finish();
         }
@@ -531,6 +534,9 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         {
             Intent in = new Intent(Connect5Activity.this, CardDetail.class);
             in.putExtra("profile_id", userProfileId2);
+            in.putExtra("DateInitiated", "");
+            in.putExtra("lat", "");
+            in.putExtra("long", "");
             startActivity(in);
             finish();
         }
@@ -538,6 +544,9 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         {
             Intent in = new Intent(Connect5Activity.this, CardDetail.class);
             in.putExtra("profile_id", userProfileId3);
+            in.putExtra("DateInitiated", "");
+            in.putExtra("lat", "");
+            in.putExtra("long", "");
             startActivity(in);
             finish();
         }
@@ -545,6 +554,9 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         {
             Intent in = new Intent(Connect5Activity.this, CardDetail.class);
             in.putExtra("profile_id", userProfileId4);
+            in.putExtra("DateInitiated", "");
+            in.putExtra("lat", "");
+            in.putExtra("long", "");
             startActivity(in);
             finish();
         }
@@ -552,6 +564,9 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         {
             Intent in = new Intent(Connect5Activity.this, CardDetail.class);
             in.putExtra("profile_id", userProfileId5);
+            in.putExtra("DateInitiated", "");
+            in.putExtra("lat", "");
+            in.putExtra("long", "");
             startActivity(in);
             finish();
         }
@@ -559,6 +574,9 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         {
             Intent in = new Intent(Connect5Activity.this, CardDetail.class);
             in.putExtra("profile_id", userProfileId6);
+            in.putExtra("DateInitiated", "");
+            in.putExtra("lat", "");
+            in.putExtra("long", "");
             startActivity(in);
             finish();
         }
@@ -566,6 +584,9 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         {
             Intent in = new Intent(Connect5Activity.this, CardDetail.class);
             in.putExtra("profile_id", userProfileId7);
+            in.putExtra("DateInitiated", "");
+            in.putExtra("lat", "");
+            in.putExtra("long", "");
             startActivity(in);
             finish();
         }

@@ -378,6 +378,8 @@ public class List2Fragment extends Fragment
                             connectModel.setGoogle_id(iCon.getString("Google"));
                             connectModel.setLinkedin_id(iCon.getString("LinkedIn"));
                             connectModel.setWebsite(iCon.getString("Website"));
+                            connectModel.setLatitude(iCon.getString("Latitude"));
+                            connectModel.setLongitude(iCon.getString("Longitude"));
                             allTaggs.add(connectModel);
 
                             gridAdapter = new GridViewAdapter(getContext(), R.layout.grid_list2_layout, allTaggs);
@@ -576,6 +578,8 @@ public class List2Fragment extends Fragment
                                 + object.getString("Address3") + object.getString("Address4"));
                         nfcModelTag.setDateInitiated(object.getString("DateInitiated"));
                         nfcModelTag.setNfc_tag("en000000001");
+                        nfcModelTag.setLatitude(object.getString("Latitude"));
+                        nfcModelTag.setLongitude(object.getString("Longitude"));
                         allTaggs.add(nfcModelTag);
                         GetData(mContext);
                     }
@@ -963,6 +967,8 @@ public class List2Fragment extends Fragment
             nfcModelTag.setProfile_id(reTag.getProfile_id());
             nfcModelTag.setAddress(reTag.getAddress());
             nfcModelTag.setDateInitiated(reTag.getDateInitiated());
+            nfcModelTag.setLatitude(reTag.getLatitude());
+            nfcModelTag.setLongitude(reTag.getLongitude());
             nfcModel.add(nfcModelTag);
         }
 
