@@ -22,7 +22,7 @@ public class ProfileModel {
     String Association = "" ;
     String Industry = "";
     String Profile = "";
-
+    String ProfileName = "";
 
     public ProfileModel() {
     }
@@ -33,6 +33,14 @@ public class ProfileModel {
 
     public void setProfile(String profile) {
         Profile = profile;
+    }
+
+    public String getProfileName() {
+        return ProfileName;
+    }
+
+    public void setProfileName(String profileName) {
+        ProfileName = profileName;
     }
 
     public String getCompany_Profile() {

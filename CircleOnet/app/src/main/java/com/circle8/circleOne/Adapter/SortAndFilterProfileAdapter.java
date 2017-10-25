@@ -19,29 +19,23 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
- * Created by ample-arch on 9/19/2017.
+ * Created by ample-arch on 10/25/2017.
  */
 
-public class SortAndFilterAdapter extends BaseAdapter
+public class SortAndFilterProfileAdapter extends BaseAdapter
 {
     Context context ;
-    ArrayList<String> img = new ArrayList<>();
-    ArrayList<String> name = new ArrayList<>();
-    ArrayList<String> desc = new ArrayList<>();
+    ArrayList<ProfileModel> profileModelArrayList ;
 
-    ArrayList<GroupModel> groupModelsList ;
-
-    public SortAndFilterAdapter(SortAndFilterOption sortAndFilterOption, ArrayList<GroupModel> groupModelArrayList)
+    public SortAndFilterProfileAdapter(SortAndFilterOption sortAndFilterOption, ArrayList<ProfileModel> profileModelArrayList)
     {
         this.context = sortAndFilterOption ;
-        this.groupModelsList = groupModelArrayList ;
+        this.profileModelArrayList = profileModelArrayList ;
     }
-
-
 
     @Override
     public int getCount() {
-        return groupModelsList.size();
+        return profileModelArrayList.size();
     }
 
     @Override
@@ -56,8 +50,8 @@ public class SortAndFilterAdapter extends BaseAdapter
 
     static class ViewHolder
     {
-        TextView groupName ;
-        CircleImageView groupImg ;
+        TextView profileName ;
+        CircleImageView profileImg ;
     }
 
     @Override
@@ -72,8 +66,8 @@ public class SortAndFilterAdapter extends BaseAdapter
             vi = inflater.inflate(R.layout.sort_filter_groups, null);
             holder = new ViewHolder();
 
-            holder.groupImg = (CircleImageView)vi.findViewById(R.id.imgProfile1);
-            holder.groupName = (TextView)vi.findViewById(R.id.tvPersonName1);
+            holder.profileImg = (CircleImageView)vi.findViewById(R.id.imgProfile1);
+            holder.profileName = (TextView)vi.findViewById(R.id.tvPersonName1);
 
             vi.setTag(holder);
         }
@@ -82,15 +76,15 @@ public class SortAndFilterAdapter extends BaseAdapter
             holder = (ViewHolder)vi.getTag();
         }
 
-        holder.groupName.setText(groupModelsList.get(position).getGroup_Name());
+        holder.profileName.setText(profileModelArrayList.get(position).getProfileName());
 
-        if (groupModelsList.get(position).getGroup_Photo().equals(""))
+        if (profileModelArrayList.get(position).getUserPhoto().equals(""))
         {
-            holder.groupImg.setImageResource(R.drawable.usr_1);
+            holder.profileImg.setImageResource(R.drawable.usr_1);
         }
         else
         {
-            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Group/"+groupModelsList.get(position).getGroup_Photo()).placeholder(R.drawable.usr_1).into(holder.groupImg);
+            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+profileModelArrayList.get(position).getUserPhoto()).placeholder(R.drawable.usr_1).into(holder.profileImg);
         }
 
         return vi;

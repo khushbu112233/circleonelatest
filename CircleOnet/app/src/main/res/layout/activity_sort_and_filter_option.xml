@@ -370,7 +370,7 @@
             </RelativeLayout>
             <com.circle8.circleOne.Utils.ExpandableHeightListView
                 android:visibility="gone"
-                android:id="@+id/listView"
+                android:id="@+id/listViewEx1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
@@ -382,36 +382,90 @@
 
             </com.circle8.circleOne.Utils.ExpandableHeightListView>
 
-<!--
-            <LinearLayout
+            <RelativeLayout
+                android:layout_gravity="center_vertical"
                 android:layout_marginTop="15dp"
-                android:gravity="center_vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/imgProfileIcon"
+                    android:layout_centerVertical="true"
                     android:backgroundTint="@color/colorAccent"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:id="@+id/drawer10"
-                    android:src="@drawable/ic_tag1"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/ic_icon4b"
                     android:layout_marginLeft="10dp"
                     android:contentDescription="Home!"
                     android:layout_marginTop="0dp" />
 
-                <TextView
+                <com.circle8.circleOne.Utils.cgTextView
+                    android:layout_toRightOf="@+id/imgProfileIcon"
+                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Group Tag 1"
-                    android:id="@+id/textDrawer10"
-                    android:textSize="16dp"
+                    android:text="By Profile"
+                    android:textSize="14dp"
                     android:layout_marginLeft="20dp"
                     android:textColor="@color/colorAccent" />
 
+                <ImageView
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/ivArrowImg2"
+                    android:layout_width="40dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="0dp"
+                    android:src="@drawable/ic_right_arrow_blue" />
 
-            </LinearLayout>
--->
+            </RelativeLayout>
+
+            <com.circle8.circleOne.Utils.ExpandableHeightListView
+                android:visibility="gone"
+                android:id="@+id/listViewEx2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="10dp"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="0dp">
+
+            </com.circle8.circleOne.Utils.ExpandableHeightListView>
+
+            <!--
+                        <LinearLayout
+                            android:layout_marginTop="15dp"
+                            android:gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:backgroundTint="@color/colorAccent"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:id="@+id/drawer10"
+                                android:src="@drawable/ic_tag1"
+                                android:layout_marginLeft="10dp"
+                                android:contentDescription="Home!"
+                                android:layout_marginTop="0dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Group Tag 1"
+                                android:id="@+id/textDrawer10"
+                                android:textSize="16dp"
+                                android:layout_marginLeft="20dp"
+                                android:textColor="@color/colorAccent" />
+
+
+                        </LinearLayout>
+            -->
 
 <!--
             <LinearLayout

@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,9 +20,11 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
 {
     private ImageView ivMessage, ivPhone ;
     private TextView tvAddress1, tvAddress2, tvWebsite, tvEmail, tvPhone, tvFax ;
-    private TextView tvCompany, tvPartner ;
+    private TextView tvCompany, tvPartner, tvSend, tvCancel;
+    private EditText etSubject, etDescription ;
     private ImageView imgBack;
     private LinearLayout lnrAddress, lnrEmail, lnrContact, lnrWebsite ;
+    private String subject, description ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -36,6 +39,10 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
         tvEmail = (TextView)findViewById(R.id.tvMail);
         tvPhone = (TextView)findViewById(R.id.tvPhone);
         tvFax = (TextView)findViewById(R.id.tvWork);
+        tvSend = (TextView)findViewById(R.id.tvSend);
+        tvCancel = (TextView)findViewById(R.id.tvCancel);
+        etSubject = (EditText)findViewById(R.id.etSubject);
+        etDescription = (EditText)findViewById(R.id.etDescription);
 
         lnrAddress = (LinearLayout)findViewById(R.id.lnrAddress);
         lnrEmail = (LinearLayout)findViewById(R.id.llMailBox);
@@ -49,6 +56,8 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
         ivMessage.setOnClickListener(this);
         ivPhone.setOnClickListener(this);
         lnrWebsite.setOnClickListener(this);
+        tvSend.setOnClickListener(this);
+        tvCancel.setOnClickListener(this);
 
     }
 
@@ -166,6 +175,28 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
                     })
                     .setIcon(android.R.drawable.ic_menu_set_as)
                     .show();
+        }
+        if ( v == tvSend)
+        {
+            subject = etSubject.getText().toString();
+            description = etDescription.getText().toString();
+
+            if (subject.isEmpty())
+            {
+                Toast.makeText(getApplicationContext(),"Enter Subject",Toast.LENGTH_SHORT).show();
+            }
+            else if (description.isEmpty())
+            {
+                Toast.makeText(getApplicationContext(),"Enter Description",Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(),"Send",Toast.LENGTH_SHORT).show();
+            }
+        }
+        if ( v == tvCancel)
+        {
+            finish();
         }
     }
 }

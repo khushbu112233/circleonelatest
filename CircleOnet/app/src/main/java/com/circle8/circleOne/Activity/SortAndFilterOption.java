@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.circle8.circleOne.Adapter.GroupsItemsAdapter;
 import com.circle8.circleOne.Adapter.SortAndFilterAdapter;
+import com.circle8.circleOne.Adapter.SortAndFilterProfileAdapter;
 import com.circle8.circleOne.Fragments.List1Fragment;
 import com.circle8.circleOne.Fragments.List2Fragment;
 import com.circle8.circleOne.Fragments.List3Fragment;
@@ -30,6 +31,7 @@ import com.circle8.circleOne.Fragments.List4Fragment;
 import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.GroupModel;
+import com.circle8.circleOne.Model.ProfileModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.ExpandableHeightListView;
 import com.circle8.circleOne.Utils.Utility;
@@ -61,15 +63,18 @@ public class SortAndFilterOption extends AppCompatActivity
     DatabaseHelper db;
     public static String SortType = "desc";
     LinearLayout lnrAllCards;
-    ExpandableHeightListView listView ;
+    ExpandableHeightListView listView, listView1, listView2 ;
     private LoginSession session;
-    private String user_id ;
-    private ImageView ivArrowImg, ivArrowImg1;
+    private String user_id, profile_id ;
+    private ImageView ivArrowImg, ivArrowImg1, ivArrowImg2;
     private String arrowStatus = "RIGHT";
     private String arrowStatus1 = "RIGHT";
+    private String arrowStatus2 = "RIGHT";
 
     public static ArrayList<GroupModel> groupModelArrayList;
+    public static ArrayList<ProfileModel> profileModelArrayList ;
     SortAndFilterAdapter sortAndFilterAdapter ;
+    SortAndFilterProfileAdapter sortAndFilterProfileAdapter ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -93,15 +98,22 @@ public class SortAndFilterOption extends AppCompatActivity
         lnrSortName = (LinearLayout) findViewById(R.id.lnrSortName);
         lnrSortCompany = (LinearLayout) findViewById(R.id.lnrSortCompany);
         lnrAllCards = (LinearLayout) findViewById(R.id.lnrAllCards);
-        listView = (ExpandableHeightListView)findViewById(R.id.listView);
+        listView1 = (ExpandableHeightListView)findViewById(R.id.listViewEx1);
+        listView2 = (ExpandableHeightListView)findViewById(R.id.listViewEx2);
         ivArrowImg1 = (ImageView) findViewById(R.id.ivArrowImg1);
+        ivArrowImg2 = (ImageView) findViewById(R.id.ivArrowImg2);
         imgLogo.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
+
         session = new LoginSession(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
         user_id = user.get(LoginSession.KEY_USERID);
+        profile_id = user.get(LoginSession.KEY_PROFILEID);
+
         groupModelArrayList = new ArrayList<>();
+        profileModelArrayList = new ArrayList<>();
 
         new HttpAsyncTaskfetchGroup().execute(Utility.BASE_URL+"Group/Fetch");
+        new HttpAsyncTaskFetchProfile().execute("http://circle8.asia:8082/Onet.svc/GetProfileConnection");
 
         lnrAllCards.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,14 +177,33 @@ public class SortAndFilterOption extends AppCompatActivity
                 if (arrowStatus1.equalsIgnoreCase("RIGHT"))
                 {
                     ivArrowImg1.setImageResource(R.drawable.ic_down_arrow_blue);
-                    listView.setVisibility(View.VISIBLE);
+                    listView1.setVisibility(View.VISIBLE);
                     arrowStatus1 = "DOWN";
                 }
                 else if (arrowStatus1.equalsIgnoreCase("DOWN"))
                 {
                     ivArrowImg1.setImageResource(R.drawable.ic_right_arrow_blue);
-                    listView.setVisibility(View.GONE);
+                    listView1.setVisibility(View.GONE);
                     arrowStatus1 = "RIGHT";
+                }
+            }
+        });
+
+        ivArrowImg2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                if (arrowStatus2.equalsIgnoreCase("RIGHT"))
+                {
+                    ivArrowImg2.setImageResource(R.drawable.ic_down_arrow_blue);
+                    listView2.setVisibility(View.VISIBLE);
+                    arrowStatus2 = "DOWN";
+                }
+                else if (arrowStatus2.equalsIgnoreCase("DOWN"))
+                {
+                    ivArrowImg2.setImageResource(R.drawable.ic_right_arrow_blue);
+                    listView2.setVisibility(View.GONE);
+                    arrowStatus2 = "RIGHT";
                 }
             }
         });
@@ -496,7 +527,7 @@ public class SortAndFilterOption extends AppCompatActivity
 
                     if (jsonArray.length() == 0)
                     {
-                        listView.setVisibility(View.GONE);
+                        listView1.setVisibility(View.GONE);
                         //txtGroup.setVisibility(View.VISIBLE);
                     }
                     else
@@ -596,8 +627,8 @@ public class SortAndFilterOption extends AppCompatActivity
                     }
 
                     sortAndFilterAdapter = new SortAndFilterAdapter(SortAndFilterOption.this, groupModelArrayList);
-                    listView.setAdapter(sortAndFilterAdapter);
-                    listView.setExpanded(true);
+                    listView1.setAdapter(sortAndFilterAdapter);
+                    listView1.setExpanded(true);
                     sortAndFilterAdapter.notifyDataSetChanged();
 
                     // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
@@ -614,10 +645,87 @@ public class SortAndFilterOption extends AppCompatActivity
         }
     }
 
-    public String FetchGroupPost(String url) {
+    private class HttpAsyncTaskFetchProfile extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+           /* dialog = new ProgressDialog(SortAndFilterOption.this);
+            dialog.setMessage("Fetching Groups...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return FetchProfilePost(urls[0]);
+        }
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            try
+            {
+                if (result != null)
+                {
+                    JSONObject jsonObject = new JSONObject(result);
+
+                    String profileID = jsonObject.getString("profileid");
+
+                    JSONArray jsonArray = jsonObject.getJSONArray("connection");
+                    //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
+
+                    if (jsonArray.length() == 0)
+                    {
+                        listView2.setVisibility(View.GONE);
+                        //txtGroup.setVisibility(View.VISIBLE);
+                    }
+                    else
+                    {
+                        // listView.setVisibility(View.VISIBLE);
+                        // txtGroup.setVisibility(View.GONE);
+                    }
+
+                    for (int i = 0; i < jsonArray.length() ; i++)
+                    {
+                        JSONObject object = jsonArray.getJSONObject(i);
+
+                        ProfileModel nfcModelTag = new ProfileModel();
+                        nfcModelTag.setUserID(object.getString("UserID"));
+                        nfcModelTag.setProfileName(object.getString("ProfileName"));
+                        nfcModelTag.setUserPhoto(object.getString("UserPhoto"));
+                        profileModelArrayList.add(nfcModelTag);
+                    }
+
+                    sortAndFilterProfileAdapter = new SortAndFilterProfileAdapter(SortAndFilterOption.this, profileModelArrayList);
+                    listView2.setAdapter(sortAndFilterProfileAdapter);
+                    listView2.setExpanded(true);
+                    sortAndFilterProfileAdapter.notifyDataSetChanged();
+                    // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                }
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public String FetchGroupPost(String url)
+    {
         InputStream inputStream = null;
         String result = "";
-        try {
+        try
+        {
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
 
@@ -628,7 +736,65 @@ public class SortAndFilterOption extends AppCompatActivity
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("UserId", user_id);
-            jsonObject.accumulate("numofrecords", "50");
+            jsonObject.accumulate("numofrecords", "100");
+            jsonObject.accumulate("pageno", "1");
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    public String FetchProfilePost(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("ProfileID", profile_id);
+            jsonObject.accumulate("Type", "desc");
+            jsonObject.accumulate("numofrecords", "100");
             jsonObject.accumulate("pageno", "1");
 
             // 4. convert JSONObject to JSON to String
@@ -678,7 +844,6 @@ public class SortAndFilterOption extends AppCompatActivity
 
         inputStream.close();
         return result;
-
     }
 
 }
