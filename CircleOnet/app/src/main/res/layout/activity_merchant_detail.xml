@@ -46,7 +46,8 @@
     <ScrollView
         android:layout_below="@+id/rlTabBar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,16 +59,18 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:weightSum="1">
-                <com.circle8.circleOne.Utils.cgTextView
+                android:weightSum="1"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp">
+                <com.circle8.circleOne.Utils.cgBoldTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Starbucks Singapore"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/gray_text"
                     android:layout_centerVertical="true"
                     android:textSize="17dp"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="0dp"
                     android:layout_weight="0.5"/>
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -80,6 +83,33 @@
                     android:layout_gravity="center"
                     android:layout_weight="0.5"/>
             </LinearLayout>
+
+            <com.circle8.circleOne.Utils.cgTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/merchant_item_detail"
+                android:textColor="@color/gray_text"
+                android:textSize="12dp"
+                android:textAlignment="gravity"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"/>
+
+            <com.circle8.circleOne.Utils.cgTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="More info"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14dp"
+                android:textAlignment="gravity"
+                android:layout_gravity="right"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"/>
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </ListView>
 
 
 
