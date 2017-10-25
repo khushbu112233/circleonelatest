@@ -174,7 +174,7 @@
 
     <TextView
         android:textAlignment="center"
-        android:visibility="visible"
+        android:visibility="gone"
         android:id="@+id/txtNoCard1"
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"

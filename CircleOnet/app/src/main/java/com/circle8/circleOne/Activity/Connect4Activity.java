@@ -118,12 +118,12 @@ public class Connect4Activity extends AppCompatActivity
               //  txtCongratulations.setVisibility(View.GONE);
                 txtAsk.setVisibility(View.GONE);
                 txtLink.setText("You have no established connections");
-                level1.setVisibility(View.GONE);
-                level2.setVisibility(View.GONE);
-                level3.setVisibility(View.GONE);
-                level4.setVisibility(View.GONE);
-                level5.setVisibility(View.GONE);
-                level6.setVisibility(View.GONE);
+                level1.setVisibility(View.INVISIBLE);
+                level2.setVisibility(View.INVISIBLE);
+                level3.setVisibility(View.INVISIBLE);
+                level4.setVisibility(View.INVISIBLE);
+                level5.setVisibility(View.INVISIBLE);
+                level6.setVisibility(View.INVISIBLE);
             }
             else if (level.equals("1"))
             {
@@ -131,11 +131,11 @@ public class Connect4Activity extends AppCompatActivity
                 txtAsk.setVisibility(View.VISIBLE);
                 txtLink.setText("you are now 1 connection away");
                 level1.setVisibility(View.VISIBLE);
-                level2.setVisibility(View.GONE);
-                level3.setVisibility(View.GONE);
-                level4.setVisibility(View.GONE);
-                level5.setVisibility(View.GONE);
-                level6.setVisibility(View.GONE);
+                level2.setVisibility(View.INVISIBLE);
+                level3.setVisibility(View.INVISIBLE);
+                level4.setVisibility(View.INVISIBLE);
+                level5.setVisibility(View.INVISIBLE);
+                level6.setVisibility(View.INVISIBLE);
             }
             else if (level.equals("2"))
             {
@@ -144,10 +144,10 @@ public class Connect4Activity extends AppCompatActivity
                 txtLink.setText("you are now 2 connections away");
                 level1.setVisibility(View.VISIBLE);
                 level2.setVisibility(View.VISIBLE);
-                level3.setVisibility(View.GONE);
-                level4.setVisibility(View.GONE);
-                level5.setVisibility(View.GONE);
-                level6.setVisibility(View.GONE);
+                level3.setVisibility(View.INVISIBLE);
+                level4.setVisibility(View.INVISIBLE);
+                level5.setVisibility(View.INVISIBLE);
+                level6.setVisibility(View.INVISIBLE);
             }
             else if (level.equals("3"))
             {
@@ -157,9 +157,9 @@ public class Connect4Activity extends AppCompatActivity
                 level1.setVisibility(View.VISIBLE);
                 level2.setVisibility(View.VISIBLE);
                 level3.setVisibility(View.VISIBLE);
-                level4.setVisibility(View.GONE);
-                level5.setVisibility(View.GONE);
-                level6.setVisibility(View.GONE);
+                level4.setVisibility(View.INVISIBLE);
+                level5.setVisibility(View.INVISIBLE);
+                level6.setVisibility(View.INVISIBLE);
             }
             else if (level.equals("4"))
             {
@@ -170,8 +170,8 @@ public class Connect4Activity extends AppCompatActivity
                 level2.setVisibility(View.VISIBLE);
                 level3.setVisibility(View.VISIBLE);
                 level4.setVisibility(View.VISIBLE);
-                level5.setVisibility(View.GONE);
-                level6.setVisibility(View.GONE);
+                level5.setVisibility(View.INVISIBLE);
+                level6.setVisibility(View.INVISIBLE);
             }
             else if (level.equals("5"))
             {
@@ -183,7 +183,7 @@ public class Connect4Activity extends AppCompatActivity
                 level3.setVisibility(View.VISIBLE);
                 level4.setVisibility(View.VISIBLE);
                 level5.setVisibility(View.VISIBLE);
-                level6.setVisibility(View.GONE);
+                level6.setVisibility(View.INVISIBLE);
             }
             else if (level.equals("6"))
             {
