@@ -291,7 +291,7 @@ public class GridViewAdapter extends BaseSwipeAdapter
                 {
                     nfcModelList1.add(md);
                 }
-                CardsActivity.setActionBarTitle("Cards - " + nfcModelList1.size());
+                CardsActivity.setActionBarTitle("Cards - " + nfcModelList1.size() + " out of "+ CardsActivity.Connection_Limit);
             }
         }
         notifyDataSetChanged();

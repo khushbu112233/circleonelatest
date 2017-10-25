@@ -1225,7 +1225,7 @@ public class List1Fragment extends Fragment
             txtNoCard1.setVisibility(View.GONE);
         }
 
-        CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
+        CardsActivity.setActionBarTitle("Cards - " + nfcModel.size() + " out of "+ CardsActivity.Connection_Limit);
 //        CardsActivity.setActionBarTitle("Cards - "+number_cards);
         initRecyclerView1(recyclerView1, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter);
         initRecyclerView2(recyclerView2, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter1);

@@ -927,6 +927,8 @@ public class LoginActivity extends AppCompatActivity implements
                         String Phone = jsonArray.getString("Phone");
                         String UserName = jsonArray.getString("UserName");
                         String dob = jsonArray.getString("dob");
+                        String Connection_Limit = jsonArray.getString("Connection_Limit");
+                        String Connection_Left = jsonArray.getString("Connection_Left");
 
 
                         try {
@@ -941,31 +943,31 @@ public class LoginActivity extends AppCompatActivity implements
                                 HashMap<String, String> user = loginSession.getUserDetails();
                                 try {
                                     if ((user.get(LoginSession.KEY_EMAIL).equalsIgnoreCase(UserName)) && (user.get(LoginSession.KEY_PASSWORD).equalsIgnoreCase(userPassword))) {
-                                        UserObject userData = new UserObject(user.get(LoginSession.KEY_PROFILEID), user.get(LoginSession.KEY_NAME), user.get(LoginSession.KEY_EMAIL), user.get(LoginSession.KEY_PASSWORD), UserID, Gender, UserPhoto, dob, Phone, false);
+                                        UserObject userData = new UserObject(user.get(LoginSession.KEY_PROFILEID), user.get(LoginSession.KEY_NAME), user.get(LoginSession.KEY_EMAIL), user.get(LoginSession.KEY_PASSWORD), UserID, Gender, UserPhoto, dob, Phone, Connection_Limit, Connection_Left, false);
                                         String userDataString = gson.toJson(userData);
                                         CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
                                         pref.setUserData(userDataString);
 
-                                        loginSession.createLoginSession(user.get(LoginSession.KEY_PROFILEID), UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone);
+                                        loginSession.createLoginSession(user.get(LoginSession.KEY_PROFILEID), UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone, Connection_Limit, Connection_Left );
                                         HashMap<String, String> profile = profileSession.getProfileDetails();
                                         profileSession.createProfileSession(profile.get(ProfileSession.KEY_PROFILE_INDEX));
                                     } else {
-                                        UserObject userData = new UserObject(profileid, FirstName + " " + LastName, UserName, userPassword, UserID, Gender, UserPhoto, dob, Phone, false);
+                                        UserObject userData = new UserObject(profileid, FirstName + " " + LastName, UserName, userPassword, UserID, Gender, UserPhoto, dob, Phone, Connection_Limit, Connection_Left, false);
                                         String userDataString = gson.toJson(userData);
                                         CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
                                         pref.setUserData(userDataString);
 
-                                        loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone);
+                                        loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone, Connection_Limit, Connection_Left);
                                         profileSession.createProfileSession("0");
                                     }
                                 }
                                 catch (Exception e){
-                                    UserObject userData = new UserObject(profileid, FirstName + " " + LastName, UserName, userPassword, UserID, Gender, UserPhoto, dob, Phone, false);
+                                    UserObject userData = new UserObject(profileid, FirstName + " " + LastName, UserName, userPassword, UserID, Gender, UserPhoto, dob, Phone, Connection_Limit, Connection_Left, false);
                                     String userDataString = gson.toJson(userData);
                                     CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
                                     pref.setUserData(userDataString);
 
-                                    loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone);
+                                    loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone, Connection_Limit, Connection_Left);
                                     profileSession.createProfileSession("0");
                                 }
                                 if (prefs.getBoolean("firstrun", true)) {
@@ -1056,18 +1058,18 @@ public class LoginActivity extends AppCompatActivity implements
                                 try {
                                     if ((user.get(LoginSession.KEY_EMAIL).equalsIgnoreCase(UserName)) && (user.get(LoginSession.KEY_PASSWORD).equalsIgnoreCase(userPassword))) {
 
-                                        loginSession.createLoginSession(user.get(LoginSession.KEY_PROFILEID), UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone);
+                                        loginSession.createLoginSession(user.get(LoginSession.KEY_PROFILEID), UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone, Connection_Limit, Connection_Left);
                                         HashMap<String, String> profile = profileSession.getProfileDetails();
                                         profileSession.createProfileSession(profile.get(ProfileSession.KEY_PROFILE_INDEX));
 
                                     } else {
-                                        loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone);
+                                        loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone, Connection_Limit, Connection_Left);
                                         // HashMap<String, String> profile = profileSession.getProfileDetails();
                                         profileSession.createProfileSession("0");
 
                                     }
                                 }catch (Exception e){
-                                    loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone);
+                                    loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone, Connection_Limit, Connection_Left);
                                     // HashMap<String, String> profile = profileSession.getProfileDetails();
                                     profileSession.createProfileSession("0");
                                 }
@@ -1901,6 +1903,9 @@ public class LoginActivity extends AppCompatActivity implements
                         String Phone = jsonArray.getString("Phone");
                         String UserName = jsonArray.getString("UserName");
                         String dob = jsonArray.getString("dob");
+                        String Connection_Limit = jsonArray.getString("Connection_Limit");
+                        String Connection_Left = jsonArray.getString("Connection_Left");
+
                         referralCodeSession.createReferral(jsonArray.getString("ReferrenceCode"));
                         if (Status.equalsIgnoreCase("Verified")) {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -1912,31 +1917,31 @@ public class LoginActivity extends AppCompatActivity implements
                                 try {
 
                                     if ((user.get(LoginSession.KEY_EMAIL).equalsIgnoreCase(UserName))) {
-                                        UserObject userData = new UserObject(user.get(LoginSession.KEY_PROFILEID), user.get(LoginSession.KEY_NAME), user.get(LoginSession.KEY_EMAIL), "", UserID, Gender, UserPhoto, dob, Phone, false);
+                                        UserObject userData = new UserObject(user.get(LoginSession.KEY_PROFILEID), user.get(LoginSession.KEY_NAME), user.get(LoginSession.KEY_EMAIL), "", UserID, Gender, UserPhoto, dob, Phone, Connection_Limit, Connection_Left, false);
                                         String userDataString = gson.toJson(userData);
                                         CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
                                         pref.setUserData(userDataString);
 
-                                        loginSession.createLoginSession(user.get(LoginSession.KEY_PROFILEID), UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone);
+                                        loginSession.createLoginSession(user.get(LoginSession.KEY_PROFILEID), UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone, Connection_Limit, Connection_Left);
                                         HashMap<String, String> profile = profileSession.getProfileDetails();
                                         profileSession.createProfileSession(profile.get(ProfileSession.KEY_PROFILE_INDEX));
                                     } else {
-                                        UserObject userData = new UserObject(profileid, FirstName + " " + LastName, UserName, "", UserID, Gender, UserPhoto, dob, Phone, false);
+                                        UserObject userData = new UserObject(profileid, FirstName + " " + LastName, UserName, "", UserID, Gender, UserPhoto, dob, Phone, Connection_Limit, Connection_Left, false);
                                         String userDataString = gson.toJson(userData);
                                         CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
                                         pref.setUserData(userDataString);
 
-                                        loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone);
+                                        loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone, Connection_Limit, Connection_Left);
                                         profileSession.createProfileSession("0");
                                     }
                                 }
                                 catch (Exception e){
-                                    UserObject userData = new UserObject(profileid, FirstName + " " + LastName, UserName, "", UserID, Gender, UserPhoto, dob, Phone, false);
+                                    UserObject userData = new UserObject(profileid, FirstName + " " + LastName, UserName, "", UserID, Gender, UserPhoto, dob, Phone, Connection_Limit, Connection_Left, false);
                                     String userDataString = gson.toJson(userData);
                                     CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
                                     pref.setUserData(userDataString);
 
-                                    loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone);
+                                    loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone, Connection_Limit, Connection_Left);
                                     profileSession.createProfileSession("0");
                                 }
 
@@ -2031,19 +2036,19 @@ public class LoginActivity extends AppCompatActivity implements
                                 try {
                                     if ((user.get(LoginSession.KEY_EMAIL).equalsIgnoreCase(UserName))) {
 
-                                        loginSession.createLoginSession(user.get(LoginSession.KEY_PROFILEID), UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone);
+                                        loginSession.createLoginSession(user.get(LoginSession.KEY_PROFILEID), UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone, Connection_Limit, Connection_Left);
                                         HashMap<String, String> profile = profileSession.getProfileDetails();
                                         profileSession.createProfileSession(profile.get(ProfileSession.KEY_PROFILE_INDEX));
 
                                     } else {
-                                        loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone);
+                                        loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone, Connection_Limit, Connection_Left);
                                         // HashMap<String, String> profile = profileSession.getProfileDetails();
                                         profileSession.createProfileSession("0");
 
                                     }
                                 }
                                 catch (Exception e){
-                                    loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone);
+                                    loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone, Connection_Limit, Connection_Left);
                                     // HashMap<String, String> profile = profileSession.getProfileDetails();
                                     profileSession.createProfileSession("0");
                                 }

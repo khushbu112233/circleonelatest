@@ -119,6 +119,7 @@ public class SortAndFilterOption extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 SortType = "asc";
+                List1Fragment.allTags.clear();
                 List1Fragment.progressStatus = "FILTER";
                 try
                 {
@@ -215,6 +216,7 @@ public class SortAndFilterOption extends AppCompatActivity
             public void onClick(View v)
             {
                 SortType = "desc";
+                List1Fragment.allTags.clear();
                 List1Fragment.progressStatus = "FILTER";
                 try
                 {
@@ -273,6 +275,7 @@ public class SortAndFilterOption extends AppCompatActivity
             public void onClick(View v) {
                 SortType = "Name";
                 List1Fragment.progressStatus = "FILTER";
+                List1Fragment.allTags.clear();
                 try {
                     List2Fragment.gridAdapter.notifyDataSetChanged();
                     List2Fragment.allTags = db.getActiveNFC();
@@ -329,6 +332,7 @@ public class SortAndFilterOption extends AppCompatActivity
             public void onClick(View v) {
                 SortType = "CompanyName";
                 List1Fragment.progressStatus = "FILTER";
+                List1Fragment.allTags.clear();
                 try {
                     List2Fragment.gridAdapter.notifyDataSetChanged();
                     List2Fragment.allTags = db.getActiveNFC();

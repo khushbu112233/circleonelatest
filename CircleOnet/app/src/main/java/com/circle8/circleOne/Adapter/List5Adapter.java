@@ -296,7 +296,7 @@ public class List5Adapter extends BaseSwipeAdapter
                 {
                     connectLists.add(md);
                 }
-                CardsActivity.setActionBarTitle("Cards - "+connectLists.size());
+                CardsActivity.setActionBarTitle("Cards - "+connectLists.size() + " out of "+ CardsActivity.Connection_Limit);
             }
         }
         notifyDataSetChanged();

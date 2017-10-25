@@ -683,8 +683,10 @@ public class ProfileFragment extends Fragment
                                     String gender = user.get(LoginSession.KEY_GENDER);
                                     String date_DOB = user.get(LoginSession.KEY_DOB);
                                     String phone_no = user.get(LoginSession.KEY_PHONE);
+                                    String Connection_Limit = user.get(LoginSession.KEY_CONNECTION_LIMIT);
+                                    String Connection_Left = user.get(LoginSession.KEY_CONNECTION_LEFT);
 
-                                    session.createLoginSession(allTags.get(i).getProfileID(), user_id, first_name + " " + last_name, email_id, user_img, gender, user_pass, date_DOB, phone_no);
+                                    session.createLoginSession(allTags.get(i).getProfileID(), user_id, first_name + " " + last_name, email_id, user_img, gender, user_pass, date_DOB, phone_no, Connection_Limit, Connection_Left);
 
                                     try {
                                         JSONObject object = jsonArray.getJSONObject(i);
