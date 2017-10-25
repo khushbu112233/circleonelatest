@@ -383,8 +383,7 @@ public class SortAndFilterOption extends AppCompatActivity
         imgDrawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
-                startActivity(intent);
+
                 finish();
                 overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
             }

@@ -134,6 +134,15 @@ public class Connect3Activity extends AppCompatActivity
                 // properly
                 startActivity(go);
                 finish();*/
+                new HttpAsyncTask().cancel(true);
+                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+                go.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                // you pass the position you want the viewpager to show in the extra,
+                // please don't forget to define and initialize the position variable
+                // properly
+                go.putExtra("viewpager_position", 1);
+
+                startActivity(go);
               finish();
             }
         });

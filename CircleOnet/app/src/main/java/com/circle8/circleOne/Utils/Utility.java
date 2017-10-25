@@ -21,7 +21,7 @@ public class Utility
     /**
      * for 8082
      */
-    public static final String BASE_IMAGE_URL = "http://circle8.asia/App_imgLib/";
+    public static final String BASE_IMAGE_URL = "http://circle8.asia:8083/";
 
     /**
      * for 8081
