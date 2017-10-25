@@ -64,6 +64,9 @@ public class SortAndFilterOption extends AppCompatActivity
     ExpandableHeightListView listView ;
     private LoginSession session;
     private String user_id ;
+    private ImageView ivArrowImg, ivArrowImg1;
+    private String arrowStatus = "RIGHT";
+    private String arrowStatus1 = "RIGHT";
 
     public static ArrayList<GroupModel> groupModelArrayList;
     SortAndFilterAdapter sortAndFilterAdapter ;
@@ -91,6 +94,7 @@ public class SortAndFilterOption extends AppCompatActivity
         lnrSortCompany = (LinearLayout) findViewById(R.id.lnrSortCompany);
         lnrAllCards = (LinearLayout) findViewById(R.id.lnrAllCards);
         listView = (ExpandableHeightListView)findViewById(R.id.listView);
+        ivArrowImg1 = (ImageView) findViewById(R.id.ivArrowImg1);
         imgLogo.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
         session = new LoginSession(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
@@ -151,6 +155,25 @@ public class SortAndFilterOption extends AppCompatActivity
                 startActivity(intent);
                 finish();
                 overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);*/
+            }
+        });
+
+        ivArrowImg1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                if (arrowStatus1.equalsIgnoreCase("RIGHT"))
+                {
+                    ivArrowImg1.setImageResource(R.drawable.ic_down_arrow_blue);
+                    listView.setVisibility(View.VISIBLE);
+                    arrowStatus1 = "DOWN";
+                }
+                else if (arrowStatus1.equalsIgnoreCase("DOWN"))
+                {
+                    ivArrowImg1.setImageResource(R.drawable.ic_right_arrow_blue);
+                    listView.setVisibility(View.GONE);
+                    arrowStatus1 = "RIGHT";
+                }
             }
         });
 
@@ -479,7 +502,7 @@ public class SortAndFilterOption extends AppCompatActivity
                     }
                     else
                     {
-                        listView.setVisibility(View.VISIBLE);
+                       // listView.setVisibility(View.VISIBLE);
                         // txtGroup.setVisibility(View.GONE);
                     }
 

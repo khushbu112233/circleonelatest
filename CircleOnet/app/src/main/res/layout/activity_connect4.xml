@@ -65,6 +65,7 @@
                 android:layout_marginBottom="45dp"/>
 
             <com.circle8.circleOne.Utils.cgTextView
+                android:gravity="center"
                 android:id="@+id/txtLink"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -139,6 +140,7 @@
 
             </RelativeLayout>
             <com.circle8.circleOne.Utils.cgBoldTextView
+                android:gravity="center"
                 android:id="@+id/txtAsk"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -150,6 +152,18 @@
                 android:layout_below="@+id/rltConnect"
                 android:layout_marginTop="30dp"/>
 
+            <com.circle8.circleOne.Utils.cgTextView
+                android:gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Enjoy unlimited connections for a limited period, or subscribe for more connections"
+                android:textColor="@android:color/white"
+                android:textSize="15dp"
+                android:textAlignment="center"
+                android:layout_below="@+id/txtAsk" />
 
             <LinearLayout
                 android:layout_alignParentBottom="true"
