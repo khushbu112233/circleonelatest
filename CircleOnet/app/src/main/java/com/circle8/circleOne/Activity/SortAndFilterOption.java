@@ -119,7 +119,9 @@ public class SortAndFilterOption extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 SortType = "asc";
-                try {
+                List1Fragment.progressStatus = "FILTER";
+                try
+                {
                     List2Fragment.gridAdapter.notifyDataSetChanged();
                     List2Fragment.allTags = db.getActiveNFC();
                     List2Fragment.nfcModel.clear();
@@ -210,9 +212,12 @@ public class SortAndFilterOption extends AppCompatActivity
 
         lnrSortRecent.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 SortType = "desc";
-                try {
+                List1Fragment.progressStatus = "FILTER";
+                try
+                {
                     List2Fragment.gridAdapter.notifyDataSetChanged();
                     List2Fragment.allTags = db.getActiveNFC();
                     List2Fragment.nfcModel.clear();
@@ -266,8 +271,8 @@ public class SortAndFilterOption extends AppCompatActivity
         lnrSortName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 SortType = "Name";
+                List1Fragment.progressStatus = "FILTER";
                 try {
                     List2Fragment.gridAdapter.notifyDataSetChanged();
                     List2Fragment.allTags = db.getActiveNFC();
@@ -323,6 +328,7 @@ public class SortAndFilterOption extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 SortType = "CompanyName";
+                List1Fragment.progressStatus = "FILTER";
                 try {
                     List2Fragment.gridAdapter.notifyDataSetChanged();
                     List2Fragment.allTags = db.getActiveNFC();

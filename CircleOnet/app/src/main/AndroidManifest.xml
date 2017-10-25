@@ -11,8 +11,9 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <uses-feature android:name="android.hardware.nfc" />
 
     <uses-permission android:name="android.permission.CAMERA" />
@@ -144,7 +145,7 @@
             android:name=".Activity.FingerPrintLogin"
             android:label="CircleOne"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeDialog"/>
+            android:theme="@style/ThemeDialog" />
         <activity
             android:name=".Activity.GroupTag"
             android:screenOrientation="portrait" />
@@ -219,8 +220,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         <activity
-            android:screenOrientation="portrait"
             android:name=".Activity.UpdateGroupActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/ThemeDialog" />
         <activity
             android:name=".Activity.ImageZoom"
@@ -228,24 +229,27 @@
             android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.SearchGroupMembers"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.HistoryActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionbar"/>
-
-        <activity android:name=".Activity.TestimonialCardDetail"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".MultiContactPickerActivity"
+            android:theme="@style/NoActionbar" />
+        <activity
+            android:name=".Activity.TestimonialCardDetail"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MultiContactPickerActivity"
+            android:label="@string/picker_title"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".Activity.CreateGroupActivity"
             android:screenOrientation="portrait"
-            android:label="@string/picker_title">
+            android:theme="@style/NoActionbar" />
+        <activity android:name=".Activity.MerchantDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionbar">
+
         </activity>
-
-        <activity android:name=".Activity.CreateGroupActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/NoActionbar"/>
     </application>
 
 </manifest>

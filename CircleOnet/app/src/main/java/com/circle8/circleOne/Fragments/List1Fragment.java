@@ -642,6 +642,11 @@ public class List1Fragment extends Fragment
                 String loading = "Refreshing Cards" ;
                 CustomProgressDialog(loading);
             }
+            else if (progressStatus.equalsIgnoreCase("FILTER"))
+            {
+                String loading = "Fetching Cards" ;
+                CustomProgressDialog(loading);
+            }
             else
             {
 

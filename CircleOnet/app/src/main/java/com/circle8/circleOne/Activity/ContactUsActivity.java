@@ -191,7 +191,12 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
             }
             else
             {
-                Toast.makeText(getApplicationContext(),"Send",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(),"Send",Toast.LENGTH_SHORT).show();
+
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"+"general@circle.asia"));
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+                emailIntent.putExtra(Intent.EXTRA_TEXT, description);
+                startActivity(Intent.createChooser(emailIntent, "Choose mail options..."));
             }
         }
         if ( v == tvCancel)
