@@ -1001,7 +1001,7 @@ public class List2Fragment extends Fragment
         gridAdapter = new GridViewAdapter(context, R.layout.grid_list2_layout, nfcModel);
         gridView.setAdapter(gridAdapter);
         gridAdapter.notifyDataSetChanged();
-        CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
+        CardsActivity.setActionBarTitle("Cards - " + nfcModel.size() + " out of "+ CardsActivity.Connection_Limit);
         gridAdapter.setMode(Attributes.Mode.Single);
     }
 

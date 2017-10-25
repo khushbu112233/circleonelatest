@@ -128,6 +128,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     CountryCodePicker ccp;
     EditText etDD, etMM, etYYYY;
     String user_name, dob, profile_id;
+    String Connection_Limit, Connection_Left;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -144,7 +145,8 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         user_img = user.get(LoginSession.KEY_IMAGE);
         user_pass = user.get(LoginSession.KEY_PASSWORD);
         profile_id = user.get(LoginSession.KEY_PROFILEID);
-
+        Connection_Limit = user.get(LoginSession.KEY_CONNECTION_LIMIT);
+        Connection_Left = user.get(LoginSession.KEY_CONNECTION_LEFT);
 //        Toast.makeText(getApplicationContext(),email_id+" "+user_pass,Toast.LENGTH_LONG).show();
 
         imgProfile = (CircleImageView)findViewById(R.id.imgProfile);
@@ -1201,7 +1203,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                         jsonObject.accumulate("dob", date_DOB);
 
 
-                        session.createLoginSession(profile_id, user_id, first_name + " " + last_name, email_id, register_img, gender, password, date_DOB, phone_no);
+                        session.createLoginSession(profile_id, user_id, first_name + " " + last_name, email_id, register_img, gender, password, date_DOB, phone_no, Connection_Limit, Connection_Left);
                         Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
                     }
                     else

@@ -12,9 +12,11 @@ public class UserObject {
     private String profileid;
     private String dob;
     private String phone;
+    private String Connection_Limit;
+    private String Connection_Left;
     private boolean loginOption;
 
-    public UserObject(String profileid, String username, String email, String password, String userId, String gender, String image, String dob, String phone, boolean loginOption) {
+    public UserObject(String profileid, String username, String email, String password, String userId, String gender, String image, String dob, String phone, String Connection_Limit, String Connection_Left, boolean loginOption) {
         this.profileid = profileid;
         this.username = username;
         this.email = email;
@@ -24,7 +26,25 @@ public class UserObject {
         this.image = image;
         this.dob = dob;
         this.phone = phone;
+        this.Connection_Limit = Connection_Limit;
+        this.Connection_Left = Connection_Left;
         this.loginOption = loginOption;
+    }
+
+    public String getConnection_Limit() {
+        return Connection_Limit;
+    }
+
+    public void setConnection_Limit(String connection_Limit) {
+        Connection_Limit = connection_Limit;
+    }
+
+    public String getConnection_Left() {
+        return Connection_Left;
+    }
+
+    public void setConnection_Left(String connection_Left) {
+        Connection_Left = connection_Left;
     }
 
     public String getPhone() {

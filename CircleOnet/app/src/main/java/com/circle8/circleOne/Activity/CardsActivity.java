@@ -166,6 +166,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
     PermissionUtils permissionUtils;
 
     public static boolean isPermissionGranted;
+    public static String Connection_Limit, Connection_Left;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -209,6 +210,8 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         String email = user.get(LoginSession.KEY_EMAIL);    // email
         String image = user.get(LoginSession.KEY_IMAGE);
         String gender = user.get(LoginSession.KEY_GENDER);
+        Connection_Limit = user.get(LoginSession.KEY_CONNECTION_LIMIT);
+        Connection_Left = user.get(LoginSession.KEY_CONNECTION_LEFT);
 //        Toast.makeText(getApplicationContext(), name + " " + email + " " + image + " " + gender, Toast.LENGTH_LONG).show();
 
         if (checkPlayServices()) {
@@ -336,7 +339,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                 if (position == 0) {
                     CardsFragment.mViewPager.setCurrentItem(nested_position);
                     getSupportActionBar().show();
-                    setActionBarTitle("Cards - " + List1Fragment.nfcModel.size());
+                    setActionBarTitle("Cards - " + List1Fragment.nfcModel.size() + " out of "+ Connection_Limit);
                     setActionBarRightImage(R.drawable.ic_drawer);
                     setActionBarRightImagevisible();
                 } else if (position == 1) {

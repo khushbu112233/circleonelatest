@@ -43,6 +43,8 @@ public class LoginSession {
     public static final String KEY_PROFILEID = "profile_id";
     public static final String KEY_DOB = "dob";
     public static final String KEY_PHONE = "phone";
+    public static final String KEY_CONNECTION_LIMIT = "Connection_Limit";
+    public static final String KEY_CONNECTION_LEFT = "Connection_Left";
 
     // Constructor
     public LoginSession(Context context){
@@ -54,7 +56,7 @@ public class LoginSession {
     /**
      * Create login session
      * */
-    public void createLoginSession(String profileid, String userid, String name, String email, String image, String gender, String password, String dob, String phone){
+    public void createLoginSession(String profileid, String userid, String name, String email, String image, String gender, String password, String dob, String phone, String Connection_Limit, String Connection_Left){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
@@ -70,6 +72,8 @@ public class LoginSession {
         editor.putString(KEY_PASSWORD, password);
         editor.putString(KEY_DOB, dob);
         editor.putString(KEY_PHONE, phone);
+        editor.putString(KEY_CONNECTION_LIMIT, Connection_Limit);
+        editor.putString(KEY_CONNECTION_LEFT, Connection_Left);
         // commit changes
         editor.commit();
     }
@@ -116,6 +120,8 @@ public class LoginSession {
         user.put(KEY_PASSWORD, pref.getString(KEY_PASSWORD, null));
         user.put(KEY_DOB, pref.getString(KEY_DOB, null));
         user.put(KEY_PHONE, pref.getString(KEY_PHONE, null));
+        user.put(KEY_CONNECTION_LIMIT, pref.getString(KEY_CONNECTION_LIMIT, null));
+        user.put(KEY_CONNECTION_LEFT, pref.getString(KEY_CONNECTION_LEFT, null));
 
         // return user
         return user;
