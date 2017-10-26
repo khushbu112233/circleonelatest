@@ -46,12 +46,12 @@
     <ScrollView
         android:layout_below="@+id/rlTabBar"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:background="@color/white">
 
@@ -111,11 +111,28 @@
             <com.circle8.circleOne.Utils.ExpandableHeightListView
                 android:id="@+id/listView1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="320dp"
                 android:scrollbars="none"
                 android:fadingEdge="none"
                 android:orientation="vertical"
                 android:nestedScrollingEnabled="true"/>
+
+<!--
+            <com.circle8.circleOne.Utils.ExpandableHeightListView
+                android:visibility="visible"
+                android:id="@+id/listView1"
+                android:layout_width="match_parent"
+                android:layout_height="320dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="10dp"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="0dp">
+
+            </com.circle8.circleOne.Utils.ExpandableHeightListView>
+-->
+
 
             <com.circle8.circleOne.Utils.cgTextView
                 android:layout_width="match_parent"
@@ -188,9 +205,27 @@
             <com.circle8.circleOne.Utils.ExpandableHeightListView
                 android:id="@+id/listView2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="350dp"
                 android:scrollbars="none"
-                android:nestedScrollingEnabled="true"/>
+                android:nestedScrollingEnabled="true"
+                android:layout_marginBottom="5dp"/>
+
+<!--
+            <com.circle8.circleOne.Utils.ExpandableHeightListView
+                android:visibility="visible"
+                android:id="@+id/listView2"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="10dp"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="0dp">
+
+            </com.circle8.circleOne.Utils.ExpandableHeightListView>
+-->
+
 
         </LinearLayout>
 
