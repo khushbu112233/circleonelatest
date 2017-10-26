@@ -859,7 +859,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
         gridAdapter = new List3Adapter(context, R.layout.grid_list3_layout, nfcModel1);
         listView.setAdapter(gridAdapter);
         gridAdapter.notifyDataSetChanged();
-        CardsActivity.setActionBarTitle("Cards - "+nfcModel1.size() + " out of "+ CardsActivity.Connection_Limit);
+        CardsActivity.setActionBarTitle("Cards - "+nfcModel1.size() + "/"+ CardsActivity.Connection_Limit);
         gridAdapter.setMode(Attributes.Mode.Single);
 
 //        Toast.makeText(mContext,"ListView size: "+nfcModel1.size(),Toast.LENGTH_SHORT).show();

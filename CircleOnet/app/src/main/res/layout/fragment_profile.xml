@@ -292,7 +292,7 @@
                             android:layout_marginRight="15dp"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
-                            android:src="@drawable/ic_icon4b"/>
+                            android:src="@drawable/new_profile"/>
 
                         <com.circle8.circleOne.Utils.cgTextView
                             android:id="@+id/tvProfileName"

@@ -133,8 +133,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
                 }catch (Exception e){}
 
                 try {
-                if (nfcModelList.get(position).getWebsite().equals("") || nfcModelList.get(position).getWebsite().equals("null")
-                        || nfcModelList.get(position).getWebsite() == null) {
+                if (nfcModelList.get(position).getEmail().equals("") || nfcModelList.get(position).getEmail().equals("null")
+                        || nfcModelList.get(position).getEmail() == null) {
                     tvPersonWebsite.setVisibility(View.GONE);
                 }
                 }catch (Exception e){}
@@ -142,22 +142,29 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
                 try {
                 if (nfcModelList.get(position).getAddress().equals("") || nfcModelList.get(position).getAddress().equalsIgnoreCase("null")
                         || nfcModelList.get(position).getAddress() == null) {
-                    tvPersonAddress.setVisibility(View.GONE);
+                    tvPersonAddress.setVisibility(View.INVISIBLE);
                 }
-                }catch (Exception e){}
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
 
                 try {
                     if (nfcModelList.get(position).getPh_no().equals("") || nfcModelList.get(position).getPh_no().equals("null")
                             || nfcModelList.get(position).getPh_no() == null) {
-                        tvPersonContact.setVisibility(View.GONE);
+                        tvPersonMobile.setVisibility(View.INVISIBLE);
                     }
-                }catch (Exception e){}
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                /* if (nfcModelList.get(position).getMob_no().equals("") || nfcModelList.get(position).getMob_no().equals("null")
                         || nfcModelList.get(position).getMob_no() == null) {
                     tvPersonMobile.setVisibility(View.GONE);
                 }*/
             }
-            catch (Exception e){   }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+
 
             String name = nfcModelList.get(position).getName();
             kept = name.substring(0, name.indexOf(" "));
@@ -165,11 +172,10 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             tvPersonName.setText(kept);
             tvPersonNameLast.setText(remainder);
             tvPersonProfile.setText(nfcModelList.get(position).getDesignation());
-            tvPersonWebsite.setText("E : " + nfcModelList.get(position).getWebsite());
+            tvPersonWebsite.setText("E : " + nfcModelList.get(position).getEmail());
             tvPersonAddress.setText("A : " + nfcModelList.get(position).getAddress());
            // tvPersonContact.setText("T : " + nfcModelList.get(position).getPh_no());
             tvPersonMobile.setText("M : " + nfcModelList.get(position).getPh_no());
-            nfcModelList.get(position).getMob_no();
         }
         else
         {

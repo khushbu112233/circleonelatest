@@ -971,7 +971,7 @@ public class List4Fragment extends Fragment
         gridAdapter = new List4Adapter(context, R.layout.grid_list4_layout, nfcModel1);
         listView.setAdapter(gridAdapter);
         gridAdapter.notifyDataSetChanged();
-        CardsActivity.setActionBarTitle("Cards - " + nfcModel1.size() + " out of "+ CardsActivity.Connection_Limit);
+        CardsActivity.setActionBarTitle("Cards - " + nfcModel1.size() + "/"+ CardsActivity.Connection_Limit);
     }
 
     public static void CustomProgressDialog(final String loading)

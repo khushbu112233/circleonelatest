@@ -395,7 +395,7 @@
                     android:backgroundTint="@color/colorAccent"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
-                    android:src="@drawable/ic_icon4b"
+                    android:src="@drawable/new_profile"
                     android:layout_marginLeft="10dp"
                     android:contentDescription="Home!"
                     android:layout_marginTop="0dp" />

@@ -1122,6 +1122,8 @@ public class List1Fragment extends Fragment
                             connectModel.setWebsite(iCon.getString("Website"));
                             connectModel.setLatitude(iCon.getString("Latitude"));
                             connectModel.setLongitude(iCon.getString("Longitude"));
+                            connectModel.setAddress(iCon.getString("Address1") + " " + iCon.getString("Address2")
+                                    + " " + iCon.getString("Address3") + " " + iCon.getString("Address4"));
                             allTags.add(connectModel);
 
                             GetData(mContext);
@@ -1202,9 +1204,15 @@ public class List1Fragment extends Fragment
         nfcModel.clear();
         for (FriendConnection reTag : allTags)
         {
+
             FriendConnection nfcModelTag = new FriendConnection();
             // nfcModelTag.setId(reTag.getId());
             nfcModelTag.setName(reTag.getName());
+            nfcModelTag.setPh_no(reTag.getPh_no());
+            nfcModelTag.setUser_image(reTag.getUser_image());
+            nfcModelTag.setFirstName(reTag.getFirstName());
+            nfcModelTag.setLastName(reTag.getLastName());
+            nfcModelTag.setUserID(reTag.getUserID());
             nfcModelTag.setCompany(reTag.getCompany());
             nfcModelTag.setEmail(reTag.getEmail());
             nfcModelTag.setWebsite(reTag.getWebsite());
@@ -1217,6 +1225,11 @@ public class List1Fragment extends Fragment
             nfcModelTag.setDateInitiated(reTag.getDateInitiated());
             nfcModelTag.setLatitude(reTag.getLatitude());
             nfcModelTag.setLongitude(reTag.getLongitude());
+            nfcModelTag.setAddress(reTag.getAddress());
+            nfcModelTag.setFb_id(reTag.getFb_id());
+            nfcModelTag.setLinkedin_id(reTag.getLinkedin_id());
+            nfcModelTag.setGoogle_id(reTag.getGoogle_id());
+            nfcModelTag.setTwitter_id(reTag.getTwitter_id());
             nfcModel.add(nfcModelTag);
         }
 
@@ -1231,7 +1244,7 @@ public class List1Fragment extends Fragment
             txtNoCard1.setVisibility(View.GONE);
         }
 
-        CardsActivity.setActionBarTitle("Cards - " + nfcModel.size() + " out of "+ CardsActivity.Connection_Limit);
+        CardsActivity.setActionBarTitle("Cards - " + nfcModel.size() + "/"+ CardsActivity.Connection_Limit);
 //        CardsActivity.setActionBarTitle("Cards - "+number_cards);
         initRecyclerView1(recyclerView1, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter);
         initRecyclerView2(recyclerView2, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter1);
