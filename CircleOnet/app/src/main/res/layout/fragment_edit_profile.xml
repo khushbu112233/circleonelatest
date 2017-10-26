@@ -1631,7 +1631,7 @@
 
                                 <com.circle8.circleOne.Utils.orkebyBoldTextView
                                     android:id="@+id/txtAttachDelete"
-                                    android:layout_width="40dp"
+                                    android:layout_width="wrap_content"
                                     android:gravity="left|center_vertical"
                                     android:padding="2dp"
                                     android:layout_alignParentBottom="true"
@@ -1646,11 +1646,14 @@
                                     android:textStyle="bold" />
 
                                 <com.circle8.circleOne.Utils.cgTextView
+                                    android:id="@+id/cgText"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="bottom"
+                                    android:gravity="right"
                                     android:text="less than 3MB"
+                                    android:textSize="11sp"
                                     android:layout_marginRight="5dp"
+                                    android:layout_toRightOf="@+id/txtAttachDelete"
                                     android:layout_toLeftOf="@+id/ivAttachFile"
                                     android:layout_alignParentBottom="true"/>
 
