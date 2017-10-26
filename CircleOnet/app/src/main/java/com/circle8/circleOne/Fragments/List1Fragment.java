@@ -729,6 +729,12 @@ public class List1Fragment extends Fragment
                         GetData(mContext);
                     }
 
+                    if (allTags.size() == 0) {
+                        txtNoCard1.setVisibility(View.VISIBLE);
+                    } else {
+                        txtNoCard1.setVisibility(View.GONE);
+                    }
+
                     recycleSize = allTags.size();
 
                     // Load More in recycler view
@@ -1127,6 +1133,13 @@ public class List1Fragment extends Fragment
                             allTags.add(connectModel);
 
                             GetData(mContext);
+                        }
+
+
+                        if (allTags.size() == 0) {
+                            txtNoCard1.setVisibility(View.VISIBLE);
+                        } else {
+                            txtNoCard1.setVisibility(View.GONE);
                         }
                     }
                 }
