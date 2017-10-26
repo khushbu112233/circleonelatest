@@ -93,11 +93,11 @@
 
                 <ImageView
                     android:id="@+id/imgLevel5"
-                    android:layout_centerInParent="true"
                     android:layout_width="190dp"
                     android:layout_height="190dp"
                     android:src="@drawable/level5"
-                    />
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true" />
 
                 <ImageView
                     android:id="@+id/imgLevel4"

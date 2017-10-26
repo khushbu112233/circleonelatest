@@ -71,6 +71,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         imgConnect = (ImageView) findViewById(R.id.imgConnect);
         imgEvents = (ImageView) findViewById(R.id.imgEvents);
         imgProfile = (ImageView) findViewById(R.id.imgProfile);
+
         level1 = (CircleImageView) findViewById(R.id.imgLevel1);
         level2 = (CircleImageView) findViewById(R.id.imgLevel2);
         level3 = (CircleImageView) findViewById(R.id.imgLevel3);
@@ -155,6 +156,22 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             txtName5.setVisibility(View.INVISIBLE);
             txtName6.setVisibility(View.INVISIBLE);
             txtName7.setVisibility(View.INVISIBLE);
+
+            level1.setVisibility(View.VISIBLE);
+            level2.setVisibility(View.VISIBLE);
+            level3.setVisibility(View.VISIBLE);
+            level4.setVisibility(View.VISIBLE);
+            level5.setVisibility(View.VISIBLE);
+            level6.setVisibility(View.VISIBLE);
+            level7.setVisibility(View.VISIBLE);
+
+            ivProfile1.setVisibility(View.VISIBLE);
+            ivProfile2.setVisibility(View.VISIBLE);
+            ivProfile3.setVisibility(View.VISIBLE);
+            ivProfile4.setVisibility(View.VISIBLE);
+            ivProfile5.setVisibility(View.VISIBLE);
+            ivProfile6.setVisibility(View.VISIBLE);
+            ivProfile7.setVisibility(View.VISIBLE);
         }
         if (level.equals("1"))
         {
@@ -176,6 +193,14 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             txtName6.setVisibility(View.INVISIBLE);
             txtName7.setVisibility(View.INVISIBLE);
 
+            level1.setVisibility(View.VISIBLE);
+            level2.setVisibility(View.VISIBLE);
+            level3.setVisibility(View.VISIBLE);
+            level4.setVisibility(View.VISIBLE);
+            level5.setVisibility(View.VISIBLE);
+            level6.setVisibility(View.VISIBLE);
+            level7.setVisibility(View.VISIBLE);
+
             txtName1.setText(userName1);
             if (userPhoto1.equals(""))
             {
@@ -185,6 +210,13 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             {
                 Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).into(ivProfile1);
             }
+
+            ivProfile2.setVisibility(View.VISIBLE);
+            ivProfile3.setVisibility(View.VISIBLE);
+            ivProfile4.setVisibility(View.VISIBLE);
+            ivProfile5.setVisibility(View.VISIBLE);
+            ivProfile6.setVisibility(View.VISIBLE);
+            ivProfile7.setVisibility(View.VISIBLE);
         }
         else if (level.equals("2"))
         {
@@ -206,6 +238,14 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             txtName6.setVisibility(View.INVISIBLE);
             txtName7.setVisibility(View.INVISIBLE);
 
+            level1.setVisibility(View.VISIBLE);
+            level2.setVisibility(View.VISIBLE);
+            level3.setVisibility(View.VISIBLE);
+            level4.setVisibility(View.VISIBLE);
+            level5.setVisibility(View.VISIBLE);
+            level6.setVisibility(View.VISIBLE);
+            level7.setVisibility(View.VISIBLE);
+
             txtName1.setText(userName1);
             txtName2.setText(userName2);
 
@@ -219,6 +259,12 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
                 Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).into(ivProfile1);
                 Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).into(ivProfile2);
             }
+
+            ivProfile3.setVisibility(View.VISIBLE);
+            ivProfile4.setVisibility(View.VISIBLE);
+            ivProfile5.setVisibility(View.VISIBLE);
+            ivProfile6.setVisibility(View.VISIBLE);
+            ivProfile7.setVisibility(View.VISIBLE);
         }
         else if (level.equals("3"))
         {
@@ -240,6 +286,14 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             txtName6.setVisibility(View.INVISIBLE);
             txtName7.setVisibility(View.INVISIBLE);
 
+            level1.setVisibility(View.VISIBLE);
+            level2.setVisibility(View.VISIBLE);
+            level3.setVisibility(View.VISIBLE);
+            level4.setVisibility(View.VISIBLE);
+            level5.setVisibility(View.VISIBLE);
+            level6.setVisibility(View.VISIBLE);
+            level7.setVisibility(View.VISIBLE);
+
             txtName1.setText(userName1);
             txtName2.setText(userName2);
             txtName3.setText(userName3);
@@ -256,6 +310,11 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
                 Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).into(ivProfile2);
                 Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).into(ivProfile3);
             }
+
+            ivProfile4.setVisibility(View.VISIBLE);
+            ivProfile5.setVisibility(View.VISIBLE);
+            ivProfile6.setVisibility(View.VISIBLE);
+            ivProfile7.setVisibility(View.VISIBLE);
         }
         else if (level.equals("4"))
         {
@@ -277,6 +336,14 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             txtName6.setVisibility(View.INVISIBLE);
             txtName7.setVisibility(View.INVISIBLE);
 
+            level1.setVisibility(View.VISIBLE);
+            level2.setVisibility(View.VISIBLE);
+            level3.setVisibility(View.VISIBLE);
+            level4.setVisibility(View.VISIBLE);
+            level5.setVisibility(View.VISIBLE);
+            level6.setVisibility(View.VISIBLE);
+            level7.setVisibility(View.VISIBLE);
+
             txtName1.setText(userName1);
             txtName2.setText(userName2);
             txtName3.setText(userName3);
@@ -296,6 +363,10 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
                 Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).into(ivProfile3);
                 Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4).into(ivProfile4);
             }
+
+            ivProfile5.setVisibility(View.VISIBLE);
+            ivProfile6.setVisibility(View.VISIBLE);
+            ivProfile7.setVisibility(View.VISIBLE);
         }
         else if (level.equals("5"))
         {
@@ -316,6 +387,14 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             txtName5.setVisibility(View.VISIBLE);
             txtName6.setVisibility(View.INVISIBLE);
             txtName7.setVisibility(View.INVISIBLE);
+
+            level1.setVisibility(View.VISIBLE);
+            level2.setVisibility(View.VISIBLE);
+            level3.setVisibility(View.VISIBLE);
+            level4.setVisibility(View.VISIBLE);
+            level5.setVisibility(View.VISIBLE);
+            level6.setVisibility(View.VISIBLE);
+            level7.setVisibility(View.VISIBLE);
 
             txtName1.setText(userName1);
             txtName2.setText(userName2);
@@ -340,6 +419,9 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
                 Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4).into(ivProfile4);
                 Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto5).into(ivProfile5);
             }
+
+            ivProfile6.setVisibility(View.VISIBLE);
+            ivProfile7.setVisibility(View.VISIBLE);
         }
         else if (level.equals("6"))
         {
@@ -360,6 +442,14 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             txtName5.setVisibility(View.VISIBLE);
             txtName6.setVisibility(View.VISIBLE);
             txtName7.setVisibility(View.INVISIBLE);
+
+            level1.setVisibility(View.VISIBLE);
+            level2.setVisibility(View.VISIBLE);
+            level3.setVisibility(View.VISIBLE);
+            level4.setVisibility(View.VISIBLE);
+            level5.setVisibility(View.VISIBLE);
+            level6.setVisibility(View.VISIBLE);
+            level7.setVisibility(View.VISIBLE);
 
             txtName1.setText(userName1);
             txtName2.setText(userName2);
@@ -388,6 +478,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
                 Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto6).into(ivProfile6);
             }
 
+            ivProfile7.setVisibility(View.VISIBLE);
         }
         else if (level.equals("7"))
         {
@@ -408,6 +499,14 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             txtName5.setVisibility(View.VISIBLE);
             txtName6.setVisibility(View.VISIBLE);
             txtName7.setVisibility(View.VISIBLE);
+
+            level1.setVisibility(View.VISIBLE);
+            level2.setVisibility(View.VISIBLE);
+            level3.setVisibility(View.VISIBLE);
+            level4.setVisibility(View.VISIBLE);
+            level5.setVisibility(View.VISIBLE);
+            level6.setVisibility(View.VISIBLE);
+            level7.setVisibility(View.VISIBLE);
 
             txtName1.setText(userName1);
             txtName2.setText(userName2);
