@@ -39,7 +39,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
     private Map<String, List<String>> laptopCollection;
 
     static TextView textView;
-    static ImageView imgDrawer, imgBack;
+    static ImageView imgDrawer, imgBack, ivAdImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -80,6 +80,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         createCollection();
 
         expListView = (ExpandableListView)MerchantView.findViewById(R.id.laptop_list);
+        ivAdImg = (ImageView)MerchantView.findViewById(R.id.ivAdImg);
         final ExpandableListAdapter1 expListAdapter = new ExpandableListAdapter1(this, groupList, laptopCollection);
         expListView.setAdapter(expListAdapter);
 
@@ -93,6 +94,16 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                 final String selected = (String) expListAdapter.getChild(groupPosition, childPosition);
 //                Toast.makeText(getBaseContext(), selected, Toast.LENGTH_LONG).show();
                 return true;
+            }
+        });
+
+        ivAdImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Intent in = new Intent(RewardsPointsActivity.this, MerchantDetailActivity.class);
+                startActivity(in);
+                finish();
             }
         });
     }

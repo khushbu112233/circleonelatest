@@ -5,6 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/ivAdImg"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:src="@drawable/cold_coco"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimary"/>
+
     <ExpandableListView
         android:id="@+id/laptop_list"
         android:layout_width="match_parent"
