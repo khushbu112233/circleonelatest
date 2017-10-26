@@ -339,7 +339,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                 if (position == 0) {
                     CardsFragment.mViewPager.setCurrentItem(nested_position);
                     getSupportActionBar().show();
-                    setActionBarTitle("Cards - " + List1Fragment.nfcModel.size() + " out of "+ Connection_Limit);
+                    setActionBarTitle("Cards - " + List1Fragment.nfcModel.size() + "/"+ Connection_Limit);
                     setActionBarRightImage(R.drawable.ic_drawer);
                     setActionBarRightImagevisible();
                 } else if (position == 1) {

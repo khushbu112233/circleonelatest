@@ -1313,13 +1313,32 @@ public class ProfileFragment extends Fragment
                         for (int i1 = 0; i1 < arrayEvents.length(); i1++) {
 
                             listEvents.add(arrayEvents.getString(i1));
-                            eventString += arrayEvents.getString(i1) + " / ";
+
+                            String name = arrayEvents.getString(i1);
+                            String kept = name.substring(0, name.indexOf(":"));
+                            String remainder = name.substring(name.indexOf(":") + 1, name.length());
+
+                            if (i1 == arrayEvents.length()-1){
+                                eventString += remainder ;
+                            }else {
+                                eventString += remainder + " / ";
+                            }
                         }
                         txtEventsListFinal.setText(eventString);
                         for (int i1 = 0; i1 < array.length(); i1++) {
 
                             listAssociation.add(array.getString(i1));
-                            associationString += array.getString(i1) + " / ";
+
+
+                            String name = array.getString(i1);
+                            String kept = name.substring(0, name.indexOf(":"));
+                            String remainder = name.substring(name.indexOf(":") + 1, name.length());
+
+                            if (i1 == array.length()-1){
+                                associationString += remainder ;
+                            }else {
+                                associationString += remainder + " / ";
+                            }
                         }
                         txtAssociationList.setText(associationString);
                         int countAssociation;

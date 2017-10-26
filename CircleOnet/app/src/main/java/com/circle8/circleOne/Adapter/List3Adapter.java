@@ -379,7 +379,7 @@ public class List3Adapter extends BaseSwipeAdapter
                 if (md.getName().toLowerCase(Locale.getDefault()).contains(charText)) {
                     nfcModelList1.add(md);
                 }
-                CardsActivity.setActionBarTitle("Cards - " + nfcModelList1.size() + " out of "+ CardsActivity.Connection_Limit);
+                CardsActivity.setActionBarTitle("Cards - " + nfcModelList1.size() + "/"+ CardsActivity.Connection_Limit);
             }
         }
         notifyDataSetChanged();
