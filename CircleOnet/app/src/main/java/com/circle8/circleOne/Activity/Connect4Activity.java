@@ -28,7 +28,7 @@ public class Connect4Activity extends AppCompatActivity
     private ImageView imgBack, imgCards, imgConnect, imgEvents, imgProfile, imgConnecting;
     TextView txtAsk, txtLink, txtCongratulations;
     String level = "";
-    ImageView level1, level2, level3, level4, level5, level6, ivImage1;
+    ImageView level1, level2, level3, level4, level5, level6, level7, ivImage1;
     String profile;
 
     String connectLevel = "";
@@ -61,6 +61,7 @@ public class Connect4Activity extends AppCompatActivity
         level4 = (ImageView) findViewById(R.id.imgLevel4);
         level5 = (ImageView) findViewById(R.id.imgLevel5);
         level6 = (ImageView) findViewById(R.id.imgLevel6);
+        level7 = (ImageView) findViewById(R.id.imgLevel7);
         ivImage1 = (ImageView) findViewById(R.id.ivImage1);
         txtCongratulations = (TextView) findViewById(R.id.txtCongratulations);
 
@@ -124,6 +125,7 @@ public class Connect4Activity extends AppCompatActivity
                 level4.setVisibility(View.INVISIBLE);
                 level5.setVisibility(View.INVISIBLE);
                 level6.setVisibility(View.INVISIBLE);
+                level7.setVisibility(View.INVISIBLE);
             }
             else if (level.equals("1"))
             {
@@ -136,6 +138,7 @@ public class Connect4Activity extends AppCompatActivity
                 level4.setVisibility(View.INVISIBLE);
                 level5.setVisibility(View.INVISIBLE);
                 level6.setVisibility(View.INVISIBLE);
+                level7.setVisibility(View.INVISIBLE);
             }
             else if (level.equals("2"))
             {
@@ -148,6 +151,7 @@ public class Connect4Activity extends AppCompatActivity
                 level4.setVisibility(View.INVISIBLE);
                 level5.setVisibility(View.INVISIBLE);
                 level6.setVisibility(View.INVISIBLE);
+                level7.setVisibility(View.INVISIBLE);
             }
             else if (level.equals("3"))
             {
@@ -160,6 +164,7 @@ public class Connect4Activity extends AppCompatActivity
                 level4.setVisibility(View.INVISIBLE);
                 level5.setVisibility(View.INVISIBLE);
                 level6.setVisibility(View.INVISIBLE);
+                level7.setVisibility(View.INVISIBLE);
             }
             else if (level.equals("4"))
             {
@@ -172,6 +177,7 @@ public class Connect4Activity extends AppCompatActivity
                 level4.setVisibility(View.VISIBLE);
                 level5.setVisibility(View.INVISIBLE);
                 level6.setVisibility(View.INVISIBLE);
+                level7.setVisibility(View.INVISIBLE);
             }
             else if (level.equals("5"))
             {
@@ -184,6 +190,7 @@ public class Connect4Activity extends AppCompatActivity
                 level4.setVisibility(View.VISIBLE);
                 level5.setVisibility(View.VISIBLE);
                 level6.setVisibility(View.INVISIBLE);
+                level7.setVisibility(View.INVISIBLE);
             }
             else if (level.equals("6"))
             {
@@ -196,7 +203,23 @@ public class Connect4Activity extends AppCompatActivity
                 level4.setVisibility(View.VISIBLE);
                 level5.setVisibility(View.VISIBLE);
                 level6.setVisibility(View.VISIBLE);
+                level7.setVisibility(View.INVISIBLE);
             }
+            else if (level.equals("7"))
+            {
+                //  txtCongratulations.setVisibility(View.VISIBLE);
+                txtAsk.setVisibility(View.VISIBLE);
+                txtLink.setText("you are now 7 connections away");
+                level1.setVisibility(View.VISIBLE);
+                level2.setVisibility(View.VISIBLE);
+                level3.setVisibility(View.VISIBLE);
+                level4.setVisibility(View.VISIBLE);
+                level5.setVisibility(View.VISIBLE);
+                level6.setVisibility(View.VISIBLE);
+                level7.setVisibility(View.VISIBLE);
+            }
+
+
 
             txtAsk.setOnClickListener(new View.OnClickListener() {
                 @Override
