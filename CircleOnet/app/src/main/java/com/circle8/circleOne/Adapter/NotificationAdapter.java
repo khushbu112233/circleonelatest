@@ -425,7 +425,7 @@ public class NotificationAdapter extends BaseAdapter
         holder.btnNfcCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //  new HttpAsyncTaskAcceptFriend().execute(Utility.BASE_URL+"ShareProfile/Request");
+                new HttpAsyncTaskShareCancel().execute(Utility.BASE_URL+"ShareProfile/CancelNotification");
             }
         });
 
@@ -450,7 +450,7 @@ public class NotificationAdapter extends BaseAdapter
         holder.btnShareCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new HttpAsyncTaskShareCancel().execute(Utility.BASE_URL+"ShareProfile/CancelRequest");
+                new HttpAsyncTaskShareCancel().execute(Utility.BASE_URL+"ShareProfile/CancelNotification");
             }
         });
 
@@ -1074,7 +1074,8 @@ public class NotificationAdapter extends BaseAdapter
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("SharingID", testimonialModels.get(posi).getShared_ProfileID());
+            jsonObject.accumulate("NotificationID", testimonialModels.get(posi).getNotificationID());
+            jsonObject.accumulate("SharingID", testimonialModels.get(posi).getStatus());
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();

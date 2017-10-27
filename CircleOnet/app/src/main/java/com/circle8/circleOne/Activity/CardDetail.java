@@ -222,7 +222,8 @@ public class CardDetail extends NfcActivity
             lnrNfcLocation.setVisibility(View.VISIBLE);
             Latitude = Double.parseDouble(lat);
             Longitude = Double.parseDouble(lon);
-            getAddress();
+
+             getAddress();
         }
 //        Toast.makeText(getApplicationContext(), DateInitiated.toString(),Toast.LENGTH_SHORT).show();
 
@@ -883,7 +884,17 @@ public class CardDetail extends NfcActivity
 
         try {
             addresses = geocoder.getFromLocation(latitude,longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-            return addresses.get(0);
+            if (addresses != null) {
+                try {
+                    return addresses.get(0);
+                }
+                catch (Exception e){
+                    lnrNfcLocation.setVisibility(View.GONE);
+                }
+            }
+            else {
+                lnrNfcLocation.setVisibility(View.GONE);
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
