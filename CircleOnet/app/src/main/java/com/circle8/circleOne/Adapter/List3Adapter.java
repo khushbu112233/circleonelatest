@@ -287,7 +287,17 @@ public class List3Adapter extends BaseSwipeAdapter
         String designation = nfcModelList1.get(position).getDesignation();
 
         holder.imageName.setText(name);
-        holder.imageDesc.setText(company + "\n" + email + "\n" + mobile + "\n" + website);
+        String desc = "";
+        if (!company.equals("")){
+            desc += company;
+        }
+        if (!mobile.equals("")){
+            desc += "\n" + mobile;
+        }
+        if (!website.equals("")){
+            desc += "\n" +website;
+        }
+        holder.imageDesc.setText(company + "\n" + mobile + "\n" + website);
 
         try {
             if (!designation.equalsIgnoreCase("")) {
