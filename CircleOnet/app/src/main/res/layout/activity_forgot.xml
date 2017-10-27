@@ -100,7 +100,7 @@
                 android:id="@+id/tvEmailInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Please input your email"
+                android:text="Please enter a valid Email address"
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="45dp"
                 android:layout_marginTop="2dp"
