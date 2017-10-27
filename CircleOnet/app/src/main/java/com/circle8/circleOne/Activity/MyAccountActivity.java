@@ -503,8 +503,9 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         }
         if ( v == ivEditImg)
         {
-            Toast.makeText(getApplicationContext(), "Now you can edit your information", Toast.LENGTH_LONG).show();
+           // Toast.makeText(getApplicationContext(), "Now you can edit your information", Toast.LENGTH_LONG).show();
             etFirstName.setEnabled(true);
+            etFirstName.requestFocus();
             etLastName.setEnabled(true);
             etPassword.setEnabled(true);
             etPasswordAgain.setEnabled(true);
@@ -1205,6 +1206,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
 
                         session.createLoginSession(profile_id, user_id, first_name + " " + last_name, email_id, register_img, gender, password, date_DOB, phone_no, Connection_Limit, Connection_Left);
                         Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+                        finish();
                     }
                     else
                     {
