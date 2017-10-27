@@ -910,13 +910,49 @@ public class EditProfileActivity extends AppCompatActivity implements
                 }
                 catch (Exception e){}
 
-                if (type.equals("add"))
-                {
-                    new HttpAsyncTaskAddProfile().execute(Utility.BASE_URL+"AddProfile");
+                if (edtProfileName.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Enter Profile Name", Toast.LENGTH_LONG).show();
                 }
-                else if (type.equals("edit"))
-                {
-                    new HttpAsyncTask().execute(Utility.BASE_URL+"UpdateProfile");
+                else if (edtFirstName.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Enter First Name", Toast.LENGTH_LONG).show();
+                }
+                else if (edtLastName.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Enter Last Name", Toast.LENGTH_LONG).show();
+                }
+                else if (autoCompleteDesignation.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Enter Designation (Title)", Toast.LENGTH_LONG).show();
+                }
+                else if (autoCompleteCompany.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Enter Company Name", Toast.LENGTH_LONG).show();
+                }
+                else if (edtAddress1.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Enter Address", Toast.LENGTH_LONG).show();
+                }
+                else if (edtAddress3.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Enter City", Toast.LENGTH_LONG).show();
+                }
+                else if (edtAddress4.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Enter State", Toast.LENGTH_LONG).show();
+                }
+                else if (ccpCountry.getSelectedCountryName().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Select Country", Toast.LENGTH_LONG).show();
+                }
+                else if (edtAddress6.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Enter PostalCode", Toast.LENGTH_LONG).show();
+                }
+                else if (edtEmail.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Enter Email1", Toast.LENGTH_LONG).show();
+                }
+                else if (edtPrimary.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Enter Mobile1", Toast.LENGTH_LONG).show();
+                }
+                else {
+
+                    if (type.equals("add")) {
+                        new HttpAsyncTaskAddProfile().execute(Utility.BASE_URL + "AddProfile");
+                    } else if (type.equals("edit")) {
+                        new HttpAsyncTask().execute(Utility.BASE_URL + "UpdateProfile");
+                    }
                 }
             }
         });

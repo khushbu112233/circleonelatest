@@ -328,7 +328,7 @@
                                 android:gravity="center_vertical"
                                 android:paddingBottom="10dp"
                                 android:paddingLeft="10dp"
-                                android:hint="Profile Name"
+                                android:hint="* Profile Name"
                                 android:textSize="13sp"
                                 android:backgroundTint="@color/colorPrimary"/>
                         </LinearLayout>
@@ -360,7 +360,7 @@
                                     android:layout_weight="0.5"
                                     android:textSize="13sp"
                                     android:backgroundTint="@color/colorPrimary"
-                                    android:hint="First Name"
+                                    android:hint="* First Name"
                                     android:paddingLeft="10dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -371,7 +371,7 @@
                                     android:layout_weight="0.5"
                                     android:textSize="13sp"
                                     android:backgroundTint="@color/colorPrimary"
-                                    android:hint="Last Name"
+                                    android:hint="* Last Name"
                                     android:paddingLeft="10dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -413,7 +413,7 @@
                                 android:layout_height="wrap_content"
                                 android:ems="10"
                                 android:gravity="center_vertical"
-                                android:hint="Title"
+                                android:hint="* Title"
                                 android:paddingBottom="10dp"
                                 android:paddingLeft="10dp"
                                 android:textSize="13sp"
@@ -443,7 +443,7 @@
                                 android:gravity="center_vertical"
                                 android:paddingBottom="10dp"
                                 android:paddingLeft="10dp"
-                                android:hint="Company Name"
+                                android:hint="* Company Name"
                                 android:textSize="13sp"
                                 android:backgroundTint="@color/colorPrimary"/>
 
@@ -651,7 +651,7 @@
                                     android:gravity="center_vertical"
                                     android:paddingBottom="10dp"
                                     android:paddingLeft="10dp"
-                                    android:hint="Mobile 1"
+                                    android:hint="* Mobile 1"
                                     android:textSize="13sp"
                                     android:layout_weight="0.8"
                                     android:layout_marginRight="10dp"
@@ -881,7 +881,7 @@
                                 android:gravity="center_vertical"
                                 android:paddingBottom="10dp"
                                 android:paddingLeft="10dp"
-                                android:hint="Email1"
+                                android:hint="* Email1"
                                 android:textSize="13sp"
                                 android:backgroundTint="@color/colorPrimary"/>
                         </LinearLayout>
@@ -1126,7 +1126,7 @@
                                 android:gravity="center_vertical"
                                 android:paddingBottom="10dp"
                                 android:paddingLeft="10dp"
-                                android:hint="Address"
+                                android:hint="* Address"
                                 android:textSize="13sp"
                                 android:backgroundTint="@color/colorPrimary"/>
                         </LinearLayout>
@@ -1180,6 +1180,10 @@
                                     android:layout_marginRight="20dp" />
 
 
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="*"/>
                                 <com.hbb20.CountryCodePicker
                                     android:visibility="visible"
                                     app:ccp_textSize="12dp"
@@ -1218,7 +1222,7 @@
                                     android:gravity="center_vertical"
                                     android:paddingBottom="10dp"
                                     android:paddingLeft="10dp"
-                                    android:hint="State"
+                                    android:hint="* State"
                                     android:textSize="13sp"
                                     android:backgroundTint="@color/colorPrimary"/>
                             </LinearLayout>
@@ -1254,7 +1258,7 @@
                                     android:gravity="center_vertical"
                                     android:paddingBottom="10dp"
                                     android:paddingLeft="10dp"
-                                    android:hint="City"
+                                    android:hint="* City"
                                     android:textSize="13sp"
                                     android:backgroundTint="@color/colorPrimary"/>
                             </LinearLayout>
@@ -1279,7 +1283,7 @@
                                     android:gravity="center_vertical"
                                     android:paddingBottom="10dp"
                                     android:paddingLeft="10dp"
-                                    android:hint="Postcode"
+                                    android:hint="* Postcode"
                                     android:textSize="13sp"
                                     android:backgroundTint="@color/colorPrimary"/>
                             </LinearLayout>
