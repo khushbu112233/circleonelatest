@@ -36,10 +36,11 @@
                 android:id="@+id/rltDefaultCard"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white"
+                android:background="@color/colorPrimary"
                 android:visibility="gone">
 
                 <ImageView
+                    android:tint="@color/white"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignParentRight="true"
@@ -63,7 +64,7 @@
                         android:layout_marginBottom="5dp"
                         android:layout_marginLeft="20dp"
                         android:text="Aakashi"
-                        android:textColor="#4c4d4b"
+                        android:textColor="@color/white"
                         android:textSize="13dp"
                         android:textStyle="bold" />
 
@@ -74,7 +75,7 @@
                             android:layout_marginBottom="5dp"
                             android:layout_marginLeft="5dp"
                             android:text="Desai"
-                            android:textColor="#4c4d4b"
+                            android:textColor="@color/white"
                             android:textSize="13dp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -85,7 +86,7 @@
                         android:layout_marginBottom="10dp"
                         android:layout_marginLeft="20dp"
                         android:text="CEO"
-                        android:textColor="#4c4d4b"
+                        android:textColor="@color/white"
                         android:textSize="10dp"
                         android:textStyle="bold" />
 
@@ -94,7 +95,7 @@
                         android:layout_height="0.5dp"
                         android:layout_marginBottom="10dp"
                         android:layout_marginLeft="20dp"
-                        android:background="#4c4d4b" />
+                        android:background="@color/white" />
 
                     <com.circle8.circleOne.Utils.cgTextView
                         android:id="@+id/tvPersonAddress"
@@ -103,7 +104,7 @@
                         android:layout_marginBottom="5dp"
                         android:layout_marginLeft="20dp"
                         android:text="A : 65 Ubi Road | #03-90 Oxley Bizhub"
-                        android:textColor="#4c4d4b"
+                        android:textColor="@color/white"
                         android:textSize="10dp" />
 
                     <com.circle8.circleOne.Utils.cgTextView
@@ -113,7 +114,7 @@
                         android:layout_marginBottom="5dp"
                         android:layout_marginLeft="20dp"
                         android:text="E : chris.liao@circle8.asia"
-                        android:textColor="#4c4d4b"
+                        android:textColor="@color/white"
                         android:textSize="10dp" />
 
                     <com.circle8.circleOne.Utils.cgTextView
@@ -124,7 +125,7 @@
                         android:layout_marginBottom="5dp"
                         android:layout_marginLeft="20dp"
                         android:text="T : +65 6816 7888"
-                        android:textColor="#4c4d4b"
+                        android:textColor="@color/white"
                         android:textSize="10dp" />
 
                     <com.circle8.circleOne.Utils.cgTextView
@@ -134,7 +135,7 @@
                         android:layout_marginBottom="20dp"
                         android:layout_marginLeft="20dp"
                         android:text="T : +65 6816 7888"
-                        android:textColor="#4c4d4b"
+                        android:textColor="@color/white"
                         android:textSize="10dp" />
 
                 </LinearLayout>
@@ -144,13 +145,12 @@
                 android:id="@+id/rltDefaultCard1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/colorPrimary"
+                android:background="@color/white"
                 android:visibility="gone">
 
                 <ImageView
                     android:visibility="gone"
                     android:id="@+id/carousel_logo"
-                    android:tint="@color/white"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                    android:layout_centerInParent="true"
@@ -159,7 +159,6 @@
 
                 <ImageView
                     android:id="@+id/imgTopLogo"
-                    android:tint="@color/white"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignParentRight="true"
@@ -179,7 +178,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
                             android:text="Unico Creative ptl lte"
-                            android:textColor="@color/white"
+                            android:textColor="#4c4d4b"
                             android:textSize="13dp"
                             android:textStyle="bold" />
 
@@ -190,7 +189,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
                             android:text="www.unicocreative.com"
-                            android:textColor="@color/white"
+                            android:textColor="#4c4d4b"
                             android:textSize="11dp"
                             android:textStyle="bold" />
 
