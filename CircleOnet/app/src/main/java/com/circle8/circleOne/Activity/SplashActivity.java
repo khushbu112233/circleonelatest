@@ -29,46 +29,28 @@ public class SplashActivity extends AppCompatActivity
         imageView2 = (ImageView)findViewById(R.id.imgLogin1);
 
         imageView1.setVisibility(View.GONE);
-        imageView2.setVisibility(View.GONE);
+        imageView2.setVisibility(View.VISIBLE);
 
-        new Handler().postDelayed(new Runnable()
-        {
+        new Handler().postDelayed(new Runnable() {
+
             @Override
             public void run()
             {
-                imageView1.setVisibility(View.VISIBLE);
-                imageView2.setVisibility(View.GONE);
 
-                TranslateAnimation slide = new TranslateAnimation(0, 0, 250,0 );
-                slide.setDuration(1000);
-                imageView1.startAnimation(slide);
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run()
-                    {
-
-                        if (prefs.getBoolean("firstrun", true)) {
-                            // Do first run stuff here then set 'firstrun' as false
-                            // using the following line to edit/commit prefs
-                            Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
-                            startActivity(intent);
-                          //  prefs.edit().putBoolean("firstrun", false).commit();
-                            finish();
-                        } else {
-                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                            finish();
-                        }
+                if (prefs.getBoolean("firstrun", true)) {
+                    // Do first run stuff here then set 'firstrun' as false
+                    // using the following line to edit/commit prefs
+                    Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                    startActivity(intent);
+                    //  prefs.edit().putBoolean("firstrun", false).commit();
+                    finish();
+                } else {
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                    finish();
+                }
 
 
-                    }
-                },1500);
-
-//                Animation anim = AnimationUtils.loadAnimation(SplashActivity.this, R.anim.img_anim);
-//                imageView1.startAnimation(anim);
             }
-        }, SPLASH_TIME_OUT);
-
-
+        },1000);
     }
 }
