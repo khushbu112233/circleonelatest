@@ -385,7 +385,7 @@ public class SubscriptionActivity extends AppCompatActivity
                         subscriptionModel.setConnectionLimit(object.getString("Connection_Limit"));
                         subscriptionModel.setGroupLimit(object.getString("Group_Limit"));
                         subscriptionModel.setMonthlyConnectionLimit(object.getString("Monthy_Connection_Limit"));
-                        subscriptionModel.setLetf_connection("");
+                        subscriptionModel.setLetf_connection(object.getString("Connections_Left"));
                         subscriptionModelArrayList.add(subscriptionModel);
 
                         String PackageID = object.getString("PackageID");
@@ -426,6 +426,7 @@ public class SubscriptionActivity extends AppCompatActivity
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("UserId", UserId);
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
