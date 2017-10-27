@@ -266,6 +266,15 @@ public class CardDetail extends NfcActivity
             }
         });
 
+        txtAttachment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
+                intent.putExtra("url", Utility.BASE_IMAGE_URL+"Other_doc/"+txtAttachment.getText().toString());
+                startActivity(intent);
+            }
+        });
+
         imgProfileCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)

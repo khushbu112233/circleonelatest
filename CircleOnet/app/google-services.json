@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1056701830109-fqdoqcu343giqhqt43s5n7afrputnq72.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.circle8.circleOne",
+            "certificate_hash": "ea288de95554331dba3b006871801e0ed5d21db3"
+          }
+        },
+        {
           "client_id": "1056701830109-2ldq8873f55miqsi1m8i26gv2s894seh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -57,6 +65,13 @@
             {
               "client_id": "1056701830109-ul2s0phsjo3m9br888rojnafj4gs640d.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1056701830109-dvcqv4un23h9g4ejbhceb110pt0mt87u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.circle8.circleOne"
+              }
             }
           ]
         },

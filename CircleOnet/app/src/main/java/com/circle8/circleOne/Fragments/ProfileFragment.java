@@ -36,6 +36,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.circle8.circleOne.Activity.AttachmentDisplay;
 import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.Activity.EditProfileActivity;
 import com.circle8.circleOne.Activity.ImageZoom;
@@ -296,6 +297,15 @@ public class ProfileFragment extends Fragment
                 wmlp.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
                 wmlp.y = 300;*/   //y position
                 dialog.show();
+            }
+        });
+
+        txtAttachment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), AttachmentDisplay.class);
+                intent.putExtra("url", Utility.BASE_IMAGE_URL+"Other_doc/d20170906042557443.txt");
+                startActivity(intent);
             }
         });
 

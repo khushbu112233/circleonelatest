@@ -240,16 +240,17 @@
         <activity
             android:name=".MultiContactPickerActivity"
             android:label="@string/picker_title"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.CreateGroupActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
-        <activity android:name=".Activity.MerchantDetailActivity"
+        <activity
+            android:name=".Activity.MerchantDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionbar">
-
-        </activity>
+            android:theme="@style/NoActionbar"></activity>
+        <activity android:name=".Activity.AttachmentDisplay"
+            android:theme="@style/NoActionbarSplash"></activity>
     </application>
 
 </manifest>
