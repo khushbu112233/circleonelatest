@@ -113,7 +113,7 @@ public class SortAndFilterOption extends AppCompatActivity
         profileModelArrayList = new ArrayList<>();
 
         new HttpAsyncTaskfetchGroup().execute(Utility.BASE_URL+"Group/Fetch");
-        new HttpAsyncTaskFetchProfile().execute("http://circle8.asia:8082/Onet.svc/GetProfileConnection");
+        new HttpAsyncTaskFetchProfile().execute(Utility.BASE_URL+"MyProfiles");
 
         lnrAllCards.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -685,9 +685,9 @@ public class SortAndFilterOption extends AppCompatActivity
                 {
                     JSONObject jsonObject = new JSONObject(result);
 
-                    String profileID = jsonObject.getString("profileid");
+                   // String profileID = jsonObject.getString("profileid");
 
-                    JSONArray jsonArray = jsonObject.getJSONArray("connection");
+                    JSONArray jsonArray = jsonObject.getJSONArray("Profiles");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
 
                     if (jsonArray.length() == 0)
@@ -802,10 +802,9 @@ public class SortAndFilterOption extends AppCompatActivity
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("ProfileID", profile_id);
-            jsonObject.accumulate("Type", "desc");
             jsonObject.accumulate("numofrecords", "100");
             jsonObject.accumulate("pageno", "1");
+            jsonObject.accumulate("userid", user_id);
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
