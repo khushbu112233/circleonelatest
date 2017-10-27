@@ -103,7 +103,9 @@ import java.security.GeneralSecurityException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -1521,10 +1523,20 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
             HttpPost httpPost = new HttpPost(url);
             String json = "";
 
+            Calendar c = Calendar.getInstance();
+            System.out.println("Current time =&gt; "+c.getTime());
+
+            SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+            String formattedDate = df.format(c.getTime());
+           // Toast.makeText(getApplicationContext(), formattedDate, Toast.LENGTH_LONG).show();
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("Latitude", String.valueOf(latitude));
+            jsonObject.accumulate("Location", "");
+            jsonObject.accumulate("Longitude", String.valueOf(longitude));
             jsonObject.accumulate("Operation", "Request");
             jsonObject.accumulate("RequestType", "NFC");
+            jsonObject.accumulate("connection_date", formattedDate);
             jsonObject.accumulate("friendProfileId", nfcProfileId);
             jsonObject.accumulate("myProfileId", profileId);
 

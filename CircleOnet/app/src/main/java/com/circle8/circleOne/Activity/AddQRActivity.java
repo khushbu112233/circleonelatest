@@ -49,6 +49,8 @@ import java.security.GeneralSecurityException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import javax.crypto.BadPaddingException;
@@ -248,12 +250,24 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
             HttpPost httpPost = new HttpPost(url);
             String json = "";
 
+            Calendar c = Calendar.getInstance();
+            System.out.println("Current time =&gt; "+c.getTime());
+
+            SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+            String formattedDate = df.format(c.getTime());
+
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
+
+            jsonObject.accumulate("Latitude", String.valueOf(latitude));
+            jsonObject.accumulate("Location", "");
+            jsonObject.accumulate("Longitude", String.valueOf(longitude));
             jsonObject.accumulate("Operation", "Request");
             jsonObject.accumulate("RequestType", "NFC");
+            jsonObject.accumulate("connection_date", formattedDate);
             jsonObject.accumulate("friendProfileId", scanQr);
             jsonObject.accumulate("myProfileId", profileId);
+
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
