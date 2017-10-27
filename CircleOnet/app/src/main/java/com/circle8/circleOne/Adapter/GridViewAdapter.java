@@ -2,8 +2,10 @@ package com.circle8.circleOne.Adapter;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -135,7 +137,25 @@ public class GridViewAdapter extends BaseSwipeAdapter
                 posi  = position ;
 //                Toast.makeText(context, "Friend Profile ID: "+ nfcModelList1.get(posi).getProfile_id(), Toast.LENGTH_SHORT).show();
 
-                new HttpAsyncTask().execute(Utility.BASE_URL+"FriendConnection_Operation");
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(context, R.style.Blue_AlertDialog);
+                alert.setMessage("Do you want to Delete this Profile?");
+                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //do your work here
+                        dialog.dismiss();
+                        new HttpAsyncTask().execute(Utility.BASE_URL+"FriendConnection_Operation");
+                    }
+                });
+                alert.setNegativeButton("No", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                alert.show();
 
                 /*if (CardsActivity.mViewPager.getCurrentItem() == 0){
                     Intent go = new Intent(context,CardsActivity.class);

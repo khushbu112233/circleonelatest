@@ -8,64 +8,6 @@
     android:background="@color/white"
     tools:context="com.circle8.circleOne.Activity.NewCardRequestActivity">
 
-    <RelativeLayout
-        android:elevation="15dp"
-        android:id="@+id/rlActionBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary">
-
-        <ImageView
-            android:id="@+id/imgBack"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_width="35dp"
-            android:layout_height="45dp"
-            android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <com.circle8.circleOne.Utils.cgTextView
-            android:id="@+id/tvBarTitle"
-            android:textSize="17dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Card Request"
-            android:textColor="@color/white"/>
-
-        <com.circle8.circleOne.Utils.cgTextView
-            android:layout_below="@+id/tvBarTitle"
-            android:textSize="9dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Select profile you wish to make the request for"
-            android:textColor="@color/white"/>
-
-        <ImageView
-            android:id="@+id/imgProfileMenu"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_width="22dp"
-            android:layout_height="30dp" />
-
-    </RelativeLayout>
-
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/rlActionBar"
-        android:divider="@color/colorPrimary"
-        android:dividerHeight="1dp">
-
-    </ListView>
 
     <RelativeLayout
         android:id="@+id/rlProgressDialog"
@@ -127,6 +69,154 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="0.3"/>
         </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlLayOne"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:elevation="15dp"
+            android:id="@+id/rlActionBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary">
+
+            <ImageView
+                android:id="@+id/imgBack"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="35dp"
+                android:layout_height="45dp"
+                android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <com.circle8.circleOne.Utils.cgTextView
+                android:id="@+id/tvBarTitle"
+                android:textSize="17dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Card Request"
+                android:textColor="@color/white"/>
+
+            <com.circle8.circleOne.Utils.cgTextView
+                android:layout_below="@+id/tvBarTitle"
+                android:textSize="9dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select profile you wish to make the request for"
+                android:textColor="@color/white"/>
+
+            <ImageView
+                android:id="@+id/imgProfileMenu"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="22dp"
+                android:layout_height="30dp" />
+
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rlActionBar"
+            android:divider="@color/colorPrimary"
+            android:dividerHeight="1dp">
+
+        </ListView>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/ivAlphaImg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:alpha="0.8"
+        android:visibility="gone"/>
+
+
+    <RelativeLayout
+        android:id="@+id/rlLayTwo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_centerInParent="true">
+
+            <com.circle8.circleOne.Utils.cgBoldTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Take Note"
+                android:textSize="18sp"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorAccent"
+                android:layout_marginBottom="10dp"/>
+
+            <com.circle8.circleOne.Utils.cgTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Please note that our standard namecard size is 8.5cmX5.5cm, 300dpi or above in CMYK color, Any uploaded design below our standard might delay the printing timeline. If you have the original name card design file, please upload the original file in the next page, or login to www.circle8.asia, under 'request a new card', upload the original file. Otherwise, if the provided design cannot be printed, our customer service may contact you within 3-5 working days."
+                android:textColor="@color/unselected"
+                android:textSize="15sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <com.circle8.circleOne.Utils.cgBoldTextView
+                    android:id="@+id/tvNext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Next"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_weight="0.5"
+                    android:gravity="center_horizontal"/>
+
+                <com.circle8.circleOne.Utils.cgBoldTextView
+                    android:id="@+id/tvCancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cancel"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_weight="0.5"
+                    android:gravity="center_horizontal"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
     </RelativeLayout>
 
 

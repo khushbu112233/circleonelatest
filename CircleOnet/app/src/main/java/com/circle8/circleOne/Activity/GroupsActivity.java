@@ -123,7 +123,7 @@ public class GroupsActivity extends AppCompatActivity
 
         listView = (ListView)findViewById(R.id.listView);
         ivAlphaImg = (ImageView)findViewById(R.id.ivAlphaImg);
-        imgBack = (ImageView) findViewById(R.id.imgBack);
+        imgBack =(ImageView) findViewById(R.id.imgBack);
         llBottom = (RelativeLayout) findViewById(R.id.llBottom);
         rlLayOne = (RelativeLayout) findViewById(R.id.rlLayOne);
         rlLayTwo = (RelativeLayout) findViewById(R.id.rlLayTwo);

@@ -57,6 +57,10 @@ public class NewCardRequestActivity extends AppCompatActivity
     private TextView tvProgressing ;
     private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
 
+    public static RelativeLayout rlLayOne, rlLayTwo ;
+    public static TextView tvNext, tvCancel ;
+    public static ImageView ivAlphaImg ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -70,6 +74,12 @@ public class NewCardRequestActivity extends AppCompatActivity
         ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
         ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
         ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
+
+        rlLayOne = (RelativeLayout) findViewById(R.id.rlLayOne);
+        rlLayTwo = (RelativeLayout) findViewById(R.id.rlLayTwo);
+        tvNext = (TextView)findViewById(R.id.tvNext);
+        tvCancel = (TextView)findViewById(R.id.tvCancel);
+        ivAlphaImg = (ImageView)findViewById(R.id.ivAlphaImg);
 
         HashMap<String, String> user = session.getUserDetails();
         UserID = user.get(LoginSession.KEY_USERID);
@@ -93,9 +103,44 @@ public class NewCardRequestActivity extends AppCompatActivity
 */
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id)
             {
-                int count = position + 1;
+
+
+                listView.setEnabled(false);
+                ivAlphaImg.setVisibility(View.VISIBLE);
+                rlLayTwo.setVisibility(View.VISIBLE);
+
+                tvNext.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        int count = position + 1;
+                        Intent i = new Intent(getApplicationContext(), NewCardRequestDetailActivity.class);
+                        i.putExtra("person", allTags.get(position).getFirstName() + " " + allTags.get(position).getLastName());
+                        i.putExtra("designation", allTags.get(position).getDesignation());
+                        i.putExtra("company", allTags.get(position).getCompanyName());
+                        i.putExtra("profile", allTags.get(position).getProfile());
+                        i.putExtra("image", allTags.get(position).getUserPhoto());
+                        i.putExtra("phone", allTags.get(position).getPhone1());
+                        i.putExtra("profileID", allTags.get(position).getProfileID());
+                        i.putExtra("Card_Front", allTags.get(position).getCard_Front());
+                        i.putExtra("Card_Back", allTags.get(position).getCard_Back());
+                        startActivity(i);
+                    }
+                });
+
+                tvCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        ivAlphaImg.setVisibility(View.GONE);
+                        rlLayTwo.setVisibility(View.GONE);
+                        listView.setEnabled(true);
+                    }
+                });
+
+               /* int count = position + 1;
                 Intent i = new Intent(getApplicationContext(), NewCardRequestDetailActivity.class);
                 i.putExtra("person", allTags.get(position).getFirstName() + " " + allTags.get(position).getLastName());
                 i.putExtra("designation", allTags.get(position).getDesignation());
@@ -106,9 +151,10 @@ public class NewCardRequestActivity extends AppCompatActivity
                 i.putExtra("profileID", allTags.get(position).getProfileID());
                 i.putExtra("Card_Front", allTags.get(position).getCard_Front());
                 i.putExtra("Card_Back", allTags.get(position).getCard_Back());
-                startActivity(i);
+                startActivity(i);*/
             }
         });
+
     }
 
     public  String POST5(String url)

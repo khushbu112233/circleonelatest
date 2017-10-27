@@ -481,6 +481,39 @@ public class EditProfileActivity extends AppCompatActivity implements
 
         }
 
+        imgYoutube.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(EditProfileActivity.this);
+                final EditText input = new EditText(EditProfileActivity.this);
+                input.setHint("Enter Youtube Url");
+                alertDialog.setMessage("Youtube");
+                alertDialog.setView(input);
+                alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //do your work here
+                        if (input.getText().toString().equals("")){
+                            Toast.makeText(getApplicationContext(), "Enter youtube url", Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            dialog.dismiss();
+                            strYoutube = input.getText().toString();
+                        }
+                       // new HttpAsyncTask().execute(Utility.BASE_URL+"FriendConnection_Operation");
+                    }
+                });
+                alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                alertDialog.show();
+            }
+        });
+
         client = new TwitterAuthClient();
         imgTwitter.setOnClickListener(new View.OnClickListener() {
             @Override
