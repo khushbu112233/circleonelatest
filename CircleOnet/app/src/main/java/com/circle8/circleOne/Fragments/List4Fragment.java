@@ -506,7 +506,7 @@ public class List4Fragment extends Fragment
 
     private static void callFirst()
     {
-        new HttpAsyncTask().execute(Utility.BASE_URL+"GetFriendConnection");
+        new HttpAsyncTask().execute(Utility.BASE_URL+SortAndFilterOption.CardListApi);
     }
 
     public static void webCall()
@@ -532,7 +532,7 @@ public class List4Fragment extends Fragment
             gridAdapter.notifyDataSetChanged();
         } catch (Exception e) {
         }
-        new HttpAsyncTask().execute(Utility.BASE_URL+"GetFriendConnection");
+        new HttpAsyncTask().execute(Utility.BASE_URL+SortAndFilterOption.CardListApi);
     }
 
 
@@ -663,7 +663,7 @@ public class List4Fragment extends Fragment
                                     if (listView.getLastVisiblePosition() >= count - threshold) {
                                         rlLoadMore.setVisibility(View.VISIBLE);
                                         // Execute LoadMoreDataTask AsyncTask
-                                        new HttpAsyncTask().execute(Utility.BASE_URL+"GetFriendConnection");
+                                        new HttpAsyncTask().execute(Utility.BASE_URL+SortAndFilterOption.CardListApi);
                                     }
                                 } else {
 
@@ -701,10 +701,29 @@ public class List4Fragment extends Fragment
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("Type", SortAndFilterOption.SortType);
-            jsonObject.accumulate("numofrecords", "10");
-            jsonObject.accumulate("pageno", pageno);
-            jsonObject.accumulate("userid", UserId);
+            if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
+
+                jsonObject.accumulate("Type", SortAndFilterOption.SortType);
+                jsonObject.accumulate("numofrecords", "10");
+                jsonObject.accumulate("pageno", pageno);
+                jsonObject.accumulate("userid", UserId);
+            }
+            else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
+                jsonObject.accumulate("ProfileID", SortAndFilterOption.ProfileArrayId);
+                jsonObject.accumulate("Type", SortAndFilterOption.SortType);
+                jsonObject.accumulate("numofrecords", "10");
+//            jsonObject.accumulate("pageno", pageno);
+                jsonObject.accumulate("pageno", pageno);
+            }
+            else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
+                jsonObject.accumulate("group_ID", SortAndFilterOption.groupId);
+                jsonObject.accumulate("profileId", SortAndFilterOption.ProfileArrayId);
+                jsonObject.accumulate("numofrecords", "10");
+//            jsonObject.accumulate("pageno", pageno);
+                jsonObject.accumulate("pageno", pageno);
+            }
+
+
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();

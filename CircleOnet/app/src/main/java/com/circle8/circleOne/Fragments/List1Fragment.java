@@ -492,7 +492,7 @@ public class List1Fragment extends Fragment
         // tvNoCard.setVisibility(View.GONE);
         nfcModel.clear();
         pageno = 1;
-        new HttpAsyncTask().execute(Utility.BASE_URL+"GetFriendConnection");
+        new HttpAsyncTask().execute(Utility.BASE_URL+SortAndFilterOption.CardListApi);
     }
 
     public static void webCall()
@@ -538,11 +538,28 @@ public class List1Fragment extends Fragment
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("Type", SortAndFilterOption.SortType);
-            jsonObject.accumulate("numofrecords", "100");
+
+            if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
+                jsonObject.accumulate("Type", SortAndFilterOption.SortType);
+                jsonObject.accumulate("numofrecords", "100");
 //            jsonObject.accumulate("pageno", pageno);
-            jsonObject.accumulate("pageno", "1");
-            jsonObject.accumulate("userid", UserId);
+                jsonObject.accumulate("pageno", "1");
+                jsonObject.accumulate("userid", UserId);
+            }
+            else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
+                jsonObject.accumulate("ProfileID", SortAndFilterOption.ProfileArrayId);
+                jsonObject.accumulate("Type", SortAndFilterOption.SortType);
+                jsonObject.accumulate("numofrecords", "100");
+//            jsonObject.accumulate("pageno", pageno);
+                jsonObject.accumulate("pageno", "1");
+            }
+            else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
+                jsonObject.accumulate("group_ID", SortAndFilterOption.groupId);
+                jsonObject.accumulate("profileId", SortAndFilterOption.ProfileArrayId);
+                jsonObject.accumulate("numofrecords", "100");
+//            jsonObject.accumulate("pageno", pageno);
+                jsonObject.accumulate("pageno", "1");
+            }
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -575,10 +592,11 @@ public class List1Fragment extends Fragment
                 result = "Did not work!";
 
         } catch (Exception e) {
+            Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
             Log.d("InputStream", e.getLocalizedMessage());
         }
 
-        pageno++;
+       // pageno++;
         // 11. return result
         return result;
     }

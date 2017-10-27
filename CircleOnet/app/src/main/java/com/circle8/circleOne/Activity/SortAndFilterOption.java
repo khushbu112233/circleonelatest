@@ -15,6 +15,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -62,6 +63,9 @@ public class SortAndFilterOption extends AppCompatActivity
     LinearLayout lnrSortRecent, lnrSortName, lnrSortCompany;
     DatabaseHelper db;
     public static String SortType = "desc";
+    public static String CardListApi = "GetFriendConnection";
+    public static String ProfileArrayId = "";
+    public static String groupId = "";
     LinearLayout lnrAllCards;
     ExpandableHeightListView listView, listView1, listView2 ;
     private LoginSession session;
@@ -75,6 +79,7 @@ public class SortAndFilterOption extends AppCompatActivity
     public static ArrayList<ProfileModel> profileModelArrayList ;
     SortAndFilterAdapter sortAndFilterAdapter ;
     SortAndFilterProfileAdapter sortAndFilterProfileAdapter ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -119,6 +124,7 @@ public class SortAndFilterOption extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 SortType = "asc";
+                CardListApi = "GetFriendConnection";
                 List1Fragment.allTags.clear();
                 List1Fragment.progressStatus = "FILTER";
                 try
@@ -216,6 +222,7 @@ public class SortAndFilterOption extends AppCompatActivity
             public void onClick(View v)
             {
                 SortType = "desc";
+                CardListApi = "GetFriendConnection";
                 List1Fragment.allTags.clear();
                 List1Fragment.progressStatus = "FILTER";
                 try
@@ -274,6 +281,7 @@ public class SortAndFilterOption extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 SortType = "Name";
+                CardListApi = "GetFriendConnection";
                 List1Fragment.progressStatus = "FILTER";
                 List1Fragment.allTags.clear();
                 try {
@@ -331,6 +339,7 @@ public class SortAndFilterOption extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 SortType = "CompanyName";
+                CardListApi = "GetFriendConnection";
                 List1Fragment.progressStatus = "FILTER";
                 List1Fragment.allTags.clear();
                 try {
@@ -453,6 +462,123 @@ public class SortAndFilterOption extends AppCompatActivity
             }
         });
 
+        listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                SortType = "desc";
+                CardListApi = "GetProfileConnection";
+                ProfileArrayId = profileModelArrayList.get(position).getProfileID();
+                List1Fragment.progressStatus = "FILTER";
+                List1Fragment.allTags.clear();
+                try {
+                    List2Fragment.gridAdapter.notifyDataSetChanged();
+                    List2Fragment.allTags = db.getActiveNFC();
+                    List2Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List2Fragment.GetData(getApplicationContext());
+                } catch (Exception e) {
+
+                }
+
+                try {
+                    List3Fragment.gridAdapter.notifyDataSetChanged();
+                    List3Fragment.allTags = db.getActiveNFC();
+                    List3Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List3Fragment.GetData(getApplicationContext());
+                } catch (Exception e) {
+
+                }
+                try {
+                    List4Fragment.gridAdapter.notifyDataSetChanged();
+                    List4Fragment.allTags = db.getActiveNFC();
+                    List4Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List4Fragment.GetData(getApplicationContext());
+                } catch (Exception e) {
+
+                }
+
+                try {
+                    //List1Fragment.myPager.notifyDataSetChanged();
+                    //   List1Fragment.allTags = db.getActiveNFC();
+
+                    List1Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List1Fragment.GetData(getApplicationContext());
+                } catch (Exception e) {
+
+                }
+                Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                userIntent.putExtra("viewpager_position", 0);
+                startActivity(userIntent);
+                finish();
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+
+
+            }
+        });
+
+        listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+               // SortType = "desc";
+                CardListApi = "Group/FetchConnection";
+                ProfileArrayId = profile_id;
+                groupId = groupModelArrayList.get(position).getGroup_ID();
+                List1Fragment.progressStatus = "FILTER";
+                List1Fragment.allTags.clear();
+                try {
+                    List2Fragment.gridAdapter.notifyDataSetChanged();
+                    List2Fragment.allTags = db.getActiveNFC();
+                    List2Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List2Fragment.GetData(getApplicationContext());
+                } catch (Exception e) {
+
+                }
+
+                try {
+                    List3Fragment.gridAdapter.notifyDataSetChanged();
+                    List3Fragment.allTags = db.getActiveNFC();
+                    List3Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List3Fragment.GetData(getApplicationContext());
+                } catch (Exception e) {
+
+                }
+                try {
+                    List4Fragment.gridAdapter.notifyDataSetChanged();
+                    List4Fragment.allTags = db.getActiveNFC();
+                    List4Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List4Fragment.GetData(getApplicationContext());
+                } catch (Exception e) {
+
+                }
+
+                try {
+                    //List1Fragment.myPager.notifyDataSetChanged();
+                    //   List1Fragment.allTags = db.getActiveNFC();
+
+                    List1Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List1Fragment.GetData(getApplicationContext());
+                } catch (Exception e) {
+
+                }
+                Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                userIntent.putExtra("viewpager_position", 0);
+                startActivity(userIntent);
+                finish();
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+
+
+            }
+        });
+
         imgLogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -552,6 +678,7 @@ public class SortAndFilterOption extends AppCompatActivity
 
                         GroupModel nfcModelTag = new GroupModel();
                         nfcModelTag.setGroup_ID(object.getString("group_ID"));
+                      //  nfcModelTag.setProfileId1(object.getString("ProfileId"));
                         nfcModelTag.setGroup_Name(object.getString("group_Name"));
                         nfcModelTag.setGroup_Desc(object.getString("group_desc"));
                         nfcModelTag.setGroup_Photo(object.getString("group_photo"));
@@ -707,6 +834,7 @@ public class SortAndFilterOption extends AppCompatActivity
 
                         ProfileModel nfcModelTag = new ProfileModel();
                         nfcModelTag.setUserID(object.getString("UserID"));
+                        nfcModelTag.setProfileID(object.getString("ProfileID"));
                         nfcModelTag.setProfileName(object.getString("ProfileName"));
                         nfcModelTag.setUserPhoto(object.getString("UserPhoto"));
                         profileModelArrayList.add(nfcModelTag);
