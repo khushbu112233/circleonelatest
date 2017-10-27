@@ -125,7 +125,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -133,7 +133,7 @@
                 app:layout_scrollFlags="snap">
 
                 <FrameLayout
-                    android:alpha="0.7"
+                    android:alpha="0.8"
                     android:layout_width="match_parent"
                     android:layout_height="245dp"
                     android:background="@color/colorAccent">
@@ -185,62 +185,6 @@
                             android:text="Slide down to view the front &amp; back card images"
                             android:textColor="@color/white"/>
 
-                        <LinearLayout
-                            android:gravity="center"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_marginTop="55dp"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true">
-                            <RelativeLayout
-                                android:layout_width="70dp"
-                                android:layout_height="70dp">
-                                <de.hdodenhof.circleimageview.CircleImageView
-                                    app:civ_border_width="1dp"
-                                    app:civ_border_color="@color/white"
-                                    android:src="@drawable/usr_white1"
-                                    android:id="@+id/imgProfile"
-                                    android:layout_width="70dp"
-                                    android:layout_height="70dp" />
-
-                                <ImageView
-                                    android:layout_centerInParent="true"
-                                    android:layout_width="70dp"
-                                    android:layout_height="70dp"
-                                    android:src="@drawable/round_white_profile"
-                                    />
-                            </RelativeLayout>
-                            <com.circle8.circleOne.Utils.orkebyBoldTextView
-                                android:id="@+id/tvPersonName"
-                                android:textSize="17dp"
-                                android:layout_marginTop="5dp"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:textAlignment="center"
-                                android:text="Name"
-                                android:textStyle="bold"
-                                android:textColor="@color/white"/>
-                            <com.circle8.circleOne.Utils.orkebyTextView
-                                android:id="@+id/tvDesignation"
-                                android:textSize="15dp"
-                                android:layout_marginTop="0dp"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:textAlignment="center"
-                                android:text="Designation"
-                                android:textColor="@color/white"/>
-                            <com.circle8.circleOne.Utils.orkebyTextView
-                                android:id="@+id/tvCompany"
-                                android:textSize="15dp"
-                                android:layout_marginTop="2dp"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:textAlignment="center"
-                                android:text="Company"
-                                android:textColor="@color/white"/>
-                        </LinearLayout>
-
                         <com.circle8.circleOne.Utils.HelveticaLightTextView
                             android:id="@+id/tvProfile"
                             android:layout_alignParentBottom="true"
@@ -254,7 +198,64 @@
                             android:textColor="@color/white"/>
                     </RelativeLayout>
                 </FrameLayout>
-            </LinearLayout>
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="55dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true">
+                    <RelativeLayout
+                        android:layout_width="70dp"
+                        android:layout_height="70dp">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            app:civ_border_width="1dp"
+                            app:civ_border_color="@color/white"
+                            android:src="@drawable/usr_white1"
+                            android:id="@+id/imgProfile"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp" />
+
+                        <ImageView
+                            android:layout_centerInParent="true"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:src="@drawable/round_white_profile"
+                            />
+                    </RelativeLayout>
+                    <com.circle8.circleOne.Utils.orkebyBoldTextView
+                        android:id="@+id/tvPersonName"
+                        android:textSize="17dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textAlignment="center"
+                        android:text="Name"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"/>
+                    <com.circle8.circleOne.Utils.orkebyTextView
+                        android:id="@+id/tvDesignation"
+                        android:textSize="15dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textAlignment="center"
+                        android:text="Designation"
+                        android:textColor="@color/white"/>
+                    <com.circle8.circleOne.Utils.orkebyTextView
+                        android:id="@+id/tvCompany"
+                        android:textSize="15dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textAlignment="center"
+                        android:text="Company"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:background="@color/white"

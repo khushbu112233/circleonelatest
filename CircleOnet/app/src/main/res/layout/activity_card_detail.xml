@@ -240,7 +240,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -248,7 +248,7 @@
                 app:layout_scrollFlags="snap">
 
                 <FrameLayout
-                    android:alpha="0.7"
+                    android:alpha="0.8"
                     android:layout_width="match_parent"
                     android:layout_height="220dp"
                     android:background="@color/colorAccent">
@@ -291,7 +291,7 @@
                             android:layout_marginTop="5dp"
                             android:src="@drawable/ic_dehaze_black_24dp" />
 
-                        <LinearLayout
+                       <!-- <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/txtprofile"
@@ -351,12 +351,73 @@
                                 android:textColor="@color/white"
                                 android:textSize="16dp" />
 
-                        </LinearLayout>
+                        </LinearLayout>-->
 
                     </RelativeLayout>
 
                 </FrameLayout>
-            </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtprofile"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_centerInParent="true"
+                            android:id="@+id/imgProfileCard"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/usr_white1"
+                            app:civ_border_width="0dp" />
+
+                        <ImageView
+                            android:layout_centerInParent="true"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/round_white_profile"
+                            />
+                    </RelativeLayout>
+
+                    <com.circle8.circleOne.Utils.orkebyBoldTextView
+                        android:id="@+id/txtName"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="8dp"
+                        android:text="Person"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="17dp"
+                        android:textStyle="bold" />
+
+                    <com.circle8.circleOne.Utils.orkebyTextView
+                        android:id="@+id/txtDesi"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="3dp"
+                        android:text="Designation"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="16dp" />
+
+                    <com.circle8.circleOne.Utils.orkebyTextView
+                        android:id="@+id/txtCompany"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="3dp"
+                        android:text="Company"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="16dp" />
+
+                </LinearLayout>
+            </RelativeLayout>
 
 
             <android.support.design.widget.AppBarLayout
