@@ -304,7 +304,7 @@ public class ProfileFragment extends Fragment
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), AttachmentDisplay.class);
-                intent.putExtra("url", Utility.BASE_IMAGE_URL+"Other_doc/d20170906042557443.txt");
+                intent.putExtra("url", Utility.BASE_IMAGE_URL+"Other_doc/"+txtAttachment.getText().toString());
                 startActivity(intent);
             }
         });
