@@ -293,9 +293,12 @@ public class List3Adapter extends BaseSwipeAdapter
         if (!company.equals("")){
             desc += company;
         }
-        if (!mobile.equals("")){
-            desc += "\n" + mobile;
-        }
+
+        try {
+            if (!mobile.equals("")) {
+                desc += "\n" + mobile;
+            }
+        }catch (Exception e){}
         if (!website.equals("")){
             desc += "\n" +website;
         }
