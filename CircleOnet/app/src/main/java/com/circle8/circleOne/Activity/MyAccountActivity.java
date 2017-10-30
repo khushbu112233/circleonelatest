@@ -6,11 +6,13 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.media.ExifInterface;
 import android.net.Uri;
@@ -96,6 +98,8 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
 {
     private EditText etUserName, etFirstName, etLastName, etPassword,
             etPasswordAgain, etEmail, etAddress1 , etAddress2, etPhone ;
+    private TextView tvUserName, tvFirstName, tvLastName, tvPassword,
+            tvPasswordAgain, tvEmail, tvPhone, tvDD, tvMM, tvYYYY ;
     private CircleImageView imgProfile ;
     private TextView tvSave, tvCancel, txtGender ;
     private ImageView ivFemaleround, ivFemaleImg, ivConnect, ivMiniCamera,
@@ -130,11 +134,13 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     String user_name, dob, profile_id;
     String Connection_Limit, Connection_Left;
 
+    String editStatus = "None";
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_account);
+        setContentView(R.layout.my_account);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
@@ -159,6 +165,16 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         etAddress1 = (EditText)findViewById(R.id.etAddress1);
         etAddress2 = (EditText)findViewById(R.id.etAddress2);
         etPhone = (EditText)findViewById(R.id.etPhone);
+
+        tvFirstName = (TextView) findViewById(R.id.tvFirstName);
+        tvLastName = (TextView)findViewById(R.id.tvLastName);
+        tvPassword = (TextView)findViewById(R.id.tvPassword);
+        tvPasswordAgain = (TextView)findViewById(R.id.tvRePassword);
+        tvPhone = (TextView)findViewById(R.id.tvPhone);
+        tvDD = (TextView)findViewById(R.id.tvDate);
+        tvMM = (TextView)findViewById(R.id.tvMonth);
+        tvYYYY = (TextView)findViewById(R.id.tvYear);
+
         imgBack = (ImageView) findViewById(R.id.imgBack);
         tvSave = (TextView)findViewById(R.id.tvSave);
         tvCancel = (TextView)findViewById(R.id.tvCancel);
@@ -197,9 +213,24 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         pDialog = new ProgressDialog(this);
         etUserName.setText(email_id);
 
+        etFirstName.setVisibility(View.VISIBLE);
+        tvFirstName.setVisibility(View.GONE);
+        etLastName.setVisibility(View.VISIBLE);
+        tvLastName.setVisibility(View.GONE);
+        etPassword.setVisibility(View.VISIBLE);
+        tvPassword.setVisibility(View.GONE);
+        etPasswordAgain.setVisibility(View.VISIBLE);
+        tvPasswordAgain.setVisibility(View.GONE);
+        etPhone.setVisibility(View.VISIBLE);
+        tvPhone.setVisibility(View.GONE);
+        etDD.setVisibility(View.VISIBLE);
+        tvDD.setVisibility(View.GONE);
+        etMM.setVisibility(View.VISIBLE);
+        tvMM.setVisibility(View.GONE);
+        etYYYY.setVisibility(View.VISIBLE);
+        tvYYYY.setVisibility(View.GONE);
+
        // new HttpAsyncTaskFetchLoginData().execute("http://circle8.asia:8999/Onet.svc/UserLogin");
-
-
 
         etUserName.setText(user.get(LoginSession.KEY_EMAIL));
 
@@ -211,6 +242,11 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             etDD.setText(day);
             etMM.setText(month);
             etYYYY.setText(year);
+
+            tvDD.setText(day);
+            tvMM.setText(month);
+            tvYYYY.setText(year);
+
         }
         catch (Exception e){}
 
@@ -221,6 +257,9 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         etFirstName.setText(kept1);
         etLastName.setText(remainder1);
 
+        tvFirstName.setText(kept1);
+        tvLastName.setText(remainder1);
+
         try
         {
             if (user.get(LoginSession.KEY_PHONE).contains(" ")){
@@ -230,9 +269,11 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                 kept = kept.replaceAll("//+", "");
                 ccp.setCountryForPhoneCode(Integer.parseInt(kept));
                 etPhone.setText(remainder);
+                tvPhone.setText(remainder);
             }
             else {
                 etPhone.setText(user.get(LoginSession.KEY_PHONE));
+                tvPhone.setText(user.get(LoginSession.KEY_PHONE));
             }
         }
         catch (Exception e)
@@ -246,6 +287,8 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         {
             etPassword.setText(user_pass);
             etPasswordAgain.setText(user_pass);
+            tvPassword.setText(user_pass);
+            tvPasswordAgain.setText(user_pass);
         }
         catch (Exception e)
         {
@@ -434,14 +477,24 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         ivEditImg.setOnClickListener(this);
         imgProfile.setOnClickListener(this);
 
+        etFirstName.setOnClickListener(this);
+
         rlFemale.setEnabled(false);
         rlMale.setEnabled(false);
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+
     }
 
     @Override
     public void onBackPressed()
     {
         finish();
+        editStatus = "None";
     }
 
     @Override
@@ -513,6 +566,44 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             etDD.setEnabled(true);
             etMM.setEnabled(true);
             etYYYY.setEnabled(true);
+
+/*
+            etFirstName.setVisibility(View.VISIBLE);
+            tvFirstName.setVisibility(View.GONE);
+            etLastName.setVisibility(View.VISIBLE);
+            tvLastName.setVisibility(View.GONE);
+            etPassword.setVisibility(View.VISIBLE);
+            tvPassword.setVisibility(View.GONE);
+            etPasswordAgain.setVisibility(View.VISIBLE);
+            tvPasswordAgain.setVisibility(View.GONE);
+            etPhone.setVisibility(View.VISIBLE);
+            tvPhone.setVisibility(View.GONE);
+            etDD.setVisibility(View.VISIBLE);
+            tvDD.setVisibility(View.GONE);
+            etMM.setVisibility(View.VISIBLE);
+            tvMM.setVisibility(View.GONE);
+            etYYYY.setVisibility(View.VISIBLE);
+            tvYYYY.setVisibility(View.GONE);
+*/
+
+            ColorStateList colorStateList = ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary));
+            etFirstName.setBackgroundTintList(colorStateList);
+            etLastName.setBackgroundTintList(colorStateList);
+            etPassword.setBackgroundTintList(colorStateList);
+            etPasswordAgain.setBackgroundTintList(colorStateList);
+            etPhone.setBackgroundTintList(colorStateList);
+            etDD.setBackgroundTintList(colorStateList);
+            etMM.setBackgroundTintList(colorStateList);
+            etYYYY.setBackgroundTintList(colorStateList);
+
+            etFirstName.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+            etLastName.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+            etPassword.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+            etPasswordAgain.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+            etPhone.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+            etDD.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+            etMM.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+            etYYYY.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
 
             rlFemale.setEnabled(true);
             rlMale.setEnabled(true);
@@ -686,9 +777,10 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
 
             gender = "F";
             txtGender.setText("Gender: Female");
-
         }
     }
+
+
 
     private void selectImage()
     {
