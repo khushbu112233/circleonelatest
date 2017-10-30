@@ -297,9 +297,13 @@ public class LoginActivity extends AppCompatActivity implements
                     userName = etLoginUser.getText().toString();
                     userPassword = etLoginPass.getText().toString();
 
-                    if (!validateLogin(userName, userPassword)) {
-                        Toast.makeText(getApplicationContext(), "All fields are require!", Toast.LENGTH_SHORT).show();
-                    } else {
+                    if (userName.equals("")){
+                        Toast.makeText(getApplicationContext(), "Enter Username", Toast.LENGTH_SHORT).show();
+                    }
+                    else if (userPassword.equals("")){
+                        Toast.makeText(getApplicationContext(), "Enter Password", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
                         new HttpAsyncTask().execute(Utility.BASE_URL+"UserLogin");
                     }
                 }

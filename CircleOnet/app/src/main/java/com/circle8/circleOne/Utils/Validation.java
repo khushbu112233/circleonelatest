@@ -207,7 +207,7 @@ public class Validation
         if(userName.isEmpty())
         {
 //            LoginActivity.etLoginUser.setError(Html.fromHtml("<font color='red'>Username can't be empty</font>"));
-            LoginActivity.tvUsernameInfo.setVisibility(View.VISIBLE);
+           // LoginActivity.tvUsernameInfo.setVisibility(View.VISIBLE);
             valid = false ;
         }
         else
@@ -219,7 +219,7 @@ public class Validation
         if(password.isEmpty())
         {
 //            LoginActivity.etLoginPass.setError("Enter Password");
-            LoginActivity.tvPasswordInfo.setVisibility(View.VISIBLE);
+           // LoginActivity.tvPasswordInfo.setVisibility(View.VISIBLE);
             valid = false ;
         }
         else
