@@ -349,12 +349,12 @@ public class ConnectActivity extends AppCompatActivity
             }
         });
 
-        boolean result = Utility.checkContactPermission(ConnectActivity.this);
+      /*  boolean result = Utility.checkContactPermission(ConnectActivity.this);
         if (result)
         {
-            contactExists(getApplicationContext(), "+91 9737032082");
+            contactExists(getApplicationContext(), "+91 ");
         }
-
+*/
         rlConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)

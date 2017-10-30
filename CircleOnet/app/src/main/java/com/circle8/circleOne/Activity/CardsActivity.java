@@ -54,6 +54,7 @@ import com.circle8.circleOne.Fragments.List1Fragment;
 import com.circle8.circleOne.Fragments.ProfileFragment;
 import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
+import com.circle8.circleOne.Helper.ReferralCodeSession;
 import com.circle8.circleOne.LocationUtil.PermissionUtils;
 import com.circle8.circleOne.MultiContactPicker;
 import com.circle8.circleOne.R;
@@ -169,6 +170,9 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
 
     public static boolean isPermissionGranted;
     public static String Connection_Limit, Connection_Left;
+    ReferralCodeSession referralCodeSession;
+    private String refer;
+    String User_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,7 +187,9 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         String date1 = format.format(Date.parse(stringDate));
 
         Toast.makeText(getApplicationContext(), "Time: " + date1, Toast.LENGTH_LONG).show();   */
-
+        referralCodeSession = new ReferralCodeSession(getApplicationContext());
+        HashMap<String, String> referral = referralCodeSession.getReferralDetails();
+        refer = referral.get(ReferralCodeSession.KEY_REFERRAL);
         mAuth = FirebaseAuth.getInstance();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         Bundle extras = getIntent().getExtras();
@@ -209,6 +215,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
 
         UserId = user.get(LoginSession.KEY_USERID);      // name
         profileId = user.get(LoginSession.KEY_PROFILEID);
+        User_name = user.get(LoginSession.KEY_NAME);
         String email = user.get(LoginSession.KEY_EMAIL);    // email
         String image = user.get(LoginSession.KEY_IMAGE);
         String gender = user.get(LoginSession.KEY_GENDER);
@@ -679,6 +686,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         dialog.setCanceledOnTouchOutside(true);
 
         LinearLayout lnrMyAccount = (LinearLayout) dialog.findViewById(R.id.lnrMyAcc);
+        LinearLayout lnrShare = (LinearLayout) dialog.findViewById(R.id.lnrShare);
         LinearLayout lnrLogout = (LinearLayout) dialog.findViewById(R.id.lnrLogout);
         LinearLayout lnrAddQR = (LinearLayout) dialog.findViewById(R.id.lnrAddQR);
         LinearLayout lnrManageProfile = (LinearLayout) dialog.findViewById(R.id.lnrManageProfile);
@@ -700,6 +708,21 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
             txtNotificationCount.setVisibility(View.VISIBLE);
         }
         txtNotificationCount.setText(NotificationCount);
+
+        lnrShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String shareBody = "I'm giving you a free redemption points on the Circle app (up to ₹25). To accept, use code '"+ refer+"' to sign up. Enjoy!"
+                        +System.lineSeparator() + "Details: https://www.circle8.asia/invite/"+refer;
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, User_name);
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(sharingIntent, "Share Profile Via"));
+
+            }
+        });
 
         lnrSyncContacts.setOnClickListener(new View.OnClickListener() {
             @Override
