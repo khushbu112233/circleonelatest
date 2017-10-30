@@ -146,7 +146,7 @@
                 <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sort by recently added"
+                    android:text="Sort By Recently Added"
                     android:id="@+id/textDrawer3"
                     android:textSize="14dp"
                     android:layout_marginLeft="20dp"
@@ -176,7 +176,7 @@
                 <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sort by name"
+                    android:text="Sort By Name"
                     android:id="@+id/textDrawer4"
                     android:textSize="14dp"
                     android:layout_marginLeft="20dp"
@@ -205,7 +205,7 @@
                 <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sort by company name"
+                    android:text="Sort By Company Name"
                     android:id="@+id/textDrawer5"
                     android:textSize="14dp"
                     android:layout_marginLeft="20dp"
@@ -234,7 +234,7 @@
                 <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="By company"
+                    android:text="By Company (Search By Key Words)"
                     android:id="@+id/textDrawer6"
                     android:textSize="14dp"
                     android:layout_marginLeft="20dp"
@@ -263,7 +263,7 @@
                 <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="By title"
+                    android:text="By Title (Search By Key Words)"
                     android:id="@+id/textDrawer7"
                     android:textSize="14dp"
                     android:layout_marginLeft="20dp"
@@ -292,7 +292,7 @@
                 <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="By industry"
+                    android:text="By Industry (Search By Key Words)"
                     android:id="@+id/textDrawer8"
                     android:textSize="14dp"
                     android:layout_marginLeft="20dp"
@@ -321,7 +321,7 @@
                 <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="By Association"
+                    android:text="By Association (Search By Key Words)"
                     android:id="@+id/textDrawer9"
                     android:textSize="14dp"
                     android:layout_marginLeft="20dp"
@@ -338,14 +338,16 @@
 
                 <ImageView
                     android:id="@+id/imgGroupIcon"
-                    android:layout_centerVertical="true"
                     android:backgroundTint="@color/colorAccent"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
-                    android:src="@drawable/ic_group_blue"
-                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/ic_group_list"
+                    android:layout_marginLeft="14dp"
                     android:contentDescription="Home!"
-                    android:layout_marginTop="0dp" />
+                    android:layout_alignBottom="@+id/cgTextView"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="14dp" />
 
                 <com.circle8.circleOne.Utils.cgTextView
                     android:layout_toRightOf="@+id/imgGroupIcon"
@@ -355,7 +357,8 @@
                     android:text="By Circle"
                     android:textSize="14dp"
                     android:layout_marginLeft="20dp"
-                    android:textColor="@color/colorAccent" />
+                    android:textColor="@color/colorAccent"
+                    android:id="@+id/cgTextView" />
 
                 <ImageView
                     android:layout_marginRight="10dp"
