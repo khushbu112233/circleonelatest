@@ -190,7 +190,7 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/ic_paid_event"
+                android:src="@drawable/ic_reward"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="0dp" />
             <com.circle8.circleOne.Utils.orkebyTextView

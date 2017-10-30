@@ -701,12 +701,13 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         LinearLayout lnrHistory = (LinearLayout)dialog.findViewById(R.id.lnrHistory);
         txtNotificationCount = (CircularTextView) dialog.findViewById(R.id.txtNotificationCount);
 
-        if (NotificationCount.equals("0")){
-            txtNotificationCount.setVisibility(View.GONE);
-        }
-        else {
-            txtNotificationCount.setVisibility(View.VISIBLE);
-        }
+        try {
+            if (NotificationCount.equals("0")) {
+                txtNotificationCount.setVisibility(View.GONE);
+            } else {
+                txtNotificationCount.setVisibility(View.VISIBLE);
+            }
+        }catch (Exception e){}
         txtNotificationCount.setText(NotificationCount);
 
         lnrShare.setOnClickListener(new View.OnClickListener() {
