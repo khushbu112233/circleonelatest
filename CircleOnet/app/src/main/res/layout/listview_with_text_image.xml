@@ -157,6 +157,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/lnrRewardsPoints"
             android:layout_marginTop="15dp"
             android:layout_width="match_parent"

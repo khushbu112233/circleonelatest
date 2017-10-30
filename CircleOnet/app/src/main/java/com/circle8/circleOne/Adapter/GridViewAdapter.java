@@ -200,7 +200,9 @@ public class GridViewAdapter extends BaseSwipeAdapter
         holder.tvPersonProfile = (TextView) row.findViewById(R.id.tvPersonProfile);
         holder.tvPersonWebsite = (TextView) row.findViewById(R.id.tvPersonWebsite);
         holder.tvPersonAddress = (TextView) row.findViewById(R.id.tvPersonAddress);
-        holder.tvPersonContact = (TextView) row.findViewById(R.id.tvPersonContact);
+        holder.tvPersonContact = (TextView) row.findViewById(R.id.tvPersonMobile);
+        holder.tvPersonNameLast = (TextView) row.findViewById(R.id.tvPersonNameLast);
+
         row.setTag(holder);
 
         if (nfcModelList1.get(position).getCard_front().equals(""))
@@ -209,29 +211,57 @@ public class GridViewAdapter extends BaseSwipeAdapter
             holder.defaultCard.setVisibility(View.VISIBLE);
             try
             {
-                if (nfcModelList1.get(position).getName().equals("")) {
-                    holder.tvPersonName.setVisibility(View.GONE);
-                }
-                if (nfcModelList1.get(position).getDesignation().equals("")) {
-                    holder.tvPersonProfile.setVisibility(View.GONE);
-                }
-                if (nfcModelList1.get(position).getWebsite().equals("")) {
-                    holder.tvPersonWebsite.setVisibility(View.GONE);
-                }
-                if (nfcModelList1.get(position).getAddress().equals("")) {
-                    holder.tvPersonAddress.setVisibility(View.GONE);
-                }
-                if (nfcModelList1.get(position).getPh_no().equals("")) {
-                    holder.tvPersonContact.setVisibility(View.GONE);
-                }
-            }
-            catch (Exception e) {  }
+                try {
+                    if (nfcModelList1.get(position).getDesignation().equals("") || nfcModelList1.get(position).getDesignation().equals("null")
+                            || nfcModelList1.get(position).getDesignation() == null) {
+                        holder.tvPersonProfile.setVisibility(View.GONE);
+                    }
+                }catch (Exception e){}
 
-            holder.tvPersonName.setText(nfcModelList1.get(position).getName());
+                try {
+                    if (nfcModelList1.get(position).getEmail().equals("") || nfcModelList1.get(position).getEmail().equals("null")
+                            || nfcModelList1.get(position).getEmail() == null) {
+                        holder.tvPersonWebsite.setVisibility(View.GONE);
+                    }
+                }catch (Exception e){}
+
+                try {
+                    if (nfcModelList1.get(position).getAddress().equals("") || nfcModelList1.get(position).getAddress().equalsIgnoreCase("null")
+                            || nfcModelList1.get(position).getAddress() == null) {
+                        holder.tvPersonAddress.setVisibility(View.INVISIBLE);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+                try {
+                    if (nfcModelList1.get(position).getPh_no().equals("") || nfcModelList1.get(position).getPh_no().equals("null")
+                            || nfcModelList1.get(position).getPh_no() == null) {
+                        holder.tvPersonContact.setVisibility(View.INVISIBLE);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+               /* if (nfcModelList.get(position).getMob_no().equals("") || nfcModelList.get(position).getMob_no().equals("null")
+                        || nfcModelList.get(position).getMob_no() == null) {
+                    tvPersonMobile.setVisibility(View.GONE);
+                }*/
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+
+            String name = nfcModelList1.get(position).getName();
+            String kept = name.substring(0, name.indexOf(" "));
+            String remainder = name.substring(name.indexOf(" ") + 1, name.length());
+            holder.tvPersonName.setText(kept);
+            holder.tvPersonNameLast.setText(remainder);
             holder.tvPersonProfile.setText(nfcModelList1.get(position).getDesignation());
-            holder.tvPersonWebsite.setText(nfcModelList1.get(position).getWebsite());
-            holder.tvPersonAddress.setText(nfcModelList1.get(position).getAddress());
-            holder.tvPersonContact.setText(nfcModelList1.get(position).getPh_no());
+            holder.tvPersonWebsite.setText("E : " + nfcModelList1.get(position).getEmail());
+            holder.tvPersonAddress.setText("A : " + nfcModelList1.get(position).getAddress());
+            holder.tvPersonContact.setText("M : " + nfcModelList1.get(position).getPh_no());
+
+
         }
         else
         {
@@ -294,7 +324,7 @@ public class GridViewAdapter extends BaseSwipeAdapter
         TextView imageTitle;
         ImageView image;
         RelativeLayout defaultCard;
-        TextView tvPersonName, tvPersonProfile, tvPersonWebsite, tvPersonAddress, tvPersonContact;
+        TextView tvPersonName, tvPersonProfile, tvPersonWebsite, tvPersonAddress, tvPersonContact, tvPersonNameLast;
 
     }
 

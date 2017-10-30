@@ -460,22 +460,26 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        final LocationSettingsStates states = LocationSettingsStates.fromIntent(data);
-        switch (requestCode) {
-            case REQUEST_CHECK_SETTINGS:
-                switch (resultCode) {
-                    case Activity.RESULT_OK:
-                        // All required changes were successfully made
-                        getLocation();
-                        break;
-                    case Activity.RESULT_CANCELED:
-                        // The user was asked to change settings, but chose not to
-                        break;
-                    default:
-                        break;
-                }
-                break;
-        }
+
+        try {
+
+            final LocationSettingsStates states = LocationSettingsStates.fromIntent(data);
+            switch (requestCode) {
+                case REQUEST_CHECK_SETTINGS:
+                    switch (resultCode) {
+                        case Activity.RESULT_OK:
+                            // All required changes were successfully made
+                            getLocation();
+                            break;
+                        case Activity.RESULT_CANCELED:
+                            // The user was asked to change settings, but chose not to
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+            }
+        }catch (Exception e){}
     }
 
     @Override

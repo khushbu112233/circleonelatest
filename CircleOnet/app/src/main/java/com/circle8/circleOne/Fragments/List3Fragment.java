@@ -520,6 +520,9 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                             connectModel.setWebsite(iCon.getString("Website"));
                             connectModel.setLatitude(iCon.getString("Latitude"));
                             connectModel.setLongitude(iCon.getString("Longitude"));
+                            connectModel.setAddress(iCon.getString("Address1") + " " + iCon.getString("Address2")
+                                    + " " + iCon.getString("Address3") + " " + iCon.getString("Address4"));
+
                             allTaggs.add(connectModel);
 
                             gridAdapter = new List3Adapter(getContext(), R.layout.grid_list3_layout, allTaggs);
@@ -666,15 +669,17 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                         nfcModelTag.setName(object.getString("FirstName") + " " + object.getString("LastName"));
                         nfcModelTag.setCompany(object.getString("CompanyName"));
                         nfcModelTag.setEmail(object.getString("UserName"));
-                        nfcModelTag.setWebsite("");
-                        nfcModelTag.setMob_no(object.getString("Phone"));
+                        nfcModelTag.setWebsite(object.getString("Website"));
+                        nfcModelTag.setPh_no(object.getString("Phone"));
                         nfcModelTag.setDesignation(object.getString("Designation"));
                         nfcModelTag.setCard_front(object.getString("Card_Front"));
                         nfcModelTag.setCard_back(object.getString("Card_Back"));
+                        nfcModelTag.setUser_image(object.getString("UserPhoto"));
                         nfcModelTag.setProfile_id(object.getString("ProfileId"));
-                        nfcModelTag.setAddress(object.getString("Address1") + " " + object.getString("Address2") + " "
-                                + object.getString("Address3") + object.getString("Address4"));
                         nfcModelTag.setDateInitiated(object.getString("DateInitiated"));
+                        nfcModelTag.setAddress(object.getString("Address1") + " " + object.getString("Address2")
+                                + " " + object.getString("Address3") + " " + object.getString("Address4"));
+//                        Toast.makeText(getActivity(),"Profile_id"+object.getString("ProfileId"),Toast.LENGTH_SHORT).show();
                         nfcModelTag.setNfc_tag("en000000001");
                         nfcModelTag.setLatitude(object.getString("Latitude"));
                         nfcModelTag.setLongitude(object.getString("Longitude"));
@@ -852,18 +857,28 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
             FriendConnection nfcModelTag = new FriendConnection();
 //            nfcModelTag.setId(reTag.getId());
             nfcModelTag.setName(reTag.getName());
+            nfcModelTag.setPh_no(reTag.getPh_no());
+            nfcModelTag.setUser_image(reTag.getUser_image());
+            nfcModelTag.setFirstName(reTag.getFirstName());
+            nfcModelTag.setLastName(reTag.getLastName());
+            nfcModelTag.setUserID(reTag.getUserID());
             nfcModelTag.setCompany(reTag.getCompany());
             nfcModelTag.setEmail(reTag.getEmail());
             nfcModelTag.setWebsite(reTag.getWebsite());
             nfcModelTag.setMob_no(reTag.getMob_no());
             nfcModelTag.setDesignation(reTag.getDesignation());
             nfcModelTag.setCard_front(reTag.getCard_front());
+            nfcModelTag.setCard_back(reTag.getCard_back());
             nfcModelTag.setNfc_tag(reTag.getNfc_tag());
             nfcModelTag.setProfile_id(reTag.getProfile_id());
-            nfcModelTag.setAddress(reTag.getAddress());
             nfcModelTag.setDateInitiated(reTag.getDateInitiated());
             nfcModelTag.setLatitude(reTag.getLatitude());
             nfcModelTag.setLongitude(reTag.getLongitude());
+            nfcModelTag.setAddress(reTag.getAddress());
+            nfcModelTag.setFb_id(reTag.getFb_id());
+            nfcModelTag.setLinkedin_id(reTag.getLinkedin_id());
+            nfcModelTag.setGoogle_id(reTag.getGoogle_id());
+            nfcModelTag.setTwitter_id(reTag.getTwitter_id());
             nfcModel1.add(nfcModelTag);
         }
 

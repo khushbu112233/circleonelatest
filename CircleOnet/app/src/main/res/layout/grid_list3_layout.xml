@@ -60,68 +60,110 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
             <RelativeLayout
-                android:visibility="gone"
+                android:visibility="visible"
                 android:id="@+id/rltDefaultCard"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/default_card">
+                android:background="@color/colorPrimary">
+
+                <ImageView
+                    android:tint="@color/white"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/login_logo" />
 
                 <LinearLayout
-                    android:layout_alignParentBottom="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:orientation="vertical">
-                    <com.circle8.circleOne.Utils.cgTextView
-                        android:id="@+id/tvPersonName"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginBottom="2dp"
-                        android:textSize="6dp"
-                        android:textStyle="bold"
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:text="CHRIS LIAO"/>
+                        android:orientation="horizontal">
+                        <com.circle8.circleOne.Utils.cgTextView
+                            android:id="@+id/tvPersonName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:text="Aakashi"
+                            android:textColor="@color/white"
+                            android:textSize="7dp"
+                            android:textStyle="bold" />
 
+                        <com.circle8.circleOne.Utils.cgBoldTextView
+                            android:id="@+id/tvPersonNameLast"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:text="Desai"
+                            android:textColor="@color/white"
+                            android:textSize="7dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
                     <com.circle8.circleOne.Utils.cgTextView
                         android:id="@+id/tvPersonProfile"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginBottom="3dp"
-                        android:textSize="6dp"
-                        android:textStyle="bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:text="CEO"
                         android:textColor="@color/white"
-                        android:text="CEO"/>
+                        android:textSize="7dp"
+                        android:textStyle="bold" />
 
-                    <com.circle8.circleOne.Utils.cgTextView
-                        android:id="@+id/tvPersonWebsite"
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="0.5dp"
+                        android:layout_marginBottom="5dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginBottom="2dp"
-                        android:textSize="4dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:text="www.circlesone.com  chris.liao@circle8.asia"/>
+                        android:background="@color/white" />
 
                     <com.circle8.circleOne.Utils.cgTextView
                         android:id="@+id/tvPersonAddress"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginBottom="2dp"
-                        android:textSize="4dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:text="A : 65 Ubi Road | #03-90 Oxley Bizhub"
                         android:textColor="@color/white"
-                        android:text="65 Ubi Road | #03-90 Oxley Bizhub"/>
+                        android:textSize="6dp" />
 
                     <com.circle8.circleOne.Utils.cgTextView
-                        android:id="@+id/tvPersonContact"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:textSize="4dp"
+                        android:id="@+id/tvPersonWebsite"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:text="E : chris.liao@circle8.asia"
                         android:textColor="@color/white"
-                        android:text="+65 6816 7888   +65 9821 9235"/>
+                        android:textSize="6dp" />
+
+                    <com.circle8.circleOne.Utils.cgTextView
+                        android:visibility="gone"
+                        android:id="@+id/tvPersonContact"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:text="T : +65 6816 7888"
+                        android:textColor="@color/white"
+                        android:textSize="6dp" />
+
+                    <com.circle8.circleOne.Utils.cgTextView
+                        android:id="@+id/tvPersonMobile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginLeft="5dp"
+                        android:text="T : +65 6816 7888"
+                        android:textColor="@color/white"
+                        android:textSize="6dp" />
 
                 </LinearLayout>
             </RelativeLayout>
