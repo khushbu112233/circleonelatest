@@ -721,6 +721,7 @@
                     android:src="@drawable/ic_web" />
 
                 <com.circle8.circleOne.Utils.cgTextView
+                    android:textIsSelectable="true"
                     android:id="@+id/txtWebsite"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -751,6 +752,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
+                    android:textIsSelectable="true"
                     android:hint="Email Address"
                     android:textAlignment="center"
                     android:textColor="#6b6c6e"
@@ -777,6 +779,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:hint="Telephone No."
+                    android:textIsSelectable="true"
                     android:textAlignment="center"
                     android:textColor="#6b6c6e"
                     android:textSize="13sp" />
@@ -797,6 +800,7 @@
                     android:src="@drawable/ic_phone2" />
                 <com.circle8.circleOne.Utils.cgTextView
                     android:id="@+id/txtWork"
+                    android:textIsSelectable="true"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -823,6 +827,7 @@
 
                 <com.circle8.circleOne.Utils.cgTextView
                     android:id="@+id/txtMob"
+                    android:textIsSelectable="true"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -852,6 +857,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="Address"
+                    android:textIsSelectable="true"
                     android:textColor="#6b6c6e"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -906,7 +912,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" />
 
-                    <TextView
+                    <com.circle8.circleOne.Utils.orkebyTextView
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:id="@+id/txtMore"
@@ -986,6 +992,7 @@
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
+                android:textIsSelectable="true"
                 android:hint="time: 04/04/2017   10:25am"
                 android:textColor="#6b6c6e"
                 android:textSize="13sp"
@@ -1012,6 +1019,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint=""
+                    android:textIsSelectable="true"
                     android:textColor="#6b6c6e"
                     android:textSize="13sp" />
             </LinearLayout>

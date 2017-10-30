@@ -22,6 +22,7 @@
             android:layout_height="match_parent">
 
             <RelativeLayout
+                android:id="@+id/rlt"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@android:color/transparent"
@@ -65,16 +66,16 @@
                 android:layout_marginBottom="45dp"/>
 
             <com.circle8.circleOne.Utils.cgTextView
+                android:layout_below="@+id/rlt"
                 android:gravity="center"
                 android:id="@+id/txtLink"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="You have no established connections"
                 android:textColor="@android:color/white"
-                android:textSize="15dp"
+                android:textSize="12dp"
                 android:textAlignment="center"
-                android:layout_above="@+id/rltConnect"
-                android:layout_marginBottom="20dp"/>
+                android:layout_marginBottom="10dp"/>
 
            <!-- <RelativeLayout
                 android:id="@+id/rltConnect"
@@ -142,12 +143,13 @@
 
 
             <RelativeLayout
-                android:layout_marginBottom="30dp"
+                android:layout_below="@+id/txtLink"
+                android:layout_marginBottom="5dp"
                 android:id="@+id/rltConnect"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true">
+               >
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/ivImage1"
@@ -412,15 +414,16 @@
                 android:layout_marginTop="0dp"/>
 
             <com.circle8.circleOne.Utils.cgTextView
+                android:layout_above="@+id/lnrBottomTab"
                 android:gravity="center"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Enjoy unlimited connections for a limited period, or subscribe for more connections"
                 android:textColor="@android:color/white"
-                android:textSize="15dp"
+                android:textSize="10dp"
                 android:textAlignment="center"
                 android:layout_below="@+id/txtAsk" />
 

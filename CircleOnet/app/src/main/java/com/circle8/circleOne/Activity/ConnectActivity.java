@@ -349,12 +349,12 @@ public class ConnectActivity extends AppCompatActivity
             }
         });
 
-        boolean result = Utility.checkContactPermission(ConnectActivity.this);
+      /*  boolean result = Utility.checkContactPermission(ConnectActivity.this);
         if (result)
         {
-            contactExists(getApplicationContext(), "+91 9737032082");
+            contactExists(getApplicationContext(), "+91 ");
         }
-
+*/
         rlConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -381,7 +381,7 @@ public class ConnectActivity extends AppCompatActivity
                                 go.putExtra("profile", profileImg);
                                 go.putExtra("friendUserID", friendUserID);
                                 startActivity(go);
-                                finish();
+                               // finish();
                             }
                         }, 1600);
                         // Second Things
@@ -408,7 +408,7 @@ public class ConnectActivity extends AppCompatActivity
                                 go.putExtra("profile", profileImg);
                                 go.putExtra("friendUserID", friendUserID);
                                 startActivity(go);
-                                finish();
+                               // finish();
                             }
                         }, 1600);
                         // Second Things
@@ -1138,7 +1138,7 @@ public class ConnectActivity extends AppCompatActivity
             dialog.show();
             dialog.setCancelable(false);*/
 
-            String loading = "Upload Photo" ;
+            String loading = "Fetching data" ;
             CustomProgressDialog(loading);
         }
 
