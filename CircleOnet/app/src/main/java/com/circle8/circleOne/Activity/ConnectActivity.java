@@ -381,7 +381,7 @@ public class ConnectActivity extends AppCompatActivity
                                 go.putExtra("profile", profileImg);
                                 go.putExtra("friendUserID", friendUserID);
                                 startActivity(go);
-                                finish();
+                               // finish();
                             }
                         }, 1600);
                         // Second Things
@@ -408,7 +408,7 @@ public class ConnectActivity extends AppCompatActivity
                                 go.putExtra("profile", profileImg);
                                 go.putExtra("friendUserID", friendUserID);
                                 startActivity(go);
-                                finish();
+                               // finish();
                             }
                         }, 1600);
                         // Second Things
@@ -1138,7 +1138,7 @@ public class ConnectActivity extends AppCompatActivity
             dialog.show();
             dialog.setCancelable(false);*/
 
-            String loading = "Upload Photo" ;
+            String loading = "Fetching data" ;
             CustomProgressDialog(loading);
         }
 

@@ -48,6 +48,25 @@ public class CardsFragment extends Fragment
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(android.R.color.white));
         setupTabIcons();
         mViewPager.setCurrentItem(CardsActivity.nested_position);
+
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(tabLayout.getApplicationWindowToken(), 0);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
         return view;
     }
 

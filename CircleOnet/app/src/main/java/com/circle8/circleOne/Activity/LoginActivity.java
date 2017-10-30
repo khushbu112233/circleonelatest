@@ -36,9 +36,11 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -304,6 +306,11 @@ public class LoginActivity extends AppCompatActivity implements
                         Toast.makeText(getApplicationContext(), "Enter Password", Toast.LENGTH_SHORT).show();
                     }
                     else {
+                        if(getCurrentFocus()!=null) {
+                            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                        }
+
                         new HttpAsyncTask().execute(Utility.BASE_URL+"UserLogin");
                     }
                 }
@@ -463,6 +470,10 @@ public class LoginActivity extends AppCompatActivity implements
                 if (!validateLogin(userName, userPassword)) {
 //                    Toast.makeText(getApplicationContext(), "Form Fill Invalid!", Toast.LENGTH_SHORT).show();
                 } else {
+                    if(getCurrentFocus()!=null) {
+                        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                    }
                     new HttpAsyncTask().execute(Utility.BASE_URL+"UserLogin");
                 }
             /* Create an Intent that will start the Menu-Activity. */

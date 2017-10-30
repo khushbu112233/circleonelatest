@@ -1565,7 +1565,10 @@ public class ProfileFragment extends Fragment
                         imgProfile.setImageResource(R.drawable.usr_white1);
                     }
                     else {
-                        Picasso.with(getContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+allTags.get(profileIndex).getUserPhoto()).into(imgProfile);
+                        try {
+                            Picasso.with(getContext()).load(Utility.BASE_IMAGE_URL + "UserProfile/" + allTags.get(profileIndex).getUserPhoto()).into(imgProfile);
+                        }
+                        catch (Exception e){}
                     }
 
                     new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");
