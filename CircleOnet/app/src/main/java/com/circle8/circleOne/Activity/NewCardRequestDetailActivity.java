@@ -89,6 +89,11 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
     private static TextView tvProgressing ;
     private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
 
+    RelativeLayout rlLayOne, rlLayTwo ;
+    LinearLayout llFrontCard, llBackCard ;
+    TextView tvUploadCard, tvCancel, tvNext ;
+    ImageView ivAlphaImg ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -116,6 +121,15 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
         ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
         ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
         ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
+
+        rlLayOne = (RelativeLayout)findViewById(R.id.rlLayOne);
+        rlLayTwo = (RelativeLayout)findViewById(R.id.rlLayTwo);
+        llFrontCard = (LinearLayout)findViewById(R.id.llFrontCard);
+        llBackCard = (LinearLayout)findViewById(R.id.llBackCard);
+        tvUploadCard = (TextView)findViewById(R.id.tvUploadCard);
+        tvCancel = (TextView)findViewById(R.id.tvCancel);
+        tvNext = (TextView)findViewById(R.id.tvNext);
+        ivAlphaImg = (ImageView)findViewById(R.id.ivAlphaImg);
 
         Intent i = getIntent();
         name = i.getStringExtra("person") ;
@@ -207,7 +221,12 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                selectCardType();
+//                selectCardType();
+
+                rlLayOne.setEnabled(false);
+                ivAlphaImg.setVisibility(View.VISIBLE);
+                rlLayTwo.setVisibility(View.VISIBLE);
+
                 /*Intent i = new Intent(getApplicationContext(), NewCardRequestActivity1.class);
                 i.putExtra("person", name);
                 i.putExtra("designation", designation);
@@ -216,6 +235,48 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                 i.putExtra("image", image);
                 i.putExtra("phone",profile);
                 startActivity(i);*/
+            }
+        });
+
+        tvNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+
+            }
+        });
+
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                rlLayOne.setEnabled(true);
+                ivAlphaImg.setVisibility(View.GONE);
+                rlLayTwo.setVisibility(View.GONE);
+            }
+        });
+
+        tvUploadCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+
+            }
+        });
+
+        llFrontCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+
+            }
+        });
+
+        llBackCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+
             }
         });
 
