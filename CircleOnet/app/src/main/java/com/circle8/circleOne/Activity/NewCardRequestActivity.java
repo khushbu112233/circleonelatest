@@ -105,8 +105,6 @@ public class NewCardRequestActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id)
             {
-
-
                 listView.setEnabled(false);
                 ivAlphaImg.setVisibility(View.VISIBLE);
                 rlLayTwo.setVisibility(View.VISIBLE);
@@ -115,6 +113,10 @@ public class NewCardRequestActivity extends AppCompatActivity
                     @Override
                     public void onClick(View v)
                     {
+                        ivAlphaImg.setVisibility(View.GONE);
+                        rlLayTwo.setVisibility(View.GONE);
+                        listView.setEnabled(true);
+                        
                         int count = position + 1;
                         Intent i = new Intent(getApplicationContext(), NewCardRequestDetailActivity.class);
                         i.putExtra("person", allTags.get(position).getFirstName() + " " + allTags.get(position).getLastName());
