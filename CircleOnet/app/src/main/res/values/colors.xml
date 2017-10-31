@@ -46,4 +46,6 @@
     <color name="azureColorPrimary">#009BFA</color>
     <color name="azureColorAccent">#FFFFFF</color>
 
+    <color name="transparent">#00000000</color>
+
 </resources>
