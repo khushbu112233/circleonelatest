@@ -17,6 +17,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -113,7 +114,7 @@ public class ProfileFragment extends Fragment
     public final static int QRcodeWidth = 500 ;
     Bitmap bitmap ;
     ProgressDialog progressDialog ;
-    ArrayList<String> profile_array, NameArray, DesignationArray, profileid_array;
+    ArrayList<String> profile_array, NameArray, DesignationArray, profileImage_array;
     private LoginButton loginButton;
     private LoginSession session;
     private String UserID = "";
@@ -612,7 +613,8 @@ public class ProfileFragment extends Fragment
         imgProfileMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PopupMenu popup = new PopupMenu(getContext(), imgProfileMenu);
+                ContextThemeWrapper ctw = new ContextThemeWrapper(getContext(), R.style.Blue_AlertDialog);
+                PopupMenu popup = new PopupMenu(ctw, imgProfileMenu);
                 //Inflating the Popup using xml file
                 popup.getMenuInflater().inflate(R.menu.profile_popup_menu, popup.getMenu());
                 for (String s : profile_array) {
@@ -1214,6 +1216,7 @@ public class ProfileFragment extends Fragment
                     jsonArray = jsonObject.getJSONArray("Profiles");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
                     profile_array = new ArrayList<String>();
+                    profileImage_array = new ArrayList<>();
                     NameArray = new ArrayList<>();
                     DesignationArray = new ArrayList<>();
                     listAssociation = new ArrayList<>();
@@ -1323,11 +1326,15 @@ public class ProfileFragment extends Fragment
                         for (int i1 = 0; i1 < arrayEvents.length(); i1++) {
 
                             listEvents.add(arrayEvents.getString(i1));
-
+                            String remainder = "";
                             String name = arrayEvents.getString(i1);
-                            String kept = name.substring(0, name.indexOf(":"));
-                            String remainder = name.substring(name.indexOf(":") + 1, name.length());
-
+                            if (name.contains(":")) {
+                                //String kept = name.substring(0, name.indexOf(":"));
+                                remainder = name.substring(name.indexOf(":") + 1, name.length());
+                            }
+                            else {
+                                remainder = name;
+                            }
                             if (i1 == arrayEvents.length()-1){
                                 eventString += remainder ;
                             }else {
@@ -1341,9 +1348,14 @@ public class ProfileFragment extends Fragment
 
 
                             String name = array.getString(i1);
-                            String kept = name.substring(0, name.indexOf(":"));
-                            String remainder = name.substring(name.indexOf(":") + 1, name.length());
-
+                            String remainder;
+                            if (name.contains(":")) {
+                                //String kept = name.substring(0, name.indexOf(":"));
+                                remainder = name.substring(name.indexOf(":") + 1, name.length());
+                            }
+                            else {
+                                remainder = name;
+                            }
                             if (i1 == array.length()-1){
                                 associationString += remainder ;
                             }else {

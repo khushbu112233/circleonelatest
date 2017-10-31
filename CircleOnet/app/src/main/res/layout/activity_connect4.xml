@@ -143,6 +143,7 @@
 
 
             <RelativeLayout
+                android:layout_marginTop="20dp"
                 android:layout_below="@+id/txtLink"
                 android:layout_marginBottom="5dp"
                 android:id="@+id/rltConnect"
@@ -411,7 +412,7 @@
                 android:textStyle="bold"
                 android:textSize="15dp"
                 android:layout_below="@+id/rltConnect"
-                android:layout_marginTop="0dp"/>
+                android:layout_marginTop="5dp"/>
 
             <com.circle8.circleOne.Utils.cgTextView
                 android:layout_above="@+id/lnrBottomTab"
@@ -544,14 +545,6 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-
-
         </RelativeLayout>
-
-
-
-
     </FrameLayout>
-
-
 </RelativeLayout>

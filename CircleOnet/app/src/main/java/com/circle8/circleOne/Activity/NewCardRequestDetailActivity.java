@@ -194,6 +194,8 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CardFront = null;
+                CardBack = null;
                 finish();
             }
         });
@@ -243,6 +245,31 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
             public void onClick(View v)
             {
 
+                if (CardFront==null && CardBack == null)
+                {
+                    Toast.makeText(getApplicationContext(), "Please Upload Front Card Image.", Toast.LENGTH_LONG).show();
+                }
+                else if (CardFront == null)
+                {
+                    Toast.makeText(getApplicationContext(), "Please Upload First Card Image.", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "Card Uploaded Sucessfully..", Toast.LENGTH_LONG).show();
+                    //dialog.dismiss();
+                    Intent i = new Intent(getApplicationContext(), NewCardRequestActivity1.class);
+                    i.putExtra("person", name);
+                    i.putExtra("designation", designation);
+                    i.putExtra("company", company);
+                    i.putExtra("profile", profile);
+                    i.putExtra("image", image);
+                    i.putExtra("phone",phone);
+                    i.putExtra("card_front", CardFront);
+                    i.putExtra("card_back", CardBack);
+                    i.putExtra("type", "bitmap");
+                    i.putExtra("profileID",profileID);
+                    startActivity(i);
+                }
             }
         });
 
@@ -268,7 +295,9 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-
+                cardType = "front";
+                CropImage.activity(null).setGuidelines(CropImageView.Guidelines.ON)
+                        .start(NewCardRequestDetailActivity.this);
             }
         });
 
@@ -276,6 +305,10 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                cardType = "back";
+
+                CropImage.activity(null).setGuidelines(CropImageView.Guidelines.ON)
+                        .start(NewCardRequestDetailActivity.this);
 
             }
         });
@@ -355,7 +388,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                         i.putExtra("company", company);
                         i.putExtra("profile", profile);
                         i.putExtra("image", image);
-                        i.putExtra("phone",profile);
+                        i.putExtra("phone",phone);
                         i.putExtra("card_front", CardFront);
                         i.putExtra("card_back", CardBack);
                         i.putExtra("type", "bitmap");
@@ -484,6 +517,13 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
         }
 
 //        BmToString(bm);
+    }
+
+    @Override
+    public void onBackPressed() {
+        CardFront = null;
+        CardBack = null;
+        finish();
     }
 
     public static void crop(Bitmap bitmap) {

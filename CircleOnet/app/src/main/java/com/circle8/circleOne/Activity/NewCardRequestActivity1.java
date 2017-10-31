@@ -192,7 +192,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
         etPerson.setText(i.getStringExtra("person"));
         etCompany.setText(i.getStringExtra("company"));
         etPhone.setText(i.getStringExtra("phone"));
-        etAddress1.setText("Address");
+        etAddress1.setText("");
         etAddress2.setText("");
 
         imgBack.setOnClickListener(new View.OnClickListener() {
@@ -208,10 +208,21 @@ public class NewCardRequestActivity1 extends AppCompatActivity
             {
 
                 if (card_back.equals("") && card_front.equals("")) {
-                    final_ImgBase64Back = BitMapToString(cardBackBmp);
-                    final_ImgBase64Front = BitMapToString(cardFrontBmp);
-                    new HttpAsyncTaskFrontUpload().execute(Utility.BASE_URL+"ImgUpload");
-                    new HttpAsyncTaskBackUpload().execute(Utility.BASE_URL+"ImgUpload");
+                    try {
+                        final_ImgBase64Back = BitMapToString(cardBackBmp);
+                        new HttpAsyncTaskBackUpload().execute(Utility.BASE_URL+"ImgUpload");
+                    }catch (Exception e){
+                        final_ImgBase64Back = "";
+                        card_back = "";
+                    }
+
+                    try {
+                        final_ImgBase64Front = BitMapToString(cardFrontBmp);
+                        new HttpAsyncTaskFrontUpload().execute(Utility.BASE_URL + "ImgUpload");
+                    }catch (Exception e){
+                        final_ImgBase64Front = "";
+                        card_back = "";
+                    }
                 }
                 try
                 {
@@ -903,6 +914,8 @@ public class NewCardRequestActivity1 extends AppCompatActivity
 
             public void onError(Exception error) {
                 Log.d("Stripe", error.getLocalizedMessage());
+                Toast.makeText(getApplicationContext(), error.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                new HttpAsyncRequestTask().execute(Utility.BASE_URL+"Physical_Card/Order");
             }
         });
     }
