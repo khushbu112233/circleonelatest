@@ -419,10 +419,11 @@
                         android:layout_weight="0.5"
                         android:id="@+id/llFrontCard">
                         <ImageView
-                            android:layout_width="130dp"
+                            android:layout_width="135dp"
                             android:layout_height="100dp"
                             android:layout_gravity="center_horizontal"
-                            android:layout_marginBottom="5dp"/>
+                            android:layout_marginBottom="5dp"
+                            android:src="@drawable/new_front_card"/>
                         <com.circle8.circleOne.Utils.cgBoldTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -444,10 +445,11 @@
                         android:layout_weight="0.5"
                         android:id="@+id/llBackCard">
                         <ImageView
-                            android:layout_width="130dp"
+                            android:layout_width="135dp"
                             android:layout_height="100dp"
                             android:layout_gravity="center_horizontal"
-                            android:layout_marginBottom="5dp"/>
+                            android:layout_marginBottom="5dp"
+                            android:src="@drawable/new_back_card"/>
                         <com.circle8.circleOne.Utils.cgBoldTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
