@@ -260,7 +260,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
             public void onClick(View v)
             {
 
-                
+
 
 
                 /*if (Card_Front == null && final_attachment.equals(""))

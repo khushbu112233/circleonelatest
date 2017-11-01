@@ -94,6 +94,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
     String numberOnCard, nameOnCard, exYearOnCard, exMonthOnCard, cvvOnCard, mobileNoOnCard, strToken ;
     int amount;
     private String email;
+    String Price;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -235,14 +236,18 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                         card_back = "";
                     }
                 }
-                try
-                {
-                    stripe = new Stripe("pk_test_6fZCC6Gu2kwYLUQxJhGte65l");
-                }
-                catch (AuthenticationException e)
-                {
-                    e.printStackTrace();
-                }
+
+
+                if (amount == 0){
+                    new HttpAsyncRequestTask().execute(Utility.BASE_URL+"Physical_Card/Order");
+                }else {
+
+
+                    try {
+                        stripe = new Stripe("pk_test_6fZCC6Gu2kwYLUQxJhGte65l");
+                    } catch (AuthenticationException e) {
+                        e.printStackTrace();
+                    }
 
                /* alertDialog = new AlertDialog.Builder(NewCardRequestActivity1.this).create();
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -254,78 +259,64 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                 alertDialog.setView(dialogView);
                 alertDialog.show();*/
 
-                // new payment mode
-                alertDialog = new AlertDialog.Builder(NewCardRequestActivity1.this).create();
-                LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View dialogView = inflater.inflate(R.layout.stripe_payment_screen1, null);
+                    // new payment mode
+                    alertDialog = new AlertDialog.Builder(NewCardRequestActivity1.this).create();
+                    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    View dialogView = inflater.inflate(R.layout.stripe_payment_screen1, null);
 
-                LinearLayout llCardValues = (LinearLayout)dialogView.findViewById(R.id.llCardValues);
-                LinearLayout llPackageDetails = (LinearLayout)dialogView.findViewById(R.id.llPackageDetails);
+                    LinearLayout llCardValues = (LinearLayout) dialogView.findViewById(R.id.llCardValues);
+                    LinearLayout llPackageDetails = (LinearLayout) dialogView.findViewById(R.id.llPackageDetails);
 
-                final EditText etCardNumber = (EditText)dialogView.findViewById(R.id.etCardNumber);
-                final EditText etCardHolderName = (EditText)dialogView.findViewById(R.id.etCardHolderName);
-                final EditText etExMonth = (EditText)dialogView.findViewById(R.id.etExMonth);
-                final EditText etExYear = (EditText)dialogView.findViewById(R.id.etExYear);
-                final EditText etSecurityCode = (EditText)dialogView.findViewById(R.id.etSecurityCode);
-                final EditText etMobileNumber = (EditText)dialogView.findViewById(R.id.etMobileNumber);
-                TextView tvPay = (TextView)dialogView.findViewById(R.id.tvPay);
-                TextView tvCancel = (TextView)dialogView.findViewById(R.id.tvCancel);
+                    final EditText etCardNumber = (EditText) dialogView.findViewById(R.id.etCardNumber);
+                    final EditText etCardHolderName = (EditText) dialogView.findViewById(R.id.etCardHolderName);
+                    final EditText etExMonth = (EditText) dialogView.findViewById(R.id.etExMonth);
+                    final EditText etExYear = (EditText) dialogView.findViewById(R.id.etExYear);
+                    final EditText etSecurityCode = (EditText) dialogView.findViewById(R.id.etSecurityCode);
+                    final EditText etMobileNumber = (EditText) dialogView.findViewById(R.id.etMobileNumber);
+                    TextView tvPay = (TextView) dialogView.findViewById(R.id.tvPay);
+                    TextView tvCancel = (TextView) dialogView.findViewById(R.id.tvCancel);
 
-                tvPay.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        numberOnCard = etCardNumber.getText().toString();
-                        nameOnCard = etCardHolderName.getText().toString();
-                        exYearOnCard = etExYear.getText().toString();
-                        exMonthOnCard = etExMonth.getText().toString();
-                        cvvOnCard = etSecurityCode.getText().toString();
-                        mobileNoOnCard = etMobileNumber.getText().toString();
+                    tvPay.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            numberOnCard = etCardNumber.getText().toString();
+                            nameOnCard = etCardHolderName.getText().toString();
+                            exYearOnCard = etExYear.getText().toString();
+                            exMonthOnCard = etExMonth.getText().toString();
+                            cvvOnCard = etSecurityCode.getText().toString();
+                            mobileNoOnCard = etMobileNumber.getText().toString();
 
-                        if (numberOnCard.isEmpty())
-                        {
-                            Toast.makeText(NewCardRequestActivity1.this,"Enter Card No.",Toast.LENGTH_SHORT).show();
+                            if (numberOnCard.isEmpty()) {
+                                Toast.makeText(NewCardRequestActivity1.this, "Enter Card No.", Toast.LENGTH_SHORT).show();
+                            } else if (nameOnCard.isEmpty()) {
+                                Toast.makeText(NewCardRequestActivity1.this, "Enter Holder Name", Toast.LENGTH_SHORT).show();
+                            } else if (exMonthOnCard.isEmpty()) {
+                                Toast.makeText(NewCardRequestActivity1.this, "Enter Expiry Month", Toast.LENGTH_SHORT).show();
+                            } else if (exYearOnCard.isEmpty()) {
+                                Toast.makeText(NewCardRequestActivity1.this, "Enter Expiry Month", Toast.LENGTH_SHORT).show();
+                            } else if (cvvOnCard.isEmpty()) {
+                                Toast.makeText(NewCardRequestActivity1.this, "Enter CVV No.", Toast.LENGTH_SHORT).show();
+                            } else if (mobileNoOnCard.isEmpty()) {
+                                Toast.makeText(NewCardRequestActivity1.this, "Enter Mobile No.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                cardPayment();
+                                alertDialog.dismiss();
+                            }
                         }
-                        else if (nameOnCard.isEmpty())
-                        {
-                            Toast.makeText(NewCardRequestActivity1.this,"Enter Holder Name",Toast.LENGTH_SHORT).show();
-                        }
-                        else if (exMonthOnCard.isEmpty())
-                        {
-                            Toast.makeText(NewCardRequestActivity1.this,"Enter Expiry Month",Toast.LENGTH_SHORT).show();
-                        }
-                        else if (exYearOnCard.isEmpty())
-                        {
-                            Toast.makeText(NewCardRequestActivity1.this,"Enter Expiry Month",Toast.LENGTH_SHORT).show();
-                        }
-                        else if (cvvOnCard.isEmpty())
-                        {
-                            Toast.makeText(NewCardRequestActivity1.this,"Enter CVV No.",Toast.LENGTH_SHORT).show();
-                        }
-                        else if (mobileNoOnCard.isEmpty())
-                        {
-                            Toast.makeText(NewCardRequestActivity1.this,"Enter Mobile No.",Toast.LENGTH_SHORT).show();
-                        }
-                        else
-                        {
-                            cardPayment();
+                    });
+
+                    tvCancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
                             alertDialog.dismiss();
                         }
-                    }
-                });
+                    });
 
-                tvCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        alertDialog.dismiss();
-                    }
-                });
-
-                alertDialog.setView(dialogView);
-                alertDialog.setCancelable(false);
-                alertDialog.getWindow().setFormat(PixelFormat.TRANSLUCENT);
-                alertDialog.show();
+                    alertDialog.setView(dialogView);
+                    alertDialog.setCancelable(false);
+                    alertDialog.getWindow().setFormat(PixelFormat.TRANSLUCENT);
+                    alertDialog.show();
+                }
             }
         });
 
@@ -336,7 +327,9 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                 llBlueCardSample.setAlpha(0.4f);
                 llGoldCardSample.setAlpha(1.0f);
                 PhysicalCardTypeID = "1";
-                amount = 50 * 100;
+                Price = laserPrintCost;
+                int amt = Integer.parseInt(Price);
+                amount = amt * 100;
                 //llBlueCardSample.setEnabled(false);
             }
         });
@@ -347,7 +340,9 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                 llGoldCardSample.setAlpha(0.4f);
                 llBlueCardSample.setAlpha(1.0f);
                 PhysicalCardTypeID = "2";
-                amount = 25 * 100;
+                Price = normalPrintCost;
+                int amt = Integer.parseInt(Price);
+                amount = amt * 100;
                 //llGoldCardSample.setEnabled(false);
             }
         });
@@ -800,15 +795,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                   //  Type = object.getString("Type");
                     txtNormalDesc.setText(object1.getString("Description"));
                     normalPrintCost = object1.getString("Cost") ;
-
-                    if (normalPrintCost.equalsIgnoreCase("0"))
-                    {
-                        txtNormalCost.setText("SGD $"+normalPrintCost+"/Pc");
-                    }
-                    else
-                    {
-                        txtNormalCost.setText("SGD $"+normalPrintCost+"/Pc");
-                    }
+                    txtNormalCost.setText("SGD $"+normalPrintCost+"/Pc");
 //                    txtNormalCost.setText(object1.getString("Cost"));
                     PhysicalCardNormalId = "2";
 
