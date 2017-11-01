@@ -1843,9 +1843,9 @@
                             android:id="@+id/txtTestimonial"
                             android:layout_marginTop="5dp"
                             android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
                             android:layout_centerVertical="true"
                             android:textSize="12sp"
-                            android:text="You do not have any Testimonials"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent" />
 

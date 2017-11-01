@@ -34,6 +34,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Base64;
 import android.util.Log;
 import android.util.Pair;
@@ -425,6 +430,29 @@ public class EditProfileActivity extends AppCompatActivity implements
         UserID = user.get(LoginSession.KEY_USERID);
         profileId = intent.getStringExtra("profile_id");
         allTaggs = new ArrayList<>();
+
+        SpannableString ss = new SpannableString("Ask your friends to write a Testimonial for you(100 words or less),Please choose from your CircleOne contacts and send a request.");
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View textView) {
+                Intent intent1 = new Intent(getApplicationContext(), SearchGroupMembers.class);
+                intent1.putExtra("from", "profile");
+                intent1.putExtra("ProfileId", profileId);
+                startActivity(intent1);
+            }
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false);
+            }
+        };
+        ss.setSpan(clickableSpan, 91, 100, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        // TextView textView = (TextView) findViewById(R.id.hello);
+        txtTestimonial.setText(ss);
+        txtTestimonial.setMovementMethod(LinkMovementMethod.getInstance());
+        txtTestimonial.setHighlightColor(getResources().getColor(R.color.colorPrimary));
+
 
         btnSignIn.setOnClickListener(this);
         imgGoogle.setOnClickListener(this);
