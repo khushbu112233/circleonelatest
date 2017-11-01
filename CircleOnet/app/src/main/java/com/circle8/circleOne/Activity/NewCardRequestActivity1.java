@@ -90,6 +90,8 @@ public class NewCardRequestActivity1 extends AppCompatActivity
     private String final_ImgBase64Front, final_ImgBase64Back;
 
     String numberOnCard, nameOnCard, exYearOnCard, exMonthOnCard, cvvOnCard, mobileNoOnCard, strToken ;
+    int amount;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -102,6 +104,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
         HashMap<String, String> user = session.getUserDetails();
 
         userID = user.get(LoginSession.KEY_USERID);
+        email = user.get(LoginSession.KEY_EMAIL);
 
         imgProfile = (CircleImageView) findViewById(R.id.imgProfile);
         txtLaserCost = (TextView) findViewById(R.id.txtLaserCost);
@@ -324,6 +327,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                 llBlueCardSample.setAlpha(0.4f);
                 llGoldCardSample.setAlpha(1.0f);
                 PhysicalCardTypeID = "1";
+                amount = 50 * 100;
                 //llBlueCardSample.setEnabled(false);
             }
         });
@@ -334,6 +338,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                 llGoldCardSample.setAlpha(0.4f);
                 llBlueCardSample.setAlpha(1.0f);
                 PhysicalCardTypeID = "2";
+                amount = 25 * 100;
                 //llGoldCardSample.setEnabled(false);
             }
         });
@@ -865,8 +870,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                 tok = token;
                 strToken = token.getId();
                 //  new StripeCharge(token.getId()).execute();
-//                new HttpAsyncTokenTask().execute("https://circle8.asia/Checkout/pay");
-                new HttpAsyncRequestTask().execute(Utility.BASE_URL+"Physical_Card/Order");
+                new HttpAsyncTokenTask().execute("http://circle8.asia/Checkout/Pay");
                 alertDialog.cancel();
             }
 
@@ -875,6 +879,126 @@ public class NewCardRequestActivity1 extends AppCompatActivity
             }
         });
     }
+
+    public  String POST2(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("amt", amount );
+            jsonObject.accumulate("currency", "sgd" );
+            jsonObject.accumulate("source", strToken );
+            jsonObject.accumulate("Email    ", email );
+            jsonObject.accumulate("Description", "New card Request Payment" );
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    private class HttpAsyncTokenTask extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            /*dialog = new ProgressDialog(SubscriptionActivity.this);
+            dialog.setMessage("Loading...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+
+            String loading = "Loading" ;
+            CustomProgressDialog(loading);
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            return POST2(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
+
+            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+
+            try
+            {
+                if(result == "")
+                {
+                    Toast.makeText(getApplicationContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    JSONObject response = new JSONObject(result);
+                    String message = response.getString("message");
+                    String success = response.getString("Status");
+                    if (success.equals("success")){
+                        Toast.makeText(getApplicationContext(), "Paied..", Toast.LENGTH_LONG).show();
+                        new HttpAsyncRequestTask().execute(Utility.BASE_URL+"Physical_Card/Order");
+                    }else {
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     public void submitCard(View view)
     {

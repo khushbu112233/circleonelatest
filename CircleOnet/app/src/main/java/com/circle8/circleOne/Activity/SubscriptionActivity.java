@@ -134,7 +134,7 @@ public class SubscriptionActivity extends AppCompatActivity
                 String groups_limit = subscriptionModelArrayList.get(position).getGroupLimit();
                 String month_connect_limit = subscriptionModelArrayList.get(position).getMonthlyConnectionLimit();
                 String left_connection = subscriptionModelArrayList.get(position).getLetf_connection();
-                String amountt = subscriptionModelArrayList.get(position).getPrice();
+               // String amountt = subscriptionModelArrayList.get(position).getPrice();
 
                 int price = Integer.parseInt(subscriptionModelArrayList.get(position).getPrice());
                 PackageName = subscriptionModelArrayList.get(position).getPackageName();
@@ -276,7 +276,7 @@ public class SubscriptionActivity extends AppCompatActivity
                 tok = token;
                 strToken = token.getId();
                 //  new StripeCharge(token.getId()).execute();
-                new HttpAsyncTokenTask().execute("http://circle8.asia/Checkout/PaywithSubscription\n");
+                new HttpAsyncTokenTask().execute("http://circle8.asia/Checkout/PaywithSubscription");
                 alertDialog.cancel();
                 ivAlphaImg.setVisibility(View.GONE);
             }
@@ -325,7 +325,7 @@ public class SubscriptionActivity extends AppCompatActivity
                 tok = token;
                 strToken = token.getId();
                 //  new StripeCharge(token.getId()).execute();
-                new HttpAsyncTokenTask().execute("http://circle8.asia/Checkout/PaywithSubscription\n");
+                new HttpAsyncTokenTask().execute("http://circle8.asia/Checkout/PaywithSubscription");
                 alertDialog.cancel();
             }
 
@@ -616,6 +616,7 @@ public class SubscriptionActivity extends AppCompatActivity
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("amt", amount );
+            jsonObject.accumulate("Userid", UserId );
             jsonObject.accumulate("currency", "sgd" );
             jsonObject.accumulate("source", strToken );
             jsonObject.accumulate("Email", email );
