@@ -259,21 +259,57 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-
-                if (Card_Front == null)
+                if (CardFront == null)
                 {
-                    if (final_attachment.equalsIgnoreCase(""))
+                    if ( final_attachment.equalsIgnoreCase(""))
                     {
-                        Toast.makeText(getApplicationContext(), "Please Upload Front Card.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Please Upload Front Card or Attachment File.", Toast.LENGTH_LONG).show();
+                    }
+                    else if (!final_attachment.equalsIgnoreCase(""))
+                    {
+                        Toast.makeText(getApplicationContext(), "Card Uploaded Sucessfully..", Toast.LENGTH_LONG).show();
+                        Intent i = new Intent(getApplicationContext(), NewCardRequestActivity1.class);
+                        i.putExtra("person", name);
+                        i.putExtra("designation", designation);
+                        i.putExtra("company", company);
+                        i.putExtra("profile", profile);
+                        i.putExtra("image", image);
+                        i.putExtra("phone",phone);
+                        i.putExtra("profileID",profileID);
+                        i.putExtra("card_front", final_attachment);
+                        i.putExtra("card_back", "");
+                        i.putExtra("type", "string");
+                        startActivity(i);
+
+                        rlLayOne.setEnabled(true);
+                        ivAlphaImg.setVisibility(View.GONE);
+                        rlLayTwo.setVisibility(View.GONE);
                     }
                 }
-
-                else if ( Card_Front == null)
+                /*else if (CardFront == null || CardBack != null)
                 {
-                    
+                    Toast.makeText(getApplicationContext(), "Please Upload Front Card.", Toast.LENGTH_LONG).show();
+                }*/
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "Card Uploaded Sucessfully..", Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(getApplicationContext(), NewCardRequestActivity1.class);
+                    i.putExtra("person", name);
+                    i.putExtra("designation", designation);
+                    i.putExtra("company", company);
+                    i.putExtra("profile", profile);
+                    i.putExtra("image", image);
+                    i.putExtra("phone",phone);
+                    i.putExtra("profileID",profileID);
+                    i.putExtra("card_front", final_attachment);
+                    i.putExtra("card_back", "");
+                    i.putExtra("type", "string");
+                    startActivity(i);
+
+                    rlLayOne.setEnabled(true);
+                    ivAlphaImg.setVisibility(View.GONE);
+                    rlLayTwo.setVisibility(View.GONE);
                 }
-
-
                 /*if (Card_Front == null && final_attachment.equals(""))
                 {
                     Toast.makeText(getApplicationContext(), "Please Upload Front Card or attach File", Toast.LENGTH_LONG).show();
@@ -385,7 +421,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                if (Card_Front == null)
+                if (CardFront == null)
                 {
                     Toast.makeText(getApplicationContext(), "Please Upload Front Card.", Toast.LENGTH_LONG).show();
                 }
