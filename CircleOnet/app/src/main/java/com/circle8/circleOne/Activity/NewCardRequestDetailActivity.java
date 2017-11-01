@@ -260,7 +260,18 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
             public void onClick(View v)
             {
 
-                
+                if (Card_Front == null)
+                {
+                    if (final_attachment.equalsIgnoreCase(""))
+                    {
+                        Toast.makeText(getApplicationContext(), "Please Upload Front Card.", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                else if ( Card_Front == null)
+                {
+                    
+                }
 
 
                 /*if (Card_Front == null && final_attachment.equals(""))
