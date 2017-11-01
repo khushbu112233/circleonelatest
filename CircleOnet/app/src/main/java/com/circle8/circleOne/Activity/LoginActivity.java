@@ -1243,7 +1243,7 @@ public class LoginActivity extends AppCompatActivity implements
             @Override
             public void onAuthError(LIAuthError error) {
 
-                Toast.makeText(getApplicationContext(), "failed " + error.toString(), Toast.LENGTH_LONG).show();
+               // Toast.makeText(getApplicationContext(), "failed " + error.toString(), Toast.LENGTH_LONG).show();
             }
         }, true);
     }

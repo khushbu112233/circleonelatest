@@ -502,7 +502,7 @@ public class GroupDetailActivity extends AppCompatActivity
 
                 if (selectedList.size() == 0)
                 {
-                    Toast.makeText(getApplicationContext(),"Select member for delete", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Select member to be removed from circle", Toast.LENGTH_LONG).show();
                 }
                 else
                 {

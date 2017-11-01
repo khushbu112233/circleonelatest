@@ -28,8 +28,8 @@
     <string name="auth_successful">Fingerprint authentication successful</string>
     <string name="Unknown_permission_request">Unrecognized permission request</string>
     <string name="permission_refused">" User refused Fingerprint permission"</string>
-    <string name="twitter_consumer_key">UTZ9PSBUbbMjlnUWczUM53Td0</string>
-    <string name="twitter_consumer_secret">TAuxc7j5HLPLW5lxPSWJLjuBpdLOBGbbkKuRtJOSAYyZLDJMVi</string>
+    <string name="twitter_consumer_key">MFwFYj3lAWanBi3xPm6K2pmuy</string>
+    <string name="twitter_consumer_secret">oe2JTjYnfHGLESRdp0xh5anlHemwFRL6RmQTtnLNVWxKn6wwnd</string>
     <string name="testimonial1">Ask your friends to write a Testimonial for you{100 words or less},</string>
     <string name="testimonial2">Please choose from your <b><font color="#38c0c7">Circle 1 contacts</font></b> and send a request. </string>
 

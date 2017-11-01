@@ -518,7 +518,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
 
     private void selectCardType()
     {
-        type = new CharSequence[]{"Add Front Card", "Add Back Card", "Next"};
+        type = new CharSequence[]{"Upload Design (Front)", "Upload Design (Back)", "Next"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(NewCardRequestDetailActivity.this);
         builder.setTitle("Add Card");
@@ -529,14 +529,14 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
             {
                 boolean result = Utility.checkStoragePermission(NewCardRequestDetailActivity.this);
                 boolean result1 = Utility.checkCameraPermission(NewCardRequestDetailActivity.this);
-                if (type[item].equals("Add Front Card"))
+                if (type[item].equals("Upload Design (Front)"))
                 {
                     cardType = "front";
                     CropImage.activity(null).setGuidelines(CropImageView.Guidelines.ON)
                             .start(NewCardRequestDetailActivity.this);
                     // selectImage();
                 }
-                else if (type[item].equals("Add Back Card"))
+                else if (type[item].equals("Upload Design (Back)"))
                 {
                     cardType = "back";
 

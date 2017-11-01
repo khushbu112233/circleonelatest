@@ -234,7 +234,7 @@
                 <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="By Company (Search By Key Words)"
+                    android:text="By Company (Search by keywords)"
                     android:id="@+id/textDrawer6"
                     android:textSize="14dp"
                     android:layout_marginLeft="20dp"
@@ -263,7 +263,7 @@
                 <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="By Title (Search By Key Words)"
+                    android:text="By Title (Search by keywords)"
                     android:id="@+id/textDrawer7"
                     android:textSize="14dp"
                     android:layout_marginLeft="20dp"
@@ -292,7 +292,7 @@
                 <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="By Industry (Search By Key Words)"
+                    android:text="By Industry (Search by keywords)"
                     android:id="@+id/textDrawer8"
                     android:textSize="14dp"
                     android:layout_marginLeft="20dp"
@@ -321,7 +321,7 @@
                 <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="By Association (Search By Key Words)"
+                    android:text="By Association (Search by keywords)"
                     android:id="@+id/textDrawer9"
                     android:textSize="14dp"
                     android:layout_marginLeft="20dp"
