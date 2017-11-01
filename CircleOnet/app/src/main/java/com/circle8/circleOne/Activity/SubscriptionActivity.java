@@ -82,6 +82,7 @@ public class SubscriptionActivity extends AppCompatActivity
     WindowManager.LayoutParams params;
 
     String numberOnCard, nameOnCard, exYearOnCard, exMonthOnCard, cvvOnCard, mobileNoOnCard ;
+    String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -101,6 +102,7 @@ public class SubscriptionActivity extends AppCompatActivity
         HashMap<String, String> user = session.getUserDetails();
         // name
         UserId = user.get(LoginSession.KEY_USERID);
+        email = user.get(LoginSession.KEY_EMAIL);
         rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
         tvProgressing = (TextView)findViewById(R.id.txtProgressing);
         ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
@@ -274,7 +276,7 @@ public class SubscriptionActivity extends AppCompatActivity
                 tok = token;
                 strToken = token.getId();
                 //  new StripeCharge(token.getId()).execute();
-                new HttpAsyncTokenTask().execute("https://circle8.asia/Checkout/pay");
+                new HttpAsyncTokenTask().execute("http://circle8.asia/Checkout/PaywithSubscription\n");
                 alertDialog.cancel();
                 ivAlphaImg.setVisibility(View.GONE);
             }
@@ -323,7 +325,7 @@ public class SubscriptionActivity extends AppCompatActivity
                 tok = token;
                 strToken = token.getId();
                 //  new StripeCharge(token.getId()).execute();
-                new HttpAsyncTokenTask().execute("https://circle8.asia/Checkout/pay");
+                new HttpAsyncTokenTask().execute("http://circle8.asia/Checkout/PaywithSubscription\n");
                 alertDialog.cancel();
             }
 
@@ -616,7 +618,9 @@ public class SubscriptionActivity extends AppCompatActivity
             jsonObject.accumulate("amt", amount );
             jsonObject.accumulate("currency", "sgd" );
             jsonObject.accumulate("source", strToken );
+            jsonObject.accumulate("Email", email );
             jsonObject.accumulate("Description", PackageName );
+            jsonObject.accumulate("PlanId", strToken );
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();

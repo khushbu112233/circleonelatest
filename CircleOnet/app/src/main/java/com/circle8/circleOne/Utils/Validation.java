@@ -152,10 +152,10 @@ public class Validation
             MyAccountActivity.tvLastNameInfo.setVisibility(View.GONE);
         }
 
-        if(contactNo.isEmpty() || contactNo.length() <= 8  )
+        if(contactNo.isEmpty() )
         {
 //            RegisterActivity.etPhone.setError("10 Characters Required");
-            MyAccountActivity.tvPhoneInfo.setText("Mini 8 digit");
+            MyAccountActivity.tvPhoneInfo.setText("Enter Phone Number");
             MyAccountActivity.tvPhoneInfo.setVisibility(View.VISIBLE);
             valid = false ;
         }

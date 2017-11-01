@@ -130,9 +130,14 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
 
     public String decrypt(String value, String key)
             throws GeneralSecurityException, IOException {
-        byte[] value_bytes = Base64.decode(value, 0);
-        byte[] key_bytes = getKeyBytes(key);
-        return new String(decrypt(value_bytes, key_bytes, key_bytes), "UTF-8");
+
+        try {
+            byte[] value_bytes = Base64.decode(value, 0);
+            byte[] key_bytes = getKeyBytes(key);
+            return new String(decrypt(value_bytes, key_bytes, key_bytes), "UTF-8");
+        }catch (Exception e){
+            return "Invalid QRCode";
+        }
     }
 
     public byte[] decrypt(byte[] ArrayOfByte1, byte[] ArrayOfByte2, byte[] ArrayOfByte3)
@@ -171,30 +176,36 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
         scanFormat = rawResult.getBarcodeFormat().toString();
     //    new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
 
-
-
-
         try {
 
             scanQr = decrypt(rawResult.getText().toString(), secretKey);
-           // Toast.makeText(getApplicationContext(), scanQr, Toast.LENGTH_LONG).show();
-            try {
+            if (scanQr.equals("Invalid QRCode")) {
+                Toast.makeText(getApplicationContext(), scanQr, Toast.LENGTH_LONG).show();
                 mScannerView.stopCamera();
                 CameraScann();
 
-                if (CardsActivity.mLastLocation != null) {
-                    latitude = CardsActivity.mLastLocation.getLatitude();
-                    longitude = CardsActivity.mLastLocation.getLongitude();
+            } else
+            {
+                // Toast.makeText(getApplicationContext(), scanQr, Toast.LENGTH_LONG).show();
+                try {
+                    mScannerView.stopCamera();
+                    CameraScann();
 
-                    new HttpAsyncTask().execute(Utility.BASE_URL+"FriendConnection_Operation");
-                } else {
-                    CardsActivity.getLocation();
-                    Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
+                    if (CardsActivity.mLastLocation != null) {
+                        latitude = CardsActivity.mLastLocation.getLatitude();
+                        longitude = CardsActivity.mLastLocation.getLongitude();
+
+                        new HttpAsyncTask().execute(Utility.BASE_URL + "FriendConnection_Operation");
+                    } else {
+                        CardsActivity.getLocation();
+                        Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
+                    }
+
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                 }
+        }
 
-            } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
-            }
         } catch (GeneralSecurityException e) {
             e.printStackTrace();
         } catch (IOException e) {
