@@ -83,6 +83,7 @@ public class SubscriptionActivity extends AppCompatActivity
 
     String numberOnCard, nameOnCard, exYearOnCard, exMonthOnCard, cvvOnCard, mobileNoOnCard ;
     String email;
+    String PlanId = "", final_packageID = "", default_subscriptionId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -115,6 +116,7 @@ public class SubscriptionActivity extends AppCompatActivity
 //        tvCancel = (TextView)findViewById(R.id.tvCancel);
 
         new HttpAsyncTask().execute(Utility.BASE_URL+"Subscription/GetPackageList");
+      //  new HttpAsyncTaskGetUserSubscription().execute(Utility.BASE_URL+"Subscription/GetUserSubscription");
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,7 +140,8 @@ public class SubscriptionActivity extends AppCompatActivity
 
                 int price = Integer.parseInt(subscriptionModelArrayList.get(position).getPrice());
                 PackageName = subscriptionModelArrayList.get(position).getPackageName();
-                SubscriptionID = subscriptionModelArrayList.get(position).getPackageID();
+              //  SubscriptionID = subscriptionModelArrayList.get(position).getPackageID();
+                PlanId = subscriptionModelArrayList.get(position).getPackage_plan_id();
                 amount = price * 100;
 
                 try
@@ -335,6 +338,91 @@ public class SubscriptionActivity extends AppCompatActivity
         });
     }
 
+    private class HttpAsyncTaskGetUserSubscription extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+           /* dialog = new ProgressDialog(SubscriptionActivity.this);
+            dialog.setMessage("Fetching Groups...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+            String loading = "Subscriptions" ;
+            CustomProgressDialog(loading);
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return POST3(urls[0]);
+        }
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
+
+            try
+            {
+                if (result != null)
+                {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("UserSubscription");
+//                    Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+
+                    if (success.equals("1")) {
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
+
+                            SubscriptionModel subscriptionModel = new SubscriptionModel();
+                            final_packageID = (object.getString("PackageID"));
+                            /*subscriptionModel.setPackageName(object.getString("Package_Name"));
+                            subscriptionModel.setPackageDesc(object.getString("Package_Desc"));
+                            subscriptionModel.setPrice(object.getString("Price"));
+                            subscriptionModel.setPackageType(object.getString("Package_Type"));
+                            subscriptionModel.setConnectionLimit(object.getString("Connection_Limit"));
+                            subscriptionModel.setGroupLimit(object.getString("Group_Limit"));
+                            subscriptionModel.setMonthlyConnectionLimit(object.getString("Monthy_Connection_Limit"));
+                            subscriptionModel.setLetf_connection(object.getString("Connections_Left"));*/
+                            default_subscriptionId = (object.getString("Stripe_SubscriptionID"));
+                            subscriptionModelArrayList.add(subscriptionModel);
+
+                            String PackageID = object.getString("PackageID");
+                            String Package_Name = object.getString("Package_Name");
+                            String Package_Desc = object.getString("Package_Desc");
+                            String Price = object.getString("Price");
+                            String Package_Type = object.getString("Package_Type");
+                            String Connection_Limit = object.getString("Connection_Limit");
+                            String Group_Limit = object.getString("Group_Limit");
+                            String Monthy_Connection_Limit = object.getString("Monthy_Connection_Limit");
+                        }
+
+                        subscriptionAdapter = new SubscriptionAdapter(SubscriptionActivity.this, subscriptionModelArrayList);
+                        listView.setAdapter(subscriptionAdapter);
+                        subscriptionAdapter.notifyDataSetChanged();
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(), "Not able to load Subscription..", Toast.LENGTH_LONG).show();
+                    }
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Not able to load Subscription..", Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
     private class HttpAsyncTask extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -388,6 +476,7 @@ public class SubscriptionActivity extends AppCompatActivity
                         subscriptionModel.setGroupLimit(object.getString("Group_Limit"));
                         subscriptionModel.setMonthlyConnectionLimit(object.getString("Monthy_Connection_Limit"));
                         subscriptionModel.setLetf_connection(object.getString("Connections_Left"));
+                        subscriptionModel.setPackage_plan_id(object.getString("package_plan_id"));
                         subscriptionModelArrayList.add(subscriptionModel);
 
                         String PackageID = object.getString("PackageID");
@@ -585,6 +674,7 @@ public class SubscriptionActivity extends AppCompatActivity
                     JSONObject response = new JSONObject(result);
                     String message = response.getString("message");
                     String success = response.getString("Status");
+                    SubscriptionID = response.getString("STRIPE_SUBSCRIPTION_ID");
                     if (success.equals("success")){
                         Toast.makeText(getApplicationContext(), "Paied..", Toast.LENGTH_LONG).show();
                         new HttpAsyncSubscriptTask().execute(Utility.BASE_URL+"Subscription/AddUser");
@@ -615,13 +705,12 @@ public class SubscriptionActivity extends AppCompatActivity
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("amt", amount );
             jsonObject.accumulate("Userid", UserId );
-            jsonObject.accumulate("currency", "sgd" );
-            jsonObject.accumulate("source", strToken );
+          /*  jsonObject.accumulate("currency", "sgd" );
+            jsonObject.accumulate("source", strToken );*/
             jsonObject.accumulate("Email", email );
             jsonObject.accumulate("Description", PackageName );
-            jsonObject.accumulate("PlanId", strToken );
+            jsonObject.accumulate("PlanId", PlanId );
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -678,6 +767,61 @@ public class SubscriptionActivity extends AppCompatActivity
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("my_userid", UserId );
             jsonObject.accumulate("subscription_id", SubscriptionID );
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    public  String POST3(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("UserId", UserId );
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
