@@ -89,6 +89,8 @@ public class NewCardRequestActivity1 extends AppCompatActivity
     private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
     private String final_ImgBase64Front, final_ImgBase64Back;
 
+    private String laserPrintCost, normalPrintCost ;
+
     String numberOnCard, nameOnCard, exYearOnCard, exMonthOnCard, cvvOnCard, mobileNoOnCard, strToken ;
     int amount;
     private String email;
@@ -210,19 +212,25 @@ public class NewCardRequestActivity1 extends AppCompatActivity
             public void onClick(View v)
             {
 
-                if (card_back.equals("") && card_front.equals("")) {
-                    try {
+                if (card_back.equals("") && card_front.equals(""))
+                {
+                    try
+                    {
                         final_ImgBase64Back = BitMapToString(cardBackBmp);
                         new HttpAsyncTaskBackUpload().execute(Utility.BASE_URL+"ImgUpload");
-                    }catch (Exception e){
+                    }
+                    catch (Exception e){
                         final_ImgBase64Back = "";
                         card_back = "";
                     }
 
-                    try {
+                    try
+                    {
                         final_ImgBase64Front = BitMapToString(cardFrontBmp);
                         new HttpAsyncTaskFrontUpload().execute(Utility.BASE_URL + "ImgUpload");
-                    }catch (Exception e){
+                    }
+                    catch (Exception e)
+                    {
                         final_ImgBase64Front = "";
                         card_back = "";
                     }
@@ -323,7 +331,8 @@ public class NewCardRequestActivity1 extends AppCompatActivity
 
         llGoldCardSample.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 llBlueCardSample.setAlpha(0.4f);
                 llGoldCardSample.setAlpha(1.0f);
                 PhysicalCardTypeID = "1";
@@ -761,7 +770,8 @@ public class NewCardRequestActivity1 extends AppCompatActivity
 
             try
             {
-                if (result != null) {
+                if (result != null)
+                {
                     JSONObject jsonObject = new JSONObject(result);
                     JSONArray jsonArray = jsonObject.getJSONArray("PhysicalCard_Types");
 //                    Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
@@ -771,16 +781,35 @@ public class NewCardRequestActivity1 extends AppCompatActivity
 
                    // Type = object.getString("Type");
                     txtLaserDesc.setText(object.getString("Description"));
-                    txtLaserCost.setText(object.getString("Cost"));
-                    PhysicalCardLaserId = "1";
 
+                    laserPrintCost = object.getString("Cost");
+                    if (laserPrintCost.equalsIgnoreCase("0"))
+                    {
+                        txtLaserCost.setText("SGD $"+laserPrintCost+"/Pc");
+                    }
+                    else
+                    {
+                        txtLaserCost.setText("SGD $"+laserPrintCost+"/Pc");
+                    }
+
+                    PhysicalCardLaserId = "1";
 
                     JSONObject object1 = jsonArray.getJSONObject(1);
                     //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
 
                   //  Type = object.getString("Type");
                     txtNormalDesc.setText(object1.getString("Description"));
-                    txtNormalCost.setText(object1.getString("Cost"));
+                    normalPrintCost = object1.getString("Cost") ;
+
+                    if (normalPrintCost.equalsIgnoreCase("0"))
+                    {
+                        txtNormalCost.setText("SGD $"+normalPrintCost+"/Pc");
+                    }
+                    else
+                    {
+                        txtNormalCost.setText("SGD $"+normalPrintCost+"/Pc");
+                    }
+//                    txtNormalCost.setText(object1.getString("Cost"));
                     PhysicalCardNormalId = "2";
 
                 } else {
