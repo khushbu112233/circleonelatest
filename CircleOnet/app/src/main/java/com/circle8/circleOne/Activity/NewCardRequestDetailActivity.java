@@ -260,10 +260,17 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
             public void onClick(View v)
             {
 
-                if (Card_Front == null && final_attachment.equals("")){
+                
+
+
+                /*if (Card_Front == null && final_attachment.equals(""))
+                {
                     Toast.makeText(getApplicationContext(), "Please Upload Front Card or attach File", Toast.LENGTH_LONG).show();
-                }else if (Card_Front == null || final_attachment.equals("")) {
-                    if (Card_Front == null && !final_attachment.equals("")){
+                }*/
+//                else if (Card_Front == null || final_attachment.equals(""))
+                /*{
+                    if (Card_Front == null && !final_attachment.equals(""))
+                    {
                         Toast.makeText(getApplicationContext(), "Card Uploaded Sucessfully..", Toast.LENGTH_LONG).show();
                         Intent i = new Intent(getApplicationContext(), NewCardRequestActivity1.class);
                         i.putExtra("person", name);
@@ -281,9 +288,9 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                         rlLayOne.setEnabled(true);
                         ivAlphaImg.setVisibility(View.GONE);
                         rlLayTwo.setVisibility(View.GONE);
-
                     }
-                    else if (Card_Front != null && final_attachment.equals("")){
+                    else if (Card_Front != null && final_attachment.equals(""))
+                    {
                         Toast.makeText(getApplicationContext(), "Card Uploaded Sucessfully..", Toast.LENGTH_LONG).show();
                         //dialog.dismiss();
                         Intent i = new Intent(getApplicationContext(), NewCardRequestActivity1.class);
@@ -304,9 +311,10 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                         rlLayTwo.setVisibility(View.GONE);
 
                     }
-                }
-                else {
-                   /* if (CardFront == null && CardBack == null) {
+                }*/
+//                else
+                /*{
+                   *//* if (CardFront == null && CardBack == null) {
                         Toast.makeText(getApplicationContext(), "Please Upload Front Card Image.", Toast.LENGTH_LONG).show();
                     } else if (CardFront == null) {
                         Toast.makeText(getApplicationContext(), "Please Upload First Card Image.", Toast.LENGTH_LONG).show();
@@ -330,8 +338,8 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                         ivAlphaImg.setVisibility(View.GONE);
                         rlLayTwo.setVisibility(View.GONE);
 
-                    }*/
-                }
+                    }*//*
+                }*/
             }
         });
 
@@ -358,8 +366,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 cardType = "front";
-                CropImage.activity(null).setGuidelines(CropImageView.Guidelines.ON)
-                        .start(NewCardRequestDetailActivity.this);
+                CropImage.activity(null).setGuidelines(CropImageView.Guidelines.ON).start(NewCardRequestDetailActivity.this);
             }
         });
 
@@ -367,11 +374,15 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                cardType = "back";
-
-                CropImage.activity(null).setGuidelines(CropImageView.Guidelines.ON)
-                        .start(NewCardRequestDetailActivity.this);
-
+                if (Card_Front == null)
+                {
+                    Toast.makeText(getApplicationContext(), "Please Upload Front Card.", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    cardType = "back";
+                    CropImage.activity(null).setGuidelines(CropImageView.Guidelines.ON).start(NewCardRequestDetailActivity.this);
+                }
             }
         });
 
