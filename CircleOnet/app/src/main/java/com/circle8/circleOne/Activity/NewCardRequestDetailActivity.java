@@ -168,7 +168,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
         mViewPager2.setOffscreenPageLimit(1);
         mViewPager2.setAdapter(myPager);
 
-       // Toast.makeText(getApplicationContext(), Card_Back, Toast.LENGTH_LONG).show();
+        // Toast.makeText(getApplicationContext(), Card_Back, Toast.LENGTH_LONG).show();
 
         tvPerson.setText(i.getStringExtra("person"));
         tvDesignation.setText(i.getStringExtra("designation"));
@@ -192,7 +192,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
             appbar.setVisibility(View.VISIBLE);
         }
 
-      //  imgProfile.setImageResource(Integer.parseInt(i.getStringExtra("image")));
+        //  imgProfile.setImageResource(Integer.parseInt(i.getStringExtra("image")));
         if (image.equals(""))
         {
             imgProfile.setImageResource(R.drawable.usr_white1);
@@ -259,10 +259,57 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                if (CardFront == null)
+                {
+                    if ( final_attachment.equalsIgnoreCase(""))
+                    {
+                        Toast.makeText(getApplicationContext(), "Please Upload Front Card or Attachment File.", Toast.LENGTH_LONG).show();
+                    }
+                    else if (!final_attachment.equalsIgnoreCase(""))
+                    {
+                        Toast.makeText(getApplicationContext(), "Card Uploaded Sucessfully..", Toast.LENGTH_LONG).show();
+                        Intent i = new Intent(getApplicationContext(), NewCardRequestActivity1.class);
+                        i.putExtra("person", name);
+                        i.putExtra("designation", designation);
+                        i.putExtra("company", company);
+                        i.putExtra("profile", profile);
+                        i.putExtra("image", image);
+                        i.putExtra("phone",phone);
+                        i.putExtra("profileID",profileID);
+                        i.putExtra("card_front", final_attachment);
+                        i.putExtra("card_back", "");
+                        i.putExtra("type", "string");
+                        startActivity(i);
 
+                        rlLayOne.setEnabled(true);
+                        ivAlphaImg.setVisibility(View.GONE);
+                        rlLayTwo.setVisibility(View.GONE);
+                    }
+                }
+                /*else if (CardFront == null || CardBack != null)
+                {
+                    Toast.makeText(getApplicationContext(), "Please Upload Front Card.", Toast.LENGTH_LONG).show();
+                }*/
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "Card Uploaded Sucessfully..", Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(getApplicationContext(), NewCardRequestActivity1.class);
+                    i.putExtra("person", name);
+                    i.putExtra("designation", designation);
+                    i.putExtra("company", company);
+                    i.putExtra("profile", profile);
+                    i.putExtra("image", image);
+                    i.putExtra("phone",phone);
+                    i.putExtra("profileID",profileID);
+                    i.putExtra("card_front", final_attachment);
+                    i.putExtra("card_back", "");
+                    i.putExtra("type", "string");
+                    startActivity(i);
 
-
-
+                    rlLayOne.setEnabled(true);
+                    ivAlphaImg.setVisibility(View.GONE);
+                    rlLayTwo.setVisibility(View.GONE);
+                }
                 /*if (Card_Front == null && final_attachment.equals(""))
                 {
                     Toast.makeText(getApplicationContext(), "Please Upload Front Card or attach File", Toast.LENGTH_LONG).show();
@@ -374,7 +421,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                if (Card_Front == null)
+                if (CardFront == null)
                 {
                     Toast.makeText(getApplicationContext(), "Please Upload Front Card.", Toast.LENGTH_LONG).show();
                 }
@@ -487,7 +534,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                     cardType = "front";
                     CropImage.activity(null).setGuidelines(CropImageView.Guidelines.ON)
                             .start(NewCardRequestDetailActivity.this);
-                   // selectImage();
+                    // selectImage();
                 }
                 else if (type[item].equals("Add Back Card"))
                 {
@@ -495,7 +542,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
 
                     CropImage.activity(null).setGuidelines(CropImageView.Guidelines.ON)
                             .start(NewCardRequestDetailActivity.this);
-                   // selectImage();
+                    // selectImage();
                 }
                 else if (type[item].equals("Next"))
                 {
@@ -561,7 +608,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                         galleryCardIntent();
                     }
                 } else if (items[item].equals("Cancel")) {
-                        dialog.dismiss();
+                    dialog.dismiss();
                 }
             }
         });
@@ -883,7 +930,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(result.getUri()));
                     // originalBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
 
-                  //  final_ImgBase64 = BitMapToString(bitmap);
+                    //  final_ImgBase64 = BitMapToString(bitmap);
                     //   Upload();
                     CardSwipe.imageView.setImageBitmap(bitmap);
                     myPager.notifyDataSetChanged();
@@ -891,9 +938,9 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                     {
                         CardFront = bitmap;
                     }
-                        //new HttpAsyncTaskFrontUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                    //new HttpAsyncTaskFrontUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
                     else if (cardType.equals("back")) {
-                     //   new HttpAsyncTaskBackUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
+                        //   new HttpAsyncTaskBackUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
                         CardBack = bitmap;
                     }
                 }
@@ -1008,7 +1055,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                         finish();*/
                         // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                         Toast.makeText(activity, "Back Card Uploaded Successfully.", Toast.LENGTH_LONG).show();
-                       // CardBack = ImgName;
+                        // CardBack = ImgName;
                     } else {
                         Toast.makeText(activity, "Error While Uploading Image..", Toast.LENGTH_LONG).show();
                     }
@@ -1135,7 +1182,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                         startActivity(intent);
                         finish();*/
                         Toast.makeText(activity, "Front Card Uploaded Successfully. Add Back Card..", Toast.LENGTH_LONG).show();
-                       // CardFront = ImgName;
+                        // CardFront = ImgName;
 
 
                     }
