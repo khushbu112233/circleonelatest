@@ -21,7 +21,15 @@ public class SubscriptionModel
     String connectionLimit ;
     String groupLimit ;
     String monthlyConnectionLimit ;
+    String package_plan_id;
 
+    public String getPackage_plan_id() {
+        return package_plan_id;
+    }
+
+    public void setPackage_plan_id(String package_plan_id) {
+        this.package_plan_id = package_plan_id;
+    }
 
     public String getPackage_no() {
         return package_no;

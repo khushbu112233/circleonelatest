@@ -83,6 +83,7 @@ public class SubscriptionActivity extends AppCompatActivity
 
     String numberOnCard, nameOnCard, exYearOnCard, exMonthOnCard, cvvOnCard, mobileNoOnCard ;
     String email;
+    String PlanId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -138,7 +139,8 @@ public class SubscriptionActivity extends AppCompatActivity
 
                 int price = Integer.parseInt(subscriptionModelArrayList.get(position).getPrice());
                 PackageName = subscriptionModelArrayList.get(position).getPackageName();
-                SubscriptionID = subscriptionModelArrayList.get(position).getPackageID();
+              //  SubscriptionID = subscriptionModelArrayList.get(position).getPackageID();
+                PlanId = subscriptionModelArrayList.get(position).getPackage_plan_id();
                 amount = price * 100;
 
                 try
@@ -388,6 +390,7 @@ public class SubscriptionActivity extends AppCompatActivity
                         subscriptionModel.setGroupLimit(object.getString("Group_Limit"));
                         subscriptionModel.setMonthlyConnectionLimit(object.getString("Monthy_Connection_Limit"));
                         subscriptionModel.setLetf_connection(object.getString("Connections_Left"));
+                        subscriptionModel.setPackage_plan_id(object.getString("package_plan_id"));
                         subscriptionModelArrayList.add(subscriptionModel);
 
                         String PackageID = object.getString("PackageID");
@@ -585,6 +588,7 @@ public class SubscriptionActivity extends AppCompatActivity
                     JSONObject response = new JSONObject(result);
                     String message = response.getString("message");
                     String success = response.getString("Status");
+                    SubscriptionID = response.getString("STRIPE_SUBSCRIPTION_ID");
                     if (success.equals("success")){
                         Toast.makeText(getApplicationContext(), "Paied..", Toast.LENGTH_LONG).show();
                         new HttpAsyncSubscriptTask().execute(Utility.BASE_URL+"Subscription/AddUser");
@@ -615,12 +619,12 @@ public class SubscriptionActivity extends AppCompatActivity
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("amt", amount );
-            jsonObject.accumulate("currency", "sgd" );
-            jsonObject.accumulate("source", strToken );
+            jsonObject.accumulate("Userid", UserId );
+          /*  jsonObject.accumulate("currency", "sgd" );
+            jsonObject.accumulate("source", strToken );*/
             jsonObject.accumulate("Email", email );
             jsonObject.accumulate("Description", PackageName );
-            jsonObject.accumulate("PlanId", strToken );
+            jsonObject.accumulate("PlanId", PlanId );
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
