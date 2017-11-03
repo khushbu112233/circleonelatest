@@ -685,7 +685,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                 byte[] data = fileName.getBytes("UTF-8");
                 String base64 = Base64.encodeToString(data, Base64.DEFAULT);
                 Attach_String = base64;
-                Toast.makeText(getApplicationContext(), base64, Toast.LENGTH_LONG).show();
+               // Toast.makeText(getApplicationContext(), base64, Toast.LENGTH_LONG).show();
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
@@ -789,6 +789,8 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                         startActivity(intent);
                         finish();*/
                         // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
+                        tvNext.setEnabled(true);
+                        tvNext.setAlpha(1.0f);
                         final_attachment = ImgName;
                         //etAttachFile.setText(ImgName);
                     } else {
@@ -937,6 +939,8 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                     if (cardType.equals("front"))
                     {
                         CardFront = bitmap;
+                        tvNext.setEnabled(true);
+                        tvNext.setAlpha(1.0f);
                     }
                     //new HttpAsyncTaskFrontUpload().execute("http://circle8.asia:8999/Onet.svc/ImgUpload");
                     else if (cardType.equals("back")) {

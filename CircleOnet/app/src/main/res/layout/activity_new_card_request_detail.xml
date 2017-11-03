@@ -559,6 +559,8 @@
                         android:gravity="center_horizontal"/>
                     <com.circle8.circleOne.Utils.cgBoldTextView
                         android:id="@+id/tvNext"
+                        android:enabled="false"
+                        android:alpha="0.5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Next"
