@@ -1041,7 +1041,17 @@ public class List2Fragment extends Fragment
         gridAdapter = new GridViewAdapter(context, R.layout.grid_list2_layout, nfcModel);
         gridView.setAdapter(gridAdapter);
         gridAdapter.notifyDataSetChanged();
-        CardsActivity.setActionBarTitle("Cards - " + nfcModel.size() + "/"+ CardsActivity.Connection_Limit);
+
+        if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
+            CardsActivity.setActionBarTitle("Cards - " + nfcModel.size() + "/"+ CardsActivity.Connection_Limit);
+        }
+        else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
+            CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
+        }
+        else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
+            CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
+        }
+
         gridAdapter.setMode(Attributes.Mode.Single);
     }
 

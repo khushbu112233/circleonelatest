@@ -990,7 +990,18 @@ public class List4Fragment extends Fragment
         gridAdapter = new List4Adapter(context, R.layout.grid_list4_layout, nfcModel1);
         listView.setAdapter(gridAdapter);
         gridAdapter.notifyDataSetChanged();
-        CardsActivity.setActionBarTitle("Cards - " + nfcModel1.size() + "/"+ CardsActivity.Connection_Limit);
+
+        if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
+            CardsActivity.setActionBarTitle("Cards - " + nfcModel1.size() + "/"+ CardsActivity.Connection_Limit);
+        }
+        else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
+            CardsActivity.setActionBarTitle("Cards - " + nfcModel1.size());
+        }
+        else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
+            CardsActivity.setActionBarTitle("Cards - " + nfcModel1.size());
+        }
+
+       // CardsActivity.setActionBarTitle("Cards - " + nfcModel1.size() + "/"+ CardsActivity.Connection_Limit);
     }
 
     public static void CustomProgressDialog(final String loading)

@@ -1275,7 +1275,17 @@ public class List1Fragment extends Fragment
             txtNoCard1.setVisibility(View.GONE);
         }
 
-        CardsActivity.setActionBarTitle("Cards - " + nfcModel.size() + "/"+ CardsActivity.Connection_Limit);
+
+        if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
+            CardsActivity.setActionBarTitle("Cards - " + nfcModel.size() + "/"+ CardsActivity.Connection_Limit);
+        }
+        else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
+            CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
+        }
+        else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
+            CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
+        }
+
 //        CardsActivity.setActionBarTitle("Cards - "+number_cards);
         initRecyclerView1(recyclerView1, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter);
         initRecyclerView2(recyclerView2, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter1);
