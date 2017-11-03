@@ -986,21 +986,6 @@ public class EditProfileActivity extends AppCompatActivity implements
                 else if (autoCompleteCompany.getText().toString().equals("")){
                     Toast.makeText(getApplicationContext(), "Enter Company Name", Toast.LENGTH_LONG).show();
                 }
-                else if (edtAddress1.getText().toString().equals("")){
-                    Toast.makeText(getApplicationContext(), "Enter Address", Toast.LENGTH_LONG).show();
-                }
-                else if (edtAddress3.getText().toString().equals("")){
-                    Toast.makeText(getApplicationContext(), "Enter City", Toast.LENGTH_LONG).show();
-                }
-                else if (edtAddress4.getText().toString().equals("")){
-                    Toast.makeText(getApplicationContext(), "Enter State", Toast.LENGTH_LONG).show();
-                }
-                else if (ccpCountry.getSelectedCountryName().toString().equals("")){
-                    Toast.makeText(getApplicationContext(), "Select Country", Toast.LENGTH_LONG).show();
-                }
-                else if (edtAddress6.getText().toString().equals("")){
-                    Toast.makeText(getApplicationContext(), "Enter PostalCode", Toast.LENGTH_LONG).show();
-                }
                 else if (edtEmail.getText().toString().equals("")){
                     Toast.makeText(getApplicationContext(), "Enter Email1", Toast.LENGTH_LONG).show();
                 }

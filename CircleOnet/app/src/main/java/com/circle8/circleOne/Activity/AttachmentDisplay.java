@@ -51,7 +51,6 @@ public class AttachmentDisplay extends AppCompatActivity {
                     progressDialog.setCancelable(false);
                     progressDialog.show();
                 }
-
             }
 
             public void onPageFinished(WebView view, String url) {

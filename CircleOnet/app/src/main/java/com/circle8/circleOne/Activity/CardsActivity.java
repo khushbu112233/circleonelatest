@@ -193,7 +193,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         mAuth = FirebaseAuth.getInstance();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         Bundle extras = getIntent().getExtras();
-        permissionUtils=new PermissionUtils(CardsActivity.this);
+        permissionUtils = new PermissionUtils(CardsActivity.this);
 
         permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
         permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);

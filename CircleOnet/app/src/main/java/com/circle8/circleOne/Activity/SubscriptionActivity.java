@@ -3,6 +3,7 @@ package com.circle8.circleOne.Activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.PixelFormat;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -84,6 +85,8 @@ public class SubscriptionActivity extends AppCompatActivity
     String numberOnCard, nameOnCard, exYearOnCard, exMonthOnCard, cvvOnCard, mobileNoOnCard ;
     String email;
     String PlanId = "", final_packageID = "";
+    String default_PackageId = "";
+    String key = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -129,59 +132,86 @@ public class SubscriptionActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                ivAlphaImg.setVisibility(View.VISIBLE);
 
                 String package_Name = subscriptionModelArrayList.get(position).getPackageName();
+                String packageId = subscriptionModelArrayList.get(position).getPackageID();
                 String contacts_limit = subscriptionModelArrayList.get(position).getConnectionLimit();
                 String groups_limit = subscriptionModelArrayList.get(position).getGroupLimit();
                 String month_connect_limit = subscriptionModelArrayList.get(position).getMonthlyConnectionLimit();
                 String left_connection = subscriptionModelArrayList.get(position).getLetf_connection();
                // String amountt = subscriptionModelArrayList.get(position).getPrice();
-
-                int price = Integer.parseInt(subscriptionModelArrayList.get(position).getPrice());
                 PackageName = subscriptionModelArrayList.get(position).getPackageName();
-              //  SubscriptionID = subscriptionModelArrayList.get(position).getPackageID();
+                //  SubscriptionID = subscriptionModelArrayList.get(position).getPackageID();
                 PlanId = subscriptionModelArrayList.get(position).getPackage_plan_id();
-                amount = price * 100;
 
-                try
+                if (packageId.equalsIgnoreCase(default_PackageId))
                 {
-                    stripe = new Stripe("pk_live_d0uXEesOC2Qg5919ul4t7Ocl");
+
                 }
-                catch (AuthenticationException e)
+                else if (packageId.equalsIgnoreCase("1"))
                 {
-                    e.printStackTrace();
-                }
+                    AlertDialog.Builder alert = new AlertDialog.Builder(SubscriptionActivity.this, R.style.Blue_AlertDialog);
+                    alert.setMessage("Do you want to Cancel your previous Subscription?");
+                    alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //do your work here
+                            dialog.dismiss();
+                            new HttpAsyncTaskCancelSub().execute("http://circle8.asia/Checkout/Cancelsubscription");
+                        }
+                    });
+                    alert.setNegativeButton("No", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    alert.show();
 
-                alertDialog = new AlertDialog.Builder(SubscriptionActivity.this).create();
-                LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View dialogView = inflater.inflate(R.layout.stripe_payment_screen, null);
+                }else if (!packageId.equalsIgnoreCase(default_PackageId)) {
+                    if (default_PackageId.equals("1")) {
+                        //key = "firstpay";
+                        ivAlphaImg.setVisibility(View.VISIBLE);
 
-                LinearLayout llCardValues = (LinearLayout)dialogView.findViewById(R.id.llCardValues);
-                LinearLayout llPackageDetails = (LinearLayout)dialogView.findViewById(R.id.llPackageDetails);
+                        int price = Integer.parseInt(subscriptionModelArrayList.get(position).getPrice());
+                        amount = price * 100;
 
-                TextView tvPackageName = (TextView)dialogView.findViewById(R.id.tvPackageName);
-                TextView tvConnect_Group = (TextView)dialogView.findViewById(R.id.tvContact_Group);
-                TextView tvConnection = (TextView)dialogView.findViewById(R.id.tvConnection);
-                TextView tvAmount = (TextView)dialogView.findViewById(R.id.tvAmount);
-                TextView tvLeftConnection = (TextView)dialogView.findViewById(R.id.tvLeftConnection);
-                RelativeLayout rlLeftConnection = (RelativeLayout)dialogView.findViewById(R.id.rlLeftConnection);
-                ImageView ivVisa = (ImageView)dialogView.findViewById(R.id.ivVisa);
-                ImageView ivMasterCard = (ImageView)dialogView.findViewById(R.id.ivMasterCard);
-                ImageView ivAmex = (ImageView)dialogView.findViewById(R.id.ivAmex);
-                final EditText etCardNumber = (EditText)dialogView.findViewById(R.id.etCardNumber);
-                final EditText etCardHolderName = (EditText)dialogView.findViewById(R.id.etCardHolderName);
-                final EditText etExMonth = (EditText)dialogView.findViewById(R.id.etExMonth);
-                final EditText etExYear = (EditText)dialogView.findViewById(R.id.etExYear);
-                final EditText etSecurityCode = (EditText)dialogView.findViewById(R.id.etSecurityCode);
-                final EditText etMobileNumber = (EditText)dialogView.findViewById(R.id.etMobileNumber);
-                TextView tvPay = (TextView)dialogView.findViewById(R.id.tvPay);
-                TextView tvCancel = (TextView)dialogView.findViewById(R.id.tvCancel);
+                        try {
+                            stripe = new Stripe("pk_live_d0uXEesOC2Qg5919ul4t7Ocl");
+                        } catch (AuthenticationException e) {
+                            e.printStackTrace();
+                        }
 
-                tvPackageName.setText(package_Name);
-                tvConnect_Group.setText(contacts_limit+" contacts, up to "+groups_limit+" circles,");
-                tvConnection.setText("up to "+month_connect_limit+" connections per month.");
-                tvAmount.setText("SGD $"+price);
+                        alertDialog = new AlertDialog.Builder(SubscriptionActivity.this).create();
+                        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        View dialogView = inflater.inflate(R.layout.stripe_payment_screen, null);
+
+                        LinearLayout llCardValues = (LinearLayout) dialogView.findViewById(R.id.llCardValues);
+                        LinearLayout llPackageDetails = (LinearLayout) dialogView.findViewById(R.id.llPackageDetails);
+
+                        TextView tvPackageName = (TextView) dialogView.findViewById(R.id.tvPackageName);
+                        TextView tvConnect_Group = (TextView) dialogView.findViewById(R.id.tvContact_Group);
+                        TextView tvConnection = (TextView) dialogView.findViewById(R.id.tvConnection);
+                        TextView tvAmount = (TextView) dialogView.findViewById(R.id.tvAmount);
+                        TextView tvLeftConnection = (TextView) dialogView.findViewById(R.id.tvLeftConnection);
+                        RelativeLayout rlLeftConnection = (RelativeLayout) dialogView.findViewById(R.id.rlLeftConnection);
+                        ImageView ivVisa = (ImageView) dialogView.findViewById(R.id.ivVisa);
+                        ImageView ivMasterCard = (ImageView) dialogView.findViewById(R.id.ivMasterCard);
+                        ImageView ivAmex = (ImageView) dialogView.findViewById(R.id.ivAmex);
+                        final EditText etCardNumber = (EditText) dialogView.findViewById(R.id.etCardNumber);
+                        final EditText etCardHolderName = (EditText) dialogView.findViewById(R.id.etCardHolderName);
+                        final EditText etExMonth = (EditText) dialogView.findViewById(R.id.etExMonth);
+                        final EditText etExYear = (EditText) dialogView.findViewById(R.id.etExYear);
+                        final EditText etSecurityCode = (EditText) dialogView.findViewById(R.id.etSecurityCode);
+                        final EditText etMobileNumber = (EditText) dialogView.findViewById(R.id.etMobileNumber);
+                        TextView tvPay = (TextView) dialogView.findViewById(R.id.tvPay);
+                        TextView tvCancel = (TextView) dialogView.findViewById(R.id.tvCancel);
+
+                        tvPackageName.setText(package_Name);
+                        tvConnect_Group.setText(contacts_limit + " contacts, up to " + groups_limit + " circles,");
+                        tvConnection.setText("up to " + month_connect_limit + " connections per month.");
+                        tvAmount.setText("SGD $" + price);
 
                 /*cardNumberField = (TextView) dialogView.findViewById(R.id.cardNumber);
                 monthField = (TextView) dialogView.findViewById(R.id.month);
@@ -190,70 +220,59 @@ public class SubscriptionActivity extends AppCompatActivity
 //                cvcField = (TextView) dialogView.findViewById(R.id.cvc);
 //                cardHolderName = (TextView) dialogView.findViewById(R.id.cardHolderName);
 
-                tvPay.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v)
-                    {
+                        tvPay.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
 
 
-                        numberOnCard = etCardNumber.getText().toString();
-                        nameOnCard = etCardHolderName.getText().toString();
-                        exYearOnCard = etExYear.getText().toString();
-                        exMonthOnCard = etExMonth.getText().toString();
-                        cvvOnCard = etSecurityCode.getText().toString();
-                        mobileNoOnCard = etMobileNumber.getText().toString();
+                                numberOnCard = etCardNumber.getText().toString();
+                                nameOnCard = etCardHolderName.getText().toString();
+                                exYearOnCard = etExYear.getText().toString();
+                                exMonthOnCard = etExMonth.getText().toString();
+                                cvvOnCard = etSecurityCode.getText().toString();
+                                mobileNoOnCard = etMobileNumber.getText().toString();
 
-                        if (numberOnCard.isEmpty())
-                        {
-                            Toast.makeText(SubscriptionActivity.this,"Enter Card No.",Toast.LENGTH_SHORT).show();
-                        }
-                        else if (nameOnCard.isEmpty())
-                        {
-                            Toast.makeText(SubscriptionActivity.this,"Enter Holder Name",Toast.LENGTH_SHORT).show();
-                        }
-                        else if (exMonthOnCard.isEmpty())
-                        {
-                            Toast.makeText(SubscriptionActivity.this,"Enter Expiry Month",Toast.LENGTH_SHORT).show();
-                        }
-                        else if (exYearOnCard.isEmpty())
-                        {
-                            Toast.makeText(SubscriptionActivity.this,"Enter Expiry Month",Toast.LENGTH_SHORT).show();
-                        }
-                        else if (cvvOnCard.isEmpty())
-                        {
-                            Toast.makeText(SubscriptionActivity.this,"Enter CVV No.",Toast.LENGTH_SHORT).show();
-                        }
-                        else if (mobileNoOnCard.isEmpty())
-                        {
-                            Toast.makeText(SubscriptionActivity.this,"Enter Mobile No.",Toast.LENGTH_SHORT).show();
-                        }
-                        else
-                        {
-                            cardPayment();
-                            alertDialog.dismiss();
-                            ivAlphaImg.setVisibility(View.GONE);
-                        }
-                    }
-                });
+                                if (numberOnCard.isEmpty()) {
+                                    Toast.makeText(SubscriptionActivity.this, "Enter Card No.", Toast.LENGTH_SHORT).show();
+                                } else if (nameOnCard.isEmpty()) {
+                                    Toast.makeText(SubscriptionActivity.this, "Enter Holder Name", Toast.LENGTH_SHORT).show();
+                                } else if (exMonthOnCard.isEmpty()) {
+                                    Toast.makeText(SubscriptionActivity.this, "Enter Expiry Month", Toast.LENGTH_SHORT).show();
+                                } else if (exYearOnCard.isEmpty()) {
+                                    Toast.makeText(SubscriptionActivity.this, "Enter Expiry Month", Toast.LENGTH_SHORT).show();
+                                } else if (cvvOnCard.isEmpty()) {
+                                    Toast.makeText(SubscriptionActivity.this, "Enter CVV No.", Toast.LENGTH_SHORT).show();
+                                } else if (mobileNoOnCard.isEmpty()) {
+                                    Toast.makeText(SubscriptionActivity.this, "Enter Mobile No.", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    cardPayment();
+                                    alertDialog.dismiss();
+                                    ivAlphaImg.setVisibility(View.GONE);
+                                }
+                            }
+                        });
 
-                tvCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        alertDialog.dismiss();
-                        ivAlphaImg.setVisibility(View.GONE);
-                    }
-                });
+                        tvCancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                alertDialog.dismiss();
+                                ivAlphaImg.setVisibility(View.GONE);
+                            }
+                        });
 
-                alertDialog.setView(dialogView);
-                alertDialog.setCancelable(false);
-                alertDialog.getWindow().setFormat(PixelFormat.TRANSLUCENT);
+                        alertDialog.setView(dialogView);
+                        alertDialog.setCancelable(false);
+                        alertDialog.getWindow().setFormat(PixelFormat.TRANSLUCENT);
 //                alertDialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
 //                alertDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
-                alertDialog.show();
-                Window window = alertDialog.getWindow();
-                window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-
+                        alertDialog.show();
+                        Window window = alertDialog.getWindow();
+                        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                    }
+                    else {
+                        new HttpAsyncTaskUpdateSub().execute("http://circle8.asia/Checkout/Updatesubscription");
+                    }
+                }
             }
         });
 
@@ -374,17 +393,15 @@ public class SubscriptionActivity extends AppCompatActivity
                 {
                     JSONObject jsonObject = new JSONObject(result);
                     String success = jsonObject.getString("success");
-                    JSONArray jsonArray = jsonObject.getJSONArray("UserSubscription");
+                    JSONObject jsonArray = jsonObject.getJSONObject("UserSubscription");
 //                    Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
 
                     if (success.equals("1")) {
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject object = jsonArray.getJSONObject(i);
                             //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
 
-                            SubscriptionModel subscriptionModel = new SubscriptionModel();
-                            final_packageID = (object.getString("PackageID"));
-                            Toast.makeText(getApplicationContext(), final_packageID, Toast.LENGTH_LONG).show();
+                           // SubscriptionModel subscriptionModel = new SubscriptionModel();
+                            default_PackageId = (jsonArray.getString("PackageID"));
+                           // Toast.makeText(getApplicationContext(), default_PackageId, Toast.LENGTH_LONG).show();
                             /*subscriptionModel.setPackageName(object.getString("Package_Name"));
                             subscriptionModel.setPackageDesc(object.getString("Package_Desc"));
                             subscriptionModel.setPrice(object.getString("Price"));
@@ -393,23 +410,18 @@ public class SubscriptionActivity extends AppCompatActivity
                             subscriptionModel.setGroupLimit(object.getString("Group_Limit"));
                             subscriptionModel.setMonthlyConnectionLimit(object.getString("Monthy_Connection_Limit"));
                             subscriptionModel.setLetf_connection(object.getString("Connections_Left"));*/
-                            SubscriptionID = (object.getString("Stripe_SubscriptionID"));
-                            subscriptionModelArrayList.add(subscriptionModel);
+                            SubscriptionID = (jsonArray.getString("Stripe_SubscriptionID"));
+                           // subscriptionModelArrayList.add(subscriptionModel);
 
-                            String PackageID = object.getString("PackageID");
-                            String Package_Name = object.getString("Package_Name");
-                            String Package_Desc = object.getString("Package_Desc");
-                            String Price = object.getString("Price");
-                            String Package_Type = object.getString("Package_Type");
-                            String Connection_Limit = object.getString("Connection_Limit");
-                            String Group_Limit = object.getString("Group_Limit");
-                            String Monthy_Connection_Limit = object.getString("Monthy_Connection_Limit");
-                        }
-
-                        subscriptionAdapter = new SubscriptionAdapter(SubscriptionActivity.this, subscriptionModelArrayList);
-                        listView.setAdapter(subscriptionAdapter);
-                        subscriptionAdapter.notifyDataSetChanged();
-                    }
+                            String PackageID = jsonArray.getString("PackageID");
+                            String Package_Name = jsonArray.getString("Package_Name");
+                            String Package_Desc = jsonArray.getString("Package_Desc");
+                            String Price = jsonArray.getString("Price");
+                            String Package_Type = jsonArray.getString("Package_Type");
+                            String Connection_Limit = jsonArray.getString("Connection_Limit");
+                            String Group_Limit = jsonArray.getString("Group_Limit");
+                            String Monthy_Connection_Limit = jsonArray.getString("Monthy_Connection_Limit");
+                       }
                     else {
                         Toast.makeText(getApplicationContext(), "Not able to load Subscription..", Toast.LENGTH_LONG).show();
                     }
@@ -986,8 +998,8 @@ public class SubscriptionActivity extends AppCompatActivity
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("PlanId","");
-            jsonObject.accumulate("subscriptionId","");
+            jsonObject.accumulate("PlanId",PlanId);
+            jsonObject.accumulate("subscriptionId",SubscriptionID);
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
 

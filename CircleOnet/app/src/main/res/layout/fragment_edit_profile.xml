@@ -1126,7 +1126,7 @@
                                 android:gravity="center_vertical"
                                 android:paddingBottom="10dp"
                                 android:paddingLeft="10dp"
-                                android:hint="* Address"
+                                android:hint="Address"
                                 android:textSize="13sp"
                                 android:backgroundTint="@color/colorPrimary"/>
                         </LinearLayout>
@@ -1180,10 +1180,6 @@
                                     android:layout_marginRight="20dp" />
 
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="*"/>
                                 <com.hbb20.CountryCodePicker
                                     android:visibility="visible"
                                     app:ccp_textSize="12dp"
@@ -1222,7 +1218,7 @@
                                     android:gravity="center_vertical"
                                     android:paddingBottom="10dp"
                                     android:paddingLeft="10dp"
-                                    android:hint="* State"
+                                    android:hint="State"
                                     android:textSize="13sp"
                                     android:backgroundTint="@color/colorPrimary"/>
                             </LinearLayout>
@@ -1258,7 +1254,7 @@
                                     android:gravity="center_vertical"
                                     android:paddingBottom="10dp"
                                     android:paddingLeft="10dp"
-                                    android:hint="* City"
+                                    android:hint="City"
                                     android:textSize="13sp"
                                     android:backgroundTint="@color/colorPrimary"/>
                             </LinearLayout>
@@ -1283,7 +1279,7 @@
                                     android:gravity="center_vertical"
                                     android:paddingBottom="10dp"
                                     android:paddingLeft="10dp"
-                                    android:hint="* Postcode"
+                                    android:hint="Postcode"
                                     android:textSize="13sp"
                                     android:backgroundTint="@color/colorPrimary"/>
                             </LinearLayout>
