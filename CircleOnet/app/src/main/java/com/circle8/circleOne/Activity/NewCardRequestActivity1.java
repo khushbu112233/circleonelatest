@@ -179,7 +179,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
             mViewPager2.setAdapter(swipeBitmap);
         }
 
-        new HttpAsyncTask().execute(Utility.BASE_URL+"Physical_Card/GetType");
+        new HttpAsyncTask().execute(Utility.BASE_URL+"Physical_Card/Get_Type");
 
 
         if (image.equals(""))
@@ -780,7 +780,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                     laserPrintCost = object.getString("Cost");
                     if (laserPrintCost.equalsIgnoreCase("0"))
                     {
-                        txtLaserCost.setText("SGD $"+laserPrintCost+"/Pc");
+                        txtLaserCost.setText("Free for a Limited Period");
                     }
                     else
                     {
@@ -795,7 +795,18 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                   //  Type = object.getString("Type");
                     txtNormalDesc.setText(object1.getString("Description"));
                     normalPrintCost = object1.getString("Cost") ;
-                    txtNormalCost.setText("SGD $"+normalPrintCost+"/Pc");
+
+                    if (normalPrintCost.equalsIgnoreCase("0"))
+                    {
+                        txtNormalCost.setText("Free for a Limited Period");
+                    }
+                    else
+                    {
+                        txtNormalCost.setText("SGD $"+normalPrintCost+"/Pc");
+                    }
+
+
+                   // txtNormalCost.setText("SGD $"+normalPrintCost+"/Pc");
 //                    txtNormalCost.setText(object1.getString("Cost"));
                     PhysicalCardNormalId = "2";
 

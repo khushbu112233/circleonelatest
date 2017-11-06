@@ -1,21 +1,29 @@
 {
   "project_info": {
-    "project_number": "1056701830109",
-    "firebase_url": "https://circleone-7029c.firebaseio.com",
-    "project_id": "circleone-7029c",
-    "storage_bucket": "circleone-7029c.appspot.com"
+    "project_number": "509952815575",
+    "firebase_url": "https://circleone-fe177.firebaseio.com",
+    "project_id": "circleone-fe177",
+    "storage_bucket": "circleone-fe177.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1056701830109:android:df7caa87eff30bf7",
+        "mobilesdk_app_id": "1:509952815575:android:df7caa87eff30bf7",
         "android_client_info": {
           "package_name": "com.circle8.circleOne"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1056701830109-fqdoqcu343giqhqt43s5n7afrputnq72.apps.googleusercontent.com",
+          "client_id": "509952815575-svm6jnvk4c0crseptilki965r62u019g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.circle8.circleOne",
+            "certificate_hash": "14a291b2dc94b65697ed1914dc476f571940c4d7"
+          }
+        },
+        {
+          "client_id": "509952815575-bhhf14o21dua65fpt228cg61ilh11ana.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.circle8.circleOne",
@@ -23,7 +31,11 @@
           }
         },
         {
-          "client_id": "1056701830109-2ldq8873f55miqsi1m8i26gv2s894seh.apps.googleusercontent.com",
+          "client_id": "509952815575-r9665bfhr6jtqbhu4h1fgbc1ennfuc2b.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "509952815575-j0demvhk15akdf5oqsf4bj5khpdvl5j8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.circle8.circleOne",
@@ -31,47 +43,28 @@
           }
         },
         {
-          "client_id": "1056701830109-ul2s0phsjo3m9br888rojnafj4gs640d.apps.googleusercontent.com",
+          "client_id": "509952815575-8eh4fi99k9v5hacsuqi7f24g4n73hkk9.apps.googleusercontent.com",
           "client_type": 3
-        },
-        {
-          "client_id": "1056701830109-jnuj4m18jktjrphto05mgh81b6lghcj7.apps.googleusercontent.com",
-          "client_type": 3
-        },
-        {
-          "client_id": "1056701830109-tisaf89k9l098bcvssfluduhk0u57rru.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.circle8.circleOne",
-            "certificate_hash": "14a291b2dc94b65697ed1914dc476f571940c4d7"
-          }
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD4e6c4ZKmJBahJZhVOkf1yftKXCEBDcs4"
+          "current_key": "AIzaSyCiiH_iEnp97ZPZrVSK7mPvAY30jthNSJ8"
         }
       ],
       "services": {
         "analytics_service": {
           "status": 2,
           "analytics_property": {
-            "tracking_id": "UA-105109251-1"
+            "tracking_id": "UA-109199907-1"
           }
         },
         "appinvite_service": {
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "1056701830109-ul2s0phsjo3m9br888rojnafj4gs640d.apps.googleusercontent.com",
+              "client_id": "509952815575-r9665bfhr6jtqbhu4h1fgbc1ennfuc2b.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "1056701830109-dvcqv4un23h9g4ejbhceb110pt0mt87u.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.circle8.circleOne"
-              }
             }
           ]
         },

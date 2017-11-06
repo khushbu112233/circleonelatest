@@ -105,14 +105,15 @@ public class SubscriptionAdapter extends BaseAdapter
         holder.tvAmount.setText("SGD $"+subscriptionModelArrayList.get(position).getPrice());
 
         String left_connection = subscriptionModelArrayList.get(position).getLetf_connection();
+        String packageName = subscriptionModelArrayList.get(position).getPackageName();
 
-        if( left_connection.equals(""))
+        if( packageName.equalsIgnoreCase(SubscriptionActivity.Package_Name))
         {
-            holder.rlLeftConnection.setVisibility(View.GONE);
+            holder.tvLeftConnection.setText(left_connection+" connections left, until the end of month");
         }
         else
         {
-            holder.tvLeftConnection.setText(left_connection+" connections left, until the end of month");
+            holder.rlLeftConnection.setVisibility(View.GONE);
         }
 
            /* tvPackageName.setText(packageName.get(position));

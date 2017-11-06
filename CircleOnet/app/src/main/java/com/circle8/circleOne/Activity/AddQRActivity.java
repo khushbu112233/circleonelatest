@@ -75,6 +75,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
     private LoginSession session;
     public String secretKey = "1234567890234561";
     private double latitude, longitude;
+    String lat = "", lng = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -194,9 +195,13 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
                     if (CardsActivity.mLastLocation != null) {
                         latitude = CardsActivity.mLastLocation.getLatitude();
                         longitude = CardsActivity.mLastLocation.getLongitude();
-
+                        lat = String.valueOf(latitude);
+                        lng = String.valueOf(longitude);
                         new HttpAsyncTask().execute(Utility.BASE_URL + "FriendConnection_Operation");
                     } else {
+                        lat = "";
+                        lng = "";
+                        new HttpAsyncTask().execute(Utility.BASE_URL + "FriendConnection_Operation");
                         CardsActivity.getLocation();
                         Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
                     }
@@ -270,9 +275,9 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
 
-            jsonObject.accumulate("Latitude", String.valueOf(latitude));
+            jsonObject.accumulate("Latitude", lat);
             jsonObject.accumulate("Location", "");
-            jsonObject.accumulate("Longitude", String.valueOf(longitude));
+            jsonObject.accumulate("Longitude", lng);
             jsonObject.accumulate("Operation", "Request");
             jsonObject.accumulate("RequestType", "NFC");
             jsonObject.accumulate("connection_date", formattedDate);

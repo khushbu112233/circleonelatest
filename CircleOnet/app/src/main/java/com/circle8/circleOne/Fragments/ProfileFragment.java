@@ -963,6 +963,12 @@ public class ProfileFragment extends Fragment
                 TextView tvBarName = (TextView)dialogView.findViewById(R.id.tvBarName);
                 ImageView ivBarImage = (ImageView)dialogView.findViewById(R.id.ivBarImage);
 //                tvBarName.setText(barName);
+              //  alertDialog.setFeatureDrawableAlpha(R.color.colorPrimary, 8);
+
+                ColorDrawable dialogColor = new ColorDrawable(getResources().getColor(R.color.colorPrimary));
+                dialogColor.setAlpha(70);
+                alertDialog.getWindow().setBackgroundDrawable(dialogColor);
+               // alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
                 tvBarName.setText(tvPersonName.getText().toString());
 //                    bitmap = TextToImageEncode(barName);
                 ivBarImage.setImageBitmap(bitmap);

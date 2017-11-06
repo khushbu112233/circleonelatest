@@ -975,9 +975,11 @@ public class List1Fragment extends Fragment
             super.onScrollStateChanged(recyclerView, newState);
             if (recyclerView1 == recyclerView && newState == RecyclerView.SCROLL_STATE_DRAGGING) {
                 draggingView = 1;
+                recyclerView2.stopScroll();
                 // GalleryAdapter.position = Integer.parseInt(GalleryAdapter.imageView.getTag().toString());
             } else if (recyclerView2 == recyclerView && newState == RecyclerView.SCROLL_STATE_DRAGGING) {
                 draggingView = 2;
+                recyclerView1.stopScroll();
             }
 
         }

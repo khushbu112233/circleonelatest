@@ -162,7 +162,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
     // Google client to interact with Google API
     public double latitude;
     public double longitude;
-
+    String lat = "", lng = "";
     // list of permissions
 
     ArrayList<String> permissions=new ArrayList<>();
@@ -1267,7 +1267,12 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                     if (mLastLocation != null) {
                         latitude = mLastLocation.getLatitude();
                         longitude = mLastLocation.getLongitude();
-
+                    } else {
+                        lat = "";
+                        lng = "";
+                        getLocation();
+                        Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
+                    }
                         // Toast.makeText(getApplicationContext(), String.valueOf(latitude + " " + longitude), Toast.LENGTH_LONG).show();
                         try {
 
@@ -1283,10 +1288,6 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                    } else {
-                        getLocation();
-                        Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
-                    }
 
 
                 }
@@ -1336,7 +1337,12 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                 if (mLastLocation != null) {
                     latitude = mLastLocation.getLatitude();
                     longitude = mLastLocation.getLongitude();
-
+                } else {
+                    lat = "";
+                    lng = "";
+                    getLocation();
+                    Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
+                }
                   //  Toast.makeText(getApplicationContext(), String.valueOf(latitude + " " + longitude), Toast.LENGTH_LONG).show();
                     try {
                         nfcProfileId = decrypt(data, secretKey);
@@ -1351,10 +1357,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                } else {
-                    getLocation();
-                    Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
-                }
+
             }
         }
     }
@@ -1559,9 +1562,9 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
            // Toast.makeText(getApplicationContext(), formattedDate, Toast.LENGTH_LONG).show();
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("Latitude", String.valueOf(latitude));
+            jsonObject.accumulate("Latitude", lat);
             jsonObject.accumulate("Location", "");
-            jsonObject.accumulate("Longitude", String.valueOf(longitude));
+            jsonObject.accumulate("Longitude", lng);
             jsonObject.accumulate("Operation", "Request");
             jsonObject.accumulate("RequestType", "NFC");
             jsonObject.accumulate("connection_date", formattedDate);

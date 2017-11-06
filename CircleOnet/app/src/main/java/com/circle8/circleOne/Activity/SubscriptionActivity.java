@@ -87,6 +87,7 @@ public class SubscriptionActivity extends AppCompatActivity
     String PlanId = "", final_packageID = "";
     String default_PackageId = "";
     String key = "";
+    public static String Package_Name = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -118,8 +119,8 @@ public class SubscriptionActivity extends AppCompatActivity
 //        tvPay = (TextView)findViewById(R.id.tvPay);
 //        tvCancel = (TextView)findViewById(R.id.tvCancel);
 
-        new HttpAsyncTask().execute(Utility.BASE_URL+"Subscription/GetPackageList");
         new HttpAsyncTaskGetUserSubscription().execute(Utility.BASE_URL+"Subscription/GetUserSubscription");
+        new HttpAsyncTask().execute(Utility.BASE_URL+"Subscription/GetPackageList");
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -414,7 +415,7 @@ public class SubscriptionActivity extends AppCompatActivity
                            // subscriptionModelArrayList.add(subscriptionModel);
 
                             String PackageID = jsonArray.getString("PackageID");
-                            String Package_Name = jsonArray.getString("Package_Name");
+                            Package_Name = jsonArray.getString("Package_Name");
                             String Package_Desc = jsonArray.getString("Package_Desc");
                             String Price = jsonArray.getString("Price");
                             String Package_Type = jsonArray.getString("Package_Type");
@@ -477,6 +478,9 @@ public class SubscriptionActivity extends AppCompatActivity
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     }else {
                         Toast.makeText(getApplicationContext(), "Previous Subscription cancelled Successfully..", Toast.LENGTH_LONG).show();
+                        new HttpAsyncTask().execute(Utility.BASE_URL+"Subscription/GetPackageList");
+                        new HttpAsyncTaskGetUserSubscription().execute(Utility.BASE_URL+"Subscription/GetUserSubscription");
+
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), "Not able to load Subscription..", Toast.LENGTH_LONG).show();
@@ -530,7 +534,10 @@ public class SubscriptionActivity extends AppCompatActivity
                     }
                     else
                     {
-                        Toast.makeText(getApplicationContext(), "Previous Subscription update Successfully..", Toast.LENGTH_LONG).show();
+                        new HttpAsyncTask().execute(Utility.BASE_URL+"Subscription/GetPackageList");
+                        new HttpAsyncTaskGetUserSubscription().execute(Utility.BASE_URL+"Subscription/GetUserSubscription");
+
+                        Toast.makeText(getApplicationContext(), "Previous Subscription updated Successfully..", Toast.LENGTH_LONG).show();
                     }
                 }
                 else
@@ -582,7 +589,7 @@ public class SubscriptionActivity extends AppCompatActivity
                     JSONObject jsonObject = new JSONObject(result);
                     JSONArray jsonArray = jsonObject.getJSONArray("SubscriptionPackage_List");
 //                    Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-
+                    subscriptionModelArrayList.clear();
                     for (int i = 0; i < jsonArray.length(); i++)
                     {
                         JSONObject object = jsonArray.getJSONObject(i);
@@ -738,6 +745,9 @@ public class SubscriptionActivity extends AppCompatActivity
                     String success = response.getString("Success");
                     if (success.equals("1")){
                         Toast.makeText(getApplicationContext(), "Subscribed..", Toast.LENGTH_LONG).show();
+                        new HttpAsyncTask().execute(Utility.BASE_URL+"Subscription/GetPackageList");
+                        new HttpAsyncTaskGetUserSubscription().execute(Utility.BASE_URL+"Subscription/GetUserSubscription");
+
                     }else {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     }
@@ -827,6 +837,9 @@ public class SubscriptionActivity extends AppCompatActivity
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("amt", amount );
+            jsonObject.accumulate("currency", "sgd" );
+            jsonObject.accumulate("source", strToken );
             jsonObject.accumulate("Userid", UserId );
           /*  jsonObject.accumulate("currency", "sgd" );
             jsonObject.accumulate("source", strToken );*/

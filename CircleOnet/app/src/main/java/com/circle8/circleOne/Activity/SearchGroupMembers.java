@@ -395,12 +395,12 @@ public class SearchGroupMembers extends AppCompatActivity
                     }
                     else if (success.equals("-1"))
                     {
-                        Toast.makeText(SearchGroupMembers.this, "Profile Share Request already sent..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SearchGroupMembers.this, "Profile share request already sent..", Toast.LENGTH_LONG).show();
                         //  txtRequest.setVisibility(View.GONE);
                     }
                     else
                     {
-                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Profile share request already sent..", Toast.LENGTH_LONG).show();
                     }
 
                 }
