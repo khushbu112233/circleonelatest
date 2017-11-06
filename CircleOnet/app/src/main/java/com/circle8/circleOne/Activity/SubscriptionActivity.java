@@ -120,7 +120,7 @@ public class SubscriptionActivity extends AppCompatActivity
 //        tvCancel = (TextView)findViewById(R.id.tvCancel);
 
         new HttpAsyncTaskGetUserSubscription().execute(Utility.BASE_URL+"Subscription/GetUserSubscription");
-        new HttpAsyncTask().execute(Utility.BASE_URL+"Subscription/GetPackageList");
+     //   new HttpAsyncTask().execute(Utility.BASE_URL+"Subscription/GetPackageList");
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -399,7 +399,7 @@ public class SubscriptionActivity extends AppCompatActivity
 
                     if (success.equals("1")) {
                             //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
-
+                        new HttpAsyncTask().execute(Utility.BASE_URL+"Subscription/GetPackageList");
                            // SubscriptionModel subscriptionModel = new SubscriptionModel();
                             default_PackageId = (jsonArray.getString("PackageID"));
                            // Toast.makeText(getApplicationContext(), default_PackageId, Toast.LENGTH_LONG).show();
@@ -958,6 +958,7 @@ public class SubscriptionActivity extends AppCompatActivity
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Email", email );
             jsonObject.accumulate("subscriptionId", SubscriptionID );
+            jsonObject.accumulate("Userid", Integer.parseInt(UserId) );
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
 
@@ -1013,6 +1014,7 @@ public class SubscriptionActivity extends AppCompatActivity
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("PlanId",PlanId);
             jsonObject.accumulate("subscriptionId",SubscriptionID);
+            jsonObject.accumulate("Userid", Integer.parseInt(UserId) );
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
 

@@ -80,7 +80,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
     ImageView imgBack;
     String card_front = "", card_back = "", Type, Description, Cost, PhysicalCardLaserId, PhysicalCardNormalId, type;
     TextView txtLaserCost, txtLaserDesc, txtNormalCost, txtNormalDesc;
-    String PhysicalCardTypeID;
+    String PhysicalCardTypeID = "";
     LoginSession session;
     private String profileId, userID;
     Bitmap cardFrontBmp, cardBackBmp;
@@ -213,41 +213,39 @@ public class NewCardRequestActivity1 extends AppCompatActivity
             public void onClick(View v)
             {
 
-                if (card_back.equals("") && card_front.equals(""))
-                {
-                    try
-                    {
-                        final_ImgBase64Back = BitMapToString(cardBackBmp);
-                        new HttpAsyncTaskBackUpload().execute(Utility.BASE_URL+"ImgUpload");
-                    }
-                    catch (Exception e){
-                        final_ImgBase64Back = "";
-                        card_back = "";
-                    }
-
-                    try
-                    {
-                        final_ImgBase64Front = BitMapToString(cardFrontBmp);
-                        new HttpAsyncTaskFrontUpload().execute(Utility.BASE_URL + "ImgUpload");
-                    }
-                    catch (Exception e)
-                    {
-                        final_ImgBase64Front = "";
-                        card_back = "";
-                    }
-                }
-
-
-                if (amount == 0){
-                    new HttpAsyncRequestTask().execute(Utility.BASE_URL+"Physical_Card/Order");
+                if (PhysicalCardTypeID.equals("")){
+                    Toast.makeText(getApplicationContext(), "Please select card type", Toast.LENGTH_LONG).show();
                 }else {
 
+                    if (card_back.equals("") && card_front.equals("")) {
+                        try {
+                            final_ImgBase64Back = BitMapToString(cardBackBmp);
+                            new HttpAsyncTaskBackUpload().execute(Utility.BASE_URL + "ImgUpload");
+                        } catch (Exception e) {
+                            final_ImgBase64Back = "";
+                            card_back = "";
+                        }
 
-                    try {
-                        stripe = new Stripe("pk_test_6fZCC6Gu2kwYLUQxJhGte65l");
-                    } catch (AuthenticationException e) {
-                        e.printStackTrace();
+                        try {
+                            final_ImgBase64Front = BitMapToString(cardFrontBmp);
+                            new HttpAsyncTaskFrontUpload().execute(Utility.BASE_URL + "ImgUpload");
+                        } catch (Exception e) {
+                            final_ImgBase64Front = "";
+                            card_back = "";
+                        }
                     }
+
+
+                    if (amount == 0) {
+                        new HttpAsyncRequestTask().execute(Utility.BASE_URL + "Physical_Card/Order");
+                    } else {
+
+
+                        try {
+                            stripe = new Stripe("pk_test_6fZCC6Gu2kwYLUQxJhGte65l");
+                        } catch (AuthenticationException e) {
+                            e.printStackTrace();
+                        }
 
                /* alertDialog = new AlertDialog.Builder(NewCardRequestActivity1.this).create();
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -259,63 +257,64 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                 alertDialog.setView(dialogView);
                 alertDialog.show();*/
 
-                    // new payment mode
-                    alertDialog = new AlertDialog.Builder(NewCardRequestActivity1.this).create();
-                    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    View dialogView = inflater.inflate(R.layout.stripe_payment_screen1, null);
+                        // new payment mode
+                        alertDialog = new AlertDialog.Builder(NewCardRequestActivity1.this).create();
+                        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        View dialogView = inflater.inflate(R.layout.stripe_payment_screen1, null);
 
-                    LinearLayout llCardValues = (LinearLayout) dialogView.findViewById(R.id.llCardValues);
-                    LinearLayout llPackageDetails = (LinearLayout) dialogView.findViewById(R.id.llPackageDetails);
+                        LinearLayout llCardValues = (LinearLayout) dialogView.findViewById(R.id.llCardValues);
+                        LinearLayout llPackageDetails = (LinearLayout) dialogView.findViewById(R.id.llPackageDetails);
 
-                    final EditText etCardNumber = (EditText) dialogView.findViewById(R.id.etCardNumber);
-                    final EditText etCardHolderName = (EditText) dialogView.findViewById(R.id.etCardHolderName);
-                    final EditText etExMonth = (EditText) dialogView.findViewById(R.id.etExMonth);
-                    final EditText etExYear = (EditText) dialogView.findViewById(R.id.etExYear);
-                    final EditText etSecurityCode = (EditText) dialogView.findViewById(R.id.etSecurityCode);
-                    final EditText etMobileNumber = (EditText) dialogView.findViewById(R.id.etMobileNumber);
-                    TextView tvPay = (TextView) dialogView.findViewById(R.id.tvPay);
-                    TextView tvCancel = (TextView) dialogView.findViewById(R.id.tvCancel);
+                        final EditText etCardNumber = (EditText) dialogView.findViewById(R.id.etCardNumber);
+                        final EditText etCardHolderName = (EditText) dialogView.findViewById(R.id.etCardHolderName);
+                        final EditText etExMonth = (EditText) dialogView.findViewById(R.id.etExMonth);
+                        final EditText etExYear = (EditText) dialogView.findViewById(R.id.etExYear);
+                        final EditText etSecurityCode = (EditText) dialogView.findViewById(R.id.etSecurityCode);
+                        final EditText etMobileNumber = (EditText) dialogView.findViewById(R.id.etMobileNumber);
+                        TextView tvPay = (TextView) dialogView.findViewById(R.id.tvPay);
+                        TextView tvCancel = (TextView) dialogView.findViewById(R.id.tvCancel);
 
-                    tvPay.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            numberOnCard = etCardNumber.getText().toString();
-                            nameOnCard = etCardHolderName.getText().toString();
-                            exYearOnCard = etExYear.getText().toString();
-                            exMonthOnCard = etExMonth.getText().toString();
-                            cvvOnCard = etSecurityCode.getText().toString();
-                            mobileNoOnCard = etMobileNumber.getText().toString();
+                        tvPay.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                numberOnCard = etCardNumber.getText().toString();
+                                nameOnCard = etCardHolderName.getText().toString();
+                                exYearOnCard = etExYear.getText().toString();
+                                exMonthOnCard = etExMonth.getText().toString();
+                                cvvOnCard = etSecurityCode.getText().toString();
+                                mobileNoOnCard = etMobileNumber.getText().toString();
 
-                            if (numberOnCard.isEmpty()) {
-                                Toast.makeText(NewCardRequestActivity1.this, "Enter Card No.", Toast.LENGTH_SHORT).show();
-                            } else if (nameOnCard.isEmpty()) {
-                                Toast.makeText(NewCardRequestActivity1.this, "Enter Holder Name", Toast.LENGTH_SHORT).show();
-                            } else if (exMonthOnCard.isEmpty()) {
-                                Toast.makeText(NewCardRequestActivity1.this, "Enter Expiry Month", Toast.LENGTH_SHORT).show();
-                            } else if (exYearOnCard.isEmpty()) {
-                                Toast.makeText(NewCardRequestActivity1.this, "Enter Expiry Month", Toast.LENGTH_SHORT).show();
-                            } else if (cvvOnCard.isEmpty()) {
-                                Toast.makeText(NewCardRequestActivity1.this, "Enter CVV No.", Toast.LENGTH_SHORT).show();
-                            } else if (mobileNoOnCard.isEmpty()) {
-                                Toast.makeText(NewCardRequestActivity1.this, "Enter Mobile No.", Toast.LENGTH_SHORT).show();
-                            } else {
-                                cardPayment();
+                                if (numberOnCard.isEmpty()) {
+                                    Toast.makeText(NewCardRequestActivity1.this, "Enter Card No.", Toast.LENGTH_SHORT).show();
+                                } else if (nameOnCard.isEmpty()) {
+                                    Toast.makeText(NewCardRequestActivity1.this, "Enter Holder Name", Toast.LENGTH_SHORT).show();
+                                } else if (exMonthOnCard.isEmpty()) {
+                                    Toast.makeText(NewCardRequestActivity1.this, "Enter Expiry Month", Toast.LENGTH_SHORT).show();
+                                } else if (exYearOnCard.isEmpty()) {
+                                    Toast.makeText(NewCardRequestActivity1.this, "Enter Expiry Month", Toast.LENGTH_SHORT).show();
+                                } else if (cvvOnCard.isEmpty()) {
+                                    Toast.makeText(NewCardRequestActivity1.this, "Enter CVV No.", Toast.LENGTH_SHORT).show();
+                                } else if (mobileNoOnCard.isEmpty()) {
+                                    Toast.makeText(NewCardRequestActivity1.this, "Enter Mobile No.", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    cardPayment();
+                                    alertDialog.dismiss();
+                                }
+                            }
+                        });
+
+                        tvCancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
                                 alertDialog.dismiss();
                             }
-                        }
-                    });
+                        });
 
-                    tvCancel.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            alertDialog.dismiss();
-                        }
-                    });
-
-                    alertDialog.setView(dialogView);
-                    alertDialog.setCancelable(false);
-                    alertDialog.getWindow().setFormat(PixelFormat.TRANSLUCENT);
-                    alertDialog.show();
+                        alertDialog.setView(dialogView);
+                        alertDialog.setCancelable(false);
+                        alertDialog.getWindow().setFormat(PixelFormat.TRANSLUCENT);
+                        alertDialog.show();
+                    }
                 }
             }
         });
@@ -925,7 +924,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
             jsonObject.accumulate("amt", amount );
             jsonObject.accumulate("currency", "sgd" );
             jsonObject.accumulate("source", strToken );
-            jsonObject.accumulate("Email    ", email );
+            jsonObject.accumulate("Email", email );
             jsonObject.accumulate("Description", "New card Request Payment" );
 
             // 4. convert JSONObject to JSON to String
