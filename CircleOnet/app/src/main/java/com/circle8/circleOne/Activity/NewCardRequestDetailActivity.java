@@ -83,8 +83,8 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
     private String userChoosenTask;
     private int SELECT_GALLERY_CARD = 500;
     private Bitmap originalBitmap;
-    public static Bitmap CardFront;
-    public static Bitmap CardBack;
+    public static Bitmap CardFront = null;
+    public static Bitmap CardBack = null;
     public static Activity activity;
     private String profileID , Card_Front = "", Card_Back = "";
     ImageView imgUse;
@@ -301,9 +301,9 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                     i.putExtra("image", image);
                     i.putExtra("phone",phone);
                     i.putExtra("profileID",profileID);
-                    i.putExtra("card_front", final_attachment);
-                    i.putExtra("card_back", "");
-                    i.putExtra("type", "string");
+                    i.putExtra("card_front", CardFront);
+                    i.putExtra("card_back", CardBack);
+                    i.putExtra("type", "bitmap");
                     startActivity(i);
 
                     rlLayOne.setEnabled(true);

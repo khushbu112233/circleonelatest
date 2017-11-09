@@ -71,7 +71,7 @@ public class List1Fragment extends Fragment
 {
     // private ArrayList<Integer> imageFront = new ArrayList<>();
     // private ArrayList<Integer> imageBack = new ArrayList<>();
-    //  public static MyPager myPager ;
+    // public static MyPager myPager ;
     DatabaseHelper db;
     private GestureDetector gestureDetector1;
     FrameLayout frameList1;

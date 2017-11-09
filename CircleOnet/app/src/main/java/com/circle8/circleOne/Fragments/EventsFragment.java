@@ -129,9 +129,9 @@ public class EventsFragment extends Fragment
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                /*Intent intent = new Intent(getContext(), EventDetail.class);
+                Intent intent = new Intent(getContext(), EventDetail.class);
                 intent.putExtra("Event_ID", eventModelArrayList.get(position).getEvent_ID());
-                startActivity(intent);*/
+                startActivity(intent);
             }
         });
 

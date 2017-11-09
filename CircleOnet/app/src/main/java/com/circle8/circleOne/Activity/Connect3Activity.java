@@ -558,7 +558,7 @@ public class Connect3Activity extends AppCompatActivity
                     }
                     else
                     {
-
+                        connectLevel = "0" ;
                     }
 
                     startAction();

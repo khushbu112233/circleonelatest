@@ -64,4 +64,7 @@
     <string name="tv_select_btn_text_disabled">Select</string>
     <string name="tv_select_btn_text_enabled">Select(%1$s)</string>
 
+    <integer name="google_play_services_version">11020000</integer>
+    <string name="google_map_api">AIzaSyCiiH_iEnp97ZPZrVSK7mPvAY30jthNSJ8</string>
+
 </resources>

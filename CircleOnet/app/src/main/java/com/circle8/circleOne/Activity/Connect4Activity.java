@@ -218,6 +218,17 @@ public class Connect4Activity extends AppCompatActivity
                 level6.setVisibility(View.VISIBLE);
                 level7.setVisibility(View.VISIBLE);
             }
+            else {
+                txtAsk.setVisibility(View.GONE);
+                txtLink.setText("You have no established connections");
+                level1.setVisibility(View.INVISIBLE);
+                level2.setVisibility(View.INVISIBLE);
+                level3.setVisibility(View.INVISIBLE);
+                level4.setVisibility(View.INVISIBLE);
+                level5.setVisibility(View.INVISIBLE);
+                level6.setVisibility(View.INVISIBLE);
+                level7.setVisibility(View.INVISIBLE);
+            }
 
 
 

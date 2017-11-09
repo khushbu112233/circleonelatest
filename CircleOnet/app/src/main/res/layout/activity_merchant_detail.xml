@@ -111,11 +111,10 @@
             <com.circle8.circleOne.Utils.ExpandableHeightListView
                 android:id="@+id/listView1"
                 android:layout_width="match_parent"
-                android:layout_height="320dp"
+                android:layout_height="wrap_content"
                 android:scrollbars="none"
                 android:fadingEdge="none"
-                android:orientation="vertical"
-                android:nestedScrollingEnabled="true"/>
+                android:orientation="vertical" />
 
 <!--
             <com.circle8.circleOne.Utils.ExpandableHeightListView
@@ -150,10 +149,23 @@
                 android:layout_height="1dp"
                 android:background="@color/colorPrimary"/>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp">
+
+                <fragment
+                    android:id="@+id/map"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </RelativeLayout>
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:scaleType="fitXY"
+                android:visibility="gone"
                 android:src="@drawable/store_map"/>
 
             <View
@@ -205,9 +217,8 @@
             <com.circle8.circleOne.Utils.ExpandableHeightListView
                 android:id="@+id/listView2"
                 android:layout_width="match_parent"
-                android:layout_height="350dp"
+                android:layout_height="wrap_content"
                 android:scrollbars="none"
-                android:nestedScrollingEnabled="true"
                 android:layout_marginBottom="5dp"/>
 
 <!--

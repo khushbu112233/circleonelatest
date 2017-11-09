@@ -115,7 +115,7 @@ public class NewCardRequestAdapter extends BaseAdapter
             holder.tvDesignation.setText(newCardModelArrayList.get(position).getDesignation());
             holder.tvCompany.setText(newCardModelArrayList.get(position).getCompanyName());
             holder.tvEmail.setText(newCardModelArrayList.get(position).getEmail1());
-            holder.tvPhone.setText(newCardModelArrayList.get(position).getPhone1());
+            holder.tvPhone.setText(newCardModelArrayList.get(position).getMobile1());
             holder.tvProfile.setText(newCardModelArrayList.get(position).getProfile());
 
             if (newCardModelArrayList.get(position).getUserPhoto().equals(""))
