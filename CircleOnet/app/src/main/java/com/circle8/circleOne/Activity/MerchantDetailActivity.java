@@ -1,13 +1,18 @@
 package com.circle8.circleOne.Activity;
 
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.circle8.circleOne.Adapter.ImageAdAdapter;
 import com.circle8.circleOne.Adapter.MerchantAddressAdapter;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.ExpandableHeightListView;
+import com.circle8.circleOne.Utils.Utility;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -16,6 +21,19 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class MerchantDetailActivity extends FragmentActivity implements OnMapReadyCallback
@@ -69,6 +87,8 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        new HttpAsyncGetDetails().execute(Utility.MERCHANT_BASE_URL+"GetDetails");                               // post
+
     }
 
     @Override
@@ -98,4 +118,177 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(sumerpur));
 
     }
+
+    private class HttpAsyncGetDetails extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            dialog = new ProgressDialog(MerchantDetailActivity.this);
+            dialog.setMessage("Get Details...");
+            dialog.show();
+            dialog.setCancelable(false);
+
+            /*String loading = "Get Association" ;
+            CustomProgressDialog(loading);*/
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return PostGetDetails(urls[0]);
+        }
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+            dialog.dismiss();
+//            rlProgressDialog.setVisibility(View.GONE);
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            try
+            {
+                if (result != null)
+                {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String success = jsonObject.getString("success");
+                    String message = jsonObject.getString("message");
+                    String merchant_id = jsonObject.getString("merchant_id");
+                    String merchant_name = jsonObject.getString("merchant_name");
+                    String merchant_desc = jsonObject.getString("merchant_desc");
+                    String merchant_website = jsonObject.getString("merchant_website");
+
+                    JSONArray productsArray = jsonObject.getJSONArray("Products");
+                    if (productsArray.length() != 0)
+                    {
+                        for (int i = 0 ; i <= productsArray.length(); i++)
+                        {
+                            JSONObject productListObj = productsArray.getJSONObject(i);
+
+                            String ProductCategoryID = productListObj.getString("ProductCategoryID");
+                            String ProductCategoryName = productListObj.getString("ProductCategoryName");
+                            String ProductID = productListObj.getString("ProductID");
+                            String ProductName = productListObj.getString("ProductName");
+                            String ProductDesc = productListObj.getString("ProductDesc");
+                            String Offer = productListObj.getString("Offer");
+                            String ProductCost = productListObj.getString("ProductCost");
+                            String ProductImage = productListObj.getString("ProductImage");
+                            String MerchantImage = productListObj.getString("MerchantImage");
+                            String Merchant_ID = productListObj.getString("Merchant_ID");
+                            String Merchant_Name = productListObj.getString("Merchant_Name");
+                            String Merchant_Desc = productListObj.getString("Merchant_Desc");
+                        }
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(), "No Product_List Avail", Toast.LENGTH_LONG).show();
+                    }
+
+                    JSONArray locationsArray = jsonObject.getJSONArray("Locations");
+                    if (locationsArray.length() != 0)
+                    {
+                        for (int i = 0 ; i <= locationsArray.length(); i++)
+                        {
+                            JSONObject locationsObj = locationsArray.getJSONObject(i);
+
+                            String Branch_Name = locationsObj.getString("Branch_Name");
+                            String Addr1 = locationsObj.getString("Addr1");
+                            String Addr2 = locationsObj.getString("Addr2");
+                            String Addr3 = locationsObj.getString("Addr3");
+                            String Addr4 = locationsObj.getString("Addr4");
+                            String City = locationsObj.getString("City");
+                            String State = locationsObj.getString("State");
+                            String Country = locationsObj.getString("Country");
+                            String PostalCode = locationsObj.getString("PostalCode");
+                            String Latitude = locationsObj.getString("Latitude");
+                            String Longitude = locationsObj.getString("Longitude");
+                            String Open_Time = locationsObj.getString("Open_Time");
+                            String Close_Time = locationsObj.getString("Close_Time");
+                            String Open_24Hours_Flag = locationsObj.getString("Open_24Hours_Flag");
+                        }
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(), "No Locations Avail", Toast.LENGTH_LONG).show();
+                    }
+                }
+                else
+                {
+                    // Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                }
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public String PostGetDetails(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("merchantid", "1");
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException
+    {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+        while ((line = bufferedReader.readLine()) != null)
+            result += line;
+
+        inputStream.close();
+        return result;
+    }
+
+
 }

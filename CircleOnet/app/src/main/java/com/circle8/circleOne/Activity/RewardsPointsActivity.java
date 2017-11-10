@@ -1,9 +1,12 @@
 package com.circle8.circleOne.Activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ExpandableListView;
@@ -11,12 +14,28 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.circle8.circleOne.Adapter.ExpandableListAdapter1;
 import com.circle8.circleOne.Model.ListAdapter1;
 import com.circle8.circleOne.Model.ListCell;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -65,6 +84,13 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         llMerchantBox.setOnClickListener(this);
         tvHistory.setOnClickListener(this);
         imgBack.setOnClickListener(this);
+
+        new HttpAsyncGetProductCategory().execute(Utility.MERCHANT_BASE_URL+"GetProductCategory");                 //get
+        new HttpAsyncGetProduct().execute(Utility.MERCHANT_BASE_URL+"GetProducts");                               //get
+        new HttpAsyncGetProductByCategory().execute(Utility.MERCHANT_BASE_URL+"GetProductsByCategory");           // post
+        new HttpAsyncGetBalance().execute(Utility.REWARDS_BASE_URL+"GetBalance");                                 // post
+        new HttpAsyncGetHistoryEarnedPoints().execute(Utility.REWARDS_BASE_URL+"History_EarnedPoints");           // post
+        new HttpAsyncGetHistoryReedemedPoints().execute(Utility.REWARDS_BASE_URL+"History_ReedemedPoints");           // post
     }
 
     private void init()
@@ -326,4 +352,709 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
     public void onBackPressed() {
 
     }
+
+    private class HttpAsyncGetProductCategory extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            dialog = new ProgressDialog(RewardsPointsActivity.this);
+            dialog.setMessage("Get Product Category..");
+            dialog.show();
+            dialog.setCancelable(false);
+
+            /*String loading = "Get Association" ;
+            CustomProgressDialog(loading);*/
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return PostGetProductCategory(urls[0]);
+        }
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+            dialog.dismiss();
+//            rlProgressDialog.setVisibility(View.GONE);
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            try
+            {
+                if (result != null)
+                {
+                    JSONObject jsonObject = new JSONObject(result);
+                    JSONArray jsonArray = jsonObject.getJSONArray("ProductCategory_List");
+
+                    if (jsonArray.length() != 0)
+                    {
+                        for (int i = 0 ; i<= jsonArray.length(); i++)
+                        {
+                            JSONObject productListObj = jsonArray.getJSONObject(i);
+
+                            String ProductCategoryID = productListObj.getString("ProductCategoryID");
+                            String ProductCategoryName = productListObj.getString("ProductCategoryName");
+                            String ProductCategoryDesc = productListObj.getString("ProductCategoryDesc");
+                        }
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(), "No ProductCategory_List Avail", Toast.LENGTH_LONG).show();
+                    }
+                    //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    // Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                }
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public String PostGetProductCategory(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpGet httpPost = new HttpGet(url);
+
+            // 6. set httpPost Entity
+            //   httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    private class HttpAsyncGetProduct extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            dialog = new ProgressDialog(RewardsPointsActivity.this);
+            dialog.setMessage("Get Product...");
+            dialog.show();
+            dialog.setCancelable(false);
+
+            /*String loading = "Get Association" ;
+            CustomProgressDialog(loading);*/
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return PostGetProducts(urls[0]);
+        }
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+            dialog.dismiss();
+//            rlProgressDialog.setVisibility(View.GONE);
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            try
+            {
+                if (result != null)
+                {
+                    JSONObject jsonObject = new JSONObject(result);
+                    JSONArray jsonArray = jsonObject.getJSONArray("Product_List");
+                    if (jsonArray.length() != 0)
+                    {
+                        for (int i = 0 ; i <= jsonArray.length(); i++)
+                        {
+                            JSONObject productListObj = jsonArray.getJSONObject(i);
+
+                            String ProductCategoryID = productListObj.getString("ProductCategoryID");
+                            String ProductCategoryName = productListObj.getString("ProductCategoryName");
+                            String ProductID = productListObj.getString("ProductID");
+                            String ProductName = productListObj.getString("ProductName");
+                            String ProductDesc = productListObj.getString("ProductDesc");
+                            String Offer = productListObj.getString("Offer");
+                            String ProductCost = productListObj.getString("ProductCost");
+                            String ProductImage = productListObj.getString("ProductImage");
+                            String MerchantImage = productListObj.getString("MerchantImage");
+                            String Merchant_ID = productListObj.getString("Merchant_ID");
+                            String Merchant_Name = productListObj.getString("Merchant_Name");
+                            String Merchant_Desc = productListObj.getString("Merchant_Desc");
+                        }
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(), "No Product_List Avail", Toast.LENGTH_LONG).show();
+                    }
+                }
+                else
+                {
+                    // Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                }
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public String PostGetProducts(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpGet httpPost = new HttpGet(url);
+
+            // 6. set httpPost Entity
+            //   httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    private class HttpAsyncGetProductByCategory extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            dialog = new ProgressDialog(RewardsPointsActivity.this);
+            dialog.setMessage("Get Product By Category..");
+            dialog.show();
+            dialog.setCancelable(false);
+
+            /*String loading = "Get Association" ;
+            CustomProgressDialog(loading);*/
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return PostGetProductsByCategory(urls[0]);
+        }
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+            dialog.dismiss();
+//            rlProgressDialog.setVisibility(View.GONE);
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            try
+            {
+                if (result != null)
+                {
+                    JSONObject jsonObject = new JSONObject(result);
+
+                    String success = jsonObject.getString("success");
+                    String message = jsonObject.getString("message");
+                    String ProductCategoryID = jsonObject.getString("ProductCategoryID");
+
+                    JSONArray jsonArray = jsonObject.getJSONArray("ProductsByCategory");
+                    if (jsonArray.length() != 0)
+                    {
+                        for (int i = 0 ; i <= jsonArray.length(); i++)
+                        {
+                            JSONObject productListObj = jsonArray.getJSONObject(i);
+
+                            String ProductID = productListObj.getString("ProductID");
+                            String ProductName = productListObj.getString("ProductName");
+                            String ProductDesc = productListObj.getString("ProductDesc");
+                            String ProductType = productListObj.getString("ProductType");
+                            String ProductCost = productListObj.getString("ProductCost");
+                            String ProductImage = productListObj.getString("ProductImage");
+                            String MerchantImage = productListObj.getString("MerchantImage");
+                            String Merchant_ID = productListObj.getString("Merchant_ID");
+                            String Merchant_Name = productListObj.getString("Merchant_Name");
+                            String Merchant_Desc = productListObj.getString("Merchant_Desc");
+                        }
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(), "No Product_List Avail", Toast.LENGTH_LONG).show();
+                    }
+                }
+                else
+                {
+                    // Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                }
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public String PostGetProductsByCategory(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("ProductCategoryID", "1");
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException
+    {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+        while ((line = bufferedReader.readLine()) != null)
+            result += line;
+
+        inputStream.close();
+        return result;
+    }
+
+    private class HttpAsyncGetBalance extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            dialog = new ProgressDialog(RewardsPointsActivity.this);
+            dialog.setMessage("Get Balance...");
+            dialog.show();
+            dialog.setCancelable(false);
+
+            /*String loading = "Get Association" ;
+            CustomProgressDialog(loading);*/
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return PostGetBalance(urls[0]);
+        }
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+            dialog.dismiss();
+//            rlProgressDialog.setVisibility(View.GONE);
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            try
+            {
+                if (result != null)
+                {
+                    JSONObject jsonObject = new JSONObject(result);
+
+                    String success = jsonObject.getString("success");
+                    String message = jsonObject.getString("message");
+                    String userid = jsonObject.getString("userid");
+                    String points_earned = jsonObject.getString("points_earned");
+                }
+                else
+                {
+                    // Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                }
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public String PostGetBalance(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("userid", "1");
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    private class HttpAsyncGetHistoryEarnedPoints extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            dialog = new ProgressDialog(RewardsPointsActivity.this);
+            dialog.setMessage("Get history earn points...");
+            dialog.show();
+            dialog.setCancelable(false);
+
+            /*String loading = "Get Association" ;
+            CustomProgressDialog(loading);*/
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return PostGetHistoryEarnedPoints(urls[0]);
+        }
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+            dialog.dismiss();
+//            rlProgressDialog.setVisibility(View.GONE);
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            try
+            {
+                if (result != null)
+                {
+                    JSONObject jsonObject = new JSONObject(result);
+
+                    String success = jsonObject.getString("success");
+                    String message = jsonObject.getString("message");
+                    String userid = jsonObject.getString("userid");
+
+                    JSONArray jsonArray = jsonObject.getJSONArray("EarnedPoints_Trans");
+                    if (jsonArray.length() != 0)
+                    {
+                        for (int i = 0 ; i <= jsonArray.length(); i++)
+                        {
+                            JSONObject productListObj = jsonArray.getJSONObject(i);
+
+                            String Earned_ID = productListObj.getString("Earned_ID");
+                            String Points_Earned = productListObj.getString("Points_Earned");
+                            String Benefit_Name = productListObj.getString("Benefit_Name");
+                            String Benefit_Desc = productListObj.getString("Benefit_Desc");
+                            String Benefit_Date = productListObj.getString("Benefit_Date");
+                        }
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(), "No EarnPoints Avail", Toast.LENGTH_LONG).show();
+                    }
+                }
+                else
+                {
+                    // Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                }
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public String PostGetHistoryEarnedPoints(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("userid", "1");
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    private class HttpAsyncGetHistoryReedemedPoints extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            dialog = new ProgressDialog(RewardsPointsActivity.this);
+            dialog.setMessage("Get history earn points...");
+            dialog.show();
+            dialog.setCancelable(false);
+
+            /*String loading = "Get Association" ;
+            CustomProgressDialog(loading);*/
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return PostGetHistoryReedemedPoints(urls[0]);
+        }
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+            dialog.dismiss();
+//            rlProgressDialog.setVisibility(View.GONE);
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            try
+            {
+                if (result != null)
+                {
+                    JSONObject jsonObject = new JSONObject(result);
+
+                    String success = jsonObject.getString("success");
+                    String message = jsonObject.getString("message");
+                    String userid = jsonObject.getString("userid");
+
+                    JSONArray jsonArray = jsonObject.getJSONArray("ReedemedPoints_Trans");
+                    if (jsonArray.length() != 0)
+                    {
+                        for (int i = 0 ; i <= jsonArray.length(); i++)
+                        {
+                            JSONObject productListObj = jsonArray.getJSONObject(i);
+
+                            String ProfileID = productListObj.getString("ProfileID");
+                            String ProductID = productListObj.getString("ProductID");
+                            String ProductName = productListObj.getString("ProductName");
+                            String ProductDesc = productListObj.getString("ProductDesc");
+                            String Offer = productListObj.getString("Offer");
+                            String ProductImage = productListObj.getString("ProductImage");
+                            String Points_Used = productListObj.getString("Points_Used");
+                            String Quantity = productListObj.getString("Quantity");
+                            String Trans_Desc = productListObj.getString("Trans_Desc");
+                            String Trans_Date = productListObj.getString("Trans_Date");
+                            String Merchant_BranchID = productListObj.getString("Merchant_BranchID");
+                            String Merchant_BranchName = productListObj.getString("Merchant_BranchName");
+                        }
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(), "No Redeem Points Avail", Toast.LENGTH_LONG).show();
+                    }
+                }
+                else
+                {
+                    // Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                }
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public String PostGetHistoryReedemedPoints(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("userid", "1");
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+
 }
