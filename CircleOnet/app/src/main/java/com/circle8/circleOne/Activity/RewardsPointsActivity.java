@@ -3,16 +3,20 @@ package com.circle8.circleOne.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +53,7 @@ import java.util.Map;
 
 public class RewardsPointsActivity extends AppCompatActivity implements View.OnClickListener
 {
+    private TextView tvRewardBalance, tvRewardPoints ;
     private LinearLayout llEarnPointBox, llMerchantBox ;
     private TextView tvRewardName, tvRewardType, tvRewardPoint, tvHistory;
     private View MerchantView, RewardView, HistoryView , HistoryListView ;
@@ -72,6 +77,10 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
     MerchantGetAllModel merchantGetAllModel ;
     ArrayList<MerchantGetAllModel> merchantGetAllModelArrayList = new ArrayList<>();
 
+    private RelativeLayout rlProgressDialog ;
+    private TextView tvProgressing ;
+    private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -84,6 +93,9 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         HashMap<String, String> user = loginSession.getUserDetails();
         userId = user.get(LoginSession.KEY_USERID);
 
+        tvRewardPoints = (TextView)findViewById(R.id.tvRewardPoints);
+        tvRewardBalance = (TextView)findViewById(R.id.tvRewardBalance);
+
         tvHistory = (TextView)findViewById(R.id.tvHistory);
         llEarnPointBox = (LinearLayout)findViewById(R.id.llEarnPointBox);
         llMerchantBox = (LinearLayout)findViewById(R.id.llMerchantBox);
@@ -93,6 +105,12 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         tvMerchant = (TextView)findViewById(R.id.tvMerchant);
         imgBack = (ImageView)findViewById(R.id.imgBack);
 
+        rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
+        tvProgressing = (TextView)findViewById(R.id.txtProgressing);
+        ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
+        ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
+        ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
+
         init();
         init1();
 
@@ -101,13 +119,13 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         tvHistory.setOnClickListener(this);
         imgBack.setOnClickListener(this);
 
+        new HttpAsyncGetHistoryReedemedPoints().execute(Utility.REWARDS_BASE_URL+"History_ReedemedPoints");           // post
         new HttpAsyncGetAll().execute(Utility.MERCHANT_BASE_URL+"GetAll");                 //get
-        new HttpAsyncGetProductCategory().execute(Utility.MERCHANT_BASE_URL+"GetProductCategory");                 //get
-        new HttpAsyncGetProduct().execute(Utility.MERCHANT_BASE_URL+"GetProducts");                               //get
-        new HttpAsyncGetProductByCategory().execute(Utility.MERCHANT_BASE_URL+"GetProductsByCategory");           // post
+//        new HttpAsyncGetProductCategory().execute(Utility.MERCHANT_BASE_URL+"GetProductCategory");                 //get
+//        new HttpAsyncGetProduct().execute(Utility.MERCHANT_BASE_URL+"GetProducts");                               //get
+//        new HttpAsyncGetProductByCategory().execute(Utility.MERCHANT_BASE_URL+"GetProductsByCategory");           // post
         new HttpAsyncGetBalance().execute(Utility.REWARDS_BASE_URL+"GetBalance");                                 // post
         new HttpAsyncGetHistoryEarnedPoints().execute(Utility.REWARDS_BASE_URL+"History_EarnedPoints");           // post
-        new HttpAsyncGetHistoryReedemedPoints().execute(Utility.REWARDS_BASE_URL+"History_ReedemedPoints");           // post
     }
 
     private void init()
@@ -306,7 +324,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int width = dm.widthPixels;
 
-        expListView.setIndicatorBounds(width - getDipsFromPixel(50), width - getDipsFromPixel(5));
+        expListView.setIndicatorBounds(width - getDipsFromPixel(30), width - getDipsFromPixel(5));
 //        expListView.setGroupIndicator(getResources().getDrawable(R.drawable.ic_down_arrow));
     }
 
@@ -316,7 +334,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         // Get the screen's density scale
         final float scale = getResources().getDisplayMetrics().density;
         // Convert the dps to pixels, based on density scale
-        return (int) (pixels * scale + 0.8f);
+        return (int) (pixels * scale + 0.5f);
     }
 
     @Override
@@ -369,7 +387,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onBackPressed() {
-
+        finish();
     }
 
     private class HttpAsyncGetAll extends AsyncTask<String, Void, String>
@@ -380,13 +398,13 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         protected void onPreExecute()
         {
             super.onPreExecute();
-            dialog = new ProgressDialog(RewardsPointsActivity.this);
+            /*dialog = new ProgressDialog(RewardsPointsActivity.this);
             dialog.setMessage("Get All..");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
 
-            /*String loading = "Get Association" ;
-            CustomProgressDialog(loading);*/
+            String loading = "Get All" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -397,8 +415,8 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
-//            rlProgressDialog.setVisibility(View.GONE);
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -543,13 +561,13 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         protected void onPreExecute()
         {
             super.onPreExecute();
-            dialog = new ProgressDialog(RewardsPointsActivity.this);
+           /* dialog = new ProgressDialog(RewardsPointsActivity.this);
             dialog.setMessage("Get Product Category..");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
 
-            /*String loading = "Get Association" ;
-            CustomProgressDialog(loading);*/
+            String loading = "Get Product Category" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -560,8 +578,8 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
-//            rlProgressDialog.setVisibility(View.GONE);
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -644,13 +662,13 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         protected void onPreExecute()
         {
             super.onPreExecute();
-            dialog = new ProgressDialog(RewardsPointsActivity.this);
+           /* dialog = new ProgressDialog(RewardsPointsActivity.this);
             dialog.setMessage("Get Product...");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
 
-            /*String loading = "Get Association" ;
-            CustomProgressDialog(loading);*/
+            String loading = "Get Products" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -661,8 +679,8 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
-//            rlProgressDialog.setVisibility(View.GONE);
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -752,13 +770,13 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         protected void onPreExecute()
         {
             super.onPreExecute();
-            dialog = new ProgressDialog(RewardsPointsActivity.this);
+           /* dialog = new ProgressDialog(RewardsPointsActivity.this);
             dialog.setMessage("Get Product By Category..");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
 
-            /*String loading = "Get Association" ;
-            CustomProgressDialog(loading);*/
+            String loading = "Get Product By Category" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -769,8 +787,8 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
-//            rlProgressDialog.setVisibility(View.GONE);
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -891,13 +909,13 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         protected void onPreExecute()
         {
             super.onPreExecute();
-            dialog = new ProgressDialog(RewardsPointsActivity.this);
+            /*dialog = new ProgressDialog(RewardsPointsActivity.this);
             dialog.setMessage("Get Balance...");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
 
-            /*String loading = "Get Association" ;
-            CustomProgressDialog(loading);*/
+            String loading = "Get Balance" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -908,8 +926,8 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
-//            rlProgressDialog.setVisibility(View.GONE);
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -921,6 +939,9 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                     String message = jsonObject.getString("message");
                     String userid = jsonObject.getString("userid");
                     String points_earned = jsonObject.getString("points_earned");
+
+                    tvRewardPoints.setText(points_earned);
+                    tvRewardBalance.setText(points_earned);
                 }
                 else
                 {
@@ -995,13 +1016,13 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         protected void onPreExecute()
         {
             super.onPreExecute();
-            dialog = new ProgressDialog(RewardsPointsActivity.this);
+            /*dialog = new ProgressDialog(RewardsPointsActivity.this);
             dialog.setMessage("Get history earn points...");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
 
-            /*String loading = "Get Association" ;
-            CustomProgressDialog(loading);*/
+            String loading = "Get history earn points" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -1012,8 +1033,8 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
-//            rlProgressDialog.setVisibility(View.GONE);
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -1132,13 +1153,13 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         protected void onPreExecute()
         {
             super.onPreExecute();
-            dialog = new ProgressDialog(RewardsPointsActivity.this);
+           /* dialog = new ProgressDialog(RewardsPointsActivity.this);
             dialog.setMessage("Get history redeem points...");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
 
-            /*String loading = "Get Association" ;
-            CustomProgressDialog(loading);*/
+            String loading = "Get history redeem points" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -1149,8 +1170,8 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
-//            rlProgressDialog.setVisibility(View.GONE);
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -1184,7 +1205,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
 
                             ArrayList<ListCell> items = new ArrayList<ListCell>();
 
-                            items.add(new ListCell("AUG 2017", "07th", Trans_Desc, "+"+Points_Used));
+                            items.add(new ListCell("", "", ProductName, "+"+Points_Used));
 
                             redeemListView = (ListView)HistoryListView.findViewById(R.id.awesome_list);
                             items = sortAndAddSections(items);
@@ -1263,5 +1284,40 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         return result;
     }
 
+    public  void CustomProgressDialog(final String loading)
+    {
+        rlProgressDialog.setVisibility(View.VISIBLE);
+        tvProgressing.setText(loading);
+
+        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
+        ivConnecting1.startAnimation(anim);
+        Animation anim1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.clockwise);
+        ivConnecting2.startAnimation(anim1);
+
+        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
+        for (int i = 350; i <= SPLASHTIME; i = i + 350)
+        {
+            final int j = i;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run()
+                {
+                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
+                    {
+                        tvProgressing.setText(loading+".");
+                    }
+                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
+                    {
+                        tvProgressing.setText(loading+"..");
+                    }
+                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+
+                }
+            }, i);
+        }
+    }
 
 }

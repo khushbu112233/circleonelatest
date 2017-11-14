@@ -8,8 +8,9 @@
     <ImageView
         android:id="@+id/ivAdImg"
         android:layout_width="match_parent"
-        android:layout_height="110dp"
-        android:src="@drawable/cold_coco"/>
+        android:layout_height="90dp"
+        android:src="@drawable/cold_coco"
+        android:scaleType="fitXY"/>
 
     <View
         android:layout_width="match_parent"

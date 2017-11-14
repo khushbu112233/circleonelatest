@@ -1,6 +1,7 @@
 package com.circle8.circleOne.Activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
@@ -9,8 +10,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +59,8 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
     ImageView tvMerchantImg;
     TextView tvMerchantName, tvMerchantDesc ;
 
+    ImageView imgBack ;
+
     ExpandableHeightListView listView1, listView2 ;
 
     ImageAdAdapter imageAdAdapter ;
@@ -73,11 +80,17 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
     LoginSession loginSession ;
     String userId = "";
 
+    private RelativeLayout rlProgressDialog ;
+    private TextView tvProgressing ;
+    private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_merchant_detail);
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         loginSession = new LoginSession(getApplicationContext());
         HashMap<String, String> user = loginSession.getUserDetails();
@@ -88,6 +101,13 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
 
         tvMerchantName = (TextView)findViewById(R.id.tvMerchantName);
         tvMerchantDesc = (TextView)findViewById(R.id.tvMerchantDesc);
+        imgBack = (ImageView)findViewById(R.id.imgBack);
+
+        rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
+        tvProgressing = (TextView)findViewById(R.id.txtProgressing);
+        ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
+        ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
+        ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
 
         // for ads images
        /* adImages.add(R.drawable.cold_coco);
@@ -138,6 +158,21 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
                 locationAddress.getAddressFromLocation(storeAddress, getApplicationContext(), new GeocoderHandler());
             }
         });*/
+
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                startActivity(new Intent(MerchantDetailActivity.this, RewardsPointsActivity.class));
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(MerchantDetailActivity.this, RewardsPointsActivity.class));
+        finish();
     }
 
     private class GeocoderHandler extends Handler
@@ -224,13 +259,13 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
         protected void onPreExecute()
         {
             super.onPreExecute();
-            dialog = new ProgressDialog(MerchantDetailActivity.this);
+           /* dialog = new ProgressDialog(MerchantDetailActivity.this);
             dialog.setMessage("Get Details...");
             dialog.show();
-            dialog.setCancelable(false);
+            dialog.setCancelable(false);*/
 
-            /*String loading = "Get Association" ;
-            CustomProgressDialog(loading);*/
+            String loading = "Get Merchant Detail" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -241,8 +276,8 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
-//            rlProgressDialog.setVisibility(View.GONE);
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -428,6 +463,41 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
 
         inputStream.close();
         return result;
+    }
+
+    public  void CustomProgressDialog(final String loading)
+    {
+        rlProgressDialog.setVisibility(View.VISIBLE);
+        tvProgressing.setText(loading);
+
+        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
+        ivConnecting1.startAnimation(anim);
+        Animation anim1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.clockwise);
+        ivConnecting2.startAnimation(anim1);
+
+        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
+        for (int i = 350; i <= SPLASHTIME; i = i + 350)
+        {
+            final int j = i;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run()
+                {
+                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
+                    {
+                        tvProgressing.setText(loading+".");
+                    }
+                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
+                    {
+                        tvProgressing.setText(loading+"..");
+                    }
+                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+                }
+            }, i);
+        }
     }
 
 

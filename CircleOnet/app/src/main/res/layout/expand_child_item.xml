@@ -8,6 +8,7 @@
 
     <com.circle8.circleOne.Utils.cgTextView
         android:id="@+id/tvUtility"
+        android:textSize="12sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
