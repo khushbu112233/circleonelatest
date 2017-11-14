@@ -7,13 +7,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginBottom="10dp">
 
         <com.circle8.circleOne.Utils.cgBoldTextView
-            android:id="@+id/tvTextStore"
+            android:id="@+id/tvStoreName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="45dp"
+            android:text="100 AM"
+            android:textSize="15dp"
+            android:paddingTop="3dp"
             android:textColor="@color/colorPrimary"/>
 
         <LinearLayout
@@ -21,27 +25,77 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="0dp"
+            android:paddingBottom="0dp"
+            android:paddingTop="0dp">
 
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:src="@drawable/ic_location_blue"
-                android:layout_gravity="center_vertical" />
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="0dp"
+                android:layout_marginLeft="5dp"/>
 
-            <com.circle8.circleOne.Utils.cgTextView
-                android:id="@+id/tvTextAddress"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:textColor="@color/unselected"/>
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:orientation="vertical">
+
+                <com.circle8.circleOne.Utils.cgTextView
+                    android:id="@+id/tvStoreAddress1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="11sp"
+                    android:textColor="@color/unselected" />
+
+                <com.circle8.circleOne.Utils.cgTextView
+                    android:id="@+id/tvStoreAddress2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="11sp"
+                    android:textColor="@color/unselected" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+                    <com.circle8.circleOne.Utils.cgTextView
+                        android:id="@+id/tvOpenTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="11sp"
+                        android:textColor="@color/unselected"
+                        android:layout_weight="0.5"/>
+                    <com.circle8.circleOne.Utils.cgTextView
+                        android:id="@+id/tvCloseTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="11sp"
+                        android:textColor="@color/unselected"
+                        android:layout_weight="0.5"/>
+                </LinearLayout>
+
+                <com.circle8.circleOne.Utils.cgTextView
+                    android:id="@+id/tvHourFlag"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="11sp"
+                    android:textColor="@color/unselected"
+                    android:layout_marginBottom="0dp"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
     </LinearLayout>
-
-
 
 </RelativeLayout>

@@ -66,6 +66,7 @@
                 android:layout_marginTop="15dp">
 
                 <com.circle8.circleOne.Utils.cgBoldTextView
+                    android:id="@+id/tvMerchantName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Starbucks Singapore"
@@ -80,7 +81,7 @@
                     app:civ_border_width="1dp"
                     app:civ_border_color="@color/white"
                     android:src="@drawable/usr"
-                    android:id="@+id/imgProfile"
+                    android:id="@+id/tvMerchantImg"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_gravity="center"
@@ -88,6 +89,7 @@
             </LinearLayout>
 
             <com.circle8.circleOne.Utils.cgTextView
+                android:id="@+id/tvMerchantDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Singapore is the third international country outside North America to introduce Starbucks to its discoming customers who readly embrace the starbucks experience.\n\nStarbucks coffee singapore is a wholy owned subsidary of Starbucks Coffee Corporation since June 2004.\nThe first starbucks store opened on December 1996 of Uat Town, strategically located along the nation's reowned Orchard Food shopping belt."
@@ -219,7 +221,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scrollbars="none"
-                android:layout_marginBottom="5dp"/>
+                android:layout_marginBottom="10dp"/>
 
 <!--
             <com.circle8.circleOne.Utils.ExpandableHeightListView

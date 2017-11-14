@@ -85,8 +85,21 @@ public class ExpandableListAdapter1 extends BaseExpandableListAdapter
         return convertView;
     }
 
-    public int getChildrenCount(int groupPosition) {
-        return laptopCollections.get(laptops.get(groupPosition)).size();
+    public int getChildrenCount(int groupPosition)
+    {
+        try
+        {
+            if (laptopCollections.get(laptops.get(groupPosition)).size() != 0)
+            {
+                return laptopCollections.get(laptops.get(groupPosition)).size();
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 
     public Object getGroup(int groupPosition) {

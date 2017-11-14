@@ -151,7 +151,6 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
     private static final int CONTACT_PICKER_REQUEST = 991;
     private static final int PERMISSION_REQUEST_CONTACT = 111;
 
-
     private static final String TAG = CardsActivity.class.getSimpleName();
 
     private final static int PLAY_SERVICES_REQUEST = 1000;
@@ -175,7 +174,8 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
     String User_name;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         TwitterAuthConfig authConfig = new TwitterAuthConfig(getString(R.string.twitter_consumer_key),
@@ -699,15 +699,21 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         LinearLayout lnrSyncContacts = (LinearLayout) dialog.findViewById(R.id.lnrSyncContacts);
         LinearLayout lnrRewardsPoints = (LinearLayout)dialog.findViewById(R.id.lnrRewardsPoints);
         LinearLayout lnrHistory = (LinearLayout)dialog.findViewById(R.id.lnrHistory);
+        LinearLayout lnrCardVerification = (LinearLayout)dialog.findViewById(R.id.lnrCardVerification);
         txtNotificationCount = (CircularTextView) dialog.findViewById(R.id.txtNotificationCount);
 
-        try {
-            if (NotificationCount.equals("0")) {
+        try
+        {
+            if (NotificationCount.equals("0"))
+            {
                 txtNotificationCount.setVisibility(View.GONE);
-            } else {
+            }
+            else
+            {
                 txtNotificationCount.setVisibility(View.VISIBLE);
             }
-        }catch (Exception e){}
+        }
+        catch (Exception e){}
         txtNotificationCount.setText(NotificationCount);
 
         lnrShare.setOnClickListener(new View.OnClickListener() {
@@ -721,7 +727,6 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, User_name);
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Share Profile Via"));
-
             }
         });
 
@@ -751,6 +756,15 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), ManageMyProfile.class);
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        });
+
+        lnrCardVerification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CardVerificationActivity.class);
                 startActivity(intent);
                 dialog.dismiss();
             }

@@ -232,12 +232,12 @@ public class CardDetail extends NfcActivity
         txtTestimonial.setMovementMethod(LinkMovementMethod.getInstance());
         txtTestimonial.setHighlightColor(getResources().getColor(R.color.colorPrimary));
 
-
         if ((lat.equals("") || lat.equals("null") || lat == null || lat.isEmpty()) && (lon.equals("") || lon.equals("null") || lon == null || lon.isEmpty()))
         {
             lnrNfcLocation.setVisibility(View.GONE);
-
-        }else {
+        }
+        else
+        {
             lnrNfcLocation.setVisibility(View.VISIBLE);
             Latitude = Double.parseDouble(lat);
             Longitude = Double.parseDouble(lon);
@@ -927,7 +927,7 @@ public class CardDetail extends NfcActivity
     public void getAddress()
     {
 
-        Address locationAddress=getAddress(Latitude,Longitude);
+        Address locationAddress = getAddress(Latitude,Longitude);
 
         if(locationAddress!=null)
         {

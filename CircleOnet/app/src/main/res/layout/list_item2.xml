@@ -46,11 +46,12 @@
                 android:layout_height="wrap_content"
                 android:text="-1000"
                 android:gravity="right"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="1dp"
                 android:textColor="@color/colorPrimary" />
             <ImageView
                 android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_height="11dp"
+                android:layout_gravity="center_vertical"
                 android:src="@drawable/ic_mini_circle" />
         </LinearLayout>
 

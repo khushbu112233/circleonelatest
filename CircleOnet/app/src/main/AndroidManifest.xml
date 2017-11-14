@@ -14,8 +14,9 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-    <uses-feature android:name="android.hardware.nfc"
-        android:required="false"/>
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="false" />
 
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -33,15 +34,12 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="@string/google_map_api" />
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
 
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />
         <activity
@@ -55,7 +53,6 @@
 
                 <data android:mimeType="application/com.amplearch.circleonet" />
             </intent-filter>
-
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
 
@@ -266,9 +263,13 @@
         <activity
             android:name=".Activity.MerchantDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionbar"></activity>
-        <activity android:name=".Activity.AttachmentDisplay"
-            android:theme="@style/NoActionbarSplash"></activity>
+            android:theme="@style/NoActionbar" />
+        <activity
+            android:name=".Activity.AttachmentDisplay"
+            android:theme="@style/NoActionbarSplash" />
+        <activity android:name=".Activity.CardVerificationActivity" android:screenOrientation="portrait"
+            android:theme="@style/NoActionbar" >
+        </activity>
     </application>
 
 </manifest>

@@ -16,9 +16,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.circle8.circleOne.Adapter.EarnPointsAdapter;
 import com.circle8.circleOne.Adapter.ExpandableListAdapter1;
+import com.circle8.circleOne.Helper.LoginSession;
+import com.circle8.circleOne.Model.EarnPointsModel;
 import com.circle8.circleOne.Model.ListAdapter1;
 import com.circle8.circleOne.Model.ListCell;
+import com.circle8.circleOne.Model.MerchantGetAllModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
 
@@ -38,6 +42,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,15 +55,22 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
     private ImageView ivCirclePlus, ivHouse ;
     private TextView tvPoints, tvMerchant ;
 
-    private ListView listView ;
+    private ListView redeemListView, earnListView ;
 
     private ExpandableListView expListView;
-    private List<String> groupList;
-    private List<String> childList;
-    private Map<String, List<String>> laptopCollection;
+    ExpandableListAdapter1 expListAdapter ;
+    private List<String> groupList = new ArrayList<String>();
+    private List<String> childList = new ArrayList<String>();
+    private Map<String, List<String>> laptopCollection = new LinkedHashMap<String, List<String>>();
 
     static TextView textView;
     static ImageView imgDrawer, imgBack, ivAdImg;
+
+    LoginSession loginSession ;
+    String userId = "";
+
+    MerchantGetAllModel merchantGetAllModel ;
+    ArrayList<MerchantGetAllModel> merchantGetAllModelArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -67,6 +79,10 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_rewards_points);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        loginSession = new LoginSession(getApplicationContext());
+        HashMap<String, String> user = loginSession.getUserDetails();
+        userId = user.get(LoginSession.KEY_USERID);
 
         tvHistory = (TextView)findViewById(R.id.tvHistory);
         llEarnPointBox = (LinearLayout)findViewById(R.id.llEarnPointBox);
@@ -85,6 +101,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         tvHistory.setOnClickListener(this);
         imgBack.setOnClickListener(this);
 
+        new HttpAsyncGetAll().execute(Utility.MERCHANT_BASE_URL+"GetAll");                 //get
         new HttpAsyncGetProductCategory().execute(Utility.MERCHANT_BASE_URL+"GetProductCategory");                 //get
         new HttpAsyncGetProduct().execute(Utility.MERCHANT_BASE_URL+"GetProducts");                               //get
         new HttpAsyncGetProductByCategory().execute(Utility.MERCHANT_BASE_URL+"GetProductsByCategory");           // post
@@ -100,15 +117,15 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         MerchantView = findViewById(R.id.icdMerchantLayout);
         RewardView = findViewById(R.id.icdEarnPointLayout);
 
-        getHistory();
+//        getHistory();
 
-        createGroupList();
-        createCollection();
+//        createGroupList();
+//        createCollection();
 
         expListView = (ExpandableListView)MerchantView.findViewById(R.id.laptop_list);
         ivAdImg = (ImageView)MerchantView.findViewById(R.id.ivAdImg);
-        final ExpandableListAdapter1 expListAdapter = new ExpandableListAdapter1(this, groupList, laptopCollection);
-        expListView.setAdapter(expListAdapter);
+       /* expListAdapter = new ExpandableListAdapter1(this, groupList, laptopCollection);
+        expListView.setAdapter(expListAdapter);*/
 
         setGroupIndicatorToRight();
 
@@ -132,6 +149,8 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                 finish();
             }
         });
+
+        earnListView = (ListView)RewardView.findViewById(R.id.listView_Earn);
     }
 
     private void init1()
@@ -183,11 +202,11 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         items.add(new ListCell("JUL 2017", "18th", "Berjaya Times Square", "+10"));
         items.add(new ListCell("JUL 2017", "15th", "Sungai Wang Plaza", "+20"));
 
-        listView = (ListView)HistoryListView.findViewById(R.id.awesome_list);
+        redeemListView = (ListView)HistoryListView.findViewById(R.id.awesome_list);
         items = sortAndAddSections(items);
 
         ListAdapter1 adapter = new ListAdapter1(this, items);
-        listView.setAdapter(adapter);
+        redeemListView.setAdapter(adapter);
     }
 
     private ArrayList<ListCell> sortAndAddSections(ArrayList<ListCell> itemList)
@@ -352,6 +371,169 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
     public void onBackPressed() {
 
     }
+
+    private class HttpAsyncGetAll extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            dialog = new ProgressDialog(RewardsPointsActivity.this);
+            dialog.setMessage("Get All..");
+            dialog.show();
+            dialog.setCancelable(false);
+
+            /*String loading = "Get Association" ;
+            CustomProgressDialog(loading);*/
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return PostGetAll(urls[0]);
+        }
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+            dialog.dismiss();
+//            rlProgressDialog.setVisibility(View.GONE);
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            try
+            {
+                if (result != null)
+                {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String success = jsonObject.getString("success");
+                    String message = jsonObject.getString("message");
+
+                    JSONArray jsonArray = jsonObject.getJSONArray("MerchantProducts");
+
+                    if (jsonArray.length() != 0)
+                    {
+                        for (int i = 0 ; i< jsonArray.length(); i++)
+                        {
+                            JSONObject productListObj = jsonArray.getJSONObject(i);
+
+                            String ProductCategoryID = productListObj.getString("ProductCategoryID");
+                            String ProductCategoryName = productListObj.getString("ProductCategoryName");
+
+                            groupList.add(ProductCategoryName);
+                            merchantGetAllModel = new MerchantGetAllModel();
+                            merchantGetAllModel.setProductCategoryID(ProductCategoryID);
+                            merchantGetAllModel.setProductCategoryName(ProductCategoryName);
+
+                            JSONArray jsonArray1 = productListObj.getJSONArray("MerchantByCat");
+                            if (jsonArray1.length() != 0)
+                            {
+//                                expListView.setGroupIndicator(getResources().getDrawable(R.drawable.group_indicator));
+
+                                int n = jsonArray1.length();
+                                String[] child_Data = new String[n];
+
+                                for (int j = 0; j< jsonArray1.length(); j++)
+                                {
+                                    JSONObject merchantListObj = jsonArray1.getJSONObject(j);
+
+                                    String Merchant_ID = merchantListObj.getString("Merchant_ID");
+                                    String MerchantImage = merchantListObj.getString("MerchantImage");
+                                    String Merchant_Name = merchantListObj.getString("Merchant_Name");
+                                    String Merchant_Desc = merchantListObj.getString("Merchant_Desc");
+                                    String ProductID = merchantListObj.getString("ProductID");
+                                    String ProductImage = merchantListObj.getString("ProductImage");
+                                    String ProductName = merchantListObj.getString("ProductName");
+                                    String ProductDesc = merchantListObj.getString("ProductDesc");
+                                    String Offer = merchantListObj.getString("Offer");
+                                    String ProductCost = merchantListObj.getString("ProductCost");
+
+                                    merchantGetAllModel.setMerchant_ID(Merchant_ID);
+                                    merchantGetAllModel.setMerchantImage(MerchantImage);
+                                    merchantGetAllModel.setMerchant_Name(Merchant_Name);
+                                    merchantGetAllModel.setMerchant_Desc(Merchant_Desc);
+                                    merchantGetAllModel.setProductID(ProductID);
+                                    merchantGetAllModel.setProductImage(ProductImage);
+                                    merchantGetAllModel.setProductName(ProductName);
+                                    merchantGetAllModel.setProductDesc(ProductDesc);
+                                    merchantGetAllModel.setOffer(Offer);
+                                    merchantGetAllModel.setProductCost(ProductCost);
+                                    merchantGetAllModelArrayList.add(merchantGetAllModel);
+
+                                    child_Data[j] = ProductName ;
+
+                                    for (String parent : groupList)
+                                    {
+                                        if (parent.equalsIgnoreCase(ProductCategoryName))
+                                        {
+                                            loadChild(child_Data);
+                                        }
+                                        laptopCollection.put(parent, childList);
+                                    }
+                                    expListAdapter = new ExpandableListAdapter1(RewardsPointsActivity.this, groupList, laptopCollection);
+                                    expListView.setAdapter(expListAdapter);
+                                }
+                            }
+                            else if (jsonArray1.length() == 0)
+                            {
+//                                expListView.setGroupIndicator(getResources().getDrawable(R.drawable.group_indicator));
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(), "No ProductCategory_List Avail", Toast.LENGTH_LONG).show();
+                    }
+                    //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    // Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                }
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public String PostGetAll(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpGet httpPost = new HttpGet(url);
+
+            // 6. set httpPost Entity
+            //   httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
 
     private class HttpAsyncGetProductCategory extends AsyncTask<String, Void, String>
     {
@@ -765,7 +947,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("userid", "1");
+            jsonObject.accumulate("userid", userId);
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -844,9 +1026,10 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                     String userid = jsonObject.getString("userid");
 
                     JSONArray jsonArray = jsonObject.getJSONArray("EarnedPoints_Trans");
+
                     if (jsonArray.length() != 0)
                     {
-                        for (int i = 0 ; i <= jsonArray.length(); i++)
+                        for (int i = 0 ; i < jsonArray.length(); i++)
                         {
                             JSONObject productListObj = jsonArray.getJSONObject(i);
 
@@ -855,6 +1038,20 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                             String Benefit_Name = productListObj.getString("Benefit_Name");
                             String Benefit_Desc = productListObj.getString("Benefit_Desc");
                             String Benefit_Date = productListObj.getString("Benefit_Date");
+
+                            ArrayList<EarnPointsModel> earnPointsModelsList = new ArrayList<>();
+
+                            EarnPointsModel earnPointsModel = new EarnPointsModel();
+                            earnPointsModel.setEarnId(Earned_ID);
+                            earnPointsModel.setPointEarned(Points_Earned);
+                            earnPointsModel.setBenefitName(Benefit_Name);
+                            earnPointsModel.setBenefitDesc(Benefit_Desc);
+                            earnPointsModel.setBenefitDate(Benefit_Date);
+                            earnPointsModelsList.add(earnPointsModel);
+
+                            EarnPointsAdapter earnPointsAdapter = new EarnPointsAdapter(RewardsPointsActivity.this, earnPointsModelsList);
+                            earnListView.setAdapter(earnPointsAdapter);
+                            earnPointsAdapter.notifyDataSetChanged();
                         }
                     }
                     else
@@ -887,7 +1084,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("userid", "1");
+            jsonObject.accumulate("userid", userId);
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -936,7 +1133,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         {
             super.onPreExecute();
             dialog = new ProgressDialog(RewardsPointsActivity.this);
-            dialog.setMessage("Get history earn points...");
+            dialog.setMessage("Get history redeem points...");
             dialog.show();
             dialog.setCancelable(false);
 
@@ -984,6 +1181,16 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                             String Trans_Date = productListObj.getString("Trans_Date");
                             String Merchant_BranchID = productListObj.getString("Merchant_BranchID");
                             String Merchant_BranchName = productListObj.getString("Merchant_BranchName");
+
+                            ArrayList<ListCell> items = new ArrayList<ListCell>();
+
+                            items.add(new ListCell("AUG 2017", "07th", Trans_Desc, "+"+Points_Used));
+
+                            redeemListView = (ListView)HistoryListView.findViewById(R.id.awesome_list);
+                            items = sortAndAddSections(items);
+
+                            ListAdapter1 adapter = new ListAdapter1(RewardsPointsActivity.this, items);
+                            redeemListView.setAdapter(adapter);
                         }
                     }
                     else
@@ -1016,7 +1223,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("userid", "1");
+            jsonObject.accumulate("userid", userId);
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
