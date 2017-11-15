@@ -142,7 +142,7 @@
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/ic_new_card"
+            android:src="@drawable/ic_card_verify"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="0dp" />
         <com.circle8.circleOne.Utils.orkebyTextView
@@ -153,6 +153,28 @@
             android:layout_marginLeft="20dp"
             android:textColor="@android:color/white" />
     </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lnrVPA"
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_vpa"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="0dp" />
+            <com.circle8.circleOne.Utils.orkebyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="VPA         "
+                android:textSize="15dp"
+                android:layout_marginLeft="20dp"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
 
     <LinearLayout
         android:id="@+id/lnrSyncContacts"
