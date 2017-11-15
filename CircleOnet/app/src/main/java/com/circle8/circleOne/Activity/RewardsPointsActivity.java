@@ -1172,7 +1172,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         {
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
-//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+           // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
                 if (result != null)
@@ -1181,37 +1181,37 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
 
                     String success = jsonObject.getString("success");
                     String message = jsonObject.getString("message");
-                    String userid = jsonObject.getString("userid");
+                    String userid = jsonObject.getString("FilterId");
 
-                    JSONArray jsonArray = jsonObject.getJSONArray("ReedemedPoints_Trans");
-                    if (jsonArray.length() != 0)
-                    {
-                        for (int i = 0 ; i <= jsonArray.length(); i++)
-                        {
-                            JSONObject productListObj = jsonArray.getJSONObject(i);
+                    if (success.equalsIgnoreCase("1")) {
+                        JSONArray jsonArray = jsonObject.getJSONArray("ReedemedPoints_Trans");
+                        if (jsonArray.length() != 0) {
+                            for (int i = 0; i <= jsonArray.length(); i++) {
+                                JSONObject productListObj = jsonArray.getJSONObject(i);
 
-                            String ProfileID = productListObj.getString("ProfileID");
-                            String ProductID = productListObj.getString("ProductID");
-                            String ProductName = productListObj.getString("ProductName");
-                            String ProductDesc = productListObj.getString("ProductDesc");
-                            String Offer = productListObj.getString("Offer");
-                            String ProductImage = productListObj.getString("ProductImage");
-                            String Points_Used = productListObj.getString("Points_Used");
-                            String Quantity = productListObj.getString("Quantity");
-                            String Trans_Desc = productListObj.getString("Trans_Desc");
-                            String Trans_Date = productListObj.getString("Trans_Date");
-                            String Merchant_BranchID = productListObj.getString("Merchant_BranchID");
-                            String Merchant_BranchName = productListObj.getString("Merchant_BranchName");
+                                String ProfileID = productListObj.getString("ProfileID");
+                                String ProductID = productListObj.getString("ProductID");
+                                String ProductName = productListObj.getString("ProductName");
+                                String ProductDesc = productListObj.getString("ProductDesc");
+                                String Offer = productListObj.getString("Offer");
+                                String ProductImage = productListObj.getString("ProductImage");
+                                String Points_Used = productListObj.getString("Points_Used");
+                                String Quantity = productListObj.getString("Quantity");
+                                String Trans_Desc = productListObj.getString("Trans_Desc");
+                                String Trans_Date = productListObj.getString("Trans_Date");
+                                String Merchant_BranchID = productListObj.getString("Merchant_BranchID");
+                                String Merchant_BranchName = productListObj.getString("Merchant_BranchName");
 
-                            ArrayList<ListCell> items = new ArrayList<ListCell>();
+                                ArrayList<ListCell> items = new ArrayList<ListCell>();
 
-                            items.add(new ListCell("", "", ProductName, "+"+Points_Used));
+                                items.add(new ListCell("", "", ProductName, "+" + Points_Used));
 
-                            redeemListView = (ListView)HistoryListView.findViewById(R.id.awesome_list);
-                            items = sortAndAddSections(items);
+                                redeemListView = (ListView) HistoryListView.findViewById(R.id.awesome_list);
+                                items = sortAndAddSections(items);
 
-                            ListAdapter1 adapter = new ListAdapter1(RewardsPointsActivity.this, items);
-                            redeemListView.setAdapter(adapter);
+                                ListAdapter1 adapter = new ListAdapter1(RewardsPointsActivity.this, items);
+                                redeemListView.setAdapter(adapter);
+                            }
                         }
                     }
                     else
@@ -1244,7 +1244,8 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("userid", userId);
+            jsonObject.accumulate("FilterId", userId);
+            jsonObject.accumulate("FilterType", "user");
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
