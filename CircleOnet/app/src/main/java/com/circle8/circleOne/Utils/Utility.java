@@ -17,13 +17,13 @@ public class Utility
     public static final int MY_PERMISSIONS_REQUEST_CAMERA = 121;
     public static final int MY_PERMISSIONS_REQUEST_READ_CONTACT = 122;
     public static final int MY_PERMISSIONS_REQUEST_SMS = 124;
-    public static final String BASE_URL = "http://circle8.asia:8999/Onet.svc/";
+    public static final String BASE_URL = "http://circle8.asia:8082/Onet.svc/";
     public static final String MERCHANT_BASE_URL = "http://circle8.asia:8082/Onet.svc/Merchant/";
     public static final String REWARDS_BASE_URL = "http://circle8.asia:8082/Onet.svc/Rewards/";
     /**
      * for 8082
      */
-    public static final String BASE_IMAGE_URL = "http://circle8.asia/App_imgLib/";
+    public static final String BASE_IMAGE_URL = "http://circle8.asia:8083/";
 
     /**
      * for 8081
