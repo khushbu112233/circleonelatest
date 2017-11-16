@@ -89,11 +89,20 @@ public class Help2Activity extends AppCompatActivity
     {
         questionsList = new ArrayList<String>();
         questionsList.add("My Account:");
+
+        questionsList.add("Editing Your Profile:");
+        questionsList.add("Changing Your Password:");
+        questionsList.add("Scan QR Code:");
+
         questionsList.add("Lost or Stolen Cards:");
         questionsList.add("Request for a New Card:");
         questionsList.add("Damaged Cards:");
         questionsList.add("Request for a new Account:");
         questionsList.add("Requested Card/Cards did not arrive:");
+
+        questionsList.add("Sync Contacts:");
+        questionsList.add("Reward Points:");
+
         questionsList.add("Notifications:");
         questionsList.add("Circles:");
         questionsList.add("Subscription:");
@@ -238,7 +247,32 @@ public class Help2Activity extends AppCompatActivity
                         "4) You will need to unlock each level of connection in order to move on to the next – each connection costs SGD$0.99.",
                         "You will also receive invitations to be connected.\nSimply accept the invitation and that person will be added to your network immediately."
                 };
-
+        String[] eighteen =
+                {
+                        "1) Under ‘My Account’, tap on the pencil icon",
+                        "2) Here you can update your contact number, email as well as your profile pitcture" ,
+                        "3) * fields are compulsory and have to be filled before saving",
+                        "4) Tap ‘Save’ once you’re done to finalise changes"
+                };
+        String[] nineteen =
+                {
+                        "1) Under ‘My Account’, tap on the pencil icon",
+                        "2) Tap on the masked field below your name to change your password",
+                        "3) Re-enter your new password in the field directly below it",
+                        "4) Tap ‘Save’ once you’re done to finalise changes"
+                };
+        String[] twenty =
+                {
+                        "CircleOne works for those whose mobile devices aren’t equipped with NFC capabilities too.\nEach user has a unique QR code beside their name on their Profile.\nThe ‘Profile’ tab can be found on the bottom right of the screen in the dashboard.\nTo access your QR code for another user to scan, simply tap on it to enlarge the image."
+                };
+        String[] twentyOne =
+                {
+                        "The ‘Sync Contact’ tab in the sidebar allows you to sync your contacts from your device on to the CircleOne app.\nDoing so allows you to connect better with other users, especially if the both of you are already acquainted, but have yet to connect via the CircleOne app."
+                };
+        String[] twentyTwo =
+                {
+                        "Points can be earned through a variety of actions.\nThese accumulated points can be spent or exchanged for discounts and services at our various CircleOne merchants.\nYou’ll be able to see how many points you’ve earned and how you’ve earned it in this tab.\nYou can also view the various merchants and rewards we have by tapping on ‘Merchants’."
+                };
 
         collectionList = new LinkedHashMap<String, List<String>>();
 
@@ -246,7 +280,7 @@ public class Help2Activity extends AppCompatActivity
         {
             if (question.equals("My Account:"))
             {
-                loadChild(firstAnswer);
+//                loadChild(firstAnswer);
             }
             else if (question.equals("Lost or Stolen Cards:"))
             {
@@ -311,6 +345,26 @@ public class Help2Activity extends AppCompatActivity
             else if (question.equals("Connect:"))
             {
                 loadChild(seventeen);
+            }
+            else if (question.equals("Editing Your Profile:"))
+            {
+                loadChild(eighteen);
+            }
+            else if (question.equals("Changing Your Password:"))
+            {
+                loadChild(nineteen);
+            }
+            else if (question.equals("Scan QR Code:"))
+            {
+                loadChild(twenty);
+            }
+            else if (question.equals("Sync Contacts:"))
+            {
+                loadChild(twentyOne);
+            }
+            else if (question.equals("Reward Points:"))
+            {
+                loadChild(twentyTwo);
             }
 
             collectionList.put(question, answersList);

@@ -2,6 +2,7 @@ package com.circle8.circleOne.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
@@ -35,6 +36,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -217,7 +220,31 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
     {
         googleMaps = googleMap ;
 
+       /* Circle circle = googleMaps.addCircle(new CircleOptions()
+                .center(googleMaps.setMyLocationEnabled(true))
+                .radius(100)
+                .strokeColor(Color.RED)
+                .fillColor(Color.BLUE));*/
+
         googleMaps.setMyLocationEnabled(true);
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(10);
+        googleMaps.animateCamera(zoom);
+
+        LatLng ttc = new LatLng(23.012688,72.522777);
+        googleMaps.addMarker(new MarkerOptions().position(ttc).title("Titanium City Center"));
+        googleMaps.moveCamera(CameraUpdateFactory.newLatLng(ttc));
+
+        LatLng seemaHall = new LatLng(23.013258,72.520127);
+        googleMaps.addMarker(new MarkerOptions().position(seemaHall).title("seemaHall"));
+        googleMaps.moveCamera(CameraUpdateFactory.newLatLng(seemaHall));
+
+        LatLng sachinTawer = new LatLng(23.013021,72.524633);
+        googleMaps.addMarker(new MarkerOptions().position(sachinTawer).title("sachinTawer"));
+        googleMaps.moveCamera(CameraUpdateFactory.newLatLng(sachinTawer));
+
+        LatLng panchtirthPlaza = new LatLng(23.011353,72.522857);
+        googleMaps.addMarker(new MarkerOptions().position(panchtirthPlaza).title("panchtirthPlaza"));
+        googleMaps.moveCamera(CameraUpdateFactory.newLatLng(panchtirthPlaza));
 
        /* LatLng ahmedabad = new LatLng(23.0225, 72.5714);
         LatLng surat = new LatLng(21.1702, 72.8311);
@@ -250,7 +277,7 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
 
         googleMaps.addMarker(new MarkerOptions().position(location).title(storeAddress));
         googleMaps.moveCamera(CameraUpdateFactory.newLatLng(location));
-        googleMaps.animateCamera(zoom);
+//        googleMaps.animateCamera(zoom);
     }
 
     private class HttpAsyncGetDetails extends AsyncTask<String, Void, String>
@@ -383,6 +410,11 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
                             merchantAddressAdapter = new MerchantAddressAdapter(MerchantDetailActivity.this, merchantLocationModelArrayList);
                             listView2.setAdapter(merchantAddressAdapter);
                             merchantAddressAdapter.notifyDataSetChanged();
+
+                            String markerAddress = Addr1+","+Addr2+","+City+","+State+","+Country+" "+PostalCode;
+
+                            GeocodingLocation locationAddress = new GeocodingLocation();
+                            locationAddress.getAddressFromLocation(markerAddress, getApplicationContext(), new GeocoderHandler());
                         }
                     }
                     else
