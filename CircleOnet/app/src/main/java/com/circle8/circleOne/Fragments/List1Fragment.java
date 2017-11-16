@@ -696,9 +696,12 @@ public class List1Fragment extends Fragment
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
                     String count = jsonObject.getString("count");
 
-                    if (count.equals("") || count.equals("null")) {
+                    if (count.equals("") || count.equals("null"))
+                    {
                         numberCount = 0;
-                    } else {
+                    }
+                    else
+                    {
                         numberCount = Integer.parseInt(count);
                     }
 
@@ -747,9 +750,20 @@ public class List1Fragment extends Fragment
                         GetData(mContext);
                     }
 
-                    if (allTags.size() == 0) {
-                        txtNoCard1.setVisibility(View.VISIBLE);
-                    } else {
+                    if (allTags.size() == 0)
+                    {
+                        if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection"))
+                        {
+                            txtNoCard1.setText("No members have been added to the group.");
+                            txtNoCard1.setVisibility(View.VISIBLE);
+                        }
+                        else
+                        {
+                            txtNoCard1.setVisibility(View.VISIBLE);
+                        }
+                    }
+                    else
+                    {
                         txtNoCard1.setVisibility(View.GONE);
                     }
 
@@ -1155,7 +1169,6 @@ public class List1Fragment extends Fragment
                             GetData(mContext);
                         }
 
-
                         if (allTags.size() == 0) {
                             txtNoCard1.setVisibility(View.VISIBLE);
                         } else {
@@ -1271,20 +1284,25 @@ public class List1Fragment extends Fragment
         mAdapter.notifyDataSetChanged();
         mAdapter1.notifyDataSetChanged();
 
-        if (nfcModel.size() == 0) {
-            txtNoCard1.setVisibility(View.VISIBLE);
-        } else {
+        if (nfcModel.size() == 0)
+        {
+                txtNoCard1.setVisibility(View.VISIBLE);
+        }
+        else
+        {
             txtNoCard1.setVisibility(View.GONE);
         }
 
-
-        if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
+        if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetFriendConnection"))
+        {
             CardsActivity.setActionBarTitle("Cards - " + nfcModel.size() + "/"+ CardsActivity.Connection_Limit);
         }
-        else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
+        else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetProfileConnection"))
+        {
             CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
         }
-        else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
+        else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection"))
+        {
             CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
         }
 

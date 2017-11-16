@@ -55,8 +55,8 @@ public class Utility
                     });
                     AlertDialog alert = alertBuilder.create();
                     alert.show();
-
-                } else {
+                }
+                else {
                     ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
                 }
                 return false;
@@ -67,7 +67,6 @@ public class Utility
             return true;
         }
     }
-
 
     public static boolean checkSMSPermission(final Context context)
     {
@@ -101,7 +100,6 @@ public class Utility
         }
     }
 
-
     public static boolean checkCameraPermission(final Context context)
     {
         int currentAPIVersion = Build.VERSION.SDK_INT;
@@ -121,7 +119,6 @@ public class Utility
                     });
                     AlertDialog alert = alertBuilder.create();
                     alert.show();
-
                 } else {
                     ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CAMERA);
                 }

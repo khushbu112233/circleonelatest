@@ -1377,10 +1377,9 @@ public class ProfileFragment extends Fragment
                             }
                         }
                         txtEventsListFinal.setText(eventString);
-                        for (int i1 = 0; i1 < array.length(); i1++) {
-
+                        for (int i1 = 0; i1 < array.length(); i1++)
+                        {
                             listAssociation.add(array.getString(i1));
-
 
                             String name = array.getString(i1);
                             String remainder;

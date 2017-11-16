@@ -217,6 +217,8 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
     {
         googleMaps = googleMap ;
 
+        googleMaps.setMyLocationEnabled(true);
+
        /* LatLng ahmedabad = new LatLng(23.0225, 72.5714);
         LatLng surat = new LatLng(21.1702, 72.8311);
         LatLng vadodra = new LatLng(22.3072, 73.1812);

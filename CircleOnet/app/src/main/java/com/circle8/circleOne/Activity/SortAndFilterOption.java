@@ -522,7 +522,8 @@ public class SortAndFilterOption extends AppCompatActivity
 
         listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
 
                // SortType = "desc";
                 CardListApi = "Group/FetchConnection";
@@ -530,13 +531,17 @@ public class SortAndFilterOption extends AppCompatActivity
                 groupId = groupModelArrayList.get(position).getGroup_ID();
                 List1Fragment.progressStatus = "FILTER";
                 List1Fragment.allTags.clear();
-                try {
+
+                try
+                {
                     List2Fragment.gridAdapter.notifyDataSetChanged();
                     List2Fragment.allTags = db.getActiveNFC();
                     List2Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
                     List2Fragment.GetData(getApplicationContext());
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
 
                 }
 
@@ -549,7 +554,8 @@ public class SortAndFilterOption extends AppCompatActivity
                 } catch (Exception e) {
 
                 }
-                try {
+                try
+                {
                     List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.allTags = db.getActiveNFC();
                     List4Fragment.nfcModel.clear();
@@ -559,7 +565,8 @@ public class SortAndFilterOption extends AppCompatActivity
 
                 }
 
-                try {
+                try
+                {
                     //List1Fragment.myPager.notifyDataSetChanged();
                     //   List1Fragment.allTags = db.getActiveNFC();
 
@@ -574,8 +581,6 @@ public class SortAndFilterOption extends AppCompatActivity
                 startActivity(userIntent);
                 finish();
                 overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-
-
             }
         });
 

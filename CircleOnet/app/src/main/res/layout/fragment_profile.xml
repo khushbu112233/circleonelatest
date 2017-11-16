@@ -877,7 +877,7 @@
                             android:layout_centerVertical="true"
                             android:textSize="13sp"
                             android:textColor="@android:color/black"
-                            android:text="You do not have any events"
+                            android:text="You do not have any preferred events"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent" />
                         <android.support.v7.widget.RecyclerView
