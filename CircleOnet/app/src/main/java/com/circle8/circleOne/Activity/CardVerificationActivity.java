@@ -158,12 +158,17 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
         //Toast.makeText(getApplicationContext(), arrayNFC.toString(), Toast.LENGTH_LONG).show();
         if (arrayNFC.size() == 1){
             txtNoGroup.setText("Your Card is already verified..");
+            ivAddCard.setVisibility(View.GONE);
         }
         else if (arrayNFC.size() == 2){
             ProfileId = arrayNFC.get(0).toString();
             CardCode = arrayNFC.get(1).toString();
             Toast.makeText(getApplicationContext(), ProfileId + " " + CardCode, Toast.LENGTH_LONG).show();
             new HttpAsyncActivateNFC().execute(Utility.BASE_URL+"NFCSecurity/ActivateNFC");
+        }
+        else {
+            txtNoGroup.setText("Your Card is already verified..");
+            ivAddCard.setVisibility(View.GONE);
         }
         //txtNoGroup.setText(s);
     }
@@ -261,7 +266,7 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
                     String message = jsonObject.getString("message");
                     String card_code = jsonObject.getString("card_code");
                     if (success.equalsIgnoreCase("1")){
-                        Toast.makeText(getApplicationContext(), "Card verified successfully", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Card verified successfully. Please check your mail.", Toast.LENGTH_LONG).show();
                     }
                     else {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
