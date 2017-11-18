@@ -95,6 +95,7 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
             //txtNoGroup.setText("Read an NFC tag");
         } else {
             txtNoGroup.setText("This phone is not NFC enabled.");
+            ivAddCard.setVisibility(View.GONE);
         }
 
         // create an intent with tag data and deliver to this activity
@@ -256,7 +257,7 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
         {
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
-            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+          //  Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
                 if (result != null)
@@ -266,7 +267,7 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
                     String message = jsonObject.getString("message");
                     String card_code = jsonObject.getString("card_code");
                     if (success.equalsIgnoreCase("1")){
-                        Toast.makeText(getApplicationContext(), "Card verified successfully. Please check your mail.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     }
                     else {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
