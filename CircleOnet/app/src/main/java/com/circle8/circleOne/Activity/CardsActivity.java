@@ -17,9 +17,11 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcManager;
 import android.nfc.Tag;
+import android.nfc.tech.NfcF;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,6 +37,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.util.TypedValue;
@@ -106,6 +109,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -122,7 +126,7 @@ import be.appfoundry.nfclibrary.utilities.interfaces.NfcReadUtility;
 import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
 import io.fabric.sdk.android.Fabric;
 
-public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks,
+public class CardsActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks,
         ActivityCompat.OnRequestPermissionsResultCallback,
         PermissionUtils.PermissionResultCallback
 {
@@ -137,7 +141,6 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
     private Date location;
     private int currentPage;
     int cardCount = 0;
-    private NfcAdapter mNfcAdapter;
     Tag tag;
     boolean done = false;
     public static GoogleApiClient mGoogleApiClient;
@@ -172,7 +175,13 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
     ReferralCodeSession referralCodeSession;
     private String refer;
     String User_name;
-
+    private NfcAdapter mNfcAdapter;
+    private PendingIntent mPendingIntent;
+    private IntentFilter[] mIntentFilters;
+    private String[][] mNFCTechLists;
+    ArrayList<String> arrayNFC ;
+    String CardCode = "";
+    public static final byte[] MIME_TEXT = "application/com.circle8.circleOne".getBytes();
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -230,15 +239,27 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         }
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        NfcManager manager = (NfcManager) getSystemService(Context.NFC_SERVICE);
 
-        if (mNfcAdapter == null || mNfcAdapter.isEnabled() == false) {
-            // adapter exists and is enabled.
-            //txtMessage.setVisibility(View.VISIBLE);
+        if (mNfcAdapter != null) {
+            //txtNoGroup.setText("Read an NFC tag");
         } else {
-            // txtMessage.setVisibility(View.GONE);
-            // handleIntent(getIntent());
         }
+
+        // create an intent with tag data and deliver to this activity
+        mPendingIntent = PendingIntent.getActivity(this, 0,
+                new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+
+        // set an intent filter for all MIME data
+        IntentFilter ndefIntent = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
+        try {
+            ndefIntent.addDataType("*/*");
+            mIntentFilters = new IntentFilter[] { ndefIntent };
+        } catch (Exception e) {
+            Log.e("TagDispatch", e.toString());
+        }
+
+        mNFCTechLists = new String[][] { new String[] { NfcF.class.getName() } };
+
         new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         // mViewPager.setOverScrollMode(View.OVER_SCROLL_NEVER);
        /* mViewPager.setPageTransformer(true, new ViewPager.PageTransformer() {
@@ -1195,13 +1216,6 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         }
     }*/
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (getNfcAdapter() != null) {
-            getNfcAdapter().disableForegroundDispatch(this);
-        }
-    }
 
     private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
 
@@ -1262,6 +1276,95 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
 
             if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
                 Parcelable[] rawMsgs = getIntent().getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+
+
+
+
+                if (rawMsgs != null) {
+                    try {
+                        arrayNFC = new ArrayList<>();
+                        for (int i = 0; i < rawMsgs.length; i++) {
+                            NdefRecord[] recs = ((NdefMessage)rawMsgs[i]).getRecords();
+                            for (int j = 0; j < recs.length; j++) {
+                                if (recs[j].getTnf() == NdefRecord.TNF_MIME_MEDIA &&
+                                        Arrays.equals(recs[j].getType(), MIME_TEXT)) {
+
+                                    byte[] payload = recs[j].getPayload();
+                                    String textEncoding = ((payload[0] & 0200) == 0) ? "UTF-8" : "UTF-16";
+                                    int langCodeLen = payload[0] & 0077;
+
+                                    /*s += ("\n" +
+                                            new String(payload, langCodeLen + 1,
+                                                    payload.length - langCodeLen - 1, textEncoding) );
+*/
+                                    String s1 = new String(payload, langCodeLen + 1,
+                                            payload.length - langCodeLen - 1, textEncoding);
+                                    String decryptstr = decrypt(s1, secretKey);
+                                    arrayNFC.add(decryptstr);
+                                }
+                            }
+                        }
+                    } catch (Exception e) {
+                        Log.e("TagDispatch", e.toString());
+                    }
+
+                }
+                String ProfileId = "", card_code = "";
+                //Toast.makeText(getApplicationContext(), arrayNFC.toString(), Toast.LENGTH_LONG).show();
+                if (arrayNFC.size() == 1){
+                    nfcProfileId = arrayNFC.get(0).toString();
+                    //  txtNoGroup.setText("Your Card is already verified..");
+                    //  ivAddCard.setVisibility(View.GONE);
+                }
+                else if (arrayNFC.size() == 2){
+                    nfcProfileId = arrayNFC.get(0).toString();
+                    CardCode = arrayNFC.get(1).toString();
+                    // Toast.makeText(getApplicationContext(), ProfileId + " " + CardCode, Toast.LENGTH_LONG).show();
+                    // new HttpAsyncActivateNFC().execute(Utility.BASE_URL+"NFCSecurity/ActivateNFC");
+                }
+                else {
+                    nfcProfileId = arrayNFC.get(0).toString();
+                    //txtNoGroup.setText("Your Card is already verified..");
+                    //ivAddCard.setVisibility(View.GONE);
+                }
+
+                if (mLastLocation != null) {
+                    latitude = mLastLocation.getLatitude();
+                    longitude = mLastLocation.getLongitude();
+                } else {
+                    lat = "";
+                    lng = "";
+                    getLocation();
+                    Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
+                }
+
+
+                try {
+                    new HttpAsyncTask().execute(Utility.BASE_URL+"FriendConnection_Operation");
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                }
+                // Toast.makeText(getApplicationContext(), String.valueOf(latitude + " " + longitude), Toast.LENGTH_LONG).show();
+              /*  try {
+
+                    nfcProfileId = decrypt(ProfileId, secretKey);
+                    if (!card_code.equals("")){
+                        CardCode = decrypt(card_code, secretKey);
+                    }
+                    //  Toast.makeText(getApplicationContext(), nfcProfileId, Toast.LENGTH_LONG).show();
+                    try {
+                        new HttpAsyncTask().execute(Utility.BASE_URL+"FriendConnection_Operation");
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                    }
+                } catch (GeneralSecurityException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+
                 if (rawMsgs != null) {
                     msgs = new NdefMessage[rawMsgs.length];
                     for (int i = 0; i < rawMsgs.length; i++) {
@@ -1271,7 +1374,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                     byte[] payload = msgs[0].getRecords()[0].getPayload();
 
                     String message = new String(payload);
-                /* 把tag的資訊放到textview裡面 */
+                 把tag的資訊放到textview裡面
                     // mEtMessage.setText(new String(payload));
                     done = true;
 //                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
@@ -1304,7 +1407,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                         }
 
 
-                }
+                }*/
             }
         }
 
@@ -1320,6 +1423,22 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
 
     }
 
+   /* @Override
+    public void onResume() {
+        super.onResume();
+
+        if (mNfcAdapter != null)
+            mNfcAdapter.enableForegroundDispatch(this, mPendingIntent, mIntentFilters, mNFCTechLists);
+    }
+*/
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if (mNfcAdapter != null)
+            mNfcAdapter.disableForegroundDispatch(this);
+    }
+
     /**
      * Launched when in foreground dispatch mode
      *
@@ -1330,7 +1449,108 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         super.onNewIntent(paramIntent);
 
         getSupportActionBar().setShowHideAnimationEnabled(false);
+
+
+        String action = paramIntent.getAction();
         Tag tag = paramIntent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+
+        String s = "";
+
+        // parse through all NDEF messages and their records and pick text type only
+        Parcelable[] data = paramIntent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+
+        if (data != null) {
+            try {
+                arrayNFC = new ArrayList<>();
+                for (int i = 0; i < data.length; i++) {
+                    NdefRecord[] recs = ((NdefMessage)data[i]).getRecords();
+                    for (int j = 0; j < recs.length; j++) {
+                        if (recs[j].getTnf() == NdefRecord.TNF_MIME_MEDIA &&
+                                Arrays.equals(recs[j].getType(), MIME_TEXT)) {
+
+                            byte[] payload = recs[j].getPayload();
+                            String textEncoding = ((payload[0] & 0200) == 0) ? "UTF-8" : "UTF-16";
+                            int langCodeLen = payload[0] & 0077;
+
+                            s += ("\n" +
+                                    new String(payload, langCodeLen + 1,
+                                            payload.length - langCodeLen - 1, textEncoding) );
+                            String s1 = new String(payload, langCodeLen + 1,
+                                    payload.length - langCodeLen - 1, textEncoding);
+                            String decryptstr = decrypt(s1, secretKey);
+                            arrayNFC.add(decryptstr);
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                Log.e("TagDispatch", e.toString());
+            }
+
+        }
+        String ProfileId = "", card_code = "";
+        //Toast.makeText(getApplicationContext(), arrayNFC.toString(), Toast.LENGTH_LONG).show();
+        if (arrayNFC.size() == 1){
+            nfcProfileId = arrayNFC.get(0).toString();
+          //  txtNoGroup.setText("Your Card is already verified..");
+          //  ivAddCard.setVisibility(View.GONE);
+        }
+        else if (arrayNFC.size() == 2){
+            nfcProfileId = arrayNFC.get(0).toString();
+            CardCode = arrayNFC.get(1).toString();
+           // Toast.makeText(getApplicationContext(), ProfileId + " " + CardCode, Toast.LENGTH_LONG).show();
+           // new HttpAsyncActivateNFC().execute(Utility.BASE_URL+"NFCSecurity/ActivateNFC");
+        }
+        else {
+            nfcProfileId = arrayNFC.get(0).toString();
+            //txtNoGroup.setText("Your Card is already verified..");
+            //ivAddCard.setVisibility(View.GONE);
+        }
+
+
+        if (mLastLocation != null) {
+            latitude = mLastLocation.getLatitude();
+            longitude = mLastLocation.getLongitude();
+        } else {
+            lat = "";
+            lng = "";
+            getLocation();
+            Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
+        }
+        //  Toast.makeText(getApplicationContext(), String.valueOf(latitude + " " + longitude), Toast.LENGTH_LONG).show();
+
+        try {
+            new HttpAsyncTask().execute(Utility.BASE_URL+"FriendConnection_Operation");
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+        }
+       /* try {
+            nfcProfileId = decrypt(ProfileId, secretKey);
+            if (!CardCode.equals("")){
+                CardCode = decrypt(card_code, secretKey);
+            }
+            //  Toast.makeText(getApplicationContext(), nfcProfileId, Toast.LENGTH_LONG).show();
+            try {
+                new HttpAsyncTask().execute(Utility.BASE_URL+"FriendConnection_Operation");
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+            }
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+
+
+
+
+
+
+
+
+
+
+
+        /*Tag tag = paramIntent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
         if (tag == null) {
 //            Toast.makeText(getApplicationContext(), "tag == null", Toast.LENGTH_LONG).show();
             //textViewInfo.setText("tag == null");
@@ -1373,7 +1593,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
                     }
 
             }
-        }
+        }*/
     }
 
     public String decrypt(String value, String key)
@@ -1584,6 +1804,9 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
             jsonObject.accumulate("connection_date", formattedDate);
             jsonObject.accumulate("friendProfileId", nfcProfileId);
             jsonObject.accumulate("myProfileId", profileId);
+            if (!CardCode.equals("")){
+                jsonObject.accumulate("card_code", CardCode);
+            }
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
