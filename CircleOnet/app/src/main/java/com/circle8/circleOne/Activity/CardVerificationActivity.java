@@ -94,7 +94,7 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
         if (mNfcAdapter != null) {
             //txtNoGroup.setText("Read an NFC tag");
         } else {
-            txtNoGroup.setText("This phone is not NFC enabled.");
+            txtNoGroup.setText("Your current mobile device is not NFC-enabled. \nPlease login via an NFC-enabled device to unlock your card.");
             ivAddCard.setVisibility(View.GONE);
         }
 

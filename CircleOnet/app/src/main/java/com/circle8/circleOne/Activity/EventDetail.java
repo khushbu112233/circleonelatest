@@ -311,7 +311,7 @@ public class EventDetail extends AppCompatActivity
                     if(eventDetail.getString("Event_Image").equals("")
                             || eventDetail.getString("Event_Image").equals(null))
                     {
-                        imgEvent.setImageResource(R.drawable.events4);
+                        imgEvent.setImageResource(R.drawable.ic_event_default);
                     }
                     else
                     {

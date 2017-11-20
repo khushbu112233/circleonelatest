@@ -86,7 +86,7 @@ public class EventsAdapter extends ArrayAdapter
         if(eventModelArrayList.get(position).getEvent_Image().equalsIgnoreCase("")
                 || eventModelArrayList.get(position).getEvent_Image().equalsIgnoreCase("null") )
         {
-            holder.image.setImageResource(R.drawable.events4);
+            holder.image.setImageResource(R.drawable.ic_event_default);
         }
         else
         {
