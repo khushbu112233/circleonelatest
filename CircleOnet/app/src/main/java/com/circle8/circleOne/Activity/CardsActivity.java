@@ -1277,9 +1277,6 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
                 Parcelable[] rawMsgs = getIntent().getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
 
-
-
-
                 if (rawMsgs != null) {
                     try {
                         arrayNFC = new ArrayList<>();

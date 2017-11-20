@@ -87,6 +87,8 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
     private TextView tvProgressing ;
     private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
 
+    private TextView tvProductListInfo, tvLocationListInfo ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -111,6 +113,9 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
         ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
         ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
         ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
+
+        tvProductListInfo = (TextView)findViewById(R.id.tvProductListInfo);
+        tvLocationListInfo = (TextView)findViewById(R.id.tvLocationListInfo);
 
         // for ads images
        /* adImages.add(R.drawable.cold_coco);
@@ -321,105 +326,135 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
                     String merchant_website = jsonObject.getString("merchant_website");
 
                     tvMerchantName.setText(merchant_name);
-                    tvMerchantDesc.setText(merchant_desc+"\n\n"+merchant_website);
 
-                    JSONArray productsArray = jsonObject.getJSONArray("Products");
-                    if (productsArray.length() != 0)
+                    if (merchant_desc.equalsIgnoreCase(""))
                     {
-                        for (int i = 0 ; i < productsArray.length(); i++)
-                        {
-                            JSONObject productListObj = productsArray.getJSONObject(i);
-
-                            String ProductCategoryID = productListObj.getString("ProductCategoryID");
-                            String ProductCategoryName = productListObj.getString("ProductCategoryName");
-                            String ProductID = productListObj.getString("ProductID");
-                            String ProductName = productListObj.getString("ProductName");
-                            String ProductDesc = productListObj.getString("ProductDesc");
-                            String Offer = productListObj.getString("Offer");
-                            String ProductCost = productListObj.getString("ProductCost");
-                            String ProductImage = productListObj.getString("ProductImage");
-                            String MerchantImage = productListObj.getString("MerchantImage");
-                            String Merchant_ID = productListObj.getString("Merchant_ID");
-                            String Merchant_Name = productListObj.getString("Merchant_Name");
-                            String Merchant_Desc = productListObj.getString("Merchant_Desc");
-
-                            MerchantProductModel merchantProductModel = new MerchantProductModel();
-                            merchantProductModel.setProductCategoryId(ProductCategoryID);
-                            merchantProductModel.setProductCategoryName(ProductCategoryName);
-                            merchantProductModel.setProductId(ProductID);
-                            merchantProductModel.setProductName(ProductName);
-                            merchantProductModel.setProductDesc(ProductDesc);
-                            merchantProductModel.setProductOffer(Offer);
-                            merchantProductModel.setProductCost(ProductCost);
-                            merchantProductModel.setProductImage(ProductImage);
-                            merchantProductModel.setMerchantImage(MerchantImage);
-                            merchantProductModel.setMerchantId(Merchant_ID);
-                            merchantProductModel.setMerchantName(Merchant_Name);
-                            merchantProductModel.setMerchantDesc(Merchant_Desc);
-                            merchantProductModelArrayList.add(merchantProductModel);
-
-                            merchantProductAdapter = new MerchantProductAdapter(MerchantDetailActivity.this, merchantProductModelArrayList);
-                            listView1.setAdapter(merchantProductAdapter);
-                            merchantProductAdapter.notifyDataSetChanged();
-                        }
+                        tvMerchantDesc.setText("No merchant description available.");
                     }
                     else
                     {
-                        Toast.makeText(getApplicationContext(), "No Product_List Avail", Toast.LENGTH_LONG).show();
+                        tvMerchantDesc.setText(merchant_desc+"\n\n"+merchant_website);
                     }
 
-                    JSONArray locationsArray = jsonObject.getJSONArray("Locations");
-                    if (locationsArray.length() != 0)
+                    try
                     {
-                        for (int i = 0 ; i < locationsArray.length(); i++)
+                        JSONArray productsArray = jsonObject.getJSONArray("Products");
+                        if (productsArray.length() != 0)
                         {
-                            JSONObject locationsObj = locationsArray.getJSONObject(i);
+                            tvProductListInfo.setVisibility(View.GONE);
 
-                            String Branch_Name = locationsObj.getString("Branch_Name");
-                            String Addr1 = locationsObj.getString("Addr1");
-                            String Addr2 = locationsObj.getString("Addr2");
-                            String Addr3 = locationsObj.getString("Addr3");
-                            String Addr4 = locationsObj.getString("Addr4");
-                            String City = locationsObj.getString("City");
-                            String State = locationsObj.getString("State");
-                            String Country = locationsObj.getString("Country");
-                            String PostalCode = locationsObj.getString("PostalCode");
-                            String Latitude = locationsObj.getString("Latitude");
-                            String Longitude = locationsObj.getString("Longitude");
-                            String Open_Time = locationsObj.getString("Open_Time");
-                            String Close_Time = locationsObj.getString("Close_Time");
-                            String Open_24Hours_Flag = locationsObj.getString("Open_24Hours_Flag");
+                            for (int i = 0 ; i < productsArray.length(); i++)
+                            {
+                                JSONObject productListObj = productsArray.getJSONObject(i);
 
-                            MerchantLocationModel merchantLocationModel = new MerchantLocationModel();
-                            merchantLocationModel.setStoreName(Branch_Name);
-                            merchantLocationModel.setAddress1(Addr1);
-                            merchantLocationModel.setAddress2(Addr2);
-                            merchantLocationModel.setAddress3(Addr3);
-                            merchantLocationModel.setAddress4(Addr4);
-                            merchantLocationModel.setCity(City);
-                            merchantLocationModel.setState(State);
-                            merchantLocationModel.setCountry(Country);
-                            merchantLocationModel.setPostalCode(PostalCode);
-                            merchantLocationModel.setLatitude(Latitude);
-                            merchantLocationModel.setLongitude(Longitude);
-                            merchantLocationModel.setOpenTime(Open_Time);
-                            merchantLocationModel.setCloseTime(Close_Time);
-                            merchantLocationModel.setHourFlag(Open_24Hours_Flag);
-                            merchantLocationModelArrayList.add(merchantLocationModel);
+                                String ProductCategoryID = productListObj.getString("ProductCategoryID");
+                                String ProductCategoryName = productListObj.getString("ProductCategoryName");
+                                String ProductID = productListObj.getString("ProductID");
+                                String ProductName = productListObj.getString("ProductName");
+                                String ProductDesc = productListObj.getString("ProductDesc");
+                                String Offer = productListObj.getString("Offer");
+                                String ProductCost = productListObj.getString("ProductCost");
+                                String ProductImage = productListObj.getString("ProductImage");
+                                String MerchantImage = productListObj.getString("MerchantImage");
+                                String Merchant_ID = productListObj.getString("Merchant_ID");
+                                String Merchant_Name = productListObj.getString("Merchant_Name");
+                                String Merchant_Desc = productListObj.getString("Merchant_Desc");
 
-                            merchantAddressAdapter = new MerchantAddressAdapter(MerchantDetailActivity.this, merchantLocationModelArrayList);
-                            listView2.setAdapter(merchantAddressAdapter);
-                            merchantAddressAdapter.notifyDataSetChanged();
+                                MerchantProductModel merchantProductModel = new MerchantProductModel();
+                                merchantProductModel.setProductCategoryId(ProductCategoryID);
+                                merchantProductModel.setProductCategoryName(ProductCategoryName);
+                                merchantProductModel.setProductId(ProductID);
+                                merchantProductModel.setProductName(ProductName);
+                                merchantProductModel.setProductDesc(ProductDesc);
+                                merchantProductModel.setProductOffer(Offer);
+                                merchantProductModel.setProductCost(ProductCost);
+                                merchantProductModel.setProductImage(ProductImage);
+                                merchantProductModel.setMerchantImage(MerchantImage);
+                                merchantProductModel.setMerchantId(Merchant_ID);
+                                merchantProductModel.setMerchantName(Merchant_Name);
+                                merchantProductModel.setMerchantDesc(Merchant_Desc);
+                                merchantProductModelArrayList.add(merchantProductModel);
 
-                            String markerAddress = Addr1+","+Addr2+","+City+","+State+","+Country+" "+PostalCode;
-
-                            GeocodingLocation locationAddress = new GeocodingLocation();
-                            locationAddress.getAddressFromLocation(markerAddress, getApplicationContext(), new GeocoderHandler());
+                                merchantProductAdapter = new MerchantProductAdapter(MerchantDetailActivity.this, merchantProductModelArrayList);
+                                listView1.setAdapter(merchantProductAdapter);
+                                merchantProductAdapter.notifyDataSetChanged();
+                            }
+                        }
+                        else
+                        {
+                            tvProductListInfo.setVisibility(View.VISIBLE);
+    //                        Toast.makeText(getApplicationContext(), "No Product_List Avail", Toast.LENGTH_LONG).show();
                         }
                     }
-                    else
+                    catch (JSONException e)
                     {
-                        Toast.makeText(getApplicationContext(), "No Locations Avail", Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                        tvProductListInfo.setVisibility(View.VISIBLE);
+                    }
+
+                    try
+                    {
+                        JSONArray locationsArray = jsonObject.getJSONArray("Locations");
+                        if (locationsArray.length() != 0)
+                        {
+                            tvLocationListInfo.setVisibility(View.GONE);
+
+                            for (int i = 0 ; i < locationsArray.length(); i++)
+                            {
+                                JSONObject locationsObj = locationsArray.getJSONObject(i);
+
+                                String Branch_Name = locationsObj.getString("Branch_Name");
+                                String Addr1 = locationsObj.getString("Addr1");
+                                String Addr2 = locationsObj.getString("Addr2");
+                                String Addr3 = locationsObj.getString("Addr3");
+                                String Addr4 = locationsObj.getString("Addr4");
+                                String City = locationsObj.getString("City");
+                                String State = locationsObj.getString("State");
+                                String Country = locationsObj.getString("Country");
+                                String PostalCode = locationsObj.getString("PostalCode");
+                                String Latitude = locationsObj.getString("Latitude");
+                                String Longitude = locationsObj.getString("Longitude");
+                                String Open_Time = locationsObj.getString("Open_Time");
+                                String Close_Time = locationsObj.getString("Close_Time");
+                                String Open_24Hours_Flag = locationsObj.getString("Open_24Hours_Flag");
+
+                                MerchantLocationModel merchantLocationModel = new MerchantLocationModel();
+                                merchantLocationModel.setStoreName(Branch_Name);
+                                merchantLocationModel.setAddress1(Addr1);
+                                merchantLocationModel.setAddress2(Addr2);
+                                merchantLocationModel.setAddress3(Addr3);
+                                merchantLocationModel.setAddress4(Addr4);
+                                merchantLocationModel.setCity(City);
+                                merchantLocationModel.setState(State);
+                                merchantLocationModel.setCountry(Country);
+                                merchantLocationModel.setPostalCode(PostalCode);
+                                merchantLocationModel.setLatitude(Latitude);
+                                merchantLocationModel.setLongitude(Longitude);
+                                merchantLocationModel.setOpenTime(Open_Time);
+                                merchantLocationModel.setCloseTime(Close_Time);
+                                merchantLocationModel.setHourFlag(Open_24Hours_Flag);
+                                merchantLocationModelArrayList.add(merchantLocationModel);
+
+                                merchantAddressAdapter = new MerchantAddressAdapter(MerchantDetailActivity.this, merchantLocationModelArrayList);
+                                listView2.setAdapter(merchantAddressAdapter);
+                                merchantAddressAdapter.notifyDataSetChanged();
+
+                                String markerAddress = Addr1+","+Addr2+","+City+","+State+","+Country+" "+PostalCode;
+
+                                GeocodingLocation locationAddress = new GeocodingLocation();
+                                locationAddress.getAddressFromLocation(markerAddress, getApplicationContext(), new GeocoderHandler());
+                            }
+                        }
+                        else
+                        {
+                            tvLocationListInfo.setVisibility(View.VISIBLE);
+    //                        Toast.makeText(getApplicationContext(), "No Locations Avail", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    catch (JSONException e)
+                    {
+                        e.printStackTrace();
+                        tvLocationListInfo.setVisibility(View.VISIBLE);
                     }
                 }
                 else
