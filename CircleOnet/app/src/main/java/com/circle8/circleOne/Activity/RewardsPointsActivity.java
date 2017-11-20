@@ -121,13 +121,13 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         tvHistory.setOnClickListener(this);
         imgBack.setOnClickListener(this);
 
-        new HttpAsyncGetHistoryReedemedPoints().execute(Utility.REWARDS_BASE_URL+"History_ReedemedPoints");           // post
-        new HttpAsyncGetAll().execute(Utility.MERCHANT_BASE_URL+"GetAll");                 //get
+        new HttpAsyncGetHistoryReedemedPoints().execute(Utility.BASE_URL+"Rewards/History_ReedemedPoints");           // post
+        new HttpAsyncGetAll().execute(Utility.BASE_URL+"Merchant/GetAll");                 //get
 //        new HttpAsyncGetProductCategory().execute(Utility.MERCHANT_BASE_URL+"GetProductCategory");                 //get
 //        new HttpAsyncGetProduct().execute(Utility.MERCHANT_BASE_URL+"GetProducts");                               //get
 //        new HttpAsyncGetProductByCategory().execute(Utility.MERCHANT_BASE_URL+"GetProductsByCategory");           // post
-        new HttpAsyncGetBalance().execute(Utility.REWARDS_BASE_URL+"GetBalance");                                 // post
-        new HttpAsyncGetHistoryEarnedPoints().execute(Utility.REWARDS_BASE_URL+"History_EarnedPoints");           // post
+        new HttpAsyncGetBalance().execute(Utility.BASE_URL+"Rewards/GetBalance");                                 // post
+        new HttpAsyncGetHistoryEarnedPoints().execute(Utility.BASE_URL+"Rewards/History_EarnedPoints");           // post
     }
 
     private void init()

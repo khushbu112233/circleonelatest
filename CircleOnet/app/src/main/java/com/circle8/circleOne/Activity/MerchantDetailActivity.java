@@ -154,7 +154,7 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        new HttpAsyncGetDetails().execute(Utility.MERCHANT_BASE_URL+"GetDetails");                               // post
+        new HttpAsyncGetDetails().execute(Utility.BASE_URL+"Merchant/GetDetails");                               // post
 
        /* listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
