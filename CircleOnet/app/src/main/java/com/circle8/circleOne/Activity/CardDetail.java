@@ -80,7 +80,7 @@ import be.appfoundry.nfclibrary.utilities.interfaces.NfcReadUtility;
 import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CardDetail extends NfcActivity
+public class CardDetail extends NfcActivity implements View.OnClickListener
 {
     ExpandableHeightListView lstTestimonial;
     ViewPager mViewPager, viewPager1;
@@ -448,31 +448,7 @@ public class CardDetail extends NfcActivity
         llWebsiteBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder;
-                builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
 
-                builder.setTitle("Redirect to Web Browser")
-                        .setMessage("Are you sure you want to redirect to Web Browser ?")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // continue with delete
-                                String url = txtWebsite.getText().toString();
-                                if (url != null) {
-                                    if (!url.startsWith("http://") && !url.startsWith("https://"))
-                                        url = "http://" + url;
-                                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                                    startActivity(browserIntent);
-                                }
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // do nothing
-                                dialog.dismiss();
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_menu_set_as)
-                        .show();
             }
         });
 
@@ -525,11 +501,15 @@ public class CardDetail extends NfcActivity
                     }
                     else
                     {
-                        Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+                        Uri uri = Uri.parse("smsto:"+txtMob.getText().toString());
+                        Intent it = new Intent(Intent.ACTION_SENDTO, uri);
+                        it.putExtra("sms_body", "");
+                        startActivity(it);
+                       /* Intent smsIntent = new Intent(Intent.ACTION_VIEW);
                         smsIntent.setType("vnd.android-dir/mms-sms");
                         smsIntent.putExtra("address", txtMob.getText().toString());
                         smsIntent.putExtra("sms_body", "");
-                        startActivity(smsIntent);
+                        startActivity(smsIntent);*/
                     }
                 }
             }
@@ -612,90 +592,21 @@ public class CardDetail extends NfcActivity
         llEmailBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (txtEmail.getText().toString().equals("")) {
 
-                } else {
-                    AlertDialog.Builder builder;
-                    builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
-                    builder.setTitle("Mail to " + txtName.getText().toString())
-                            .setMessage("Are you sure you want to drop Mail ?")
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // continue with delete
-                                    try {
-                                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("mailto:" + txtEmail.getText().toString()));
-                                        intent.putExtra(Intent.EXTRA_SUBJECT, "");
-                                        intent.putExtra(Intent.EXTRA_TEXT, "");
-                                        startActivity(intent);
-                                    } catch (Exception e) {
-                                        Toast.makeText(getApplicationContext(), "Sorry...You don't have any mail app", Toast.LENGTH_SHORT).show();
-                                        e.printStackTrace();
-                                    }
-                                }
-                            })
-                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // do nothing
-                                    dialog.dismiss();
-                                }
-                            })
-                            .setIcon(android.R.drawable.ic_dialog_email)
-                            .show();
-                }
             }
         });
 
         llMobileBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder;
-                builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
 
-                builder.setTitle("Call to " + txtName.getText().toString())
-                        .setMessage("Are you sure you want to make a Call ?")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // continue with delete
-                                Intent intent = new Intent(Intent.ACTION_DIAL);
-                                intent.setData(Uri.parse("tel:" + txtMob.getText().toString()));
-                                startActivity(intent);
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // do nothing
-                                dialog.dismiss();
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_menu_call)
-                        .show();
             }
         });
 
         llTeleBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder;
-                builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
 
-                builder.setTitle("Call to " + txtName.getText().toString())
-                        .setMessage("Are you sure you want to make a Call ?")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // continue with delete
-                                Intent intent = new Intent(Intent.ACTION_DIAL);
-                                intent.setData(Uri.parse("tel:" + txtPH.getText().toString()));
-                                startActivity(intent);
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // do nothing
-                                dialog.dismiss();
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_menu_call)
-                        .show();
             }
         });
 
@@ -894,6 +805,128 @@ public class CardDetail extends NfcActivity
         });
     }
 
+    @Override
+    public void onClick(View v)
+    {
+        if ( v == llWebsiteBox)
+        {
+
+        }
+    }
+
+    public void openWebPage(View v)
+    {
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
+
+        builder.setTitle("Redirect to Web Browser")
+                .setMessage("Are you sure you want to redirect to Web Browser ?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                        String url = txtWebsite.getText().toString();
+                        if (url != null) {
+                            if (!url.startsWith("http://") && !url.startsWith("https://"))
+                                url = "http://" + url;
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                            startActivity(browserIntent);
+                        }
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                        dialog.dismiss();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_menu_set_as)
+                .show();
+    }
+
+    public void openGMail(View v)
+    {
+        if (txtEmail.getText().toString().equals("")) {
+
+        } else {
+            AlertDialog.Builder builder;
+            builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
+            builder.setTitle("Mail to " + txtName.getText().toString())
+                    .setMessage("Are you sure you want to drop Mail ?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // continue with delete
+                            try {
+                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("mailto:" + txtEmail.getText().toString()));
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "");
+                                intent.putExtra(Intent.EXTRA_TEXT, "");
+                                startActivity(intent);
+                            } catch (Exception e) {
+                                Toast.makeText(getApplicationContext(), "Sorry...You don't have any mail app", Toast.LENGTH_SHORT).show();
+                                e.printStackTrace();
+                            }
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // do nothing
+                            dialog.dismiss();
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_email)
+                    .show();
+        }
+    }
+
+    public void openTele(View v)
+    {
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
+
+        builder.setTitle("Call to " + txtName.getText().toString())
+                .setMessage("Are you sure you want to make a Call ?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                        Intent intent = new Intent(Intent.ACTION_DIAL);
+                        intent.setData(Uri.parse("tel:" + txtPH.getText().toString()));
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                        dialog.dismiss();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_menu_call)
+                .show();
+    }
+
+    public void openMobile(View v)
+    {
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
+
+        builder.setTitle("Call to " + txtName.getText().toString())
+                .setMessage("Are you sure you want to make a Call ?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                        Intent intent = new Intent(Intent.ACTION_DIAL);
+                        intent.setData(Uri.parse("tel:" + txtMob.getText().toString()));
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                        dialog.dismiss();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_menu_call)
+                .show();
+    }
+
 
     public Address getAddress(double latitude, double longitude)
     {
@@ -967,11 +1000,8 @@ public class CardDetail extends NfcActivity
                     currentLocation+=" "+country;
 
                 txtRemark.setText(currentLocation);
-
             }
-
         }
-
     }
 
     public String POST2(String url)

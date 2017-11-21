@@ -67,4 +67,6 @@
     <integer name="google_play_services_version">11020000</integer>
     <string name="google_map_api">AIzaSyCiiH_iEnp97ZPZrVSK7mPvAY30jthNSJ8</string>
 
+    <string name="net_check">check for data connection</string>
+
 </resources>

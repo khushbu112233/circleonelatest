@@ -64,6 +64,7 @@ import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.Adapter.CardViewDataAdapter;
 import com.circle8.circleOne.Adapter.CustomAdapter;
 import com.circle8.circleOne.Helper.LoginSession;
+import com.circle8.circleOne.Helper.ProfileSession;
 import com.circle8.circleOne.Helper.ReferralCodeSession;
 import com.circle8.circleOne.Model.AssociationModel;
 import com.circle8.circleOne.Model.EventModel;
@@ -90,6 +91,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
@@ -253,7 +255,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     EditText edtWork2, edtPrimary2, edtEmail2, edtFax1, edtFax2;
     private static final int PERMISSIONS_REQUEST_CAMERA = 314;
     FrameLayout FrameScanBotCamera;
-
+    ProfileSession profileSession;
     private Toast userGuidanceToast;
     private List<AssociationModel> associationList, eventList;
     private boolean flashEnabled = false;
@@ -342,6 +344,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         appbar = (AppBarLayout) findViewById(R.id.appbar);
         ccpCountry = (CountryCodePicker) findViewById(R.id.ccpAddress5);
 
+        profileSession = new ProfileSession(getApplicationContext());
         rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
         tvProgressing = (TextView)findViewById(R.id.txtProgressing);
         ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
@@ -549,13 +552,13 @@ public class EditProfileActivity extends AppCompatActivity implements
                 client.authorize(EditProfileActivity.this, new Callback<TwitterSession>() {
                     @Override
                     public void success(Result<TwitterSession> twitterSessionResult) {
-                        Toast.makeText(EditProfileActivity.this, "success", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(EditProfileActivity.this, "success", Toast.LENGTH_SHORT).show();
                         handleTwitterSession(twitterSessionResult.data);
                     }
 
                     @Override
                     public void failure(TwitterException e) {
-                        Toast.makeText(EditProfileActivity.this, "failure", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(EditProfileActivity.this, "failure", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -1164,8 +1167,8 @@ public class EditProfileActivity extends AppCompatActivity implements
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("TAG", "signInWithCredential:failure", task.getException());
-                            Toast.makeText(EditProfileActivity.this, task.getException().toString(),
-                                    Toast.LENGTH_SHORT).show();
+                           /* Toast.makeText(EditProfileActivity.this, task.getException().toString(),
+                                    Toast.LENGTH_SHORT).show();*/
                             // updateUI(null);
                         }
 
@@ -1182,7 +1185,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             @Override
             public void onAuthSuccess() {
 
-                 Toast.makeText(getApplicationContext(), "success" + LISessionManager.getInstance(getApplicationContext()).getSession().getAccessToken().toString(), Toast.LENGTH_LONG).show();
+               //  Toast.makeText(getApplicationContext(), "success" + LISessionManager.getInstance(getApplicationContext()).getSession().getAccessToken().toString(), Toast.LENGTH_LONG).show();
                // login_linkedin_btn.setVisibility(View.GONE);
 
             }
@@ -1190,7 +1193,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             @Override
             public void onAuthError(LIAuthError error) {
 
-                Toast.makeText(getApplicationContext(), "failed " + error.toString(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "failed " + error.toString(), Toast.LENGTH_LONG).show();
             }
         }, true);
     }
@@ -1303,6 +1306,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                     String success = jsonObject.getString("success");
                     String message = jsonObject.getString("message");
                     if (success.equalsIgnoreCase("1")){
+                        profileSession.createProfileSession("0");
                        finish();
                         Toast.makeText(getApplicationContext(), "Profile Deleted Successfully..", Toast.LENGTH_LONG).show();
                     }else {
@@ -1373,6 +1377,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                         );
                         strGoogle = "https://plus.google.com/" + acct.getId()+"/";
                         imgGoogle.setImageResource(R.drawable.icon_google);
+                        signOut();
                     }
                 }
             } else {
@@ -1387,6 +1392,15 @@ public class EditProfileActivity extends AppCompatActivity implements
         }
     }
 
+    private void signOut() {
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                new ResultCallback<com.google.android.gms.common.api.Status>() {
+                    @Override
+                    public void onResult(Status status) {
+                        updateUI(false);
+                    }
+                });
+    }
 
     private FacebookCallback<LoginResult> mCallBack = new FacebookCallback<LoginResult>() {
         @Override
@@ -1406,10 +1420,10 @@ public class EditProfileActivity extends AppCompatActivity implements
                                 GraphResponse response) {
 
                             Log.e("response: ", response + "");
-                            Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
+                          //  Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
                             try {
                                 strFB = "http://www.facebook.com/" + object.getString("id").toString();
-                                Toast.makeText(getApplicationContext(), strFB, Toast.LENGTH_LONG).show();
+                               // Toast.makeText(getApplicationContext(), strFB, Toast.LENGTH_LONG).show();
                                 imgFb.setImageResource(R.drawable.icon_fb);
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -2402,7 +2416,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                 try {
                     byte[] data1 = file_name.getBytes("UTF-8");
                     String base64 = Base64.encodeToString(data1, Base64.DEFAULT);
-                    Toast.makeText(getApplicationContext(), base64, Toast.LENGTH_LONG).show();
+                  //  Toast.makeText(getApplicationContext(), base64, Toast.LENGTH_LONG).show();
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
@@ -2920,7 +2934,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                 byte[] data = fileName.getBytes("UTF-8");
                 String base64 = Base64.encodeToString(data, Base64.DEFAULT);
                 Attach_String = base64;
-                Toast.makeText(getApplicationContext(), base64, Toast.LENGTH_LONG).show();
+               // Toast.makeText(getApplicationContext(), base64, Toast.LENGTH_LONG).show();
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
@@ -3055,7 +3069,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                     String message = jsonObject.getString("message");
                     String UserID = jsonObject.getString("UserID");
                     String ProfileID = jsonObject.getString("ProfileID");
-
+                    profileSession.createProfileSession("0");
                     if (success.equalsIgnoreCase("1")) {
 
                         if (fromActivity.equalsIgnoreCase("manage")){
@@ -3460,7 +3474,11 @@ public class EditProfileActivity extends AppCompatActivity implements
                         String kept = name.substring(0, name.indexOf(" "));
                         String remainder = name.substring(name.indexOf(" ") + 1, name.length());
                         kept = kept.replaceAll("//+", "");
-                        ccp3.setCountryForPhoneCode(Integer.parseInt(kept));
+                        try {
+                            ccp3.setCountryForPhoneCode(Integer.parseInt(kept));
+                        }catch (Exception e){
+
+                        }
                         edtPrimary.setText(remainder);
                     }
                     else {

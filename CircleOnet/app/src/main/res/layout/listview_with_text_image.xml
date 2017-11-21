@@ -155,6 +155,7 @@
     </LinearLayout>
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/lnrVPA"
             android:layout_marginTop="15dp"
             android:layout_width="match_parent"

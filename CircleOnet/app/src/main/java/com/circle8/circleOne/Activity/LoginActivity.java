@@ -82,6 +82,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.internal.fa;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
@@ -221,6 +222,7 @@ public class LoginActivity extends AppCompatActivity implements
 
     private static final int CONTACT_PICKER_REQUEST = 991;
     private static final int PERMISSION_REQUEST_CONTACT = 111;
+    Boolean netCheck= false;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -262,6 +264,11 @@ public class LoginActivity extends AppCompatActivity implements
         editor = sharedPreferences.edit();
         rem_userpass = (CheckBox) findViewById(R.id.switchRemember);
 
+        netCheck = Utility.isNetworkAvailable(getApplicationContext());
+        if (netCheck == false){
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
+        }
+       // Toast.makeText(getApplicationContext(), netCheck.toString(), Toast.LENGTH_LONG).show();
         if (sharedPreferences.getBoolean(KEY_REMEMBER, false))
             rem_userpass.setChecked(true);
         else
@@ -295,23 +302,27 @@ public class LoginActivity extends AppCompatActivity implements
         etLoginPass.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
-                    userName = etLoginUser.getText().toString();
-                    userPassword = etLoginPass.getText().toString();
 
-                    if (userName.equals("")){
-                        Toast.makeText(getApplicationContext(), "Enter Username", Toast.LENGTH_SHORT).show();
-                    }
-                    else if (userPassword.equals("")){
-                        Toast.makeText(getApplicationContext(), "Enter Password", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        if(getCurrentFocus()!=null) {
-                            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                if (netCheck == false){
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
+                }
+                else {
+                    if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                        userName = etLoginUser.getText().toString();
+                        userPassword = etLoginPass.getText().toString();
+
+                        if (userName.equals("")) {
+                            Toast.makeText(getApplicationContext(), "Enter Username", Toast.LENGTH_SHORT).show();
+                        } else if (userPassword.equals("")) {
+                            Toast.makeText(getApplicationContext(), "Enter Password", Toast.LENGTH_SHORT).show();
+                        } else {
+                            if (getCurrentFocus() != null) {
+                                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                            }
+
+                            new HttpAsyncTask().execute(Utility.BASE_URL + "UserLogin");
                         }
-
-                        new HttpAsyncTask().execute(Utility.BASE_URL+"UserLogin");
                     }
                 }
                 return false;
@@ -467,14 +478,18 @@ public class LoginActivity extends AppCompatActivity implements
                 userName = etLoginUser.getText().toString();
                 userPassword = etLoginPass.getText().toString();
 
-                if (!validateLogin(userName, userPassword)) {
+                if (netCheck == false){
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
+                }else {
+                    if (!validateLogin(userName, userPassword)) {
 //                    Toast.makeText(getApplicationContext(), "Form Fill Invalid!", Toast.LENGTH_SHORT).show();
-                } else {
-                    if(getCurrentFocus()!=null) {
-                        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                    } else {
+                        if (getCurrentFocus() != null) {
+                            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                        }
+                        new HttpAsyncTask().execute(Utility.BASE_URL + "UserLogin");
                     }
-                    new HttpAsyncTask().execute(Utility.BASE_URL+"UserLogin");
                 }
             /* Create an Intent that will start the Menu-Activity. */
 
@@ -505,20 +520,26 @@ public class LoginActivity extends AppCompatActivity implements
                 progressDialog.setMessage("Loading...");
                 progressDialog.show();*/
 
-                String loading = "Loading";
-                CustomProgressDialog(loading);
+                if (netCheck == false){
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
+                }
+                else {
 
-                loginButton.performClick();
+                    String loading = "Loading";
+                    CustomProgressDialog(loading);
 
-                loginButton.setPressed(true);
+                    loginButton.performClick();
 
-                loginButton.invalidate();
+                    loginButton.setPressed(true);
 
-                loginButton.registerCallback(callbackManager, mCallBack);
+                    loginButton.invalidate();
 
-                loginButton.setPressed(false);
+                    loginButton.registerCallback(callbackManager, mCallBack);
 
-                loginButton.invalidate();
+                    loginButton.setPressed(false);
+
+                    loginButton.invalidate();
+                }
             }
         });
 

@@ -58,6 +58,8 @@ public class EventDetail extends AppCompatActivity
     private ArrayList<String> eventDate = new ArrayList<>();
     private ArrayList<String> startTime = new ArrayList<>();
     private ArrayList<String> endTime = new ArrayList<>();
+    TextView txtBook, txtRegister;
+    String eventBook = "", eventRegister = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -78,7 +80,8 @@ public class EventDetail extends AppCompatActivity
         imgLogo = (ImageView) findViewById(R.id.imgLogo);
         actionText = (TextView) findViewById(R.id.mytext);
         actionText.setText("Events");
-
+        txtBook = (TextView) findViewById(R.id.txtBook);
+        txtRegister = (TextView) findViewById(R.id.txtRegister);
         tvEventTitle = (TextView)findViewById(R.id.tvEventTitle);
         tvEventDate = (TextView)findViewById(R.id.tvEventDate);
         tvEventType = (TextView)findViewById(R.id.tvEventType);
@@ -128,6 +131,24 @@ public class EventDetail extends AppCompatActivity
                 go.putExtra("viewpager_position", 0);
                 startActivity(go);
                 finish();
+            }
+        });
+
+        txtRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
+                intent.putExtra("url", eventRegister);
+                startActivity(intent);
+            }
+        });
+
+        txtBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
+                intent.putExtra("url", eventBook);
+                startActivity(intent);
             }
         });
 
@@ -257,6 +278,26 @@ public class EventDetail extends AppCompatActivity
                     eventModel.setAddress3(eventDetail.getString("Address3"));
                     eventModel.setAddress4(eventDetail.getString("Address4"));
                     eventModelArrayList.add(eventModel);
+
+                    if (eventDetail.getString("Event_Book_Stand").equalsIgnoreCase("") ||
+                            eventDetail.getString("Event_Book_Stand").equalsIgnoreCase("null") ||
+                            eventDetail.getString("Event_Book_Stand").equalsIgnoreCase(null)){
+                        txtBook.setVisibility(View.GONE);
+                    }
+                    else {
+                        eventBook = eventDetail.getString("Event_Book_Stand").toString();
+                        txtBook.setVisibility(View.VISIBLE);
+                    }
+
+                    if (eventDetail.getString("Event_Registration").equalsIgnoreCase("") ||
+                            eventDetail.getString("Event_Registration").equalsIgnoreCase("null") ||
+                            eventDetail.getString("Event_Registration").equalsIgnoreCase(null)){
+                        txtRegister.setVisibility(View.GONE);
+                    }
+                    else {
+                        eventRegister = eventDetail.getString("Event_Registration").toString();
+                        txtRegister.setVisibility(View.VISIBLE);
+                    }
 
                     if(eventDetail.getString("Event_Name").equals("")
                             || eventDetail.getString("Event_Name").equals("null"))

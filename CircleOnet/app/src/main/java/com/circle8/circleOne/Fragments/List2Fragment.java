@@ -398,7 +398,7 @@ public class List2Fragment extends Fragment
         }
     }
 
-    private static void callFirst()
+    public static void callFirst()
     {
         new HttpAsyncTask().execute(Utility.BASE_URL+SortAndFilterOption.CardListApi);
     }
