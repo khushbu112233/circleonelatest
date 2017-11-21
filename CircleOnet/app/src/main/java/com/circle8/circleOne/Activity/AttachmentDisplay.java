@@ -7,14 +7,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 
 public class AttachmentDisplay extends AppCompatActivity {
 
     private WebView webView;
     String url;
-
+    Boolean net_check = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,7 +24,10 @@ public class AttachmentDisplay extends AppCompatActivity {
         webView = (WebView)findViewById(R.id.webView1);
         Intent i = getIntent();
         url = i.getStringExtra("url");
-
+        net_check = Utility.isNetworkAvailable(getApplicationContext());
+        if (net_check == false){
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
+        }
         startWebView(url);
     }
 

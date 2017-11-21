@@ -76,7 +76,7 @@ public class HistoryActivity extends AppCompatActivity
         ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
         ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
 
-        new HttpAsyncTaskHistoryList().execute(Utility.BASE_URL+"Hisory");
+        new HttpAsyncTaskHistoryList().execute(Utility.BASE_URL+"History");
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override

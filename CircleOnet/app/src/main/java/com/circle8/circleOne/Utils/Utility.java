@@ -6,6 +6,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -17,14 +19,14 @@ public class Utility
     public static final int MY_PERMISSIONS_REQUEST_CAMERA = 121;
     public static final int MY_PERMISSIONS_REQUEST_READ_CONTACT = 122;
     public static final int MY_PERMISSIONS_REQUEST_SMS = 124;
-    public static final String BASE_URL = "http://circle8.asia:8082/Onet.svc/";
+    public static final String BASE_URL = "http://circle8.asia:8999/Onet.svc/";
     public static final String MERCHANT_BASE_URL = "http://circle8.asia:8082/Onet.svc/Merchant/";
     public static final String REWARDS_BASE_URL = "http://circle8.asia:8082/Onet.svc/Rewards/";
 
     /**
      * Uat for 8082
      */
-    public static final String BASE_IMAGE_URL = "http://circle8.asia:8083/";
+    public static final String BASE_IMAGE_URL = "http://circle8.asia/App_imgLib/";
 //    public static final String BASE_URL = "http://circle8.asia:8999/Onet.svc/";
 
     /**
@@ -70,6 +72,13 @@ public class Utility
         } else {
             return true;
         }
+    }
+
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     public static boolean checkSMSPermission(final Context context)

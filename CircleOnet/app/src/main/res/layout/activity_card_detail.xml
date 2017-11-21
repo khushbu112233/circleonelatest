@@ -714,7 +714,8 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginRight="20dp"
-                        android:src="@drawable/ic_web" />
+                        android:src="@drawable/ic_web"
+                        android:onClick="openWebPage"/>
 
                     <com.circle8.circleOne.Utils.cgTextView
                         android:textIsSelectable="true"
@@ -725,7 +726,8 @@
                         android:hint="Website"
                         android:textAlignment="center"
                         android:textColor="#6b6c6e"
-                        android:textSize="13sp" />
+                        android:textSize="13sp"
+                        android:onClick="openWebPage"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -741,7 +743,8 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginRight="20dp"
-                        android:src="@drawable/ic_mail_gray" />
+                        android:src="@drawable/ic_mail_gray"
+                        android:onClick="openGMail"/>
 
                     <com.circle8.circleOne.Utils.cgTextView
                         android:id="@+id/txtEmail"
@@ -752,7 +755,8 @@
                         android:hint="Email Address"
                         android:textAlignment="center"
                         android:textColor="#6b6c6e"
-                        android:textSize="13sp" />
+                        android:textSize="13sp"
+                        android:onClick="openGMail"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -768,7 +772,8 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginRight="20dp"
-                        android:src="@drawable/ic_phone" />
+                        android:src="@drawable/ic_phone"
+                        android:onClick="openTele"/>
 
                     <com.circle8.circleOne.Utils.cgTextView
                         android:id="@+id/txtPH"
@@ -778,7 +783,8 @@
                         android:textIsSelectable="true"
                         android:textAlignment="center"
                         android:textColor="#6b6c6e"
-                        android:textSize="13sp" />
+                        android:textSize="13sp"
+                        android:onClick="openTele"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -819,7 +825,8 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginRight="20dp"
-                        android:src="@drawable/ic_mob" />
+                        android:src="@drawable/ic_mob"
+                        android:onClick="openMobile"/>
 
                     <com.circle8.circleOne.Utils.cgTextView
                         android:id="@+id/txtMob"
@@ -830,7 +837,8 @@
                         android:hint="Mobile No."
                         android:textAlignment="center"
                         android:textColor="#6b6c6e"
-                        android:textSize="13sp" />
+                        android:textSize="13sp"
+                        android:onClick="openMobile"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -1046,7 +1054,8 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_marginBottom="55dp"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 </RelativeLayout>

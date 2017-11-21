@@ -483,11 +483,10 @@ public class List1Fragment extends Fragment
             }
         });
 
-
         return view;
     }
 
-    private static void callFirst()
+    public static void callFirst()
     {
         // tvNoCard.setVisibility(View.GONE);
         nfcModel.clear();
@@ -653,7 +652,8 @@ public class List1Fragment extends Fragment
             }
             else if (progressStatus.equalsIgnoreCase("SECOND"))
             {
-
+                String loading = "Fetching Cards" ;
+                CustomProgressDialog(loading);
             }
             else if (progressStatus.equalsIgnoreCase("DELETE"))
             {

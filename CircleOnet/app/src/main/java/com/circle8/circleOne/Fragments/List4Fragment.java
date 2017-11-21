@@ -504,7 +504,7 @@ public class List4Fragment extends Fragment
         }
     }
 
-    private static void callFirst()
+    public static void callFirst()
     {
         new HttpAsyncTask().execute(Utility.BASE_URL+SortAndFilterOption.CardListApi);
     }

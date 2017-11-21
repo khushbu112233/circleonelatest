@@ -1040,7 +1040,15 @@ public class ProfileFragment extends Fragment
         return view;
     }
 
-   /* @Override
+    @Override
+    public void onResume() {
+        super.onResume();
+        HashMap<String, String> profile = profileSession.getProfileDetails();
+        profileIndex = Integer.parseInt(profile.get(ProfileSession.KEY_PROFILE_INDEX));
+        new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
+    }
+
+    /* @Override
     public void onResume() {
         super.onResume();
 

@@ -143,6 +143,7 @@
         </ListView>
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/ivAddCard"
             android:layout_width="80dp"
             android:layout_height="60dp"

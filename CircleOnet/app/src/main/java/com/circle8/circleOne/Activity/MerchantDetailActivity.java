@@ -325,9 +325,14 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
                     String merchant_desc = jsonObject.getString("merchant_desc");
                     String merchant_website = jsonObject.getString("merchant_website");
 
-                    tvMerchantName.setText(merchant_name);
-
-                    if (merchant_desc.equalsIgnoreCase(""))
+                    if (merchant_name.equalsIgnoreCase("null") || merchant_name.equalsIgnoreCase(""))
+                    {
+                        //tvMerchantName.setText(merchant_name);
+                    }
+                    else {
+                        tvMerchantName.setText(merchant_name);
+                    }
+                    if (merchant_desc.equalsIgnoreCase("") || merchant_desc.equalsIgnoreCase("null"))
                     {
                         tvMerchantDesc.setText("No merchant description available.");
                     }
