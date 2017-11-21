@@ -215,6 +215,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/lnrCompany"
                 android:layout_marginTop="15dp"
                 android:gravity="center_vertical"
                 android:layout_width="match_parent"
@@ -244,6 +245,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/lnrTitle"
                 android:layout_marginTop="15dp"
                 android:gravity="center_vertical"
                 android:layout_width="match_parent"
@@ -273,6 +275,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/lnrIndustry"
                 android:layout_marginTop="15dp"
                 android:gravity="center_vertical"
                 android:layout_width="match_parent"
@@ -302,6 +305,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/lnrAssociation"
                 android:layout_marginTop="15dp"
                 android:gravity="center_vertical"
                 android:layout_width="match_parent"

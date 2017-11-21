@@ -655,7 +655,12 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                     }
 //                    Toast.makeText(mContext,"Counts: "+numberCount,Toast.LENGTH_SHORT).show();
 
-                    JSONArray jsonArray = jsonObject.getJSONArray("connection");
+                    JSONArray jsonArray;
+                    if (SortAndFilterOption.CardListApi.equalsIgnoreCase("SearchConnect")){
+                        jsonArray = jsonObject.getJSONArray("connect");
+                    }else {
+                        jsonArray = jsonObject.getJSONArray("connection");
+                    }
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
                     numberCount = jsonArray.length();
                     rlLoadMore.setVisibility(View.GONE);
@@ -778,6 +783,15 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                 jsonObject.accumulate("numofrecords", "10");
 //            jsonObject.accumulate("pageno", pageno);
                 jsonObject.accumulate("pageno", pageno);
+            }
+            else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("SearchConnect")) {
+                jsonObject.accumulate("FindBy", SortAndFilterOption.FindBY );
+                jsonObject.accumulate("Search", SortAndFilterOption.Search );
+                jsonObject.accumulate("SearchType", "Local" );
+                jsonObject.accumulate("UserID", UserId );
+                jsonObject.accumulate("numofrecords", "100" );
+                jsonObject.accumulate("pageno", "1" );
+
             }
 
 
@@ -903,6 +917,9 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
             CardsActivity.setActionBarTitle("Cards - " + nfcModel1.size());
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
+            CardsActivity.setActionBarTitle("Cards - " + nfcModel1.size());
+        }
+        else{
             CardsActivity.setActionBarTitle("Cards - " + nfcModel1.size());
         }
 

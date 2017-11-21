@@ -556,7 +556,12 @@ public class List2Fragment extends Fragment
                         numberCount = Integer.parseInt(count);
                     }
 
-                    JSONArray jsonArray = jsonObject.getJSONArray("connection");
+                    JSONArray jsonArray;
+                    if (SortAndFilterOption.CardListApi.equalsIgnoreCase("SearchConnect")){
+                        jsonArray = jsonObject.getJSONArray("connect");
+                    }else {
+                        jsonArray = jsonObject.getJSONArray("connection");
+                    }
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
                     numberCount = jsonArray.length();
 
@@ -727,6 +732,15 @@ public class List2Fragment extends Fragment
                 jsonObject.accumulate("numofrecords", "10");
 //            jsonObject.accumulate("pageno", pageno);
                 jsonObject.accumulate("pageno", pageno);
+            }
+            else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("SearchConnect")) {
+                jsonObject.accumulate("FindBy", SortAndFilterOption.FindBY );
+                jsonObject.accumulate("Search", SortAndFilterOption.Search );
+                jsonObject.accumulate("SearchType", "Local" );
+                jsonObject.accumulate("UserID", UserId );
+                jsonObject.accumulate("numofrecords", "100" );
+                jsonObject.accumulate("pageno", "1" );
+
             }
 
 
@@ -1049,6 +1063,10 @@ public class List2Fragment extends Fragment
             CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
+            CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
+        }
+        else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("SearchConnect"))
+        {
             CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
         }
 
