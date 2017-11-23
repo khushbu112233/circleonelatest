@@ -19,7 +19,7 @@
         <ImageView
             android:id="@+id/imgEvent"
             android:scaleType="fitXY"
-            android:src="@drawable/events4"
+            android:src="@drawable/ic_event_default"
             android:layout_width="match_parent"
             android:layout_height="180dp" />
 
@@ -179,6 +179,8 @@ Monday - April 3, 2017 - 9:30am - 5:00pm"/>
                 <com.circle8.circleOne.Utils.cgBoldTextView
                     android:textStyle="bold"
                     android:textSize="13dp"
+                    android:id="@+id/txtRegister"
+                    android:padding="15dp"
                     android:textColor="@color/colorAccent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -186,6 +188,8 @@ Monday - April 3, 2017 - 9:30am - 5:00pm"/>
 
                 <com.circle8.circleOne.Utils.cgBoldTextView
                     android:textStyle="bold"
+                    android:id="@+id/txtBook"
+                    android:padding="15dp"
                     android:layout_marginLeft="20dp"
                     android:textSize="13dp"
                     android:textColor="@color/colorAccent"

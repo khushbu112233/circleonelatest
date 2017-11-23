@@ -137,7 +137,7 @@ public class GroupDetailActivity extends AppCompatActivity
         setContentView(R.layout.activity_group_detail);
 
         mContext = GroupDetailActivity.this ;
-
+        Utility.freeMemory();
         listView = (ListView)findViewById(R.id.listView);
         imgProfile = (CircleImageView)findViewById(R.id.imgProfile);
         imgBack = (ImageView) findViewById(R.id.imgBack);
@@ -193,7 +193,7 @@ public class GroupDetailActivity extends AppCompatActivity
        ivMenuImg.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-
+               Utility.freeMemory();
                PopupMenu popup = new PopupMenu(GroupDetailActivity.this, ivMenuImg);
                //Inflating the Popup using xml file
                popup.getMenu().add("Edit Circle");
@@ -250,7 +250,7 @@ public class GroupDetailActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-
+                Utility.freeMemory();
                 selectArray = new JSONArray();
                 selectedList.clear();
 
@@ -296,7 +296,7 @@ public class GroupDetailActivity extends AppCompatActivity
             public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean cecked)
             {
                 selectListPosition = position ;
-
+                Utility.freeMemory();
                 // Capture total checked items
                 final int checkedCount = listView.getCheckedItemCount();
                 // Set the CAB title according to total checked items
@@ -484,7 +484,7 @@ public class GroupDetailActivity extends AppCompatActivity
 
 //                selectArray1 = new JSONArray(selectedList);
 //                Toast.makeText(getApplicationContext(), selectArray1.toString(), Toast.LENGTH_LONG).show();
-
+                Utility.freeMemory();
                 SparseBooleanArray  selected = groupDetailAdapter.getSelectedIds();
                 for (int i =  (selected.size() - 1); i >= 0; i--) {
                     if  (selected.valueAt(i)) {
@@ -519,7 +519,7 @@ public class GroupDetailActivity extends AppCompatActivity
             {
                 final Dialog dialog = new Dialog(GroupDetailActivity.this);
                 dialog.setContentView(R.layout.imageview_popup);
-
+                Utility.freeMemory();
                 ImageView ivViewImage = (ImageView)dialog.findViewById(R.id.ivViewImage);
                 if (group_Img.equals(""))
                 {
@@ -555,6 +555,7 @@ public class GroupDetailActivity extends AppCompatActivity
             {
                 GroupsActivity.backStatus = "DetailBack";
                 finish();
+                Utility.freeMemory();
             }
         });
 
@@ -566,18 +567,28 @@ public class GroupDetailActivity extends AppCompatActivity
                 intent1.putExtra("from", "group");
                 intent1.putExtra("GroupId", group_id);
                 startActivity(intent1);
+                Utility.freeMemory();
             }
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
+
     public void callFirst()
     {
+        Utility.freeMemory();
         loading = "Fetching Connections" ;
         new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/FetchConnection");
     }
 
     public static void webCall()
     {
+        Utility.freeMemory();
         loading = "Updating Connections" ;
         groupDetailModelArrayList.clear();
         try
@@ -591,6 +602,7 @@ public class GroupDetailActivity extends AppCompatActivity
 
     public  String POST1(String url)
     {
+        Utility.freeMemory();
         InputStream inputStream = null;
         String result = "";
         try
@@ -648,6 +660,7 @@ public class GroupDetailActivity extends AppCompatActivity
         super.onResume();
         groupDetailModelArrayList.clear();
         callFirst();
+        Utility.freeMemory();
     }
 
     private class HttpAsyncTaskGroupDelete extends AsyncTask<String, Void, String>
@@ -678,6 +691,7 @@ public class GroupDetailActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(String result)
         {
+            Utility.freeMemory();
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
             try
@@ -774,6 +788,7 @@ public class GroupDetailActivity extends AppCompatActivity
 
     public  String PhotoUploadPost(String url)
     {
+        Utility.freeMemory();
         InputStream inputStream = null;
         String result = "";
         try
@@ -856,6 +871,7 @@ public class GroupDetailActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(String result)
         {
+            Utility.freeMemory();
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
 
@@ -900,6 +916,7 @@ public class GroupDetailActivity extends AppCompatActivity
 
     public String GroupUpdatePost(String url)
     {
+        Utility.freeMemory();
         InputStream inputStream = null;
         String result = "";
         try
@@ -958,6 +975,7 @@ public class GroupDetailActivity extends AppCompatActivity
     }
 
     public static String POST4(String url) {
+        Utility.freeMemory();
         InputStream inputStream = null;
         String result = "";
         try {
@@ -1015,6 +1033,7 @@ public class GroupDetailActivity extends AppCompatActivity
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        Utility.freeMemory();
         String line = "";
         String result = "";
         while ((line = bufferedReader.readLine()) != null)
@@ -1051,6 +1070,7 @@ public class GroupDetailActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(String result)
         {
+            Utility.freeMemory();
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
 
@@ -1168,6 +1188,7 @@ public class GroupDetailActivity extends AppCompatActivity
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
+        Utility.freeMemory();
         if (resultCode == Activity.RESULT_OK)
         {
             if (requestCode == SELECT_FILE)
@@ -1181,7 +1202,7 @@ public class GroupDetailActivity extends AppCompatActivity
         Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-
+        Utility.freeMemory();
         final_ImgBase64 = BitMapToString(thumbnail);
         //  Upload();
         ivGroupImage.setImageBitmap(thumbnail);
@@ -1189,6 +1210,7 @@ public class GroupDetailActivity extends AppCompatActivity
 
     public String getPath(Uri uri)
     {
+        Utility.freeMemory();
         String[] projection = { MediaStore.Images.Media.DATA };
         Cursor cursor = managedQuery(uri, projection, null, null, null);
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
@@ -1352,6 +1374,7 @@ public class GroupDetailActivity extends AppCompatActivity
 
     public static void CustomProgressDialog(final String loading)
     {
+        Utility.freeMemory();
         rlProgressDialog.setVisibility(View.VISIBLE);
         tvProgressing.setText(loading);
 
@@ -1411,6 +1434,7 @@ public class GroupDetailActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(String result)
         {
+            Utility.freeMemory();
 //            dialog.dismiss();
              rlProgressDialog.setVisibility(View.GONE);
 
@@ -1444,6 +1468,7 @@ public class GroupDetailActivity extends AppCompatActivity
     }
 
     public String MemberDeletePost(String url) {
+        Utility.freeMemory();
         InputStream inputStream = null;
         String result = "";
         try {

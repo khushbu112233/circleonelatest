@@ -10,6 +10,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.Walkthrough.HelpActivity;
 
 public class SplashActivity extends AppCompatActivity
@@ -52,5 +53,11 @@ public class SplashActivity extends AppCompatActivity
 
             }
         },1000);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
     }
 }

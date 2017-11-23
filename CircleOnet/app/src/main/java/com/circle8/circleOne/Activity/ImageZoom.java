@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.TouchImageView;
+import com.circle8.circleOne.Utils.Utility;
 import com.squareup.picasso.Picasso;
 
 public class ImageZoom extends AppCompatActivity {
@@ -22,6 +23,7 @@ public class ImageZoom extends AppCompatActivity {
         String displayProfile = intent.getStringExtra("displayProfile");
         TouchImageView img = (TouchImageView) findViewById(R.id.imgTouch);
         ImageView imgBack = (ImageView) findViewById(R.id.imgBack);
+        Utility.freeMemory();
       //  img.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         if (displayProfile.equals(""))
         {
@@ -45,4 +47,12 @@ public class ImageZoom extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
+
 }

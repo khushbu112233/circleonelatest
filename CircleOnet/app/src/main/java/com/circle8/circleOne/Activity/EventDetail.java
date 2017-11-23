@@ -58,6 +58,8 @@ public class EventDetail extends AppCompatActivity
     private ArrayList<String> eventDate = new ArrayList<>();
     private ArrayList<String> startTime = new ArrayList<>();
     private ArrayList<String> endTime = new ArrayList<>();
+    TextView txtBook, txtRegister;
+    String eventBook = "", eventRegister = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -67,6 +69,7 @@ public class EventDetail extends AppCompatActivity
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
+        Utility.freeMemory();
         final ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.custom_actionbar);
@@ -78,7 +81,8 @@ public class EventDetail extends AppCompatActivity
         imgLogo = (ImageView) findViewById(R.id.imgLogo);
         actionText = (TextView) findViewById(R.id.mytext);
         actionText.setText("Events");
-
+        txtBook = (TextView) findViewById(R.id.txtBook);
+        txtRegister = (TextView) findViewById(R.id.txtRegister);
         tvEventTitle = (TextView)findViewById(R.id.tvEventTitle);
         tvEventDate = (TextView)findViewById(R.id.tvEventDate);
         tvEventType = (TextView)findViewById(R.id.tvEventType);
@@ -97,6 +101,7 @@ public class EventDetail extends AppCompatActivity
         imgLogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
                 //Toast.makeText(getApplicationContext(), "Hello", Toast.LENGTH_LONG).show();
                 TypedValue tv = new TypedValue();
                 if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
@@ -109,6 +114,7 @@ public class EventDetail extends AppCompatActivity
         imgDrawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
                 Intent go = new Intent(getApplicationContext(),EventsSelectOption.class);
                 // you pass the position you want the viewpager to show in the extra,
                 // please don't forget to define and initialize the position variable
@@ -121,6 +127,7 @@ public class EventDetail extends AppCompatActivity
         imgCards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
                 Intent go = new Intent(getApplicationContext(),CardsActivity.class);
                 // you pass the position you want the viewpager to show in the extra,
                 // please don't forget to define and initialize the position variable
@@ -131,9 +138,30 @@ public class EventDetail extends AppCompatActivity
             }
         });
 
+        txtRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utility.freeMemory();
+                Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
+                intent.putExtra("url", eventRegister);
+                startActivity(intent);
+            }
+        });
+
+        txtBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utility.freeMemory();
+                Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
+                intent.putExtra("url", eventBook);
+                startActivity(intent);
+            }
+        });
+
         imgConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
                 Intent go = new Intent(getApplicationContext(),CardsActivity.class);
                 // you pass the position you want the viewpager to show in the extra,
                 // please don't forget to define and initialize the position variable
@@ -147,6 +175,7 @@ public class EventDetail extends AppCompatActivity
         imgEvents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
                 Intent go = new Intent(getApplicationContext(),CardsActivity.class);
                 // you pass the position you want the viewpager to show in the extra,
                 // please don't forget to define and initialize the position variable
@@ -160,6 +189,7 @@ public class EventDetail extends AppCompatActivity
         imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
                 Intent go = new Intent(getApplicationContext(),CardsActivity.class);
                 // you pass the position you want the viewpager to show in the extra,
                 // please don't forget to define and initialize the position variable
@@ -170,9 +200,17 @@ public class EventDetail extends AppCompatActivity
             }
         });
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
     public void showDialog(Context context, int x, int y){
         // x -->  X-Cordinate
         // y -->  Y-Cordinate
+        Utility.freeMemory();
         final Dialog dialog  = new Dialog(context, R.style.PauseDialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -221,6 +259,7 @@ public class EventDetail extends AppCompatActivity
         @Override
         protected void onPostExecute(String result)
         {
+            Utility.freeMemory();
             dialog.dismiss();
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
 
@@ -257,6 +296,26 @@ public class EventDetail extends AppCompatActivity
                     eventModel.setAddress3(eventDetail.getString("Address3"));
                     eventModel.setAddress4(eventDetail.getString("Address4"));
                     eventModelArrayList.add(eventModel);
+
+                    if (eventDetail.getString("Event_Book_Stand").equalsIgnoreCase("") ||
+                            eventDetail.getString("Event_Book_Stand").equalsIgnoreCase("null") ||
+                            eventDetail.getString("Event_Book_Stand").equalsIgnoreCase(null)){
+                        txtBook.setVisibility(View.GONE);
+                    }
+                    else {
+                        eventBook = eventDetail.getString("Event_Book_Stand").toString();
+                        txtBook.setVisibility(View.VISIBLE);
+                    }
+
+                    if (eventDetail.getString("Event_Registration").equalsIgnoreCase("") ||
+                            eventDetail.getString("Event_Registration").equalsIgnoreCase("null") ||
+                            eventDetail.getString("Event_Registration").equalsIgnoreCase(null)){
+                        txtRegister.setVisibility(View.GONE);
+                    }
+                    else {
+                        eventRegister = eventDetail.getString("Event_Registration").toString();
+                        txtRegister.setVisibility(View.VISIBLE);
+                    }
 
                     if(eventDetail.getString("Event_Name").equals("")
                             || eventDetail.getString("Event_Name").equals("null"))
@@ -311,7 +370,7 @@ public class EventDetail extends AppCompatActivity
                     if(eventDetail.getString("Event_Image").equals("")
                             || eventDetail.getString("Event_Image").equals(null))
                     {
-                        imgEvent.setImageResource(R.drawable.events4);
+                        imgEvent.setImageResource(R.drawable.ic_event_default);
                     }
                     else
                     {
@@ -375,7 +434,7 @@ public class EventDetail extends AppCompatActivity
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("event_id", event_ID );
-
+            Utility.freeMemory();
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
 
@@ -420,7 +479,7 @@ public class EventDetail extends AppCompatActivity
         String result = "";
         while((line = bufferedReader.readLine()) != null)
             result += line;
-
+        Utility.freeMemory();
         inputStream.close();
         return result;
     }

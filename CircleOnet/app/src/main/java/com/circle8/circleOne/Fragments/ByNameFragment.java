@@ -75,6 +75,7 @@ public class ByNameFragment extends Fragment
     private RelativeLayout rlProgressDialog ;
     private TextView tvProgressing ;
     private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+    Boolean netCheck = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,  Bundle savedInstanceState)
@@ -88,7 +89,7 @@ public class ByNameFragment extends Fragment
         listView = (ListView) view.findViewById(R.id.listViewType4);
         imgSearch = (ImageView) view.findViewById(R.id.imgSearch);
         searchText.setHint("Search by name");
-
+        netCheck = Utility.isNetworkAvailable(getContext());
         rlProgressDialog = (RelativeLayout)view.findViewById(R.id.rlProgressDialog);
         tvProgressing = (TextView)view.findViewById(R.id.txtProgressing);
         ivConnecting1 = (ImageView)view.findViewById(R.id.imgConnecting1) ;
@@ -109,8 +110,15 @@ public class ByNameFragment extends Fragment
             {
                 String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
                 listView.setVisibility(View.VISIBLE);
-                connectTags.clear();
-                new ByNameFragment.HttpAsyncTask().execute(Utility.BASE_URL+"SearchConnect");
+                if (netCheck == false){
+                    Utility.freeMemory();
+                    Toast.makeText(getContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
+                }
+                else {
+
+                    connectTags.clear();
+                    new ByNameFragment.HttpAsyncTask().execute(Utility.BASE_URL + "SearchConnect");
+                }
             }
         });
 
@@ -119,9 +127,16 @@ public class ByNameFragment extends Fragment
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
                 listView.setVisibility(View.VISIBLE);
-                connectTags.clear();
-                new ByNameFragment.HttpAsyncTask().execute(Utility.BASE_URL+"SearchConnect");
 
+                if (netCheck == false){
+                    Utility.freeMemory();
+                    Toast.makeText(getContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
+                }
+                else {
+
+                    connectTags.clear();
+                    new ByNameFragment.HttpAsyncTask().execute(Utility.BASE_URL + "SearchConnect");
+                }
                 return true;
             }
         });

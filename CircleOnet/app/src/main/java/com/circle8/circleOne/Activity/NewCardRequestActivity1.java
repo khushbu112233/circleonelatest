@@ -11,7 +11,10 @@ import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -274,6 +277,26 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                         TextView tvPay = (TextView) dialogView.findViewById(R.id.tvPay);
                         TextView tvCancel = (TextView) dialogView.findViewById(R.id.tvCancel);
 
+                        etExMonth.addTextChangedListener(new TextWatcher() {
+                            @Override
+                            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                            }
+
+                            @Override
+                            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                int month = Integer.parseInt(s.toString());
+                                if (month > 12){
+                                    Toast.makeText(getApplicationContext(), "selected month is not proper", Toast.LENGTH_LONG).show();
+                                }
+                            }
+
+                            @Override
+                            public void afterTextChanged(Editable s) {
+
+                            }
+                        });
+
                         tvPay.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -372,6 +395,13 @@ public class NewCardRequestActivity1 extends AppCompatActivity
             }
         });
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
 
     private class HttpAsyncTaskFrontUpload extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
@@ -859,7 +889,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                     String message = object.getString("message");
 
                     if (success.equalsIgnoreCase("1")){
-                        Toast.makeText(getApplicationContext(), "Request sent Successfully.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Request for NFC card is successful", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(getApplicationContext(), NewCardRequestActivity.class);
                         startActivity(intent);
                         finish();

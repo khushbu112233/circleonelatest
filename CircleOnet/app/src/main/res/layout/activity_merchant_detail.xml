@@ -133,7 +133,7 @@
                     android:id="@+id/tvMerchantName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Starbucks Singapore"
+                    android:hint="Product Title"
                     android:textColor="@color/gray_text"
                     android:layout_centerVertical="true"
                     android:textSize="17dp"
@@ -156,9 +156,9 @@
                 android:id="@+id/tvMerchantDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Singapore is the third international country outside North America to introduce Starbucks to its discoming customers who readly embrace the starbucks experience.\n\nStarbucks coffee singapore is a wholy owned subsidary of Starbucks Coffee Corporation since June 2004.\nThe first starbucks store opened on December 1996 of Uat Town, strategically located along the nation's reowned Orchard Food shopping belt."
                 android:textColor="@color/gray_text"
                 android:textSize="12dp"
+                android:hint="Product Description"
                 android:textAlignment="gravity"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="10dp"/>
@@ -181,6 +181,14 @@
                 android:scrollbars="none"
                 android:fadingEdge="none"
                 android:orientation="vertical" />
+
+            <com.circle8.circleOne.Utils.cgTextView
+                android:id="@+id/tvProductListInfo"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="No products are available."
+                android:gravity="center"
+                android:visibility="gone"/>
 
 <!--
             <com.circle8.circleOne.Utils.ExpandableHeightListView
@@ -287,21 +295,29 @@
                 android:scrollbars="none"
                 android:layout_marginBottom="5dp"/>
 
-<!--
-            <com.circle8.circleOne.Utils.ExpandableHeightListView
-                android:visibility="visible"
-                android:id="@+id/listView2"
+            <com.circle8.circleOne.Utils.cgTextView
+                android:id="@+id/tvLocationListInfo"
                 android:layout_width="match_parent"
-                android:layout_height="350dp"
-                android:layout_marginLeft="0dp"
-                android:layout_marginRight="0dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="10dp"
-                android:divider="@android:color/transparent"
-                android:dividerHeight="0dp">
+                android:layout_height="30dp"
+                android:text="No Locations are available."
+                android:gravity="center"
+                android:visibility="gone"/>
 
-            </com.circle8.circleOne.Utils.ExpandableHeightListView>
--->
+            <!--
+                        <com.circle8.circleOne.Utils.ExpandableHeightListView
+                            android:visibility="visible"
+                            android:id="@+id/listView2"
+                            android:layout_width="match_parent"
+                            android:layout_height="350dp"
+                            android:layout_marginLeft="0dp"
+                            android:layout_marginRight="0dp"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginBottom="10dp"
+                            android:divider="@android:color/transparent"
+                            android:dividerHeight="0dp">
+
+                        </com.circle8.circleOne.Utils.ExpandableHeightListView>
+            -->
 
 
         </LinearLayout>

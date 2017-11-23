@@ -61,7 +61,7 @@ public class HistoryActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
-
+        Utility.freeMemory();
         session = new LoginSession(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
         user_id = user.get(LoginSession.KEY_USERID);
@@ -76,7 +76,7 @@ public class HistoryActivity extends AppCompatActivity
         ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
         ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
 
-        new HttpAsyncTaskHistoryList().execute(Utility.BASE_URL+"Hisory");
+        new HttpAsyncTaskHistoryList().execute(Utility.BASE_URL+"History");
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +86,13 @@ public class HistoryActivity extends AppCompatActivity
             }
         });
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -117,6 +124,7 @@ public class HistoryActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(String result)
         {
+            Utility.freeMemory();
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
 
@@ -143,6 +151,7 @@ public class HistoryActivity extends AppCompatActivity
                     }
                     else
                     {
+                        Utility.freeMemory();
                         tvHistoryInfo.setVisibility(View.GONE);
 
                         for(int i = 0 ; i <= historyList.length() ; i++ )
@@ -179,6 +188,8 @@ public class HistoryActivity extends AppCompatActivity
 
     public  String HistoryPost(String url)
     {
+        Utility.freeMemory();
+        Utility.freeMemory();
         InputStream inputStream = null;
         String result = "";
         try
@@ -236,6 +247,7 @@ public class HistoryActivity extends AppCompatActivity
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException
     {
+        Utility.freeMemory();
         BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
         String line = "";
         String result = "";
@@ -248,6 +260,7 @@ public class HistoryActivity extends AppCompatActivity
 
     public void CustomProgressDialog(final String loading)
     {
+        Utility.freeMemory();
         rlProgressDialog.setVisibility(View.VISIBLE);
         tvProgressing.setText(loading);
 

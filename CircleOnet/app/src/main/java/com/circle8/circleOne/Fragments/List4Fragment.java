@@ -103,7 +103,7 @@ public class List4Fragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Utility.freeMemory();
     }
 
     @Override
@@ -111,7 +111,7 @@ public class List4Fragment extends Fragment
     {
         View view = inflater.inflate(R.layout.fragment_list4, container, false);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
+        Utility.freeMemory();
         mContext = List4Fragment.this.getContext();
         pageno = 1;
         db = new DatabaseHelper(getContext());
@@ -195,6 +195,7 @@ public class List4Fragment extends Fragment
                 intent.putExtra("lat", nfcModel1.get(position).getLatitude());
                 intent.putExtra("long", nfcModel1.get(position).getLongitude());
                 getContext().startActivity(intent);
+                Utility.freeMemory();
             }
         });
 
@@ -251,7 +252,7 @@ public class List4Fragment extends Fragment
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
                     gridAdapter.Filter(text);
                 }*/
-
+                Utility.freeMemory();
                try
                {
                    if (s.length() <= 0)
@@ -301,6 +302,7 @@ public class List4Fragment extends Fragment
             @Override
             public void onClick(View v)
             {
+                Utility.freeMemory();
                 nfcModel1.clear();
                 allTaggs.clear();
                 try
@@ -319,6 +321,7 @@ public class List4Fragment extends Fragment
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
+                Utility.freeMemory();
                 nfcModel1.clear();
                 allTaggs.clear();
                 try
@@ -427,7 +430,7 @@ public class List4Fragment extends Fragment
             //   dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
-
+            Utility.freeMemory();
             try
             {
                 if (result == "")
@@ -504,8 +507,9 @@ public class List4Fragment extends Fragment
         }
     }
 
-    private static void callFirst()
+    public static void callFirst()
     {
+        Utility.freeMemory();
         new HttpAsyncTask().execute(Utility.BASE_URL+SortAndFilterOption.CardListApi);
     }
 
@@ -524,7 +528,7 @@ public class List4Fragment extends Fragment
         }*/
 
         pageno = 1;
-
+        Utility.freeMemory();
         try
         {
             nfcModel1.clear();
@@ -598,7 +602,7 @@ public class List4Fragment extends Fragment
         {
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
-
+            Utility.freeMemory();
             try
             {
                 if (result != null) {
@@ -612,7 +616,12 @@ public class List4Fragment extends Fragment
                         numberCount = Integer.parseInt(count);
                     }
 
-                    JSONArray jsonArray = jsonObject.getJSONArray("connection");
+                    JSONArray jsonArray;
+                    if (SortAndFilterOption.CardListApi.equalsIgnoreCase("SearchConnect")){
+                        jsonArray = jsonObject.getJSONArray("connect");
+                    }else {
+                        jsonArray = jsonObject.getJSONArray("connection");
+                    }
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
                     numberCount = jsonArray.length();
                     rlLoadMore.setVisibility(View.GONE);
@@ -689,6 +698,7 @@ public class List4Fragment extends Fragment
     }
 
     public static String POST(String url) {
+        Utility.freeMemory();
         InputStream inputStream = null;
         String result = "";
         try {
@@ -721,6 +731,15 @@ public class List4Fragment extends Fragment
                 jsonObject.accumulate("numofrecords", "10");
 //            jsonObject.accumulate("pageno", pageno);
                 jsonObject.accumulate("pageno", pageno);
+            }
+            else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("SearchConnect")) {
+                jsonObject.accumulate("FindBy", SortAndFilterOption.FindBY );
+                jsonObject.accumulate("Search", SortAndFilterOption.Search );
+                jsonObject.accumulate("SearchType", "Local" );
+                jsonObject.accumulate("UserID", UserId );
+                jsonObject.accumulate("numofrecords", "100" );
+                jsonObject.accumulate("pageno", "1" );
+
             }
 
 
@@ -998,6 +1017,9 @@ public class List4Fragment extends Fragment
             CardsActivity.setActionBarTitle("Cards - " + nfcModel1.size());
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
+            CardsActivity.setActionBarTitle("Cards - " + nfcModel1.size());
+        }
+        else  {
             CardsActivity.setActionBarTitle("Cards - " + nfcModel1.size());
         }
 

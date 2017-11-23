@@ -43,6 +43,7 @@ public class EventsAdapter extends ArrayAdapter
     public EventsAdapter(Context context, int row_events, ArrayList<EventModel> eventModelArrayList)
     {
         super(context, row_events, eventModelArrayList);
+        Utility.freeMemory();
         this.layoutResourceId = row_events;
         this.context = context;
         this.eventModelArrayList = eventModelArrayList ;
@@ -63,6 +64,7 @@ public class EventsAdapter extends ArrayAdapter
 
         if (row == null)
         {
+            Utility.freeMemory();
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
             holder = new ViewHolder();
@@ -73,6 +75,7 @@ public class EventsAdapter extends ArrayAdapter
         }
         else
         {
+            Utility.freeMemory();
             holder = (ViewHolder) row.getTag();
         }
 
@@ -82,11 +85,11 @@ public class EventsAdapter extends ArrayAdapter
         holder.txtTitle.setText(eventModelArrayList.get(position).getEvent_Name());
         holder.txtDesc.setText(eventModelArrayList.get(position).getEvent_StartDate()+" To "
                 +eventModelArrayList.get(position).getEvent_EndDate());
-
+        Utility.freeMemory();
         if(eventModelArrayList.get(position).getEvent_Image().equalsIgnoreCase("")
                 || eventModelArrayList.get(position).getEvent_Image().equalsIgnoreCase("null") )
         {
-            holder.image.setImageResource(R.drawable.events4);
+            holder.image.setImageResource(R.drawable.ic_event_default);
         }
         else
         {

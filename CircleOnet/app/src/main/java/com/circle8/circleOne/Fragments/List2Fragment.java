@@ -189,6 +189,7 @@ public class List2Fragment extends Fragment
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
+                Utility.freeMemory();
                /* if(s.length() <= 0)
                 {
                     nfcModel.clear();
@@ -251,6 +252,7 @@ public class List2Fragment extends Fragment
             @Override
             public void onClick(View v)
             {
+                Utility.freeMemory();
                 nfcModel.clear();
                 allTaggs.clear();
                 try
@@ -269,6 +271,7 @@ public class List2Fragment extends Fragment
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
+                Utility.freeMemory();
                 nfcModel.clear();
                 allTaggs.clear();
                 try
@@ -316,6 +319,7 @@ public class List2Fragment extends Fragment
         @Override
         protected void onPostExecute(String result)
         {
+            Utility.freeMemory();
             //  dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
@@ -398,8 +402,9 @@ public class List2Fragment extends Fragment
         }
     }
 
-    private static void callFirst()
+    public static void callFirst()
     {
+        Utility.freeMemory();
         new HttpAsyncTask().execute(Utility.BASE_URL+SortAndFilterOption.CardListApi);
     }
 
@@ -556,7 +561,12 @@ public class List2Fragment extends Fragment
                         numberCount = Integer.parseInt(count);
                     }
 
-                    JSONArray jsonArray = jsonObject.getJSONArray("connection");
+                    JSONArray jsonArray;
+                    if (SortAndFilterOption.CardListApi.equalsIgnoreCase("SearchConnect")){
+                        jsonArray = jsonObject.getJSONArray("connect");
+                    }else {
+                        jsonArray = jsonObject.getJSONArray("connection");
+                    }
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
                     numberCount = jsonArray.length();
 
@@ -727,6 +737,15 @@ public class List2Fragment extends Fragment
                 jsonObject.accumulate("numofrecords", "10");
 //            jsonObject.accumulate("pageno", pageno);
                 jsonObject.accumulate("pageno", pageno);
+            }
+            else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("SearchConnect")) {
+                jsonObject.accumulate("FindBy", SortAndFilterOption.FindBY );
+                jsonObject.accumulate("Search", SortAndFilterOption.Search );
+                jsonObject.accumulate("SearchType", "Local" );
+                jsonObject.accumulate("UserID", UserId );
+                jsonObject.accumulate("numofrecords", "100" );
+                jsonObject.accumulate("pageno", "1" );
+
             }
 
 
@@ -1049,6 +1068,10 @@ public class List2Fragment extends Fragment
             CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
+            CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
+        }
+        else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("SearchConnect"))
+        {
             CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
         }
 

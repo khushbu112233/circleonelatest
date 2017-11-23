@@ -483,12 +483,12 @@ public class List1Fragment extends Fragment
             }
         });
 
-
         return view;
     }
 
-    private static void callFirst()
+    public static void callFirst()
     {
+        Utility.freeMemory();
         // tvNoCard.setVisibility(View.GONE);
         nfcModel.clear();
         pageno = 1;
@@ -560,6 +560,15 @@ public class List1Fragment extends Fragment
 //            jsonObject.accumulate("pageno", pageno);
                 jsonObject.accumulate("pageno", "1");
             }
+            else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("SearchConnect")) {
+                jsonObject.accumulate("FindBy", SortAndFilterOption.FindBY );
+                jsonObject.accumulate("Search", SortAndFilterOption.Search );
+                jsonObject.accumulate("SearchType", "Local" );
+                jsonObject.accumulate("UserID", UserId );
+                jsonObject.accumulate("numofrecords", "100" );
+                jsonObject.accumulate("pageno", "1" );
+
+            }
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -592,7 +601,7 @@ public class List1Fragment extends Fragment
                 result = "Did not work!";
 
         } catch (Exception e) {
-            Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
             Log.d("InputStream", e.getLocalizedMessage());
         }
 
@@ -653,7 +662,8 @@ public class List1Fragment extends Fragment
             }
             else if (progressStatus.equalsIgnoreCase("SECOND"))
             {
-
+                String loading = "Fetching Cards" ;
+                CustomProgressDialog(loading);
             }
             else if (progressStatus.equalsIgnoreCase("DELETE"))
             {
@@ -686,7 +696,7 @@ public class List1Fragment extends Fragment
             CustomProgressBar(loading, status);*/
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
-
+            Utility.freeMemory();
             try
             {
                 if (result != null)
@@ -715,9 +725,12 @@ public class List1Fragment extends Fragment
                     catch (Exception e) {
                         e.printStackTrace();
                     }
-
-                    JSONArray jsonArray = jsonObject.getJSONArray("connection");
-
+                    JSONArray jsonArray;
+                    if (SortAndFilterOption.CardListApi.equalsIgnoreCase("SearchConnect")){
+                        jsonArray = jsonObject.getJSONArray("connect");
+                    }else {
+                        jsonArray = jsonObject.getJSONArray("connection");
+                    }
                     number_cards = jsonArray.length();
                     rlLoadMore1.setVisibility(View.GONE);
                     rlLoadMore2.setVisibility(View.GONE);
@@ -754,11 +767,12 @@ public class List1Fragment extends Fragment
                     {
                         if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection"))
                         {
-                            txtNoCard1.setText("No members have been added to the group.");
+                            txtNoCard1.setText("No members have been added to the circle");
                             txtNoCard1.setVisibility(View.VISIBLE);
                         }
                         else
                         {
+                            txtNoCard1.setText("No such information found,\nplease try again");
                             txtNoCard1.setVisibility(View.VISIBLE);
                         }
                     }
@@ -1302,6 +1316,10 @@ public class List1Fragment extends Fragment
             CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection"))
+        {
+            CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
+        }
+        else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("SearchConnect"))
         {
             CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
         }

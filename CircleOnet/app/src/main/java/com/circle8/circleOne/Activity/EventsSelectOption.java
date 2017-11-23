@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 
 public class EventsSelectOption extends AppCompatActivity {
 
@@ -22,7 +23,7 @@ public class EventsSelectOption extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events_select_option);
-
+        Utility.freeMemory();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         final ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -48,6 +49,7 @@ public class EventsSelectOption extends AppCompatActivity {
                 // properly
 
                 startActivity(go);
+                Utility.freeMemory();
             }
         });
 
@@ -66,6 +68,7 @@ public class EventsSelectOption extends AppCompatActivity {
 
                 finish();
                 overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                Utility.freeMemory();
             }
         });
 
@@ -81,6 +84,7 @@ public class EventsSelectOption extends AppCompatActivity {
 
                 startActivity(go);
                 finish();
+                Utility.freeMemory();
             }
         });
 
@@ -96,6 +100,7 @@ public class EventsSelectOption extends AppCompatActivity {
 
                 startActivity(go);
                 finish();
+                Utility.freeMemory();
             }
         });
 
@@ -111,6 +116,7 @@ public class EventsSelectOption extends AppCompatActivity {
 
                 startActivity(go);
                 finish();
+                Utility.freeMemory();
             }
         });
 
@@ -126,7 +132,15 @@ public class EventsSelectOption extends AppCompatActivity {
 
                 startActivity(go);
                 finish();
+                Utility.freeMemory();
             }
         });
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
 }

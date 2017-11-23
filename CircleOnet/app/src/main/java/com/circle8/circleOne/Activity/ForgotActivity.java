@@ -51,7 +51,7 @@ public class ForgotActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot);
-
+        Utility.freeMemory();
         etEmailAddress = (EditText)findViewById(R.id.etEmailAddress);
         tvEmailInfo = (TextView) findViewById(R.id.tvEmailInfo);
         btnSubmit = (Button)findViewById(R.id.btnSubmit);
@@ -76,11 +76,18 @@ public class ForgotActivity extends AppCompatActivity
                 }
                 else
                 {
+                    Utility.freeMemory();
                     new HttpAsyncTask().execute(Utility.BASE_URL+"ForgotPassword");
                 }
             }
         });
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
     }
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {

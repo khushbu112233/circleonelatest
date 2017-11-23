@@ -24,10 +24,10 @@ android {
 
     defaultConfig {
         applicationId "com.circle8.circleOne"
-        minSdkVersion 16
-        targetSdkVersion 26
-        versionCode 2
-        versionName "1.0.1"
+        minSdkVersion 18
+        targetSdkVersion 25
+        versionCode 3
+        versionName "1.0.2"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [onesignal_app_id               : "8cc4b927-da5f-4152-805d-bf3b40e53773",
@@ -93,7 +93,7 @@ dependencies {
     }
     compile project(':linkedin-sdk')
     // Required for OneSignal
-    //    compile 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
+    compile 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support:design:26.+'

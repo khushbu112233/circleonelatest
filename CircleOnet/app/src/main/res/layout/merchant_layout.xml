@@ -22,8 +22,17 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:scrollbars="none"
+        android:visibility="visible"
         android:groupIndicator="@drawable/group_indicator">
 
     </ExpandableListView>
+
+    <com.circle8.circleOne.Utils.cgTextView
+        android:id="@+id/tvProductListInfo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="There is no products available."
+        android:visibility="gone"
+        android:gravity="center" />
 
 </LinearLayout>

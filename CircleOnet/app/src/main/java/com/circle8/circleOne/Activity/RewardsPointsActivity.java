@@ -81,6 +81,8 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
     private TextView tvProgressing ;
     private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
 
+    private TextView tvProductListInfo, tvEarnListInfo, tvHistoryListInfo ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -119,13 +121,20 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         tvHistory.setOnClickListener(this);
         imgBack.setOnClickListener(this);
 
-        new HttpAsyncGetHistoryReedemedPoints().execute(Utility.REWARDS_BASE_URL+"History_ReedemedPoints");           // post
-        new HttpAsyncGetAll().execute(Utility.MERCHANT_BASE_URL+"GetAll");                 //get
+        new HttpAsyncGetHistoryReedemedPoints().execute(Utility.BASE_URL+"Rewards/History_ReedemedPoints");           // post
+        new HttpAsyncGetAll().execute(Utility.BASE_URL+"Merchant/GetAll");                 //get
 //        new HttpAsyncGetProductCategory().execute(Utility.MERCHANT_BASE_URL+"GetProductCategory");                 //get
 //        new HttpAsyncGetProduct().execute(Utility.MERCHANT_BASE_URL+"GetProducts");                               //get
 //        new HttpAsyncGetProductByCategory().execute(Utility.MERCHANT_BASE_URL+"GetProductsByCategory");           // post
-        new HttpAsyncGetBalance().execute(Utility.REWARDS_BASE_URL+"GetBalance");                                 // post
-        new HttpAsyncGetHistoryEarnedPoints().execute(Utility.REWARDS_BASE_URL+"History_EarnedPoints");           // post
+        new HttpAsyncGetBalance().execute(Utility.BASE_URL+"Rewards/GetBalance");                                 // post
+        new HttpAsyncGetHistoryEarnedPoints().execute(Utility.BASE_URL+"Rewards/History_EarnedPoints");           // post
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
     }
 
     private void init()
@@ -134,6 +143,11 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         HistoryView = findViewById(R.id.icdRewardHistoryLayout);
         MerchantView = findViewById(R.id.icdMerchantLayout);
         RewardView = findViewById(R.id.icdEarnPointLayout);
+
+
+        tvHistoryListInfo = (TextView)HistoryListView.findViewById(R.id.tvHistoryListInfo);
+        tvProductListInfo = (TextView)MerchantView.findViewById(R.id.tvProductListInfo);
+        tvEarnListInfo = (TextView)RewardView.findViewById(R.id.tvEarnListInfo);
 
 //        getHistory();
 
@@ -445,6 +459,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                             JSONArray jsonArray1 = productListObj.getJSONArray("MerchantByCat");
                             if (jsonArray1.length() != 0)
                             {
+                                tvProductListInfo.setVisibility(View.GONE);
 //                                expListView.setGroupIndicator(getResources().getDrawable(R.drawable.group_indicator));
 
                                 int n = jsonArray1.length();
@@ -493,13 +508,26 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                             }
                             else if (jsonArray1.length() == 0)
                             {
+                                String[] child_Data = new String[1];
+                                child_Data[0] = "no sub products avail" ;
+                                for (String parent : groupList)
+                                {
+                                    if (parent.equalsIgnoreCase(ProductCategoryName))
+                                    {
+                                        loadChild(child_Data);
+                                    }
+                                    laptopCollection.put(parent, childList);
+                                }
 //                                expListView.setGroupIndicator(getResources().getDrawable(R.drawable.group_indicator));
+                                expListAdapter = new ExpandableListAdapter1(RewardsPointsActivity.this, groupList, laptopCollection);
+                                expListView.setAdapter(expListAdapter);
                             }
                         }
                     }
                     else
                     {
-                        Toast.makeText(getApplicationContext(), "No ProductCategory_List Avail", Toast.LENGTH_LONG).show();
+                        tvProductListInfo.setVisibility(View.VISIBLE);
+//                        Toast.makeText(getApplicationContext(), "No ProductCategory_List Avail", Toast.LENGTH_LONG).show();
                     }
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
                 }
@@ -1052,6 +1080,8 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                     {
                         for (int i = 0 ; i < jsonArray.length(); i++)
                         {
+                            tvEarnListInfo.setVisibility(View.GONE);
+
                             JSONObject productListObj = jsonArray.getJSONObject(i);
 
                             String Earned_ID = productListObj.getString("Earned_ID");
@@ -1077,7 +1107,8 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                     }
                     else
                     {
-                        Toast.makeText(getApplicationContext(), "No EarnPoints Avail", Toast.LENGTH_LONG).show();
+                        tvEarnListInfo.setVisibility(View.VISIBLE);
+//                        Toast.makeText(getApplicationContext(), "No EarnPoints Avail", Toast.LENGTH_LONG).show();
                     }
                 }
                 else
@@ -1183,35 +1214,52 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                     String message = jsonObject.getString("message");
                     String userid = jsonObject.getString("FilterId");
 
-                    if (success.equalsIgnoreCase("1")) {
-                        JSONArray jsonArray = jsonObject.getJSONArray("ReedemedPoints_Trans");
-                        if (jsonArray.length() != 0) {
-                            for (int i = 0; i <= jsonArray.length(); i++) {
-                                JSONObject productListObj = jsonArray.getJSONObject(i);
+                    if (success.equalsIgnoreCase("1"))
+                    {
+                        try
+                        {
+                            JSONArray jsonArray = jsonObject.getJSONArray("ReedemedPoints_Trans");
+                            if (jsonArray.length() != 0)
+                            {
+                                tvHistoryListInfo.setVisibility(View.GONE);
 
-                                String ProfileID = productListObj.getString("ProfileID");
-                                String ProductID = productListObj.getString("ProductID");
-                                String ProductName = productListObj.getString("ProductName");
-                                String ProductDesc = productListObj.getString("ProductDesc");
-                                String Offer = productListObj.getString("Offer");
-                                String ProductImage = productListObj.getString("ProductImage");
-                                String Points_Used = productListObj.getString("Points_Used");
-                                String Quantity = productListObj.getString("Quantity");
-                                String Trans_Desc = productListObj.getString("Trans_Desc");
-                                String Trans_Date = productListObj.getString("Trans_Date");
-                                String Merchant_BranchID = productListObj.getString("Merchant_BranchID");
-                                String Merchant_BranchName = productListObj.getString("Merchant_BranchName");
+                                for (int i = 0; i < jsonArray.length(); i++)
+                                {
+                                    JSONObject productListObj = jsonArray.getJSONObject(i);
 
-                                ArrayList<ListCell> items = new ArrayList<ListCell>();
+                                    String ProfileID = productListObj.getString("ProfileID");
+                                    String ProductID = productListObj.getString("ProductID");
+                                    String ProductName = productListObj.getString("ProductName");
+                                    String ProductDesc = productListObj.getString("ProductDesc");
+                                    String Offer = productListObj.getString("Offer");
+                                    String ProductImage = productListObj.getString("ProductImage");
+                                    String Points_Used = productListObj.getString("Points_Used");
+                                    String Quantity = productListObj.getString("Quantity");
+                                    String Trans_Desc = productListObj.getString("Trans_Desc");
+                                    String Trans_Date = productListObj.getString("Trans_Date");
+                                    String Merchant_BranchID = productListObj.getString("Merchant_BranchID");
+                                    String Merchant_BranchName = productListObj.getString("Merchant_BranchName");
 
-                                items.add(new ListCell("", "", ProductName, "+" + Points_Used));
+                                    ArrayList<ListCell> items = new ArrayList<ListCell>();
 
-                                redeemListView = (ListView) HistoryListView.findViewById(R.id.awesome_list);
-                                items = sortAndAddSections(items);
+                                    items.add(new ListCell("", "", ProductName, "+" + Points_Used));
 
-                                ListAdapter1 adapter = new ListAdapter1(RewardsPointsActivity.this, items);
-                                redeemListView.setAdapter(adapter);
+                                    redeemListView = (ListView) HistoryListView.findViewById(R.id.awesome_list);
+                                    items = sortAndAddSections(items);
+
+                                    ListAdapter1 adapter = new ListAdapter1(RewardsPointsActivity.this, items);
+                                    redeemListView.setAdapter(adapter);
+                                }
                             }
+                            else
+                            {
+                                tvHistoryListInfo.setVisibility(View.VISIBLE);
+                            }
+                        }
+                        catch (JSONException e)
+                        {
+                            e.printStackTrace();
+                            tvHistoryListInfo.setVisibility(View.VISIBLE);
                         }
                     }
                     else

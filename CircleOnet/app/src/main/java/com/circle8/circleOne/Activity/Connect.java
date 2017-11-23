@@ -7,6 +7,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 
 public class Connect extends AppCompatActivity {
 
@@ -25,4 +26,11 @@ public class Connect extends AppCompatActivity {
         actionText = (TextView) findViewById(R.id.mytext);
         actionText.setText("Connect");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
 }

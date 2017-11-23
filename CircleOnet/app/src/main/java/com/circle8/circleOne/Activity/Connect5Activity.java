@@ -38,7 +38,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connect5);
-
+        Utility.freeMemory();
         Intent intent = getIntent();
         level = intent.getStringExtra("level");
         profile = intent.getStringExtra("profile");
@@ -109,6 +109,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
 
         try
         {
+            Utility.freeMemory();
             if (profile.equalsIgnoreCase("") || profile.equalsIgnoreCase("null"))
             {
                 ivImage1.setImageResource(R.drawable.usr);
@@ -134,11 +135,13 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
                 go.putExtra("viewpager_position", 1);
                 startActivity(go);*/
                 finish();
+                Utility.freeMemory();
             }
         });
 
         if (level.equals("0"))
         {
+            Utility.freeMemory();
           //  txtCongratulations.setVisibility(View.GONE);
             txtLink.setText("You have no established connections");
             rltLevel1.setVisibility(View.INVISIBLE);
@@ -268,6 +271,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         }
         else if (level.equals("3"))
         {
+            Utility.freeMemory();
             //txtCongratulations.setVisibility(View.VISIBLE);
             txtLink.setText("you are now 3 connections away");
             rltLevel1.setVisibility(View.VISIBLE);
@@ -542,6 +546,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         imgCards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
                 Intent go = new Intent(getApplicationContext(),CardsActivity.class);
 
                 // you pass the position you want the viewpager to show in the extra,
@@ -557,6 +562,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         imgConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
                 Intent go = new Intent(getApplicationContext(),CardsActivity.class);
 
                 // you pass the position you want the viewpager to show in the extra,
@@ -572,6 +578,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         imgEvents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
                 Intent go = new Intent(getApplicationContext(),CardsActivity.class);
 
                 // you pass the position you want the viewpager to show in the extra,
@@ -587,6 +594,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
                 Intent go = new Intent(getApplicationContext(),CardsActivity.class);
 
                 // you pass the position you want the viewpager to show in the extra,
@@ -617,10 +625,17 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
+    @Override
     public void onClick(View v)
     {
         if ( v == ivProfile1)
         {
+            Utility.freeMemory();
             Intent in = new Intent(Connect5Activity.this, CardDetail.class);
             in.putExtra("profile_id", userProfileId1);
             in.putExtra("DateInitiated", "");
@@ -631,6 +646,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         }
         if ( v == ivProfile2)
         {
+            Utility.freeMemory();
             Intent in = new Intent(Connect5Activity.this, CardDetail.class);
             in.putExtra("profile_id", userProfileId2);
             in.putExtra("DateInitiated", "");
@@ -641,6 +657,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         }
         if ( v == ivProfile3)
         {
+            Utility.freeMemory();
             Intent in = new Intent(Connect5Activity.this, CardDetail.class);
             in.putExtra("profile_id", userProfileId3);
             in.putExtra("DateInitiated", "");
@@ -651,6 +668,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         }
         if ( v == ivProfile4)
         {
+            Utility.freeMemory();
             Intent in = new Intent(Connect5Activity.this, CardDetail.class);
             in.putExtra("profile_id", userProfileId4);
             in.putExtra("DateInitiated", "");
@@ -661,6 +679,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         }
         if ( v == ivProfile5)
         {
+            Utility.freeMemory();
             Intent in = new Intent(Connect5Activity.this, CardDetail.class);
             in.putExtra("profile_id", userProfileId5);
             in.putExtra("DateInitiated", "");
@@ -671,6 +690,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         }
         if ( v == ivProfile6)
         {
+            Utility.freeMemory();
             Intent in = new Intent(Connect5Activity.this, CardDetail.class);
             in.putExtra("profile_id", userProfileId6);
             in.putExtra("DateInitiated", "");
@@ -681,6 +701,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         }
         if ( v == ivProfile7)
         {
+            Utility.freeMemory();
             Intent in = new Intent(Connect5Activity.this, CardDetail.class);
             in.putExtra("profile_id", userProfileId7);
             in.putExtra("DateInitiated", "");

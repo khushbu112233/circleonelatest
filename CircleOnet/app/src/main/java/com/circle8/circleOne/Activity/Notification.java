@@ -98,6 +98,12 @@ public class Notification extends AppCompatActivity
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
     private void callFirst()
     {
         new HttpAsyncTask().execute(Utility.BASE_URL+"Notification");

@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.RxContacts.Contact;
+import com.circle8.circleOne.Utils.Utility;
 
 public class ContactUsActivity extends AppCompatActivity implements View.OnClickListener
 {
@@ -25,12 +26,14 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
     private ImageView imgBack;
     private LinearLayout lnrAddress, lnrEmail, lnrContact, lnrWebsite ;
     private String subject, description ;
+    ImageView fbUrl, linkedInUrl, twitterUrl, googleUrl, youtubeUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_us);
+        Utility.freeMemory();
         imgBack = (ImageView) findViewById(R.id.imgBack);
         tvCompany = (TextView)findViewById(R.id.tvCompanyName);
         tvPartner = (TextView)findViewById(R.id.tvPartner);
@@ -50,6 +53,11 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
         lnrWebsite = (LinearLayout)findViewById(R.id.lnrWebsite);
         ivMessage = (ImageView) findViewById(R.id.ivMessage);
         ivPhone = (ImageView) findViewById(R.id.ivPhone);
+        fbUrl = (ImageView) findViewById(R.id.fbUrl);
+        linkedInUrl = (ImageView) findViewById(R.id.linkedInUrl);
+        twitterUrl = (ImageView) findViewById(R.id.twitterUrl);
+        googleUrl = (ImageView) findViewById(R.id.googleUrl);
+        youtubeUrl = (ImageView) findViewById(R.id.youtubeUrl);
 
         imgBack.setOnClickListener(this);
         lnrAddress.setOnClickListener(this);
@@ -58,7 +66,17 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
         lnrWebsite.setOnClickListener(this);
         tvSend.setOnClickListener(this);
         tvCancel.setOnClickListener(this);
+        fbUrl.setOnClickListener(this);
+        linkedInUrl.setOnClickListener(this);
+        twitterUrl.setOnClickListener(this);
+        googleUrl.setOnClickListener(this);
+        youtubeUrl.setOnClickListener(this);
 
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
     }
 
     @Override
@@ -66,10 +84,48 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
     {
         if ( v == imgBack)
         {
+            Utility.freeMemory();
             finish();
         }
+        if ( v == fbUrl)
+        {
+            Utility.freeMemory();
+            Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
+            intent.putExtra("url", "https://www.facebook.com/circleoneasia/");
+            startActivity(intent);
+        }
+        if ( v == linkedInUrl)
+        {
+            Utility.freeMemory();
+            Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
+            intent.putExtra("url", "https://www.linkedin.com/company/13454864/");
+            startActivity(intent);
+        }
+        if ( v == twitterUrl)
+        {
+            Utility.freeMemory();
+            Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
+            intent.putExtra("url", "https://twitter.com/Circle8Asia");
+            startActivity(intent);
+        }
+        if ( v == googleUrl)
+        {
+            Utility.freeMemory();
+            /*Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
+            intent.putExtra("url", Utility.BASE_IMAGE_URL+"Other_doc/"+txtAttachment.getText().toString());
+            startActivity(intent);*/
+        }
+        if ( v == youtubeUrl)
+        {
+            Utility.freeMemory();
+           /* Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
+            intent.putExtra("url", Utility.BASE_IMAGE_URL+"Other_doc/"+txtAttachment.getText().toString());
+            startActivity(intent);*/
+        }
+
         if ( v == lnrAddress)
         {
+            Utility.freeMemory();
             AlertDialog.Builder builder;
             builder = new AlertDialog.Builder(ContactUsActivity.this, R.style.Blue_AlertDialog);
 
@@ -94,6 +150,7 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
         }
         if ( v == ivMessage)
         {
+            Utility.freeMemory();
             AlertDialog.Builder builder;
             builder = new AlertDialog.Builder(ContactUsActivity.this, R.style.Blue_AlertDialog);
             builder.setTitle("Mail to "+ tvCompany.getText().toString())
@@ -126,6 +183,7 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
         }
         if ( v == ivPhone)
         {
+            Utility.freeMemory();
             AlertDialog.Builder builder;
             builder = new AlertDialog.Builder(ContactUsActivity.this, R.style.Blue_AlertDialog);
 
@@ -150,6 +208,7 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
         }
         if ( v == lnrWebsite)
         {
+            Utility.freeMemory();
             AlertDialog.Builder builder;
             builder = new AlertDialog.Builder(ContactUsActivity.this, R.style.Blue_AlertDialog);
 
@@ -178,6 +237,7 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
         }
         if ( v == tvSend)
         {
+            Utility.freeMemory();
             subject = etSubject.getText().toString();
             description = etDescription.getText().toString();
 

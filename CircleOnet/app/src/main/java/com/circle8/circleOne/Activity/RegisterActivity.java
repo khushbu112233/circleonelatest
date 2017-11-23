@@ -351,6 +351,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
 
     private Bitmap downloadImage(String stringUrl) {
         URL url;
@@ -386,11 +391,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         if (v == imgBack) {
+            Utility.freeMemory();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
             finish();
         }
         if (v == ivMale) {
+            Utility.freeMemory();
           //  Toast.makeText(getApplicationContext(), String.valueOf(motionLength), Toast.LENGTH_LONG).show();
             TranslateAnimation slide1 = new TranslateAnimation(0, -(motionLength-15), 0, 0);
             slide1.setDuration(1000);
@@ -418,9 +425,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
          //   ivMaleImg.setImageResource(R.drawable.ic_male);
 
             gender = "M";
-            txtGender.setText("Gender: Male");
+            txtGender.setText("Male");
         }
         if (v == ivFemale) {
+            Utility.freeMemory();
           //  Toast.makeText(getApplicationContext(), String.valueOf(motionLength), Toast.LENGTH_LONG).show();
             TranslateAnimation slide = new TranslateAnimation(0, motionLength-15, 0, 0);
             slide.setDuration(1000);
@@ -450,10 +458,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
           //  ivFemaleImg.setImageResource(R.drawable.ic_female);
 
             gender = "F";
-            txtGender.setText("Gender: Female");
+            txtGender.setText("Female");
 
         }
         if (v == lnrRegister) {
+            Utility.freeMemory();
             company_name = "Ample Arch";
             refferelCode = etReferrelCode.getText().toString();
             user_name = etFirstName.getText().toString() + " " + etLastName.getText().toString();
@@ -504,7 +513,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
         if (v == civProfilePic) {
            // selectImage();
-
+            Utility.freeMemory();
             CropImage.activity(null)
                     .setGuidelines(CropImageView.Guidelines.ON)
                     .start(RegisterActivity.this);
@@ -703,6 +712,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public static String BitMapToString(Bitmap bitmap) {
+        Utility.freeMemory();
         ByteArrayOutputStream ByteStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, ByteStream);
         byte[] b = ByteStream.toByteArray();

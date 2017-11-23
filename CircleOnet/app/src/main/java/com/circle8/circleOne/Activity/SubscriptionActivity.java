@@ -147,7 +147,7 @@ public class SubscriptionActivity extends AppCompatActivity
 
                 if (packageId.equalsIgnoreCase(default_PackageId))
                 {
-
+                    Toast.makeText(getApplicationContext(), "You cannot cancel Basic package", Toast.LENGTH_LONG).show();
                 }
                 else if (packageId.equalsIgnoreCase("1"))
                 {
@@ -277,6 +277,12 @@ public class SubscriptionActivity extends AppCompatActivity
             }
         });
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
     }
 
     public void cardPayment()

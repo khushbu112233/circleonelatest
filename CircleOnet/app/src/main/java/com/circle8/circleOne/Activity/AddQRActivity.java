@@ -79,6 +79,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
     public String secretKey = "1234567890234561";
     private double latitude, longitude;
     String lat = "", lng = "";
+    private boolean netCheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -96,7 +97,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
        /* mScannerView = new ZXingScannerView(this);
         contentFrame.addView(mScannerView);
         CameraScann();*/
-
+        netCheck = Utility.isNetworkAvailable(getApplicationContext());
         btnRescan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -126,6 +127,8 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Utility.freeMemory();
                 finish();
             }
         });
@@ -136,6 +139,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
             throws GeneralSecurityException, IOException {
 
         try {
+            Utility.freeMemory();
             byte[] value_bytes = Base64.decode(value, 0);
             byte[] key_bytes = getKeyBytes(key);
             return new String(decrypt(value_bytes, key_bytes, key_bytes), "UTF-8");
@@ -147,6 +151,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
     public byte[] decrypt(byte[] ArrayOfByte1, byte[] ArrayOfByte2, byte[] ArrayOfByte3)
             throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
         // setup AES cipher in CBC mode with PKCS #5 padding
+        Utility.freeMemory();
         Cipher localCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 
         // decrypt
@@ -156,16 +161,11 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
 
     private byte[] getKeyBytes(String paramString)
             throws UnsupportedEncodingException {
+        Utility.freeMemory();
         byte[] arrayOfByte1 = new byte[16];
         byte[] arrayOfByte2 = paramString.getBytes("UTF-8");
         System.arraycopy(arrayOfByte2, 0, arrayOfByte1, 0, Math.min(arrayOfByte2.length, arrayOfByte1.length));
         return arrayOfByte1;
-    }
-
-
-    @Override
-    public void onBackPressed() {
-
     }
 
     @Override
@@ -181,7 +181,8 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
     //    new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
 
         try {
-
+            Utility.freeMemory();
+           // Toast.makeText(getApplicationContext(), rawResult.getText().toString(), Toast.LENGTH_LONG).show();
             scanQr = decrypt(rawResult.getText().toString(), secretKey);
             if (scanQr.equals("Invalid QRCode")) {
                 Toast.makeText(getApplicationContext(), scanQr, Toast.LENGTH_LONG).show();
@@ -194,19 +195,25 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
                 try {
                     mScannerView.stopCamera();
                     CameraScann();
-
-                    if (CardsActivity.mLastLocation != null) {
-                        latitude = CardsActivity.mLastLocation.getLatitude();
-                        longitude = CardsActivity.mLastLocation.getLongitude();
-                        lat = String.valueOf(latitude);
-                        lng = String.valueOf(longitude);
-                        new HttpAsyncTask().execute(Utility.BASE_URL + "FriendConnection_Operation");
-                    } else {
-                        lat = "";
-                        lng = "";
-                        new HttpAsyncTask().execute(Utility.BASE_URL + "FriendConnection_Operation");
-                        CardsActivity.getLocation();
-                        Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
+                    Utility.freeMemory();
+                    if (netCheck == false){
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        Utility.freeMemory();
+                        if (CardsActivity.mLastLocation != null) {
+                            latitude = CardsActivity.mLastLocation.getLatitude();
+                            longitude = CardsActivity.mLastLocation.getLongitude();
+                            lat = String.valueOf(latitude);
+                            lng = String.valueOf(longitude);
+                            new HttpAsyncTask().execute(Utility.BASE_URL + "FriendConnection_Operation");
+                        } else {
+                            lat = "";
+                            lng = "";
+                            new HttpAsyncTask().execute(Utility.BASE_URL + "FriendConnection_Operation");
+                            CardsActivity.getLocation();
+                            Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
+                        }
                     }
 
                 } catch (Exception e) {
@@ -363,6 +370,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
         @Override
         protected void onPostExecute(String result) {
             dialog.dismiss();
+            Utility.freeMemory();
             //  Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result == "") {
@@ -373,6 +381,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
                     String success = response.getString("success");
 
                     if (success.equals("1")) {
+                        Utility.freeMemory();
                         Toast.makeText(getApplicationContext(), getResources().getString(R.string.successful_request_sent), Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
                         intent.putExtra("viewpager_position", CardsActivity.mViewPager.getCurrentItem());
@@ -436,10 +445,16 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
 
     @Override
     public void onResume()
     {
+        Utility.freeMemory();
         super.onResume();
         mScannerView.setResultHandler(this);
         mScannerView.startCamera();
@@ -495,7 +510,8 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
         private static final long ANIMATION_DELAY = 80l;
 
         private Rect mFramingRect;
-        private static final float SQUARE_DIMENSION_RATIO = 5f/8;
+
+        private static final float SQUARE_DIMENSION_RATIO = 7f/8;
         private static final float PORTRAIT_WIDTH_RATIO = 6f/8;
         private static final float PORTRAIT_WIDTH_HEIGHT_RATIO = 0.75f;
 
@@ -693,4 +709,5 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
             mFramingRect = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
         }
     }
+
 }

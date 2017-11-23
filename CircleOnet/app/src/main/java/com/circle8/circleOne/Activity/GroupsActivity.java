@@ -112,9 +112,11 @@ public class GroupsActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        Utility.freeMemory();
         super.onCreate(savedInstanceState);
+        Utility.freeMemory();
         setContentView(R.layout.activity_groups);
-
+        Utility.freeMemory();
         session = new LoginSession(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
         user_id = user.get(LoginSession.KEY_USERID);
@@ -189,6 +191,7 @@ public class GroupsActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                Utility.freeMemory();
                 CreateOrUpdateStatus = "Create";
                 tvCreateOrUpdate.setText("Create");
                 tvTextView.setText("Create New Circle");
@@ -373,6 +376,7 @@ public class GroupsActivity extends AppCompatActivity
         ivGroupImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
                 CropImage.activity(null)
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .setCropMenuCropButtonTitle("Save")
@@ -385,6 +389,7 @@ public class GroupsActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                Utility.freeMemory();
                 if (CreateOrUpdateStatus.equalsIgnoreCase("Create"))
                 {
                     GroupName = etCircleName.getText().toString();
@@ -459,6 +464,7 @@ public class GroupsActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                Utility.freeMemory();
                 ivAlphaImg.setVisibility(View.GONE);
                 rlLayTwo.setVisibility(View.GONE);
                 listView.setEnabled(true);
@@ -473,6 +479,7 @@ public class GroupsActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
+                Utility.freeMemory();
                 Intent intent = new Intent(getApplicationContext(), GroupDetailActivity.class);
                 intent.putExtra("group_id", groupModelArrayList.get(position).getGroup_ID());
                 intent.putExtra("groupImg", groupModelArrayList.get(position).getGroup_Photo());
@@ -483,8 +490,16 @@ public class GroupsActivity extends AppCompatActivity
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
+
     public  String POST1(String url)
     {
+        Utility.freeMemory();
         InputStream inputStream = null;
         String result = "";
         try
@@ -566,6 +581,7 @@ public class GroupsActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(String result)
         {
+            Utility.freeMemory();
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
@@ -651,6 +667,7 @@ public class GroupsActivity extends AppCompatActivity
 
     private void galleryIntent()
     {
+        Utility.freeMemory();
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -667,6 +684,7 @@ public class GroupsActivity extends AppCompatActivity
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
+        Utility.freeMemory();
         if (resultCode == Activity.RESULT_OK)
         {
             if (requestCode == SELECT_FILE)
@@ -742,8 +760,9 @@ public class GroupsActivity extends AppCompatActivity
             {
                 try
                 {
+                    Utility.freeMemory();
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
-
+                    Utility.freeMemory();
                     Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 150, 150, false);
                     image = ConvertBitmapToString(resizedBitmap);
                     final_ImgBase64 = BitMapToString(resizedBitmap);
@@ -962,7 +981,7 @@ public class GroupsActivity extends AppCompatActivity
         {
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
-
+            Utility.freeMemory();
             try
             {
                 if (result != null)
@@ -1026,7 +1045,7 @@ public class GroupsActivity extends AppCompatActivity
         {
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
-
+            Utility.freeMemory();
             try
             {
                 if (result != null)
@@ -1146,7 +1165,7 @@ public class GroupsActivity extends AppCompatActivity
     protected void onResume()
     {
         super.onResume();
-
+        Utility.freeMemory();
         if (backStatus.equals("UpdateBack"))
         {
 
@@ -1200,6 +1219,7 @@ public class GroupsActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(String result)
         {
+            Utility.freeMemory();
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
             try
@@ -1341,6 +1361,7 @@ public class GroupsActivity extends AppCompatActivity
     }
 
     public String POST4(String url) {
+        Utility.freeMemory();
         InputStream inputStream = null;
         String result = "";
         try {
@@ -1411,7 +1432,7 @@ public class GroupsActivity extends AppCompatActivity
     {
         rlProgressDialog.setVisibility(View.VISIBLE);
         tvProgressing.setText(loading);
-
+        Utility.freeMemory();
         Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
         ivConnecting1.startAnimation(anim);
         Animation anim1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.clockwise);

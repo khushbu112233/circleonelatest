@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.circle8.circleOne.Adapter.EventsAdapter;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 
 import java.util.ArrayList;
 
@@ -37,4 +38,11 @@ public class EventsActivity extends AppCompatActivity
 
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
 }

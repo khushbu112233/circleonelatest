@@ -79,8 +79,8 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_verification);
-
-        ivBack = (ImageView)findViewById(R.id.imgBack);
+        Utility.freeMemory();
+        ivBack = (ImageView)findViewById(R.id.imgBackCard);
         ivAddCard = (ImageView)findViewById(R.id.ivAddCard);
 
         rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
@@ -94,7 +94,7 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
         if (mNfcAdapter != null) {
             //txtNoGroup.setText("Read an NFC tag");
         } else {
-            txtNoGroup.setText("This phone is not NFC enabled.");
+            txtNoGroup.setText("Your current mobile device is not NFC-enabled. \nPlease login via an NFC-enabled device to unlock your card.");
             ivAddCard.setVisibility(View.GONE);
         }
 
@@ -113,6 +113,7 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
 
         mNFCTechLists = new String[][] { new String[] { NfcF.class.getName() } };
 
+        ivBack.setOnClickListener(this);
 
 //        new HttpAsyncActivateNFC().execute(Utility.BASE_URL+"NFCSecurity/ActivateNFC");                               // post
     }
@@ -130,6 +131,7 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
 
         if (data != null) {
             try {
+                Utility.freeMemory();
                 arrayNFC = new ArrayList<>();
                 for (int i = 0; i < data.length; i++) {
                     NdefRecord[] recs = ((NdefMessage)data[i]).getRecords();
@@ -158,17 +160,20 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
         }
         //Toast.makeText(getApplicationContext(), arrayNFC.toString(), Toast.LENGTH_LONG).show();
         if (arrayNFC.size() == 1){
+            Utility.freeMemory();
             txtNoGroup.setText("Your Card is already verified..");
             ivAddCard.setVisibility(View.GONE);
         }
         else if (arrayNFC.size() == 2){
+            Utility.freeMemory();
             ProfileId = arrayNFC.get(0).toString();
             CardCode = arrayNFC.get(1).toString();
-            Toast.makeText(getApplicationContext(), ProfileId + " " + CardCode, Toast.LENGTH_LONG).show();
+           // Toast.makeText(getApplicationContext(), ProfileId + " " + CardCode, Toast.LENGTH_LONG).show();
             new HttpAsyncActivateNFC().execute(Utility.BASE_URL+"NFCSecurity/ActivateNFC");
         }
         else {
-            txtNoGroup.setText("Your Card is already verified..");
+            Utility.freeMemory();
+            txtNoGroup.setText("Please use only CircleOne NFC-Card for unlock");
             ivAddCard.setVisibility(View.GONE);
         }
         //txtNoGroup.setText(s);
@@ -176,6 +181,7 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
 
     public String decrypt(String value, String key)
             throws GeneralSecurityException, IOException {
+        Utility.freeMemory();
         byte[] value_bytes = Base64.decode(value, 0);
         byte[] key_bytes = getKeyBytes(key);
         return new String(decrypt(value_bytes, key_bytes, key_bytes), "UTF-8");
@@ -185,7 +191,7 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
             throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
         // setup AES cipher in CBC mode with PKCS #5 padding
         Cipher localCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-
+        Utility.freeMemory();
         // decrypt
         localCipher.init(2, new SecretKeySpec(ArrayOfByte2, "AES"), new IvParameterSpec(ArrayOfByte3));
         return localCipher.doFinal(ArrayOfByte1);
@@ -193,17 +199,24 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
 
     private byte[] getKeyBytes(String paramString)
             throws UnsupportedEncodingException {
+        Utility.freeMemory();
         byte[] arrayOfByte1 = new byte[16];
         byte[] arrayOfByte2 = paramString.getBytes("UTF-8");
         System.arraycopy(arrayOfByte2, 0, arrayOfByte1, 0, Math.min(arrayOfByte2.length, arrayOfByte1.length));
         return arrayOfByte1;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
 
     @Override
     public void onResume() {
         super.onResume();
-
+        Utility.freeMemory();
         if (mNfcAdapter != null)
             mNfcAdapter.enableForegroundDispatch(this, mPendingIntent, mIntentFilters, mNFCTechLists);
     }
@@ -211,7 +224,7 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
     @Override
     public void onPause() {
         super.onPause();
-
+        Utility.freeMemory();
         if (mNfcAdapter != null)
             mNfcAdapter.disableForegroundDispatch(this);
     }
@@ -222,11 +235,12 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
     {
         if ( v == ivBack)
         {
+            Utility.freeMemory();
             finish();
         }
         if ( v == ivAddCard)
         {
-
+            Utility.freeMemory();
         }
     }
 
@@ -255,6 +269,7 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
         @Override
         protected void onPostExecute(String result)
         {
+            Utility.freeMemory();
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
           //  Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
@@ -267,7 +282,7 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
                     String message = jsonObject.getString("message");
                     String card_code = jsonObject.getString("card_code");
                     if (success.equalsIgnoreCase("1")){
-                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Your NFC card is unlock", Toast.LENGTH_LONG).show();
                     }
                     else {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
@@ -336,6 +351,7 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException
     {
+        Utility.freeMemory();
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line = "";
         String result = "";
@@ -348,6 +364,7 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
 
     public  void CustomProgressDialog(final String loading)
     {
+        Utility.freeMemory();
         rlProgressDialog.setVisibility(View.VISIBLE);
         tvProgressing.setText(loading);
 

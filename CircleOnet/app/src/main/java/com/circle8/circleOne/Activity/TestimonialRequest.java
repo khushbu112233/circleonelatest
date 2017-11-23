@@ -82,6 +82,12 @@ public class TestimonialRequest extends AppCompatActivity
         new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"GetFriends_Profile");
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
     private static class HttpAsyncTaskTestimonial extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;

@@ -9,6 +9,8 @@ import android.widget.ImageView;
 
 import com.circle8.circleOne.Adapter.ExpandableListAdapter;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -26,6 +28,7 @@ public class Help2Activity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        Utility.freeMemory();
         setContentView(R.layout.activity_help2);
 
         expListView = (ExpandableListView)findViewById(R.id.QA_listview);
@@ -41,6 +44,7 @@ public class Help2Activity extends AppCompatActivity
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
                 finish();
             }
         });
@@ -54,6 +58,7 @@ public class Help2Activity extends AppCompatActivity
             @Override
             public void onGroupExpand(int groupPosition)
             {
+                Utility.freeMemory();
                 // Collapse previous parent if expanded.
                 if ((previousGroup != -1) && (groupPosition != previousGroup))
                 {
@@ -65,8 +70,16 @@ public class Help2Activity extends AppCompatActivity
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
+
     private void setGroupIndicatorToRight()
     {
+        Utility.freeMemory();
         /* Get the screen width */
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -87,6 +100,7 @@ public class Help2Activity extends AppCompatActivity
 
     private void createGroupList()
     {
+        Utility.freeMemory();
         questionsList = new ArrayList<String>();
         questionsList.add("My Account:");
 
@@ -118,6 +132,7 @@ public class Help2Activity extends AppCompatActivity
 
     private void createCollection()
     {
+        Utility.freeMemory();
         // preparing laptops collection(child)
         String[] firstAnswer =
                 {
@@ -373,6 +388,7 @@ public class Help2Activity extends AppCompatActivity
 
     private void loadChild(String[] laptopModels)
     {
+        Utility.freeMemory();
         answersList = new ArrayList<String>();
 
         for (String model : laptopModels)
