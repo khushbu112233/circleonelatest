@@ -3,6 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.circle8.circleOne">
 
+    <permission
+        android:name="com.circle8.circleOne.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.circle8.circleOne.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,6 +21,8 @@
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature
         android:name="android.hardware.nfc"
@@ -40,6 +50,48 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="com.quickblox.sample.chat" />
+            </intent-filter>
+        </receiver>
+
+       <!-- <service
+            android:name=".gcm.GcmPushListenerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>-->
+        <service
+            android:name="com.quickblox.messages.services.gcm.QBGcmPushInstanceIDService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.quickblox.messages.TYPE"
+            android:value="GCM" />
+        <meta-data
+            android:name="com.quickblox.messages.SENDER_ID"
+            android:value="564268798411" />
+        <meta-data
+            android:name="com.quickblox.messages.QB_ENVIRONMENT"
+            android:value="DEVELOPMENT" />
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="7aea78439bec41a9005c7488bb6751c5e33fe270" />
 
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />
         <activity
@@ -270,6 +322,28 @@
         <activity android:name=".Activity.CardVerificationActivity" android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" >
         </activity>
+        <activity
+            android:name=".chat.DialogsActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".chat.ChatActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <activity
+            android:name=".chat.ChatInfoActivity"
+            android:label="@string/chat_info"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".chat.AttachmentImageActivity"
+            android:theme="@style/AppTheme.Dark"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".chat.SelectUsersActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

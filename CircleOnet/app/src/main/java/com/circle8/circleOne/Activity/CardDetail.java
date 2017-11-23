@@ -2,6 +2,7 @@ package com.circle8.circleOne.Activity;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -55,6 +56,25 @@ import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.ExpandableHeightListView;
 import com.circle8.circleOne.Utils.StickyScrollView;
 import com.circle8.circleOne.Utils.Utility;
+import com.circle8.circleOne.chat.ChatActivity;
+import com.circle8.circleOne.chat.ChatHelper;
+import com.circle8.circleOne.chat.DialogsAdapter;
+import com.circle8.circleOne.chat.DialogsManager;
+import com.circle8.circleOne.chat.qb.QbChatDialogMessageListenerImp;
+import com.quickblox.chat.QBChatService;
+import com.quickblox.chat.QBIncomingMessagesManager;
+import com.quickblox.chat.QBSystemMessagesManager;
+import com.quickblox.chat.exception.QBChatException;
+import com.quickblox.chat.listeners.QBChatDialogMessageListener;
+import com.quickblox.chat.listeners.QBSystemMessageListener;
+import com.quickblox.chat.model.QBChatDialog;
+import com.quickblox.chat.model.QBChatMessage;
+import com.quickblox.core.QBEntityCallback;
+import com.quickblox.core.exception.QBResponseException;
+import com.quickblox.sample.core.gcm.GooglePlayServicesHelper;
+import com.quickblox.sample.core.utils.constant.GcmConsts;
+import com.quickblox.users.QBUsers;
+import com.quickblox.users.model.QBUser;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpResponse;
@@ -80,7 +100,7 @@ import be.appfoundry.nfclibrary.utilities.interfaces.NfcReadUtility;
 import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CardDetail extends NfcActivity
+public class CardDetail extends NfcActivity implements DialogsManager.ManagingDialogsCallbacks
 {
     ExpandableHeightListView lstTestimonial;
     ViewPager mViewPager, viewPager1;
@@ -136,6 +156,21 @@ public class CardDetail extends NfcActivity
     double Latitude, Longitude;
     LinearLayout lnrNfcLocation;
 
+
+    private QBSystemMessagesManager systemMessagesManager;
+    ArrayList<QBUser> selectedUsers = new ArrayList<QBUser>();
+
+    private BroadcastReceiver pushBroadcastReceiver;
+    private GooglePlayServicesHelper googlePlayServicesHelper;
+    private DialogsAdapter dialogsAdapter;
+    private QBChatDialogMessageListener allDialogsMessagesListener;
+    private SystemMessagesListener systemMessagesListener;
+    private QBIncomingMessagesManager incomingMessagesManager;
+    private DialogsManager dialogsManager;
+    private QBUser currentUser;
+    String Q_ID = "", CurrentQ_ID = "";
+    ImageView imgChat;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -146,6 +181,7 @@ public class CardDetail extends NfcActivity
         HashMap<String, String> user = loginSession.getUserDetails();
         user_id = user.get(LoginSession.KEY_USERID);
         currentUser_ProfileId = user.get(LoginSession.KEY_PROFILEID);
+        CurrentQ_ID = user.get(LoginSession.KEY_QID);
         imgProfileShare = (ImageView) findViewById(R.id.imgProfileShare);
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager1 = (ViewPager) findViewById(R.id.viewPager1);
@@ -203,7 +239,7 @@ public class CardDetail extends NfcActivity
         ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
         ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
         ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
-
+        imgChat = (ImageView) findViewById(R.id.imgChat);
         txtMore = (TextView) findViewById(R.id.txtMore);
         HashMap<String, String> referral = referralCodeSession.getReferralDetails();
         refer = referral.get(ReferralCodeSession.KEY_REFERRAL);
@@ -212,7 +248,7 @@ public class CardDetail extends NfcActivity
         DateInitiated = intent.getStringExtra("DateInitiated");
         String lat = intent.getStringExtra("lat");
         String lon = intent.getStringExtra("long");
-
+        dialogsManager = new DialogsManager();
         SpannableString ss = new SpannableString("Ask your friends to write a Testimonial for you(100 words or less),Please choose from your CircleOne contacts and send a request.");
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
@@ -259,6 +295,36 @@ public class CardDetail extends NfcActivity
         {
             new CardDetail.HttpAsyncTask().execute(Utility.BASE_URL+"GetUserProfile");
         }
+
+
+        googlePlayServicesHelper = new GooglePlayServicesHelper();
+
+        pushBroadcastReceiver = new PushBroadcastReceiver();
+
+        allDialogsMessagesListener = new AllDialogsMessageListener();
+        systemMessagesListener = new SystemMessagesListener();
+
+        dialogsManager = new DialogsManager();
+
+        currentUser = ChatHelper.getCurrentUser();
+
+        incomingMessagesManager = QBChatService.getInstance().getIncomingMessagesManager();
+        systemMessagesManager = QBChatService.getInstance().getSystemMessagesManager();
+
+        if (incomingMessagesManager != null) {
+            incomingMessagesManager.addDialogMessageListener(allDialogsMessagesListener != null
+                    ? allDialogsMessagesListener : new AllDialogsMessageListener());
+        }
+
+        if (systemMessagesManager != null) {
+            systemMessagesManager.addSystemMessageListener(systemMessagesListener != null
+                    ? systemMessagesListener : new SystemMessagesListener());
+        }
+
+        dialogsManager.addManagingDialogsCallbackListener(this);
+
+
+
 
         new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/Fetch");
 
@@ -866,9 +932,31 @@ public class CardDetail extends NfcActivity
             }
         });
 
+        imgChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ChatHelper.getInstance().createDialogWithSelectedUsers(selectedUsers,
+                        new QBEntityCallback<QBChatDialog>() {
+                            @Override
+                            public void onSuccess(QBChatDialog dialog, Bundle args) {
+                                // dialogsManager.sendSystemMessageAboutCreatingDialog(systemMessagesManager, dialog);
+                                ChatActivity.startForResult(CardDetail.this, 165, dialog);
+                                //ProgressDialogFragment.hide(getSupportFragmentManager());
+                            }
+
+                            @Override
+                            public void onError(QBResponseException e) {
+                                // ProgressDialogFragment.hide(getSupportFragmentManager());
+                            }
+                        }
+                );
+            }
+        });
+
         imgMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 AlertDialog.Builder builder;
                 builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
 
@@ -892,6 +980,38 @@ public class CardDetail extends NfcActivity
                         .show();
             }
         });
+    }
+
+    private class PushBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            String message = intent.getStringExtra(GcmConsts.EXTRA_GCM_MESSAGE);
+            Log.v(TAG, "Received broadcast " + intent.getAction() + " with data: " + message);
+            //  requestBuilder.setSkip(skipRecords = 0);
+            //  loadDialogsFromQb(true, true);
+        }
+    }
+
+    private class SystemMessagesListener implements QBSystemMessageListener {
+        @Override
+        public void processMessage(final QBChatMessage qbChatMessage) {
+            dialogsManager.onSystemMessageReceived(qbChatMessage);
+        }
+
+        @Override
+        public void processError(QBChatException e, QBChatMessage qbChatMessage) {
+
+        }
+    }
+
+    private class AllDialogsMessageListener extends QbChatDialogMessageListenerImp {
+        @Override
+        public void processMessage(final String dialogId, final QBChatMessage qbChatMessage, Integer senderId) {
+            if (!senderId.equals(ChatHelper.getCurrentUser().getId())) {
+                dialogsManager.onGlobalMessageReceived(dialogId, qbChatMessage);
+            }
+        }
     }
 
 
@@ -1029,6 +1149,21 @@ public class CardDetail extends NfcActivity
 
         // 11. return result
         return result;
+    }
+
+    @Override
+    public void onDialogCreated(QBChatDialog chatDialog) {
+
+    }
+
+    @Override
+    public void onDialogUpdated(String chatDialog) {
+
+    }
+
+    @Override
+    public void onNewDialogLoaded(QBChatDialog chatDialog) {
+
     }
 
     private class HttpAsyncTaskTestimonial extends AsyncTask<String, Void, String>
@@ -1452,7 +1587,47 @@ public class CardDetail extends NfcActivity
                     strgoogleUrl = jsonObject.getString("Google");
                     frontCardImg = jsonObject.getString("Card_Front");
                     backCardImg = jsonObject.getString("Card_Back");
+                    Q_ID = jsonObject.getString("Q_ID");
 
+
+                    int occupant_id = 0;
+
+                    if (Q_ID.equals("") || Q_ID == null || Q_ID.equals("")){
+                        imgChat.setVisibility(View.GONE);
+                    }
+                    else if (CurrentQ_ID.equals("")){
+                        imgChat.setVisibility(View.GONE);
+                    }
+                    else {
+                        imgChat.setVisibility(View.VISIBLE);
+                        occupant_id = Integer.parseInt(Q_ID);
+
+                        List<Integer> tags = new ArrayList<>();
+                        tags.add(Integer.parseInt(CurrentQ_ID));
+                        tags.add(occupant_id);
+                        // tags.add(App.getSampleConfigs().getUsersTag());
+
+                        QBUsers.getUsersByIDs(tags, null).performAsync(new QBEntityCallback<ArrayList<QBUser>>() {
+                            @Override
+                            public void onSuccess(ArrayList<QBUser> result, Bundle params) {
+                                //  QBChatDialog dialog = (QBChatDialog) getIntent().getSerializableExtra(EXTRA_QB_DIALOG);
+                                selectedUsers = result;
+                            }
+
+                            @Override
+                            public void onError(QBResponseException e) {
+                      /*  showErrorSnackbar(R.string.select_users_get_users_error, e,
+                                new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        loadUsersFromQb();
+                                    }
+                                });
+                        progressBar.setVisibility(View.GONE);*/
+                            }
+                        });
+
+                    }
 
                     if (jsonObject.getString("Attachment_FileName").toString().equals("") || jsonObject.getString("Attachment_FileName").toString() == null ||
                             jsonObject.getString("Attachment_FileName").toString().equals("null")) {

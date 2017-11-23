@@ -43,6 +43,11 @@ import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.AsyncRequest;
 import com.circle8.circleOne.Utils.Utility;
 import com.hbb20.CountryCodePicker;
+import com.quickblox.core.QBEntityCallback;
+import com.quickblox.core.exception.QBResponseException;
+import com.quickblox.core.helper.StringifyArrayList;
+import com.quickblox.users.QBUsers;
+import com.quickblox.users.model.QBUser;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -132,7 +137,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     int motionLength;
     int roundWidth = 0, lineWidth = 0;
     View viewCenter;
-
+    String Q_ID = "";
     private RelativeLayout rlProgressDialog ;
     private TextView tvProgressing ;
     EditText etDD, etMM, etYYYY;
@@ -1108,6 +1113,60 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         return result;
     }
 
+    public String POSTQ_ID(String url) {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("Q_ID", Q_ID);
+            jsonObject.accumulate("UserId", UserID);
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
@@ -1148,39 +1207,65 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     if (success.equals("1") && message.equalsIgnoreCase("Successfully Registered.")) {
                        // Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
 
-                        new Handler().postDelayed(new Runnable()
-                        {
-                            @Override
-                            public void run()
-                            {
+                        final QBUser user = new QBUser(email, "circle@123");
+                        user.setExternalId("");
+                        user.setEmail(email);
+                        user.setFullName(etFirstName.getText().toString() + " " + etLastName.getText().toString());
+                        StringifyArrayList<String> tags = new StringifyArrayList<String>();
+                        tags.add("dev");
+                        user.setTags(tags);
 
-                                final Dialog dialog = new Dialog(RegisterActivity.this);
-                                dialog.setContentView(R.layout.register_custom_popup);
-
-                                dialog.show();
-
-                                if (Status.equalsIgnoreCase("Verified")) {
-                                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                } else {
-                                    new HttpAsyncTaskVerify().execute(Utility.BASE_URL+"AccVerification/" + UserID);
-                                }
-
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run()
+                        try {
+                            QBUsers.signUp(user).performAsync(new QBEntityCallback<QBUser>() {
+                                @Override
+                                public void onSuccess(final QBUser user, Bundle args) {
+                                    new Handler().postDelayed(new Runnable()
                                     {
-                                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                                        finish();
-                                    }
-                                },2500);
+                                        @Override
+                                        public void run()
+                                        {
+
+                                            Q_ID = String.valueOf(user.getId());
+                                            new HttpAsyncTaskUpdateQ_ID().execute(Utility.BASE_URL+"User/Update_QID");
+
+                                            final Dialog dialog = new Dialog(RegisterActivity.this);
+                                            dialog.setContentView(R.layout.register_custom_popup);
+
+                                            dialog.show();
+
+                                            if (Status.equalsIgnoreCase("Verified")) {
+                                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                                startActivity(intent);
+                                                finish();
+                                            } else {
+                                                new HttpAsyncTaskVerify().execute(Utility.BASE_URL+"AccVerification/" + UserID);
+                                            }
+
+                                            new Handler().postDelayed(new Runnable() {
+                                                @Override
+                                                public void run()
+                                                {
+                                                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                                    finish();
+                                                }
+                                            },2500);
 
 //                Animation anim = AnimationUtils.loadAnimation(SplashActivity.this, R.anim.img_anim);
 //                imageView1.startAnimation(anim);
-                            }
-                        }, 2500);
+                                        }
+                                    }, 2500);
 
+                                }
+
+                                @Override
+                                public void onError(QBResponseException errors) {
+                                    Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }catch (Exception e) {
+
+                            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                        }
                     } else {
                         Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
                     }
@@ -1219,9 +1304,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         @Override
         protected void onPostExecute(String result) {
           //  dialog.dismiss();
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            /*Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
-            finish();
+            finish();*/
             // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
         }
     }
@@ -1321,6 +1406,56 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                     } else {
                         Toast.makeText(getBaseContext(), "Error While Uploading Image..", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(getBaseContext(), "Not able to Register..", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private class HttpAsyncTaskUpdateQ_ID extends AsyncTask<String, Void, String> {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+           /* dialog = new ProgressDialog(RegisterActivity.this);
+            dialog.setMessage("Uploading...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+
+            String loading = "Uploading" ;
+           // CustomProgressDialog(loading);
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return POSTQ_ID(urls[0]);
+        }
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+          //  rlProgressDialog.setVisibility(View.GONE);
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            try {
+                if (result != null) {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String Success = jsonObject.getString("Success").toString();
+                    String Message = jsonObject.getString("Message").toString();
+
+                    if (Success.equals("1")) {
+                       // Toast.makeText(getBaseContext(), "Registered Successfully", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getBaseContext(), Message, Toast.LENGTH_LONG).show();
                     }
                 } else {
                     Toast.makeText(getBaseContext(), "Not able to Register..", Toast.LENGTH_LONG).show();

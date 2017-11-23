@@ -2,6 +2,7 @@ package com.circle8.circleOne.Activity;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Dialog;
 import android.app.KeyguardManager;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -63,6 +64,7 @@ import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.PrefUtils;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.Walkthrough.HelpActivity;
+import com.circle8.circleOne.chat.ChatHelper;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -103,6 +105,15 @@ import com.linkedin.platform.listeners.AuthListener;
 import com.linkedin.platform.utils.Scope;
 import com.onesignal.OSPermissionSubscriptionState;
 import com.onesignal.OneSignal;
+import com.quickblox.core.QBEntityCallback;
+import com.quickblox.core.exception.QBResponseException;
+import com.quickblox.core.helper.StringifyArrayList;
+import com.quickblox.sample.core.ui.dialog.ProgressDialogFragment;
+import com.quickblox.sample.core.utils.ErrorUtils;
+import com.quickblox.sample.core.utils.SharedPrefsHelper;
+import com.quickblox.sample.core.utils.Toaster;
+import com.quickblox.users.QBUsers;
+import com.quickblox.users.model.QBUser;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -221,7 +232,8 @@ public class LoginActivity extends AppCompatActivity implements
 
     private static final int CONTACT_PICKER_REQUEST = 991;
     private static final int PERMISSION_REQUEST_CONTACT = 111;
-
+    String Q_ID = "";
+    String UserID = "";
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -893,6 +905,112 @@ public class LoginActivity extends AppCompatActivity implements
 
     }
 
+    public String POSTQ_ID(String url) {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("Q_ID", Q_ID);
+            jsonObject.accumulate("UserId", UserID);
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+
+    private class HttpAsyncTaskUpdateQ_ID extends AsyncTask<String, Void, String> {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+           /* dialog = new ProgressDialog(RegisterActivity.this);
+            dialog.setMessage("Uploading...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+
+            String loading = "Uploading" ;
+            // CustomProgressDialog(loading);
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return POSTQ_ID(urls[0]);
+        }
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            //  rlProgressDialog.setVisibility(View.GONE);
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            try {
+                if (result != null) {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String Success = jsonObject.getString("Success").toString();
+                    String Message = jsonObject.getString("Message").toString();
+
+                    if (Success.equals("1")) {
+                        // Toast.makeText(getBaseContext(), "Registered Successfully", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getBaseContext(), Message, Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(getBaseContext(), "Not able to Register..", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
+        }
+    }
+
+
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
@@ -924,7 +1042,7 @@ public class LoginActivity extends AppCompatActivity implements
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
                     String success = jsonObject.getString("success").toString();
-                    String UserID = "", profileid = "", FirstName = "", LastName = "", UserPhoto = "";
+                    String profileid = "", FirstName = "", LastName = "", UserPhoto = "";
 
                     if (success.equals("1")) {
                         //  Toast.makeText(getBaseContext(), "LoggedIn Successfully..", Toast.LENGTH_LONG).show();
@@ -944,6 +1062,7 @@ public class LoginActivity extends AppCompatActivity implements
                         String dob = jsonArray.getString("dob");
                         String Connection_Limit = jsonArray.getString("Connection_Limit");
                         String Connection_Left = jsonArray.getString("Connection_Left");
+                        Q_ID = jsonArray.getString("Q_ID");
 
 
                         try {
@@ -952,37 +1071,127 @@ public class LoginActivity extends AppCompatActivity implements
                         }
 
                         if (Status.equalsIgnoreCase("Verified")) {
+
+                            if (Q_ID.equals("")){
+
+                                final QBUser user = new QBUser(UserName, "circle@123");
+                                user.setExternalId("");
+                                user.setEmail(UserName);
+                                user.setFullName(FirstName + " " + LastName);
+                                StringifyArrayList<String> tags = new StringifyArrayList<String>();
+                                tags.add("dev");
+                                user.setTags(tags);
+
+                                try {
+                                    QBUsers.signUp(user).performAsync(new QBEntityCallback<QBUser>() {
+                                        @Override
+                                        public void onSuccess(final QBUser user, Bundle args) {
+                                            Q_ID = String.valueOf(user.getId());
+                                            new HttpAsyncTaskUpdateQ_ID().execute(Utility.BASE_URL+"User/Update_QID");
+
+                                        }
+
+                                        @Override
+                                        public void onError(QBResponseException errors) {
+                                            Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                }catch (Exception e) {
+
+                                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                                }
+
+
+
+                            }else {
+
+                                QBUser qbUser = new QBUser(UserName, "circle@123");
+                                QBUsers.signIn(qbUser).performAsync(new QBEntityCallback<QBUser>() {
+                                    @Override
+                                    public void onSuccess(final QBUser qbUser, Bundle bundle) {
+                                        // progressDialog.dismiss();
+                                        Toaster.longToast("success");
+                                        // setResult(RESULT_OK);
+                                        // SharedPrefsHelper.getInstance().saveQbUser(qbUser);
+                                        Toast.makeText(getApplicationContext(), "fgbgfb", Toast.LENGTH_LONG).show();
+                                        qbUser.setPassword("circle@123");
+                                        ChatHelper.getInstance().login(qbUser, new QBEntityCallback<Void>() {
+                                            @Override
+                                            public void onSuccess(Void result, Bundle bundle) {
+                                                SharedPrefsHelper.getInstance().saveQbUser(qbUser);
+                                                Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
+                                                // DialogsActivity.start(LoginActivity.this);
+                                                // finish();
+
+                                                //ProgressDialogFragment.hide(getSupportFragmentManager());
+                                            }
+
+                                            @Override
+                                            public void onError(QBResponseException e) {
+                                                ProgressDialogFragment.hide(getSupportFragmentManager());
+                                                Toast.makeText(getApplicationContext(), "not done", Toast.LENGTH_LONG).show();
+
+                                    /*ErrorUtils.showSnackbar(userListView, R.string.login_chat_login_error, e,
+                                            R.string.dlg_retry, new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    login(user);
+                                                }
+                                            });*/
+                                            }
+                                        });
+
+                                        // DataHolder.getInstance().setSignInQbUser(qbUser);
+                                        // Toaster.longToast(R.string.user_successfully_sign_in);
+
+                                        //finish();
+                                    }
+
+                                    @Override
+                                    public void onError(QBResponseException errors) {
+//                                    progressDialog.dismiss();
+                                        Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
+                                    /*showSnackbarError(rootLayout, R.string.errors, errors, new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            signIn();
+                                        }
+                                    });*/
+                                    }
+                                });
+                            }
+
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                 Gson gson = ((MyApplication) getApplication()).getGsonObject();
 
                                 HashMap<String, String> user = loginSession.getUserDetails();
                                 try {
                                     if ((user.get(LoginSession.KEY_EMAIL).equalsIgnoreCase(UserName)) && (user.get(LoginSession.KEY_PASSWORD).equalsIgnoreCase(userPassword))) {
-                                        UserObject userData = new UserObject(user.get(LoginSession.KEY_PROFILEID), user.get(LoginSession.KEY_NAME), user.get(LoginSession.KEY_EMAIL), user.get(LoginSession.KEY_PASSWORD), UserID, Gender, UserPhoto, dob, Phone, Connection_Limit, Connection_Left, false);
+                                        UserObject userData = new UserObject(Q_ID, user.get(LoginSession.KEY_PROFILEID), user.get(LoginSession.KEY_NAME), user.get(LoginSession.KEY_EMAIL), user.get(LoginSession.KEY_PASSWORD), UserID, Gender, UserPhoto, dob, Phone, Connection_Limit, Connection_Left, false);
                                         String userDataString = gson.toJson(userData);
                                         CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
                                         pref.setUserData(userDataString);
 
-                                        loginSession.createLoginSession(user.get(LoginSession.KEY_PROFILEID), UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone, Connection_Limit, Connection_Left );
+                                        loginSession.createLoginSession(Q_ID, user.get(LoginSession.KEY_PROFILEID), UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone, Connection_Limit, Connection_Left );
                                         HashMap<String, String> profile = profileSession.getProfileDetails();
                                         profileSession.createProfileSession(profile.get(ProfileSession.KEY_PROFILE_INDEX));
                                     } else {
-                                        UserObject userData = new UserObject(profileid, FirstName + " " + LastName, UserName, userPassword, UserID, Gender, UserPhoto, dob, Phone, Connection_Limit, Connection_Left, false);
+                                        UserObject userData = new UserObject(Q_ID, profileid, FirstName + " " + LastName, UserName, userPassword, UserID, Gender, UserPhoto, dob, Phone, Connection_Limit, Connection_Left, false);
                                         String userDataString = gson.toJson(userData);
                                         CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
                                         pref.setUserData(userDataString);
 
-                                        loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone, Connection_Limit, Connection_Left);
+                                        loginSession.createLoginSession(Q_ID, profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone, Connection_Limit, Connection_Left);
                                         profileSession.createProfileSession("0");
                                     }
                                 }
                                 catch (Exception e){
-                                    UserObject userData = new UserObject(profileid, FirstName + " " + LastName, UserName, userPassword, UserID, Gender, UserPhoto, dob, Phone, Connection_Limit, Connection_Left, false);
+                                    UserObject userData = new UserObject(Q_ID, profileid, FirstName + " " + LastName, UserName, userPassword, UserID, Gender, UserPhoto, dob, Phone, Connection_Limit, Connection_Left, false);
                                     String userDataString = gson.toJson(userData);
                                     CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
                                     pref.setUserData(userDataString);
 
-                                    loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone, Connection_Limit, Connection_Left);
+                                    loginSession.createLoginSession(Q_ID, profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone, Connection_Limit, Connection_Left);
                                     profileSession.createProfileSession("0");
                                 }
                                 if (prefs.getBoolean("firstrun", true)) {
@@ -1073,18 +1282,18 @@ public class LoginActivity extends AppCompatActivity implements
                                 try {
                                     if ((user.get(LoginSession.KEY_EMAIL).equalsIgnoreCase(UserName)) && (user.get(LoginSession.KEY_PASSWORD).equalsIgnoreCase(userPassword))) {
 
-                                        loginSession.createLoginSession(user.get(LoginSession.KEY_PROFILEID), UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone, Connection_Limit, Connection_Left);
+                                        loginSession.createLoginSession(Q_ID, user.get(LoginSession.KEY_PROFILEID), UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone, Connection_Limit, Connection_Left);
                                         HashMap<String, String> profile = profileSession.getProfileDetails();
                                         profileSession.createProfileSession(profile.get(ProfileSession.KEY_PROFILE_INDEX));
 
                                     } else {
-                                        loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone, Connection_Limit, Connection_Left);
+                                        loginSession.createLoginSession(Q_ID, profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone, Connection_Limit, Connection_Left);
                                         // HashMap<String, String> profile = profileSession.getProfileDetails();
                                         profileSession.createProfileSession("0");
 
                                     }
                                 }catch (Exception e){
-                                    loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone, Connection_Limit, Connection_Left);
+                                    loginSession.createLoginSession(Q_ID, profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, userPassword, dob, Phone, Connection_Limit, Connection_Left);
                                     // HashMap<String, String> profile = profileSession.getProfileDetails();
                                     profileSession.createProfileSession("0");
                                 }
@@ -1920,9 +2129,103 @@ public class LoginActivity extends AppCompatActivity implements
                         String dob = jsonArray.getString("dob");
                         String Connection_Limit = jsonArray.getString("Connection_Limit");
                         String Connection_Left = jsonArray.getString("Connection_Left");
+                        Q_ID = jsonArray.getString("Q_ID");
 
                         referralCodeSession.createReferral(jsonArray.getString("ReferrenceCode"));
                         if (Status.equalsIgnoreCase("Verified")) {
+
+
+                            if (Q_ID.equals("")){
+
+                                final QBUser user = new QBUser(UserName, "circle@123");
+                                user.setExternalId("");
+                                user.setEmail(UserName);
+                                user.setFullName(FirstName + " " + LastName);
+                                StringifyArrayList<String> tags = new StringifyArrayList<String>();
+                                tags.add("dev");
+                                user.setTags(tags);
+
+                                try {
+                                    QBUsers.signUp(user).performAsync(new QBEntityCallback<QBUser>() {
+                                        @Override
+                                        public void onSuccess(final QBUser user, Bundle args) {
+                                            Q_ID = String.valueOf(user.getId());
+                                            new HttpAsyncTaskUpdateQ_ID().execute(Utility.BASE_URL+"User/Update_QID");
+
+                                        }
+
+                                        @Override
+                                        public void onError(QBResponseException errors) {
+                                            Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                }catch (Exception e) {
+
+                                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                                }
+
+
+
+                            }else {
+
+                                QBUser qbUser = new QBUser(UserName, "circle@123");
+                                QBUsers.signIn(qbUser).performAsync(new QBEntityCallback<QBUser>() {
+                                    @Override
+                                    public void onSuccess(final QBUser qbUser, Bundle bundle) {
+                                        // progressDialog.dismiss();
+                                        Toaster.longToast("success");
+                                        // setResult(RESULT_OK);
+                                        // SharedPrefsHelper.getInstance().saveQbUser(qbUser);
+                                        Toast.makeText(getApplicationContext(), "fgbgfb", Toast.LENGTH_LONG).show();
+                                        qbUser.setPassword("circle@123");
+                                        ChatHelper.getInstance().login(qbUser, new QBEntityCallback<Void>() {
+                                            @Override
+                                            public void onSuccess(Void result, Bundle bundle) {
+                                                SharedPrefsHelper.getInstance().saveQbUser(qbUser);
+                                                Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
+                                                // DialogsActivity.start(LoginActivity.this);
+                                                // finish();
+
+                                                //ProgressDialogFragment.hide(getSupportFragmentManager());
+                                            }
+
+                                            @Override
+                                            public void onError(QBResponseException e) {
+                                                ProgressDialogFragment.hide(getSupportFragmentManager());
+                                                Toast.makeText(getApplicationContext(), "not done", Toast.LENGTH_LONG).show();
+
+                                    /*ErrorUtils.showSnackbar(userListView, R.string.login_chat_login_error, e,
+                                            R.string.dlg_retry, new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    login(user);
+                                                }
+                                            });*/
+                                            }
+                                        });
+
+                                        // DataHolder.getInstance().setSignInQbUser(qbUser);
+                                        // Toaster.longToast(R.string.user_successfully_sign_in);
+
+                                        //finish();
+                                    }
+
+                                    @Override
+                                    public void onError(QBResponseException errors) {
+//                                    progressDialog.dismiss();
+                                        Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
+                                    /*showSnackbarError(rootLayout, R.string.errors, errors, new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            signIn();
+                                        }
+                                    });*/
+                                    }
+                                });
+                            }
+
+
+
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
 
@@ -1932,31 +2235,31 @@ public class LoginActivity extends AppCompatActivity implements
                                 try {
 
                                     if ((user.get(LoginSession.KEY_EMAIL).equalsIgnoreCase(UserName))) {
-                                        UserObject userData = new UserObject(user.get(LoginSession.KEY_PROFILEID), user.get(LoginSession.KEY_NAME), user.get(LoginSession.KEY_EMAIL), "", UserID, Gender, UserPhoto, dob, Phone, Connection_Limit, Connection_Left, false);
+                                        UserObject userData = new UserObject(Q_ID, user.get(LoginSession.KEY_PROFILEID), user.get(LoginSession.KEY_NAME), user.get(LoginSession.KEY_EMAIL), "", UserID, Gender, UserPhoto, dob, Phone, Connection_Limit, Connection_Left, false);
                                         String userDataString = gson.toJson(userData);
                                         CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
                                         pref.setUserData(userDataString);
 
-                                        loginSession.createLoginSession(user.get(LoginSession.KEY_PROFILEID), UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone, Connection_Limit, Connection_Left);
+                                        loginSession.createLoginSession(Q_ID, user.get(LoginSession.KEY_PROFILEID), UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone, Connection_Limit, Connection_Left);
                                         HashMap<String, String> profile = profileSession.getProfileDetails();
                                         profileSession.createProfileSession(profile.get(ProfileSession.KEY_PROFILE_INDEX));
                                     } else {
-                                        UserObject userData = new UserObject(profileid, FirstName + " " + LastName, UserName, "", UserID, Gender, UserPhoto, dob, Phone, Connection_Limit, Connection_Left, false);
+                                        UserObject userData = new UserObject(Q_ID, profileid, FirstName + " " + LastName, UserName, "", UserID, Gender, UserPhoto, dob, Phone, Connection_Limit, Connection_Left, false);
                                         String userDataString = gson.toJson(userData);
                                         CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
                                         pref.setUserData(userDataString);
 
-                                        loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone, Connection_Limit, Connection_Left);
+                                        loginSession.createLoginSession(Q_ID, profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone, Connection_Limit, Connection_Left);
                                         profileSession.createProfileSession("0");
                                     }
                                 }
                                 catch (Exception e){
-                                    UserObject userData = new UserObject(profileid, FirstName + " " + LastName, UserName, "", UserID, Gender, UserPhoto, dob, Phone, Connection_Limit, Connection_Left, false);
+                                    UserObject userData = new UserObject(Q_ID, profileid, FirstName + " " + LastName, UserName, "", UserID, Gender, UserPhoto, dob, Phone, Connection_Limit, Connection_Left, false);
                                     String userDataString = gson.toJson(userData);
                                     CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
                                     pref.setUserData(userDataString);
 
-                                    loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone, Connection_Limit, Connection_Left);
+                                    loginSession.createLoginSession(Q_ID, profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone, Connection_Limit, Connection_Left);
                                     profileSession.createProfileSession("0");
                                 }
 
@@ -2051,19 +2354,19 @@ public class LoginActivity extends AppCompatActivity implements
                                 try {
                                     if ((user.get(LoginSession.KEY_EMAIL).equalsIgnoreCase(UserName))) {
 
-                                        loginSession.createLoginSession(user.get(LoginSession.KEY_PROFILEID), UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone, Connection_Limit, Connection_Left);
+                                        loginSession.createLoginSession(Q_ID, user.get(LoginSession.KEY_PROFILEID), UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone, Connection_Limit, Connection_Left);
                                         HashMap<String, String> profile = profileSession.getProfileDetails();
                                         profileSession.createProfileSession(profile.get(ProfileSession.KEY_PROFILE_INDEX));
 
                                     } else {
-                                        loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone, Connection_Limit, Connection_Left);
+                                        loginSession.createLoginSession(Q_ID, profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone, Connection_Limit, Connection_Left);
                                         // HashMap<String, String> profile = profileSession.getProfileDetails();
                                         profileSession.createProfileSession("0");
 
                                     }
                                 }
                                 catch (Exception e){
-                                    loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone, Connection_Limit, Connection_Left);
+                                    loginSession.createLoginSession(Q_ID, profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, "", dob, Phone, Connection_Limit, Connection_Left);
                                     // HashMap<String, String> profile = profileSession.getProfileDetails();
                                     profileSession.createProfileSession("0");
                                 }

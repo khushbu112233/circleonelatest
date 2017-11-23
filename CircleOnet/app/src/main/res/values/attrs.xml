@@ -24,4 +24,7 @@
         <attr name="stuckShadowDrawable" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="MaskedImageView">
+        <attr name="mask" format="integer" />
+    </declare-styleable>
 </resources>

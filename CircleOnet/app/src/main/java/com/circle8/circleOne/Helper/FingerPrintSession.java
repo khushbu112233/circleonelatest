@@ -25,7 +25,7 @@ public class FingerPrintSession {
     int PRIVATE_MODE = 0;
 
     // Sharedpref file name
-    private static final String PREF_NAME = "LoginSession";
+    private static final String PREF_NAME = "FingerPrintLoginSession";
 
     // All Shared Preferences Keys
     private static final String IS_LOGIN = "IsLoggedIn";

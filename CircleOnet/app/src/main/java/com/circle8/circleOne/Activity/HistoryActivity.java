@@ -140,7 +140,6 @@ public class HistoryActivity extends AppCompatActivity
                     if(historyList.length() == 0)
                     {
                         tvHistoryInfo.setVisibility(View.VISIBLE);
-
                     }
                     else
                     {

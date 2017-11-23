@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -62,6 +63,14 @@ import com.circle8.circleOne.Utils.CircularTextView;
 import com.circle8.circleOne.Utils.CustomViewPager;
 import com.circle8.circleOne.Utils.PrefUtils;
 import com.circle8.circleOne.Utils.Utility;
+import com.circle8.circleOne.chat.ChatActivity;
+import com.circle8.circleOne.chat.ChatHelper;
+import com.circle8.circleOne.chat.CheckboxUsersAdapter;
+import com.circle8.circleOne.chat.DialogsActivity;
+import com.circle8.circleOne.chat.DialogsAdapter;
+import com.circle8.circleOne.chat.DialogsManager;
+import com.circle8.circleOne.chat.SelectUsersActivity;
+import com.circle8.circleOne.chat.qb.QbChatDialogMessageListenerImp;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -84,6 +93,21 @@ import com.google.android.gms.plus.Plus;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.linkedin.platform.LISessionManager;
+import com.quickblox.chat.QBChatService;
+import com.quickblox.chat.QBIncomingMessagesManager;
+import com.quickblox.chat.QBSystemMessagesManager;
+import com.quickblox.chat.exception.QBChatException;
+import com.quickblox.chat.listeners.QBChatDialogMessageListener;
+import com.quickblox.chat.listeners.QBSystemMessageListener;
+import com.quickblox.chat.model.QBChatDialog;
+import com.quickblox.chat.model.QBChatMessage;
+import com.quickblox.core.QBEntityCallback;
+import com.quickblox.core.exception.QBResponseException;
+import com.quickblox.sample.core.gcm.GooglePlayServicesHelper;
+import com.quickblox.sample.core.ui.dialog.ProgressDialogFragment;
+import com.quickblox.sample.core.utils.constant.GcmConsts;
+import com.quickblox.users.QBUsers;
+import com.quickblox.users.model.QBUser;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 
@@ -92,6 +116,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.jivesoftware.smack.filter.MessageTypeFilter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -109,6 +134,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -124,7 +150,7 @@ import io.fabric.sdk.android.Fabric;
 
 public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks,
         ActivityCompat.OnRequestPermissionsResultCallback,
-        PermissionUtils.PermissionResultCallback
+        PermissionUtils.PermissionResultCallback, DialogsManager.ManagingDialogsCallbacks
 {
     public static CustomViewPager mViewPager;
     TabLayout tabLayout;
@@ -172,6 +198,17 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
     ReferralCodeSession referralCodeSession;
     private String refer;
     String User_name;
+    private QBSystemMessagesManager systemMessagesManager;
+    ArrayList<QBUser> selectedUsers = new ArrayList<QBUser>();
+
+     private BroadcastReceiver pushBroadcastReceiver;
+    private GooglePlayServicesHelper googlePlayServicesHelper;
+    private DialogsAdapter dialogsAdapter;
+    private QBChatDialogMessageListener allDialogsMessagesListener;
+    private SystemMessagesListener systemMessagesListener;
+    private QBIncomingMessagesManager incomingMessagesManager;
+    private DialogsManager dialogsManager;
+    private QBUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -249,6 +286,58 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         });*/
         getSupportActionBar().setShowHideAnimationEnabled(false);
         new HttpAsyncTaskNotification().execute(Utility.BASE_URL+"CountNewNotification");
+        googlePlayServicesHelper = new GooglePlayServicesHelper();
+
+        pushBroadcastReceiver = new PushBroadcastReceiver();
+
+        allDialogsMessagesListener = new AllDialogsMessageListener();
+        systemMessagesListener = new SystemMessagesListener();
+
+        dialogsManager = new DialogsManager();
+
+        currentUser = ChatHelper.getCurrentUser();
+
+        List<String> tags = new ArrayList<>();
+        tags.add("jay.ample@gmail.com");
+        tags.add("jijo@amt.in");
+        // tags.add(App.getSampleConfigs().getUsersTag());
+
+        QBUsers.getUsersByEmails(tags, null).performAsync(new QBEntityCallback<ArrayList<QBUser>>() {
+            @Override
+            public void onSuccess(ArrayList<QBUser> result, Bundle params) {
+                //  QBChatDialog dialog = (QBChatDialog) getIntent().getSerializableExtra(EXTRA_QB_DIALOG);
+                selectedUsers = result;
+            }
+
+            @Override
+            public void onError(QBResponseException e) {
+                      /*  showErrorSnackbar(R.string.select_users_get_users_error, e,
+                                new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        loadUsersFromQb();
+                                    }
+                                });
+                        progressBar.setVisibility(View.GONE);*/
+            }
+        });
+
+
+        incomingMessagesManager = QBChatService.getInstance().getIncomingMessagesManager();
+        systemMessagesManager = QBChatService.getInstance().getSystemMessagesManager();
+
+        if (incomingMessagesManager != null) {
+            incomingMessagesManager.addDialogMessageListener(allDialogsMessagesListener != null
+                    ? allDialogsMessagesListener : new AllDialogsMessageListener());
+        }
+
+        if (systemMessagesManager != null) {
+            systemMessagesManager.addSystemMessageListener(systemMessagesListener != null
+                    ? systemMessagesListener : new SystemMessagesListener());
+        }
+
+        dialogsManager.addManagingDialogsCallbackListener(this);
+
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -403,6 +492,52 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         });
     }
 
+    @Override
+    public void onDialogCreated(QBChatDialog chatDialog) {
+
+    }
+
+    @Override
+    public void onDialogUpdated(String chatDialog) {
+
+    }
+
+    @Override
+    public void onNewDialogLoaded(QBChatDialog chatDialog) {
+
+    }
+
+    private class PushBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            String message = intent.getStringExtra(GcmConsts.EXTRA_GCM_MESSAGE);
+            Log.v(TAG, "Received broadcast " + intent.getAction() + " with data: " + message);
+          //  requestBuilder.setSkip(skipRecords = 0);
+          //  loadDialogsFromQb(true, true);
+        }
+    }
+
+    private class SystemMessagesListener implements QBSystemMessageListener {
+        @Override
+        public void processMessage(final QBChatMessage qbChatMessage) {
+            dialogsManager.onSystemMessageReceived(qbChatMessage);
+        }
+
+        @Override
+        public void processError(QBChatException e, QBChatMessage qbChatMessage) {
+
+        }
+    }
+
+    private class AllDialogsMessageListener extends QbChatDialogMessageListenerImp {
+        @Override
+        public void processMessage(final String dialogId, final QBChatMessage qbChatMessage, Integer senderId) {
+            if (!senderId.equals(ChatHelper.getCurrentUser().getId())) {
+                dialogsManager.onGlobalMessageReceived(dialogId, qbChatMessage);
+            }
+        }
+    }
 
     protected synchronized void buildGoogleApiClient() {
 
@@ -700,6 +835,7 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
         LinearLayout lnrRewardsPoints = (LinearLayout)dialog.findViewById(R.id.lnrRewardsPoints);
         LinearLayout lnrHistory = (LinearLayout)dialog.findViewById(R.id.lnrHistory);
         LinearLayout lnrCardVerification = (LinearLayout)dialog.findViewById(R.id.lnrCardVerification);
+        LinearLayout lnrVPA = (LinearLayout)dialog.findViewById(R.id.lnrVPA);
         txtNotificationCount = (CircularTextView) dialog.findViewById(R.id.txtNotificationCount);
 
         try
@@ -714,7 +850,34 @@ public class CardsActivity extends NfcActivity implements GoogleApiClient.OnConn
             }
         }
         catch (Exception e){}
+
         txtNotificationCount.setText(NotificationCount);
+        dialogsManager = new DialogsManager();
+        lnrVPA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               /* DialogsActivity.start(CardsActivity.this);
+                finish();
+*/
+              //  Toast.makeText(getApplicationContext(), selectedUsers.toString(), Toast.LENGTH_LONG).show();
+
+                ChatHelper.getInstance().createDialogWithSelectedUsers(selectedUsers,
+                        new QBEntityCallback<QBChatDialog>() {
+                            @Override
+                            public void onSuccess(QBChatDialog dialog, Bundle args) {
+                               // dialogsManager.sendSystemMessageAboutCreatingDialog(systemMessagesManager, dialog);
+                                ChatActivity.startForResult(CardsActivity.this, 165, dialog);
+                                //ProgressDialogFragment.hide(getSupportFragmentManager());
+                            }
+
+                            @Override
+                            public void onError(QBResponseException e) {
+                               // ProgressDialogFragment.hide(getSupportFragmentManager());
+                            }
+                        }
+                );
+            }
+        });
 
         lnrShare.setOnClickListener(new View.OnClickListener() {
             @Override

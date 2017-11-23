@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/library" />
             <option value="$PROJECT_DIR$/linkedin-sdk" />
             <option value="$PROJECT_DIR$/nfclib" />
+            <option value="$PROJECT_DIR$/sample-core" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

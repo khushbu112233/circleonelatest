@@ -54,21 +54,21 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_marginLeft="0dp"
-                android:layout_weight="0.2"
+                android:layout_weight="0.0"
                 app:civ_border_width="2dp"
                 app:civ_border_color="@color/colorPrimary"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/usr_1"
                 android:id="@+id/imgProfile"
-                android:layout_width="55dp"
+                android:layout_width="match_parent"
                 android:layout_height="55dp" />
 
             <LinearLayout
-                android:layout_weight="0.3"
+                android:layout_weight="0.0"
                 android:layout_marginLeft="0dp"
                 android:layout_marginRight="5dp"
                 android:layout_gravity="center_vertical|left"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <com.circle8.circleOne.Utils.cgBoldTextView
@@ -91,14 +91,14 @@
             </LinearLayout>
 
             <com.circle8.circleOne.Utils.cgTextView
-                android:layout_weight="0.5"
+                android:layout_weight="0.0"
                 android:ellipsize="end"
                 android:layout_gravity="center_vertical|right"
                 android:gravity="left|center_vertical"
                 android:visibility="visible"
                 android:textColor="@color/gray_text"
                 android:id="@+id/tvPersonDetail"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="90dp"
                 android:textSize="11sp" />
 

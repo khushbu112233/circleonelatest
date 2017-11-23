@@ -13,6 +13,9 @@ import android.util.Log;
 import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.ConnectivityReceiver;
 import com.circle8.circleOne.Helper.CustomSharedPreference;
+import com.circle8.circleOne.Model.SampleConfigs;
+import com.circle8.circleOne.Utils.ConfigUtils;
+import com.circle8.circleOne.Utils.Consts;
 import com.facebook.FacebookSdk;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -20,17 +23,21 @@ import com.onesignal.OSNotification;
 import com.onesignal.OSNotificationAction;
 import com.onesignal.OSNotificationOpenResult;
 import com.onesignal.OneSignal;
+import com.quickblox.sample.core.CoreApp;
+import com.quickblox.sample.core.utils.ActivityLifecycle;
 
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 
-public class MyApplication extends MultiDexApplication
+public class MyApplication extends CoreApp
 {
     private static MyApplication mInstance ;
+    private static SampleConfigs sampleConfigs;
 
     private Gson gson;
     private GsonBuilder builder;
@@ -42,6 +49,7 @@ public class MyApplication extends MultiDexApplication
     {
         super.attachBaseContext(base);
         MultiDex.install(this);
+
     }
 
     @Override
@@ -64,7 +72,8 @@ public class MyApplication extends MultiDexApplication
         }
         catch (PackageManager.NameNotFoundException e) { }
         catch ( NoSuchAlgorithmException e ) {  }
-
+        ActivityLifecycle.init(this);
+        initSampleConfigs();
         builder = new GsonBuilder();
         gson = builder.create();
         shared = new CustomSharedPreference(getApplicationContext());
@@ -80,6 +89,17 @@ public class MyApplication extends MultiDexApplication
         MyApplication app = this;//(BeaconScannerApp)this.getApplication();
     }
 
+    private void initSampleConfigs() {
+        try {
+            sampleConfigs = ConfigUtils.getSampleConfigs(Consts.SAMPLE_CONFIG_FILE_NAME);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static SampleConfigs getSampleConfigs() {
+        return sampleConfigs;
+    }
 
     public static synchronized MyApplication getInstance() {
         return mInstance;
@@ -181,10 +201,6 @@ public class MyApplication extends MultiDexApplication
           <meta-data android:name="com.onesignal.NotificationOpened.DEFAULT" android:value="DISABLE" />
         </application>
      */
-
-
-
-
         }
     }
 

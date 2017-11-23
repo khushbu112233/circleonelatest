@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneFinal\\CircleOnet\\linkedin-sdk\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+        "outputFile": "F:\\Kajol\\CircleOne\\CircleOnet\\linkedin-sdk\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
         "map": [
             {
                 "to": {
@@ -11,7 +11,7 @@
                     "endOffset": 112
                 },
                 "from": {
-                    "file": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneFinal\\CircleOnet\\linkedin-sdk\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "file": "F:\\Kajol\\CircleOne\\CircleOnet\\linkedin-sdk\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -30,7 +30,7 @@
                     "endOffset": 178
                 },
                 "from": {
-                    "file": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneFinal\\CircleOnet\\linkedin-sdk\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "file": "F:\\Kajol\\CircleOne\\CircleOnet\\linkedin-sdk\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -49,7 +49,7 @@
                     "endOffset": 317
                 },
                 "from": {
-                    "file": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneFinal\\CircleOnet\\linkedin-sdk\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "file": "F:\\Kajol\\CircleOne\\CircleOnet\\linkedin-sdk\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
@@ -68,88 +68,7 @@
                     "endOffset": 391
                 },
                 "from": {
-                    "file": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneFinal\\CircleOnet\\linkedin-sdk\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 5,
-                        "startColumn": 4,
-                        "startOffset": 322,
-                        "endColumn": 73,
-                        "endOffset": 391
-                    }
-                }
-            }
-        ]
-    },
-    {
-        "outputFile": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 5\\CircleOnet\\linkedin-sdk\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
-        "map": [
-            {
-                "to": {
-                    "startLine": 2,
-                    "startColumn": 4,
-                    "startOffset": 55,
-                    "endColumn": 61,
-                    "endOffset": 112
-                },
-                "from": {
-                    "file": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 5\\CircleOnet\\linkedin-sdk\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 2,
-                        "startColumn": 4,
-                        "startOffset": 55,
-                        "endColumn": 61,
-                        "endOffset": 112
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 3,
-                    "startColumn": 4,
-                    "startOffset": 117,
-                    "endColumn": 65,
-                    "endOffset": 178
-                },
-                "from": {
-                    "file": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 5\\CircleOnet\\linkedin-sdk\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 3,
-                        "startColumn": 4,
-                        "startOffset": 117,
-                        "endColumn": 65,
-                        "endOffset": 178
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 4,
-                    "startColumn": 4,
-                    "startOffset": 183,
-                    "endColumn": 138,
-                    "endOffset": 317
-                },
-                "from": {
-                    "file": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 5\\CircleOnet\\linkedin-sdk\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 4,
-                        "startColumn": 4,
-                        "startOffset": 183,
-                        "endColumn": 138,
-                        "endOffset": 317
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 5,
-                    "startColumn": 4,
-                    "startOffset": 322,
-                    "endColumn": 73,
-                    "endOffset": 391
-                },
-                "from": {
-                    "file": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 5\\CircleOnet\\linkedin-sdk\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "file": "F:\\Kajol\\CircleOne\\CircleOnet\\linkedin-sdk\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
                         "startLine": 5,
                         "startColumn": 4,

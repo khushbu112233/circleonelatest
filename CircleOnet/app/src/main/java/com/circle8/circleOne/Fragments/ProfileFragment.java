@@ -113,7 +113,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class ProfileFragment extends Fragment
 {
-   // private ProgressBar firstBar = null;
+    // private ProgressBar firstBar = null;
     ImageView imgProfileShare, imgProfileMenu, imgQR, ivEditProfile;
     TextView tvPersonName, tvProfileName ;
     public final static int QRcodeWidth = 500 ;
@@ -136,7 +136,7 @@ public class ProfileFragment extends Fragment
     ProfileModel nfcModelTag;
     CircleImageView imgProfile;
     LinearLayout lnrMob, lnrWork, lnrWebsite, lnrMap, llNameBox, llCompanyBox,
-                 llIndustryBox, llDesignationBox, llAssociationBox , llMailBox;
+            llIndustryBox, llDesignationBox, llAssociationBox , llMailBox;
     ViewPager mViewPager, viewPager1;
     String recycle_image1, recycle_image2 ;
     private ArrayList<String> image = new ArrayList<>();
@@ -169,6 +169,7 @@ public class ProfileFragment extends Fragment
     ReferralCodeSession referralCodeSession;
     private String refer;
     TextView txtAssociationList, txtEventsListFinal;
+    String Q_ID = "";
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -179,7 +180,7 @@ public class ProfileFragment extends Fragment
     {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getContext());
-     //   getActivity().requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //   getActivity().requestWindowFeature(Window.FEATURE_NO_TITLE);
     }
 
     @Override
@@ -187,8 +188,8 @@ public class ProfileFragment extends Fragment
     {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_profile, container, false);
-      //  getActivity().requestWindowFeature(Window.FEATURE_NO_TITLE);
-      //  ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+        //  getActivity().requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //  ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
         callbackManager = CallbackManager.Factory.create();
         profileSession = new ProfileSession(getContext());
@@ -247,7 +248,7 @@ public class ProfileFragment extends Fragment
         listAssociation = new ArrayList<>();
         imgQR = (ImageView) view.findViewById(R.id.imgQR);
         imgAdd = (ImageView) view.findViewById(R.id.imgAdd);
-      //  firstBar = (ProgressBar)view.findViewById(R.id.firstBar);
+        //  firstBar = (ProgressBar)view.findViewById(R.id.firstBar);
         tvPersonName = (TextView)view.findViewById(R.id.tvPersonName);
         tvProfileName = (TextView) view.findViewById(R.id.tvProfileName);
         imgProfileShare = (ImageView) view.findViewById(R.id.imgProfileShare);
@@ -269,6 +270,7 @@ public class ProfileFragment extends Fragment
         HashMap<String, String> user = session.getUserDetails();
         UserID = user.get(LoginSession.KEY_USERID);
         profileId = user.get(LoginSession.KEY_PROFILEID);
+        Q_ID = user.get(LoginSession.KEY_QID);
 
         SpannableString ss = new SpannableString("Ask your friends to write a Testimonial for you(100 words or less),Please choose from your CircleOne contacts and send a request.");
         ClickableSpan clickableSpan = new ClickableSpan() {
@@ -288,7 +290,7 @@ public class ProfileFragment extends Fragment
         };
         ss.setSpan(clickableSpan, 91, 100, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-       // TextView textView = (TextView) findViewById(R.id.hello);
+        // TextView textView = (TextView) findViewById(R.id.hello);
         txtTestimonial.setText(ss);
         txtTestimonial.setMovementMethod(LinkMovementMethod.getInstance());
         txtTestimonial.setHighlightColor(getResources().getColor(R.color.colorPrimary));
@@ -629,7 +631,7 @@ public class ProfileFragment extends Fragment
         imgProfileShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String shareBody = "I'm giving you a free redemption points on the Circle app (up to ₹25). To accept, use code '"+ refer+"' to sign up. Enjoy!"
+                String shareBody = "I'm giving you a free redemption points on the Circle app (up to ?25). To accept, use code '"+ refer+"' to sign up. Enjoy!"
                         +System.lineSeparator() + "Details: https://www.circle8.asia/invite/"+refer;
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
@@ -659,7 +661,7 @@ public class ProfileFragment extends Fragment
 
                         if (item.getTitle().toString().equals("Add New Profile"))
                         {
-                           // new HttpAsyncTaskAddProfile().execute("http://circle8.asia:8999/Onet.svc/AddProfile");
+                            // new HttpAsyncTaskAddProfile().execute("http://circle8.asia:8999/Onet.svc/AddProfile");
                             Intent intent = new Intent(getContext(), EditProfileActivity.class);
                             intent.putExtra("profile_id", TestimonialProfileId);
                             intent.putExtra("type", "add");
@@ -698,14 +700,14 @@ public class ProfileFragment extends Fragment
                                         txtAttachment.setText(allTags.get(i).getAttachment_FileName());
                                     }
                                     tvAddress.setText(
-                                              allTags.get(i).getAddress1()+ " "
-                                            + allTags.get(i).getAddress2() + "\n"
-                                            + allTags.get(i).getAddress3()  + " "
-                                            + allTags.get(i).getAddress4() + "\n"
-                                            + allTags.get(i).getCity() + " "
-                                            + allTags.get(i).getState() + "\n"
-                                            + allTags.get(i).getCountry() + " "
-                                            + allTags.get(i).getPostalcode());
+                                            allTags.get(i).getAddress1()+ " "
+                                                    + allTags.get(i).getAddress2() + "\n"
+                                                    + allTags.get(i).getAddress3()  + " "
+                                                    + allTags.get(i).getAddress4() + "\n"
+                                                    + allTags.get(i).getCity() + " "
+                                                    + allTags.get(i).getState() + "\n"
+                                                    + allTags.get(i).getCountry() + " "
+                                                    + allTags.get(i).getPostalcode());
                                     tvWebsite.setText(allTags.get(i).getWebsite());
                                     TestimonialProfileId = allTags.get(i).getProfileID();
 
@@ -727,7 +729,7 @@ public class ProfileFragment extends Fragment
                                     String Connection_Limit = user.get(LoginSession.KEY_CONNECTION_LIMIT);
                                     String Connection_Left = user.get(LoginSession.KEY_CONNECTION_LEFT);
 
-                                    session.createLoginSession(allTags.get(i).getProfileID(), user_id, first_name + " " + last_name, email_id, user_img, gender, user_pass, date_DOB, phone_no, Connection_Limit, Connection_Left);
+                                    session.createLoginSession(Q_ID, allTags.get(i).getProfileID(), user_id, first_name + " " + last_name, email_id, user_img, gender, user_pass, date_DOB, phone_no, Connection_Limit, Connection_Left);
 
                                     try {
                                         JSONObject object = jsonArray.getJSONObject(i);
@@ -752,12 +754,12 @@ public class ProfileFragment extends Fragment
 
                                             if (listAssociation.size() == 0){
                                                 txtAssociationList.setVisibility(View.GONE);
-                                              //  recyclerAssociation.setVisibility(View.GONE);
+                                                //  recyclerAssociation.setVisibility(View.GONE);
                                                 txtNoAssociation.setVisibility(View.VISIBLE);
                                             }
                                             else {
                                                 txtAssociationList.setVisibility(View.VISIBLE);
-                                               // recyclerAssociation.setVisibility(View.VISIBLE);
+                                                // recyclerAssociation.setVisibility(View.VISIBLE);
                                                 txtNoAssociation.setVisibility(View.GONE);
                                             }
                                         }catch (Exception e){}
@@ -787,11 +789,11 @@ public class ProfileFragment extends Fragment
 
                                             if (listEvents.size() == 0) {
                                                 txtEventsListFinal.setVisibility(View.GONE);
-                                               // recyclerEvents.setVisibility(View.GONE);
+                                                // recyclerEvents.setVisibility(View.GONE);
                                                 txtNoEvent.setVisibility(View.VISIBLE);
                                             } else {
                                                 txtEventsListFinal.setVisibility(View.VISIBLE);
-                                               // recyclerEvents.setVisibility(View.VISIBLE);
+                                                // recyclerEvents.setVisibility(View.VISIBLE);
                                                 txtNoEvent.setVisibility(View.GONE);
                                             }
 
@@ -901,13 +903,13 @@ public class ProfileFragment extends Fragment
                                     mViewPager.setClipChildren(false);
                                     mViewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
                                     mViewPager.setOffscreenPageLimit(1);
-                                  //  mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
+                                    //  mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
                                     mViewPager.setAdapter(myPager);
 
                                     viewPager1.setClipChildren(false);
                                     viewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
                                     viewPager1.setOffscreenPageLimit(1);
-                                   // viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
+                                    // viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
                                     viewPager1.setAdapter(myPager);
                                     try
                                     {
@@ -939,14 +941,14 @@ public class ProfileFragment extends Fragment
                 });
 
                 popup.show();//showing popup men
-        }
+            }
         });
 
         imgQR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-              //  Toast.makeText(getContext(), "Generating QR Code.. Please Wait..", Toast.LENGTH_LONG).show();
+                //  Toast.makeText(getContext(), "Generating QR Code.. Please Wait..", Toast.LENGTH_LONG).show();
 
                 //                    barName = encrypt(TestimonialProfileId, secretKey);
 
@@ -963,12 +965,12 @@ public class ProfileFragment extends Fragment
                 TextView tvBarName = (TextView)dialogView.findViewById(R.id.tvBarName);
                 ImageView ivBarImage = (ImageView)dialogView.findViewById(R.id.ivBarImage);
 //                tvBarName.setText(barName);
-              //  alertDialog.setFeatureDrawableAlpha(R.color.colorPrimary, 8);
+                //  alertDialog.setFeatureDrawableAlpha(R.color.colorPrimary, 8);
 
                 ColorDrawable dialogColor = new ColorDrawable(getResources().getColor(R.color.colorPrimary));
                 dialogColor.setAlpha(70);
                 alertDialog.getWindow().setBackgroundDrawable(dialogColor);
-               // alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
+                // alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
                 tvBarName.setText(tvPersonName.getText().toString());
 //                    bitmap = TextToImageEncode(barName);
                 ivBarImage.setImageBitmap(bitmap);
@@ -1314,7 +1316,7 @@ public class ProfileFragment extends Fragment
                         }
                         Toast.makeText(getContext(), i + listAssociation.toString(), Toast.LENGTH_LONG).show();*/
                         allTags.add(nfcModelTag);
-                      //  GetData(getContext());
+                        //  GetData(getContext());
 
                         displayProfile = object.getString("UserPhoto");
                     }
@@ -1377,9 +1379,10 @@ public class ProfileFragment extends Fragment
                             }
                         }
                         txtEventsListFinal.setText(eventString);
-                        for (int i1 = 0; i1 < array.length(); i1++)
-                        {
+                        for (int i1 = 0; i1 < array.length(); i1++) {
+
                             listAssociation.add(array.getString(i1));
+
 
                             String name = array.getString(i1);
                             String remainder;
@@ -1420,23 +1423,23 @@ public class ProfileFragment extends Fragment
                         recyclerEvents.setLayoutManager(gridLayoutManager1);
                         if (listAssociation.size() == 0){
                             txtAssociationList.setVisibility(View.GONE);
-                          // recyclerAssociation.setVisibility(View.GONE);
+                            // recyclerAssociation.setVisibility(View.GONE);
                             txtNoAssociation.setVisibility(View.VISIBLE);
                         }
                         else {
                             txtAssociationList.setVisibility(View.VISIBLE);
-                           // recyclerAssociation.setVisibility(View.VISIBLE);
+                            // recyclerAssociation.setVisibility(View.VISIBLE);
                             txtNoAssociation.setVisibility(View.GONE);
                         }
 
                         if (listEvents.size() == 0){
                             txtEventsListFinal.setVisibility(View.GONE);
-                           // recyclerEvents.setVisibility(View.GONE);
+                            // recyclerEvents.setVisibility(View.GONE);
                             txtNoEvent.setVisibility(View.VISIBLE);
                         }
                         else {
                             txtEventsListFinal.setVisibility(View.VISIBLE);
-                           // recyclerEvents.setVisibility(View.VISIBLE);
+                            // recyclerEvents.setVisibility(View.VISIBLE);
                             txtNoEvent.setVisibility(View.GONE);
                         }
 
@@ -1545,7 +1548,7 @@ public class ProfileFragment extends Fragment
                     if(allTags.get(profileIndex).getUserName().equalsIgnoreCase("")
                             || allTags.get(profileIndex).getUserName().equalsIgnoreCase("null"))
                     {
-                       llMailBox.setVisibility(View.GONE);
+                        llMailBox.setVisibility(View.GONE);
                     }
                     else
                     {
@@ -1587,13 +1590,13 @@ public class ProfileFragment extends Fragment
                             + allTags.get(0).getPostalcode());*/
                     personAddress =
                             allTags.get(profileIndex).getAddress1()+ " "
-                            +allTags.get(profileIndex).getAddress2() + " "
+                                    +allTags.get(profileIndex).getAddress2() + " "
                             /*+ allTags.get(profileIndex).getAddress3()  + " "
                             + allTags.get(profileIndex).getAddress4() + " "*/
-                            + allTags.get(profileIndex).getCity() + " "
-                            + allTags.get(profileIndex).getState() + " "
-                            + allTags.get(profileIndex).getCountry() + " "
-                            + allTags.get(profileIndex).getPostalcode() ;
+                                    + allTags.get(profileIndex).getCity() + " "
+                                    + allTags.get(profileIndex).getState() + " "
+                                    + allTags.get(profileIndex).getCountry() + " "
+                                    + allTags.get(profileIndex).getPostalcode() ;
                     if(personAddress.equalsIgnoreCase("")
                             || personAddress.equalsIgnoreCase("null")
                             || personAddress.startsWith(" "))
@@ -1658,13 +1661,13 @@ public class ProfileFragment extends Fragment
                     mViewPager.setClipChildren(false);
                     mViewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
                     mViewPager.setOffscreenPageLimit(1);
-                 //   mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
+                    //   mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
                     mViewPager.setAdapter(myPager);
 
                     viewPager1.setClipChildren(false);
                     viewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
                     viewPager1.setOffscreenPageLimit(1);
-                 //   viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
+                    //   viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
                     viewPager1.setAdapter(myPager);
 
                     // for bar code generating
@@ -1782,7 +1785,7 @@ public class ProfileFragment extends Fragment
             dialog = new ProgressDialog(getActivity());
             dialog.setMessage("Fetching Testimonials...");
             //dialog.setTitle("Saving Reminder");
-          // dialog.show();
+            // dialog.show();
             dialog.setCancelable(false);
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
@@ -1797,7 +1800,7 @@ public class ProfileFragment extends Fragment
         @Override
         protected void onPostExecute(String result)
         {
-           // dialog.dismiss();
+            // dialog.dismiss();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);

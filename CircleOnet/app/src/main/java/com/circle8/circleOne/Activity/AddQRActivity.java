@@ -6,10 +6,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -60,6 +62,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import me.dm7.barcodescanner.core.DisplayUtils;
 import me.dm7.barcodescanner.core.IViewFinder;
 import me.dm7.barcodescanner.core.ViewFinderView;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -491,6 +494,17 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
         private static final int POINT_SIZE = 10;
         private static final long ANIMATION_DELAY = 80l;
 
+        private Rect mFramingRect;
+        private static final float SQUARE_DIMENSION_RATIO = 5f/8;
+        private static final float PORTRAIT_WIDTH_RATIO = 6f/8;
+        private static final float PORTRAIT_WIDTH_HEIGHT_RATIO = 0.75f;
+
+        private static final float LANDSCAPE_HEIGHT_RATIO = 5f/8;
+        private static final float LANDSCAPE_WIDTH_HEIGHT_RATIO = 1.4f;
+        private static final int MIN_DIMENSION_DIFF = 50;
+
+        protected boolean mSquareViewFinder = true ;
+
         public CustomViewFinderView(Context context) {
             super(context);
             init();
@@ -620,6 +634,63 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
                     framingRect.top - POINT_SIZE,
                     framingRect.right + POINT_SIZE,
                     framingRect.bottom + POINT_SIZE);
+        }
+
+        // TODO: Need a better way to configure this. Revisit when working on 2.0
+        public void setSquareViewFinder(boolean set) {
+            mSquareViewFinder = set;
+        }
+
+        public void setupViewFinder() {
+            updateFramingRect();
+            invalidate();
+        }
+
+        public Rect getFramingRect() {
+            return mFramingRect;
+        }
+
+        @Override
+        protected void onSizeChanged(int xNew, int yNew, int xOld, int yOld) {
+            updateFramingRect();
+        }
+
+        public synchronized void updateFramingRect()
+        {
+            Point viewResolution = new Point(getWidth(), getHeight());
+            int width;
+            int height;
+            int orientation = DisplayUtils.getScreenOrientation(getContext());
+
+            if(mSquareViewFinder) {
+                if(orientation != Configuration.ORIENTATION_PORTRAIT) {
+                    height = (int) (getHeight() * SQUARE_DIMENSION_RATIO);
+                    width = height;
+                } else {
+                    width = (int) (getWidth() * SQUARE_DIMENSION_RATIO);
+                    height = width;
+                }
+            } else {
+                if(orientation != Configuration.ORIENTATION_PORTRAIT) {
+                    height = (int) (getHeight() * LANDSCAPE_HEIGHT_RATIO);
+                    width = (int) (LANDSCAPE_WIDTH_HEIGHT_RATIO * height);
+                } else {
+                    width = (int) (getWidth() * PORTRAIT_WIDTH_RATIO);
+                    height = (int) (PORTRAIT_WIDTH_HEIGHT_RATIO * width);
+                }
+            }
+
+            if(width > getWidth()) {
+                width = getWidth() - MIN_DIMENSION_DIFF;
+            }
+
+            if(height > getHeight()) {
+                height = getHeight() - MIN_DIMENSION_DIFF;
+            }
+
+            int leftOffset = (viewResolution.x - width) / 2;
+            int topOffset = (viewResolution.y - height) / 2;
+            mFramingRect = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
         }
     }
 }
