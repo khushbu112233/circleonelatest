@@ -102,6 +102,12 @@ public class TestimonialCardDetail extends AppCompatActivity
         callFirst();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
     private void callFirst()
     {
         new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");

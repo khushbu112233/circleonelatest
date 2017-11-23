@@ -488,6 +488,7 @@ public class List1Fragment extends Fragment
 
     public static void callFirst()
     {
+        Utility.freeMemory();
         // tvNoCard.setVisibility(View.GONE);
         nfcModel.clear();
         pageno = 1;
@@ -600,7 +601,7 @@ public class List1Fragment extends Fragment
                 result = "Did not work!";
 
         } catch (Exception e) {
-            Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
             Log.d("InputStream", e.getLocalizedMessage());
         }
 
@@ -695,7 +696,7 @@ public class List1Fragment extends Fragment
             CustomProgressBar(loading, status);*/
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
-
+            Utility.freeMemory();
             try
             {
                 if (result != null)

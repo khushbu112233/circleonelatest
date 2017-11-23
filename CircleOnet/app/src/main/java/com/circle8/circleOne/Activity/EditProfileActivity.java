@@ -321,7 +321,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     {
         supportRequestWindowFeature(WindowCompat.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
-
+        Utility.freeMemory();
         TwitterAuthConfig authConfig = new TwitterAuthConfig(
                 getString(R.string.twitter_consumer_key),
                 getString(R.string.twitter_consumer_secret));
@@ -480,6 +480,7 @@ public class EditProfileActivity extends AppCompatActivity implements
 
         if (type.equals("edit"))
         {
+            Utility.freeMemory();
             new HttpAsyncTaskUserProfile().execute(Utility.BASE_URL+"GetUserProfile");
             new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");
         }
@@ -498,7 +499,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         List<String> stringList = new ArrayList<String>(Arrays.asList(array));
         eventList = new ArrayList<AssociationModel>();
         for (int i = 0; i < array.length; i++) {
-
+            Utility.freeMemory();
             AssociationModel st = new AssociationModel(String.valueOf(i), stringList.get(i), false );
 
             eventList.add(st);
@@ -515,6 +516,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         imgYoutube.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
                 final AlertDialog.Builder alertDialog = new AlertDialog.Builder(EditProfileActivity.this);
                 final EditText input = new EditText(EditProfileActivity.this);
                 input.setHint("Enter Youtube Url");
@@ -758,6 +760,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v)
             {
+                Utility.freeMemory();
                 AlertDialog.Builder alert = new AlertDialog.Builder(EditProfileActivity.this, R.style.Blue_AlertDialog);
                 alert.setMessage("Do you want to Delete this Profile?");
                 alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -824,7 +827,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position,
                                     long arg3) {
-
+                Utility.freeMemory();
                 int selectedPos = designation.indexOf((String) autoCompleteDesignation.getText().toString());
                 designationID = designation_id.get(selectedPos);
                 //s1.get(position) is name selected from autocompletetextview
@@ -850,7 +853,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position,
                                     long arg3) {
-
+                Utility.freeMemory();
                 int selectedPos = industry.indexOf((String) autoCompleteIndustry.getText().toString());
                 industryID = industry_id.get(selectedPos);
                 //s1.get(position) is name selected from autocompletetextview
@@ -865,7 +868,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                 String data = "";
                 List<AssociationModel> stList = ((CardViewDataAdapter) mAdapter)
                         .getStudentist();
-
+                Utility.freeMemory();
                 for (int i = 0; i < stList.size(); i++)
                 {
                     AssociationModel singleStudent = stList.get(i);
@@ -1009,6 +1012,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         txtMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
                 Intent intent = new Intent(getApplicationContext(), TestimonialActivity.class);
                 intent.putExtra("ProfileId", profileId);
                 intent.putExtra("from", "editprofile");
@@ -1023,6 +1027,7 @@ public class EditProfileActivity extends AppCompatActivity implements
 
             @Override
             public void onPageScrolled(final int position, final float positionOffset, final int positionOffsetPixels) {
+                Utility.freeMemory();
                 if (mScrollState == ViewPager.SCROLL_STATE_IDLE) {
                     return;
                 }
@@ -1037,6 +1042,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             @Override
             public void onPageScrollStateChanged(final int state) {
                 mScrollState = state;
+                Utility.freeMemory();
                 if (state == ViewPager.SCROLL_STATE_IDLE) {
                     mViewPager.setCurrentItem(viewPager1.getCurrentItem(), false);
                 }
@@ -1049,6 +1055,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                /* Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("file*//*");
                 startActivityForResult(intent,PICKFILE_RESULT_CODE);*/
+                Utility.freeMemory();
                 selectFile();
             }
         });
@@ -1079,6 +1086,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v)
             {
+                Utility.freeMemory();
                 if (llTelePhoneBox2.getVisibility() == View.GONE)
                 {
                     llTelePhoneBox2.setVisibility(View.VISIBLE);
@@ -1128,13 +1136,19 @@ public class EditProfileActivity extends AppCompatActivity implements
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
     private void handleTwitterSession(TwitterSession session)
     {
         Log.d("TAG", "handleTwitterSession:" + session);
         // [START_EXCLUDE silent]
 
         showProgressDialog();
-
+        Utility.freeMemory();
        /* String loading = "Google Login" ;
         CustomProgressDialog(loading);*/
 
@@ -1181,6 +1195,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     }
 
     public void login_linkedin() {
+        Utility.freeMemory();
         LISessionManager.getInstance(getApplicationContext()).init(this, buildScope(), new AuthListener() {
             @Override
             public void onAuthSuccess() {
@@ -1203,10 +1218,12 @@ public class EditProfileActivity extends AppCompatActivity implements
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
+
             case PERMISSIONS_REQUEST_CAMERA: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     openCameraDialog();
+                    Utility.freeMemory();
                 }
                 return;
             }
@@ -1215,6 +1232,7 @@ public class EditProfileActivity extends AppCompatActivity implements
 
     public  String POST9(String url)
     {
+        Utility.freeMemory();
         InputStream inputStream = null;
         String result = "";
         try
@@ -1294,6 +1312,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         @Override
         protected void onPostExecute(String result)
         {
+            Utility.freeMemory();
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
 
@@ -1325,6 +1344,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     }
 
     private void openCameraDialog() {
+        Utility.freeMemory();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
         if (prev != null) {
@@ -2438,7 +2458,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
-                Bitmap bitmap;
+                Bitmap bitmap = null;
 
                 try {
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(result.getUri()));

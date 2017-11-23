@@ -17,9 +17,11 @@ import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.CustomViewPager;
 
+import static com.circle8.circleOne.Activity.CardsActivity.Connection_Limit;
+import static com.circle8.circleOne.Activity.CardsActivity.setActionBarTitle;
+
 public class CardsFragment extends Fragment
 {
-
 
     public static CustomViewPager mViewPager;
     public static TabLayout tabLayout;
@@ -53,6 +55,18 @@ public class CardsFragment extends Fragment
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 0) {
+                    setActionBarTitle("Cards - " + List1Fragment.nfcModel.size() + "/" + Connection_Limit);
+                }
+                else if (tab.getPosition() == 1) {
+                    setActionBarTitle("Cards - " + List2Fragment.nfcModel.size() + "/" + Connection_Limit);
+                }
+                else if (tab.getPosition() == 2) {
+                    setActionBarTitle("Cards - " + List3Fragment.nfcModel1.size() + "/" + Connection_Limit);
+                }
+                else if (tab.getPosition() == 3) {
+                    setActionBarTitle("Cards - " + List4Fragment.nfcModel1.size() + "/" + Connection_Limit);
+                }
                 InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(tabLayout.getApplicationWindowToken(), 0);
             }

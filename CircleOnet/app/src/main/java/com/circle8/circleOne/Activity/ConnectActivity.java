@@ -113,9 +113,10 @@ public class ConnectActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        Utility.freeMemory();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connect2);
-
+        Utility.freeMemory();
         db = new DatabaseHelper(getApplicationContext());
 
         txtWeb = (TextView)findViewById(R.id.txtWeb);
@@ -160,6 +161,7 @@ public class ConnectActivity extends AppCompatActivity
         rlConnect.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 
             public void onGlobalLayout() {
+                Utility.freeMemory();
                 int height = rlConnect.getHeight();
                 int width = rlConnect.getWidth();
                 left = rlConnect.getLeft();
@@ -171,6 +173,7 @@ public class ConnectActivity extends AppCompatActivity
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         {
+            Utility.freeMemory();
             motionLength = 180 ;
         }
         else
@@ -196,7 +199,7 @@ public class ConnectActivity extends AppCompatActivity
         friendProfile_id = intent.getStringExtra("friendProfileID");
         profile_id = intent.getStringExtra("ProfileID");
         friendUserID = intent.getStringExtra("friendUserID");
-
+        Utility.freeMemory();
         loginSession = new LoginSession(getApplicationContext());
         HashMap<String, String> user = loginSession.getUserDetails();
         user_id = user.get(LoginSession.KEY_USERID);
@@ -276,7 +279,7 @@ public class ConnectActivity extends AppCompatActivity
         ivConnectImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Utility.freeMemory();
             }
         });
 
@@ -284,6 +287,7 @@ public class ConnectActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                Utility.freeMemory();
                 final Dialog dialog = new Dialog(ConnectActivity.this);
                 dialog.setContentView(R.layout.imageview_popup);
 
@@ -319,6 +323,7 @@ public class ConnectActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                Utility.freeMemory();
                 boolean result = Utility.checkContactPermission(ConnectActivity.this);
                 if (result) {
                     //Boolean aBoolean = contactExists(getApplicationContext(), txtMob.getText().toString());
@@ -359,6 +364,7 @@ public class ConnectActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                Utility.freeMemory();
                 boolean result = Utility.checkContactPermission(ConnectActivity.this);
                 if (result) {
                     Boolean aBoolean = contactExists(getApplicationContext(), "+91 9737032082");
@@ -424,6 +430,7 @@ public class ConnectActivity extends AppCompatActivity
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
                /* Intent go = new Intent(getApplicationContext(),CardsActivity.class);
                 // you pass the position you want the viewpager to show in the extra,
                 // please don't forget to define and initialize the position variable
@@ -451,6 +458,7 @@ public class ConnectActivity extends AppCompatActivity
         imgCards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
                 Intent go = new Intent(getApplicationContext(),CardsActivity.class);
 
                 // you pass the position you want the viewpager to show in the extra,
@@ -466,6 +474,7 @@ public class ConnectActivity extends AppCompatActivity
         imgConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
                 Intent go = new Intent(getApplicationContext(),CardsActivity.class);
 
                 // you pass the position you want the viewpager to show in the extra,
@@ -481,6 +490,7 @@ public class ConnectActivity extends AppCompatActivity
         imgEvents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
                 Intent go = new Intent(getApplicationContext(),CardsActivity.class);
 
                 // you pass the position you want the viewpager to show in the extra,
@@ -496,6 +506,7 @@ public class ConnectActivity extends AppCompatActivity
         imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
                 Intent go = new Intent(getApplicationContext(),CardsActivity.class);
 
                 // you pass the position you want the viewpager to show in the extra,
@@ -512,6 +523,7 @@ public class ConnectActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                Utility.freeMemory();
                 final CharSequence[] dialogList = list.toArray(new CharSequence[list.size()]);
                 final AlertDialog.Builder builderDialog = new AlertDialog.Builder(ConnectActivity.this);
                 LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -565,6 +577,13 @@ public class ConnectActivity extends AppCompatActivity
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
+
     public Rect locateView(View view)
     {
         Rect loc = new Rect();
@@ -584,6 +603,7 @@ public class ConnectActivity extends AppCompatActivity
     }
 
     public String POSTRequest(String url) {
+        Utility.freeMemory();
         InputStream inputStream = null;
         String result = "";
         try {
@@ -668,10 +688,11 @@ public class ConnectActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(String result)
         {
+            Utility.freeMemory();
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
 
-            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+           // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result == "") {
                     Toast.makeText(getApplicationContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
@@ -699,6 +720,7 @@ public class ConnectActivity extends AppCompatActivity
 
 
     public boolean contactExists(Context context, String number) {
+        Utility.freeMemory();
 /// number is the phone number
         Uri lookupUri = Uri.withAppendedPath(
                 ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
@@ -764,7 +786,7 @@ public class ConnectActivity extends AppCompatActivity
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
-
+            Utility.freeMemory();
             try
             {
                 if(result == "")
@@ -958,6 +980,7 @@ public class ConnectActivity extends AppCompatActivity
         String result = "";
         try
         {
+            Utility.freeMemory();
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
 
@@ -1014,7 +1037,7 @@ public class ConnectActivity extends AppCompatActivity
         String result = "";
         while((line = bufferedReader.readLine()) != null)
             result += line;
-
+        Utility.freeMemory();
         inputStream.close();
         return result;
     }
@@ -1046,6 +1069,7 @@ public class ConnectActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(String result)
         {
+            Utility.freeMemory();
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
 
@@ -1071,6 +1095,7 @@ public class ConnectActivity extends AppCompatActivity
     }
 
     public String GroupAddFriendPost(String url) {
+        Utility.freeMemory();
         InputStream inputStream = null;
         String result = "";
         try {
@@ -1151,6 +1176,7 @@ public class ConnectActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(String result)
         {
+            Utility.freeMemory();
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
 
@@ -1272,6 +1298,7 @@ public class ConnectActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(String result)
         {
+            Utility.freeMemory();
 //            dialog.dismiss();
             try
             {
@@ -1349,6 +1376,7 @@ public class ConnectActivity extends AppCompatActivity
 
     public  String FetchGroupDataPost(String url)
     {
+        Utility.freeMemory();
         InputStream inputStream = null;
         String result = "";
         try
@@ -1407,6 +1435,7 @@ public class ConnectActivity extends AppCompatActivity
 
     public  void CustomProgressDialog(final String loading)
     {
+        Utility.freeMemory();
         rlProgressDialog.setVisibility(View.VISIBLE);
         tvProgressing.setText(loading);
 

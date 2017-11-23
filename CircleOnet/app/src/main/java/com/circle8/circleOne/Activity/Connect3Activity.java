@@ -67,7 +67,7 @@ public class Connect3Activity extends AppCompatActivity
         imgConnecting1 = (ImageView) findViewById(R.id.imgConnecting1);
         txtConnecting = (TextView) findViewById(R.id.txtConnecting);
         loginSession = new LoginSession(getApplicationContext());
-
+        Utility.freeMemory();
         HashMap<String, String> user = loginSession.getUserDetails();
 
         UserId = user.get(LoginSession.KEY_USERID);      // name
@@ -126,6 +126,7 @@ public class Connect3Activity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                Utility.freeMemory();
                /* Intent go = new Intent(getApplicationContext(),ConnectActivity.class);
                 startActivity(go);
                 finish();*/
@@ -151,6 +152,7 @@ public class Connect3Activity extends AppCompatActivity
 
         if (backStatus.equalsIgnoreCase("None"))
         {
+            Utility.freeMemory();
             new HttpAsyncTask().execute(Utility.BASE_URL+"Connection7Level");
         }
 
@@ -166,6 +168,7 @@ public class Connect3Activity extends AppCompatActivity
 
                 startActivity(go);
                 finish();
+                Utility.freeMemory();
             }
         });
 
@@ -181,6 +184,7 @@ public class Connect3Activity extends AppCompatActivity
 
                 startActivity(go);
                 finish();
+                Utility.freeMemory();
             }
         });
 
@@ -196,6 +200,7 @@ public class Connect3Activity extends AppCompatActivity
 
                 startActivity(go);
                 finish();
+                Utility.freeMemory();
             }
         });
 
@@ -211,12 +216,20 @@ public class Connect3Activity extends AppCompatActivity
 
                 startActivity(go);
                 finish();
+                Utility.freeMemory();
             }
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
     private void startAction()
     {
+        Utility.freeMemory();
         if (backStatus.equalsIgnoreCase("Back"))
         {
 
@@ -255,7 +268,7 @@ public class Connect3Activity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-
+        Utility.freeMemory();
     }
 
     @Override
@@ -265,12 +278,14 @@ public class Connect3Activity extends AppCompatActivity
 
         if (backStatus.equalsIgnoreCase("Back"))
         {
+            Utility.freeMemory();
             finish();
         }
     }
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException
     {
+        Utility.freeMemory();
         BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
         String line = "";
         String result = "";
@@ -283,6 +298,7 @@ public class Connect3Activity extends AppCompatActivity
 
     public  String POST(String url)
     {
+        Utility.freeMemory();
         InputStream inputStream = null;
         String result = "";
         try
@@ -364,6 +380,7 @@ public class Connect3Activity extends AppCompatActivity
           //  dialog.dismiss();
             try
             {
+                Utility.freeMemory();
                 if (result != null)
                 {
                     JSONObject jsonObject = new JSONObject(result);

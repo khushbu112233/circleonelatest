@@ -74,6 +74,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.squareup.picasso.Picasso;
 
 
@@ -177,6 +178,7 @@ public class ProfileFragment extends Fragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
+        Utility.freeMemory();
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getContext());
      //   getActivity().requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -256,7 +258,7 @@ public class ProfileFragment extends Fragment
         loginButton = (LoginButton) view.findViewById(R.id.login_button);
         session = new LoginSession(getContext());
         appbar = (AppBarLayout) view.findViewById(R.id.appbar);
-
+        Utility.freeMemory();
         rlProgressDialog = (RelativeLayout)view.findViewById(R.id.rlProgressDialog);
         tvProgressing = (TextView)view.findViewById(R.id.txtProgressing);
         ivConnecting1 = (ImageView)view.findViewById(R.id.imgConnecting1) ;
@@ -301,7 +303,7 @@ public class ProfileFragment extends Fragment
             {
                 final Dialog dialog = new Dialog(getActivity());
                 dialog.setContentView(R.layout.imageview_popup);
-
+                Utility.freeMemory();
                 ImageView ivViewImage = (ImageView)dialog.findViewById(R.id.ivViewImage);
                 if (displayProfile.equals(""))
                 {
@@ -333,6 +335,7 @@ public class ProfileFragment extends Fragment
         txtAttachment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
                 Intent intent = new Intent(getContext(), AttachmentDisplay.class);
                 intent.putExtra("url", Utility.BASE_IMAGE_URL+"Other_doc/"+txtAttachment.getText().toString());
                 startActivity(intent);
@@ -342,6 +345,7 @@ public class ProfileFragment extends Fragment
         fbUrl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
                 if (strfbUrl!=null) {
                     if (!strfbUrl.startsWith("http://") && !strfbUrl.startsWith("https://"))
                         strfbUrl = "http://" + strfbUrl;
@@ -354,6 +358,7 @@ public class ProfileFragment extends Fragment
         googleUrl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
                 if (strgoogleUrl!=null) {
                     if (!strgoogleUrl.startsWith("http://") && !strgoogleUrl.startsWith("https://"))
                         strgoogleUrl = "http://" + strgoogleUrl;
@@ -366,6 +371,7 @@ public class ProfileFragment extends Fragment
         youtubeUrl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
                 if (stryoutubeUrl!=null) {
                     if (!stryoutubeUrl.startsWith("http://") && !stryoutubeUrl.startsWith("https://"))
                         stryoutubeUrl = "http://" + stryoutubeUrl;
@@ -378,6 +384,7 @@ public class ProfileFragment extends Fragment
         twitterUrl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
                 if (strtwitterUrl!=null) {
                     if (!strtwitterUrl.startsWith("http://") && !strtwitterUrl.startsWith("https://"))
                         strtwitterUrl = "http://" + strtwitterUrl;
@@ -399,6 +406,7 @@ public class ProfileFragment extends Fragment
             }
         });
 
+        Utility.freeMemory();
         allTaggs = new ArrayList<>();
        /* lnrMap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -431,7 +439,7 @@ public class ProfileFragment extends Fragment
         txtMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Utility.freeMemory();
                 Intent intent = new Intent(getContext(), TestimonialActivity.class);
                 intent.putExtra("ProfileId", TestimonialProfileId);
                 intent.putExtra("from", "profile");
@@ -442,7 +450,7 @@ public class ProfileFragment extends Fragment
         imgAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Utility.freeMemory();
                 Intent intent1 = new Intent(getContext(), SearchGroupMembers.class);
                 intent1.putExtra("from", "profile");
                 intent1.putExtra("ProfileId", TestimonialProfileId);
@@ -466,6 +474,7 @@ public class ProfileFragment extends Fragment
                 go.putExtra("viewpager_position", 0);
                 startActivity(go);
                 getActivity().finish();
+                Utility.freeMemory();
             }
         });
 
@@ -503,6 +512,7 @@ public class ProfileFragment extends Fragment
 
             @Override
             public void onPageScrolled(final int position, final float positionOffset, final int positionOffsetPixels) {
+                Utility.freeMemory();
                 if (mScrollState == ViewPager.SCROLL_STATE_IDLE) {
                     return;
                 }
@@ -516,6 +526,7 @@ public class ProfileFragment extends Fragment
 
             @Override
             public void onPageScrollStateChanged(final int state) {
+                Utility.freeMemory();
                 mScrollState = state;
                 if (state == ViewPager.SCROLL_STATE_IDLE) {
                     mViewPager.setCurrentItem(viewPager1.getCurrentItem(), false);
@@ -629,8 +640,9 @@ public class ProfileFragment extends Fragment
         imgProfileShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String shareBody = "I'm giving you a free redemption points on the Circle app (up to ₹25). To accept, use code '"+ refer+"' to sign up. Enjoy!"
-                        +System.lineSeparator() + "Details: https://www.circle8.asia/invite/"+refer;
+                Utility.freeMemory();
+                String shareBody = "I’m ready to connect with you and share our growing network on the CircleOne app. I’m currently a user with CircleOne and would like to invite you to join the Circle so we’ll both be able to take our professional newtorks a step further. Use the code " + refer +
+                        " for a quick and simple registration! https://www.circle8.asia/invite/"+refer;
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, tvPersonName.getText().toString());
@@ -642,6 +654,7 @@ public class ProfileFragment extends Fragment
         imgProfileMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
                 ContextThemeWrapper ctw = new ContextThemeWrapper(getContext(), R.style.Blue_AlertDialog);
                 PopupMenu popup = new PopupMenu(ctw, imgProfileMenu);
                 //Inflating the Popup using xml file
@@ -928,8 +941,6 @@ public class ProfileFragment extends Fragment
                                         e.printStackTrace();
                                     } catch (BadPaddingException e) {
                                         e.printStackTrace();
-                                    } catch (WriterException e) {
-                                        e.printStackTrace();
                                     }
                                 }
                             }
@@ -946,24 +957,16 @@ public class ProfileFragment extends Fragment
             @Override
             public void onClick(View v)
             {
+                Utility.freeMemory();
               //  Toast.makeText(getContext(), "Generating QR Code.. Please Wait..", Toast.LENGTH_LONG).show();
 
                 //                    barName = encrypt(TestimonialProfileId, secretKey);
-
-
-                // for another way to get qr code image using zxing
-                /*MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
-                BitMatrix bitMatrix = multiFormatWriter.encode(barName, BarcodeFormat.QR_CODE,200,200);
-                BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-                bitmap = barcodeEncoder.createBitmap(bitMatrix);*/
 
                 AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
                 LayoutInflater inflater = getActivity().getLayoutInflater();
                 final View dialogView = inflater.inflate(R.layout.person_qrcode, null);
                 TextView tvBarName = (TextView)dialogView.findViewById(R.id.tvBarName);
                 ImageView ivBarImage = (ImageView)dialogView.findViewById(R.id.ivBarImage);
-//                tvBarName.setText(barName);
-              //  alertDialog.setFeatureDrawableAlpha(R.color.colorPrimary, 8);
 
                 ColorDrawable dialogColor = new ColorDrawable(getResources().getColor(R.color.colorPrimary));
                 dialogColor.setAlpha(70);
@@ -974,28 +977,6 @@ public class ProfileFragment extends Fragment
                 ivBarImage.setImageBitmap(bitmap);
                 alertDialog.setView(dialogView);
                 alertDialog.show();
-
-//                progressDialog = new ProgressDialog(getActivity());
-//                progressDialog.setMessage("Generating Qr Code...");
-//                progressDialog.setCancelable(false);
-
-               /* try
-                {
-                    AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-                    LayoutInflater inflater = getActivity().getLayoutInflater();
-                    final View dialogView = inflater.inflate(R.layout.person_qrcode, null);
-                    TextView tvBarName = (TextView)dialogView.findViewById(R.id.tvBarName);
-                    ImageView ivBarImage = (ImageView)dialogView.findViewById(R.id.ivBarImage);
-                    tvBarName.setText(barName);
-                    bitmap = TextToImageEncode(barName);
-                    ivBarImage.setImageBitmap(bitmap);
-                    alertDialog.setView(dialogView);
-                    progressDialog.dismiss();
-                    alertDialog.show();
-                }
-                catch (WriterException e) {
-                    e.printStackTrace();
-                }*/
 
             }
         });
@@ -1695,8 +1676,6 @@ public class ProfileFragment extends Fragment
                         e.printStackTrace();
                     } catch (BadPaddingException e) {
                         e.printStackTrace();
-                    } catch (WriterException e) {
-                        e.printStackTrace();
                     }
                 }
                 else
@@ -2058,40 +2037,20 @@ public class ProfileFragment extends Fragment
         }
     }
 
-    Bitmap TextToImageEncode(String Value) throws WriterException
+    Bitmap TextToImageEncode(String Value)
     {
-        BitMatrix bitMatrix;
-        try
-        {
-            bitMatrix = new MultiFormatWriter().encode(
-                    Value,
-                    BarcodeFormat.DATA_MATRIX.QR_CODE,
-                    QRcodeWidth, QRcodeWidth, null  );
-
-        } catch (IllegalArgumentException Illegalargumentexception) {
-
-            return null;
+        String text=Value; // Whatever you need to encode in the QR code
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        try {
+            BitMatrix bitMatrix = multiFormatWriter.encode(text, BarcodeFormat.QR_CODE,400,400);
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+            //imageView.setImageBitmap(bitmap);
+            return bitmap;
+        } catch (WriterException e) {
+            e.printStackTrace();
         }
-        int bitMatrixWidth = bitMatrix.getWidth();
-
-        int bitMatrixHeight = bitMatrix.getHeight();
-
-        int[] pixels = new int[bitMatrixWidth * bitMatrixHeight];
-
-        for (int y = 0; y < bitMatrixHeight; y++) {
-            int offset = y * bitMatrixWidth;
-
-            for (int x = 0; x < bitMatrixWidth; x++) {
-
-                pixels[offset + x] = bitMatrix.get(x, y) ?
-                        getResources().getColor(R.color.QRCodeBlackColor):getResources().getColor(R.color.QRCodeWhiteColor);
-            }
-        }
-        Bitmap bitmap = Bitmap.createBitmap(bitMatrixWidth, bitMatrixHeight, Bitmap.Config.ARGB_4444);
-
-        bitmap.setPixels(pixels, 0, 500, 0, 0, bitMatrixWidth, bitMatrixHeight);
-
-        return bitmap;
+        return null;
     }
 
    /* @Override

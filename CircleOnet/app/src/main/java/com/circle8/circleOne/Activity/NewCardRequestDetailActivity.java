@@ -460,6 +460,13 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
+
     private void selectFile() {
         items = new CharSequence[]{"Upload Document", "Take Photo","Cancel"};
 

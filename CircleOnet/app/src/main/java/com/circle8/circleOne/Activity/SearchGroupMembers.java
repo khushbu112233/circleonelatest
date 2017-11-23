@@ -175,6 +175,12 @@ public class SearchGroupMembers extends AppCompatActivity
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
     public String POST2(String url)
     {
         InputStream inputStream = null;

@@ -6,10 +6,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -60,6 +62,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import me.dm7.barcodescanner.core.DisplayUtils;
 import me.dm7.barcodescanner.core.IViewFinder;
 import me.dm7.barcodescanner.core.ViewFinderView;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -124,6 +127,8 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Utility.freeMemory();
                 finish();
             }
         });
@@ -134,6 +139,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
             throws GeneralSecurityException, IOException {
 
         try {
+            Utility.freeMemory();
             byte[] value_bytes = Base64.decode(value, 0);
             byte[] key_bytes = getKeyBytes(key);
             return new String(decrypt(value_bytes, key_bytes, key_bytes), "UTF-8");
@@ -145,6 +151,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
     public byte[] decrypt(byte[] ArrayOfByte1, byte[] ArrayOfByte2, byte[] ArrayOfByte3)
             throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
         // setup AES cipher in CBC mode with PKCS #5 padding
+        Utility.freeMemory();
         Cipher localCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 
         // decrypt
@@ -154,6 +161,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
 
     private byte[] getKeyBytes(String paramString)
             throws UnsupportedEncodingException {
+        Utility.freeMemory();
         byte[] arrayOfByte1 = new byte[16];
         byte[] arrayOfByte2 = paramString.getBytes("UTF-8");
         System.arraycopy(arrayOfByte2, 0, arrayOfByte1, 0, Math.min(arrayOfByte2.length, arrayOfByte1.length));
@@ -173,6 +181,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
     //    new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
 
         try {
+            Utility.freeMemory();
            // Toast.makeText(getApplicationContext(), rawResult.getText().toString(), Toast.LENGTH_LONG).show();
             scanQr = decrypt(rawResult.getText().toString(), secretKey);
             if (scanQr.equals("Invalid QRCode")) {
@@ -186,11 +195,12 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
                 try {
                     mScannerView.stopCamera();
                     CameraScann();
-
+                    Utility.freeMemory();
                     if (netCheck == false){
                         Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
                     }
                     else {
+                        Utility.freeMemory();
                         if (CardsActivity.mLastLocation != null) {
                             latitude = CardsActivity.mLastLocation.getLatitude();
                             longitude = CardsActivity.mLastLocation.getLongitude();
@@ -360,6 +370,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
         @Override
         protected void onPostExecute(String result) {
             dialog.dismiss();
+            Utility.freeMemory();
             //  Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result == "") {
@@ -370,6 +381,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
                     String success = response.getString("success");
 
                     if (success.equals("1")) {
+                        Utility.freeMemory();
                         Toast.makeText(getApplicationContext(), getResources().getString(R.string.successful_request_sent), Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
                         intent.putExtra("viewpager_position", CardsActivity.mViewPager.getCurrentItem());
@@ -433,10 +445,16 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
 
     @Override
     public void onResume()
     {
+        Utility.freeMemory();
         super.onResume();
         mScannerView.setResultHandler(this);
         mScannerView.startCamera();
@@ -490,6 +508,17 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
         private int scannerAlpha;
         private static final int POINT_SIZE = 10;
         private static final long ANIMATION_DELAY = 80l;
+
+        private Rect mFramingRect;
+        private static final float SQUARE_DIMENSION_RATIO = 7f/8;
+        private static final float PORTRAIT_WIDTH_RATIO = 6f/8;
+        private static final float PORTRAIT_WIDTH_HEIGHT_RATIO = 0.75f;
+
+        private static final float LANDSCAPE_HEIGHT_RATIO = 5f/8;
+        private static final float LANDSCAPE_WIDTH_HEIGHT_RATIO = 1.4f;
+        private static final int MIN_DIMENSION_DIFF = 50;
+
+        protected boolean mSquareViewFinder = true ;
 
         public CustomViewFinderView(Context context) {
             super(context);
@@ -621,5 +650,63 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
                     framingRect.right + POINT_SIZE,
                     framingRect.bottom + POINT_SIZE);
         }
+
+        // TODO: Need a better way to configure this. Revisit when working on 2.0
+        public void setSquareViewFinder(boolean set) {
+            mSquareViewFinder = set;
+        }
+
+        public void setupViewFinder() {
+            updateFramingRect();
+            invalidate();
+        }
+
+        public Rect getFramingRect() {
+            return mFramingRect;
+        }
+
+        @Override
+        protected void onSizeChanged(int xNew, int yNew, int xOld, int yOld) {
+            updateFramingRect();
+        }
+
+        public synchronized void updateFramingRect()
+        {
+            Point viewResolution = new Point(getWidth(), getHeight());
+            int width;
+            int height;
+            int orientation = DisplayUtils.getScreenOrientation(getContext());
+
+            if(mSquareViewFinder) {
+                if(orientation != Configuration.ORIENTATION_PORTRAIT) {
+                    height = (int) (getHeight() * SQUARE_DIMENSION_RATIO);
+                    width = height;
+                } else {
+                    width = (int) (getWidth() * SQUARE_DIMENSION_RATIO);
+                    height = width;
+                }
+            } else {
+                if(orientation != Configuration.ORIENTATION_PORTRAIT) {
+                    height = (int) (getHeight() * LANDSCAPE_HEIGHT_RATIO);
+                    width = (int) (LANDSCAPE_WIDTH_HEIGHT_RATIO * height);
+                } else {
+                    width = (int) (getWidth() * PORTRAIT_WIDTH_RATIO);
+                    height = (int) (PORTRAIT_WIDTH_HEIGHT_RATIO * width);
+                }
+            }
+
+            if(width > getWidth()) {
+                width = getWidth() - MIN_DIMENSION_DIFF;
+            }
+
+            if(height > getHeight()) {
+                height = getHeight() - MIN_DIMENSION_DIFF;
+            }
+
+            int leftOffset = (viewResolution.x - width) / 2;
+            int topOffset = (viewResolution.y - height) / 2;
+            mFramingRect = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
+        }
     }
+
 }

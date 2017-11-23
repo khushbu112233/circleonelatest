@@ -103,6 +103,12 @@ public class WriteTestimonialActivity extends AppCompatActivity implements View.
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
+    @Override
     public void onClick(View v)
     {
         if( v == tvSend)

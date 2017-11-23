@@ -229,7 +229,7 @@ public class LoginActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
-
+        Utility.freeMemory();
         TwitterAuthConfig authConfig = new TwitterAuthConfig(getString(R.string.twitter_consumer_key),
                 getString(R.string.twitter_consumer_secret));
         Fabric.with(this, new Twitter(authConfig));
@@ -279,7 +279,7 @@ public class LoginActivity extends AppCompatActivity implements
 
         prefs = getSharedPreferences("com.circle8.circleOne", MODE_PRIVATE);
         etLoginPass.setImeOptions(EditorInfo.IME_ACTION_DONE);
-
+        Utility.freeMemory();
 
         OSPermissionSubscriptionState status = OneSignal.getPermissionSubscriptionState();
         boolean isEnabled = status.getPermissionStatus().getEnabled();
@@ -304,9 +304,11 @@ public class LoginActivity extends AppCompatActivity implements
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
                 if (netCheck == false){
+                    Utility.freeMemory();
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
                 }
                 else {
+                    Utility.freeMemory();
                     if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
                         userName = etLoginUser.getText().toString();
                         userPassword = etLoginPass.getText().toString();
@@ -332,6 +334,7 @@ public class LoginActivity extends AppCompatActivity implements
         imgForgotPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
                 startActivity(new Intent(LoginActivity.this, ForgotActivity.class));
             }
         });
@@ -396,6 +399,7 @@ public class LoginActivity extends AppCompatActivity implements
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
                 Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
                 intent.putExtra("Facebook", "");
                 intent.putExtra("Google", "");
@@ -411,6 +415,7 @@ public class LoginActivity extends AppCompatActivity implements
         imgFinger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
                 Intent intent = new Intent(getApplicationContext(), FingerPrintLogin.class);
                 startActivity(intent);
             }
@@ -421,12 +426,13 @@ public class LoginActivity extends AppCompatActivity implements
             @Override
             public void onClick(View view) {
                 LinkedInFlag = true;
+                Utility.freeMemory();
                 login_linkedin();
             }
         });
 
         if (loginSession.isLoggedIn()) {
-
+            Utility.freeMemory();
             Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
             startActivity(intent);
             finish();
@@ -457,6 +463,7 @@ public class LoginActivity extends AppCompatActivity implements
                 client.authorize(LoginActivity.this, new Callback<TwitterSession>() {
                     @Override
                     public void success(Result<TwitterSession> twitterSessionResult) {
+                        Utility.freeMemory();
                         Toast.makeText(LoginActivity.this, "success", Toast.LENGTH_SHORT).show();
                         handleTwitterSession(twitterSessionResult.data);
                     }
@@ -577,6 +584,13 @@ public class LoginActivity extends AppCompatActivity implements
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {

@@ -145,6 +145,13 @@ public class ManageMyProfile extends AppCompatActivity
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
+
     public  String POST5(String url)
     {
         InputStream inputStream = null;

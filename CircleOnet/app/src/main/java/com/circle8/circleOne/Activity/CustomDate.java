@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 import com.stacktips.view.CalendarListener;
 import com.stacktips.view.CustomCalendarView;
 
@@ -38,7 +39,7 @@ public class CustomDate extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_date);
-
+        Utility.freeMemory();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         final ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -72,6 +73,7 @@ public class CustomDate extends AppCompatActivity {
             @Override
             public void onDateSelected(Date date)
             {
+                Utility.freeMemory();
                 i++;
                 SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 //                Toast.makeText(CustomDate.this, df.format(date), Toast.LENGTH_SHORT).show();
@@ -138,6 +140,7 @@ public class CustomDate extends AppCompatActivity {
 
                 startActivity(go);
                 finish();
+                Utility.freeMemory();
             }
         });
 
@@ -216,4 +219,11 @@ public class CustomDate extends AppCompatActivity {
         dialog.getWindow().setAttributes(lp);
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
 }

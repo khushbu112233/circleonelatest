@@ -115,7 +115,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         mContext = List3Fragment.this.getContext() ;
-
+        Utility.freeMemory();
         db = new DatabaseHelper(getContext());
         id = new ArrayList<Integer>();
         imgf = new ArrayList<byte[]>();
@@ -164,6 +164,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                 intent.putExtra("lat", nfcModel1.get(position).getLatitude());
                 intent.putExtra("long", nfcModel1.get(position).getLongitude());
                 getContext().startActivity(intent);
+                Utility.freeMemory();
             }
         });
 
@@ -271,6 +272,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
                     gridAdapter.Filter(text);
                 }*/
+                Utility.freeMemory();
                 try
                 {
                     if (s.length() <= 0)
@@ -321,6 +323,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
             @Override
             public void onClick(View v)
             {
+                Utility.freeMemory();
                 nfcModel1.clear();
                 allTaggs.clear();
                 try
@@ -339,6 +342,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
+                Utility.freeMemory();
                 nfcModel1.clear();
                 allTaggs.clear();
                 try
@@ -458,6 +462,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
         @Override
         protected void onPostExecute(String result)
         {
+            Utility.freeMemory();
            // dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
@@ -542,11 +547,13 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
 
     public static void callFirst()
     {
+        Utility.freeMemory();
         new HttpAsyncTask().execute(Utility.BASE_URL+SortAndFilterOption.CardListApi);
     }
 
     public static void webCall()
     {
+        Utility.freeMemory();
        /* nfcModel1.clear();
         allTaggs.clear();
         try
@@ -634,6 +641,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
         @Override
         protected void onPostExecute(String result)
         {
+            Utility.freeMemory();
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
 

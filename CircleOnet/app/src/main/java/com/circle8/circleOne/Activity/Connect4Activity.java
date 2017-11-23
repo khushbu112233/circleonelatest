@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 import com.squareup.picasso.Picasso;
 import com.stripe.android.Stripe;
 import com.stripe.android.TokenCallback;
@@ -64,7 +65,7 @@ public class Connect4Activity extends AppCompatActivity
         level7 = (ImageView) findViewById(R.id.imgLevel7);
         ivImage1 = (ImageView) findViewById(R.id.ivImage1);
         txtCongratulations = (TextView) findViewById(R.id.txtCongratulations);
-
+        Utility.freeMemory();
         Intent intent = getIntent();
         level = intent.getStringExtra("level");
         profile = intent.getStringExtra("profile");
@@ -93,6 +94,7 @@ public class Connect4Activity extends AppCompatActivity
 
         try
         {
+            Utility.freeMemory();
             if (profile.equalsIgnoreCase("") || profile.equalsIgnoreCase("null"))
             {
                 ivImage1.setImageResource(R.drawable.usr);
@@ -116,6 +118,7 @@ public class Connect4Activity extends AppCompatActivity
 
             if (level.equals("0"))
             {
+                Utility.freeMemory();
               //  txtCongratulations.setVisibility(View.GONE);
                 txtAsk.setVisibility(View.GONE);
                 txtLink.setText("You have no established connections");
@@ -236,7 +239,7 @@ public class Connect4Activity extends AppCompatActivity
                 @Override
                 public void onClick(View v)
                 {
-
+                    Utility.freeMemory();
                     Intent go = new Intent(getApplicationContext(), Connect5Activity.class);
                     go.putExtra("level", level);
                     go.putExtra("profile", profile);
@@ -372,7 +375,7 @@ public class Connect4Activity extends AppCompatActivity
                 @Override
                 public void onClick(View v)
                 {
-
+                    Utility.freeMemory();
                     finish();
                 }
             });
@@ -380,6 +383,7 @@ public class Connect4Activity extends AppCompatActivity
             imgCards.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Utility.freeMemory();
                     Intent go = new Intent(getApplicationContext(), CardsActivity.class);
 
                     // you pass the position you want the viewpager to show in the extra,
@@ -395,6 +399,7 @@ public class Connect4Activity extends AppCompatActivity
             imgConnect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Utility.freeMemory();
                     Intent go = new Intent(getApplicationContext(), CardsActivity.class);
 
                     // you pass the position you want the viewpager to show in the extra,
@@ -410,6 +415,7 @@ public class Connect4Activity extends AppCompatActivity
             imgEvents.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Utility.freeMemory();
                     Intent go = new Intent(getApplicationContext(), CardsActivity.class);
 
                     // you pass the position you want the viewpager to show in the extra,
@@ -425,6 +431,7 @@ public class Connect4Activity extends AppCompatActivity
             imgProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Utility.freeMemory();
                     Intent go = new Intent(getApplicationContext(), CardsActivity.class);
 
                     // you pass the position you want the viewpager to show in the extra,
@@ -436,6 +443,12 @@ public class Connect4Activity extends AppCompatActivity
                     finish();
                 }
             });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
     }
 
     public void cardPayment()

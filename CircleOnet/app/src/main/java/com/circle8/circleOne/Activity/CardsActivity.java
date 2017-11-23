@@ -184,6 +184,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
     private String[][] mNFCTechLists;
     ArrayList<String> arrayNFC ;
     String CardCode = "";
+    Boolean netCheck= false;
     public static final byte[] MIME_TEXT = "application/com.circle8.circleOne".getBytes();
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -199,6 +200,9 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         String date1 = format.format(Date.parse(stringDate));
 
         Toast.makeText(getApplicationContext(), "Time: " + date1, Toast.LENGTH_LONG).show();   */
+
+        netCheck = Utility.isNetworkAvailable(getApplicationContext());
+
         referralCodeSession = new ReferralCodeSession(getApplicationContext());
         HashMap<String, String> referral = referralCodeSession.getReferralDetails();
         refer = referral.get(ReferralCodeSession.KEY_REFERRAL);
@@ -206,7 +210,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         Bundle extras = getIntent().getExtras();
         permissionUtils = new PermissionUtils(CardsActivity.this);
-
+        Utility.freeMemory();
         permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
         permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
 
@@ -236,7 +240,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
 //        Toast.makeText(getApplicationContext(), name + " " + email + " " + image + " " + gender, Toast.LENGTH_LONG).show();
 
         if (checkPlayServices()) {
-
+            Utility.freeMemory();
             // Building the GoogleApi client
             buildGoogleApiClient();
         }
@@ -272,10 +276,19 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             }
         });*/
         getSupportActionBar().setShowHideAnimationEnabled(false);
-        new HttpAsyncTaskNotification().execute(Utility.BASE_URL+"CountNewNotification");
+
+        if (netCheck == false){
+            Utility.freeMemory();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
+        }
+        else {
+
+            new HttpAsyncTaskNotification().execute(Utility.BASE_URL + "CountNewNotification");
+        }
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                Utility.freeMemory();
                 mViewPager.setCurrentItem(tab.getPosition(), false);
                 getSupportActionBar().setShowHideAnimationEnabled(false);
                 if (tab.getPosition() == 3) {
@@ -319,6 +332,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onTabUnselected(TabLayout.Tab tab)
             {
+                Utility.freeMemory();
                 int i = tab.getPosition();
                 if (i == 0) {
                     View view = tab.getCustomView();
@@ -355,7 +369,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                Utility.freeMemory();
             }
         });
         /*List1Fragment.callFirst();
@@ -368,11 +382,12 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+                Utility.freeMemory();
             }
 
             @Override
             public void onPageSelected(int position) {
+                Utility.freeMemory();
                 getSupportActionBar().setShowHideAnimationEnabled(false);
                 if (position == 0) {
                     CardsFragment.mViewPager.setCurrentItem(nested_position);
@@ -403,7 +418,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         imgLogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Utility.freeMemory();
                 //Toast.makeText(getApplicationContext(), "Hello", Toast.LENGTH_LONG).show();
 
                 TypedValue tv = new TypedValue();
@@ -418,6 +433,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         imgDrawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
                 int pos = mViewPager.getCurrentItem();
                 if (pos == 0) {
                     Intent intent = new Intent(getApplicationContext(), SortAndFilterOption.class);
@@ -432,9 +448,15 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
 
     protected synchronized void buildGoogleApiClient() {
-
+        Utility.freeMemory();
        /* mGoogleApiClient = new GoogleApiClient.Builder(CardsActivity.this)
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
@@ -496,7 +518,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        Utility.freeMemory();
         try {
 
             final LocationSettingsStates states = LocationSettingsStates.fromIntent(data);
@@ -526,6 +548,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onStart() {
         super.onStart();
+        Utility.freeMemory();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
         if (opr.isDone()) {
@@ -552,6 +575,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
     public void handleSignInResult(GoogleSignInResult result) {
         //   Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
+            Utility.freeMemory();
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
 
@@ -570,7 +594,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
     public static void getLocation() {
-
+        Utility.freeMemory();
         if (isPermissionGranted) {
 
             try
@@ -588,7 +612,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private boolean checkPlayServices() {
-
+        Utility.freeMemory();
         GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
 
         int resultCode = googleApiAvailability.isGooglePlayServicesAvailable(this);
@@ -661,6 +685,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
 
         @Override
         protected void onPostExecute(Void result) {
+            Utility.freeMemory();
             getSupportActionBar().setShowHideAnimationEnabled(false);
             if (position == 0) {
                 getSupportActionBar().show();
@@ -706,6 +731,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
 
     public void showDialog(Context context, int x, int y)
     {
+        Utility.freeMemory();
         // x -->  X-Cordinate
         // y -->  Y-Cordinate
         final Dialog dialog = new Dialog(context, R.style.PauseDialog);
@@ -749,8 +775,9 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onClick(View v) {
 
-                String shareBody = "I'm giving you a free redemption points on the Circle app (up to ₹25). To accept, use code '"+ refer+"' to sign up. Enjoy!"
-                        +System.lineSeparator() + "Details: https://www.circle8.asia/invite/"+refer;
+               // I’m ready to connect with you and share our growing network on the CircleOne app. I’m currently a user with CircleOne and would like to invite you to join the Circle so we’ll both be able to take our professional newtorks a step further. Use the code 'S17806DR' for a quick and simple registration!
+                String shareBody = "I’m ready to connect with you and share our growing network on the CircleOne app. I’m currently a user with CircleOne and would like to invite you to join the Circle so we’ll both be able to take our professional newtorks a step further. Use the code " + refer +
+                        " for a quick and simple registration! https://www.circle8.asia/invite/"+refer;
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, User_name);
@@ -787,6 +814,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 Intent intent = new Intent(getApplicationContext(), ManageMyProfile.class);
                 startActivity(intent);
                 dialog.dismiss();
+                Utility.freeMemory();
             }
         });
 
@@ -796,6 +824,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 Intent intent = new Intent(getApplicationContext(), CardVerificationActivity.class);
                 startActivity(intent);
                 dialog.dismiss();
+                Utility.freeMemory();
             }
         });
 
@@ -805,6 +834,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 Intent intent = new Intent(getApplicationContext(), MyAccountActivity.class);
                 startActivity(intent);
                 dialog.dismiss();
+                Utility.freeMemory();
             }
         });
 
@@ -814,16 +844,19 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 Intent intent = new Intent(getApplicationContext(), Notification.class);
                 startActivity(intent);
                 dialog.dismiss();
+                Utility.freeMemory();
             }
         });
 
         lnrGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.freeMemory();
 //                Intent intent = new Intent(getApplicationContext(), GroupTag.class);
                 Intent intent = new Intent(getApplicationContext(), GroupsActivity.class);
                 startActivity(intent);
                 dialog.dismiss();
+                Utility.freeMemory();
             }
         });
 
@@ -833,6 +866,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 Intent intent = new Intent(getApplicationContext(), AddQRActivity.class);
                 startActivity(intent);
                 dialog.dismiss();
+                Utility.freeMemory();
             }
         });
 
@@ -842,6 +876,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 Intent intent = new Intent(getApplicationContext(), NewCardRequestActivity.class);
                 startActivity(intent);
                 dialog.dismiss();
+                Utility.freeMemory();
             }
         });
 
@@ -851,6 +886,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 Intent intent = new Intent(getApplicationContext(), ContactUsActivity.class);
                 startActivity(intent);
                 dialog.dismiss();
+                Utility.freeMemory();
             }
         });
 
@@ -860,6 +896,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 Intent intent = new Intent(getApplicationContext(), SubscriptionActivity.class);
                 startActivity(intent);
                 dialog.dismiss();
+                Utility.freeMemory();
             }
         });
 
@@ -869,6 +906,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 Intent intent = new Intent(getApplicationContext(), Help2Activity.class);
                 startActivity(intent);
                 dialog.dismiss();
+                Utility.freeMemory();
             }
         });
 
@@ -879,6 +917,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 Intent intent = new Intent(getApplicationContext(), RewardsPointsActivity.class);
                 startActivity(intent);
                 dialog.dismiss();
+                Utility.freeMemory();
             }
         });
 
@@ -889,6 +928,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 Intent intent = new Intent(getApplicationContext(), HistoryActivity.class);
                 startActivity(intent);
                 dialog.dismiss();
+                Utility.freeMemory();
             }
         });
 
@@ -896,6 +936,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onClick(View v)
             {
+                Utility.freeMemory();
                 try
                 {
                   List1Fragment.allTags.clear();
@@ -963,6 +1004,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
 
     public void askForContactPermission()
     {
+        Utility.freeMemory();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         {
             if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED)
@@ -1032,6 +1074,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
     {
+        Utility.freeMemory();
         permissionUtils.onRequestPermissionsResult(requestCode,permissions,grantResults);
 
         switch (requestCode)
@@ -1092,6 +1135,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
 
         @Override
         public Fragment getItem(int position) {
+            Utility.freeMemory();
             if (position == 0) {
                 // getSupportActionBar().show();
                 // setActionBarTitle("Connect");
@@ -1277,6 +1321,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onResume() {
         super.onResume();
+        Utility.freeMemory();
         checkPlayServices();
         getSupportActionBar().setShowHideAnimationEnabled(false);
         if (!done) {
@@ -1315,40 +1360,63 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
 
                 }
                 String ProfileId = "", card_code = "";
-                //Toast.makeText(getApplicationContext(), arrayNFC.toString(), Toast.LENGTH_LONG).show();
-                if (arrayNFC.size() == 1){
-                    nfcProfileId = arrayNFC.get(0).toString();
-                    //  txtNoGroup.setText("Your Card is already verified..");
-                    //  ivAddCard.setVisibility(View.GONE);
-                }
-                else if (arrayNFC.size() == 2){
-                    nfcProfileId = arrayNFC.get(0).toString();
-                    CardCode = arrayNFC.get(1).toString();
-                    // Toast.makeText(getApplicationContext(), ProfileId + " " + CardCode, Toast.LENGTH_LONG).show();
-                    // new HttpAsyncActivateNFC().execute(Utility.BASE_URL+"NFCSecurity/ActivateNFC");
+
+                if (netCheck == false){
+                    Utility.freeMemory();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
                 }
                 else {
-                    nfcProfileId = arrayNFC.get(0).toString();
-                    //txtNoGroup.setText("Your Card is already verified..");
-                    //ivAddCard.setVisibility(View.GONE);
+                    //Toast.makeText(getApplicationContext(), arrayNFC.toString(), Toast.LENGTH_LONG).show();
+                    if (arrayNFC.size() == 1) {
+                        nfcProfileId = arrayNFC.get(0).toString();
+                        //  txtNoGroup.setText("Your Card is already verified..");
+                        //  ivAddCard.setVisibility(View.GONE);
+                        if (mLastLocation != null) {
+                            latitude = mLastLocation.getLatitude();
+                            longitude = mLastLocation.getLongitude();
+                        } else {
+                            lat = "";
+                            lng = "";
+                            getLocation();
+                            Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
+                        }
+
+
+                        try {
+                            new HttpAsyncTask().execute(Utility.BASE_URL + "FriendConnection_Operation");
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                        }
+                    } else if (arrayNFC.size() == 2) {
+                        nfcProfileId = arrayNFC.get(0).toString();
+                        CardCode = arrayNFC.get(1).toString();
+
+                        if (mLastLocation != null) {
+                            latitude = mLastLocation.getLatitude();
+                            longitude = mLastLocation.getLongitude();
+                        } else {
+                            lat = "";
+                            lng = "";
+                            getLocation();
+                            Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
+                        }
+
+
+                        try {
+                            new HttpAsyncTask().execute(Utility.BASE_URL + "FriendConnection_Operation");
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                        }
+                        // Toast.makeText(getApplicationContext(), ProfileId + " " + CardCode, Toast.LENGTH_LONG).show();
+                        // new HttpAsyncActivateNFC().execute(Utility.BASE_URL+"NFCSecurity/ActivateNFC");
+                    } else {
+                        nfcProfileId = "";
+                        Toast.makeText(getApplicationContext(), "Please use only CircleOne NFC-Card for unlock", Toast.LENGTH_LONG).show();
+                        //txtNoGroup.setText("Your Card is already verified..");
+                        //ivAddCard.setVisibility(View.GONE);
+                    }
                 }
 
-                if (mLastLocation != null) {
-                    latitude = mLastLocation.getLatitude();
-                    longitude = mLastLocation.getLongitude();
-                } else {
-                    lat = "";
-                    lng = "";
-                    getLocation();
-                    Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
-                }
-
-
-                try {
-                    new HttpAsyncTask().execute(Utility.BASE_URL+"FriendConnection_Operation");
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
-                }
                 // Toast.makeText(getApplicationContext(), String.valueOf(latitude + " " + longitude), Toast.LENGTH_LONG).show();
               /*  try {
 
@@ -1493,40 +1561,67 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
 
         }
         String ProfileId = "", card_code = "";
-        //Toast.makeText(getApplicationContext(), arrayNFC.toString(), Toast.LENGTH_LONG).show();
-        if (arrayNFC.size() == 1){
-            nfcProfileId = arrayNFC.get(0).toString();
-          //  txtNoGroup.setText("Your Card is already verified..");
-          //  ivAddCard.setVisibility(View.GONE);
-        }
-        else if (arrayNFC.size() == 2){
-            nfcProfileId = arrayNFC.get(0).toString();
-            CardCode = arrayNFC.get(1).toString();
-           // Toast.makeText(getApplicationContext(), ProfileId + " " + CardCode, Toast.LENGTH_LONG).show();
-           // new HttpAsyncActivateNFC().execute(Utility.BASE_URL+"NFCSecurity/ActivateNFC");
+
+        if (netCheck == false){
+            Utility.freeMemory();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
         }
         else {
-            nfcProfileId = arrayNFC.get(0).toString();
-            //txtNoGroup.setText("Your Card is already verified..");
-            //ivAddCard.setVisibility(View.GONE);
-        }
+
+            //Toast.makeText(getApplicationContext(), arrayNFC.toString(), Toast.LENGTH_LONG).show();
+            if (arrayNFC.size() == 1) {
+                nfcProfileId = arrayNFC.get(0).toString();
 
 
-        if (mLastLocation != null) {
-            latitude = mLastLocation.getLatitude();
-            longitude = mLastLocation.getLongitude();
-        } else {
-            lat = "";
-            lng = "";
-            getLocation();
-            Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
-        }
-        //  Toast.makeText(getApplicationContext(), String.valueOf(latitude + " " + longitude), Toast.LENGTH_LONG).show();
+                if (mLastLocation != null) {
+                    latitude = mLastLocation.getLatitude();
+                    longitude = mLastLocation.getLongitude();
+                } else {
+                    lat = "";
+                    lng = "";
+                    getLocation();
+                    Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
+                }
+                //  Toast.makeText(getApplicationContext(), String.valueOf(latitude + " " + longitude), Toast.LENGTH_LONG).show();
 
-        try {
-            new HttpAsyncTask().execute(Utility.BASE_URL+"FriendConnection_Operation");
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                try {
+                    new HttpAsyncTask().execute(Utility.BASE_URL + "FriendConnection_Operation");
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                }
+
+
+                //  txtNoGroup.setText("Your Card is already verified..");
+                //  ivAddCard.setVisibility(View.GONE);
+            } else if (arrayNFC.size() == 2) {
+                nfcProfileId = arrayNFC.get(0).toString();
+                CardCode = arrayNFC.get(1).toString();
+
+
+                if (mLastLocation != null) {
+                    latitude = mLastLocation.getLatitude();
+                    longitude = mLastLocation.getLongitude();
+                } else {
+                    lat = "";
+                    lng = "";
+                    getLocation();
+                    Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
+                }
+                //  Toast.makeText(getApplicationContext(), String.valueOf(latitude + " " + longitude), Toast.LENGTH_LONG).show();
+
+                try {
+                    new HttpAsyncTask().execute(Utility.BASE_URL + "FriendConnection_Operation");
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                }
+                // Toast.makeText(getApplicationContext(), ProfileId + " " + CardCode, Toast.LENGTH_LONG).show();
+                // new HttpAsyncActivateNFC().execute(Utility.BASE_URL+"NFCSecurity/ActivateNFC");
+            } else {
+                nfcProfileId = "";
+                Toast.makeText(getApplicationContext(), "Please use only CircleOne NFC-Card for unlock", Toast.LENGTH_LONG).show();
+                //txtNoGroup.setText("Your Card is already verified..");
+                //ivAddCard.setVisibility(View.GONE);
+            }
         }
        /* try {
             nfcProfileId = decrypt(ProfileId, secretKey);
@@ -1709,6 +1804,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         @Override
         protected void onPostExecute(String result) {
             dialog.dismiss();
+            Utility.freeMemory();
           //  Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result == "") {
@@ -1918,7 +2014,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
 
     @Override
     public void onBackPressed() {
-
+        Utility.freeMemory();
             if (doubleBackToExitPressedOnce) {
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

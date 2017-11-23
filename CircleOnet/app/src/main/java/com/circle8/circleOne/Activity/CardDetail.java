@@ -135,6 +135,7 @@ public class CardDetail extends NfcActivity implements View.OnClickListener
     String refer;
     double Latitude, Longitude;
     LinearLayout lnrNfcLocation;
+    Boolean netCheck= false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -203,7 +204,7 @@ public class CardDetail extends NfcActivity implements View.OnClickListener
         ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
         ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
         ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
-
+        netCheck = Utility.isNetworkAvailable(getApplicationContext());
         txtMore = (TextView) findViewById(R.id.txtMore);
         HashMap<String, String> referral = referralCodeSession.getReferralDetails();
         refer = referral.get(ReferralCodeSession.KEY_REFERRAL);
@@ -251,21 +252,24 @@ public class CardDetail extends NfcActivity implements View.OnClickListener
 
         allTaggs = new ArrayList<>();
 
-        if (profile_id.equals(""))
-        {
-            Toast.makeText(CardDetail.this, "Having no profile ID",Toast.LENGTH_LONG).show();
+        if (netCheck == false){
+            Utility.freeMemory();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
         }
-        else
-        {
-            new CardDetail.HttpAsyncTask().execute(Utility.BASE_URL+"GetUserProfile");
+        else {
+
+            if (profile_id.equals("")) {
+                Toast.makeText(CardDetail.this, "Having no profile ID", Toast.LENGTH_LONG).show();
+            } else {
+                new CardDetail.HttpAsyncTask().execute(Utility.BASE_URL + "GetUserProfile");
+            }
+
+            new HttpAsyncTaskGroup().execute(Utility.BASE_URL + "Group/Fetch");
+
+            new HttpAsyncTaskGroupsFetch().execute(Utility.BASE_URL + "Group/MyGroupsTaggedWithFriendProfile");
+
+            new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL + "Testimonial/Fetch");
         }
-
-        new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/Fetch");
-
-        new HttpAsyncTaskGroupsFetch().execute(Utility.BASE_URL+"Group/MyGroupsTaggedWithFriendProfile");
-
-        new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");
-
         imgProfileShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -803,6 +807,12 @@ public class CardDetail extends NfcActivity implements View.OnClickListener
                         .show();
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
     }
 
     @Override

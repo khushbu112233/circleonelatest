@@ -130,6 +130,13 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         new HttpAsyncGetHistoryEarnedPoints().execute(Utility.BASE_URL+"Rewards/History_EarnedPoints");           // post
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
     private void init()
     {
         HistoryListView = findViewById(R.id.icdHistoryListviewLayout);

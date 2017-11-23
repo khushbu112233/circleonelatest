@@ -20,6 +20,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,6 +82,7 @@ public class SortAndFilterOption extends AppCompatActivity
     SortAndFilterAdapter sortAndFilterAdapter ;
     SortAndFilterProfileAdapter sortAndFilterProfileAdapter ;
     LinearLayout lnrCompany, lnrTitle, lnrIndustry, lnrAssociation;
+    RelativeLayout rltCircle, rltProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -95,7 +97,8 @@ public class SortAndFilterOption extends AppCompatActivity
         db = new DatabaseHelper(getApplicationContext());
         actionText = (TextView) findViewById(R.id.mytext);
         imgCards = (ImageView) findViewById(R.id.imgCards);
-
+        rltCircle = (RelativeLayout) findViewById(R.id.rltCircle);
+        rltProfile = (RelativeLayout) findViewById(R.id.rltProfile);
         lnrTitle = (LinearLayout) findViewById(R.id.lnrTitle);
         lnrIndustry = (LinearLayout) findViewById(R.id.lnrIndustry);
         lnrAssociation = (LinearLayout) findViewById(R.id.lnrAssociation);
@@ -186,7 +189,7 @@ public class SortAndFilterOption extends AppCompatActivity
             }
         });
 
-        ivArrowImg1.setOnClickListener(new View.OnClickListener() {
+        rltCircle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -205,7 +208,7 @@ public class SortAndFilterOption extends AppCompatActivity
             }
         });
 
-        ivArrowImg2.setOnClickListener(new View.OnClickListener() {
+        rltProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -532,7 +535,7 @@ public class SortAndFilterOption extends AppCompatActivity
             public void onClick(View v) {
 
                 if (searchView.getText().toString().equalsIgnoreCase("")){
-                    Toast.makeText(getApplicationContext(), "Enter keyword to search", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Please type some keyword", Toast.LENGTH_LONG).show();
                 }else {
                     CardListApi = "SearchConnect";
                     FindBY = "COMPANY";
@@ -593,7 +596,7 @@ public class SortAndFilterOption extends AppCompatActivity
             public void onClick(View v) {
 
                 if (searchView.getText().toString().equalsIgnoreCase("")){
-                    Toast.makeText(getApplicationContext(), "Enter keyword to search", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Please type some keyword", Toast.LENGTH_LONG).show();
                 }else {
                     CardListApi = "SearchConnect";
                     FindBY = "JOB_ROLE";
@@ -654,7 +657,7 @@ public class SortAndFilterOption extends AppCompatActivity
             public void onClick(View v) {
 
                 if (searchView.getText().toString().equalsIgnoreCase("")){
-                    Toast.makeText(getApplicationContext(), "Enter keyword to search", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Please type some keyword", Toast.LENGTH_LONG).show();
                 }else {
                     CardListApi = "SearchConnect";
                     FindBY = "ASSOCIATION";
@@ -716,7 +719,7 @@ public class SortAndFilterOption extends AppCompatActivity
             public void onClick(View v) {
 
                 if (searchView.getText().toString().equalsIgnoreCase("")){
-                    Toast.makeText(getApplicationContext(), "Enter keyword to search", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Please type some keyword", Toast.LENGTH_LONG).show();
                 }else {
                     CardListApi = "SearchConnect";
                     FindBY = "INDUSTRY";
@@ -853,7 +856,13 @@ public class SortAndFilterOption extends AppCompatActivity
             }
         });
 
-        actionText.setText("Sort and Filter");
+        actionText.setText("Sort & Filter");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
     }
 
     public void showDialog(Context context, int x, int y){

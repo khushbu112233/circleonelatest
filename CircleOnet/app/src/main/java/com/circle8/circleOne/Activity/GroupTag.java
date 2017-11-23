@@ -258,6 +258,13 @@ public class GroupTag extends AppCompatActivity
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
+
     private class HttpAsyncTaskGroupCreate extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 

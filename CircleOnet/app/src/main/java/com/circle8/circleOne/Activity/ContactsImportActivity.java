@@ -78,7 +78,7 @@ public class ContactsImportActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts_import);
-
+        Utility.freeMemory();
         session = new LoginSession(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
         user_id = user.get(LoginSession.KEY_USERID);
@@ -119,6 +119,7 @@ public class ContactsImportActivity extends AppCompatActivity
                 for(int i=0 ; i < itemCount ; i++){
                     listView.setItemChecked(i, chk.isChecked());
                 }
+                Utility.freeMemory();
             }
         };
 
@@ -151,6 +152,7 @@ public class ContactsImportActivity extends AppCompatActivity
             public void onClick(View v) {
                 startActivity(new Intent(ContactsImportActivity.this, CardsActivity.class));
                 finish();
+                Utility.freeMemory();
             }
         });
 
@@ -158,6 +160,7 @@ public class ContactsImportActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                Utility.freeMemory();
                 System.out.println("check"+ listView.getCheckItemIds().length);
                 selectedStrings = new JSONArray();
                 for (int i = 0; i < listView.getCheckItemIds().length; i++)
@@ -179,12 +182,21 @@ public class ContactsImportActivity extends AppCompatActivity
                // Toast.makeText(getApplicationContext(), selectedStrings.toString(), Toast.LENGTH_LONG).show();
 
                 new HttpAsyncTaskImportContacts().execute(Utility.BASE_URL+"ImportContacts");
+                Utility.freeMemory();
             }
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
+
     private int getCheckedItemCount()
     {
+        Utility.freeMemory();
         int cnt = 0;
         SparseBooleanArray positions = listView.getCheckedItemPositions();
         int itemCount = listView.getCount();
@@ -199,6 +211,7 @@ public class ContactsImportActivity extends AppCompatActivity
 
     public void askForContactPermission()
     {
+        Utility.freeMemory();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         {
             if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED)
@@ -256,6 +269,7 @@ public class ContactsImportActivity extends AppCompatActivity
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
     {
+        Utility.freeMemory();
         switch (requestCode)
         {
             case PERMISSION_REQUEST_CONTACT:
@@ -284,6 +298,7 @@ public class ContactsImportActivity extends AppCompatActivity
 
     public void ReadPhoneContacts(Context cntx) //This Context parameter is nothing but your Activity class's Context
     {
+        Utility.freeMemory();
         ProgressDialog progressDialog;
         arrayListPhoneName = new ArrayList<>();
         arrayListPhoneNumber = new ArrayList<>();
@@ -403,6 +418,7 @@ public class ContactsImportActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(String result)
         {
+            Utility.freeMemory();
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
@@ -438,6 +454,7 @@ public class ContactsImportActivity extends AppCompatActivity
 
     public  String ContactUploadPost(String url)
     {
+        Utility.freeMemory();
         InputStream inputStream = null;
         String result = "";
         try
@@ -495,6 +512,7 @@ public class ContactsImportActivity extends AppCompatActivity
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException
     {
+        Utility.freeMemory();
         BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
         String line = "";
         String result = "";
@@ -507,6 +525,7 @@ public class ContactsImportActivity extends AppCompatActivity
 
     public void CustomProgressDialog(final String loading)
     {
+        Utility.freeMemory();
         rlProgressDialog.setVisibility(View.VISIBLE);
         tvProgressing.setText(loading);
 

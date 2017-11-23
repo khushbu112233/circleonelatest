@@ -32,6 +32,7 @@ import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.UserObject;
 import com.circle8.circleOne.MultiContactPicker;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.Walkthrough.HelpActivity;
 import com.google.gson.Gson;
 
@@ -134,7 +135,14 @@ public class FingerPrintLogin extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
     private void checkDeviceFingerprintSupport() {
+        Utility.freeMemory();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.USE_FINGERPRINT}, REQUEST_USE_FINGERPRINT);
         } else {
@@ -156,6 +164,7 @@ public class FingerPrintLogin extends AppCompatActivity {
     }
 
     private void generateFingerprintKeyStore() {
+        Utility.freeMemory();
         try {
             keyStore = KeyStore.getInstance("AndroidKeyStore");
         } catch (KeyStoreException e) {
@@ -188,6 +197,7 @@ public class FingerPrintLogin extends AppCompatActivity {
     }
 
     private Cipher instantiateCipher() {
+        Utility.freeMemory();
         try {
             cipher = Cipher.getInstance(KeyProperties.KEY_ALGORITHM_AES + "/" + KeyProperties.BLOCK_MODE_CBC + "/" + KeyProperties.ENCRYPTION_PADDING_PKCS7);
             keyStore.load(null);
@@ -239,6 +249,7 @@ public class FingerPrintLogin extends AppCompatActivity {
 
     public void askForContactPermission()
     {
+        Utility.freeMemory();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         {
             if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED)
@@ -308,6 +319,7 @@ public class FingerPrintLogin extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_USE_FINGERPRINT) {
+            Utility.freeMemory();
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // check support for android fingerprint on device
                 checkDeviceFingerprintSupport();
@@ -365,6 +377,7 @@ public class FingerPrintLogin extends AppCompatActivity {
         @Override
         public void onAuthenticationError(int errorCode, CharSequence errString) {
             super.onAuthenticationError(errorCode, errString);
+            Utility.freeMemory();
             Log.d(TAG, "Error message " + errorCode + ": " + errString);
             Toast.makeText(context, context.getString(R.string.authenticate_fingerprint), Toast.LENGTH_LONG).show();
         }
@@ -372,6 +385,7 @@ public class FingerPrintLogin extends AppCompatActivity {
         @Override
         public void onAuthenticationHelp(int helpCode, CharSequence helpString) {
             super.onAuthenticationHelp(helpCode, helpString);
+            Utility.freeMemory();
             Toast.makeText(context, helpString, Toast.LENGTH_LONG).show();
         }
 

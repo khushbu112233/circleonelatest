@@ -317,7 +317,8 @@ public class NotificationAdapter extends BaseAdapter
             {
                 Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgNfc);
             }
-
+            holder.btnAllowNfc.setVisibility(View.VISIBLE);
+            holder.btnNfcCancel.setVisibility(View.VISIBLE);
             /*if (testimonialModels.get(position).getStatus().equals("Requested")){
                 holder.btnTestReject.setVisibility(View.GONE);
                 holder.btnTestWrite.setVisibility(View.GONE);
@@ -440,8 +441,8 @@ public class NotificationAdapter extends BaseAdapter
             public void onClick(View v) {
               //  new HttpAsyncTaskAcceptFriend().execute(Utility.BASE_URL+"ShareProfile/Request");
                 Intent intent = new Intent(activity, ConnectActivity.class);
-                intent.putExtra("friendProfileID", testimonialModels.get(position).getFriendProfileID());
-                intent.putExtra("friendUserID", testimonialModels.get(position).getFriendUserID());
+                intent.putExtra("friendProfileID", testimonialModels.get(position).getShared_ProfileID());
+                intent.putExtra("friendUserID", testimonialModels.get(position).getShared_UserID());
                 intent.putExtra("ProfileID", profileId);
                 activity.startActivity(intent);
             }

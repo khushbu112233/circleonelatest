@@ -180,6 +180,12 @@ public class UpdateGroupActivity extends AppCompatActivity
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
     private class HttpAsyncTaskPhotoUpload extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 

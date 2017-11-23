@@ -178,6 +178,12 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
+    @Override
     public void onBackPressed() {
         startActivity(new Intent(MerchantDetailActivity.this, RewardsPointsActivity.class));
         finish();

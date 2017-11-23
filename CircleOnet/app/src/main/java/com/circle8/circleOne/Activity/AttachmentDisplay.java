@@ -21,6 +21,7 @@ public class AttachmentDisplay extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attachment_display);
+        Utility.freeMemory();
         webView = (WebView)findViewById(R.id.webView1);
         Intent i = getIntent();
         url = i.getStringExtra("url");
@@ -31,11 +32,17 @@ public class AttachmentDisplay extends AppCompatActivity {
         startWebView(url);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
     private void startWebView(String url) {
 
         //Create new webview Client to show progress dialog
         //When opening a url or click on link
-
+        Utility.freeMemory();
         webView.setWebViewClient(new WebViewClient() {
             ProgressDialog progressDialog;
 

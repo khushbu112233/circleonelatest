@@ -56,6 +56,8 @@ import java.util.Locale;
 
 public class ByAssociationFragment  extends Fragment
 {
+    private boolean netCheck = false;
+
     public ByAssociationFragment() {    }
 
     private ListView listView;
@@ -81,13 +83,13 @@ public class ByAssociationFragment  extends Fragment
     {
         View view = inflater.inflate(R.layout.fragment_connect_list, container, false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
-
+        Utility.freeMemory();
         tvDataInfo = (TextView)view.findViewById(R.id.tvDataInfo);
         searchText = (AutoCompleteTextView)view.findViewById(R.id.searchView);
         listView = (ListView) view.findViewById(R.id.listViewType4);
         imgSearch = (ImageView) view.findViewById(R.id.imgSearch);
         searchText.setHint("Search by association");
-
+        netCheck = Utility.isNetworkAvailable(getActivity());
         rlProgressDialog = (RelativeLayout)view.findViewById(R.id.rlProgressDialog);
         tvProgressing = (TextView)view.findViewById(R.id.txtProgressing);
         ivConnecting1 = (ImageView)view.findViewById(R.id.imgConnecting1) ;
@@ -106,7 +108,7 @@ public class ByAssociationFragment  extends Fragment
             @Override
             public void onClick(View v) {
                 String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
-
+                Utility.freeMemory();
                 String Findby = "name";
                 String Search = "Circle One" ;
                 String rc_no = "10";
@@ -114,8 +116,14 @@ public class ByAssociationFragment  extends Fragment
 
                 listView.setVisibility(View.VISIBLE);
                 connectTags.clear();
-                new HttpAsyncTask().execute(Utility.BASE_URL+"SearchConnect");
+                if (netCheck == false){
+                    Utility.freeMemory();
+                    Toast.makeText(getActivity(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
+                }
+                else {
 
+                    new HttpAsyncTask().execute(Utility.BASE_URL + "SearchConnect");
+                }
             }
         });
 
@@ -123,10 +131,17 @@ public class ByAssociationFragment  extends Fragment
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
-                listView.setVisibility(View.VISIBLE);
-                connectTags.clear();
-                new HttpAsyncTask().execute(Utility.BASE_URL+"SearchConnect");
+                Utility.freeMemory();
+                if (netCheck == false){
+                    Utility.freeMemory();
+                    Toast.makeText(getContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
+                }
+                else {
 
+                    listView.setVisibility(View.VISIBLE);
+                    connectTags.clear();
+                    new HttpAsyncTask().execute(Utility.BASE_URL + "SearchConnect");
+                }
                 return true;
             }
         });
@@ -140,6 +155,7 @@ public class ByAssociationFragment  extends Fragment
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
+                Utility.freeMemory();
                 if(s.length() == 0)
                 {
                     listView.setVisibility(View.GONE);
@@ -179,6 +195,7 @@ public class ByAssociationFragment  extends Fragment
                 intent.putExtra("friendUserID", connectTags.get(position).getUserID());
                 intent.putExtra("ProfileID", profileID);
                 getContext().startActivity(intent);
+                Utility.freeMemory();
             }
         });
 
@@ -222,6 +239,7 @@ public class ByAssociationFragment  extends Fragment
         @Override
         protected void onPostExecute(String result)
         {
+            Utility.freeMemory();
           //  dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();

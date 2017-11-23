@@ -97,7 +97,8 @@
             android:layout_height="wrap_content"
             android:background="@color/colorAccent" >
             <ImageView
-                android:id="@+id/imgBack"
+                android:layout_margin="5dp"
+                android:id="@+id/imgBackCard"
                 android:layout_marginTop="0dp"
                 android:layout_marginLeft="10dp"
                 android:layout_width="35dp"

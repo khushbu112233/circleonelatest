@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 
 import be.appfoundry.nfclibrary.activities.NfcActivity;
 import be.appfoundry.nfclibrary.exceptions.InsufficientCapacityException;
@@ -282,6 +283,7 @@ public class NFCDemo extends NfcActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Utility.freeMemory();
         if (mProgressDialog != null) {
             mProgressDialog.dismiss();
             mProgressDialog = null;

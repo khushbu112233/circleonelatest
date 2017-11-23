@@ -6,6 +6,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -40,6 +42,12 @@ public class Utility
     //public static final String BASE_IMAGE_URL = "http://circle8.asia/App_imgLib/";
     public static final String BASE_URL = "http://circle8.asia:8999/Onet.svc/";
 
+    public static void freeMemory(){
+        System.runFinalization();
+        Runtime.getRuntime().gc();
+        System.gc();
+    }
+
     public static boolean checkStoragePermission(final Context context)
     {
         int currentAPIVersion = Build.VERSION.SDK_INT;
@@ -71,6 +79,14 @@ public class Utility
             return true;
         }
     }
+
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
 
     public static boolean checkSMSPermission(final Context context)
     {

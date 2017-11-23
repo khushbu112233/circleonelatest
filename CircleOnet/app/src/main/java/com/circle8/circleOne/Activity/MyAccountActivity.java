@@ -484,6 +484,13 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+    }
+
+
+    @Override
     protected void onResume()
     {
         super.onResume();
@@ -835,6 +842,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK)
         {
+            Utility.freeMemory();
             if (requestCode == SELECT_FILE)
                 onSelectFromGalleryResult(data);
             else if (requestCode == REQUEST_CAMERA)
@@ -844,11 +852,11 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 Bitmap bitmap;
-
+                Utility.freeMemory();
                 try {
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(result.getUri()));
                     // originalBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
-
+                    Utility.freeMemory();
                     image = ConvertBitmapToString(bitmap);
                     final_ImgBase64 = BitMapToString(bitmap);
                     // final_ImgBase64 = resizeBase64Image(s);
@@ -865,12 +873,14 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                 // ((ImageView) findViewById(R.id.quick_start_cropped_image)).setImageURI(result.getUri());
                 //Toast.makeText(this, "Cropping successful, Sample: " + result.getSampleSize(), Toast.LENGTH_LONG).show();
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Utility.freeMemory();
                 Toast.makeText(this, "Cropping failed: " + result.getError(), Toast.LENGTH_LONG).show();
             }
         }
     }
 
     private void onCaptureImageResult(Intent data) {
+        Utility.freeMemory();
         Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
@@ -882,6 +892,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
 
     private void Upload()
     {
+        Utility.freeMemory();
         try
         {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)

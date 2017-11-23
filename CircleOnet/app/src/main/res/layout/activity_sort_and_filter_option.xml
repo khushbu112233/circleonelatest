@@ -334,6 +334,7 @@
             </LinearLayout>
 
             <RelativeLayout
+                android:id="@+id/rltCircle"
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
@@ -390,6 +391,7 @@
             </com.circle8.circleOne.Utils.ExpandableHeightListView>
 
             <RelativeLayout
+                android:id="@+id/rltProfile"
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"

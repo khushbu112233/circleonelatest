@@ -189,6 +189,7 @@ public class List2Fragment extends Fragment
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
+                Utility.freeMemory();
                /* if(s.length() <= 0)
                 {
                     nfcModel.clear();
@@ -251,6 +252,7 @@ public class List2Fragment extends Fragment
             @Override
             public void onClick(View v)
             {
+                Utility.freeMemory();
                 nfcModel.clear();
                 allTaggs.clear();
                 try
@@ -269,6 +271,7 @@ public class List2Fragment extends Fragment
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
+                Utility.freeMemory();
                 nfcModel.clear();
                 allTaggs.clear();
                 try
@@ -316,6 +319,7 @@ public class List2Fragment extends Fragment
         @Override
         protected void onPostExecute(String result)
         {
+            Utility.freeMemory();
             //  dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
@@ -400,6 +404,7 @@ public class List2Fragment extends Fragment
 
     public static void callFirst()
     {
+        Utility.freeMemory();
         new HttpAsyncTask().execute(Utility.BASE_URL+SortAndFilterOption.CardListApi);
     }
 

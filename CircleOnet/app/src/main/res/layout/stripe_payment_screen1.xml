@@ -186,6 +186,7 @@
                     android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:hint=""
+                    android:maxLength="16"
                     android:inputType="number"
                     android:backgroundTint="@color/colorPrimary"
                     android:textColorHint="@color/colorPrimary"
