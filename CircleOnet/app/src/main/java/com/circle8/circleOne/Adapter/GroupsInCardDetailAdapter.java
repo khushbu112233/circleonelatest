@@ -91,7 +91,8 @@ public class GroupsInCardDetailAdapter extends BaseAdapter
         }
         else
         {
-            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Group/"+img.get(position)).placeholder(R.drawable.usr_1).into(holder.groupImg);
+            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Group/"+img.get(position)).placeholder(R.drawable.usr_1)
+                    .skipMemoryCache().into(holder.groupImg);
         }
 
         return vi;

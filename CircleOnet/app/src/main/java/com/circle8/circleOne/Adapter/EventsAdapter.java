@@ -66,6 +66,7 @@ public class EventsAdapter extends ArrayAdapter
         {
             Utility.freeMemory();
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+            Utility.freeMemory();
             row = inflater.inflate(layoutResourceId, parent, false);
             holder = new ViewHolder();
             holder.txtTitle = (TextView) row.findViewById(R.id.txtEventTitle);
@@ -93,7 +94,8 @@ public class EventsAdapter extends ArrayAdapter
         }
         else
         {
-            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Events/"+eventModelArrayList.get(position).getEvent_Image()).into(holder.image);
+            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Events/"+eventModelArrayList.get(position).getEvent_Image())
+                    .resize(600,272).onlyScaleDown().skipMemoryCache().into(holder.image);
         }
 //        holder.image.setImageResource(image.get(position));
         return row;

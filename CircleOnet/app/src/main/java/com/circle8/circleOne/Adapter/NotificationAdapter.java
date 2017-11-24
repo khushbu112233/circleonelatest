@@ -149,7 +149,6 @@ public class NotificationAdapter extends BaseAdapter
         lnrShare = (LinearLayout) vi.findViewById(R.id.lnrShare);
         lnrNFC = (LinearLayout) vi.findViewById(R.id.lnrNFC);
 
-        posi = position;
         String purpose = testimonialModels.get(position).getPurpose();
 
         if (purpose.equalsIgnoreCase("Recieved Testimonial"))
@@ -166,7 +165,8 @@ public class NotificationAdapter extends BaseAdapter
             }
             else
             {
-                Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgTestRec);
+                Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
+                        .skipMemoryCache().into(holder.imgTestRec);
             }
            /* if (testimonialModels.get(position).getStatus().equalsIgnoreCase("Requested"))
             {
@@ -237,7 +237,8 @@ public class NotificationAdapter extends BaseAdapter
             }
             else
             {
-                Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgFriend);
+                Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
+                        .skipMemoryCache().into(holder.imgFriend);
             }
             holder.btnAcceptFriend.setVisibility(View.VISIBLE);
             holder.btnRejectFriend.setVisibility(View.VISIBLE);
@@ -247,7 +248,12 @@ public class NotificationAdapter extends BaseAdapter
                 holder.btnRejectFriend.setVisibility(View.GONE);
                 holder.txtRequested.setVisibility(View.VISIBLE);
             }*/
-            holder.txtFriendPurpose.setText(purpose);
+            if (purpose.equalsIgnoreCase("Access Right Requested")) {
+                holder.txtFriendPurpose.setText("Do you wish to connect?");
+            }
+            else if (purpose.equalsIgnoreCase("Connection Requested")) {
+                holder.txtFriendPurpose.setText("I would like to connect with you!");
+            }
             holder.txtFriendName.setText(testimonialModels.get(position).getFirstName());
         }
 
@@ -264,7 +270,8 @@ public class NotificationAdapter extends BaseAdapter
             }
             else
             {
-                Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgTestReq);
+                Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
+                        .skipMemoryCache().into(holder.imgTestReq);
             }
 
             /*if (testimonialModels.get(position).getStatus().equals("Requested")){
@@ -290,7 +297,8 @@ public class NotificationAdapter extends BaseAdapter
             }
             else
             {
-                Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgShare);
+                Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
+                        .skipMemoryCache().into(holder.imgShare);
             }
 
             /*if (testimonialModels.get(position).getStatus().equals("Requested")){
@@ -315,7 +323,8 @@ public class NotificationAdapter extends BaseAdapter
             }
             else
             {
-                Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgNfc);
+                Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
+                        .skipMemoryCache().into(holder.imgNfc);
             }
             holder.btnAllowNfc.setVisibility(View.VISIBLE);
             holder.btnNfcCancel.setVisibility(View.VISIBLE);
@@ -365,13 +374,35 @@ public class NotificationAdapter extends BaseAdapter
             }
             else
             {
-                Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgFriend);
+                Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
+                        .skipMemoryCache().into(holder.imgFriend);
             }
             holder.btnAcceptFriend.setVisibility(View.GONE);
             holder.btnRejectFriend.setVisibility(View.GONE);
             holder.txtRequested.setVisibility(View.GONE);
             holder.txtRequested.setText("Accepted");
-            holder.txtFriendPurpose.setText(purpose);
+
+            if (purpose.equalsIgnoreCase("Connection Accepted")) {
+                holder.txtFriendPurpose.setText("We are now connected!");
+            }
+            else if (purpose.equalsIgnoreCase("Connection Rejected")) {
+                holder.txtFriendPurpose.setText("Connection Rejected");
+            }
+            else if (purpose.equalsIgnoreCase("Access Right Accepted")) {
+                holder.txtFriendPurpose.setText("We are now connected!");
+            }
+            else if (purpose.equalsIgnoreCase("Received Testimonial")) {
+                holder.txtFriendPurpose.setText("You have received a testimonial!");
+            }
+            else if (purpose.equalsIgnoreCase("Sent Testimonial Request")) {
+                holder.txtFriendPurpose.setText("Testimonial Request Accepted!");
+            }
+            else if (purpose.equalsIgnoreCase("Received Testimonial Request")) {
+                holder.txtFriendPurpose.setText("I would like to receive a testimonial from you!");
+            }
+            else {
+                holder.txtFriendPurpose.setText(purpose);
+            }
             holder.txtFriendName.setText(testimonialModels.get(position).getFirstName());
         }
         holder.btnTestWrite.setOnClickListener(new View.OnClickListener() {
@@ -384,7 +415,7 @@ public class NotificationAdapter extends BaseAdapter
                 in.putExtra("UserImg", testimonialModels.get(posi).getUserPhoto());
                 in.putExtra("UserName",testimonialModels.get(posi).getFirstName()+" "+testimonialModels.get(posi).getLastName());
                 activity.startActivity(in);*/
-
+                posi = position;
                 final AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
 //                LayoutInflater inflater = activity.getLayoutInflater();
                 final View dialogView = inflater.inflate(R.layout.textimonial_write, null);
@@ -397,6 +428,7 @@ public class NotificationAdapter extends BaseAdapter
                     @Override
                     public void onClick(View v)
                     {
+                        posi = position;
                         final String text = etTextMonial.getText().toString();
                         testimonial = text ;
                         if(testimonial.isEmpty())
@@ -426,6 +458,7 @@ public class NotificationAdapter extends BaseAdapter
         holder.btnNfcCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                posi = position;
                 new HttpAsyncTaskShareCancel().execute(Utility.BASE_URL+"ShareProfile/CancelNotification");
             }
         });
@@ -433,12 +466,14 @@ public class NotificationAdapter extends BaseAdapter
         holder.btnAllowNfc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                posi = position;
                 new HttpAsyncTaskRequestFriend().execute(Utility.BASE_URL+"FriendConnection_Operation");
             }
         });
         holder.btnShareRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                posi = position;
               //  new HttpAsyncTaskAcceptFriend().execute(Utility.BASE_URL+"ShareProfile/Request");
                 Intent intent = new Intent(activity, ConnectActivity.class);
                 intent.putExtra("friendProfileID", testimonialModels.get(position).getShared_ProfileID());
@@ -451,6 +486,7 @@ public class NotificationAdapter extends BaseAdapter
         holder.btnShareCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                posi = position;
                 new HttpAsyncTaskShareCancel().execute(Utility.BASE_URL+"ShareProfile/CancelNotification");
             }
         });
@@ -458,6 +494,7 @@ public class NotificationAdapter extends BaseAdapter
         holder.btnAcceptFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                posi = position;
                 new HttpAsyncTaskAcceptFriend().execute(Utility.BASE_URL+"FriendConnection_Operation");
             }
         });
@@ -465,6 +502,7 @@ public class NotificationAdapter extends BaseAdapter
         holder.btnRejectFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                posi = position;
                 new HttpAsyncTaskRejectFriend().execute(Utility.BASE_URL+"FriendConnection_Operation");
             }
         });
@@ -472,6 +510,7 @@ public class NotificationAdapter extends BaseAdapter
         holder.btnTestAcceptRec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                posi = position;
                 accept = "1";
                 new HttpAsyncTaskAcceptTestimonial().execute(Utility.BASE_URL+"Testimonial/Accept_Reject");
             }
@@ -480,6 +519,7 @@ public class NotificationAdapter extends BaseAdapter
         holder.btnTestRejectRec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                posi = position;
                 accept = "0";
                 new HttpAsyncTaskAcceptTestimonial().execute(Utility.BASE_URL+"Testimonial/Accept_Reject");
             }
@@ -488,6 +528,7 @@ public class NotificationAdapter extends BaseAdapter
         holder.btnTestReject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                posi = position;
                 accept = "0";
                 new HttpAsyncTaskAcceptTestimonial().execute(Utility.BASE_URL+"Testimonial/Accept_Reject");
             }
@@ -496,6 +537,7 @@ public class NotificationAdapter extends BaseAdapter
         holder.imgFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                posi = position;
                 final Dialog dialog = new Dialog(activity);
                 dialog.setContentView(R.layout.imageview_popup);
 
@@ -506,7 +548,8 @@ public class NotificationAdapter extends BaseAdapter
                 }
                 else
                 {
-                    Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/"+testimonialModels.get(position).getUserPhoto()).placeholder(R.drawable.usr_1).into(ivViewImage);
+                    Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/"+testimonialModels.get(position).getUserPhoto()).placeholder(R.drawable.usr_1)
+                            .skipMemoryCache().into(ivViewImage);
                 }
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -531,6 +574,7 @@ public class NotificationAdapter extends BaseAdapter
         holder.imgTestRec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                posi = position;
                 final Dialog dialog = new Dialog(activity);
                 dialog.setContentView(R.layout.imageview_popup);
 
@@ -541,7 +585,8 @@ public class NotificationAdapter extends BaseAdapter
                 }
                 else
                 {
-                    Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/"+testimonialModels.get(position).getUserPhoto()).placeholder(R.drawable.usr_1).into(ivViewImage);
+                    Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/"+testimonialModels.get(position).getUserPhoto()).placeholder(R.drawable.usr_1)
+                            .skipMemoryCache().into(ivViewImage);
                 }
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -565,6 +610,7 @@ public class NotificationAdapter extends BaseAdapter
         holder.imgTestReq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                posi = position;
                 final Dialog dialog = new Dialog(activity);
                 dialog.setContentView(R.layout.imageview_popup);
 
@@ -575,7 +621,8 @@ public class NotificationAdapter extends BaseAdapter
                 }
                 else
                 {
-                    Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/"+testimonialModels.get(position).getUserPhoto()).placeholder(R.drawable.usr_1).into(ivViewImage);
+                    Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/"+testimonialModels.get(position).getUserPhoto()).placeholder(R.drawable.usr_1)
+                            .skipMemoryCache().into(ivViewImage);
                 }
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 

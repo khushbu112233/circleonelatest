@@ -61,6 +61,8 @@ import com.circle8.circleOne.chat.ChatHelper;
 import com.circle8.circleOne.chat.DialogsAdapter;
 import com.circle8.circleOne.chat.DialogsManager;
 import com.circle8.circleOne.chat.qb.QbChatDialogMessageListenerImp;
+import com.circle8.circleOne.chat.qb.QbDialogHolder;
+import com.quickblox.auth.session.QBSessionManager;
 import com.quickblox.chat.QBChatService;
 import com.quickblox.chat.QBIncomingMessagesManager;
 import com.quickblox.chat.QBSystemMessagesManager;
@@ -72,6 +74,9 @@ import com.quickblox.chat.model.QBChatMessage;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.QBResponseException;
 import com.quickblox.sample.core.gcm.GooglePlayServicesHelper;
+import com.quickblox.sample.core.ui.dialog.ProgressDialogFragment;
+import com.quickblox.sample.core.utils.SharedPrefsHelper;
+import com.quickblox.sample.core.utils.Toaster;
 import com.quickblox.sample.core.utils.constant.GcmConsts;
 import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
@@ -172,11 +177,13 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
     private QBUser currentUser;
     String Q_ID = "", CurrentQ_ID = "";
     ImageView imgChat;
+    String CurrentUserEmail = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        Utility.freeMemory();
         setContentView(R.layout.activity_card_detail);
         referralCodeSession = new ReferralCodeSession(getApplicationContext());
         loginSession = new LoginSession(getApplicationContext());
@@ -184,6 +191,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         user_id = user.get(LoginSession.KEY_USERID);
         currentUser_ProfileId = user.get(LoginSession.KEY_PROFILEID);
         CurrentQ_ID = user.get(LoginSession.KEY_QID);
+        CurrentUserEmail = user.get(LoginSession.KEY_EMAIL);
         imgProfileShare = (ImageView) findViewById(R.id.imgProfileShare);
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager1 = (ViewPager) findViewById(R.id.viewPager1);
@@ -379,7 +387,10 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                 }
                 else
                 {
-                    Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+displayProfile).placeholder(R.drawable.usr_1).into(ivViewImage);
+                    Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+displayProfile).skipMemoryCache().placeholder(R.drawable.usr_1)
+                            .resize(500, 500)
+                            .onlyScaleDown()
+                            .into(ivViewImage);
                 }
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -850,6 +861,46 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         imgChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                QBUser currentUser = getUserFromSession();
+                //loginToChat(currentUser);
+                Boolean aBoolean = SharedPrefsHelper.getInstance().hasQbUser();
+                Toast.makeText(getApplicationContext(), aBoolean.toString(), Toast.LENGTH_LONG).show();
+                ChatHelper.getInstance().loginToChat(currentUser, new QBEntityCallback<Void>() {
+                    @Override
+                    public void onSuccess(Void result, Bundle bundle) {
+                        Log.v(TAG, "Chat login onSuccess()");
+
+                       // ProgressDialogFragment.hide(getSupportFragmentManager());
+                    //    DialogsActivity.start(SplashActivity.this);
+                       // finish();
+                    }
+
+                    @Override
+                    public void onError(QBResponseException e) {
+                      //  ProgressDialogFragment.hide(getSupportFragmentManager());
+                        Log.w(TAG, "Chat login onError(): " + e);
+
+                    }
+                });
+
+
+
+
+/*                if (isPrivateDialogExist(selectedUsers)) {
+                    selectedUsers.remove(ChatHelper.getCurrentUser());
+                    QBChatDialog existingPrivateDialog = QbDialogHolder.getInstance().getPrivateDialogWithUser(selectedUsers.get(0));
+                   // isProcessingResultInProgress = false;
+                    ChatActivity.startForResult(CardDetail.this, 165, existingPrivateDialog);
+                } else {
+                  //  ProgressDialogFragment.show(getSupportFragmentManager(), R.string.create_chat);
+                    createDialog(selectedUsers);
+                }
+                */
+
+
+              //  ChatActivity.chatMessageListener = new ChatActivity.ChatMessageListener();
+                Toast.makeText(getApplicationContext(), selectedUsers.toString(), Toast.LENGTH_LONG).show();
                 ChatHelper.getInstance().createDialogWithSelectedUsers(selectedUsers,
                         new QBEntityCallback<QBChatDialog>() {
                             @Override
@@ -908,6 +959,28 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         }
     }
 
+    private void createDialog(final ArrayList<QBUser> selectedUsers) {
+        ChatHelper.getInstance().createDialogWithSelectedUsers(selectedUsers,
+                new QBEntityCallback<QBChatDialog>() {
+                    @Override
+                    public void onSuccess(QBChatDialog dialog, Bundle args) {
+                        //isProcessingResultInProgress = false;
+                        dialogsManager.sendSystemMessageAboutCreatingDialog(systemMessagesManager, dialog);
+                        ChatActivity.startForResult(CardDetail.this, 165, dialog);
+                     //   ProgressDialogFragment.hide(getSupportFragmentManager());
+                    }
+
+                    @Override
+                    public void onError(QBResponseException e) {
+                        //isProcessingResultInProgress = false;
+                        //ProgressDialogFragment.hide(getSupportFragmentManager());
+                        //showErrorSnackbar(R.string.dialogs_creation_error, null, null);
+                    }
+                }
+        );
+    }
+
+
     private class SystemMessagesListener implements QBSystemMessageListener {
         @Override
         public void processMessage(final QBChatMessage qbChatMessage) {
@@ -918,6 +991,19 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         public void processError(QBChatException e, QBChatMessage qbChatMessage) {
 
         }
+    }
+
+    private boolean isPrivateDialogExist(ArrayList<QBUser> allSelectedUsers) {
+        ArrayList<QBUser> selectedUsers = new ArrayList<>();
+        selectedUsers.addAll(allSelectedUsers);
+        selectedUsers.remove(ChatHelper.getCurrentUser());
+        return selectedUsers.size() == 1 && QbDialogHolder.getInstance().hasPrivateDialogWithUser(selectedUsers.get(0));
+    }
+
+    private QBUser getUserFromSession(){
+        QBUser user = SharedPrefsHelper.getInstance().getQbUser();
+        user.setId(QBSessionManager.getInstance().getSessionParameters().getUserId());
+        return user;
     }
 
     private class AllDialogsMessageListener extends QbChatDialogMessageListenerImp {
@@ -1550,9 +1636,9 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                     String Success = jsonObject.getString("Success");
                     String Message = jsonObject.getString("Message");
                     if (Success.equals("1")) {
-                        Toast.makeText(getApplicationContext(), Message, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Member Added into circle Successfully", Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(getApplicationContext(), Message, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Member not added", Toast.LENGTH_LONG).show();
                     }
                     // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
                 } else {
@@ -1845,7 +1931,10 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                         imgProfileCard.setImageResource(R.drawable.usr_white1);
                         displayProfile = "";
                     } else {
-                        Picasso.with(CardDetail.this).load(Utility.BASE_IMAGE_URL+"UserProfile/" + userImg).into(imgProfileCard);
+                        Picasso.with(CardDetail.this).load(Utility.BASE_IMAGE_URL+"UserProfile/" + userImg)
+                                .resize(300, 300)
+                                .onlyScaleDown()
+                                .skipMemoryCache().into(imgProfileCard);
                         displayProfile = userImg;
                     }
 

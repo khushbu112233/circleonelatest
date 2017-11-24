@@ -114,7 +114,7 @@ public class GroupDisplayAdapter extends BaseAdapter
         }
         else
         {
-            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Group/"+groupModelsList.get(position).getGroup_Photo()).placeholder(R.drawable.usr_1).into(holder.imgGroup);
+            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Group/"+groupModelsList.get(position).getGroup_Photo()).skipMemoryCache().placeholder(R.drawable.usr_1).into(holder.imgGroup);
         }
 
         holder.imgGroup.setOnClickListener(new View.OnClickListener() {
@@ -131,7 +131,7 @@ public class GroupDisplayAdapter extends BaseAdapter
                 }
                 else
                 {
-                    Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Group/"+groupModelsList.get(position).getGroup_Photo()).placeholder(R.drawable.usr_1).into(ivViewImage);
+                    Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Group/"+groupModelsList.get(position).getGroup_Photo()).skipMemoryCache().placeholder(R.drawable.usr_1).into(ivViewImage);
                 }
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -184,7 +184,8 @@ public class GroupDisplayAdapter extends BaseAdapter
                 }
                 else
                 {
-                    Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Group/"+grpImg).placeholder(R.drawable.user_2).into(GroupsActivity.ivGroupImage);
+                    Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Group/"+grpImg).placeholder(R.drawable.user_2)
+                            .skipMemoryCache().into(GroupsActivity.ivGroupImage);
                 }
 
                /* Intent in = new Intent(context, UpdateGroupActivity.class);

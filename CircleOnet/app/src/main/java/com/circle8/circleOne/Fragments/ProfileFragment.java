@@ -313,7 +313,8 @@ public class ProfileFragment extends Fragment
                 }
                 else
                 {
-                    Picasso.with(getActivity()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+displayProfile).placeholder(R.drawable.usr_1).into(ivViewImage);
+                    Picasso.with(getActivity()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+displayProfile).placeholder(R.drawable.usr_1)
+                            .skipMemoryCache().into(ivViewImage);
                 }
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -822,7 +823,8 @@ public class ProfileFragment extends Fragment
                                         imgProfile.setImageResource(R.drawable.usr_white1);
                                     }
                                     else {
-                                        Picasso.with(getContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+allTags.get(i).getUserPhoto()).into(imgProfile);
+                                        Picasso.with(getContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+allTags.get(i).getUserPhoto())
+                                                .skipMemoryCache().into(imgProfile);
                                     }
 
                                     if (allTags.get(i).getCard_Front().equalsIgnoreCase("") && allTags.get(i).getCard_Back().equalsIgnoreCase("")) {
@@ -1608,7 +1610,8 @@ public class ProfileFragment extends Fragment
                     }
                     else {
                         try {
-                            Picasso.with(getContext()).load(Utility.BASE_IMAGE_URL + "UserProfile/" + allTags.get(profileIndex).getUserPhoto()).into(imgProfile);
+                            Picasso.with(getContext()).load(Utility.BASE_IMAGE_URL + "UserProfile/" + allTags.get(profileIndex).getUserPhoto())
+                                    .skipMemoryCache().into(imgProfile);
                         }
                         catch (Exception e){}
                     }
@@ -1773,11 +1776,11 @@ public class ProfileFragment extends Fragment
         protected void onPreExecute()
         {
             super.onPreExecute();
-            dialog = new ProgressDialog(getActivity());
-            dialog.setMessage("Fetching Testimonials...");
+          //  dialog = new ProgressDialog(getActivity());
+          //  dialog.setMessage("Fetching Testimonials...");
             //dialog.setTitle("Saving Reminder");
             // dialog.show();
-            dialog.setCancelable(false);
+           // dialog.setCancelable(false);
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
         }

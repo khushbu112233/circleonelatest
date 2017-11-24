@@ -120,7 +120,7 @@ public class EditGroupAdapter extends BaseAdapter
         }
         else
         {
-            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Group/"+groupPhoto.get(position)).into(holder.imgGroup);
+            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Group/"+groupPhoto.get(position)).skipMemoryCache().into(holder.imgGroup);
         }
 
         return row;

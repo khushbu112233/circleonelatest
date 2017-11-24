@@ -122,7 +122,8 @@ public class SearchAdapter extends BaseAdapter
         }
         else
         {
-            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Cards/"+connectLists.get(position).getUserphoto()).into(circleImageView);
+            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Cards/"+connectLists.get(position).getUserphoto())
+                    .skipMemoryCache().into(circleImageView);
         }
 
         return convertView;

@@ -166,7 +166,8 @@ public class TestimonialRequestAdapter extends BaseSwipeAdapter
         }
         else
         {
-            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.circleImageView);
+            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
+                    .skipMemoryCache().into(holder.circleImageView);
         }
         //Picasso.with(context).load("http://circle8.asia/App_ImgLib/Cards/" + nfcModelList1.get(position).getCard_front()).into(holder.image);
 

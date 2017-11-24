@@ -55,7 +55,8 @@ public class CardSwipe extends PagerAdapter
 //            imageView.setImageResource(image.get(position));
            // Bitmap bmp = BitmapFactory.decodeByteArray(image.get(position), 0, image.get(position).length);
             // ImageView image = (ImageView) findViewById(R.id.imageView1);
-            Picasso.with(context).load(image.get(position)).into(imageView);
+            Picasso.with(context).load(image.get(position))
+                    .resize(700, 400).onlyScaleDown().skipMemoryCache().into(imageView);
 //            imageView.setImageResource(image.get(position));
 //            Glide.with(context).load(image[position]).into(imageCover);
 
