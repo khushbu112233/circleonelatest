@@ -176,7 +176,7 @@ public class GroupDetailActivity extends AppCompatActivity
         }
         else
         {
-            Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"Group/"+group_Img).skipMemoryCache().placeholder(R.drawable.usr_1).into(imgProfile);
+            Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"Group/"+group_Img).resize(300,300).onlyScaleDown().skipMemoryCache().placeholder(R.drawable.usr_1).into(imgProfile);
         }
 
         View v = LayoutInflater.from(getApplicationContext()).inflate(R.layout.group_detail_items, null);
@@ -527,7 +527,7 @@ public class GroupDetailActivity extends AppCompatActivity
                 }
                 else
                 {
-                    Picasso.with(GroupDetailActivity.this).load(Utility.BASE_IMAGE_URL+"Group/"+group_Img).skipMemoryCache().placeholder(R.drawable.usr_1).into(ivViewImage);
+                    Picasso.with(GroupDetailActivity.this).load(Utility.BASE_IMAGE_URL+"Group/"+group_Img).resize(300,300).onlyScaleDown().skipMemoryCache().placeholder(R.drawable.usr_1).into(ivViewImage);
                 }
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -895,9 +895,8 @@ public class GroupDetailActivity extends AppCompatActivity
                         }
                         else
                         {
-                            Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"Group/"+GroupImage).skipMemoryCache().placeholder(R.drawable.usr_1).into(imgProfile);
+                            Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"Group/"+GroupImage).resize(300,300).onlyScaleDown().skipMemoryCache().placeholder(R.drawable.usr_1).into(imgProfile);
                         }
-
                     }
                     else
                     {

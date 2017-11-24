@@ -91,7 +91,7 @@ public class SortAndFilterAdapter extends BaseAdapter
         else
         {
             Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Group/"+groupModelsList.get(position).getGroup_Photo())
-                    .skipMemoryCache().placeholder(R.drawable.usr_1).into(holder.groupImg);
+                    .resize(300,300).onlyScaleDown().skipMemoryCache().placeholder(R.drawable.usr_1).into(holder.groupImg);
         }
 
         return vi;

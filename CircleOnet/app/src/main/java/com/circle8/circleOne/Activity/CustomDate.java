@@ -26,8 +26,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class CustomDate extends AppCompatActivity {
-
+public class CustomDate extends AppCompatActivity
+{
     CustomCalendarView calendarView;
     private TextView actionText, dateSelect;
     private ImageView imgDrawer, imgCards, imgConnect, imgEvents, imgProfile, imgLogo;

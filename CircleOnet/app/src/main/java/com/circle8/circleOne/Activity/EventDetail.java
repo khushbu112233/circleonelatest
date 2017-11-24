@@ -374,7 +374,7 @@ public class EventDetail extends AppCompatActivity
                     }
                     else
                     {
-                        Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"Events/"+eventDetail.getString("Event_Image")).skipMemoryCache().into(imgEvent);
+                        Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"Events/"+eventDetail.getString("Event_Image")).resize(400,280).onlyScaleDown().skipMemoryCache().into(imgEvent);
                     }
 
                     tvEventDate.setText(eventDetail.getString("Event_StartDate")

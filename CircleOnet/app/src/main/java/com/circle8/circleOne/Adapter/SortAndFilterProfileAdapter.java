@@ -85,7 +85,7 @@ public class SortAndFilterProfileAdapter extends BaseAdapter
         else
         {
             Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+profileModelArrayList.get(position).getUserPhoto())
-                    .skipMemoryCache().placeholder(R.drawable.usr_1).into(holder.profileImg);
+                    .resize(300,300).onlyScaleDown().skipMemoryCache().placeholder(R.drawable.usr_1).into(holder.profileImg);
         }
 
         return vi;

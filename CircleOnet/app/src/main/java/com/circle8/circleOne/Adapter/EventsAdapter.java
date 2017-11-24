@@ -95,7 +95,7 @@ public class EventsAdapter extends ArrayAdapter
         else
         {
             Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Events/"+eventModelArrayList.get(position).getEvent_Image())
-                    .resize(600,272).onlyScaleDown().skipMemoryCache().into(holder.image);
+                    .resize(400,280).onlyScaleDown().skipMemoryCache().into(holder.image);
         }
 //        holder.image.setImageResource(image.get(position));
         return row;

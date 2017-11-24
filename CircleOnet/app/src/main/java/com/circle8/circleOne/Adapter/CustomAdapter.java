@@ -78,7 +78,8 @@ public class CustomAdapter extends BaseAdapter
         }
         else
         {
-            Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto()).skipMemoryCache().into(holder.circleImageView);
+            Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
+                    .resize(300,300).onlyScaleDown().skipMemoryCache().into(holder.circleImageView);
         }
 
         holder.txtName.setText(testimonialModels.get(position).getFirstName() + " " + testimonialModels.get(position).getLastName());

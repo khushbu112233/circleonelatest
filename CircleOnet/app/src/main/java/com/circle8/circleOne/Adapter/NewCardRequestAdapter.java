@@ -125,7 +125,7 @@ public class NewCardRequestAdapter extends BaseAdapter
             else
             {
                 Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+newCardModelArrayList.get(position).getUserPhoto())
-                        .skipMemoryCache().into(holder.ivProfile);
+                        .resize(300,300).onlyScaleDown().skipMemoryCache().into(holder.ivProfile);
             }
 
             holder.ivProfile.setOnClickListener(new View.OnClickListener() {
@@ -142,7 +142,7 @@ public class NewCardRequestAdapter extends BaseAdapter
                     else
                     {
                         Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+newCardModelArrayList.get(position).getUserPhoto()).placeholder(R.drawable.usr_1)
-                                .skipMemoryCache().into(ivViewImage);
+                                .resize(300,300).onlyScaleDown().skipMemoryCache().into(ivViewImage);
                     }
                     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 

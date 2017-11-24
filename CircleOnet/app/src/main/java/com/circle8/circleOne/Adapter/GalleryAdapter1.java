@@ -140,7 +140,7 @@ public class GalleryAdapter1 extends RecyclerView.Adapter<GalleryAdapter1.MyView
             defaultCard.setVisibility(View.GONE);
             defaultCard1.setVisibility(View.GONE);
             //imageView.setImageResource(nfcModelList.get(position).getCard_front());
-            Picasso.with(mContext).load(Utility.BASE_IMAGE_URL+"Cards/"+nfcModelList.get(position).getCard_back()).skipMemoryCache().into(imageView);
+            Picasso.with(mContext).load(Utility.BASE_IMAGE_URL+"Cards/"+nfcModelList.get(position).getCard_back()).resize(400,280).onlyScaleDown().skipMemoryCache().into(imageView);
 
         }
         defaultCard1.setOnTouchListener(new View.OnTouchListener() {

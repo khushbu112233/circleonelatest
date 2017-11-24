@@ -128,6 +128,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
 //        new HttpAsyncGetProductByCategory().execute(Utility.MERCHANT_BASE_URL+"GetProductsByCategory");           // post
         new HttpAsyncGetBalance().execute(Utility.BASE_URL+"Rewards/GetBalance");                                 // post
         new HttpAsyncGetHistoryEarnedPoints().execute(Utility.BASE_URL+"Rewards/History_EarnedPoints");           // post
+
     }
 
 
@@ -183,6 +184,8 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         });
 
         earnListView = (ListView)RewardView.findViewById(R.id.listView_Earn);
+
+
     }
 
     private void init1()
@@ -459,7 +462,6 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                             JSONArray jsonArray1 = productListObj.getJSONArray("MerchantByCat");
                             if (jsonArray1.length() != 0)
                             {
-                                tvProductListInfo.setVisibility(View.GONE);
 //                                expListView.setGroupIndicator(getResources().getDrawable(R.drawable.group_indicator));
 
                                 int n = jsonArray1.length();
@@ -508,26 +510,13 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                             }
                             else if (jsonArray1.length() == 0)
                             {
-                                String[] child_Data = new String[1];
-                                child_Data[0] = "no sub products avail" ;
-                                for (String parent : groupList)
-                                {
-                                    if (parent.equalsIgnoreCase(ProductCategoryName))
-                                    {
-                                        loadChild(child_Data);
-                                    }
-                                    laptopCollection.put(parent, childList);
-                                }
 //                                expListView.setGroupIndicator(getResources().getDrawable(R.drawable.group_indicator));
-                                expListAdapter = new ExpandableListAdapter1(RewardsPointsActivity.this, groupList, laptopCollection);
-                                expListView.setAdapter(expListAdapter);
                             }
                         }
                     }
                     else
                     {
-                        tvProductListInfo.setVisibility(View.VISIBLE);
-//                        Toast.makeText(getApplicationContext(), "No ProductCategory_List Avail", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "No ProductCategory_List Avail", Toast.LENGTH_LONG).show();
                     }
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
                 }
@@ -1074,8 +1063,9 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                     String message = jsonObject.getString("message");
                     String userid = jsonObject.getString("userid");
 
+                    try
+                    {
                     JSONArray jsonArray = jsonObject.getJSONArray("EarnedPoints_Trans");
-
                     if (jsonArray.length() != 0)
                     {
                         for (int i = 0 ; i < jsonArray.length(); i++)
@@ -1110,10 +1100,17 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                         tvEarnListInfo.setVisibility(View.VISIBLE);
 //                        Toast.makeText(getApplicationContext(), "No EarnPoints Avail", Toast.LENGTH_LONG).show();
                     }
+                    }
+                    catch (JSONException e)
+                    {
+                        e.printStackTrace();
+                        tvEarnListInfo.setVisibility(View.VISIBLE);
+                    }
                 }
                 else
                 {
-                    // Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+//                    tvEarnListInfo.setVisibility(View.VISIBLE);
+//                     Toast.makeText(getApplicationContext(), "Not able to load ..", Toast.LENGTH_LONG).show();
                 }
             }
             catch (JSONException e) {
@@ -1264,7 +1261,8 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                     }
                     else
                     {
-                        Toast.makeText(getApplicationContext(), "No Redeem Points Avail", Toast.LENGTH_LONG).show();
+                        tvHistoryListInfo.setVisibility(View.VISIBLE);
+//                        Toast.makeText(getApplicationContext(), "No Redeem Points Avail", Toast.LENGTH_LONG).show();
                     }
                 }
                 else
