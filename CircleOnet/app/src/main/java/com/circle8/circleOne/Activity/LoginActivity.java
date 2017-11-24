@@ -84,7 +84,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.internal.fa;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
@@ -1094,7 +1093,7 @@ public class LoginActivity extends AppCompatActivity implements
                         String Status = jsonArray.getString("Status");
                         String Gender = jsonArray.getString("Gender");
                         String Phone = jsonArray.getString("Phone");
-                        String UserName = jsonArray.getString("UserName");
+                        final String UserName = jsonArray.getString("UserName");
                         String dob = jsonArray.getString("dob");
                         String Connection_Limit = jsonArray.getString("Connection_Limit");
                         String Connection_Left = jsonArray.getString("Connection_Left");
@@ -1129,7 +1128,64 @@ public class LoginActivity extends AppCompatActivity implements
 
                                         @Override
                                         public void onError(QBResponseException errors) {
-                                            Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
+                                           // Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
+                                            QBUser qbUser = new QBUser(UserName, "circle@123");
+                                            QBUsers.signIn(qbUser).performAsync(new QBEntityCallback<QBUser>() {
+                                                @Override
+                                                public void onSuccess(final QBUser qbUser, Bundle bundle) {
+                                                    // progressDialog.dismiss();
+                                                    Toaster.longToast("success");
+                                                    Q_ID = String.valueOf(qbUser.getId());
+                                                    new HttpAsyncTaskUpdateQ_ID().execute(Utility.BASE_URL+"User/Update_QID");
+
+                                                    // setResult(RESULT_OK);
+                                                    // SharedPrefsHelper.getInstance().saveQbUser(qbUser);
+                                                    Toast.makeText(getApplicationContext(), "fgbgfb", Toast.LENGTH_LONG).show();
+                                                    qbUser.setPassword("circle@123");
+                                                    ChatHelper.getInstance().login(qbUser, new QBEntityCallback<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void result, Bundle bundle) {
+                                                            SharedPrefsHelper.getInstance().saveQbUser(qbUser);
+                                                            Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
+                                                            // DialogsActivity.start(LoginActivity.this);
+                                                            // finish();
+
+                                                            //ProgressDialogFragment.hide(getSupportFragmentManager());
+                                                        }
+
+                                                        @Override
+                                                        public void onError(QBResponseException e) {
+                                                            ProgressDialogFragment.hide(getSupportFragmentManager());
+                                                            Toast.makeText(getApplicationContext(), "not done", Toast.LENGTH_LONG).show();
+
+                                    /*ErrorUtils.showSnackbar(userListView, R.string.login_chat_login_error, e,
+                                            R.string.dlg_retry, new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    login(user);
+                                                }
+                                            });*/
+                                                        }
+                                                    });
+
+                                                    // DataHolder.getInstance().setSignInQbUser(qbUser);
+                                                    // Toaster.longToast(R.string.user_successfully_sign_in);
+
+                                                    //finish();
+                                                }
+
+                                                @Override
+                                                public void onError(QBResponseException errors) {
+//                                    progressDialog.dismiss();
+                                                    Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
+                                    /*showSnackbarError(rootLayout, R.string.errors, errors, new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            signIn();
+                                        }
+                                    });*/
+                                                }
+                                            });
                                         }
                                     });
                                 }catch (Exception e) {
@@ -2161,7 +2217,7 @@ public class LoginActivity extends AppCompatActivity implements
                         String Status = jsonArray.getString("Status");
                         String Gender = jsonArray.getString("Gender");
                         String Phone = jsonArray.getString("Phone");
-                        String UserName = jsonArray.getString("UserName");
+                        final String UserName = jsonArray.getString("UserName");
                         String dob = jsonArray.getString("dob");
                         String Connection_Limit = jsonArray.getString("Connection_Limit");
                         String Connection_Left = jsonArray.getString("Connection_Left");
@@ -2192,7 +2248,64 @@ public class LoginActivity extends AppCompatActivity implements
 
                                         @Override
                                         public void onError(QBResponseException errors) {
-                                            Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
+                                            //Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
+                                            QBUser qbUser = new QBUser(UserName, "circle@123");
+                                            QBUsers.signIn(qbUser).performAsync(new QBEntityCallback<QBUser>() {
+                                                @Override
+                                                public void onSuccess(final QBUser qbUser, Bundle bundle) {
+                                                    // progressDialog.dismiss();
+                                                    Toaster.longToast("success");
+                                                    Q_ID = String.valueOf(qbUser.getId());
+                                                    new HttpAsyncTaskUpdateQ_ID().execute(Utility.BASE_URL+"User/Update_QID");
+
+                                                    // setResult(RESULT_OK);
+                                                    // SharedPrefsHelper.getInstance().saveQbUser(qbUser);
+                                                    Toast.makeText(getApplicationContext(), "fgbgfb", Toast.LENGTH_LONG).show();
+                                                    qbUser.setPassword("circle@123");
+                                                    ChatHelper.getInstance().login(qbUser, new QBEntityCallback<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void result, Bundle bundle) {
+                                                            SharedPrefsHelper.getInstance().saveQbUser(qbUser);
+                                                            Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
+                                                            // DialogsActivity.start(LoginActivity.this);
+                                                            // finish();
+
+                                                            //ProgressDialogFragment.hide(getSupportFragmentManager());
+                                                        }
+
+                                                        @Override
+                                                        public void onError(QBResponseException e) {
+                                                            ProgressDialogFragment.hide(getSupportFragmentManager());
+                                                            Toast.makeText(getApplicationContext(), "not done", Toast.LENGTH_LONG).show();
+
+                                    /*ErrorUtils.showSnackbar(userListView, R.string.login_chat_login_error, e,
+                                            R.string.dlg_retry, new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    login(user);
+                                                }
+                                            });*/
+                                                        }
+                                                    });
+
+                                                    // DataHolder.getInstance().setSignInQbUser(qbUser);
+                                                    // Toaster.longToast(R.string.user_successfully_sign_in);
+
+                                                    //finish();
+                                                }
+
+                                                @Override
+                                                public void onError(QBResponseException errors) {
+//                                    progressDialog.dismiss();
+                                                    Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
+                                    /*showSnackbarError(rootLayout, R.string.errors, errors, new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            signIn();
+                                        }
+                                    });*/
+                                                }
+                                            });
                                         }
                                     });
                                 }catch (Exception e) {

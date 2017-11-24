@@ -3653,7 +3653,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                     if (UserPhoto.equals("")) {
                         imgProfile.setImageResource(R.drawable.usr_white1);
                     } else {
-                        Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/" + UserPhoto).into(imgProfile);
+                        Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/" + UserPhoto).skipMemoryCache().into(imgProfile);
                     }
 
                     image = new ArrayList<>();

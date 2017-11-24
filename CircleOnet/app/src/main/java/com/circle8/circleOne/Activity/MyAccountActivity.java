@@ -305,7 +305,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             }
             else
             {
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+user_Photo).placeholder(R.drawable.usr_1).into(imgProfile);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+user_Photo).skipMemoryCache().placeholder(R.drawable.usr_1).into(imgProfile);
             }
         }
         catch (Exception e)

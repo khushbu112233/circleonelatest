@@ -198,7 +198,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
             imgProfile.setImageResource(R.drawable.usr_white1);
         }
         else {
-            Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+image).into(imgProfile);
+            Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+image).skipMemoryCache().into(imgProfile);
         }
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override

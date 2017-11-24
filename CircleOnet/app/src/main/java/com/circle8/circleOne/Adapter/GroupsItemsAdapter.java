@@ -145,7 +145,8 @@ public class GroupsItemsAdapter extends BaseAdapter
             }
             else
             {
-                Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Group/"+groupModelsList.get(position).getGroup_Photo()).placeholder(R.drawable.usr_1).into(holder.imgGroup);
+                Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Group/"+groupModelsList.get(position).getGroup_Photo())
+                        .skipMemoryCache().placeholder(R.drawable.usr_1).into(holder.imgGroup);
             }
 
             /*tvPersonName1.setText(groupModelsList.get(position).getFirstName1()+" "+groupModelsList.get(position).getLastName1());
@@ -192,7 +193,8 @@ public class GroupsItemsAdapter extends BaseAdapter
                     }
                     else
                     {
-                        Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/" + groupModelsList.get(position).getUserPhoto1()).into(holder.imgProfile1);
+                        Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/" + groupModelsList.get(position).getUserPhoto1())
+                                .skipMemoryCache().into(holder.imgProfile1);
                     }
                     holder.tvPersonName1.setText(groupModelsList.get(position).getFirstName1()+" "+groupModelsList.get(position).getLastName1());
                     holder.tvDesignation1.setText(groupModelsList.get(position).getDesignation1());
@@ -216,7 +218,8 @@ public class GroupsItemsAdapter extends BaseAdapter
                     }
                     else
                     {
-                        Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/" + groupModelsList.get(position).getUserPhoto2()).into(holder.imgProfile2);
+                        Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/" + groupModelsList.get(position).getUserPhoto2())
+                                .skipMemoryCache().into(holder.imgProfile2);
                     }
                     holder.tvPersonName2.setText(groupModelsList.get(position).getFirstName2()+" "+groupModelsList.get(position).getLastName2());
                     holder.tvDesignation2.setText(groupModelsList.get(position).getDesignation2());
@@ -240,7 +243,8 @@ public class GroupsItemsAdapter extends BaseAdapter
                     }
                     else
                     {
-                        Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/" + groupModelsList.get(position).getUserPhoto3()).into(holder.imgProfile3);
+                        Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/" + groupModelsList.get(position).getUserPhoto3())
+                                .skipMemoryCache().into(holder.imgProfile3);
                     }
                     holder.tvPersonName3.setText(groupModelsList.get(position).getFirstName3()+" "+groupModelsList.get(position).getLastName3());
                     holder.tvDesignation3.setText(groupModelsList.get(position).getDesignation3());
@@ -267,7 +271,8 @@ public class GroupsItemsAdapter extends BaseAdapter
                     }
                     else
                     {
-                        Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/" + groupModelsList.get(position).getUserPhoto1()).into(holder.imgProfile1);
+                        Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/" + groupModelsList.get(position).getUserPhoto1())
+                                .skipMemoryCache().into(holder.imgProfile1);
                     }
                     holder.tvPersonName1.setText(groupModelsList.get(position).getFirstName1()+" "+groupModelsList.get(position).getLastName1());
                     holder.tvDesignation1.setText(groupModelsList.get(position).getDesignation1());
@@ -291,7 +296,8 @@ public class GroupsItemsAdapter extends BaseAdapter
                     }
                     else
                     {
-                        Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/" + groupModelsList.get(position).getUserPhoto2()).into(holder.imgProfile2);
+                        Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/" + groupModelsList.get(position).getUserPhoto2())
+                                .skipMemoryCache().into(holder.imgProfile2);
                     }
                     holder.tvPersonName2.setText(groupModelsList.get(position).getFirstName2()+" "+groupModelsList.get(position).getLastName2());
                     holder.tvDesignation2.setText(groupModelsList.get(position).getDesignation2());
@@ -320,7 +326,8 @@ public class GroupsItemsAdapter extends BaseAdapter
                     }
                     else
                     {
-                        Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/" + groupModelsList.get(position).getUserPhoto1()).into(holder.imgProfile1);
+                        Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/" + groupModelsList.get(position).getUserPhoto1())
+                                .skipMemoryCache().into(holder.imgProfile1);
                     }
                     holder.tvPersonName1.setText(groupModelsList.get(position).getFirstName1()+" "+groupModelsList.get(position).getLastName1());
                     holder.tvDesignation1.setText(groupModelsList.get(position).getDesignation1());

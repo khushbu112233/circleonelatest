@@ -191,7 +191,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
         }
         else
         {
-            Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/" + image).into(imgProfile);
+            Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/" + image).skipMemoryCache().into(imgProfile);
         }
         tvPerson.setText(i.getStringExtra("person"));
         tvDesignation.setText(i.getStringExtra("designation"));
@@ -314,7 +314,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                                 } else if (exMonthOnCard.isEmpty()) {
                                     Toast.makeText(NewCardRequestActivity1.this, "Enter Expiry Month", Toast.LENGTH_SHORT).show();
                                 } else if (exYearOnCard.isEmpty()) {
-                                    Toast.makeText(NewCardRequestActivity1.this, "Enter Expiry Month", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(NewCardRequestActivity1.this, "Enter Expiry Year", Toast.LENGTH_SHORT).show();
                                 } else if (cvvOnCard.isEmpty()) {
                                     Toast.makeText(NewCardRequestActivity1.this, "Enter CVV No.", Toast.LENGTH_SHORT).show();
                                 } else if (mobileNoOnCard.isEmpty()) {
@@ -932,6 +932,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
 
             public void onError(Exception error) {
                 Log.d("Stripe", error.getLocalizedMessage());
+                Toast.makeText(getApplicationContext(), error.getLocalizedMessage().toString(), Toast.LENGTH_LONG).show();
             }
         });
     }

@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "F:\\Kajol\\CircleOne\\CircleOnet\\sample-core\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-v21\\values-v21.xml",
+        "outputFile": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-v21\\values-v21.xml",
         "map": [
             {
                 "to": {
@@ -88,14 +88,14 @@
                     "endOffset": 821
                 },
                 "from": {
-                    "file": "F:\\Kajol\\CircleOne\\CircleOnet\\sample-core\\src\\main\\res\\values-v21\\themes.xml",
+                    "file": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\src\\main\\res\\values-v21\\themes.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
-                        "startOffset": 56,
+                        "startOffset": 59,
                         "endLine": 9,
                         "endColumn": 12,
-                        "endOffset": 523
+                        "endOffset": 532
                     }
                 }
             },

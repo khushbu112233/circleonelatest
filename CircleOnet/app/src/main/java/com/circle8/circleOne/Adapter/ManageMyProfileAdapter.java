@@ -83,7 +83,8 @@ public class ManageMyProfileAdapter extends BaseAdapter
             }
             else
             {
-                Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+newCardModelArrayList.get(position).getUserPhoto()).into(ivProfile);
+                Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+newCardModelArrayList.get(position).getUserPhoto())
+                        .skipMemoryCache().into(ivProfile);
             }
 
         }

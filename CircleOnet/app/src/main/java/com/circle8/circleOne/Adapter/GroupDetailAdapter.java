@@ -255,7 +255,7 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
         }
         else
         {
-            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+groupDetailModelArrayList.get(position).getImgProfile()).placeholder(R.drawable.usr_1).into(holder.personImage);
+            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+groupDetailModelArrayList.get(position).getImgProfile()).placeholder(R.drawable.usr_1).skipMemoryCache().into(holder.personImage);
         }
 
         holder.personImage.setOnClickListener(new View.OnClickListener() {
@@ -272,7 +272,7 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
                 }
                 else
                 {
-                    Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+groupDetailModelArrayList.get(position).getImgProfile()).placeholder(R.drawable.usr_1).into(ivViewImage);
+                    Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+groupDetailModelArrayList.get(position).getImgProfile()).placeholder(R.drawable.usr_1).skipMemoryCache().into(ivViewImage);
                 }
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 

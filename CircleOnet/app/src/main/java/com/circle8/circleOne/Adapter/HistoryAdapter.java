@@ -87,7 +87,8 @@ public class HistoryAdapter extends BaseAdapter
         }
         else
         {
-            Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/"+historyModelArrayList.get(position).getUserPhoto()).into(holder.imgProfile);
+            Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/"+historyModelArrayList.get(position).getUserPhoto())
+                    .skipMemoryCache().into(holder.imgProfile);
         }
 
         return row;

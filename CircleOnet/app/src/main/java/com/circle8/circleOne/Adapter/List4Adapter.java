@@ -301,7 +301,8 @@ public class List4Adapter extends BaseSwipeAdapter
             }
             else
             {
-                Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+nfcModelList1.get(position).getUser_image()).into(holder.image);
+                Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+nfcModelList1.get(position).getUser_image())
+                        .skipMemoryCache().into(holder.image);
             }
         }
         catch (Exception e)
