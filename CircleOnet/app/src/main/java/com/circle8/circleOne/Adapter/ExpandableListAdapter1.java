@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.circle8.circleOne.R;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +24,7 @@ public class ExpandableListAdapter1 extends BaseExpandableListAdapter
 {
     private Activity context;
     private Map<String, List<String>> laptopCollections;
-    private List<String> laptops;
+    private List<String> laptops = new ArrayList<>();
 
     public ExpandableListAdapter1(Activity context, List<String> laptops,
                                   Map<String, List<String>> laptopCollections) {
@@ -32,7 +33,8 @@ public class ExpandableListAdapter1 extends BaseExpandableListAdapter
         this.laptops = laptops;
     }
 
-    public Object getChild(int groupPosition, int childPosition) {
+    public Object getChild(int groupPosition, int childPosition)
+    {
         return laptopCollections.get(laptops.get(groupPosition)).get(childPosition);
     }
 
@@ -87,7 +89,14 @@ public class ExpandableListAdapter1 extends BaseExpandableListAdapter
 
     public int getChildrenCount(int groupPosition)
     {
-        try
+        List childList = laptopCollections.get(laptops.get(groupPosition)) ;
+        if (childList != null && !childList.isEmpty())
+        {
+            return childList.size();
+        }
+
+        return 1 ;
+      /*  try
         {
             if (laptopCollections.get(laptops.get(groupPosition)).size() != 0)
             {
@@ -99,7 +108,7 @@ public class ExpandableListAdapter1 extends BaseExpandableListAdapter
             e.printStackTrace();
         }
 
-        return 0;
+        return 0;*/
     }
 
     public Object getGroup(int groupPosition) {

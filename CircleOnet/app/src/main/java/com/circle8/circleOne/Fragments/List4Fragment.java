@@ -712,7 +712,6 @@ public class List4Fragment extends Fragment
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
-
                 jsonObject.accumulate("Type", SortAndFilterOption.SortType);
                 jsonObject.accumulate("numofrecords", "10");
                 jsonObject.accumulate("pageno", pageno);

@@ -3,6 +3,8 @@ package com.circle8.circleOne.Fragments;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,7 +29,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.Activity.EventDetail;
+import com.circle8.circleOne.Activity.EventsSelectOption;
 import com.circle8.circleOne.Adapter.EventsAdapter;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.EventModel;
@@ -44,9 +48,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -58,7 +65,7 @@ public class EventsFragment extends Fragment
     public static Context mContext ;
 
     private static ListView listView;
-    private static EventsAdapter gridAdapter;
+    public static EventsAdapter gridAdapter;
     private TextView actionText;
     RelativeLayout lnrSearch;
     View line;
@@ -71,11 +78,15 @@ public class EventsFragment extends Fragment
 
     static TextView tvEventInfo ;
 
-    private static ArrayList<EventModel> eventModelArrayList = new ArrayList<>();
+    public static ArrayList<EventModel> eventModelArrayList = new ArrayList<>();
 
     private static RelativeLayout rlProgressDialog ;
     private static TextView tvProgressing ;
     private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+
+    public static String eventSearchBy = "", eventSearchKey = "";
+    public static Bitmap bitmapImg ;
+    public static String imageUrl = "";
 
     public EventsFragment() {
         // Required empty public constructor
@@ -88,6 +99,8 @@ public class EventsFragment extends Fragment
       //  ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         View view = inflater.inflate(R.layout.fragment_events, container, false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
+
+        CardsActivity.setActionBarTitle("Events");
 
         mContext = EventsFragment.this.getContext() ;
 
@@ -104,11 +117,53 @@ public class EventsFragment extends Fragment
         ivConnecting2 = (ImageView)view.findViewById(R.id.imgConnecting2) ;
         ivConnecting3 = (ImageView)view.findViewById(R.id.imgConnecting3) ;
 
-        callFirst();
-
         lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
         line = view.findViewById(R.id.view);
         listView = (ListView)view.findViewById(R.id.listEvents);
+
+        searchText.setText(EventsSelectOption.searchKeyWord);
+
+        callFirst();
+
+       /* try
+        {
+            Intent eGet = getActivity().getIntent();
+            String eventFilterOpt = eGet.getStringExtra("EventSearch");
+            String eventSearchKeyOpt = eGet.getStringExtra("SearchText");
+
+            if (eventFilterOpt.equals("AllEvents"))
+            {
+                Toast.makeText(getActivity(),"All Events",Toast.LENGTH_SHORT).show();
+                eventModelArrayList.clear();
+                try {gridAdapter.notifyDataSetChanged();}
+                catch (Exception e){ e.printStackTrace(); }
+                callFirst();
+            }
+            else if (eventFilterOpt.equals("CompanyAssociation"))
+            {
+                eventSearchBy = "Company";
+                eventSearchKey = eventSearchKeyOpt ;
+                Toast.makeText(getActivity(),"Company & Association",Toast.LENGTH_SHORT).show();
+                eventModelArrayList.clear();
+                try {gridAdapter.notifyDataSetChanged();}
+                catch (Exception e){ e.printStackTrace(); }
+                new HttpAsyncTaskSearchEvent().execute(Utility.BASE_URL+"Events/Search");
+            }
+            else if (eventFilterOpt.equals("Industry"))
+            {
+                eventSearchBy = "Industry";
+                eventSearchKey = eventSearchKeyOpt ;
+                Toast.makeText(getActivity(),"Industry",Toast.LENGTH_SHORT).show();
+                eventModelArrayList.clear();
+                try {gridAdapter.notifyDataSetChanged();}
+                catch (Exception e){ e.printStackTrace(); }
+                new HttpAsyncTaskSearchEvent().execute(Utility.BASE_URL+"Events/Search");
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }*/
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -133,6 +188,7 @@ public class EventsFragment extends Fragment
                 {
                     if (s.length() <= 0)
                     {
+                        EventsSelectOption.searchOpt = "ClearSearch";
                         eventModelArrayList.clear();
                         try
                         {
@@ -173,8 +229,10 @@ public class EventsFragment extends Fragment
                 {
                     e.printStackTrace();
                 }
-
+                eventSearchBy = "Name";
+                eventSearchKey = searchText.getText().toString();
                 new HttpAsyncTaskSearchEvent().execute(Utility.BASE_URL+"Events/Search");
+//                searchEvent();
             }
         });
 
@@ -192,7 +250,10 @@ public class EventsFragment extends Fragment
                 {
                     e.printStackTrace();
                 }
+                eventSearchBy = "Name";
+                eventSearchKey = searchText.getText().toString();
                 new HttpAsyncTaskSearchEvent().execute(Utility.BASE_URL+"Events/Search");
+//                searchEvent();
 
                 return true;
             }
@@ -202,9 +263,43 @@ public class EventsFragment extends Fragment
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        CardsActivity.setActionBarTitle("Events");
+    }
+
     public static void callFirst()
     {
         new HttpAsyncTask().execute(Utility.BASE_URL+"Events/List");
+    }
+
+    public static void callSecond()
+    {
+        eventModelArrayList.clear();
+        try
+        {
+            gridAdapter.notifyDataSetChanged();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        new HttpAsyncTask().execute(Utility.BASE_URL+"Events/List");
+    }
+
+    public static void searchEvent()
+    {
+        eventModelArrayList.clear();
+        try
+        {
+            gridAdapter.notifyDataSetChanged();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        new HttpAsyncTaskSearchEvent().execute(Utility.BASE_URL+"Events/Search");
     }
 
     GestureDetector.SimpleOnGestureListener simpleOnGestureListener
@@ -277,7 +372,6 @@ public class EventsFragment extends Fragment
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
-
             try
             {
                 if(result == "")
@@ -286,6 +380,8 @@ public class EventsFragment extends Fragment
                 }
                 else
                 {
+                    eventModelArrayList.clear();
+
                     JSONObject response = new JSONObject(result);
                     String message = response.getString("message");
                     String success = response.getString("success");
@@ -325,8 +421,10 @@ public class EventsFragment extends Fragment
                             eventModel.setAddress2(eList.getString("Address2"));
                             eventModel.setAddress3(eList.getString("Address3"));
                             eventModel.setAddress4(eList.getString("Address4"));
-                            eventModelArrayList.add(eventModel);
 
+                            imageUrl = Utility.BASE_IMAGE_URL+"Events/"+eList.getString("Event_Image");
+
+                            eventModelArrayList.add(eventModel);
                             gridAdapter = new EventsAdapter(mContext, R.layout.row_events, eventModelArrayList);
                             listView.setAdapter(gridAdapter);
                         }
@@ -337,6 +435,29 @@ public class EventsFragment extends Fragment
             {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public class MyAsync extends AsyncTask<Void, Void, Bitmap>{
+
+        @Override
+        protected Bitmap doInBackground(Void... params)
+        {
+
+            try
+            {
+                URL url = new URL("");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+                InputStream input = connection.getInputStream();
+                Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                return myBitmap;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+
         }
     }
 
@@ -355,9 +476,18 @@ public class EventsFragment extends Fragment
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("my_userid", "" );
-            jsonObject.accumulate("numofrecords", "10");
-            jsonObject.accumulate("pageno", "1" );
+            if (EventsSelectOption.searchOpt.equals("AllEvents"))
+            {
+                jsonObject.accumulate("my_userid", "" );
+                jsonObject.accumulate("numofrecords", "10");
+                jsonObject.accumulate("pageno", "1" );
+            }
+            if (EventsSelectOption.searchOpt.equals("ClearSearch"))
+            {
+                jsonObject.accumulate("my_userid", "" );
+                jsonObject.accumulate("numofrecords", "10");
+                jsonObject.accumulate("pageno", "1" );
+            }
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -519,10 +649,35 @@ public class EventsFragment extends Fragment
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("SearchBy", "name" );
-            jsonObject.accumulate("SearchValue", searchText.getText().toString());
-            jsonObject.accumulate("numofrecords", "10");
-            jsonObject.accumulate("pageno", "1" );
+
+            if (EventsSelectOption.searchOpt.equals("Industry"))
+            {
+                jsonObject.accumulate("SearchBy", EventsSelectOption.searchBy );
+                jsonObject.accumulate("SearchValue", EventsSelectOption.searchKeyWord );
+                jsonObject.accumulate("numofrecords", "10");
+                jsonObject.accumulate("pageno", "1" );
+            }
+            else if (EventsSelectOption.searchOpt.equals("CompanyAssociation"))
+            {
+                jsonObject.accumulate("SearchBy", EventsSelectOption.searchBy );
+                jsonObject.accumulate("SearchValue", EventsSelectOption.searchKeyWord );
+                jsonObject.accumulate("numofrecords", "10");
+                jsonObject.accumulate("pageno", "1" );
+            }
+            else if (EventsSelectOption.searchOpt.equals("Date"))
+            {
+                jsonObject.accumulate("SearchBy", EventsSelectOption.searchBy );
+                jsonObject.accumulate("SearchValue", EventsSelectOption.searchKeyWord );
+                jsonObject.accumulate("numofrecords", "10");
+                jsonObject.accumulate("pageno", "1" );
+            }
+            else
+            {
+                jsonObject.accumulate("SearchBy", eventSearchBy );
+                jsonObject.accumulate("SearchValue", eventSearchKey );
+                jsonObject.accumulate("numofrecords", "10");
+                jsonObject.accumulate("pageno", "1" );
+            }
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();

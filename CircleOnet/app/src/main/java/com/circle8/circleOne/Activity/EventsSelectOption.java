@@ -6,21 +6,33 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.circle8.circleOne.Fragments.EventsFragment;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
 
-public class EventsSelectOption extends AppCompatActivity {
+public class EventsSelectOption extends AppCompatActivity
+{
 
     private TextView actionText;
     private ImageView imgDrawer, imgCards, imgConnect, imgEvents, imgProfile;
     LinearLayout lnrDate;
 
+    AutoCompleteTextView searchText ;
+
+    public static String searchKeyWord = "";
+    public static String searchBy = "";
+    public static String searchOpt = "AllEvents";
+    public static String eventOpt = "AllEvents";
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events_select_option);
         Utility.freeMemory();
@@ -36,12 +48,17 @@ public class EventsSelectOption extends AppCompatActivity {
         imgEvents = (ImageView) findViewById(R.id.imgEvents);
         imgProfile = (ImageView) findViewById(R.id.imgProfile);
         lnrDate = (LinearLayout) findViewById(R.id.lnrDate);
+        searchText = (AutoCompleteTextView)findViewById(R.id.searchView);
 
         actionText.setText("Events");
 
         lnrDate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
+                searchOpt = "Date";
+                searchBy = "Date" ;
+
                 Intent go = new Intent(getApplicationContext(),CustomDate.class);
 
                 // you pass the position you want the viewpager to show in the extra,
@@ -141,6 +158,70 @@ public class EventsSelectOption extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Utility.freeMemory();
+    }
+
+    public void allEvents(View v)
+    {
+        CardsActivity.setActionBarTitle("Events");
+        searchOpt = "AllEvents";
+        searchKeyWord = "";
+        Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+        userIntent.putExtra("viewpager_position", 2);
+        startActivity(userIntent);
+        finish();
+        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+        EventsFragment.callSecond();
+    }
+
+    public void byCompanyAssociation(View v)
+    {
+        if (searchText.getText().toString().isEmpty())
+        {
+            Toast.makeText(getApplicationContext(),"Please, Type some keyword related to search.",Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            CardsActivity.setActionBarTitle("Events");
+
+            searchOpt = "CompanyAssociation";
+
+            searchKeyWord = searchText.getText().toString() ;
+            searchBy = "Company";
+
+            Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+            userIntent.putExtra("viewpager_position", 2);
+            startActivity(userIntent);
+            finish();
+            overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+
+            EventsFragment.searchEvent();
+        }
+
+    }
+
+    public void byIndustry(View v)
+    {
+        if (searchText.getText().toString().isEmpty())
+        {
+            Toast.makeText(getApplicationContext(),"Please, Type some keyword related to search.",Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            CardsActivity.setActionBarTitle("Events");
+
+            searchOpt = "Industry";
+
+            searchKeyWord = searchText.getText().toString() ;
+            searchBy = "Industry";
+
+            Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+            userIntent.putExtra("viewpager_position", 2);
+            startActivity(userIntent);
+            finish();
+            overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+
+            EventsFragment.searchEvent();
+        }
     }
 
 }

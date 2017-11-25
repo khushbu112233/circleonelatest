@@ -1,5 +1,7 @@
 package com.circle8.circleOne.Model;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by ample-arch on 8/29/2017.
  */
@@ -33,6 +35,8 @@ public class EventModel
 
     String Event_Book_Stand ;
     String Event_Registration ;
+
+    Bitmap bitmapImg ;
 
     public EventModel() {    }
 
@@ -254,5 +258,13 @@ public class EventModel
 
     public void setEvent_Registration(String event_Registration) {
         Event_Registration = event_Registration;
+    }
+
+    public Bitmap getBitmapImg() {
+        return bitmapImg;
+    }
+
+    public void setBitmapImg(Bitmap bitmapImg) {
+        this.bitmapImg = bitmapImg;
     }
 }

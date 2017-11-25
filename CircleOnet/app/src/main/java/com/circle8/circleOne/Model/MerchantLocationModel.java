@@ -20,6 +20,7 @@ public class MerchantLocationModel
     String openTime ;
     String closeTime ;
     String hourFlag ;
+    String fullAddress ;
 
     public String getStoreName() {
         return storeName;
@@ -131,5 +132,13 @@ public class MerchantLocationModel
 
     public void setHourFlag(String hourFlag) {
         this.hourFlag = hourFlag;
+    }
+
+    public String getFullAddress() {
+        return fullAddress;
+    }
+
+    public void setFullAddress(String fullAddress) {
+        this.fullAddress = fullAddress;
     }
 }

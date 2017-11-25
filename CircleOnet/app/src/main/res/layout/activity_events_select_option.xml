@@ -80,7 +80,8 @@
                     android:src="@drawable/ic_all_events"
                     android:layout_marginLeft="10dp"
                     android:contentDescription="Home!"
-                    android:layout_marginTop="0dp" />
+                    android:layout_marginTop="0dp"
+                    android:onClick="allEvents"/>
 
                 <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
@@ -89,7 +90,8 @@
                     android:id="@+id/textDrawer1"
                     android:textSize="14dp"
                     android:layout_marginLeft="20dp"
-                    android:textColor="@color/colorAccent" />
+                    android:textColor="@color/colorAccent"
+                    android:onClick="allEvents"/>
 
 
             </LinearLayout>
@@ -138,7 +140,8 @@
                     android:src="@drawable/ic_group_blue"
                     android:layout_marginLeft="10dp"
                     android:contentDescription="Home!"
-                    android:layout_marginTop="0dp" />
+                    android:layout_marginTop="0dp"
+                    android:onClick="byCompanyAssociation"/>
 
                 <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
@@ -147,7 +150,8 @@
                     android:id="@+id/textDrawer3"
                     android:textSize="14dp"
                     android:layout_marginLeft="20dp"
-                    android:textColor="@color/colorAccent" />
+                    android:textColor="@color/colorAccent"
+                    android:onClick="byCompanyAssociation"/>
 
 
             </LinearLayout>
@@ -167,7 +171,8 @@
                     android:src="@drawable/ic_branding"
                     android:layout_marginLeft="10dp"
                     android:contentDescription="Home!"
-                    android:layout_marginTop="0dp" />
+                    android:layout_marginTop="0dp"
+                    android:onClick="byIndustry"/>
 
                 <com.circle8.circleOne.Utils.cgTextView
                     android:layout_width="wrap_content"
@@ -176,7 +181,8 @@
                     android:id="@+id/textDrawer4"
                     android:textSize="14dp"
                     android:layout_marginLeft="20dp"
-                    android:textColor="@color/colorAccent" />
+                    android:textColor="@color/colorAccent"
+                    android:onClick="byIndustry"/>
 
 
             </LinearLayout>

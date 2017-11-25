@@ -58,6 +58,7 @@
                     android:layout_height="wrap_content"
                     android:text=""
                     android:textSize="11sp"
+                    android:visibility="gone"
                     android:textColor="@color/unselected" />
 
                 <LinearLayout
