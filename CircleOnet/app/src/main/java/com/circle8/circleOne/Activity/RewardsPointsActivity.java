@@ -131,7 +131,6 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
 
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -145,13 +144,11 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         MerchantView = findViewById(R.id.icdMerchantLayout);
         RewardView = findViewById(R.id.icdEarnPointLayout);
 
-
         tvHistoryListInfo = (TextView)HistoryListView.findViewById(R.id.tvHistoryListInfo);
         tvProductListInfo = (TextView)MerchantView.findViewById(R.id.tvProductListInfo);
         tvEarnListInfo = (TextView)RewardView.findViewById(R.id.tvEarnListInfo);
 
 //        getHistory();
-
 //        createGroupList();
 //        createCollection();
 
@@ -297,8 +294,6 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         String[] sonyModels = { "Ample Arch", "India NIC", "Brain Hidden", "Silver Touch" };
         String[] dellModels = { "Budget", "Caltex*+", "ComfortDelGro Rent-A-Car", "SGDrivers" };
 
-        laptopCollection = new LinkedHashMap<String, List<String>>();
-
         for (String laptop : groupList)
         {
             if (laptop.equals("Food & Beverage"))
@@ -327,7 +322,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
 
     private void loadChild(String[] laptopModels)
     {
-        childList = new ArrayList<String>();
+
         for (String model : laptopModels)
         {
             childList.add(model);
@@ -447,8 +442,10 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
 
                     if (jsonArray.length() != 0)
                     {
+
                         for (int i = 0 ; i< jsonArray.length(); i++)
                         {
+                            childList.clear();
                             JSONObject productListObj = jsonArray.getJSONObject(i);
 
                             String ProductCategoryID = productListObj.getString("ProductCategoryID");
@@ -495,12 +492,16 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                                     merchantGetAllModelArrayList.add(merchantGetAllModel);
 
                                     child_Data[j] = ProductName ;
+                                    String parents = groupList.get(i).toString();
 
                                     for (String parent : groupList)
                                     {
-                                        if (parent.equalsIgnoreCase(ProductCategoryName))
+                                        parent = groupList.get(i).toString() ;
+
+                                        if (parent.equals(ProductCategoryName))
                                         {
                                             loadChild(child_Data);
+//                                            childList.add(j,ProductName);
                                         }
                                         laptopCollection.put(parent, childList);
                                     }

@@ -103,20 +103,16 @@ public class Help2Activity extends AppCompatActivity
         Utility.freeMemory();
         questionsList = new ArrayList<String>();
         questionsList.add("My Account:");
-
         questionsList.add("Editing Your Profile:");
         questionsList.add("Changing Your Password:");
         questionsList.add("Scan QR Code:");
-
         questionsList.add("Lost or Stolen Cards:");
         questionsList.add("Request for a New Card:");
         questionsList.add("Damaged Cards:");
         questionsList.add("Request for a new Account:");
         questionsList.add("Requested Card/Cards did not arrive:");
-
         questionsList.add("Sync Contacts:");
         questionsList.add("Reward Points:");
-
         questionsList.add("Notifications:");
         questionsList.add("Circles:");
         questionsList.add("Subscription:");
