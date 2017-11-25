@@ -12,6 +12,19 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
+ext.mainRepository = getMainRepository();
+ext.qbCredentialsAvailable = project.hasProperty('qbRepository')
+
+ext.qbSdkVersion = "3.3.4"
+ext.recycleVersion = "25.3.1"
+ext.circleImageVersion = "2.1.0"
+ext.glideVersion = "3.8.0"
+ext.exoPlayerVersion = "r2.5.1"
+ext.supportV4Version = "25.3.1"
+def getMainRepository() {
+    def repoUrl = project.properties["qbRepository"]
+    return repoUrl
+}
 
 allprojects {
     repositories {

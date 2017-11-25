@@ -405,6 +405,33 @@ public class NotificationAdapter extends BaseAdapter
             }
             holder.txtFriendName.setText(testimonialModels.get(position).getFirstName());
         }
+
+        vi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if ((testimonialModels.get(position).getShared_ProfileID().toString().equalsIgnoreCase("") ||
+                        testimonialModels.get(position).getShared_ProfileID().toString().equalsIgnoreCase("null") ||
+                        testimonialModels.get(position).getShared_ProfileID().toString().equalsIgnoreCase(null))
+                        && (testimonialModels.get(position).getShared_UserID().toString().equalsIgnoreCase("") ||
+                        testimonialModels.get(position).getShared_UserID().toString().equalsIgnoreCase("null") ||
+                        testimonialModels.get(position).getShared_UserID().toString().equalsIgnoreCase(null)))
+                {
+                    Intent intent = new Intent(activity, ConnectActivity.class);
+                    intent.putExtra("friendProfileID", testimonialModels.get(position).getFriendProfileID());
+                    intent.putExtra("friendUserID", testimonialModels.get(position).getFriendUserID());
+                    intent.putExtra("ProfileID", profileId);
+                    activity.startActivity(intent);
+                }
+                else {
+                    Intent intent = new Intent(activity, ConnectActivity.class);
+                    intent.putExtra("friendProfileID", testimonialModels.get(position).getShared_ProfileID());
+                    intent.putExtra("friendUserID", testimonialModels.get(position).getShared_UserID());
+                    intent.putExtra("ProfileID", profileId);
+                    activity.startActivity(intent);
+                }
+            }
+        });
+
         holder.btnTestWrite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)

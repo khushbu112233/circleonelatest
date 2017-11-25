@@ -1,6 +1,7 @@
 package com.circle8.circleOne.chat;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -14,18 +15,24 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.chat.qb.PaginationHistoryListener;
 import com.circle8.circleOne.chat.qb.QbChatDialogMessageListenerImp;
 import com.circle8.circleOne.chat.qb.QbDialogHolder;
 import com.circle8.circleOne.chat.qb.QbDialogUtils;
+import com.circle8.circleOne.chat.qb.QbUsersHolder;
 import com.circle8.circleOne.chat.qb.VerboseQbChatConnectionListener;
+import com.circle8.circleOne.chat.qb.callback.QbEntityCallbackWrapper;
+import com.quickblox.auth.session.QBSettings;
 import com.quickblox.chat.QBChatService;
+import com.quickblox.chat.QBRestChatService;
 import com.quickblox.chat.model.QBAttachment;
 import com.quickblox.chat.model.QBChatMessage;
 import com.quickblox.chat.model.QBChatDialog;
 import com.quickblox.chat.model.QBDialogType;
+import com.quickblox.core.LogLevel;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.QBResponseException;
 import com.quickblox.sample.core.ui.dialog.ProgressDialogFragment;
@@ -61,7 +68,7 @@ public class ChatActivity extends BaseActivity implements OnImagePickedListener 
 
     private LinearLayout attachmentPreviewContainerLayout;
     private Snackbar snackbar;
-
+    private static final String EXTRA_QB_USERS = "qb_user_list";
     private static ChatAdapter chatAdapter;
     private AttachmentPreviewAdapter attachmentPreviewAdapter;
     private ConnectionListener chatConnectionListener;
@@ -70,12 +77,20 @@ public class ChatActivity extends BaseActivity implements OnImagePickedListener 
     private static ArrayList<QBChatMessage> unShownMessages;
     private int skipPagination = 0;
     public static ChatMessageListener chatMessageListener;
+    private QBChatService chatService;
 
-    public static void startForResult(Activity activity, int code, QBChatDialog dialogId) {
+   /* public static void startForResult(Activity activity, int code, QBChatDialog dialogId) {
         Intent intent = new Intent(activity, ChatActivity.class);
         intent.putExtra(ChatActivity.EXTRA_DIALOG_ID, dialogId);
         activity.startActivityForResult(intent, code);
     }
+
+    public static void start(Context context, ArrayList<QBUser> qbUsers) {
+        Intent intent = new Intent(context, ChatActivity.class);
+        intent.putExtra(EXTRA_QB_USERS, qbUsers);
+        context.startActivity(intent);
+    }*/
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,6 +98,21 @@ public class ChatActivity extends BaseActivity implements OnImagePickedListener 
         setContentView(R.layout.activity_chat);
         chatMessageListener = new ChatMessageListener();
         Log.v(TAG, "onCreate ChatActivity on Thread ID = " + Thread.currentThread().getId());
+        ChatHelper.getInstance().addConnectionListener(chatConnectionListener);
+
+
+        try {
+            chatService = QBChatService.getInstance();
+            QBSettings.getInstance().setLogLevel(LogLevel.DEBUG);
+            chatService.setDebugEnabled(true);
+            chatService.setDefaultPacketReplyTimeout(150000);
+            chatService.setDefaultConnectionTimeout(150000);
+            chatService.setUseStreamManagement(true);
+            chatService.addConnectionListener(chatConnectionListener);
+             }
+             catch (Exception e) {
+                 Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+             }
 
         qbChatDialog = (QBChatDialog) getIntent().getSerializableExtra(EXTRA_DIALOG_ID);
 
@@ -98,7 +128,7 @@ public class ChatActivity extends BaseActivity implements OnImagePickedListener 
         initChat();
     }
 
-    @Override
+   /* @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         if (qbChatDialog != null) {
             outState.putString(EXTRA_DIALOG_ID, qbChatDialog.getDialogId());
@@ -112,7 +142,7 @@ public class ChatActivity extends BaseActivity implements OnImagePickedListener 
         if (qbChatDialog == null) {
             qbChatDialog = QbDialogHolder.getInstance().getChatDialogById(savedInstanceState.getString(EXTRA_DIALOG_ID));
         }
-    }
+    }*/
 
     @Override
     protected void onResume() {
@@ -123,14 +153,14 @@ public class ChatActivity extends BaseActivity implements OnImagePickedListener 
     @Override
     protected void onPause() {
         super.onPause();
-        ChatHelper.getInstance().removeConnectionListener(chatConnectionListener);
+       // ChatHelper.getInstance().removeConnectionListener(chatConnectionListener);
     }
 
     @Override
     public void onBackPressed() {
-        releaseChat();
-        sendDialogId();
-
+       // releaseChat();
+      //  sendDialogId();
+        //ChatHelper.getInstance().destroy();
         super.onBackPressed();
     }
 
@@ -208,6 +238,7 @@ public class ChatActivity extends BaseActivity implements OnImagePickedListener 
             }
         });
     }
+/*
 
     @SuppressWarnings("unchecked")
     @Override
@@ -222,6 +253,7 @@ public class ChatActivity extends BaseActivity implements OnImagePickedListener 
             }
         }
     }
+*/
 
     @Override
     public void onImagePicked(int requestCode, File file) {
@@ -234,6 +266,7 @@ public class ChatActivity extends BaseActivity implements OnImagePickedListener 
 
     @Override
     public void onImagePickError(int requestCode, Exception e) {
+        Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
         showErrorSnackbar(0, e, null);
     }
 
@@ -342,6 +375,7 @@ public class ChatActivity extends BaseActivity implements OnImagePickedListener 
             }
         } catch (SmackException.NotConnectedException e) {
             Log.w(TAG, e);
+            ChatHelper.getInstance();
             Toaster.shortToast("Can't send a message, You are not connected to chat");
         }
     }
@@ -540,19 +574,62 @@ public class ChatActivity extends BaseActivity implements OnImagePickedListener 
     }
 
     private void initChatConnectionListener() {
+        ChatHelper.getInstance().addConnectionListener(chatConnectionListener);
         chatConnectionListener = new VerboseQbChatConnectionListener(getSnackbarAnchorView()) {
             @Override
             public void reconnectionSuccessful() {
                 super.reconnectionSuccessful();
                 skipPagination = 0;
                 switch (qbChatDialog.getType()) {
-                    case GROUP:
+                    case PRIVATE:
                         chatAdapter = null;
                         // Join active room if we're in Group Chat
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                joinGroupChat();
+                                loadDialogUsers();
+                            }
+                        });
+                        break;
+                }
+            }
+
+            @Override
+            public void connectionClosed() {
+                super.connectionClosed();
+                ChatHelper.getInstance();
+                ChatHelper.getInstance().addConnectionListener(chatConnectionListener);
+                skipPagination = 0;
+                switch (qbChatDialog.getType()) {
+                    case PRIVATE:
+                        chatAdapter = null;
+                        // Join active room if we're in Group Chat
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                loadDialogUsers();
+                            }
+                        });
+                        break;
+                }
+            }
+
+            @Override
+            public void connectionClosedOnError(Exception e) {
+                super.connectionClosedOnError(e);
+                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+
+                ChatHelper.getInstance();
+                ChatHelper.getInstance().addConnectionListener(chatConnectionListener);
+                skipPagination = 0;
+                switch (qbChatDialog.getType()) {
+                    case PRIVATE:
+                        chatAdapter = null;
+                        // Join active room if we're in Group Chat
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                loadDialogUsers();
                             }
                         });
                         break;

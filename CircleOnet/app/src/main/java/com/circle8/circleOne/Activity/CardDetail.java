@@ -65,12 +65,15 @@ import com.circle8.circleOne.chat.qb.QbDialogHolder;
 import com.quickblox.auth.session.QBSessionManager;
 import com.quickblox.chat.QBChatService;
 import com.quickblox.chat.QBIncomingMessagesManager;
+import com.quickblox.chat.QBRestChatService;
 import com.quickblox.chat.QBSystemMessagesManager;
 import com.quickblox.chat.exception.QBChatException;
 import com.quickblox.chat.listeners.QBChatDialogMessageListener;
 import com.quickblox.chat.listeners.QBSystemMessageListener;
 import com.quickblox.chat.model.QBChatDialog;
 import com.quickblox.chat.model.QBChatMessage;
+import com.quickblox.chat.model.QBDialogType;
+import com.quickblox.chat.utils.DialogUtils;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.QBResponseException;
 import com.quickblox.sample.core.gcm.GooglePlayServicesHelper;
@@ -165,7 +168,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 
 
     private QBSystemMessagesManager systemMessagesManager;
-    ArrayList<QBUser> selectedUsers = new ArrayList<QBUser>();
+    public static ArrayList<QBUser> selectedUsers = new ArrayList<QBUser>();
 
     private BroadcastReceiver pushBroadcastReceiver;
     private GooglePlayServicesHelper googlePlayServicesHelper;
@@ -175,9 +178,10 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
     private QBIncomingMessagesManager incomingMessagesManager;
     private DialogsManager dialogsManager;
     private QBUser currentUser;
-    String Q_ID = "", CurrentQ_ID = "";
+    public static String Q_ID = "", CurrentQ_ID = "";
     ImageView imgChat;
     String CurrentUserEmail = "";
+    public static int occupant_id = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -253,7 +257,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         netCheck = Utility.isNetworkAvailable(getApplicationContext());
 
         txtMore = (TextView) findViewById(R.id.txtMore);
-        HashMap<String, String> referral = referralCodeSession.getReferralDetails();
+        final HashMap<String, String> referral = referralCodeSession.getReferralDetails();
         refer = referral.get(ReferralCodeSession.KEY_REFERRAL);
         Intent intent = getIntent();
         profile_id = intent.getStringExtra("profile_id");
@@ -698,7 +702,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
             }
         });
 
-
+        registerQbChatListeners();
 //        Toast.makeText(getApplicationContext(),"Profile_id: "+profile_id,Toast.LENGTH_SHORT).show();
 //        final List<NFCModel> modelList = db.getNFCbyTag(tag_id);
 
@@ -861,7 +865,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         imgChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                registerQbChatListeners();
                 QBUser currentUser = getUserFromSession();
                 //loginToChat(currentUser);
                 Boolean aBoolean = SharedPrefsHelper.getInstance().hasQbUser();
@@ -874,6 +878,73 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                        // ProgressDialogFragment.hide(getSupportFragmentManager());
                     //    DialogsActivity.start(SplashActivity.this);
                        // finish();
+
+
+                        Toast.makeText(getApplicationContext(), selectedUsers.toString(), Toast.LENGTH_LONG).show();
+
+
+                        ArrayList<Integer> occupantIdsList = new ArrayList<Integer>();
+                        occupantIdsList.add(Integer.parseInt(CurrentQ_ID));
+                        occupantIdsList.add(occupant_id);
+/*
+                        QBChatDialog dialog = new QBChatDialog();
+                        dialog.setName("Chat with Garry and John");
+                        dialog.setPhoto("1786");
+                        dialog.setType(QBDialogType.PRIVATE);
+                        dialog.setOccupantsIds(occupantIdsList);*/
+
+//or just use DialogUtils
+//for creating PRIVATE dialog
+//QBChatDialog dialog = DialogUtils.buildPrivateDialog(recipientId);
+
+//for creating GROUP dialog
+
+
+
+
+
+
+                        QBChatDialog dialog = DialogUtils.buildDialog("Chat with Garry and John", QBDialogType.PRIVATE, occupantIdsList);
+
+                        QBRestChatService.createChatDialog(dialog).performAsync(new QBEntityCallback<QBChatDialog>() {
+                            @Override
+                            public void onSuccess(QBChatDialog result, Bundle params) {
+                                //ChatActivity.startForResult(CardDetail.this, 165, result);
+                                ChatHelper.getInstance();
+                                Intent intent = new Intent(CardDetail.this, ChatActivity.class);
+                                intent.putExtra(ChatActivity.EXTRA_DIALOG_ID, result);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onError(QBResponseException responseException) {
+
+                            }
+                        });
+
+
+                        /*if (isPrivateDialogExist(selectedUsers)) {
+                            selectedUsers.remove(ChatHelper.getCurrentUser());
+                            QBChatDialog existingPrivateDialog = QbDialogHolder.getInstance().getPrivateDialogWithUser(selectedUsers.get(0));
+                          //  isProcessingResultInProgress = false;
+                            ChatActivity.startForResult(CardDetail.this, 165, existingPrivateDialog);
+                        } else {
+                           // ProgressDialogFragment.show(getSupportFragmentManager(), R.string.create_chat);
+                            createDialog(selectedUsers);
+                        }*/
+
+
+                       /* if (isPrivateDialogExist(selectedUsers)) {
+                            selectedUsers.remove(ChatHelper.getCurrentUser());
+                            QBChatDialog existingPrivateDialog = QbDialogHolder.getInstance().getPrivateDialogWithUser(selectedUsers.get(0));
+                            // isProcessingResultInProgress = false;
+                            ChatActivity.startForResult(CardDetail.this, 165, existingPrivateDialog);
+                            finish();
+                        } else {*/
+                            //  ProgressDialogFragment.show(getSupportFragmentManager(), R.string.create_chat);
+                          //  createDialog(selectedUsers);
+                     //   }
+
                     }
 
                     @Override
@@ -885,22 +956,8 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                 });
 
 
-
-
-/*                if (isPrivateDialogExist(selectedUsers)) {
-                    selectedUsers.remove(ChatHelper.getCurrentUser());
-                    QBChatDialog existingPrivateDialog = QbDialogHolder.getInstance().getPrivateDialogWithUser(selectedUsers.get(0));
-                   // isProcessingResultInProgress = false;
-                    ChatActivity.startForResult(CardDetail.this, 165, existingPrivateDialog);
-                } else {
-                  //  ProgressDialogFragment.show(getSupportFragmentManager(), R.string.create_chat);
-                    createDialog(selectedUsers);
-                }
-                */
-
-
               //  ChatActivity.chatMessageListener = new ChatActivity.ChatMessageListener();
-                Toast.makeText(getApplicationContext(), selectedUsers.toString(), Toast.LENGTH_LONG).show();
+               /* Toast.makeText(getApplicationContext(), selectedUsers.toString(), Toast.LENGTH_LONG).show();
                 ChatHelper.getInstance().createDialogWithSelectedUsers(selectedUsers,
                         new QBEntityCallback<QBChatDialog>() {
                             @Override
@@ -915,7 +972,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                                 // ProgressDialogFragment.hide(getSupportFragmentManager());
                             }
                         }
-                );
+                );*/
             }
         });
 
@@ -965,8 +1022,9 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                     @Override
                     public void onSuccess(QBChatDialog dialog, Bundle args) {
                         //isProcessingResultInProgress = false;
-                        dialogsManager.sendSystemMessageAboutCreatingDialog(systemMessagesManager, dialog);
-                        ChatActivity.startForResult(CardDetail.this, 165, dialog);
+                       // dialogsManager.sendSystemMessageAboutCreatingDialog(systemMessagesManager, dialog);
+                      //  ChatActivity.startForResult(CardDetail.this, 165, dialog);
+                       // finish();
                      //   ProgressDialogFragment.hide(getSupportFragmentManager());
                     }
 
@@ -978,6 +1036,23 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                     }
                 }
         );
+    }
+
+    private void registerQbChatListeners() {
+        incomingMessagesManager = QBChatService.getInstance().getIncomingMessagesManager();
+        systemMessagesManager = QBChatService.getInstance().getSystemMessagesManager();
+
+        if (incomingMessagesManager != null) {
+            incomingMessagesManager.addDialogMessageListener(allDialogsMessagesListener != null
+                    ? allDialogsMessagesListener : new AllDialogsMessageListener());
+        }
+
+        if (systemMessagesManager != null) {
+            systemMessagesManager.addSystemMessageListener(systemMessagesListener != null
+                    ? systemMessagesListener : new SystemMessagesListener());
+        }
+
+        dialogsManager.addManagingDialogsCallbackListener(this);
     }
 
 
@@ -1715,7 +1790,6 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                     Q_ID = jsonObject.getString("Q_ID");
 
 
-                    int occupant_id = 0;
 
                     if (Q_ID.equals("") || Q_ID == null || Q_ID.equals("")){
                         imgChat.setVisibility(View.GONE);
@@ -1736,7 +1810,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                             @Override
                             public void onSuccess(ArrayList<QBUser> result, Bundle params) {
                                 //  QBChatDialog dialog = (QBChatDialog) getIntent().getSerializableExtra(EXTRA_QB_DIALOG);
-                                selectedUsers = result;
+                                selectedUsers.addAll(result);
                             }
 
                             @Override

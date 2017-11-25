@@ -1,13 +1,19 @@
 package com.circle8.circleOne.chat.qb;
 
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.circle8.circleOne.Activity.CardDetail;
 import com.circle8.circleOne.chat.ChatHelper;
 import com.quickblox.chat.model.QBChatDialog;
 import com.quickblox.chat.model.QBDialogType;
 import com.quickblox.chat.utils.DialogUtils;
+import com.quickblox.core.QBEntityCallback;
+import com.quickblox.core.exception.QBResponseException;
+import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
+import com.stripe.android.model.Card;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,11 +22,11 @@ import java.util.List;
 public class QbDialogUtils {
     private static final String TAG = QbDialogUtils.class.getSimpleName();
 
-
-
-    public static QBChatDialog createDialog(List<QBUser> users) {
+    public static QBChatDialog createDialog(final List<QBUser> users) {
         QBUser currentUser = ChatHelper.getCurrentUser();
-        users.remove(currentUser);
+       // users.remove(currentUser);
+
+         users.remove(currentUser);
 
         return DialogUtils.buildDialog(users.toArray(new QBUser[users.size()]));
     }

@@ -166,15 +166,15 @@ public class DialogsActivity extends BaseActivity implements DialogsManager.Mana
                     selectedUsers.remove(ChatHelper.getCurrentUser());
                     QBChatDialog existingPrivateDialog = QbDialogHolder.getInstance().getPrivateDialogWithUser(selectedUsers.get(0));
                     isProcessingResultInProgress = false;
-                    ChatActivity.startForResult(DialogsActivity.this, REQUEST_DIALOG_ID_FOR_UPDATE, existingPrivateDialog);
+                  //  ChatActivity.startForResult(DialogsActivity.this, REQUEST_DIALOG_ID_FOR_UPDATE, existingPrivateDialog);
                 } else {
                     ProgressDialogFragment.show(getSupportFragmentManager(), R.string.create_chat);
                     createDialog(selectedUsers);
                 }
             } else if (requestCode == REQUEST_DIALOG_ID_FOR_UPDATE) {
                 if (data != null) {
-                    String dialogId = data.getStringExtra(ChatActivity.EXTRA_DIALOG_ID);
-                    loadUpdatedDialog(dialogId);
+                   /* String dialogId = data.getStringExtra(ChatActivity.EXTRA_DIALOG_ID);
+                    loadUpdatedDialog(dialogId);*/
                 } else {
                     isProcessingResultInProgress = false;
                     updateDialogsList();
@@ -260,7 +260,7 @@ public class DialogsActivity extends BaseActivity implements DialogsManager.Mana
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 QBChatDialog selectedDialog = (QBChatDialog) parent.getItemAtPosition(position);
                 if (currentActionMode == null) {
-                    ChatActivity.startForResult(DialogsActivity.this, REQUEST_DIALOG_ID_FOR_UPDATE, selectedDialog);
+                   // ChatActivity.startForResult(DialogsActivity.this, REQUEST_DIALOG_ID_FOR_UPDATE, selectedDialog);
                 } else {
                     dialogsAdapter.toggleSelection(selectedDialog);
                 }
@@ -322,7 +322,7 @@ public class DialogsActivity extends BaseActivity implements DialogsManager.Mana
                     public void onSuccess(QBChatDialog dialog, Bundle args) {
                         isProcessingResultInProgress = false;
                         dialogsManager.sendSystemMessageAboutCreatingDialog(systemMessagesManager, dialog);
-                        ChatActivity.startForResult(DialogsActivity.this, REQUEST_DIALOG_ID_FOR_UPDATE, dialog);
+                      //  ChatActivity.startForResult(DialogsActivity.this, REQUEST_DIALOG_ID_FOR_UPDATE, dialog);
                         ProgressDialogFragment.hide(getSupportFragmentManager());
                     }
 

@@ -77,6 +77,7 @@ import com.circle8.circleOne.chat.DialogsAdapter;
 import com.circle8.circleOne.chat.DialogsManager;
 import com.circle8.circleOne.chat.SelectUsersActivity;
 import com.circle8.circleOne.chat.qb.QbChatDialogMessageListenerImp;
+import com.circle8.circleOne.chat.qb.QbDialogHolder;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -109,8 +110,10 @@ import com.quickblox.chat.model.QBChatDialog;
 import com.quickblox.chat.model.QBChatMessage;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.QBResponseException;
+import com.quickblox.messages.services.SubscribeService;
 import com.quickblox.sample.core.gcm.GooglePlayServicesHelper;
 import com.quickblox.sample.core.ui.dialog.ProgressDialogFragment;
+import com.quickblox.sample.core.utils.SharedPrefsHelper;
 import com.quickblox.sample.core.utils.constant.GcmConsts;
 import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
@@ -923,7 +926,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                             @Override
                             public void onSuccess(QBChatDialog dialog, Bundle args) {
                                // dialogsManager.sendSystemMessageAboutCreatingDialog(systemMessagesManager, dialog);
-                                ChatActivity.startForResult(CardsActivity.this, 165, dialog);
+                             //   ChatActivity.startForResult(CardsActivity.this, 165, dialog);
                                 //ProgressDialogFragment.hide(getSupportFragmentManager());
                             }
 
@@ -1111,6 +1114,12 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 {
                     e.printStackTrace();
                 }
+
+                ChatHelper.getInstance().destroy();
+                SubscribeService.unSubscribeFromPushes(CardsActivity.this);
+                SharedPrefsHelper.getInstance().removeQbUser();
+              //  LoginActivity.start(DialogsActivity.this);
+                QbDialogHolder.getInstance().clear();
 
                 session.logoutUser();
                 try {
