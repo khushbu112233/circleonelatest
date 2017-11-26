@@ -945,7 +945,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
 
                // I’m ready to connect with you and share our growing network on the CircleOne app. I’m currently a user with CircleOne and would like to invite you to join the Circle so we’ll both be able to take our professional newtorks a step further. Use the code 'S17806DR' for a quick and simple registration!
                 String shareBody = "I’m ready to connect with you and share our growing network on the CircleOne app. I’m currently a user with CircleOne and would like to invite you to join the Circle so we’ll both be able to take our professional newtorks a step further. Use the code " + refer +
-                        " for a quick and simple registration! https://www.circle8.asia/invite/"+refer;
+                        " for a quick and simple registration! http://circle8.asia/mobileApp.html";
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, User_name);
@@ -1680,6 +1680,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
 */
     @Override
     public void onPause() {
+        Utility.freeMemory();
         super.onPause();
 
         if (mNfcAdapter != null)

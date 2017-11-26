@@ -334,7 +334,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 
         dialogsManager.addManagingDialogsCallbackListener(this);
 
-        new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/Fetch");
+       // new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/Fetch");
             if (profile_id.equals("")) {
                 Toast.makeText(CardDetail.this, "Having no profile ID", Toast.LENGTH_LONG).show();
             } else {
@@ -1004,6 +1004,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         });
     }
 
+
     private class PushBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -1645,7 +1646,11 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                     JSONObject jsonObject = new JSONObject(result);
                     JSONArray jsonArray = jsonObject.getJSONArray("Groups");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
-
+                    groupModelArrayList.clear();
+                    list.clear();
+                    listGroupId.clear();
+                    groupName.clear();
+                    groupPhoto.clear();
                     for (int i = 0; i < jsonArray.length(); i++)
                     {
 
@@ -2144,6 +2149,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 
     @Override
     protected void onPause() {
+        Utility.freeMemory();
         super.onPause();
         if (getNfcAdapter() != null) {
             getNfcAdapter().disableForegroundDispatch(this);

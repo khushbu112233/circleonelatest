@@ -480,6 +480,12 @@ public class EventDetail extends AppCompatActivity
         }
     }
 
+    @Override
+    protected void onPause() {
+        Utility.freeMemory();
+        super.onPause();
+    }
+
     public  String POST(String url)
     {
         InputStream inputStream = null;

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.Walkthrough.HelpActivity;
 
 /**
@@ -62,6 +63,12 @@ public class TutorialScreenFragment extends Fragment
         image = (ImageView) rootView.findViewById(R.id.tutorial_screen_image);
         title = (TextView) rootView.findViewById(R.id.tutorial_screen_title);
         return rootView;
+    }
+
+    @Override
+    public void onPause() {
+        Utility.freeMemory();
+        super.onPause();
     }
 
     @Override

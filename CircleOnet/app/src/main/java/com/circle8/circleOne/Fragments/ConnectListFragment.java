@@ -183,6 +183,12 @@ public class ConnectListFragment extends Fragment
         return view;
     }
 
+    @Override
+    public void onPause() {
+        Utility.freeMemory();
+        super.onPause();
+    }
+
     private void connectWithHttpPost(final String FindBy, String Search,
                                      String numofrecords, String pageno )
     {

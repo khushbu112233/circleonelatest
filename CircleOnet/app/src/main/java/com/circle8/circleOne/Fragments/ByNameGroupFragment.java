@@ -73,6 +73,12 @@ public class ByNameGroupFragment extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        Utility.freeMemory();
+        super.onPause();
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

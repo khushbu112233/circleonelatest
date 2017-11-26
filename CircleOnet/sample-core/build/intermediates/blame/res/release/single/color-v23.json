@@ -4,8 +4,28 @@
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\color-v23\\abc_tint_switch_track.xml"
     },
     {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\color-v23\\design_tint_password_toggle.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\e66df2e243e013d402cd7d774c41cf9fc04235cd\\output\\res\\color-v23\\design_tint_password_toggle.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\color-v23\\abc_tint_default.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\color-v23\\abc_tint_default.xml"
+    },
+    {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\color-v23\\abc_color_highlight_material.xml",
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\color-v23\\abc_color_highlight_material.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\color-v23\\abc_tint_switch_track.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\color-v23\\abc_tint_switch_track.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\color-v23\\abc_tint_seek_thumb.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\color-v23\\abc_tint_seek_thumb.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\color-v23\\abc_tint_edittext.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\color-v23\\abc_tint_edittext.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\color-v23\\design_tint_password_toggle.xml",
@@ -14,6 +34,10 @@
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\color-v23\\abc_tint_spinner.xml",
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\color-v23\\abc_tint_spinner.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\color-v23\\abc_color_highlight_material.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\color-v23\\abc_color_highlight_material.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\color-v23\\abc_btn_colored_borderless_text_material.xml",
@@ -36,7 +60,23 @@
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\color-v23\\abc_tint_seek_thumb.xml"
     },
     {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\color-v23\\abc_tint_spinner.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\color-v23\\abc_tint_spinner.xml"
+    },
+    {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\color-v23\\abc_tint_btn_checkable.xml",
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\color-v23\\abc_tint_btn_checkable.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\color-v23\\abc_btn_colored_text_material.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\color-v23\\abc_btn_colored_text_material.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\color-v23\\abc_btn_colored_borderless_text_material.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\color-v23\\abc_btn_colored_borderless_text_material.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\color-v23\\abc_tint_btn_checkable.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\color-v23\\abc_tint_btn_checkable.xml"
     }
 ]

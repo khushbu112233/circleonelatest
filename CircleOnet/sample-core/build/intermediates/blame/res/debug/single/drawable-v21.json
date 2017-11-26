@@ -4,6 +4,14 @@
         "source": "C:\\Users\\admin\\.android\\build-cache\\8ec4f77cf4f1b1bb5b166efdac7877b127171219\\output\\res\\drawable-v21\\avd_hide_password.xml"
     },
     {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\avd_show_password.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\e66df2e243e013d402cd7d774c41cf9fc04235cd\\output\\res\\drawable-v21\\avd_show_password.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\notification_action_background.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\213dad952c5ddf3635a42c2997d985645de690dc\\output\\res\\drawable-v21\\notification_action_background.xml"
+    },
+    {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\design_password_eye.xml",
         "source": "C:\\Users\\admin\\.android\\build-cache\\8ec4f77cf4f1b1bb5b166efdac7877b127171219\\output\\res\\drawable-v21\\design_password_eye.xml"
     },
@@ -12,8 +20,16 @@
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable-v21\\abc_edit_text_material.xml"
     },
     {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_edit_text_material.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable-v21\\abc_edit_text_material.xml"
+    },
+    {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_btn_colored_material.xml",
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable-v21\\abc_btn_colored_material.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\design_bottom_navigation_item_background.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\e66df2e243e013d402cd7d774c41cf9fc04235cd\\output\\res\\drawable-v21\\design_bottom_navigation_item_background.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\avd_show_password.xml",
@@ -24,11 +40,27 @@
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable-v21\\abc_action_bar_item_background_material.xml"
     },
     {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_action_bar_item_background_material.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable-v21\\abc_action_bar_item_background_material.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\design_password_eye.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\e66df2e243e013d402cd7d774c41cf9fc04235cd\\output\\res\\drawable-v21\\design_password_eye.xml"
+    },
+    {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\notification_action_background.xml",
         "source": "C:\\Users\\admin\\.android\\build-cache\\2ff66b8a8431f9fd1c2c1d8d9e9340f98155e5ac\\output\\res\\drawable-v21\\notification_action_background.xml"
     },
     {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\avd_hide_password.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\e66df2e243e013d402cd7d774c41cf9fc04235cd\\output\\res\\drawable-v21\\avd_hide_password.xml"
+    },
+    {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\design_bottom_navigation_item_background.xml",
         "source": "C:\\Users\\admin\\.android\\build-cache\\8ec4f77cf4f1b1bb5b166efdac7877b127171219\\output\\res\\drawable-v21\\design_bottom_navigation_item_background.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_btn_colored_material.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable-v21\\abc_btn_colored_material.xml"
     }
 ]

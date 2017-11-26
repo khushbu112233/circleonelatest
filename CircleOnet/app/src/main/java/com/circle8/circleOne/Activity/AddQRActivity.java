@@ -135,6 +135,12 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
 
     }
 
+    @Override
+    protected void onPause() {
+        Utility.freeMemory();
+        super.onPause();
+    }
+
     public String decrypt(String value, String key)
             throws GeneralSecurityException, IOException {
 

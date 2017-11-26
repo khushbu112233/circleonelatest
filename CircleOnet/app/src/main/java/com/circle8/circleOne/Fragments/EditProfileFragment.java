@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 
 /**
  * Created by ample-arch on 8/4/2017.
@@ -53,5 +54,11 @@ public class EditProfileFragment extends Fragment
         gridView.setAdapter(new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, array));
 
         return view;
+    }
+
+    @Override
+    public void onPause() {
+        Utility.freeMemory();
+        super.onPause();
     }
 }

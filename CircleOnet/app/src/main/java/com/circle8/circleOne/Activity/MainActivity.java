@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.TabPagerAdapter;
+import com.circle8.circleOne.Utils.Utility;
 
 @SuppressLint("NewApi")
 public class MainActivity extends AppCompatActivity implements ActionBar.TabListener {
@@ -48,6 +49,12 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
 			}
 		});
+	}
+
+	@Override
+	protected void onPause() {
+		Utility.freeMemory();
+		super.onPause();
 	}
 
 	@Override

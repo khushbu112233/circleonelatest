@@ -202,7 +202,13 @@ public class ByAssociationFragment  extends Fragment
         return view;
     }
 
-   /* @Override
+    @Override
+    public void onPause() {
+        Utility.freeMemory();
+        super.onPause();
+    }
+
+    /* @Override
     public void onResume()
     {
         super.onResume();

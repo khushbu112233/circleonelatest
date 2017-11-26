@@ -181,6 +181,12 @@ public class UpdateGroupActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onPause() {
+        Utility.freeMemory();
+        super.onPause();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         Utility.freeMemory();

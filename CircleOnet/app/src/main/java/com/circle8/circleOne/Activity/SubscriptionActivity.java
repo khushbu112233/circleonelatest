@@ -240,7 +240,7 @@ public class SubscriptionActivity extends AppCompatActivity
                                 } else if (exMonthOnCard.isEmpty()) {
                                     Toast.makeText(SubscriptionActivity.this, "Enter Expiry Month", Toast.LENGTH_SHORT).show();
                                 } else if (exYearOnCard.isEmpty()) {
-                                    Toast.makeText(SubscriptionActivity.this, "Enter Expiry Month", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SubscriptionActivity.this, "Enter Expiry Year", Toast.LENGTH_SHORT).show();
                                 } else if (cvvOnCard.isEmpty()) {
                                     Toast.makeText(SubscriptionActivity.this, "Enter CVV No.", Toast.LENGTH_SHORT).show();
                                 } else if (mobileNoOnCard.isEmpty()) {
@@ -277,6 +277,12 @@ public class SubscriptionActivity extends AppCompatActivity
             }
         });
 
+    }
+
+    @Override
+    protected void onPause() {
+        Utility.freeMemory();
+        super.onPause();
     }
 
     @Override

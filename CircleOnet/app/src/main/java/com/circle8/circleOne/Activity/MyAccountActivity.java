@@ -485,6 +485,12 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     }
 
     @Override
+    protected void onPause() {
+        Utility.freeMemory();
+        super.onPause();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         Utility.freeMemory();

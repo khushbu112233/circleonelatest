@@ -100,7 +100,7 @@ public class EventsFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_events, container, false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
 
-        CardsActivity.setActionBarTitle("Events");
+      //  CardsActivity.setActionBarTitle("Events");
 
         mContext = EventsFragment.this.getContext() ;
 
@@ -264,9 +264,15 @@ public class EventsFragment extends Fragment
     }
 
     @Override
+    public void onPause() {
+        Utility.freeMemory();
+        super.onPause();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
-        CardsActivity.setActionBarTitle("Events");
+       // CardsActivity.setActionBarTitle("Events");
     }
 
     public static void callFirst()

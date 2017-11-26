@@ -73,6 +73,13 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
         youtubeUrl.setOnClickListener(this);
 
     }
+
+    @Override
+    protected void onPause() {
+        Utility.freeMemory();
+        super.onPause();
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

@@ -292,6 +292,12 @@ public class List2Fragment extends Fragment
         return view;
     }
 
+    @Override
+    public void onPause() {
+        Utility.freeMemory();
+        super.onPause();
+    }
+
     private class HttpAsyncTaskSearch extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 

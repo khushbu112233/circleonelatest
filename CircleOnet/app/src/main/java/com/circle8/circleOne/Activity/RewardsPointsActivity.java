@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.circle8.circleOne.Adapter.EarnPointsAdapter;
 import com.circle8.circleOne.Adapter.ExpandableListAdapter1;
+
 import com.circle8.circleOne.Adapter.MerchantExpandableAdapter;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.EarnPointsModel;
@@ -568,6 +569,12 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    protected void onPause() {
+        Utility.freeMemory();
+        super.onPause();
     }
 
     public String PostGetAll(String url)

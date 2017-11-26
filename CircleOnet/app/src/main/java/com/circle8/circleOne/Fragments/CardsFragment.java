@@ -16,6 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.CustomViewPager;
+import com.circle8.circleOne.Utils.Utility;
 
 import static com.circle8.circleOne.Activity.CardsActivity.Connection_Limit;
 import static com.circle8.circleOne.Activity.CardsActivity.setActionBarTitle;
@@ -32,6 +33,12 @@ public class CardsFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onPause() {
+        Utility.freeMemory();
+        super.onPause();
     }
 
     @Override

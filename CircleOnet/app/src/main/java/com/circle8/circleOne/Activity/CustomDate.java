@@ -210,6 +210,12 @@ public class CustomDate extends AppCompatActivity
         });
     }
 
+    @Override
+    protected void onPause() {
+        Utility.freeMemory();
+        super.onPause();
+    }
+
     public void showDialog(Context context, int x, int y){
         // x -->  X-Cordinate
         // y -->  Y-Cordinate

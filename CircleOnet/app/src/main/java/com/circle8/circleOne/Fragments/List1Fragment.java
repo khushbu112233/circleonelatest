@@ -486,6 +486,12 @@ public class List1Fragment extends Fragment
         return view;
     }
 
+    @Override
+    public void onPause() {
+        Utility.freeMemory();
+        super.onPause();
+    }
+
     public static void callFirst()
     {
         Utility.freeMemory();

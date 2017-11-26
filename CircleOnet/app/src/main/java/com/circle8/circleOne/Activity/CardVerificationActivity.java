@@ -118,6 +118,7 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
 //        new HttpAsyncActivateNFC().execute(Utility.BASE_URL+"NFCSecurity/ActivateNFC");                               // post
     }
 
+
     public static final byte[] MIME_TEXT = "application/com.circle8.circleOne".getBytes();
     @Override
     public void onNewIntent(Intent intent) {

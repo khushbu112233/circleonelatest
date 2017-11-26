@@ -22,4 +22,9 @@ public class CreateGroupActivity extends AppCompatActivity
         Utility.freeMemory();
     }
 
+    @Override
+    protected void onPause() {
+        Utility.freeMemory();
+        super.onPause();
+    }
 }

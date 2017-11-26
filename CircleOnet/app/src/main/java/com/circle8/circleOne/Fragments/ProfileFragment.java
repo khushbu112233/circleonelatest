@@ -646,7 +646,7 @@ public class ProfileFragment extends Fragment
 
                 Utility.freeMemory();
                 String shareBody = "I’m ready to connect with you and share our growing network on the CircleOne app. I’m currently a user with CircleOne and would like to invite you to join the Circle so we’ll both be able to take our professional newtorks a step further. Use the code " + refer +
-                        " for a quick and simple registration! https://www.circle8.asia/invite/"+refer;
+                        " for a quick and simple registration! http://circle8.asia/mobileApp.html";
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, tvPersonName.getText().toString());
@@ -1098,6 +1098,11 @@ public class ProfileFragment extends Fragment
         byte[] arrayOfByte2 = paramString.getBytes("UTF-8");
         System.arraycopy(arrayOfByte2, 0, arrayOfByte1, 0, Math.min(arrayOfByte2.length, arrayOfByte1.length));
         return arrayOfByte1;
+    }
+    @Override
+    public void onPause() {
+        Utility.freeMemory();
+        super.onPause();
     }
 
     @Override

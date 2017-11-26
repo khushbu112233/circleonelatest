@@ -160,6 +160,12 @@ public class ByCompanyGroupFragment extends Fragment
         return view;
     }
 
+    @Override
+    public void onPause() {
+        Utility.freeMemory();
+        super.onPause();
+    }
+
   /*  @Override
     public void onResume()
     {

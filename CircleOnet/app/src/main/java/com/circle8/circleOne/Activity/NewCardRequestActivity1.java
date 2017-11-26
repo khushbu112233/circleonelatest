@@ -285,10 +285,20 @@ public class NewCardRequestActivity1 extends AppCompatActivity
 
                             @Override
                             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                int month = Integer.parseInt(s.toString());
-                                if (month > 12){
-                                    Toast.makeText(getApplicationContext(), "selected month is not proper", Toast.LENGTH_LONG).show();
+                                int month = 0;
+                                if (s.toString().equals("")){
+
+                                }else {
+                                    try {
+                                        month = Integer.parseInt(s.toString());
+                                    }catch (Exception e){
+                                        etExMonth.setText("");
+                                    }
+                                    if (month > 12){
+                                        Toast.makeText(getApplicationContext(), "selected month is not proper", Toast.LENGTH_LONG).show();
+                                    }
                                 }
+
                             }
 
                             @Override
@@ -394,6 +404,12 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                 }
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        Utility.freeMemory();
+        super.onPause();
     }
 
     @Override

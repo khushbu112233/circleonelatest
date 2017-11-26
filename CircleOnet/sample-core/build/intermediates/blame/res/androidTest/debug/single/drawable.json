@@ -12,28 +12,32 @@
         "source": "C:\\Users\\admin\\.android\\build-cache\\40e67b10ae84a0014964c993eae40c1524cd41b6\\output\\res\\drawable\\common_google_signin_btn_text_light.xml"
     },
     {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\design_snackbar_background.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\e66df2e243e013d402cd7d774c41cf9fc04235cd\\output\\res\\drawable\\design_snackbar_background.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_list_selector_holo_dark.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_list_selector_holo_dark.xml"
+    },
+    {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_disabled.xml",
         "source": "C:\\Users\\admin\\.android\\build-cache\\40e67b10ae84a0014964c993eae40c1524cd41b6\\output\\res\\drawable\\common_google_signin_btn_text_disabled.xml"
     },
     {
-        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_tab_indicator_material.xml",
-        "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_tab_indicator_material.xml"
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_edit_text_material.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_edit_text_material.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_seekbar_thumb_material.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_seekbar_thumb_material.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_btn_check_material.xml",
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_btn_check_material.xml"
     },
     {
-        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_btn_radio_material.xml",
-        "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_btn_radio_material.xml"
-    },
-    {
-        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ratingbar_material.xml",
-        "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_ratingbar_material.xml"
-    },
-    {
-        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_vector_test.xml",
-        "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_vector_test.xml"
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_icon_dark.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\2e367481ed08f8d50c2cba69eb548100e558dcc1\\output\\res\\drawable\\common_google_signin_btn_icon_dark.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_dark_normal.xml",
@@ -44,20 +48,36 @@
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_cab_background_internal_bg.xml"
     },
     {
-        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_icon_dark_normal.xml",
-        "source": "C:\\Users\\admin\\.android\\build-cache\\40e67b10ae84a0014964c993eae40c1524cd41b6\\output\\res\\drawable\\common_google_signin_btn_icon_dark_normal.xml"
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ic_search_api_material.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_ic_search_api_material.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_item_background_holo_light.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_item_background_holo_light.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_text_cursor_material.xml",
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_text_cursor_material.xml"
     },
     {
-        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ic_ab_back_material.xml",
-        "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_ic_ab_back_material.xml"
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_text_cursor_material.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_text_cursor_material.xml"
     },
     {
-        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\design_snackbar_background.xml",
-        "source": "C:\\Users\\admin\\.android\\build-cache\\8ec4f77cf4f1b1bb5b166efdac7877b127171219\\output\\res\\drawable\\design_snackbar_background.xml"
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_icon_dark_focused.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\2e367481ed08f8d50c2cba69eb548100e558dcc1\\output\\res\\drawable\\common_google_signin_btn_icon_dark_focused.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_dark_normal.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\2e367481ed08f8d50c2cba69eb548100e558dcc1\\output\\res\\drawable\\common_google_signin_btn_text_dark_normal.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_switch_thumb_material.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_switch_thumb_material.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_btn_borderless_material.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_btn_borderless_material.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_icon_disabled.xml",
@@ -68,32 +88,40 @@
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_cab_background_top_material.xml"
     },
     {
-        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_dialog_material_background.xml",
-        "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_dialog_material_background.xml"
-    },
-    {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\navigation_empty_icon.xml",
         "source": "C:\\Users\\admin\\.android\\build-cache\\8ec4f77cf4f1b1bb5b166efdac7877b127171219\\output\\res\\drawable\\navigation_empty_icon.xml"
     },
     {
-        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\notification_tile_bg.xml",
-        "source": "C:\\Users\\admin\\.android\\build-cache\\2ff66b8a8431f9fd1c2c1d8d9e9340f98155e5ac\\output\\res\\drawable\\notification_tile_bg.xml"
-    },
-    {
-        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\design_password_eye.xml",
-        "source": "C:\\Users\\admin\\.android\\build-cache\\8ec4f77cf4f1b1bb5b166efdac7877b127171219\\output\\res\\drawable\\design_password_eye.xml"
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_btn_colored_material.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_btn_colored_material.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_btn_colored_material.xml",
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_btn_colored_material.xml"
     },
     {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_dark_focused.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\2e367481ed08f8d50c2cba69eb548100e558dcc1\\output\\res\\drawable\\common_google_signin_btn_text_dark_focused.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_list_selector_background_transition_holo_dark.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_list_selector_background_transition_holo_dark.xml"
+    },
+    {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\tooltip_frame_light.xml",
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\tooltip_frame_light.xml"
     },
     {
-        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_icon_light_focused.xml",
-        "source": "C:\\Users\\admin\\.android\\build-cache\\40e67b10ae84a0014964c993eae40c1524cd41b6\\output\\res\\drawable\\common_google_signin_btn_icon_light_focused.xml"
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ratingbar_small_material.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_ratingbar_small_material.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\tooltip_frame_light.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\tooltip_frame_light.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_icon_light_focused.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\2e367481ed08f8d50c2cba69eb548100e558dcc1\\output\\res\\drawable\\common_google_signin_btn_icon_light_focused.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_btn_borderless_material.xml",
@@ -102,10 +130,6 @@
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ratingbar_small_material.xml",
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_ratingbar_small_material.xml"
-    },
-    {
-        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_btn_default_mtrl_shape.xml",
-        "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_btn_default_mtrl_shape.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_textfield_search_material.xml",
@@ -120,24 +144,24 @@
         "source": "C:\\Users\\admin\\.android\\build-cache\\8ec4f77cf4f1b1bb5b166efdac7877b127171219\\output\\res\\drawable\\design_fab_background.xml"
     },
     {
-        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_icon_dark_focused.xml",
-        "source": "C:\\Users\\admin\\.android\\build-cache\\40e67b10ae84a0014964c993eae40c1524cd41b6\\output\\res\\drawable\\common_google_signin_btn_icon_dark_focused.xml"
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_list_selector_background_transition_holo_light.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_list_selector_background_transition_holo_light.xml"
     },
     {
-        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ic_voice_search_api_material.xml",
-        "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_ic_voice_search_api_material.xml"
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ic_voice_search_api_material.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_ic_voice_search_api_material.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ic_menu_overflow_material.xml",
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_ic_menu_overflow_material.xml"
     },
     {
-        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_edit_text_material.xml",
-        "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_edit_text_material.xml"
-    },
-    {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_item_background_holo_light.xml",
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_item_background_holo_light.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_edit_text_material.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_edit_text_material.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_spinner_textfield_background_material.xml",
@@ -148,16 +172,24 @@
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_ic_arrow_drop_right_black_24dp.xml"
     },
     {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_light.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\2e367481ed08f8d50c2cba69eb548100e558dcc1\\output\\res\\drawable\\common_google_signin_btn_text_light.xml"
+    },
+    {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\shape_circle.xml",
         "source": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\bundles\\debug\\res\\drawable\\shape_circle.xml"
     },
     {
-        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_icon_dark.xml",
-        "source": "C:\\Users\\admin\\.android\\build-cache\\40e67b10ae84a0014964c993eae40c1524cd41b6\\output\\res\\drawable\\common_google_signin_btn_icon_dark.xml"
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_spinner_textfield_background_material.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_spinner_textfield_background_material.xml"
     },
     {
-        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_dark.xml",
-        "source": "C:\\Users\\admin\\.android\\build-cache\\40e67b10ae84a0014964c993eae40c1524cd41b6\\output\\res\\drawable\\common_google_signin_btn_text_dark.xml"
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_item_background_holo_dark.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_item_background_holo_dark.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_disabled.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\2e367481ed08f8d50c2cba69eb548100e558dcc1\\output\\res\\drawable\\common_google_signin_btn_text_disabled.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_list_selector_background_transition_holo_light.xml",
@@ -168,12 +200,200 @@
         "source": "C:\\Users\\admin\\.android\\build-cache\\2ff66b8a8431f9fd1c2c1d8d9e9340f98155e5ac\\output\\res\\drawable\\notification_bg_low.xml"
     },
     {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_textfield_search_material.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_textfield_search_material.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ratingbar_indicator_material.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_ratingbar_indicator_material.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_item_background_holo_dark.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_item_background_holo_dark.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\design_bottom_navigation_item_background.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\8ec4f77cf4f1b1bb5b166efdac7877b127171219\\output\\res\\drawable\\design_bottom_navigation_item_background.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_icon_light.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\40e67b10ae84a0014964c993eae40c1524cd41b6\\output\\res\\drawable\\common_google_signin_btn_icon_light.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_light_normal.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\40e67b10ae84a0014964c993eae40c1524cd41b6\\output\\res\\drawable\\common_google_signin_btn_text_light_normal.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_dark_focused.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\40e67b10ae84a0014964c993eae40c1524cd41b6\\output\\res\\drawable\\common_google_signin_btn_text_dark_focused.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ic_menu_overflow_material.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_ic_menu_overflow_material.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ic_arrow_drop_right_black_24dp.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_ic_arrow_drop_right_black_24dp.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_seekbar_track_material.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_seekbar_track_material.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ic_clear_material.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_ic_clear_material.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_list_selector_holo_dark.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_list_selector_holo_dark.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_light_focused.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\2e367481ed08f8d50c2cba69eb548100e558dcc1\\output\\res\\drawable\\common_google_signin_btn_text_light_focused.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\notification_bg.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\213dad952c5ddf3635a42c2997d985645de690dc\\output\\res\\drawable\\notification_bg.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_tab_indicator_material.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_tab_indicator_material.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_icon_disabled.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\2e367481ed08f8d50c2cba69eb548100e558dcc1\\output\\res\\drawable\\common_google_signin_btn_icon_disabled.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_btn_radio_material.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_btn_radio_material.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ratingbar_material.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_ratingbar_material.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_vector_test.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_vector_test.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_icon_dark_normal.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\2e367481ed08f8d50c2cba69eb548100e558dcc1\\output\\res\\drawable\\common_google_signin_btn_icon_dark_normal.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\design_password_eye.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\e66df2e243e013d402cd7d774c41cf9fc04235cd\\output\\res\\drawable\\design_password_eye.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_icon_dark_normal.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\40e67b10ae84a0014964c993eae40c1524cd41b6\\output\\res\\drawable\\common_google_signin_btn_icon_dark_normal.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ic_ab_back_material.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_ic_ab_back_material.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_icon_light_normal.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\2e367481ed08f8d50c2cba69eb548100e558dcc1\\output\\res\\drawable\\common_google_signin_btn_icon_light_normal.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\design_snackbar_background.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\8ec4f77cf4f1b1bb5b166efdac7877b127171219\\output\\res\\drawable\\design_snackbar_background.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_dialog_material_background.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_dialog_material_background.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\navigation_empty_icon.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\e66df2e243e013d402cd7d774c41cf9fc04235cd\\output\\res\\drawable\\navigation_empty_icon.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\notification_tile_bg.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\2ff66b8a8431f9fd1c2c1d8d9e9340f98155e5ac\\output\\res\\drawable\\notification_tile_bg.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_list_selector_holo_light.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_list_selector_holo_light.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\design_password_eye.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\8ec4f77cf4f1b1bb5b166efdac7877b127171219\\output\\res\\drawable\\design_password_eye.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\shape_circle.xml",
+        "source": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\bundles\\debug\\res\\drawable\\shape_circle.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_seekbar_tick_mark_material.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_seekbar_tick_mark_material.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_cab_background_top_material.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_cab_background_top_material.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_light_normal.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\2e367481ed08f8d50c2cba69eb548100e558dcc1\\output\\res\\drawable\\common_google_signin_btn_text_light_normal.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_icon_light_focused.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\40e67b10ae84a0014964c993eae40c1524cd41b6\\output\\res\\drawable\\common_google_signin_btn_icon_light_focused.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\notification_bg_low.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\213dad952c5ddf3635a42c2997d985645de690dc\\output\\res\\drawable\\notification_bg_low.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_btn_default_mtrl_shape.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_btn_default_mtrl_shape.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\design_fab_background.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\e66df2e243e013d402cd7d774c41cf9fc04235cd\\output\\res\\drawable\\design_fab_background.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_dark.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\2e367481ed08f8d50c2cba69eb548100e558dcc1\\output\\res\\drawable\\common_google_signin_btn_text_dark.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_icon_dark_focused.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\40e67b10ae84a0014964c993eae40c1524cd41b6\\output\\res\\drawable\\common_google_signin_btn_icon_dark_focused.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ic_voice_search_api_material.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_ic_voice_search_api_material.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_btn_radio_material.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_btn_radio_material.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_btn_default_mtrl_shape.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_btn_default_mtrl_shape.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_icon_dark.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\40e67b10ae84a0014964c993eae40c1524cd41b6\\output\\res\\drawable\\common_google_signin_btn_icon_dark.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_dark.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\40e67b10ae84a0014964c993eae40c1524cd41b6\\output\\res\\drawable\\common_google_signin_btn_text_dark.xml"
+    },
+    {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ratingbar_indicator_material.xml",
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_ratingbar_indicator_material.xml"
     },
     {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\notification_icon_background.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\213dad952c5ddf3635a42c2997d985645de690dc\\output\\res\\drawable\\notification_icon_background.xml"
+    },
+    {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\notification_bg.xml",
         "source": "C:\\Users\\admin\\.android\\build-cache\\2ff66b8a8431f9fd1c2c1d8d9e9340f98155e5ac\\output\\res\\drawable\\notification_bg.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_icon_light.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\2e367481ed08f8d50c2cba69eb548100e558dcc1\\output\\res\\drawable\\common_google_signin_btn_icon_light.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_list_selector_holo_light.xml",
@@ -188,12 +408,20 @@
         "source": "C:\\Users\\admin\\.android\\build-cache\\2ff66b8a8431f9fd1c2c1d8d9e9340f98155e5ac\\output\\res\\drawable\\notification_icon_background.xml"
     },
     {
-        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_item_background_holo_dark.xml",
-        "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_item_background_holo_dark.xml"
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\design_bottom_navigation_item_background.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\e66df2e243e013d402cd7d774c41cf9fc04235cd\\output\\res\\drawable\\design_bottom_navigation_item_background.xml"
     },
     {
-        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\design_bottom_navigation_item_background.xml",
-        "source": "C:\\Users\\admin\\.android\\build-cache\\8ec4f77cf4f1b1bb5b166efdac7877b127171219\\output\\res\\drawable\\design_bottom_navigation_item_background.xml"
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ratingbar_material.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_ratingbar_material.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_cab_background_internal_bg.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_cab_background_internal_bg.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\tooltip_frame_dark.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\tooltip_frame_dark.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_seekbar_track_material.xml",
@@ -208,24 +436,28 @@
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\tooltip_frame_dark.xml"
     },
     {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_dialog_material_background.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_dialog_material_background.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_tab_indicator_material.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_tab_indicator_material.xml"
+    },
+    {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_seekbar_thumb_material.xml",
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_seekbar_thumb_material.xml"
     },
     {
-        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_icon_light.xml",
-        "source": "C:\\Users\\admin\\.android\\build-cache\\40e67b10ae84a0014964c993eae40c1524cd41b6\\output\\res\\drawable\\common_google_signin_btn_icon_light.xml"
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\notification_tile_bg.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\213dad952c5ddf3635a42c2997d985645de690dc\\output\\res\\drawable\\notification_tile_bg.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ic_go_search_api_material.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_ic_go_search_api_material.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ic_clear_material.xml",
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_ic_clear_material.xml"
-    },
-    {
-        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_light_normal.xml",
-        "source": "C:\\Users\\admin\\.android\\build-cache\\40e67b10ae84a0014964c993eae40c1524cd41b6\\output\\res\\drawable\\common_google_signin_btn_text_light_normal.xml"
-    },
-    {
-        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_dark_focused.xml",
-        "source": "C:\\Users\\admin\\.android\\build-cache\\40e67b10ae84a0014964c993eae40c1524cd41b6\\output\\res\\drawable\\common_google_signin_btn_text_dark_focused.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ic_search_api_material.xml",
@@ -236,7 +468,15 @@
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_ic_go_search_api_material.xml"
     },
     {
-        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_list_selector_holo_dark.xml",
-        "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_list_selector_holo_dark.xml"
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_btn_check_material.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_btn_check_material.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_vector_test.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_vector_test.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ic_ab_back_material.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable\\abc_ic_ab_back_material.xml"
     }
 ]

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.circle8.circleOne.Activity.EditProfileActivity;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
 
 import java.util.ArrayList;
 
@@ -57,6 +58,8 @@ public class AddEventAdapter extends BaseAdapter
     {
         View view = convertView ;
         ViewHolder holder = null;
+
+        Utility.freeMemory();
 
         if( view == null)
         {

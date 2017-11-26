@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.CustomViewPager;
+import com.circle8.circleOne.Utils.Utility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +57,12 @@ public class ConnectFragment extends Fragment
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(android.R.color.white));
 
         return view;
+    }
+
+    @Override
+    public void onPause() {
+        Utility.freeMemory();
+        super.onPause();
     }
 
     private void setupViewPager(ViewPager viewPager) {

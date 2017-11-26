@@ -197,6 +197,12 @@ public class ByCompanyFragment  extends Fragment
         GetData(getContext());
     }*/
 
+    @Override
+    public void onPause() {
+        Utility.freeMemory();
+        super.onPause();
+    }
+
     private class HttpAsyncTask extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;

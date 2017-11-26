@@ -362,6 +362,12 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
         return view;
     }
 
+    @Override
+    public void onPause() {
+        Utility.freeMemory();
+        super.onPause();
+    }
+
     public  String POSTSearch(String url)
     {
         InputStream inputStream = null;
