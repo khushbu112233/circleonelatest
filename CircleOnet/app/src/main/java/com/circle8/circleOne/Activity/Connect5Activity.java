@@ -116,7 +116,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             }
             else
             {
-                Picasso.with(getApplicationContext()).load(profile).skipMemoryCache().into(ivImage1);
+                Picasso.with(getApplicationContext()).load(profile).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivImage1);
             }
         }
         catch (Exception e) {
@@ -211,7 +211,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             }
             else
             {
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).skipMemoryCache().into(ivProfile1);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile1);
             }
 
             ivProfile2.setVisibility(View.VISIBLE);
@@ -259,8 +259,8 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             }
             else
             {
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).skipMemoryCache().into(ivProfile1);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).skipMemoryCache().into(ivProfile2);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile1);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile2);
             }
 
             ivProfile3.setVisibility(View.VISIBLE);
@@ -310,9 +310,9 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             }
             else
             {
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).skipMemoryCache().into(ivProfile1);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).skipMemoryCache().into(ivProfile2);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).skipMemoryCache().into(ivProfile3);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile1);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile2);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile3);
             }
 
             ivProfile4.setVisibility(View.VISIBLE);
@@ -362,10 +362,10 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             }
             else
             {
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).skipMemoryCache().into(ivProfile1);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).skipMemoryCache().into(ivProfile2);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).skipMemoryCache().into(ivProfile3);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4).skipMemoryCache().into(ivProfile4);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile1);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile2);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile3);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile4);
             }
 
             ivProfile5.setVisibility(View.VISIBLE);
@@ -417,11 +417,11 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             }
             else
             {
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).skipMemoryCache().into(ivProfile1);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).skipMemoryCache().into(ivProfile2);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).skipMemoryCache().into(ivProfile3);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4).skipMemoryCache().into(ivProfile4);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto5).skipMemoryCache().into(ivProfile5);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile1);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile2);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile3);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile4);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto5).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile5);
             }
 
             ivProfile6.setVisibility(View.VISIBLE);
@@ -474,12 +474,12 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             }
             else
             {
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).skipMemoryCache().into(ivProfile1);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).skipMemoryCache().into(ivProfile2);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).skipMemoryCache().into(ivProfile3);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4).skipMemoryCache().into(ivProfile4);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto5).skipMemoryCache().into(ivProfile5);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto6).skipMemoryCache().into(ivProfile6);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile1);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile2);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile3);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile4);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto5).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile5);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto6).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile6);
             }
 
             ivProfile7.setVisibility(View.VISIBLE);
@@ -533,13 +533,13 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             }
             else
             {
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).skipMemoryCache().into(ivProfile1);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).skipMemoryCache().into(ivProfile2);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).skipMemoryCache().into(ivProfile3);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4).skipMemoryCache().into(ivProfile4);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto5).skipMemoryCache().into(ivProfile5);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto6).skipMemoryCache().into(ivProfile6);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto7).skipMemoryCache().into(ivProfile7);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile1);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile2);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile3);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile4);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto5).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile5);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto6).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile6);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto7).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile7);
             }
         }
 

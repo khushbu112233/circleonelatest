@@ -2,6 +2,9 @@ package com.circle8.circleOne.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,11 @@ import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -27,8 +35,9 @@ public class EventsAdapter extends ArrayAdapter
     private ArrayList<Integer> image = new ArrayList();
     private ArrayList<String> title = new ArrayList();
     private ArrayList<String> desc = new ArrayList();
-
     private ArrayList<EventModel> eventModelArrayList ;
+
+    String imageUrl = "";
 
     public EventsAdapter(Context context, int layoutResourceId, ArrayList<Integer> image, ArrayList<String> title, ArrayList<String> desc)
     {
@@ -87,6 +96,21 @@ public class EventsAdapter extends ArrayAdapter
         holder.txtDesc.setText(eventModelArrayList.get(position).getEvent_StartDate()+" To "
                 +eventModelArrayList.get(position).getEvent_EndDate());
         Utility.freeMemory();
+
+        final ViewHolder finalHolder = holder;
+      /*  MyAsync obj = new MyAsync(){
+            @Override
+            protected void onPostExecute(Bitmap bmp) {
+                super.onPostExecute(bmp);
+
+
+
+
+                finalHolder.image.setImageBitmap(bmp);
+
+            }
+        };*/
+
         if(eventModelArrayList.get(position).getEvent_Image().equalsIgnoreCase("")
                 || eventModelArrayList.get(position).getEvent_Image().equalsIgnoreCase("null") )
         {
@@ -95,11 +119,42 @@ public class EventsAdapter extends ArrayAdapter
         else
         {
             Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Events/"+eventModelArrayList.get(position).getEvent_Image())
-                    .resize(600,272).onlyScaleDown().skipMemoryCache().into(holder.image);
+                    .resize(378,250).onlyScaleDown().skipMemoryCache().noFade().into(holder.image);
+//            holder.image.setImageBitmap(eventModelArrayList.get(position).getBitmapImg());
+
+
+/*            imageUrl = Utility.BASE_IMAGE_URL+"Events/"+eventModelArrayList.get(position).getEvent_Image();
+            obj.execute();*/
+
         }
 //        holder.image.setImageResource(image.get(position));
+
+
         return row;
     }
 
+    public class MyAsync extends AsyncTask<Void, Void, Bitmap>{
+
+        @Override
+        protected Bitmap doInBackground(Void... params) {
+
+            try {
+                URL url = new URL(imageUrl);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+                InputStream input = connection.getInputStream();
+                Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                myBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+
+                return myBitmap;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+
+        }
+    }
 
 }

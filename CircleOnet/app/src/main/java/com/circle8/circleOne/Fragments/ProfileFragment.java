@@ -314,7 +314,7 @@ public class ProfileFragment extends Fragment
                 else
                 {
                     Picasso.with(getActivity()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+displayProfile).placeholder(R.drawable.usr_1)
-                            .skipMemoryCache().into(ivViewImage);
+                            .resize(300,300).onlyScaleDown().skipMemoryCache().into(ivViewImage);
                 }
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -824,7 +824,7 @@ public class ProfileFragment extends Fragment
                                     }
                                     else {
                                         Picasso.with(getContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+allTags.get(i).getUserPhoto())
-                                                .skipMemoryCache().into(imgProfile);
+                                                .resize(300,300).onlyScaleDown().skipMemoryCache().into(imgProfile);
                                     }
 
                                     if (allTags.get(i).getCard_Front().equalsIgnoreCase("") && allTags.get(i).getCard_Back().equalsIgnoreCase("")) {
@@ -1611,7 +1611,7 @@ public class ProfileFragment extends Fragment
                     else {
                         try {
                             Picasso.with(getContext()).load(Utility.BASE_IMAGE_URL + "UserProfile/" + allTags.get(profileIndex).getUserPhoto())
-                                    .skipMemoryCache().into(imgProfile);
+                                    .resize(300,300).onlyScaleDown().skipMemoryCache().into(imgProfile);
                         }
                         catch (Exception e){}
                     }

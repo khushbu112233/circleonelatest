@@ -298,7 +298,7 @@ public class ConnectActivity extends AppCompatActivity
                 }
                 else
                 {
-                    Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+displayProfile).skipMemoryCache().placeholder(R.drawable.usr_1).into(ivViewImage);
+                    Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+displayProfile).resize(300,300).onlyScaleDown().skipMemoryCache().placeholder(R.drawable.usr_1).into(ivViewImage);
                 }
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -858,7 +858,7 @@ public class ConnectActivity extends AppCompatActivity
                     }
                     else
                     {
-                        Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+profile.getString("UserPhoto")).skipMemoryCache().into(ivProfileImage);
+                        Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+profile.getString("UserPhoto")).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfileImage);
                     }
 
                     if (Matched.equals("1"))

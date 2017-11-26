@@ -60,6 +60,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <com.circle8.circleOne.Utils.cgTextView
+        android:id="@+id/tvEventInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Found Search Event"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
+
     <RelativeLayout
         android:id="@+id/rlProgressDialog"
         android:layout_width="match_parent"

@@ -268,7 +268,7 @@ public class GridViewAdapter extends BaseSwipeAdapter
             holder.image.setVisibility(View.VISIBLE);
             holder.defaultCard.setVisibility(View.GONE);
             //imageView.setImageResource(nfcModelList.get(position).getCard_front());
-            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Cards/" + nfcModelList1.get(position).getCard_front()).skipMemoryCache().into(holder.image);
+            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Cards/" + nfcModelList1.get(position).getCard_front()).resize(400,280).onlyScaleDown().skipMemoryCache().into(holder.image);
         }
 
         // holder.imageTitle.setText(name);

@@ -235,7 +235,7 @@ public class List5Adapter extends BaseSwipeAdapter
             else
             {
                 Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+connectLists.get(position).getUserphoto())
-                        .skipMemoryCache().into(holder.image);
+                        .resize(300,300).onlyScaleDown().skipMemoryCache().into(holder.image);
             }
         }
         catch (Exception e)

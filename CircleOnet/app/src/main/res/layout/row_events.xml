@@ -1,47 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/android_custom_gridview_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <ImageView
-        android:src="@drawable/ic_event_default"
-        android:scaleType="fitXY"
-        android:id="@+id/imgEvents"
-        android:layout_width="match_parent"
-        android:layout_height="200dp" />
-
     <LinearLayout
-        android:gravity="center_vertical"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:layout_gravity="bottom"
-        android:background="@color/colorAccent"
-        android:alpha="0.9"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-    <com.circle8.circleOne.Utils.cgBoldTextView
-        android:layout_marginLeft="10dp"
-        android:textStyle="bold"
-        android:textColor="@android:color/white"
-        android:text="HSBC Singapore Rugby Sevens"
-        android:visibility="visible"
-        android:id="@+id/txtEventTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="15sp" />
 
-        <com.circle8.circleOne.Utils.cgTextView
-            android:layout_marginLeft="10dp"
-            android:textColor="@android:color/white"
-            android:text="HSBC Singapore Rugby Sevens"
-            android:visibility="visible"
-            android:id="@+id/txtEventDetail"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:src="@drawable/ic_event_default"
+            android:scaleType="fitXY"
+            android:id="@+id/imgEvents"
+            android:layout_width="match_parent"
+            android:layout_height="120dp" />
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:layout_gravity="bottom"
+            android:background="@color/colorAccent"
+            android:alpha="0.9"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="12sp" />
+            android:orientation="vertical">
+            <com.circle8.circleOne.Utils.cgBoldTextView
+                android:layout_marginLeft="10dp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:text="HSBC Singapore Rugby Sevens"
+                android:visibility="visible"
+                android:id="@+id/txtEventTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp" />
+            <com.circle8.circleOne.Utils.cgTextView
+                android:layout_marginLeft="10dp"
+                android:textColor="@android:color/white"
+                android:text="HSBC Singapore Rugby Sevens"
+                android:visibility="visible"
+                android:id="@+id/txtEventDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp" />
+        </LinearLayout>
     </LinearLayout>
+
+
 </FrameLayout>

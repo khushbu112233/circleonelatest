@@ -1,5 +1,7 @@
 package com.circle8.circleOne.Model;
 
+import java.util.ArrayList;
+
 /**
  * Created by ample-arch on 11/14/2017.
  */
@@ -18,6 +20,9 @@ public class MerchantGetAllModel
     String ProductDesc ;
     String Offer ;
     String ProductCost ;
+
+    ArrayList<String> merchantNameList = new ArrayList<>();
+    ArrayList<String> merchantIdList = new ArrayList<>();
 
     public String getProductCategoryID() {
         return ProductCategoryID;
@@ -113,5 +118,21 @@ public class MerchantGetAllModel
 
     public void setProductCost(String productCost) {
         ProductCost = productCost;
+    }
+
+    public ArrayList<String> getMerchantNameList() {
+        return merchantNameList;
+    }
+
+    public void setMerchantNameList(ArrayList<String> merchantNameList) {
+        this.merchantNameList = merchantNameList;
+    }
+
+    public ArrayList<String> getMerchantIdList() {
+        return merchantIdList;
+    }
+
+    public void setMerchantIdList(ArrayList<String> merchantIdList) {
+        this.merchantIdList = merchantIdList;
     }
 }

@@ -149,7 +149,7 @@ public class SearchGroupMemberAdapter extends BaseAdapter
         else
         {
             Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+connectLists.get(position).getUserphoto())
-                    .skipMemoryCache().into(holder.circleImageView);
+                    .resize(300,300).onlyScaleDown().skipMemoryCache().into(holder.circleImageView);
         }
 
         holder.chCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

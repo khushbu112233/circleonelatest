@@ -101,7 +101,7 @@ public class Connect4Activity extends AppCompatActivity
             }
             else
             {
-                Picasso.with(getApplicationContext()).load(profile).skipMemoryCache().into(ivImage1);
+                Picasso.with(getApplicationContext()).load(profile).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivImage1);
             }
         }
         catch (Exception e) {

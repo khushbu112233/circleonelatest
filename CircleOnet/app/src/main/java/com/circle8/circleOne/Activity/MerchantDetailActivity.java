@@ -57,9 +57,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MerchantDetailActivity extends FragmentActivity implements OnMapReadyCallback
 {
-    ImageView tvMerchantImg;
+    CircleImageView tvMerchantImg;
     TextView tvMerchantName, tvMerchantDesc ;
 
     ImageView imgBack ;
@@ -81,7 +83,7 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
     String storeAddress = "" ;
 
     LoginSession loginSession ;
-    String userId = "";
+    String userId = "", merchantId = "";
 
     private RelativeLayout rlProgressDialog ;
     private TextView tvProgressing ;
@@ -101,11 +103,15 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
         HashMap<String, String> user = loginSession.getUserDetails();
         userId = user.get(LoginSession.KEY_USERID);
 
+        Intent iGet = getIntent();
+        merchantId = iGet.getStringExtra("MerchantID");
+
         listView1 = (ExpandableHeightListView)findViewById(R.id.listView1);
         listView2 = (ExpandableHeightListView)findViewById(R.id.listView2);
 
         tvMerchantName = (TextView)findViewById(R.id.tvMerchantName);
         tvMerchantDesc = (TextView)findViewById(R.id.tvMerchantDesc);
+        tvMerchantImg = (CircleImageView)findViewById(R.id.tvMerchantImg);
         imgBack = (ImageView)findViewById(R.id.imgBack);
 
         rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
@@ -214,7 +220,7 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
                     }
                     else
                     {
-                        Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
                     }
 
                     break;
@@ -444,6 +450,42 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
                                 merchantLocationModel.setOpenTime(Open_Time);
                                 merchantLocationModel.setCloseTime(Close_Time);
                                 merchantLocationModel.setHourFlag(Open_24Hours_Flag);
+
+                                if (!Addr1.equals("") || !Addr1.isEmpty())
+                                {
+                                    Addr1 = Addr1+", ";
+                                }
+                                if (!Addr2.equals("") || !Addr2.isEmpty())
+                                {
+                                    Addr2 = Addr2+", ";
+                                }
+                                if (!Addr3.equals("") || !Addr3.isEmpty())
+                                {
+                                    Addr3 = Addr3+", ";
+                                }
+                                if (!Addr4.equals("") || !Addr4.isEmpty())
+                                {
+                                    Addr4 = Addr4+", ";
+                                }
+                                if (!City.equals("") || !City.isEmpty())
+                                {
+                                    City = City+", ";
+                                }
+                                if (!State.equals("") || !State.isEmpty())
+                                {
+                                    State = State+", ";
+                                }
+                                if (!Country.equals("") || !Country.isEmpty())
+                                {
+                                    Country = Country+", ";
+                                }
+                                if (!PostalCode.equals("") || !PostalCode.isEmpty())
+                                {
+                                    PostalCode = "("+PostalCode+")";
+                                }
+
+                                String fullAddress = Addr1+Addr2+Addr3+Addr4+City+State+Country+PostalCode;
+                                merchantLocationModel.setFullAddress(fullAddress);
                                 merchantLocationModelArrayList.add(merchantLocationModel);
 
                                 merchantAddressAdapter = new MerchantAddressAdapter(MerchantDetailActivity.this, merchantLocationModelArrayList);
@@ -453,7 +495,7 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
                                 String markerAddress = Addr1+","+Addr2+","+City+","+State+","+Country+" "+PostalCode;
 
                                 GeocodingLocation locationAddress = new GeocodingLocation();
-                                locationAddress.getAddressFromLocation(markerAddress, getApplicationContext(), new GeocoderHandler());
+                                locationAddress.getAddressFromLocation(fullAddress, getApplicationContext(), new GeocoderHandler());
                             }
                         }
                         else
@@ -493,7 +535,7 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("merchantid", "1");
+            jsonObject.accumulate("merchantid", merchantId);
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();

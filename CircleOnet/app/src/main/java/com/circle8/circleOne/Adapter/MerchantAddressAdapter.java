@@ -91,16 +91,44 @@ public class MerchantAddressAdapter extends BaseAdapter
         }
 
         holder.tvStoreName.setText(merchantLocationModelArrayList.get(position).getStoreName());
-        holder.tvStoreAddress1.setText(merchantLocationModelArrayList.get(position).getAddress1()
+
+        if (merchantLocationModelArrayList.get(position).getFullAddress().isEmpty() ||
+                merchantLocationModelArrayList.get(position).getFullAddress().equals(""))
+        {
+            holder.tvStoreAddress1.setText("Address: N/A");
+        }
+        else
+        {
+            holder.tvStoreAddress1.setText(merchantLocationModelArrayList.get(position).getFullAddress());
+        }
+
+        if (merchantLocationModelArrayList.get(position).getOpenTime().isEmpty() ||
+                merchantLocationModelArrayList.get(position).getOpenTime().equals(""))
+        {
+            holder.tvOpenTime.setText("Open Time: N/A");
+        }
+        else
+        {
+            holder.tvOpenTime.setText("Open Time: "+merchantLocationModelArrayList.get(position).getOpenTime());
+        }
+
+        if (merchantLocationModelArrayList.get(position).getCloseTime().isEmpty() ||
+                merchantLocationModelArrayList.get(position).getCloseTime().equals(""))
+        {
+            holder.tvOpenTime.setText("Close Time: N/A");
+        }
+        else
+        {
+            holder.tvOpenTime.setText("Close Time: "+merchantLocationModelArrayList.get(position).getCloseTime());
+        }
+       /* holder.tvStoreAddress1.setText(merchantLocationModelArrayList.get(position).getAddress1()
                 +", "+merchantLocationModelArrayList.get(position).getAddress2()
                 +", "+merchantLocationModelArrayList.get(position).getAddress3()
                 +", "+merchantLocationModelArrayList.get(position).getAddress4());
         holder.tvStoreAddress2.setText(merchantLocationModelArrayList.get(position).getCity()
                 +", "+merchantLocationModelArrayList.get(position).getState()
                 +", "+merchantLocationModelArrayList.get(position).getCountry()
-                +"("+merchantLocationModelArrayList.get(position).getPostalCode()+").");
-        holder.tvOpenTime.setText("Open Time: "+merchantLocationModelArrayList.get(position).getOpenTime());
-        holder.tvCloseTime.setText("Close time: "+merchantLocationModelArrayList.get(position).getCloseTime());
+                +"("+merchantLocationModelArrayList.get(position).getPostalCode()+").");*/
 
         if (merchantLocationModelArrayList.get(position).getHourFlag().equalsIgnoreCase("Y"))
         {

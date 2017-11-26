@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.circle8.circleOne.Adapter.EarnPointsAdapter;
 import com.circle8.circleOne.Adapter.ExpandableListAdapter1;
+import com.circle8.circleOne.Adapter.MerchantExpandableAdapter;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.EarnPointsModel;
 import com.circle8.circleOne.Model.ListAdapter1;
@@ -83,6 +84,12 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
 
     private TextView tvProductListInfo, tvEarnListInfo, tvHistoryListInfo ;
 
+    //for new expandable listview
+    MerchantExpandableAdapter merchantExpandableAdapter ;
+    List<String> categoryList = new ArrayList<>() ;
+    List<String> subCategoryList = new ArrayList<>() ;
+    HashMap<String, List<String>> categorysData = new HashMap<String, List<String>>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -128,8 +135,8 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
 //        new HttpAsyncGetProductByCategory().execute(Utility.MERCHANT_BASE_URL+"GetProductsByCategory");           // post
         new HttpAsyncGetBalance().execute(Utility.BASE_URL+"Rewards/GetBalance");                                 // post
         new HttpAsyncGetHistoryEarnedPoints().execute(Utility.BASE_URL+"Rewards/History_EarnedPoints");           // post
-    }
 
+    }
 
     @Override
     protected void onDestroy() {
@@ -144,20 +151,16 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         MerchantView = findViewById(R.id.icdMerchantLayout);
         RewardView = findViewById(R.id.icdEarnPointLayout);
 
-
         tvHistoryListInfo = (TextView)HistoryListView.findViewById(R.id.tvHistoryListInfo);
         tvProductListInfo = (TextView)MerchantView.findViewById(R.id.tvProductListInfo);
         tvEarnListInfo = (TextView)RewardView.findViewById(R.id.tvEarnListInfo);
 
 //        getHistory();
-
 //        createGroupList();
 //        createCollection();
 
         expListView = (ExpandableListView)MerchantView.findViewById(R.id.laptop_list);
         ivAdImg = (ImageView)MerchantView.findViewById(R.id.ivAdImg);
-       /* expListAdapter = new ExpandableListAdapter1(this, groupList, laptopCollection);
-        expListView.setAdapter(expListAdapter);*/
 
         setGroupIndicatorToRight();
 
@@ -166,13 +169,20 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id)
             {
-                final String selected = (String) expListAdapter.getChild(groupPosition, childPosition);
-//                Toast.makeText(getBaseContext(), selected, Toast.LENGTH_LONG).show();
+                final String selected = (String) merchantExpandableAdapter.getChild(groupPosition, childPosition);
+
+                String mID = merchantGetAllModelArrayList.get(groupPosition).getMerchantIdList().get(childPosition);
+//                Toast.makeText(getBaseContext(), selected+" "+mID, Toast.LENGTH_LONG).show();
+
+                Intent iPut = new Intent(RewardsPointsActivity.this, MerchantDetailActivity.class);
+                iPut.putExtra("MerchantID", mID);
+                startActivity(iPut);
+
                 return true;
             }
         });
 
-        ivAdImg.setOnClickListener(new View.OnClickListener() {
+       /* ivAdImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -180,7 +190,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                 startActivity(in);
                 finish();
             }
-        });
+        });*/
 
         earnListView = (ListView)RewardView.findViewById(R.id.listView_Earn);
     }
@@ -294,8 +304,6 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         String[] sonyModels = { "Ample Arch", "India NIC", "Brain Hidden", "Silver Touch" };
         String[] dellModels = { "Budget", "Caltex*+", "ComfortDelGro Rent-A-Car", "SGDrivers" };
 
-        laptopCollection = new LinkedHashMap<String, List<String>>();
-
         for (String laptop : groupList)
         {
             if (laptop.equals("Food & Beverage"))
@@ -324,7 +332,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
 
     private void loadChild(String[] laptopModels)
     {
-        childList = new ArrayList<String>();
+
         for (String model : laptopModels)
         {
             childList.add(model);
@@ -444,6 +452,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
 
                     if (jsonArray.length() != 0)
                     {
+
                         for (int i = 0 ; i< jsonArray.length(); i++)
                         {
                             JSONObject productListObj = jsonArray.getJSONObject(i);
@@ -456,14 +465,16 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                             merchantGetAllModel.setProductCategoryID(ProductCategoryID);
                             merchantGetAllModel.setProductCategoryName(ProductCategoryName);
 
+                            categoryList.add(ProductCategoryName);
+
                             JSONArray jsonArray1 = productListObj.getJSONArray("MerchantByCat");
                             if (jsonArray1.length() != 0)
                             {
-                                tvProductListInfo.setVisibility(View.GONE);
-//                                expListView.setGroupIndicator(getResources().getDrawable(R.drawable.group_indicator));
-
                                 int n = jsonArray1.length();
                                 String[] child_Data = new String[n];
+
+                                ArrayList<String> arrayList = new ArrayList<>();
+                                ArrayList<String> arrayList1 = new ArrayList<>();
 
                                 for (int j = 0; j< jsonArray1.length(); j++)
                                 {
@@ -480,7 +491,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                                     String Offer = merchantListObj.getString("Offer");
                                     String ProductCost = merchantListObj.getString("ProductCost");
 
-                                    merchantGetAllModel.setMerchant_ID(Merchant_ID);
+                                   /* merchantGetAllModel.setMerchant_ID(Merchant_ID);
                                     merchantGetAllModel.setMerchantImage(MerchantImage);
                                     merchantGetAllModel.setMerchant_Name(Merchant_Name);
                                     merchantGetAllModel.setMerchant_Desc(Merchant_Desc);
@@ -490,44 +501,61 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                                     merchantGetAllModel.setProductDesc(ProductDesc);
                                     merchantGetAllModel.setOffer(Offer);
                                     merchantGetAllModel.setProductCost(ProductCost);
-                                    merchantGetAllModelArrayList.add(merchantGetAllModel);
+                                    merchantGetAllModelArrayList.add(merchantGetAllModel);*/
 
-                                    child_Data[j] = ProductName ;
+                                   arrayList.add(Merchant_Name);
+                                   arrayList1.add(Merchant_ID);
+
+                                   /* child_Data[j] = Merchant_Name ;
+                                    String parents = groupList.get(i).toString();
 
                                     for (String parent : groupList)
                                     {
-                                        if (parent.equalsIgnoreCase(ProductCategoryName))
+                                        parent = groupList.get(i).toString() ;
+
+                                        if (parent.equals(ProductCategoryName))
                                         {
                                             loadChild(child_Data);
+//                                            childList.add(j,ProductName);
                                         }
                                         laptopCollection.put(parent, childList);
                                     }
                                     expListAdapter = new ExpandableListAdapter1(RewardsPointsActivity.this, groupList, laptopCollection);
-                                    expListView.setAdapter(expListAdapter);
+                                    expListView.setAdapter(expListAdapter);*/
+
+                                   /*For second try*/
+                                  /* for (String parent: categoryList)
+                                   {
+                                       if (parent.equals(ProductCategoryName))
+                                       {
+                                           subCategoryList.add(Merchant_Name);
+                                       }
+                                       categorysData.put(parent, subCategoryList);
+                                   }
+                                    merchantExpandableAdapter = new MerchantExpandableAdapter(RewardsPointsActivity.this, categoryList, categorysData);
+                                    expListView.setAdapter(merchantExpandableAdapter);*/
                                 }
+
+                                merchantGetAllModel.setMerchantNameList(arrayList);
+                                merchantGetAllModel.setMerchantIdList(arrayList1);
                             }
                             else if (jsonArray1.length() == 0)
                             {
-                                String[] child_Data = new String[1];
-                                child_Data[0] = "no sub products avail" ;
-                                for (String parent : groupList)
-                                {
-                                    if (parent.equalsIgnoreCase(ProductCategoryName))
-                                    {
-                                        loadChild(child_Data);
-                                    }
-                                    laptopCollection.put(parent, childList);
-                                }
-//                                expListView.setGroupIndicator(getResources().getDrawable(R.drawable.group_indicator));
-                                expListAdapter = new ExpandableListAdapter1(RewardsPointsActivity.this, groupList, laptopCollection);
-                                expListView.setAdapter(expListAdapter);
+
                             }
+
+                            merchantGetAllModelArrayList.add(merchantGetAllModel);
+
+                            categorysData.put(merchantGetAllModelArrayList.get(i).getProductCategoryName(), merchantGetAllModelArrayList.get(i).getMerchantNameList());
+
+                            merchantExpandableAdapter = new MerchantExpandableAdapter(RewardsPointsActivity.this, categoryList, categorysData);
+                            expListView.setAdapter(merchantExpandableAdapter);
                         }
+
                     }
                     else
                     {
-                        tvProductListInfo.setVisibility(View.VISIBLE);
-//                        Toast.makeText(getApplicationContext(), "No ProductCategory_List Avail", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "No ProductCategory_List Avail", Toast.LENGTH_LONG).show();
                     }
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
                 }
@@ -1074,8 +1102,9 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                     String message = jsonObject.getString("message");
                     String userid = jsonObject.getString("userid");
 
+                    try
+                    {
                     JSONArray jsonArray = jsonObject.getJSONArray("EarnedPoints_Trans");
-
                     if (jsonArray.length() != 0)
                     {
                         for (int i = 0 ; i < jsonArray.length(); i++)
@@ -1110,10 +1139,17 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                         tvEarnListInfo.setVisibility(View.VISIBLE);
 //                        Toast.makeText(getApplicationContext(), "No EarnPoints Avail", Toast.LENGTH_LONG).show();
                     }
+                    }
+                    catch (JSONException e)
+                    {
+                        e.printStackTrace();
+                        tvEarnListInfo.setVisibility(View.VISIBLE);
+                    }
                 }
                 else
                 {
-                    // Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+//                    tvEarnListInfo.setVisibility(View.VISIBLE);
+//                     Toast.makeText(getApplicationContext(), "Not able to load ..", Toast.LENGTH_LONG).show();
                 }
             }
             catch (JSONException e) {
@@ -1264,7 +1300,8 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                     }
                     else
                     {
-                        Toast.makeText(getApplicationContext(), "No Redeem Points Avail", Toast.LENGTH_LONG).show();
+                        tvHistoryListInfo.setVisibility(View.VISIBLE);
+//                        Toast.makeText(getApplicationContext(), "No Redeem Points Avail", Toast.LENGTH_LONG).show();
                     }
                 }
                 else

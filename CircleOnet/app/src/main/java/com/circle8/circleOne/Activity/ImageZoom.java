@@ -31,7 +31,7 @@ public class ImageZoom extends AppCompatActivity {
         }
         else
         {
-            Picasso.with(getApplicationContext()).load(displayProfile).skipMemoryCache().placeholder(R.drawable.usr_1).into(img);
+            Picasso.with(getApplicationContext()).load(displayProfile).resize(500,500).onlyScaleDown().skipMemoryCache().placeholder(R.drawable.usr_1).into(img);
         }
 
 

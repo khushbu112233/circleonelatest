@@ -166,7 +166,7 @@ public class NotificationAdapter extends BaseAdapter
             else
             {
                 Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
-                        .skipMemoryCache().into(holder.imgTestRec);
+                        .resize(300,300).onlyScaleDown().skipMemoryCache().into(holder.imgTestRec);
             }
            /* if (testimonialModels.get(position).getStatus().equalsIgnoreCase("Requested"))
             {
@@ -238,7 +238,7 @@ public class NotificationAdapter extends BaseAdapter
             else
             {
                 Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
-                        .skipMemoryCache().into(holder.imgFriend);
+                        .resize(300,300).onlyScaleDown().skipMemoryCache().into(holder.imgFriend);
             }
             holder.btnAcceptFriend.setVisibility(View.VISIBLE);
             holder.btnRejectFriend.setVisibility(View.VISIBLE);
@@ -271,7 +271,7 @@ public class NotificationAdapter extends BaseAdapter
             else
             {
                 Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
-                        .skipMemoryCache().into(holder.imgTestReq);
+                        .resize(300,300).onlyScaleDown().skipMemoryCache().into(holder.imgTestReq);
             }
 
             /*if (testimonialModels.get(position).getStatus().equals("Requested")){
@@ -298,7 +298,7 @@ public class NotificationAdapter extends BaseAdapter
             else
             {
                 Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
-                        .skipMemoryCache().into(holder.imgShare);
+                        .resize(300,300).onlyScaleDown().skipMemoryCache().into(holder.imgShare);
             }
 
             /*if (testimonialModels.get(position).getStatus().equals("Requested")){
@@ -324,7 +324,7 @@ public class NotificationAdapter extends BaseAdapter
             else
             {
                 Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
-                        .skipMemoryCache().into(holder.imgNfc);
+                        .resize(300,300).onlyScaleDown().skipMemoryCache().into(holder.imgNfc);
             }
             holder.btnAllowNfc.setVisibility(View.VISIBLE);
             holder.btnNfcCancel.setVisibility(View.VISIBLE);
@@ -375,7 +375,7 @@ public class NotificationAdapter extends BaseAdapter
             else
             {
                 Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
-                        .skipMemoryCache().into(holder.imgFriend);
+                        .resize(300,300).onlyScaleDown().skipMemoryCache().into(holder.imgFriend);
             }
             holder.btnAcceptFriend.setVisibility(View.GONE);
             holder.btnRejectFriend.setVisibility(View.GONE);
@@ -576,7 +576,7 @@ public class NotificationAdapter extends BaseAdapter
                 else
                 {
                     Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/"+testimonialModels.get(position).getUserPhoto()).placeholder(R.drawable.usr_1)
-                            .skipMemoryCache().into(ivViewImage);
+                            .resize(300,300).onlyScaleDown().skipMemoryCache().into(ivViewImage);
                 }
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -613,7 +613,7 @@ public class NotificationAdapter extends BaseAdapter
                 else
                 {
                     Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/"+testimonialModels.get(position).getUserPhoto()).placeholder(R.drawable.usr_1)
-                            .skipMemoryCache().into(ivViewImage);
+                            .resize(300,300).onlyScaleDown().skipMemoryCache().into(ivViewImage);
                 }
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -649,7 +649,7 @@ public class NotificationAdapter extends BaseAdapter
                 else
                 {
                     Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/"+testimonialModels.get(position).getUserPhoto()).placeholder(R.drawable.usr_1)
-                            .skipMemoryCache().into(ivViewImage);
+                            .resize(300,300).onlyScaleDown().skipMemoryCache().into(ivViewImage);
                 }
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 

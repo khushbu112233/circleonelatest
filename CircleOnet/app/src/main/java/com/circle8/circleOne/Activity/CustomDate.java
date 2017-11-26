@@ -26,8 +26,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class CustomDate extends AppCompatActivity {
-
+public class CustomDate extends AppCompatActivity
+{
     CustomCalendarView calendarView;
     private TextView actionText, dateSelect;
     private ImageView imgDrawer, imgCards, imgConnect, imgEvents, imgProfile, imgLogo;
@@ -36,14 +36,18 @@ public class CustomDate extends AppCompatActivity {
     int i =0;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_date);
+
         Utility.freeMemory();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
         final ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.custom_actionbar);
+
         actionText = (TextView) findViewById(R.id.mytext);
         imgDrawer = (ImageView) findViewById(R.id.drawer);
         imgCards = (ImageView) findViewById(R.id.imgCards);
@@ -75,7 +79,7 @@ public class CustomDate extends AppCompatActivity {
             {
                 Utility.freeMemory();
                 i++;
-                SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy");
 //                Toast.makeText(CustomDate.this, df.format(date), Toast.LENGTH_SHORT).show();
                 if ( i % 2 == 0 ){
                     date2 = date;
@@ -84,19 +88,35 @@ public class CustomDate extends AppCompatActivity {
                     date1 = date;
                 }
 
-                try {
-                    if (date1 != null && date2 != null){
-                        long diff = date2.getDay() - date1.getDay(); //result in millis
+                try
+                {
+                    if (date1 != null && date2 != null)
+                    {
+                        long diff = 0;
+                        if (date1.getDay() > date2.getDay())
+                        {
+                            diff = date1.getDay() - date2.getDay(); //result in millis
+                        }
+                        if (date2.getDay() > date1.getDay())
+                        {
+                             diff = date2.getDay() - date1.getDay(); //result in millis
+                        }
+                        // Print what date is today!
+                        dateSelect.setText("View events within period : \n" + "From - "+ df.format(date1) + " To - " + df.format(date2) + "\nSelected Days = " + String.valueOf(diff));
+                        EventsSelectOption.searchKeyWord = df.format(date1) ;
 
+                        CardsActivity.setActionBarTitle("Events");
 
-// Print what date is today!
-                        dateSelect.setText("View events within period : \n" + "From - "+ df.format(date2) + " To - " + df.format(date1) + "\nSelected Days = " + String.valueOf(diff));
+                        Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                        userIntent.putExtra("viewpager_position", 2);
+                        startActivity(userIntent);
+                        finish();
+                        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                        // Toast.makeText(getApplicationContext(), String.valueOf(diff), Toast.LENGTH_LONG).show();
                     }
                 } catch (Exception e){
 
                 }
-
             }
 
             @Override

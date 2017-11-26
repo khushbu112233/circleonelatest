@@ -109,7 +109,6 @@ import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CardDetail extends NfcActivity implements DialogsManager.ManagingDialogsCallbacks, View.OnClickListener
-
 {
     ExpandableHeightListView lstTestimonial;
     ViewPager mViewPager, viewPager1;

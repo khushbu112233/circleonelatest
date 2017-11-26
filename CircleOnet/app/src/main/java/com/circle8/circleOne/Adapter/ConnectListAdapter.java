@@ -129,7 +129,7 @@ public class ConnectListAdapter extends BaseAdapter
             if (connectLists.get(position).getUserphoto().equalsIgnoreCase("")) {
                 holder.circleImageView.setImageResource(R.drawable.usr);
             } else {
-                Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/" + connectLists.get(position).getUserphoto()).skipMemoryCache().into(holder.circleImageView);
+                Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/" + connectLists.get(position).getUserphoto()).resize(300,300).onlyScaleDown().skipMemoryCache().into(holder.circleImageView);
             }
         }catch (Exception e){}
 

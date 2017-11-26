@@ -182,6 +182,16 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
         return v ;
     }
 
+    public static class ViewHolder
+    {
+        TextView personName;
+        TextView personDesignation;
+        TextView personDetail;
+        TextView tvAddress, tvCompany, tvEmail, tvWebsite, tvPhone ;
+        CircleImageView personImage;
+        public static CheckBox chCheckBox;
+    }
+
     @Override
     public void fillValues(final int position, View convertView)
     {
@@ -193,6 +203,12 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
         holder.personDesignation = (TextView) row.findViewById(R.id.tvDesignation);
         holder.personDetail = (TextView) row.findViewById(R.id.tvPersonDetail);
         holder.personImage = (CircleImageView) row.findViewById(R.id.imgProfile);
+        holder.tvAddress = (TextView)row.findViewById(R.id.tvAddress);
+        holder.tvCompany = (TextView)row.findViewById(R.id.tvCompany);
+        holder.tvWebsite = (TextView)row.findViewById(R.id.tvWebsite);
+        holder.tvEmail = (TextView)row.findViewById(R.id.tvEmail);
+        holder.tvPhone = (TextView)row.findViewById(R.id.tvPhone);
+
        // holder.chCheckBox = (CheckBox) row.findViewById(R.id.chCheckBox);
         row.setTag(holder);
 
@@ -247,15 +263,46 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
 
         holder.personDetail.setText(Address+"\n"+Company+"\n"+Website+"\n"+Email+"\n"+Phone);
 
+        if (Address.isEmpty())
+        {
+            holder.tvAddress.setVisibility(View.GONE);
+        } else {
+            holder.tvAddress.setText(Address);
+        }
+        if (Company.isEmpty())
+        {
+            holder.tvCompany.setVisibility(View.GONE);
+        } else {
+            holder.tvCompany.setText(Company);
+        }
+        if (Website.isEmpty())
+        {
+            holder.tvWebsite.setVisibility(View.GONE);
+        } else {
+            holder.tvWebsite.setText(Website);
+        }
+        if (Email.isEmpty())
+        {
+            holder.tvEmail.setVisibility(View.GONE);
+        } else {
+            holder.tvEmail.setText(Email);
+        }
+        if (Phone.isEmpty())
+        {
+            holder.tvPhone.setVisibility(View.GONE);
+        } else {
+            holder.tvPhone.setText(Phone);
+        }
+
         groupDetailModelArrayList.get(position).getImgProfile() ;
-         posi = position;
+        posi = position ;
         if (groupDetailModelArrayList.get(position).getImgProfile().equals(""))
         {
             holder.personImage.setImageResource(R.drawable.usr_1);
         }
         else
         {
-            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+groupDetailModelArrayList.get(position).getImgProfile()).placeholder(R.drawable.usr_1).skipMemoryCache().into(holder.personImage);
+            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+groupDetailModelArrayList.get(position).getImgProfile()).placeholder(R.drawable.usr_1).resize(300,300).onlyScaleDown().skipMemoryCache().into(holder.personImage);
         }
 
         holder.personImage.setOnClickListener(new View.OnClickListener() {
@@ -272,7 +319,7 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
                 }
                 else
                 {
-                    Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+groupDetailModelArrayList.get(position).getImgProfile()).placeholder(R.drawable.usr_1).skipMemoryCache().into(ivViewImage);
+                    Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+groupDetailModelArrayList.get(position).getImgProfile()).placeholder(R.drawable.usr_1).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivViewImage);
                 }
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -420,16 +467,6 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
         inputStream.close();
         return result;
 
-    }
-
-
-    public static class ViewHolder
-    {
-        TextView personName;
-        TextView personDesignation;
-        TextView personDetail;
-        CircleImageView personImage;
-        public static CheckBox chCheckBox;
     }
 
     @Override

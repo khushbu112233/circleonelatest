@@ -191,7 +191,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
         }
         else
         {
-            Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/" + image).skipMemoryCache().into(imgProfile);
+            Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/" + image).resize(300,300).onlyScaleDown().skipMemoryCache().into(imgProfile);
         }
         tvPerson.setText(i.getStringExtra("person"));
         tvDesignation.setText(i.getStringExtra("designation"));

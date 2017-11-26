@@ -374,26 +374,83 @@ public class EventDetail extends AppCompatActivity
                     }
                     else
                     {
-                        Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"Events/"+eventDetail.getString("Event_Image")).skipMemoryCache().into(imgEvent);
+                        Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"Events/"+eventDetail.getString("Event_Image")).resize(400,280).onlyScaleDown().skipMemoryCache().into(imgEvent);
                     }
 
                     tvEventDate.setText(eventDetail.getString("Event_StartDate")
                                     +"  to  "+ eventDetail.getString("Event_EndDate"));
 
-                    tvEventAddress.setText(eventDetail.getString("Address1")+ eventDetail.getString("Address2")+
-                            eventDetail.getString("Address3")+ eventDetail.getString("Address4")+" "+
-                            eventDetail.getString("City")+" "+eventDetail.getString("State")+" "+
-                            eventDetail.getString("Country")+" ("+eventDetail.getString("PostalCode")+")");
+                    String address1 = eventDetail.getString("Address1") ;
+                    String address2 = eventDetail.getString("Address2") ;
+                    String address3 = eventDetail.getString("Address3") ;
+                    String address4 = eventDetail.getString("Address4") ;
+                    String city = eventDetail.getString("City") ;
+                    String state = eventDetail.getString("State") ;
+                    String country = eventDetail.getString("Country") ;
+                    String postalCode = eventDetail.getString("PostalCode") ;
 
+                    String fullAddress = "";
 
-                    JSONArray showTiming = response.getJSONArray("showTimings");
-
-                    if(showTiming.length() == 0 || response.getString("showTimings").equals("null"))
+                    if (address1.equals("") || address1.isEmpty())
                     {
-                        llShowTime.setVisibility(View.GONE);
+
+                    } else {
+                        address1 = address1+", ";
                     }
-                    else
+                    if (address2.equals("") || address2.isEmpty())
                     {
+
+                    } else {
+                        address2 = address2+", ";
+                    }
+                    if (address3.equals("") || address3.isEmpty())
+                    {
+
+                    } else {
+                        address3 = address3+", ";
+                    }
+                    if (address4.equals("") || address4.isEmpty())
+                    {
+
+                    } else {
+                        address4 = address4+", ";
+                    }
+                    if (city.equals("") || city.isEmpty())
+                    {
+
+                    } else {
+                        city = city+", ";
+                    }
+                    if (state.equals("") || state.isEmpty())
+                    {
+
+                    } else {
+                        state = state+", ";
+                    }
+                    if (country.equals("") || country.isEmpty())
+                    {
+
+                    } else {
+                        country = country;
+                    }
+                    if (postalCode.equals("") || postalCode.isEmpty())
+                    {
+
+                    } else {
+                        postalCode = "("+postalCode+")";
+                    }
+
+                    tvEventAddress.setText(address1+address2+address3+address4+city+state+country+postalCode);
+
+                   /* tvEventAddress.setText(eventDetail.getString("Address1")+", "+eventDetail.getString("Address2")+", "+
+                            eventDetail.getString("Address3")+", "+eventDetail.getString("Address4")+", "+
+                            eventDetail.getString("City")+", "+eventDetail.getString("State")+", "+
+                            eventDetail.getString("Country")+"("+eventDetail.getString("PostalCode")+")");*/
+
+                    try
+                    {
+                        JSONArray showTiming = response.getJSONArray("showTimings");
+
                         for(int i = 0; i<= showTiming.length() ; i++)
                         {
                             JSONObject tList = showTiming.getJSONObject(i);
@@ -408,6 +465,11 @@ public class EventDetail extends AppCompatActivity
                             listViewTimeShow.setAdapter(eventDetailAdapter);
                             eventDetailAdapter.notifyDataSetChanged();
                         }
+                    }
+                    catch (JSONException e)
+                    {
+                        e.printStackTrace();
+                        llShowTime.setVisibility(View.GONE);
                     }
                 }
             }
