@@ -101,6 +101,7 @@ public class ConnectActivity extends AppCompatActivity
     public static JSONArray selectedStrings1 = new JSONArray();
 
     int motionLength = 0;
+    int lineWidth = 0 , roundWidth = 0;
 
     private ArrayList<ConnectProfileModel> connectingTags = new ArrayList<>();
     private String Mobile1 = "", Mobile2 = "";
@@ -158,6 +159,62 @@ public class ConnectActivity extends AppCompatActivity
         ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
         ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
 
+        rlAdd.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            public void onGlobalLayout() {
+                int height = rlAdd.getHeight();
+                int width = rlAdd.getWidth();
+                int L = rlAdd.getLeft();
+                int T = rlAdd.getTop();
+                int R = rlAdd.getRight();
+                int B = rlAdd.getBottom();
+
+                roundWidth = width / 2;
+                motionLength = motionLength + roundWidth;
+
+                System.out.print("ivMale" + height + " " + width + " " + L + " " + R + " " + T + " " + B);
+//                Toast.makeText(RegisterActivity.this, height+" "+width+" "+L+" "+R+" "+T+" "+B,Toast.LENGTH_LONG).show();
+                //don't forget to remove the listener to prevent being called again by future layout events:
+                rlAdd.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
+
+        rlConnect.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            public void onGlobalLayout() {
+                int height = rlConnect.getHeight();
+                int width = rlConnect.getWidth();
+                int L = rlConnect.getLeft();
+                int T = rlConnect.getTop();
+                int R = rlConnect.getRight();
+                int B = rlConnect.getBottom();
+
+                roundWidth = width / 2;
+                motionLength = motionLength + roundWidth;
+
+                System.out.print("ivMale" + height + " " + width + " " + L + " " + R + " " + T + " " + B);
+//                Toast.makeText(RegisterActivity.this, height+" "+width+" "+L+" "+R+" "+T+" "+B,Toast.LENGTH_LONG).show();
+                //don't forget to remove the listener to prevent being called again by future layout events:
+                rlConnect.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
+
+        ivConnectImg.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            public void onGlobalLayout() {
+                int height = ivConnectImg.getHeight();
+                int width = ivConnectImg.getWidth();
+                int L = ivConnectImg.getLeft();
+                int T = ivConnectImg.getTop();
+                int R = ivConnectImg.getRight();
+                int B = ivConnectImg.getBottom();
+                lineWidth = width;
+                motionLength = motionLength + lineWidth;
+                System.out.print("ivConnect" + height + " " + width + " " + L + " " + R + " " + T + " " + B);
+//                Toast.makeText(RegisterActivity.this, height+" "+width+" "+L+" "+R+" "+T+" "+B,Toast.LENGTH_LONG).show();
+                //don't forget to remove the listener to prevent being called again by future layout events:
+                ivConnectImg.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
+
+/*
         rlConnect.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 
             public void onGlobalLayout() {
@@ -170,8 +227,9 @@ public class ConnectActivity extends AppCompatActivity
                 rlConnect.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
+*/
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+       /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         {
             Utility.freeMemory();
             motionLength = 180 ;
@@ -179,7 +237,7 @@ public class ConnectActivity extends AppCompatActivity
         else
         {
             motionLength = 180 ;
-        }
+        }*/
 
         /*Rect loc = new Rect();
         int[] location = new int[2];
