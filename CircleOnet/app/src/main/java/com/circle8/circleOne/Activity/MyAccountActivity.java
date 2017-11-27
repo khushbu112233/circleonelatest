@@ -138,6 +138,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     String Connection_Limit, Connection_Left;
     String Q_ID = "";
     String editStatus = "None";
+    RelativeLayout rltGender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -156,6 +157,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         profile_id = user.get(LoginSession.KEY_PROFILEID);
         Connection_Limit = user.get(LoginSession.KEY_CONNECTION_LIMIT);
         Connection_Left = user.get(LoginSession.KEY_CONNECTION_LEFT);
+        rltGender = (RelativeLayout) findViewById(R.id.rltGender);
         Q_ID = user.get(LoginSession.KEY_QID);
 //        Toast.makeText(getApplicationContext(),email_id+" "+user_pass,Toast.LENGTH_LONG).show();
 
@@ -583,6 +585,8 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             etDD.setEnabled(true);
             etMM.setEnabled(true);
             etYYYY.setEnabled(true);
+            imgProfile.setEnabled(true);
+            rltGender.setEnabled(true);
 
 /*
             etFirstName.setVisibility(View.VISIBLE);

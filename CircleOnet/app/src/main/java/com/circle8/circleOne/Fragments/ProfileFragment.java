@@ -733,6 +733,7 @@ public class ProfileFragment extends Fragment
                                                     + allTags.get(i).getCountry() + " "
                                                     + allTags.get(i).getPostalcode());
                                     tvWebsite.setText(allTags.get(i).getWebsite());
+                                    displayProfile = allTags.get(i).getUserPhoto();
                                     TestimonialProfileId = allTags.get(i).getProfileID();
 
                                     HashMap<String, String> user = session.getUserDetails();
@@ -1338,8 +1339,8 @@ public class ProfileFragment extends Fragment
                         allTags.add(nfcModelTag);
                         //  GetData(getContext());
 
-                        displayProfile = object.getString("UserPhoto");
                     }
+                    displayProfile = allTags.get(profileIndex).getUserPhoto();
 
                     TestimonialProfileId = allTags.get(profileIndex).getProfileID();
 

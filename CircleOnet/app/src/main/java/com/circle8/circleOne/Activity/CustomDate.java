@@ -67,6 +67,7 @@ public class CustomDate extends AppCompatActivity
         calendarView = (CustomCalendarView) findViewById(R.id.calendar_view);
         btnSearch = (Button) findViewById(R.id.btnSearch);
 
+        imgDrawer.setVisibility(View.GONE);
         //Initialize calendar with date
         Calendar currentCalendar = Calendar.getInstance(Locale.getDefault());
 

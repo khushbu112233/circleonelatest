@@ -436,6 +436,7 @@ public class GridViewAdapter extends BaseSwipeAdapter
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Operation", "Remove" );
             jsonObject.accumulate("RequestType", "" );
+            jsonObject.accumulate("connection_date", Utility.currentDate());
             jsonObject.accumulate("friendProfileId", nfcModelList1.get(posi).getProfile_id());
             jsonObject.accumulate("myProfileId", profile_id );
 
