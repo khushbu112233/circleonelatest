@@ -217,7 +217,8 @@
         <activity
             android:name=".Activity.EditProfileActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionbar" />
+            android:theme="@style/NoActionbar"
+            android:noHistory="true"/>
         <activity
             android:name=".Activity.FingerPrintLogin"
             android:label="CircleOne"

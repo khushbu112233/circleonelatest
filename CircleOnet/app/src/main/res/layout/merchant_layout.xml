@@ -9,7 +9,7 @@
         android:id="@+id/ivAdImg"
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        android:src="@drawable/cold_coco"
+        android:src="@drawable/cosmos"
         android:scaleType="fitXY"/>
 
     <View

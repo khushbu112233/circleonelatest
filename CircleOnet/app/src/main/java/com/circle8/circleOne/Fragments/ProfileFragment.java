@@ -684,6 +684,7 @@ public class ProfileFragment extends Fragment
                             Intent intent = new Intent(getContext(), EditProfileActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                             intent.putExtra("profile_id", TestimonialProfileId);
                             intent.putExtra("type", "add");
                             intent.putExtra("activity", "profile");
@@ -1006,6 +1007,7 @@ public class ProfileFragment extends Fragment
                 Intent intent = new Intent(getContext(), EditProfileActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 intent.putExtra("type", "edit");
                 intent.putExtra("profile_id", TestimonialProfileId);
                 intent.putExtra("activity", "profile");

@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.circle8.circleOne.Activity.MerchantDetailActivity;
 import com.circle8.circleOne.Model.MerchantProductModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Utility;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -63,6 +65,7 @@ public class MerchantProductAdapter extends BaseAdapter
             row = inflater.inflate(R.layout.merchant_products_lists, null);
             holder = new ViewHolder();
 
+            holder.ivProductImg = (ImageView)row.findViewById(R.id.ivProductImg);
             holder.tvProductName = (TextView)row.findViewById(R.id.tvProductName);
             holder.tvProductDesc = (TextView)row.findViewById(R.id.tvProductDesc);
             holder.tvTermsAndCondition = (TextView)row.findViewById(R.id.tvTermsAndCondition);
@@ -74,8 +77,17 @@ public class MerchantProductAdapter extends BaseAdapter
             holder = (ViewHolder)row.getTag();
         }
 
-        holder.tvProductName.setText(merchantProductModelArrayList.get(position).getProductName());
-        holder.tvProductDesc.setText(merchantProductModelArrayList.get(position).getProductDesc());
+        if (merchantProductModelArrayList.get(position).getProductImage().equals(""))
+        {
+            holder.tvProductName.setText(merchantProductModelArrayList.get(position).getProductName());
+            holder.tvProductDesc.setText(merchantProductModelArrayList.get(position).getProductDesc());
+            holder.ivProductImg.setVisibility(View.GONE);
+        }
+        else
+        {
+            holder.ivProductImg.setVisibility(View.VISIBLE);
+            Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"Product/"+merchantProductModelArrayList.get(position).getProductImage()).resize(400,200).onlyScaleDown().skipMemoryCache().into(holder.ivProductImg);
+        }
 
         return row;
     }

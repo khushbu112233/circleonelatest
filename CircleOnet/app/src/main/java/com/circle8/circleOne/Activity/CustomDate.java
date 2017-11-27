@@ -12,10 +12,13 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.circle8.circleOne.Fragments.EventsFragment;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
 import com.stacktips.view.CalendarListener;
@@ -30,10 +33,13 @@ public class CustomDate extends AppCompatActivity
 {
     CustomCalendarView calendarView;
     private TextView actionText, dateSelect;
+    private Button btnSearch ;
     private ImageView imgDrawer, imgCards, imgConnect, imgEvents, imgProfile, imgLogo;
     private int actionBarHeight;
     Date date1, date2;
     int i =0;
+
+    private String startDate = "", endDate = "" ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -59,6 +65,7 @@ public class CustomDate extends AppCompatActivity
         actionText.setText("Events");
         imgLogo.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
         calendarView = (CustomCalendarView) findViewById(R.id.calendar_view);
+        btnSearch = (Button) findViewById(R.id.btnSearch);
 
         //Initialize calendar with date
         Calendar currentCalendar = Calendar.getInstance(Locale.getDefault());
@@ -103,15 +110,10 @@ public class CustomDate extends AppCompatActivity
                         }
                         // Print what date is today!
                         dateSelect.setText("View events within period : \n" + "From - "+ df.format(date1) + " To - " + df.format(date2) + "\nSelected Days = " + String.valueOf(diff));
-                        EventsSelectOption.searchKeyWord = df.format(date1) ;
 
-                        CardsActivity.setActionBarTitle("Events");
+                        startDate = df.format(date1);
+                        endDate = df.format(date2);
 
-                        Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
-                        userIntent.putExtra("viewpager_position", 2);
-                        startActivity(userIntent);
-                        finish();
-                        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                        // Toast.makeText(getApplicationContext(), String.valueOf(diff), Toast.LENGTH_LONG).show();
                     }
                 } catch (Exception e){
@@ -206,6 +208,31 @@ public class CustomDate extends AppCompatActivity
 
                 startActivity(go);
                 finish();
+            }
+        });
+
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                if (startDate.equals("") && endDate.equals(""))
+                {
+                    Toast.makeText(getApplicationContext(),"Please, Select start and end date.",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    EventsSelectOption.searchKeyWord = startDate ;
+                    EventsSelectOption.searchKeyWord1 = endDate ;
+
+                    EventsFragment.searchEvent();
+
+                    Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                    userIntent.putExtra("viewpager_position", 2);
+                    startActivity(userIntent);
+                    finish();
+//                    overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+
+                }
             }
         });
     }

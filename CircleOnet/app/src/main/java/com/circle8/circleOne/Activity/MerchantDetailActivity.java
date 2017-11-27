@@ -40,6 +40,7 @@ import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -62,7 +63,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MerchantDetailActivity extends FragmentActivity implements OnMapReadyCallback
 {
     CircleImageView tvMerchantImg;
-    TextView tvMerchantName, tvMerchantDesc ;
+    TextView tvMerchantName, tvMerchantDesc, tvMoreInfo ;
 
     ImageView imgBack ;
 
@@ -90,6 +91,7 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
     private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
 
     private TextView tvProductListInfo, tvLocationListInfo ;
+    private String websiteURL = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -109,6 +111,7 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
         listView1 = (ExpandableHeightListView)findViewById(R.id.listView1);
         listView2 = (ExpandableHeightListView)findViewById(R.id.listView2);
 
+        tvMoreInfo = (TextView)findViewById(R.id.tvMoreInfo);
         tvMerchantName = (TextView)findViewById(R.id.tvMerchantName);
         tvMerchantDesc = (TextView)findViewById(R.id.tvMerchantDesc);
         tvMerchantImg = (CircleImageView)findViewById(R.id.tvMerchantImg);
@@ -181,6 +184,16 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
                 finish();
             }
         });
+
+        tvMoreInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
+                intent.putExtra("url", websiteURL);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -226,7 +239,7 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
                     }
                     else
                     {
-//                        Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
                     }
 
                     break;
@@ -253,7 +266,7 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(10);
         googleMaps.animateCamera(zoom);
 
-        LatLng ttc = new LatLng(23.012688,72.522777);
+       /* LatLng ttc = new LatLng(23.012688,72.522777);
         googleMaps.addMarker(new MarkerOptions().position(ttc).title("Titanium City Center"));
         googleMaps.moveCamera(CameraUpdateFactory.newLatLng(ttc));
 
@@ -267,7 +280,7 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
 
         LatLng panchtirthPlaza = new LatLng(23.011353,72.522857);
         googleMaps.addMarker(new MarkerOptions().position(panchtirthPlaza).title("panchtirthPlaza"));
-        googleMaps.moveCamera(CameraUpdateFactory.newLatLng(panchtirthPlaza));
+        googleMaps.moveCamera(CameraUpdateFactory.newLatLng(panchtirthPlaza));*/
 
        /* LatLng ahmedabad = new LatLng(23.0225, 72.5714);
         LatLng surat = new LatLng(21.1702, 72.8311);
@@ -342,6 +355,27 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
                     String merchant_name = jsonObject.getString("merchant_name");
                     String merchant_desc = jsonObject.getString("merchant_desc");
                     String merchant_website = jsonObject.getString("merchant_website");
+                    String merchant_image = jsonObject.getString("MerchantImage");
+
+                    websiteURL = merchant_website ;
+
+                    if (websiteURL.equals(""))
+                    {
+                        tvMoreInfo.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        tvMoreInfo.setVisibility(View.VISIBLE);
+                    }
+
+                    if (merchant_image.equals(""))
+                    {
+                        tvMerchantImg.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"Merchant/"+merchant_image).resize(300,300).onlyScaleDown().skipMemoryCache().into(tvMerchantImg);
+                    }
 
                     if (merchant_name.equalsIgnoreCase("null") || merchant_name.equalsIgnoreCase(""))
                     {
@@ -356,7 +390,7 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
                     }
                     else
                     {
-                        tvMerchantDesc.setText(merchant_desc+"\n\n"+merchant_website);
+                        tvMerchantDesc.setText(merchant_desc);
                     }
 
                     try
@@ -500,8 +534,17 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
 
                                 String markerAddress = Addr1+","+Addr2+","+City+","+State+","+Country+" "+PostalCode;
 
-                                GeocodingLocation locationAddress = new GeocodingLocation();
-                                locationAddress.getAddressFromLocation(fullAddress, getApplicationContext(), new GeocoderHandler());
+                                Double lat = null, lang = null;
+                                if (!Latitude.equals("") && !Longitude.equals(""))
+                                {
+                                    lat = Double.valueOf(Latitude);
+                                    lang = Double.valueOf(Longitude);
+
+                                    createMarker(lat,lang);
+                                }
+
+//                                GeocodingLocation locationAddress = new GeocodingLocation();
+//                                locationAddress.getAddressFromLocation(fullAddress, getApplicationContext(), new GeocoderHandler());
                             }
                         }
                         else

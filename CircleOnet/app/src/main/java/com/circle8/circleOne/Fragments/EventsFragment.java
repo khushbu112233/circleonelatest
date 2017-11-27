@@ -121,8 +121,6 @@ public class EventsFragment extends Fragment
         line = view.findViewById(R.id.view);
         listView = (ListView)view.findViewById(R.id.listEvents);
 
-        searchText.setText(EventsSelectOption.searchKeyWord);
-
         callFirst();
 
        /* try
@@ -658,6 +656,8 @@ public class EventsFragment extends Fragment
 
             if (EventsSelectOption.searchOpt.equals("Industry"))
             {
+                searchText.setText(EventsSelectOption.searchKeyWord);
+
                 jsonObject.accumulate("SearchBy", EventsSelectOption.searchBy );
                 jsonObject.accumulate("SearchValue", EventsSelectOption.searchKeyWord );
                 jsonObject.accumulate("numofrecords", "10");
@@ -665,6 +665,8 @@ public class EventsFragment extends Fragment
             }
             else if (EventsSelectOption.searchOpt.equals("CompanyAssociation"))
             {
+                searchText.setText(EventsSelectOption.searchKeyWord);
+
                 jsonObject.accumulate("SearchBy", EventsSelectOption.searchBy );
                 jsonObject.accumulate("SearchValue", EventsSelectOption.searchKeyWord );
                 jsonObject.accumulate("numofrecords", "10");
@@ -672,8 +674,11 @@ public class EventsFragment extends Fragment
             }
             else if (EventsSelectOption.searchOpt.equals("Date"))
             {
+                searchText.setText(EventsSelectOption.searchKeyWord+" - "+EventsSelectOption.searchKeyWord1);
+
                 jsonObject.accumulate("SearchBy", EventsSelectOption.searchBy );
                 jsonObject.accumulate("SearchValue", EventsSelectOption.searchKeyWord );
+                jsonObject.accumulate("SearchValue1", EventsSelectOption.searchKeyWord1 );
                 jsonObject.accumulate("numofrecords", "10");
                 jsonObject.accumulate("pageno", "1" );
             }
