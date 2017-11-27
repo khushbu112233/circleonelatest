@@ -56,12 +56,12 @@
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable-hdpi-v4\\abc_ic_star_half_black_16dp.png"
     },
     {
-        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\common_full_open_on_phone.png",
-        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\2e367481ed08f8d50c2cba69eb548100e558dcc1\\output\\res\\drawable-hdpi-v4\\common_full_open_on_phone.png"
-    },
-    {
         "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\abc_switch_track_mtrl_alpha.9.png",
         "source": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\drawable-hdpi-v4\\abc_switch_track_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\common_full_open_on_phone.png",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\2e367481ed08f8d50c2cba69eb548100e558dcc1\\output\\res\\drawable-hdpi-v4\\common_full_open_on_phone.png"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\abc_ic_menu_paste_mtrl_am_alpha.png",

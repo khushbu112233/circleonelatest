@@ -8,12 +8,12 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <android.support.v4.view.ViewPager
+  <!--  <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="245dp"
         android:clickable="true"
-        app:layout_scrollFlags="scroll|snap" />
+        app:layout_scrollFlags="scroll|snap" />-->
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -98,13 +98,13 @@
                 android:theme="@style/NoActionbar"
                 app:expanded="false">
 
-                <android.support.v4.view.ViewPager
+               <!-- <android.support.v4.view.ViewPager
                     android:id="@+id/viewPager1"
                     android:layout_width="match_parent"
                     android:layout_height="245dp"
                     android:alpha="0.0"
                     android:clickable="true"
-                    app:layout_scrollFlags="scroll|snap" />
+                    app:layout_scrollFlags="scroll|snap" />-->
 
             </android.support.design.widget.AppBarLayout>
 

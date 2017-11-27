@@ -617,7 +617,7 @@ public class ChatActivity extends BaseActivity implements OnImagePickedListener 
             @Override
             public void connectionClosedOnError(Exception e) {
                 super.connectionClosedOnError(e);
-                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+               // Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
 
                 ChatHelper.getInstance();
                 ChatHelper.getInstance().addConnectionListener(chatConnectionListener);

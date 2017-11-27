@@ -68,12 +68,12 @@
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\layout\\abc_list_menu_item_radio.xml"
     },
     {
-        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\layout\\notification_template_custom_big.xml",
-        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\213dad952c5ddf3635a42c2997d985645de690dc\\output\\res\\layout\\notification_template_custom_big.xml"
-    },
-    {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\layout\\abc_activity_chooser_view.xml",
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\layout\\abc_activity_chooser_view.xml"
+    },
+    {
+        "merged": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\layout\\notification_template_custom_big.xml",
+        "source": "C:\\Users\\LENOVO\\.android\\build-cache\\213dad952c5ddf3635a42c2997d985645de690dc\\output\\res\\layout\\notification_template_custom_big.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\layout\\abc_expanded_menu_layout.xml",

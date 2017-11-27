@@ -199,7 +199,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     String Status = "";
     String Address1 = "", Address2 = "", Address3 = "", Address4 = "", City = "", State = "", Country = "", Postalcode = "", Website = "", Attachment_FileName = "";
     EditText edtUserName, edtWork, edtPrimary, edtEmail, edtProfileDesc, edtCompanyDesc, edtFirstName, edtLastName;
-    public static ViewPager mViewPager, viewPager1;
+  //  public static ViewPager mViewPager, viewPager1;
     CircleImageView imgProfile;
     TextView tvPersonName, tvDesignation, tvCompany;
     ExpandableHeightListView lstTestimonial;
@@ -321,13 +321,14 @@ public class EditProfileActivity extends AppCompatActivity implements
     {
         supportRequestWindowFeature(WindowCompat.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
-        Utility.freeMemory();
+
         TwitterAuthConfig authConfig = new TwitterAuthConfig(
                 getString(R.string.twitter_consumer_key),
                 getString(R.string.twitter_consumer_secret));
         Fabric.with(this, new Twitter(authConfig));
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.fragment_edit_profile);
+        Utility.freeMemory();
         activity = EditProfileActivity.this;
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         txtAttachDelete = (TextView) findViewById(R.id.txtAttachDelete);
@@ -396,8 +397,8 @@ public class EditProfileActivity extends AppCompatActivity implements
         edtProfileDesc = (EditText) findViewById(R.id.edtProfileDesc);
         edtCompanyDesc = (EditText) findViewById(R.id.edtCompanyDesc);
         edtPrimary = (EditText) findViewById(R.id.edtPrimary);
-        mViewPager = (ViewPager) findViewById(R.id.viewPager);
-        viewPager1 = (ViewPager) findViewById(R.id.viewPager1);
+      //  mViewPager = (ViewPager) findViewById(R.id.viewPager);
+       // viewPager1 = (ViewPager) findViewById(R.id.viewPager1);
         imgProfile = (CircleImageView) findViewById(R.id.imgProfile);
         tvCompany = (TextView) findViewById(R.id.tvCompany);
         tvDesignation = (TextView) findViewById(R.id.tvDesignation);
@@ -701,7 +702,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             tvEventInfo.setVisibility(View.GONE);
         }
 
-        viewPager1.setOnClickListener(new View.OnClickListener() {
+        /*viewPager1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (viewPager1.getCurrentItem() == 0) {
@@ -717,7 +718,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                     selectImage();
                 }
             }
-        });
+        });*/
 
         ivArrowImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1021,7 +1022,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             }
         });
 
-        viewPager1.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        /*viewPager1.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             private int mScrollState = ViewPager.SCROLL_STATE_IDLE;
 
@@ -1047,7 +1048,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                     mViewPager.setCurrentItem(viewPager1.getCurrentItem(), false);
                 }
             }
-        });
+        });*/
 
         ivAttachFile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -2470,6 +2471,25 @@ public class EditProfileActivity extends AppCompatActivity implements
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(result.getUri()));
                    // originalBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
 
+                    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
+
+                    File destination = new File(Environment.getExternalStorageDirectory(),
+                            System.currentTimeMillis() + ".jpg");
+
+                    FileOutputStream fo;
+                    try {
+                        destination.createNewFile();
+                        fo = new FileOutputStream(destination);
+                        fo.write(bytes.toByteArray());
+                        fo.close();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
                     final_ImgBase64 = BitMapToString(bitmap);
                     //   Upload();
 
@@ -3648,11 +3668,11 @@ public class EditProfileActivity extends AppCompatActivity implements
 
                     etAttachFile.setText(Attachment_FileName);
 
-                    if (Card_Front.equalsIgnoreCase("") || Card_Back.equalsIgnoreCase("")) {
+                   /* if (Card_Front.equalsIgnoreCase("") || Card_Back.equalsIgnoreCase("")) {
                         appbar.setVisibility(View.GONE);
                     } else {
                         appbar.setVisibility(View.VISIBLE);
-                    }
+                    }*/
 
                     txtCardFront.setText(Card_Front);
                     txtCardBack.setText(Card_Back);
@@ -3662,22 +3682,22 @@ public class EditProfileActivity extends AppCompatActivity implements
                         Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/" + UserPhoto).resize(300,300).onlyScaleDown().skipMemoryCache().into(imgProfile);
                     }
 
-                    image = new ArrayList<>();
+                   /* image = new ArrayList<>();
                     image.add(Utility.BASE_IMAGE_URL+"Cards/" + Card_Front);
                     image.add(Utility.BASE_IMAGE_URL+"Cards/" + Card_Back);
-                    myPager = new CardSwipe(getApplicationContext(), image);
+                    myPager = new CardSwipe(getApplicationContext(), image);*/
 
-                    mViewPager.setClipChildren(false);
+                   /* mViewPager.setClipChildren(false);
                     mViewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
                     mViewPager.setOffscreenPageLimit(1);
                     //  mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
                     mViewPager.setAdapter(myPager);
-
-                    viewPager1.setClipChildren(false);
+*/
+                   /* viewPager1.setClipChildren(false);
                     viewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
                     viewPager1.setOffscreenPageLimit(1);
                     // viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
-                    viewPager1.setAdapter(myPager);
+                    viewPager1.setAdapter(myPager);*/
 
                 } else {
                     Toast.makeText(getApplicationContext(), "Not able to load Profile..", Toast.LENGTH_LONG).show();

@@ -109,6 +109,8 @@ import javax.crypto.spec.SecretKeySpec;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -243,7 +245,9 @@ public class ProfileFragment extends Fragment
         allTags = new ArrayList<>();
         referralCodeSession = new ReferralCodeSession(getContext());
         HashMap<String, String> referral = referralCodeSession.getReferralDetails();
-        refer = referral.get(ReferralCodeSession.KEY_REFERRAL);
+        try {
+            refer = referral.get(ReferralCodeSession.KEY_REFERRAL);
+        }catch (Exception e){}
         HashMap<String, String> profile = profileSession.getProfileDetails();
         profileIndex = Integer.parseInt(profile.get(ProfileSession.KEY_PROFILE_INDEX));
 
@@ -678,10 +682,14 @@ public class ProfileFragment extends Fragment
                         {
                             // new HttpAsyncTaskAddProfile().execute("http://circle8.asia:8999/Onet.svc/AddProfile");
                             Intent intent = new Intent(getContext(), EditProfileActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.putExtra("profile_id", TestimonialProfileId);
                             intent.putExtra("type", "add");
                             intent.putExtra("activity", "profile");
                             startActivity(intent);
+                            getActivity().overridePendingTransition (0, 0);
+
                         }
                         else
                         {
@@ -750,6 +758,7 @@ public class ProfileFragment extends Fragment
                                         JSONObject object = jsonArray.getJSONObject(i);
                                         try {
                                             array = object.getJSONArray("Association_Name");
+                                            associationString = "";
                                             listAssociation = new ArrayList<String>();
                                             for (int i1 = 0; i1 < array.length(); i1++) {
 
@@ -783,7 +792,7 @@ public class ProfileFragment extends Fragment
                                             arrayEvents = object.getJSONArray("Event_Cat_Name");
 
                                             listEvents = new ArrayList<String>();
-
+                                            eventString = "";
                                             for (int i1 = 0; i1 < arrayEvents.length(); i1++) {
 
                                                 listEvents.add(arrayEvents.getString(i1));
@@ -918,13 +927,13 @@ public class ProfileFragment extends Fragment
 
                                     mViewPager.setClipChildren(false);
                                     mViewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
-                                    mViewPager.setOffscreenPageLimit(1);
+                                    mViewPager.setOffscreenPageLimit(2);
                                     //  mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
                                     mViewPager.setAdapter(myPager);
 
                                     viewPager1.setClipChildren(false);
                                     viewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
-                                    viewPager1.setOffscreenPageLimit(1);
+                                    viewPager1.setOffscreenPageLimit(2);
                                     // viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
                                     viewPager1.setAdapter(myPager);
                                     try
@@ -995,10 +1004,19 @@ public class ProfileFragment extends Fragment
             {
 //                Toast.makeText(getContext(),"Edit Profile",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(), EditProfileActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("type", "edit");
                 intent.putExtra("profile_id", TestimonialProfileId);
                 intent.putExtra("activity", "profile");
                 startActivity(intent);
+                getActivity().overridePendingTransition (0, 0);
+
+               /* Intent intent = new Intent(getApplicationContext(), Activity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                overridePendingTransition (0, 0);*/
             }
         });
 
@@ -1359,7 +1377,7 @@ public class ProfileFragment extends Fragment
                         arrayEvents = object.getJSONArray("Event_Cat_Name");
                         listAssociation = new ArrayList<String>();
                         listEvents = new ArrayList<String>();
-
+                        eventString = "";
                         for (int i1 = 0; i1 < arrayEvents.length(); i1++) {
 
                             listEvents.add(arrayEvents.getString(i1));
@@ -1379,6 +1397,7 @@ public class ProfileFragment extends Fragment
                             }
                         }
                         txtEventsListFinal.setText(eventString);
+                        associationString = "";
                         for (int i1 = 0; i1 < array.length(); i1++) {
 
                             listAssociation.add(array.getString(i1));
