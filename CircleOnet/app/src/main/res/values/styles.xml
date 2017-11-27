@@ -10,7 +10,7 @@
     </style>
 
     <style name="NoActionbar" parent="Theme.AppCompat.Light.NoActionBar">
-        
+        <item name="windowDisablePreview">true</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowLightStatusBar">true</item>
