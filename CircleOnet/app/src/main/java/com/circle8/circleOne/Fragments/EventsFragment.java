@@ -121,7 +121,19 @@ public class EventsFragment extends Fragment
         line = view.findViewById(R.id.view);
         listView = (ListView)view.findViewById(R.id.listEvents);
 
-        callFirst();
+        if (EventsSelectOption.searchOpt.equals("AllEvents"))
+        {
+            callFirst();
+        }
+        else
+        {
+            new HttpAsyncTaskSearchEvent().execute(Utility.BASE_URL+"Events/Search");
+        }
+
+
+//        callFirst();
+
+
 
        /* try
         {
@@ -187,7 +199,7 @@ public class EventsFragment extends Fragment
                     if (s.length() <= 0)
                     {
                         EventsSelectOption.searchOpt = "ClearSearch";
-                        eventModelArrayList.clear();
+                      /*  eventModelArrayList.clear();
                         try
                         {
                             gridAdapter.notifyDataSetChanged();
@@ -195,7 +207,7 @@ public class EventsFragment extends Fragment
                         catch (Exception e)
                         {
                             e.printStackTrace();
-                        }
+                        }*/
                         tvEventInfo.setVisibility(View.GONE);
 
                         callFirst();
@@ -218,7 +230,7 @@ public class EventsFragment extends Fragment
             @Override
             public void onClick(View view)
             {
-                eventModelArrayList.clear();
+               /* eventModelArrayList.clear();
                 try
                 {
                     gridAdapter.notifyDataSetChanged();
@@ -226,7 +238,7 @@ public class EventsFragment extends Fragment
                 catch (Exception e)
                 {
                     e.printStackTrace();
-                }
+                }*/
                 eventSearchBy = "Name";
                 eventSearchKey = searchText.getText().toString();
                 new HttpAsyncTaskSearchEvent().execute(Utility.BASE_URL+"Events/Search");
@@ -376,11 +388,14 @@ public class EventsFragment extends Fragment
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+
+            CardsActivity.setActionBarTitle("Events");
+
             try
             {
                 if(result == "")
                 {
-                    Toast.makeText(mContext, "Check Internet Connection", Toast.LENGTH_LONG).show();
+                    tvEventInfo.setVisibility(View.VISIBLE);
                 }
                 else
                 {
@@ -397,10 +412,12 @@ public class EventsFragment extends Fragment
 
                     if(eventList.length() == 0)
                     {
-
+                        tvEventInfo.setVisibility(View.VISIBLE);
                     }
                     else
                     {
+                        tvEventInfo.setVisibility(View.GONE);
+
                         for(int i = 0 ; i <= eventList.length() ; i++ )
                         {
                             JSONObject eList = eventList.getJSONObject(i);
@@ -572,11 +589,23 @@ public class EventsFragment extends Fragment
             rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
 
+            CardsActivity.setActionBarTitle("Events");
+
+            eventModelArrayList.clear();
+            try
+            {
+                gridAdapter.notifyDataSetChanged();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
             try
             {
                 if(result == "")
                 {
-                    Toast.makeText(mContext, "Check Internet Connection", Toast.LENGTH_LONG).show();
+                    tvEventInfo.setVisibility(View.VISIBLE);
                 }
                 else
                 {

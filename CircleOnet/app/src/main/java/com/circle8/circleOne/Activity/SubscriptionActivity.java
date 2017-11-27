@@ -156,7 +156,7 @@ public class SubscriptionActivity extends AppCompatActivity
                     alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            //do your work here
+                            //do your work here.
                             dialog.dismiss();
                             new HttpAsyncTaskCancelSub().execute("http://circle8.asia/Checkout/Cancelsubscription");
                         }

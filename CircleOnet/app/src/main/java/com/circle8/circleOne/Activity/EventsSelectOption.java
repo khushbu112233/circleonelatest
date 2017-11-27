@@ -172,9 +172,10 @@ public class EventsSelectOption extends AppCompatActivity
         CardsActivity.setActionBarTitle("Events");
         searchOpt = "AllEvents";
         searchKeyWord = "";
-        EventsFragment.callSecond();
+//        EventsFragment.callSecond();
         Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
         userIntent.putExtra("viewpager_position", 2);
+        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
         startActivity(userIntent);
         finish();
 //        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
@@ -185,7 +186,7 @@ public class EventsSelectOption extends AppCompatActivity
     {
         if (searchText.getText().toString().isEmpty())
         {
-            Toast.makeText(getApplicationContext(),"Please, Type some keyword related to search.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Please type some keyword",Toast.LENGTH_SHORT).show();
         }
         else
         {
@@ -196,15 +197,14 @@ public class EventsSelectOption extends AppCompatActivity
             searchKeyWord = searchText.getText().toString() ;
             searchBy = "Company";
 
-            EventsFragment.searchEvent();
+//            EventsFragment.searchEvent();
 
             Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
             userIntent.putExtra("viewpager_position", 2);
+            overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
             startActivity(userIntent);
             finish();
 //            overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-
-
         }
 
     }
@@ -213,7 +213,7 @@ public class EventsSelectOption extends AppCompatActivity
     {
         if (searchText.getText().toString().isEmpty())
         {
-            Toast.makeText(getApplicationContext(),"Please, Type some keyword related to search.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Please type some keyword",Toast.LENGTH_SHORT).show();
         }
         else
         {
@@ -224,10 +224,11 @@ public class EventsSelectOption extends AppCompatActivity
             searchKeyWord = searchText.getText().toString() ;
             searchBy = "Industry";
 
-            EventsFragment.searchEvent();
+//            EventsFragment.searchEvent();
 
             Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
             userIntent.putExtra("viewpager_position", 2);
+            overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
             startActivity(userIntent);
             finish();
 //            overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
