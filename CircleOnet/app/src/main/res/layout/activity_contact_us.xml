@@ -141,7 +141,7 @@
                                     <View
                                         android:layout_width="match_parent"
                                         android:layout_height="1dp"
-                                        android:background="@color/colorPrimary"
+                                        android:background="@color/white"
                                         android:layout_weight="0.5"/>
 
                                     <com.circle8.circleOne.Utils.cgTextView
@@ -151,11 +151,11 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="INFINITE POSSIBILITIES"
-                                        android:textColor="@color/colorPrimary"/>
+                                        android:textColor="@color/white"/>
                                     <View
                                         android:layout_width="match_parent"
                                         android:layout_height="1dp"
-                                        android:background="@color/colorPrimary"
+                                        android:background="@color/white"
                                         android:layout_weight="0.5"/>
 
                                 </LinearLayout>
@@ -403,7 +403,7 @@
                                 android:layout_below="@+id/rlPhoto"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="0dp"
-                                android:textColor="@color/unselected" />
+                                android:textColor="@color/black" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -418,7 +418,7 @@
                                 android:layout_height="80dp"
                                 android:hint="Description"
                                 android:textColorHint="@color/unselected"
-                                android:textColor="@color/unselected"
+                                android:textColor="@color/black"
                                 android:background="@drawable/event_back1"
                                 android:maxLines="2"
                                 android:textSize="14sp"

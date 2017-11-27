@@ -211,7 +211,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
     private QBSystemMessagesManager systemMessagesManager;
     ArrayList<QBUser> selectedUsers = new ArrayList<QBUser>();
 
-     private BroadcastReceiver pushBroadcastReceiver;
+    private BroadcastReceiver pushBroadcastReceiver;
     private GooglePlayServicesHelper googlePlayServicesHelper;
     private DialogsAdapter dialogsAdapter;
     private QBChatDialogMessageListener allDialogsMessagesListener;
@@ -1668,6 +1668,19 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         if (mNfcAdapter != null)
             mNfcAdapter.enableForegroundDispatch(this, pendingIntent, nfcIntentFilter, null);
 
+
+        if (tabLayout.getSelectedTabPosition() == 3)
+        {
+            CardsActivity.setActionBarTitle("Profile");
+        }
+        else if (tabLayout.getSelectedTabPosition() == 2)
+        {
+            CardsActivity.setActionBarTitle("Events");
+        }
+        else if (tabLayout.getSelectedTabPosition() == 1)
+        {
+            CardsActivity.setActionBarTitle("Connect");
+        }
     }
 
    /* @Override

@@ -1,12 +1,15 @@
 package com.circle8.circleOne.Activity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -59,6 +62,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.circle8.circleOne.R.id.tvAddress;
+import static java.security.AccessController.getContext;
 
 public class MerchantDetailActivity extends FragmentActivity implements OnMapReadyCallback
 {
@@ -189,9 +195,27 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
             @Override
             public void onClick(View view)
             {
-                Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
-                intent.putExtra("url", websiteURL);
-                startActivity(intent);
+                AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(getApplicationContext(), R.style.Blue_AlertDialog);
+
+                builder.setTitle("CircleOne")
+                        .setMessage("Are you sure you want to exit to "+websiteURL)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
+                                intent.putExtra("url", websiteURL);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_map)
+                        .show();
             }
         });
     }
@@ -262,8 +286,8 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
                 .strokeColor(Color.RED)
                 .fillColor(Color.BLUE));*/
 
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(20);
         googleMaps.setMyLocationEnabled(true);
-        CameraUpdate zoom = CameraUpdateFactory.zoomTo(10);
         googleMaps.animateCamera(zoom);
 
        /* LatLng ttc = new LatLng(23.012688,72.522777);
@@ -386,7 +410,7 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
                     }
                     if (merchant_desc.equalsIgnoreCase("") || merchant_desc.equalsIgnoreCase("null"))
                     {
-                        tvMerchantDesc.setText("No merchant description available.");
+
                     }
                     else
                     {

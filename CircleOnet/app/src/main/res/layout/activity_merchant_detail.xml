@@ -101,7 +101,7 @@
             android:layout_marginTop="5dp"
             android:layout_width="22dp"
             android:layout_height="30dp"
-            android:visibility="visible"
+            android:visibility="gone"
             android:src="@drawable/ic_dehaze_black_24dp"/>
     </RelativeLayout>
 
@@ -207,42 +207,6 @@
             </com.circle8.circleOne.Utils.ExpandableHeightListView>
 -->
 
-
-            <com.circle8.circleOne.Utils.cgTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Find your nearest Starbucks store."
-                android:textColor="@color/colorPrimary"
-                android:textSize="17dp"
-                android:textAlignment="gravity"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="5dp"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/colorPrimary"/>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="150dp">
-
-                <fragment
-                    android:id="@+id/map"
-                    android:name="com.google.android.gms.maps.SupportMapFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-
-            </RelativeLayout>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:scaleType="fitXY"
-                android:visibility="gone"
-                android:src="@drawable/store_map"/>
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -283,6 +247,42 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp" />
             </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimary"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp">
+
+                <fragment
+                    android:id="@+id/map"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </RelativeLayout>
+
+            <com.circle8.circleOne.Utils.cgTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Participating Stores"
+                android:textColor="@color/colorPrimary"
+                android:textSize="17dp"
+                android:textAlignment="gravity"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:scaleType="fitXY"
+                android:visibility="gone"
+                android:src="@drawable/store_map"/>
 
             <View
                 android:layout_width="match_parent"
