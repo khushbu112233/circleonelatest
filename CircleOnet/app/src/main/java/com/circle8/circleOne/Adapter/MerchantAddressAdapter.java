@@ -115,11 +115,11 @@ public class MerchantAddressAdapter extends BaseAdapter
         if (merchantLocationModelArrayList.get(position).getCloseTime().isEmpty() ||
                 merchantLocationModelArrayList.get(position).getCloseTime().equals(""))
         {
-            holder.tvOpenTime.setText("Close Time: N/A");
+            holder.tvCloseTime.setText("Close Time: N/A");
         }
         else
         {
-            holder.tvOpenTime.setText("Close Time: "+merchantLocationModelArrayList.get(position).getCloseTime());
+            holder.tvCloseTime.setText("Close Time: "+merchantLocationModelArrayList.get(position).getCloseTime());
         }
        /* holder.tvStoreAddress1.setText(merchantLocationModelArrayList.get(position).getAddress1()
                 +", "+merchantLocationModelArrayList.get(position).getAddress2()

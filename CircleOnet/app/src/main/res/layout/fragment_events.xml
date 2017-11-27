@@ -64,7 +64,7 @@
         android:id="@+id/tvEventInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No Found Search Event"
+        android:text="There is no upcoming event."
         android:layout_centerInParent="true"
         android:visibility="gone"/>
 

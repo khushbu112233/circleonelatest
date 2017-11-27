@@ -330,28 +330,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         setContentView(R.layout.fragment_edit_profile);
         activity = EditProfileActivity.this;
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        txtAttachDelete = (TextView) findViewById(R.id.txtAttachDelete);
-        recyclerEvents = (RecyclerView) findViewById(R.id.recyclerEvents);
-        edtProfileName = (EditText) findViewById(R.id.edtProfileName);
-        ivProfileDelete = (ImageView) findViewById(R.id.ivProfileDelete);
-        imgProfileShare = (ImageView) findViewById(R.id.imgProfileShare);
-        referralCodeSession = new ReferralCodeSession(getApplicationContext());
-        HashMap<String, String> referral = referralCodeSession.getReferralDetails();
-        refer = referral.get(ReferralCodeSession.KEY_REFERRAL);
-        mAuth = FirebaseAuth.getInstance();
-        // editPolygonView.setImageResource(R.drawable.test_receipt);
-        //    originalBitmap = ((BitmapDrawable) editPolygonView.getDrawable()).getBitmap();
-        appbar = (AppBarLayout) findViewById(R.id.appbar);
-        ccpCountry = (CountryCodePicker) findViewById(R.id.ccpAddress5);
-
-        profileSession = new ProfileSession(getApplicationContext());
-        rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
-        tvProgressing = (TextView)findViewById(R.id.txtProgressing);
-        ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
-        ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
-        ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
-        recyclerAssociation = (RecyclerView) findViewById(R.id.recyclerAssociation);
-
+        initUI();
         imgProfileShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -366,152 +345,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         });
 
 
-        edtWork2 = (EditText) findViewById(R.id.edtWork2);
-        edtPrimary2 = (EditText) findViewById(R.id.edtPrimary2);
-        edtEmail2 = (EditText) findViewById(R.id.edtEmail2);
-        edtFax1 = (EditText) findViewById(R.id.edtFax1);
-        edtFax2 = (EditText) findViewById(R.id.edtFax2);
-        autoCompleteCompany = (AutoCompleteTextView) findViewById(R.id.autoCompleteCompany);
-        autoCompleteDesignation = (AutoCompleteTextView) findViewById(R.id.autoCompleteDesignation);
-        autoCompleteIndustry = (AutoCompleteTextView) findViewById(R.id.autoCompleteIndustry);
-        gridView = (ExpandableHeightGridView) findViewById(R.id.gridView);
-        gridViewAdded = (ExpandableHeightGridView) findViewById(R.id.gridViewAdded);
-        etAttachFile = (TextView) findViewById(R.id.etAttachFile);
-        ivAttachFile = (ImageView) findViewById(R.id.ivAttachFile);
-        session = new LoginSession(getApplicationContext());
-        imgDone = (TextView) findViewById(R.id.imgDone);
-        imgBack = (ImageView) findViewById(R.id.imgBack);
-//        edtUserName = (EditText) findViewById(R.id.edtUserName);
-        edtFirstName = (EditText)findViewById(R.id.edtFirstName);
-        edtLastName = (EditText)findViewById(R.id.edtLastName);
-        edtAddress1 = (EditText) findViewById(R.id.edtAddress1);
-        edtAddress2 = (EditText) findViewById(R.id.edtAddress2);
-        edtAddress3 = (EditText) findViewById(R.id.edtAddress3);
-        edtAddress4 = (EditText) findViewById(R.id.edtAddress4);
-        edtAddress6 = (EditText) findViewById(R.id.edtAddress6);
-        edtWork = (EditText) findViewById(R.id.edtWork);
-        btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
-        edtEmail = (EditText) findViewById(R.id.edtEmail);
-        edtWebsite = (EditText) findViewById(R.id.edtWebsite);
-        edtProfileDesc = (EditText) findViewById(R.id.edtProfileDesc);
-        edtCompanyDesc = (EditText) findViewById(R.id.edtCompanyDesc);
-        edtPrimary = (EditText) findViewById(R.id.edtPrimary);
-        mViewPager = (ViewPager) findViewById(R.id.viewPager);
-        viewPager1 = (ViewPager) findViewById(R.id.viewPager1);
-        imgProfile = (CircleImageView) findViewById(R.id.imgProfile);
-        tvCompany = (TextView) findViewById(R.id.tvCompany);
-        tvDesignation = (TextView) findViewById(R.id.tvDesignation);
-        tvPersonName = (TextView) findViewById(R.id.tvPersonName);
-        lstTestimonial = (ExpandableHeightListView) findViewById(R.id.lstTestimonial);
-        txtTestimonial = (TextView) findViewById(R.id.txtTestimonial);
-        txtMore = (TextView) findViewById(R.id.txtMore);
-        loginButton = (LoginButton) findViewById(R.id.login_button);
-        ivArrowImg = (ImageView) findViewById(R.id.ivArrowImg);
-        ivArrowImg1 = (ImageView) findViewById(R.id.ivArrowImg1);
-        tvEventInfo = (TextView) findViewById(R.id.tvEventInfo);
-        imgAdd = (ImageView) findViewById(R.id.imgAdd);
-        llEventBox = (LinearLayout) findViewById(R.id.llEventBox);
-        ivAttachBackImage = (ImageView) findViewById(R.id.ivAttachBackImage);
-        ivAttachFrontImage = (ImageView) findViewById(R.id.ivAttachFrontImage);
-        txtCardFront = (TextView) findViewById(R.id.txtCardFront);
-        txtCardBack = (TextView) findViewById(R.id.txtCardBack);
-       // ivAddAssociate = (ImageView) findViewById(R.id.ivAddAssociate);
-        //  etAssociationName = (EditText)findViewById(R.id.etAssociationName);
-        spnAssociation = (Spinner) findViewById(R.id.spnAssociation);
-        stickyScrollView = (StickyScrollView)findViewById(R.id.scroll);
 
-        imgYoutube = (ImageView) findViewById(R.id.imgYoutube);
-        imgGoogle = (ImageView) findViewById(R.id.imgGoogle);
-        imgTwitter = (ImageView) findViewById(R.id.imgTwitter);
-        imgLinkedin = (ImageView) findViewById(R.id.imgLinkedin);
-        imgFb = (ImageView) findViewById(R.id.imgFb);
-        loginButton = (LoginButton) findViewById(R.id.login_button);
-        Intent intent = getIntent();
-        type = intent.getStringExtra("type");
-        fromActivity = intent.getStringExtra("activity");
-        HashMap<String, String> user = session.getUserDetails();
-        UserID = user.get(LoginSession.KEY_USERID);
-        profileId = intent.getStringExtra("profile_id");
-        allTaggs = new ArrayList<>();
-
-        SpannableString ss = new SpannableString("Ask your friends to write a Testimonial for you(100 words or less),Please choose from your CircleOne contacts and send a request.");
-        ClickableSpan clickableSpan = new ClickableSpan() {
-            @Override
-            public void onClick(View textView) {
-                Intent intent1 = new Intent(getApplicationContext(), SearchGroupMembers.class);
-                intent1.putExtra("from", "profile");
-                intent1.putExtra("ProfileId", profileId);
-                startActivity(intent1);
-            }
-            @Override
-            public void updateDrawState(TextPaint ds) {
-                super.updateDrawState(ds);
-                ds.setUnderlineText(false);
-            }
-        };
-        ss.setSpan(clickableSpan, 91, 100, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        // TextView textView = (TextView) findViewById(R.id.hello);
-        txtTestimonial.setText(ss);
-        txtTestimonial.setMovementMethod(LinkMovementMethod.getInstance());
-        txtTestimonial.setHighlightColor(getResources().getColor(R.color.colorPrimary));
-
-
-        btnSignIn.setOnClickListener(this);
-        imgGoogle.setOnClickListener(this);
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .addApi(Plus.API, Plus.PlusOptions.builder().build())
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
-
-
-        // Customizing G+ button
-        btnSignIn.setSize(SignInButton.SIZE_ICON_ONLY);
-        btnSignIn.setScopes(gso.getScopeArray());
-
-        new HttpAsyncTaskAssociation().execute(Utility.BASE_URL+"GetAssociationList");
-
-        if (type.equals("edit"))
-        {
-            Utility.freeMemory();
-            new HttpAsyncTaskUserProfile().execute(Utility.BASE_URL+"GetUserProfile");
-            new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");
-        }
-
-        array = new String[]{"Accommodations", "Information", "Accounting", "Information technology", "Advertising",
-                "Insurance", "Aerospace", "Journalism & News", "Agriculture & Agribusiness", "Legal Services", "Air Transportation",
-                "Manufacturing", "Apparel & Accessories", "Media & Broadcasting", "Auto", "Medical Devices & Supplies", "Banking",
-                "Motions Picture & Video", "Beauty & Cosmetics", "Music", "Biotechnology", "Pharmaceutical", "Chemical", "Public Administration",
-                "Communications", "Public Relations", "Computer", "Publishing", "Construction", "Rail", "Consulting", "Real Estate",
-                "Consumer Products", "Retail", "Education", "Service", "Electronics", "Sports", "Employment", "Technology", "Energy",
-                "Telecommunications", "Entertainment & Recreation", "Tourism", "Fashion", "Transportation", "Financial Services",
-                "Travel", "Fine Arts", "Utilities", "Food & Beverage", "Video Game", "Green Technology", "Web Services", "Health"};
-        gridView.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.mytextview, array));
-        gridView.setExpanded(true);
-
-        List<String> stringList = new ArrayList<String>(Arrays.asList(array));
-        eventList = new ArrayList<AssociationModel>();
-        for (int i = 0; i < array.length; i++) {
-            Utility.freeMemory();
-            AssociationModel st = new AssociationModel(String.valueOf(i), stringList.get(i), false );
-
-            eventList.add(st);
-
-            mAdapter1 = new CardViewDataAdapter(eventList);
-
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(EditProfileActivity.this, 5, GridLayoutManager.HORIZONTAL, false);
-            recyclerEvents.setAdapter(mAdapter1);
-            recyclerEvents.setLayoutManager(gridLayoutManager);
-
-
-        }
 
         imgYoutube.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -695,11 +529,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             }
         });
 
-        if (addEventList.size() == 0) {
-            tvEventInfo.setVisibility(View.VISIBLE);
-        } else {
-            tvEventInfo.setVisibility(View.GONE);
-        }
+
 
         viewPager1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1008,7 +838,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                 }
             }
         });
-        generateHashkey();
+       // generateHashkey();
         txtMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1066,21 +896,6 @@ public class EditProfileActivity extends AppCompatActivity implements
             makeRequest();
         }
 
-        llTelePhoneBox1 = (LinearLayout)findViewById(R.id.llTelephoneBox1);
-        llTelePhoneBox2 = (LinearLayout)findViewById(R.id.llTelephoneBox2);
-        llMobileBox1 = (LinearLayout)findViewById(R.id.llMobileBox1);
-        llMobileBox2 = (LinearLayout)findViewById(R.id.llMobileBox2);
-        llFaxBox1 = (LinearLayout)findViewById(R.id.llFaxBox1);
-        llFaxBox2 = (LinearLayout)findViewById(R.id.llFaxBox2);
-        ccp1 = (CountryCodePicker) findViewById(R.id.ccp1);
-        ccp2 = (CountryCodePicker) findViewById(R.id.ccp2);
-        ccp3 = (CountryCodePicker) findViewById(R.id.ccp3);
-        ccp4 = (CountryCodePicker) findViewById(R.id.ccp4);
-        ccp5 = (CountryCodePicker) findViewById(R.id.ccp5);
-        ccp6 = (CountryCodePicker) findViewById(R.id.ccp6);
-        ivTeleAdd = (ImageView)findViewById(R.id.ivTeleAdd);
-        ivMobAdd = (ImageView)findViewById(R.id.ivMobAdd);
-        ivFaxAdd = (ImageView)findViewById(R.id.ivFaxAdd);
 
         ivTeleAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1133,6 +948,201 @@ public class EditProfileActivity extends AppCompatActivity implements
                 }
             }
         });
+
+    }
+
+    public void initUI(){
+        txtAttachDelete = (TextView) findViewById(R.id.txtAttachDelete);
+        recyclerEvents = (RecyclerView) findViewById(R.id.recyclerEvents);
+        edtProfileName = (EditText) findViewById(R.id.edtProfileName);
+        ivProfileDelete = (ImageView) findViewById(R.id.ivProfileDelete);
+        imgProfileShare = (ImageView) findViewById(R.id.imgProfileShare);
+        referralCodeSession = new ReferralCodeSession(getApplicationContext());
+        HashMap<String, String> referral = referralCodeSession.getReferralDetails();
+        refer = referral.get(ReferralCodeSession.KEY_REFERRAL);
+        mAuth = FirebaseAuth.getInstance();
+        // editPolygonView.setImageResource(R.drawable.test_receipt);
+        //    originalBitmap = ((BitmapDrawable) editPolygonView.getDrawable()).getBitmap();
+        appbar = (AppBarLayout) findViewById(R.id.appbar);
+        ccpCountry = (CountryCodePicker) findViewById(R.id.ccpAddress5);
+
+        profileSession = new ProfileSession(getApplicationContext());
+        rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
+        tvProgressing = (TextView)findViewById(R.id.txtProgressing);
+        ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
+        ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
+        ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
+        recyclerAssociation = (RecyclerView) findViewById(R.id.recyclerAssociation);
+
+        edtWork2 = (EditText) findViewById(R.id.edtWork2);
+        edtPrimary2 = (EditText) findViewById(R.id.edtPrimary2);
+        edtEmail2 = (EditText) findViewById(R.id.edtEmail2);
+        edtFax1 = (EditText) findViewById(R.id.edtFax1);
+        edtFax2 = (EditText) findViewById(R.id.edtFax2);
+        autoCompleteCompany = (AutoCompleteTextView) findViewById(R.id.autoCompleteCompany);
+        autoCompleteDesignation = (AutoCompleteTextView) findViewById(R.id.autoCompleteDesignation);
+        autoCompleteIndustry = (AutoCompleteTextView) findViewById(R.id.autoCompleteIndustry);
+        gridView = (ExpandableHeightGridView) findViewById(R.id.gridView);
+        gridViewAdded = (ExpandableHeightGridView) findViewById(R.id.gridViewAdded);
+        etAttachFile = (TextView) findViewById(R.id.etAttachFile);
+        ivAttachFile = (ImageView) findViewById(R.id.ivAttachFile);
+        session = new LoginSession(getApplicationContext());
+        imgDone = (TextView) findViewById(R.id.imgDone);
+        imgBack = (ImageView) findViewById(R.id.imgBack);
+//        edtUserName = (EditText) findViewById(R.id.edtUserName);
+        edtFirstName = (EditText)findViewById(R.id.edtFirstName);
+        edtLastName = (EditText)findViewById(R.id.edtLastName);
+        edtAddress1 = (EditText) findViewById(R.id.edtAddress1);
+        edtAddress2 = (EditText) findViewById(R.id.edtAddress2);
+        edtAddress3 = (EditText) findViewById(R.id.edtAddress3);
+        edtAddress4 = (EditText) findViewById(R.id.edtAddress4);
+        edtAddress6 = (EditText) findViewById(R.id.edtAddress6);
+        edtWork = (EditText) findViewById(R.id.edtWork);
+        btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
+        edtEmail = (EditText) findViewById(R.id.edtEmail);
+        edtWebsite = (EditText) findViewById(R.id.edtWebsite);
+        edtProfileDesc = (EditText) findViewById(R.id.edtProfileDesc);
+        edtCompanyDesc = (EditText) findViewById(R.id.edtCompanyDesc);
+        edtPrimary = (EditText) findViewById(R.id.edtPrimary);
+        mViewPager = (ViewPager) findViewById(R.id.viewPager);
+        viewPager1 = (ViewPager) findViewById(R.id.viewPager1);
+        imgProfile = (CircleImageView) findViewById(R.id.imgProfile);
+        tvCompany = (TextView) findViewById(R.id.tvCompany);
+        tvDesignation = (TextView) findViewById(R.id.tvDesignation);
+        tvPersonName = (TextView) findViewById(R.id.tvPersonName);
+        lstTestimonial = (ExpandableHeightListView) findViewById(R.id.lstTestimonial);
+        txtTestimonial = (TextView) findViewById(R.id.txtTestimonial);
+        txtMore = (TextView) findViewById(R.id.txtMore);
+        loginButton = (LoginButton) findViewById(R.id.login_button);
+        ivArrowImg = (ImageView) findViewById(R.id.ivArrowImg);
+        ivArrowImg1 = (ImageView) findViewById(R.id.ivArrowImg1);
+        tvEventInfo = (TextView) findViewById(R.id.tvEventInfo);
+        imgAdd = (ImageView) findViewById(R.id.imgAdd);
+        llEventBox = (LinearLayout) findViewById(R.id.llEventBox);
+        ivAttachBackImage = (ImageView) findViewById(R.id.ivAttachBackImage);
+        ivAttachFrontImage = (ImageView) findViewById(R.id.ivAttachFrontImage);
+        txtCardFront = (TextView) findViewById(R.id.txtCardFront);
+        txtCardBack = (TextView) findViewById(R.id.txtCardBack);
+        // ivAddAssociate = (ImageView) findViewById(R.id.ivAddAssociate);
+        //  etAssociationName = (EditText)findViewById(R.id.etAssociationName);
+        spnAssociation = (Spinner) findViewById(R.id.spnAssociation);
+        stickyScrollView = (StickyScrollView)findViewById(R.id.scroll);
+
+        imgYoutube = (ImageView) findViewById(R.id.imgYoutube);
+        imgGoogle = (ImageView) findViewById(R.id.imgGoogle);
+        imgTwitter = (ImageView) findViewById(R.id.imgTwitter);
+        imgLinkedin = (ImageView) findViewById(R.id.imgLinkedin);
+        imgFb = (ImageView) findViewById(R.id.imgFb);
+        loginButton = (LoginButton) findViewById(R.id.login_button);
+        Intent intent = getIntent();
+        type = intent.getStringExtra("type");
+        fromActivity = intent.getStringExtra("activity");
+        HashMap<String, String> user = session.getUserDetails();
+        UserID = user.get(LoginSession.KEY_USERID);
+        profileId = intent.getStringExtra("profile_id");
+        allTaggs = new ArrayList<>();
+
+        llTelePhoneBox1 = (LinearLayout)findViewById(R.id.llTelephoneBox1);
+        llTelePhoneBox2 = (LinearLayout)findViewById(R.id.llTelephoneBox2);
+        llMobileBox1 = (LinearLayout)findViewById(R.id.llMobileBox1);
+        llMobileBox2 = (LinearLayout)findViewById(R.id.llMobileBox2);
+        llFaxBox1 = (LinearLayout)findViewById(R.id.llFaxBox1);
+        llFaxBox2 = (LinearLayout)findViewById(R.id.llFaxBox2);
+        ccp1 = (CountryCodePicker) findViewById(R.id.ccp1);
+        ccp2 = (CountryCodePicker) findViewById(R.id.ccp2);
+        ccp3 = (CountryCodePicker) findViewById(R.id.ccp3);
+        ccp4 = (CountryCodePicker) findViewById(R.id.ccp4);
+        ccp5 = (CountryCodePicker) findViewById(R.id.ccp5);
+        ccp6 = (CountryCodePicker) findViewById(R.id.ccp6);
+        ivTeleAdd = (ImageView)findViewById(R.id.ivTeleAdd);
+        ivMobAdd = (ImageView)findViewById(R.id.ivMobAdd);
+        ivFaxAdd = (ImageView)findViewById(R.id.ivFaxAdd);
+
+        SpannableString ss = new SpannableString("Ask your friends to write a Testimonial for you(100 words or less),Please choose from your CircleOne contacts and send a request.");
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View textView) {
+                Intent intent1 = new Intent(getApplicationContext(), SearchGroupMembers.class);
+                intent1.putExtra("from", "profile");
+                intent1.putExtra("ProfileId", profileId);
+                startActivity(intent1);
+            }
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false);
+            }
+        };
+        ss.setSpan(clickableSpan, 91, 100, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        // TextView textView = (TextView) findViewById(R.id.hello);
+        txtTestimonial.setText(ss);
+        txtTestimonial.setMovementMethod(LinkMovementMethod.getInstance());
+        txtTestimonial.setHighlightColor(getResources().getColor(R.color.colorPrimary));
+
+
+        btnSignIn.setOnClickListener(this);
+        imgGoogle.setOnClickListener(this);
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .addApi(Plus.API, Plus.PlusOptions.builder().build())
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+
+
+        // Customizing G+ button
+        btnSignIn.setSize(SignInButton.SIZE_ICON_ONLY);
+        btnSignIn.setScopes(gso.getScopeArray());
+
+        new HttpAsyncTaskAssociation().execute(Utility.BASE_URL+"GetAssociationList");
+
+        if (type.equals("edit"))
+        {
+            Utility.freeMemory();
+            new HttpAsyncTaskUserProfile().execute(Utility.BASE_URL+"GetUserProfile");
+            new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");
+        }
+
+        array = new String[]{"Accommodations", "Information", "Accounting", "Information technology", "Advertising",
+                "Insurance", "Aerospace", "Journalism & News", "Agriculture & Agribusiness", "Legal Services", "Air Transportation",
+                "Manufacturing", "Apparel & Accessories", "Media & Broadcasting", "Auto", "Medical Devices & Supplies", "Banking",
+                "Motions Picture & Video", "Beauty & Cosmetics", "Music", "Biotechnology", "Pharmaceutical", "Chemical", "Public Administration",
+                "Communications", "Public Relations", "Computer", "Publishing", "Construction", "Rail", "Consulting", "Real Estate",
+                "Consumer Products", "Retail", "Education", "Service", "Electronics", "Sports", "Employment", "Technology", "Energy",
+                "Telecommunications", "Entertainment & Recreation", "Tourism", "Fashion", "Transportation", "Financial Services",
+                "Travel", "Fine Arts", "Utilities", "Food & Beverage", "Video Game", "Green Technology", "Web Services", "Health"};
+        gridView.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.mytextview, array));
+        gridView.setExpanded(true);
+
+        List<String> stringList = new ArrayList<String>(Arrays.asList(array));
+        eventList = new ArrayList<AssociationModel>();
+        for (int i = 0; i < array.length; i++) {
+            Utility.freeMemory();
+            AssociationModel st = new AssociationModel(String.valueOf(i), stringList.get(i), false );
+
+            eventList.add(st);
+
+            mAdapter1 = new CardViewDataAdapter(eventList);
+
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(EditProfileActivity.this, 5, GridLayoutManager.HORIZONTAL, false);
+            recyclerEvents.setAdapter(mAdapter1);
+            recyclerEvents.setLayoutManager(gridLayoutManager);
+
+
+        }
+
+        if (addEventList.size() == 0) {
+            tvEventInfo.setVisibility(View.VISIBLE);
+        } else {
+            tvEventInfo.setVisibility(View.GONE);
+        }
 
     }
 

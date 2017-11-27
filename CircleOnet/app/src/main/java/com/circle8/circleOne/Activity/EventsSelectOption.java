@@ -26,6 +26,7 @@ public class EventsSelectOption extends AppCompatActivity
     AutoCompleteTextView searchText ;
 
     public static String searchKeyWord = "";
+    public static String searchKeyWord1 = "";
     public static String searchBy = "";
     public static String searchOpt = "AllEvents";
     public static String eventOpt = "AllEvents";
@@ -171,12 +172,13 @@ public class EventsSelectOption extends AppCompatActivity
         CardsActivity.setActionBarTitle("Events");
         searchOpt = "AllEvents";
         searchKeyWord = "";
+        EventsFragment.callSecond();
         Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
         userIntent.putExtra("viewpager_position", 2);
         startActivity(userIntent);
         finish();
-        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-        EventsFragment.callSecond();
+//        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+
     }
 
     public void byCompanyAssociation(View v)
@@ -194,13 +196,15 @@ public class EventsSelectOption extends AppCompatActivity
             searchKeyWord = searchText.getText().toString() ;
             searchBy = "Company";
 
+            EventsFragment.searchEvent();
+
             Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
             userIntent.putExtra("viewpager_position", 2);
             startActivity(userIntent);
             finish();
-            overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+//            overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
 
-            EventsFragment.searchEvent();
+
         }
 
     }
@@ -220,13 +224,15 @@ public class EventsSelectOption extends AppCompatActivity
             searchKeyWord = searchText.getText().toString() ;
             searchBy = "Industry";
 
+            EventsFragment.searchEvent();
+
             Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
             userIntent.putExtra("viewpager_position", 2);
             startActivity(userIntent);
             finish();
-            overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+//            overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
 
-            EventsFragment.searchEvent();
+
         }
     }
 

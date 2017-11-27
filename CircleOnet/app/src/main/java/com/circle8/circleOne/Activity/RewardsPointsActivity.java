@@ -129,8 +129,8 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         tvHistory.setOnClickListener(this);
         imgBack.setOnClickListener(this);
 
+        new HttpAsyncGetAll().execute(Utility.BASE_URL+"Merchant/GetAll");                          //get
         new HttpAsyncGetHistoryReedemedPoints().execute(Utility.BASE_URL+"Rewards/History_ReedemedPoints");           // post
-        new HttpAsyncGetAll().execute(Utility.BASE_URL+"Merchant/GetAll");                 //get
 //        new HttpAsyncGetProductCategory().execute(Utility.MERCHANT_BASE_URL+"GetProductCategory");                 //get
 //        new HttpAsyncGetProduct().execute(Utility.MERCHANT_BASE_URL+"GetProducts");                               //get
 //        new HttpAsyncGetProductByCategory().execute(Utility.MERCHANT_BASE_URL+"GetProductsByCategory");           // post
@@ -178,20 +178,22 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                 Intent iPut = new Intent(RewardsPointsActivity.this, MerchantDetailActivity.class);
                 iPut.putExtra("MerchantID", mID);
                 startActivity(iPut);
+                finish();
 
                 return true;
             }
         });
 
-       /* ivAdImg.setOnClickListener(new View.OnClickListener() {
+        ivAdImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                Intent in = new Intent(RewardsPointsActivity.this, MerchantDetailActivity.class);
-                startActivity(in);
+                Intent iPut = new Intent(RewardsPointsActivity.this, MerchantDetailActivity.class);
+                iPut.putExtra("MerchantID", "22");
+                startActivity(iPut);
                 finish();
             }
-        });*/
+        });
 
         earnListView = (ListView)RewardView.findViewById(R.id.listView_Earn);
     }
@@ -201,7 +203,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         Intent intent = getIntent();
         String status = intent.getStringExtra("OnClick");
 
-        status = "CardImage";
+        status = "Merchant";
 
         if(status.equalsIgnoreCase("CardImage"))
         {
