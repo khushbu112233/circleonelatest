@@ -153,7 +153,7 @@
                 android:layout_marginTop="45dp"
                 android:layout_marginLeft="40dp"/>
         </RelativeLayout>
-        <com.circle8.circleOne.Utils.orkebyBoldTextView
+        <com.circle8.circleOne.Utils.cgTextView
             android:id="@+id/tvProfile"
             android:textSize="15dp"
             android:layout_marginTop="10dp"
@@ -161,7 +161,7 @@
             android:layout_height="match_parent"
             android:textAlignment="center"
             android:text="Profile 1"
-            android:textStyle="bold"
+            android:textStyle="normal"
             android:layout_gravity="center_horizontal"
             android:textColor="@color/colorPrimary"/>
     </LinearLayout>

@@ -208,6 +208,14 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         if(status.equalsIgnoreCase("CardImage"))
         {
             HistoryListView.setVisibility(View.VISIBLE);
+
+            tvHistory.setAlpha((float) 1.0);
+
+            ivCirclePlus.setImageResource(R.drawable.ic_circle_plus_blue);
+            tvPoints.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+            ivHouse.setImageResource(R.drawable.ic_house_blue);
+            tvMerchant.setTextColor(getResources().getColor(R.color.colorPrimary));
         }
         else if(status.equalsIgnoreCase("RewardPoint"))
         {
@@ -218,6 +226,8 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
 
             ivHouse.setImageResource(R.drawable.ic_house_blue);
             tvMerchant.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+            tvHistory.setAlpha((float) 0.5);
         }
         else if(status.equalsIgnoreCase("Merchant"))
         {
@@ -228,6 +238,8 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
 
             ivCirclePlus.setImageResource(R.drawable.ic_circle_plus_blue);
             tvPoints.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+            tvHistory.setAlpha((float) 0.5);
         }
 
     }

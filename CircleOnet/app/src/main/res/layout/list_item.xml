@@ -6,11 +6,12 @@
     android:orientation="vertical"
     android:padding="8dp">
 
-    <com.circle8.circleOne.Utils.cgTextView
+    <com.circle8.circleOne.Utils.cgBoldTextView
         android:id="@+id/lblListItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="10sp"
-        android:paddingLeft="10dp"/>
+        android:paddingLeft="10dp"
+        android:textColor="@color/black"/>
 
 </LinearLayout>
