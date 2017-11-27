@@ -13,6 +13,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowAnimationStyle">@null</item>
         <item name="android:windowDisablePreview">true</item>
         <!-- Customize your theme here. -->
     </style>
@@ -23,6 +24,7 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowDisablePreview">true</item>
         <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@null</item>
         <!-- Customize your theme here. -->
     </style>
 
