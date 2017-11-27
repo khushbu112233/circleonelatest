@@ -1037,6 +1037,7 @@ public class NotificationAdapter extends BaseAdapter
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Operation", "Accept");
             jsonObject.accumulate("RequestType", "");
+            jsonObject.accumulate("connection_date", Utility.currentDate());
             jsonObject.accumulate("friendProfileId", testimonialModels.get(posi).getFriendProfileID());
             jsonObject.accumulate("myProfileId", profileId);
 
@@ -1094,6 +1095,7 @@ public class NotificationAdapter extends BaseAdapter
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Operation", "Request");
             jsonObject.accumulate("RequestType", "");
+            jsonObject.accumulate("connection_date", Utility.currentDate());
             jsonObject.accumulate("friendProfileId", testimonialModels.get(posi).getFriendProfileID());
             jsonObject.accumulate("myProfileId", profileId);
 
@@ -1317,6 +1319,7 @@ public class NotificationAdapter extends BaseAdapter
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Operation", "Reject");
             jsonObject.accumulate("RequestType", "");
+            jsonObject.accumulate("connection_date", Utility.currentDate());
             jsonObject.accumulate("friendProfileId", testimonialModels.get(posi).getFriendProfileID());
             jsonObject.accumulate("myProfileId", profileId);
 

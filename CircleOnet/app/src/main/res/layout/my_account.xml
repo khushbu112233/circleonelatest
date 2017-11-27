@@ -154,6 +154,7 @@
                             android:layout_height="70dp">
                             <de.hdodenhof.circleimageview.CircleImageView
                                 app:civ_border_width="1dp"
+                                android:enabled="false"
                                 app:civ_border_color="@color/white"
                                 android:src="@drawable/usr_white1"
                                 android:id="@+id/imgProfile"
@@ -628,6 +629,7 @@
                         <com.circle8.circleOne.Utils.HelveticaLightEditText
                             android:layout_marginLeft="0dp"
                             android:id="@+id/etDD"
+                            android:enabled="false"
                             android:layout_marginTop="3dp"
                             android:textSize="15dp"
                             android:backgroundTint="@color/transparent"
@@ -693,6 +695,7 @@
                             android:textColorHint="@android:color/black"
                             android:textColor="@android:color/black"
                             android:hint="MM"
+                            android:enabled="false"
                             android:maxLength="2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -732,6 +735,7 @@
                             android:id="@+id/etYYYY"
                             android:layout_marginTop="3dp"
                             android:textSize="15dp"
+                            android:enabled="false"
                             android:backgroundTint="@color/transparent"
                             android:textColorHint="@android:color/black"
                             android:textColor="@android:color/black"
@@ -894,6 +898,8 @@
                     android:textColor="@color/colorPrimary"/>
 
                 <RelativeLayout
+                    android:id="@+id/rltGender"
+                    android:enabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"

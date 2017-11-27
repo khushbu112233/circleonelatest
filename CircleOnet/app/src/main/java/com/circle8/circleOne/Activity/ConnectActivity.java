@@ -682,6 +682,7 @@ public class ConnectActivity extends AppCompatActivity
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Operation", "Request");
             jsonObject.accumulate("RequestType", "");
+            jsonObject.accumulate("connection_date", Utility.currentDate());
             jsonObject.accumulate("friendProfileId", friendProfile_id);
             jsonObject.accumulate("myProfileId", profile_id);
 

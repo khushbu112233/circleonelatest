@@ -1196,7 +1196,7 @@ public class LoginActivity extends AppCompatActivity implements
                                     });
                                 }catch (Exception e) {
 
-                                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                                 }
 
 
@@ -1827,8 +1827,8 @@ public class LoginActivity extends AppCompatActivity implements
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, task.getException().toString(),
-                                    Toast.LENGTH_SHORT).show();
+                         /*   Toast.makeText(LoginActivity.this, task.getException().toString(),
+                                    Toast.LENGTH_SHORT).show();*/
                             // updateUI(null);
                         }
 
@@ -2316,7 +2316,7 @@ public class LoginActivity extends AppCompatActivity implements
                                     });
                                 }catch (Exception e) {
 
-                                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                                 }
 
 

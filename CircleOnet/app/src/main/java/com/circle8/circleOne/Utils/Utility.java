@@ -13,6 +13,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class Utility
 {
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
@@ -46,6 +49,16 @@ public class Utility
         System.runFinalization();
         Runtime.getRuntime().gc();
         System.gc();
+    }
+
+    public static String currentDate()
+    {
+        Calendar c = Calendar.getInstance();
+        System.out.println("Current time =&gt; "+c.getTime());
+
+        SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        String formattedDate = df.format(c.getTime());
+        return formattedDate;
     }
 
     public static boolean checkStoragePermission(final Context context)

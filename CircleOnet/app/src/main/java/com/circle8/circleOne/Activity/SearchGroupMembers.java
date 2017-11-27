@@ -627,10 +627,10 @@ public class SearchGroupMembers extends AppCompatActivity
                     String Message = jsonObject.getString("Message");
                     if (Success.equals("1"))
                     {
-                        Toast.makeText(getApplicationContext(), "Member added in Circle", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Member(s) added successfully", Toast.LENGTH_LONG).show();
                     }
                     else {
-                        Toast.makeText(getApplicationContext(), Message, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Member(s) added successfully", Toast.LENGTH_LONG).show();
                     }
                     // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
                 } else {

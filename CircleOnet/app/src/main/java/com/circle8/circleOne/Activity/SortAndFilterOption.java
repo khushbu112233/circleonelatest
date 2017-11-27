@@ -944,7 +944,7 @@ public class SortAndFilterOption extends AppCompatActivity
                        // listView.setVisibility(View.VISIBLE);
                         // txtGroup.setVisibility(View.GONE);
                     }
-
+                    groupModelArrayList.clear();
                     for (int i = 0; i < jsonArray.length() ; i++)
                     {
                         JSONObject object = jsonArray.getJSONObject(i);
@@ -1100,7 +1100,7 @@ public class SortAndFilterOption extends AppCompatActivity
                         // listView.setVisibility(View.VISIBLE);
                         // txtGroup.setVisibility(View.GONE);
                     }
-
+                    profileModelArrayList.clear();
                     for (int i = 0; i < jsonArray.length() ; i++)
                     {
                         JSONObject object = jsonArray.getJSONObject(i);

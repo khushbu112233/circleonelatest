@@ -318,6 +318,7 @@ public class SubscriptionActivity extends AppCompatActivity
 
             public void onError(Exception error) {
                 Log.d("Stripe", error.getLocalizedMessage());
+                Toast.makeText(getApplicationContext(), error.getLocalizedMessage().toString(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -366,6 +367,7 @@ public class SubscriptionActivity extends AppCompatActivity
 
             public void onError(Exception error) {
                 Log.d("Stripe", error.getLocalizedMessage());
+                Toast.makeText(getApplicationContext(), error.getLocalizedMessage().toString(), Toast.LENGTH_LONG).show();
             }
         });
     }

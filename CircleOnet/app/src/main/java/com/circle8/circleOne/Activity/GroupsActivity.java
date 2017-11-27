@@ -1019,7 +1019,7 @@ public class GroupsActivity extends AppCompatActivity
                     String Message = jsonObject.getString("Message").toString();
                     if (Success.equals("1"))
                     {
-                        Toast.makeText(getApplicationContext(), "Circle Created..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Circle created successfully", Toast.LENGTH_LONG).show();
                         groupModelArrayList.clear();
                         new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/Fetch");
 

@@ -81,12 +81,12 @@ public class NewCardRequestActivity1 extends AppCompatActivity
     Token tok;
     AlertDialog alertDialog;
     ImageView imgBack;
-    String card_front = "", card_back = "", Type, Description, Cost, PhysicalCardLaserId, PhysicalCardNormalId, type;
+    public static String card_front = "", card_back = "", Type, Description, Cost, PhysicalCardLaserId, PhysicalCardNormalId, type;
     TextView txtLaserCost, txtLaserDesc, txtNormalCost, txtNormalDesc;
     String PhysicalCardTypeID = "";
     LoginSession session;
     private String profileId, userID;
-    Bitmap cardFrontBmp, cardBackBmp;
+    public static Bitmap cardFrontBmp, cardBackBmp;
     private static RelativeLayout rlProgressDialog ;
     private static TextView tvProgressing ;
     private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
@@ -164,8 +164,8 @@ public class NewCardRequestActivity1 extends AppCompatActivity
             mViewPager2.setAdapter(myPager);
         }
         else {
-            cardBackBmp = (Bitmap) i.getParcelableExtra("card_back");
-            cardFrontBmp = (Bitmap) i.getParcelableExtra("card_front");
+          //  cardBackBmp = (Bitmap) i.getParcelableExtra("card_back");
+           // cardFrontBmp = (Bitmap) i.getParcelableExtra("card_front");
 
             swipe_imageBmp.add(cardFrontBmp);
             swipe_imageBmp.add(cardBackBmp);

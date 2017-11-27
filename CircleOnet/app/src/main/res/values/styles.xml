@@ -22,6 +22,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowDisablePreview">true</item>
+        <item name="android:windowIsTranslucent">true</item>
         <!-- Customize your theme here. -->
     </style>
 

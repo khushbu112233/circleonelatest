@@ -292,6 +292,9 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                 }*/
                 else
                 {
+
+                    NewCardRequestActivity1.cardFrontBmp = CardFront;
+                    NewCardRequestActivity1.cardBackBmp = CardBack;
                     Toast.makeText(getApplicationContext(), "Card Uploaded Sucessfully..", Toast.LENGTH_LONG).show();
                     Intent i = new Intent(getApplicationContext(), NewCardRequestActivity1.class);
                     i.putExtra("person", name);
@@ -301,8 +304,10 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                     i.putExtra("image", image);
                     i.putExtra("phone",phone);
                     i.putExtra("profileID",profileID);
+/*
                     i.putExtra("card_front", CardFront);
                     i.putExtra("card_back", CardBack);
+*/
                     i.putExtra("type", "bitmap");
                     startActivity(i);
 
