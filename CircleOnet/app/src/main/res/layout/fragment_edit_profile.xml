@@ -478,133 +478,6 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/llTelephoneBox1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="15dp"
-                            android:gravity="center_vertical">
-
-                            <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:layout_marginRight="20dp"
-                                android:src="@drawable/ic_phone_blue" />
-
-                            <com.hbb20.CountryCodePicker
-                                app:ccp_defaultPhoneCode="65"
-                                android:visibility="visible"
-                                app:ccpDialog_searchEditTextTint="@color/colorPrimary"
-                                app:ccp_textSize="15dp"
-                                app:ccpDialog_textColor="@color/colorPrimary"
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="15dp"
-                                app:ccp_showNameCode="false"
-                                app:ccp_showPhoneCode="true"
-                                app:ccp_showFlag="false"
-                                app:ccp_contentColor="@color/colorPrimary"
-                                android:layout_marginRight="0dp"
-                                android:id="@+id/ccp1"
-                                android:layout_gravity="center_vertical"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:weightSum="1">
-
-                                <com.circle8.circleOne.Utils.cgEditView
-                                    android:id="@+id/edtWork"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center_vertical"
-                                    android:paddingBottom="10dp"
-                                    android:paddingLeft="10dp"
-                                    android:hint="Phone 1"
-                                    android:inputType="number"
-                                    android:textSize="13sp"
-                                    android:layout_weight="0.8"
-                                    android:layout_marginRight="10dp"
-                                    android:backgroundTint="@color/colorPrimary"/>
-
-                                <ImageView
-                                    android:id="@+id/ivTeleAdd"
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
-                                    android:src="@drawable/ic_plus_blue"
-                                    android:layout_weight="0.2"/>
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/llTelephoneBox2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="15dp"
-                            android:gravity="center_vertical"
-                            android:visibility="gone">
-
-                            <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:layout_marginRight="20dp"
-                                android:src="@drawable/ic_phone_blue" />
-
-                            <com.hbb20.CountryCodePicker
-                                app:ccp_defaultPhoneCode="65"
-                                android:visibility="visible"
-                                app:ccpDialog_searchEditTextTint="@color/colorPrimary"
-                                app:ccp_textSize="15dp"
-                                app:ccpDialog_textColor="@color/colorPrimary"
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="15dp"
-                                app:ccp_showNameCode="false"
-                                app:ccp_showPhoneCode="true"
-                                app:ccp_showFlag="false"
-                                app:ccp_contentColor="@color/colorPrimary"
-                                android:layout_marginRight="0dp"
-                                android:id="@+id/ccp2"
-                                android:layout_gravity="center_vertical"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:weightSum="1">
-
-                                <com.circle8.circleOne.Utils.cgEditView
-                                    android:id="@+id/edtWork2"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center_vertical"
-                                    android:paddingBottom="10dp"
-                                    android:inputType="number"
-                                    android:paddingLeft="10dp"
-                                    android:hint="Phone 2"
-                                    android:textSize="13sp"
-                                    android:layout_weight="0.8"
-                                    android:layout_marginRight="10dp"
-                                    android:backgroundTint="@color/colorPrimary"/>
-
-                                <ImageView
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
-                                    android:layout_weight="0.2"/>
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
                             android:id="@+id/llMobileBox1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -660,7 +533,7 @@
                                 <ImageView
                                     android:id="@+id/ivMobAdd"
                                     android:layout_width="20dp"
-                                    android:layout_height="20dp"
+                                    android:layout_height="match_parent"
                                     android:src="@drawable/ic_plus_blue"
                                     android:layout_weight="0.2"/>
 
@@ -724,7 +597,135 @@
 
                                 <ImageView
                                     android:layout_width="20dp"
-                                    android:layout_height="20dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.2"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/llTelephoneBox1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="15dp"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginRight="20dp"
+                                android:src="@drawable/ic_phone_blue" />
+
+                            <com.hbb20.CountryCodePicker
+                                app:ccp_defaultPhoneCode="65"
+                                android:visibility="visible"
+                                app:ccpDialog_searchEditTextTint="@color/colorPrimary"
+                                app:ccp_textSize="15dp"
+                                app:ccpDialog_textColor="@color/colorPrimary"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="15dp"
+                                app:ccp_showNameCode="false"
+                                app:ccp_showPhoneCode="true"
+                                app:ccp_showFlag="false"
+                                app:ccp_contentColor="@color/colorPrimary"
+                                android:layout_marginRight="0dp"
+                                android:id="@+id/ccp1"
+                                android:layout_gravity="center_vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:weightSum="1">
+
+                                <com.circle8.circleOne.Utils.cgEditView
+                                    android:id="@+id/edtWork"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:paddingBottom="10dp"
+                                    android:paddingLeft="10dp"
+                                    android:hint="Phone 1"
+                                    android:inputType="number"
+                                    android:textSize="13sp"
+                                    android:layout_weight="0.8"
+                                    android:layout_marginRight="10dp"
+                                    android:backgroundTint="@color/colorPrimary"/>
+
+                                <ImageView
+                                    android:id="@+id/ivTeleAdd"
+                                    android:layout_width="20dp"
+                                    android:layout_height="match_parent"
+                                    android:src="@drawable/ic_plus_blue"
+                                    android:layout_weight="0.2"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llTelephoneBox2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="15dp"
+                            android:gravity="center_vertical"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginRight="20dp"
+                                android:src="@drawable/ic_phone_blue" />
+
+                            <com.hbb20.CountryCodePicker
+                                app:ccp_defaultPhoneCode="65"
+                                android:visibility="visible"
+                                app:ccpDialog_searchEditTextTint="@color/colorPrimary"
+                                app:ccp_textSize="15dp"
+                                app:ccpDialog_textColor="@color/colorPrimary"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="15dp"
+                                app:ccp_showNameCode="false"
+                                app:ccp_showPhoneCode="true"
+                                app:ccp_showFlag="false"
+                                app:ccp_contentColor="@color/colorPrimary"
+                                android:layout_marginRight="0dp"
+                                android:id="@+id/ccp2"
+                                android:layout_gravity="center_vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:weightSum="1">
+
+                                <com.circle8.circleOne.Utils.cgEditView
+                                    android:id="@+id/edtWork2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:paddingBottom="10dp"
+                                    android:inputType="number"
+                                    android:paddingLeft="10dp"
+                                    android:hint="Phone 2"
+                                    android:textSize="13sp"
+                                    android:layout_weight="0.8"
+                                    android:layout_marginRight="10dp"
+                                    android:backgroundTint="@color/colorPrimary"/>
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="match_parent"
                                     android:layout_weight="0.2"/>
 
                             </LinearLayout>

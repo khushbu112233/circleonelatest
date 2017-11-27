@@ -649,8 +649,8 @@ public class ProfileFragment extends Fragment
             public void onClick(View v) {
 
                 Utility.freeMemory();
-                String shareBody = "I’m ready to connect with you and share our growing network on the CircleOne app. I’m currently a user with CircleOne and would like to invite you to join the Circle so we’ll both be able to take our professional newtorks a step further. Use the code " + refer +
-                        " for a quick and simple registration! http://circle8.asia/mobileApp.html";
+                String shareBody = "I’m ready to connect with you and share our growing network on the CircleOne app. I’m currently a user with CircleOne and would like to invite you to join the Circle so we’ll both be able to take our professional newtorks a step further. Use the code '" + refer +
+                        "' for a quick and simple registration! http://circle8.asia/mobileApp.html";
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, tvPersonName.getText().toString());

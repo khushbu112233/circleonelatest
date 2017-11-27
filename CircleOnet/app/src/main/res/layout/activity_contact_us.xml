@@ -252,7 +252,7 @@
                             android:padding="5dp"
                             android:layout_width="35dp"
                             android:layout_height="35dp"
-                            android:src="@drawable/icon_google"/>
+                            android:src="@drawable/icon_google_gray"/>
                         <ImageView
                             android:id="@+id/youtubeUrl"
                             android:layout_marginRight="30dp"
@@ -260,7 +260,7 @@
                             android:padding="5dp"
                             android:layout_width="35dp"
                             android:layout_height="35dp"
-                            android:src="@drawable/icon_utube_red"/>
+                            android:src="@drawable/icon_utube_gray"/>
                     </LinearLayout>
 
                 <RelativeLayout

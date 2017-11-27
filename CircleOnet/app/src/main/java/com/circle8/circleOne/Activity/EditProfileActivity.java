@@ -148,7 +148,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.fabric.sdk.android.Fabric;
@@ -608,7 +610,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             {
                 Utility.freeMemory();
                 AlertDialog.Builder alert = new AlertDialog.Builder(EditProfileActivity.this, R.style.Blue_AlertDialog);
-                alert.setMessage("Do you want to Delete this Profile?");
+                alert.setMessage("Are you sure want to delete profile?");
                 alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -824,25 +826,25 @@ public class EditProfileActivity extends AppCompatActivity implements
                 catch (Exception e){}
 
                 if (edtProfileName.getText().toString().equals("")){
-                    Toast.makeText(getApplicationContext(), "Enter Profile Name", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Please enter profile name", Toast.LENGTH_LONG).show();
                 }
                 else if (edtFirstName.getText().toString().equals("")){
-                    Toast.makeText(getApplicationContext(), "Enter First Name", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Please enter first name", Toast.LENGTH_LONG).show();
                 }
                 else if (edtLastName.getText().toString().equals("")){
-                    Toast.makeText(getApplicationContext(), "Enter Last Name", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Please enter last name", Toast.LENGTH_LONG).show();
                 }
                 else if (autoCompleteDesignation.getText().toString().equals("")){
-                    Toast.makeText(getApplicationContext(), "Enter Designation (Title)", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Please enter title", Toast.LENGTH_LONG).show();
                 }
                 else if (autoCompleteCompany.getText().toString().equals("")){
-                    Toast.makeText(getApplicationContext(), "Enter Company Name", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Please enter company name", Toast.LENGTH_LONG).show();
                 }
                 else if (edtEmail.getText().toString().equals("")){
-                    Toast.makeText(getApplicationContext(), "Enter Email1", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Please enter valid email id", Toast.LENGTH_LONG).show();
                 }
                 else if (edtPrimary.getText().toString().equals("")){
-                    Toast.makeText(getApplicationContext(), "Enter Mobile1", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Please enter your mobile number.", Toast.LENGTH_LONG).show();
                 }
                 else {
 
@@ -1619,6 +1621,21 @@ public class EditProfileActivity extends AppCompatActivity implements
             JSONArray jsonArray1 = new JSONArray();
             jsonArray1.put(1);
 
+            List<String> al = new ArrayList<>();
+            if (arrayEvents != null) {
+                for (int i=0;i<arrayEvents.length();i++){
+                    al.add(arrayEvents.getString(i));
+                }
+            }
+// add elements to al, including duplicates
+            Set<String> hs = new HashSet<>();
+            hs.addAll(al);
+            al.clear();
+            al.addAll(hs);
+            arrayEvents = new JSONArray(al);
+
+
+
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Address1", edtAddress1.getText().toString());
@@ -2170,6 +2187,19 @@ public class EditProfileActivity extends AppCompatActivity implements
             JSONArray jsonArray = new JSONArray();
             jsonArray.put(1011);
 
+            List<String> al = new ArrayList<>();
+            if (arrayEvents != null) {
+                for (int i=0;i<arrayEvents.length();i++){
+                    al.add(arrayEvents.getString(i));
+                }
+            }
+// add elements to al, including duplicates
+            Set<String> hs = new HashSet<>();
+            hs.addAll(al);
+            al.clear();
+            al.addAll(hs);
+            arrayEvents = new JSONArray(al);
+
 //            String name = edtUserName.getText().toString();
             String name = edtFirstName.getText().toString()+" "+edtLastName.getText().toString();
             String kept = name.substring(0, name.indexOf(" "));
@@ -2593,8 +2623,9 @@ public class EditProfileActivity extends AppCompatActivity implements
                 signIn();
                 break;
             case R.id.imgProfileShare:
-                String shareBody = "I'm giving you a free redemption points on the Circle app (up to ₹25). To accept, use code '" + refer + "' to sign up. Enjoy!"
-                        + System.lineSeparator() + "Details: https://www.circle8.asia/invite/" + refer;
+                Utility.freeMemory();
+                String shareBody = "I’m ready to connect with you and share our growing network on the CircleOne app. I’m currently a user with CircleOne and would like to invite you to join the Circle so we’ll both be able to take our professional newtorks a step further. Use the code '" + refer +
+                        "' for a quick and simple registration! http://circle8.asia/mobileApp.html";
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, tvPersonName.getText().toString());
@@ -3128,6 +3159,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                     if (success.equalsIgnoreCase("1")) {
 
                         if (fromActivity.equalsIgnoreCase("manage")){
+                            Toast.makeText(getApplicationContext(), "Successfully Added", Toast.LENGTH_SHORT).show();
                             finish();
                         }else {
                             Toast.makeText(getApplicationContext(), "Successfully Added", Toast.LENGTH_SHORT).show();
