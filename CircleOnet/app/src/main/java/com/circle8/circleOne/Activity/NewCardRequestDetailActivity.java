@@ -938,7 +938,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK)
             {
-                Bitmap bitmap;
+                Bitmap bitmap = null;
 
                 try
                 {
@@ -947,6 +947,26 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
 
                     //  final_ImgBase64 = BitMapToString(bitmap);
                     //   Upload();
+
+                    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
+
+                    File destination = new File(Environment.getExternalStorageDirectory(),
+                            System.currentTimeMillis() + ".jpg");
+
+                    FileOutputStream fo;
+                    try {
+                        destination.createNewFile();
+                        fo = new FileOutputStream(destination);
+                        fo.write(bytes.toByteArray());
+                        fo.close();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
                     CardSwipe.imageView.setImageBitmap(bitmap);
                     myPager.notifyDataSetChanged();
                     if (cardType.equals("front"))

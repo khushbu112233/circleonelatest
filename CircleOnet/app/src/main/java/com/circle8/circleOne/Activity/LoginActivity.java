@@ -476,7 +476,7 @@ public class LoginActivity extends AppCompatActivity implements
                     @Override
                     public void success(Result<TwitterSession> twitterSessionResult) {
                         Utility.freeMemory();
-                        Toast.makeText(LoginActivity.this, "success", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(LoginActivity.this, "success", Toast.LENGTH_SHORT).show();
                         handleTwitterSession(twitterSessionResult.data);
                     }
 
@@ -1140,19 +1140,19 @@ public class LoginActivity extends AppCompatActivity implements
                                                 @Override
                                                 public void onSuccess(final QBUser qbUser, Bundle bundle) {
                                                     // progressDialog.dismiss();
-                                                    Toaster.longToast("success");
+                                                   // Toaster.longToast("success");
                                                     Q_ID = String.valueOf(qbUser.getId());
                                                     new HttpAsyncTaskUpdateQ_ID().execute(Utility.BASE_URL+"User/Update_QID");
 
                                                     // setResult(RESULT_OK);
                                                     // SharedPrefsHelper.getInstance().saveQbUser(qbUser);
-                                                    Toast.makeText(getApplicationContext(), "fgbgfb", Toast.LENGTH_LONG).show();
+                                                  //  Toast.makeText(getApplicationContext(), "fgbgfb", Toast.LENGTH_LONG).show();
                                                     qbUser.setPassword("circle@123");
                                                     ChatHelper.getInstance().login(qbUser, new QBEntityCallback<Void>() {
                                                         @Override
                                                         public void onSuccess(Void result, Bundle bundle) {
                                                             SharedPrefsHelper.getInstance().saveQbUser(qbUser);
-                                                            Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
+                                                          //  Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
                                                             // DialogsActivity.start(LoginActivity.this);
                                                             // finish();
 
@@ -1162,7 +1162,7 @@ public class LoginActivity extends AppCompatActivity implements
                                                         @Override
                                                         public void onError(QBResponseException e) {
                                                             ProgressDialogFragment.hide(getSupportFragmentManager());
-                                                            Toast.makeText(getApplicationContext(), "not done", Toast.LENGTH_LONG).show();
+                                                           // Toast.makeText(getApplicationContext(), "not done", Toast.LENGTH_LONG).show();
 
                                     /*ErrorUtils.showSnackbar(userListView, R.string.login_chat_login_error, e,
                                             R.string.dlg_retry, new View.OnClickListener() {
@@ -1183,7 +1183,7 @@ public class LoginActivity extends AppCompatActivity implements
                                                 @Override
                                                 public void onError(QBResponseException errors) {
 //                                    progressDialog.dismiss();
-                                                    Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
+                                                   // Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
                                     /*showSnackbarError(rootLayout, R.string.errors, errors, new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
@@ -1208,16 +1208,16 @@ public class LoginActivity extends AppCompatActivity implements
                                     @Override
                                     public void onSuccess(final QBUser qbUser, Bundle bundle) {
                                         // progressDialog.dismiss();
-                                        Toaster.longToast("success");
+                                      //  Toaster.longToast("success");
                                         // setResult(RESULT_OK);
                                         // SharedPrefsHelper.getInstance().saveQbUser(qbUser);
-                                        Toast.makeText(getApplicationContext(), "fgbgfb", Toast.LENGTH_LONG).show();
+                                      //  Toast.makeText(getApplicationContext(), "fgbgfb", Toast.LENGTH_LONG).show();
                                         qbUser.setPassword("circle@123");
                                         ChatHelper.getInstance().login(qbUser, new QBEntityCallback<Void>() {
                                             @Override
                                             public void onSuccess(Void result, Bundle bundle) {
                                                 SharedPrefsHelper.getInstance().saveQbUser(qbUser);
-                                                Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
+                                               // Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
                                                 // DialogsActivity.start(LoginActivity.this);
                                                 // finish();
 
@@ -1227,7 +1227,7 @@ public class LoginActivity extends AppCompatActivity implements
                                             @Override
                                             public void onError(QBResponseException e) {
                                                 ProgressDialogFragment.hide(getSupportFragmentManager());
-                                                Toast.makeText(getApplicationContext(), "not done", Toast.LENGTH_LONG).show();
+                                               // Toast.makeText(getApplicationContext(), "not done", Toast.LENGTH_LONG).show();
 
                                     /*ErrorUtils.showSnackbar(userListView, R.string.login_chat_login_error, e,
                                             R.string.dlg_retry, new View.OnClickListener() {
@@ -1248,7 +1248,7 @@ public class LoginActivity extends AppCompatActivity implements
                                     @Override
                                     public void onError(QBResponseException errors) {
 //                                    progressDialog.dismiss();
-                                        Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
+                                     //   Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
                                     /*showSnackbarError(rootLayout, R.string.errors, errors, new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
@@ -2260,19 +2260,19 @@ public class LoginActivity extends AppCompatActivity implements
                                                 @Override
                                                 public void onSuccess(final QBUser qbUser, Bundle bundle) {
                                                     // progressDialog.dismiss();
-                                                    Toaster.longToast("success");
+                                                   // Toaster.longToast("success");
                                                     Q_ID = String.valueOf(qbUser.getId());
                                                     new HttpAsyncTaskUpdateQ_ID().execute(Utility.BASE_URL+"User/Update_QID");
 
                                                     // setResult(RESULT_OK);
                                                     // SharedPrefsHelper.getInstance().saveQbUser(qbUser);
-                                                    Toast.makeText(getApplicationContext(), "fgbgfb", Toast.LENGTH_LONG).show();
+                                                  // Toast.makeText(getApplicationContext(), "fgbgfb", Toast.LENGTH_LONG).show();
                                                     qbUser.setPassword("circle@123");
                                                     ChatHelper.getInstance().login(qbUser, new QBEntityCallback<Void>() {
                                                         @Override
                                                         public void onSuccess(Void result, Bundle bundle) {
                                                             SharedPrefsHelper.getInstance().saveQbUser(qbUser);
-                                                            Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
+                                                           // Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
                                                             // DialogsActivity.start(LoginActivity.this);
                                                             // finish();
 
@@ -2282,7 +2282,7 @@ public class LoginActivity extends AppCompatActivity implements
                                                         @Override
                                                         public void onError(QBResponseException e) {
                                                             ProgressDialogFragment.hide(getSupportFragmentManager());
-                                                            Toast.makeText(getApplicationContext(), "not done", Toast.LENGTH_LONG).show();
+                                                          //  Toast.makeText(getApplicationContext(), "not done", Toast.LENGTH_LONG).show();
 
                                     /*ErrorUtils.showSnackbar(userListView, R.string.login_chat_login_error, e,
                                             R.string.dlg_retry, new View.OnClickListener() {
@@ -2303,7 +2303,7 @@ public class LoginActivity extends AppCompatActivity implements
                                                 @Override
                                                 public void onError(QBResponseException errors) {
 //                                    progressDialog.dismiss();
-                                                    Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
+                                                  //  Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
                                     /*showSnackbarError(rootLayout, R.string.errors, errors, new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
@@ -2328,16 +2328,16 @@ public class LoginActivity extends AppCompatActivity implements
                                     @Override
                                     public void onSuccess(final QBUser qbUser, Bundle bundle) {
                                         // progressDialog.dismiss();
-                                        Toaster.longToast("success");
+                                        //Toaster.longToast("success");
                                         // setResult(RESULT_OK);
                                         // SharedPrefsHelper.getInstance().saveQbUser(qbUser);
-                                        Toast.makeText(getApplicationContext(), "fgbgfb", Toast.LENGTH_LONG).show();
+                                      //  Toast.makeText(getApplicationContext(), "fgbgfb", Toast.LENGTH_LONG).show();
                                         qbUser.setPassword("circle@123");
                                         ChatHelper.getInstance().login(qbUser, new QBEntityCallback<Void>() {
                                             @Override
                                             public void onSuccess(Void result, Bundle bundle) {
                                                 SharedPrefsHelper.getInstance().saveQbUser(qbUser);
-                                                Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
+                                               // Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
                                                 // DialogsActivity.start(LoginActivity.this);
                                                 // finish();
 
@@ -2347,7 +2347,7 @@ public class LoginActivity extends AppCompatActivity implements
                                             @Override
                                             public void onError(QBResponseException e) {
                                                 ProgressDialogFragment.hide(getSupportFragmentManager());
-                                                Toast.makeText(getApplicationContext(), "not done", Toast.LENGTH_LONG).show();
+                                               // Toast.makeText(getApplicationContext(), "not done", Toast.LENGTH_LONG).show();
 
                                     /*ErrorUtils.showSnackbar(userListView, R.string.login_chat_login_error, e,
                                             R.string.dlg_retry, new View.OnClickListener() {
@@ -2368,7 +2368,7 @@ public class LoginActivity extends AppCompatActivity implements
                                     @Override
                                     public void onError(QBResponseException errors) {
 //                                    progressDialog.dismiss();
-                                        Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
+                                       // Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
                                     /*showSnackbarError(rootLayout, R.string.errors, errors, new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {

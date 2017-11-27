@@ -199,7 +199,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     String Status = "";
     String Address1 = "", Address2 = "", Address3 = "", Address4 = "", City = "", State = "", Country = "", Postalcode = "", Website = "", Attachment_FileName = "";
     EditText edtUserName, edtWork, edtPrimary, edtEmail, edtProfileDesc, edtCompanyDesc, edtFirstName, edtLastName;
-    public static ViewPager mViewPager, viewPager1;
+  //  public static ViewPager mViewPager, viewPager1;
     CircleImageView imgProfile;
     TextView tvPersonName, tvDesignation, tvCompany;
     ExpandableHeightListView lstTestimonial;
@@ -321,31 +321,47 @@ public class EditProfileActivity extends AppCompatActivity implements
     {
         supportRequestWindowFeature(WindowCompat.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
-        Utility.freeMemory();
+
         TwitterAuthConfig authConfig = new TwitterAuthConfig(
                 getString(R.string.twitter_consumer_key),
                 getString(R.string.twitter_consumer_secret));
         Fabric.with(this, new Twitter(authConfig));
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.fragment_edit_profile);
+        Utility.freeMemory();
         activity = EditProfileActivity.this;
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
         initUI();
-        imgProfileShare.setOnClickListener(new View.OnClickListener() {
+        populate();
+
+        imgProfileShare.setOnClickListener(this);
+
+        SpannableString ss = new SpannableString("Ask your friends to write a Testimonial for you(100 words or less),Please choose from your CircleOne contacts and send a request.");
+        ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
-            public void onClick(View v) {
-                String shareBody = "I'm giving you a free redemption points on the Circle app (up to ₹25). To accept, use code '" + refer + "' to sign up. Enjoy!"
-                        + System.lineSeparator() + "Details: https://www.circle8.asia/invite/" + refer;
-                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-                sharingIntent.setType("text/plain");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, tvPersonName.getText().toString());
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-                startActivity(Intent.createChooser(sharingIntent, "Share Profile Via"));
+            public void onClick(View textView) {
+                Intent intent1 = new Intent(getApplicationContext(), SearchGroupMembers.class);
+                intent1.putExtra("from", "profile");
+                intent1.putExtra("ProfileId", profileId);
+                startActivity(intent1);
             }
-        });
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false);
+            }
+        };
+        ss.setSpan(clickableSpan, 91, 100, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        // TextView textView = (TextView) findViewById(R.id.hello);
+        txtTestimonial.setText(ss);
+        txtTestimonial.setMovementMethod(LinkMovementMethod.getInstance());
+        txtTestimonial.setHighlightColor(getResources().getColor(R.color.colorPrimary));
 
 
-
+        btnSignIn.setOnClickListener(this);
+        imgGoogle.setOnClickListener(this);
 
         imgYoutube.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -531,7 +547,7 @@ public class EditProfileActivity extends AppCompatActivity implements
 
 
 
-        viewPager1.setOnClickListener(new View.OnClickListener() {
+        /*viewPager1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (viewPager1.getCurrentItem() == 0) {
@@ -547,7 +563,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                     selectImage();
                 }
             }
-        });
+        });*/
 
         ivArrowImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -838,7 +854,6 @@ public class EditProfileActivity extends AppCompatActivity implements
                 }
             }
         });
-       // generateHashkey();
         txtMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -851,7 +866,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             }
         });
 
-        viewPager1.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        /*viewPager1.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             private int mScrollState = ViewPager.SCROLL_STATE_IDLE;
 
@@ -877,7 +892,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                     mViewPager.setCurrentItem(viewPager1.getCurrentItem(), false);
                 }
             }
-        });
+        });*/
 
         ivAttachFile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -889,13 +904,6 @@ public class EditProfileActivity extends AppCompatActivity implements
                 selectFile();
             }
         });
-
-        camera_permission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
-        if (camera_permission != PackageManager.PERMISSION_GRANTED) {
-            Log.i("Camera Permission", "Permission to record denied");
-            makeRequest();
-        }
-
 
         ivTeleAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -948,6 +956,18 @@ public class EditProfileActivity extends AppCompatActivity implements
                 }
             }
         });
+
+    }
+
+    private void populate(){
+        new HttpAsyncTaskAssociation().execute(Utility.BASE_URL+"GetAssociationList");
+
+        if (type.equals("edit"))
+        {
+            Utility.freeMemory();
+            new HttpAsyncTaskUserProfile().execute(Utility.BASE_URL+"GetUserProfile");
+            new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");
+        }
 
     }
 
@@ -1004,8 +1024,8 @@ public class EditProfileActivity extends AppCompatActivity implements
         edtProfileDesc = (EditText) findViewById(R.id.edtProfileDesc);
         edtCompanyDesc = (EditText) findViewById(R.id.edtCompanyDesc);
         edtPrimary = (EditText) findViewById(R.id.edtPrimary);
-        mViewPager = (ViewPager) findViewById(R.id.viewPager);
-        viewPager1 = (ViewPager) findViewById(R.id.viewPager1);
+        //  mViewPager = (ViewPager) findViewById(R.id.viewPager);
+        // viewPager1 = (ViewPager) findViewById(R.id.viewPager1);
         imgProfile = (CircleImageView) findViewById(R.id.imgProfile);
         tvCompany = (TextView) findViewById(R.id.tvCompany);
         tvDesignation = (TextView) findViewById(R.id.tvDesignation);
@@ -1042,48 +1062,6 @@ public class EditProfileActivity extends AppCompatActivity implements
         profileId = intent.getStringExtra("profile_id");
         allTaggs = new ArrayList<>();
 
-        llTelePhoneBox1 = (LinearLayout)findViewById(R.id.llTelephoneBox1);
-        llTelePhoneBox2 = (LinearLayout)findViewById(R.id.llTelephoneBox2);
-        llMobileBox1 = (LinearLayout)findViewById(R.id.llMobileBox1);
-        llMobileBox2 = (LinearLayout)findViewById(R.id.llMobileBox2);
-        llFaxBox1 = (LinearLayout)findViewById(R.id.llFaxBox1);
-        llFaxBox2 = (LinearLayout)findViewById(R.id.llFaxBox2);
-        ccp1 = (CountryCodePicker) findViewById(R.id.ccp1);
-        ccp2 = (CountryCodePicker) findViewById(R.id.ccp2);
-        ccp3 = (CountryCodePicker) findViewById(R.id.ccp3);
-        ccp4 = (CountryCodePicker) findViewById(R.id.ccp4);
-        ccp5 = (CountryCodePicker) findViewById(R.id.ccp5);
-        ccp6 = (CountryCodePicker) findViewById(R.id.ccp6);
-        ivTeleAdd = (ImageView)findViewById(R.id.ivTeleAdd);
-        ivMobAdd = (ImageView)findViewById(R.id.ivMobAdd);
-        ivFaxAdd = (ImageView)findViewById(R.id.ivFaxAdd);
-
-        SpannableString ss = new SpannableString("Ask your friends to write a Testimonial for you(100 words or less),Please choose from your CircleOne contacts and send a request.");
-        ClickableSpan clickableSpan = new ClickableSpan() {
-            @Override
-            public void onClick(View textView) {
-                Intent intent1 = new Intent(getApplicationContext(), SearchGroupMembers.class);
-                intent1.putExtra("from", "profile");
-                intent1.putExtra("ProfileId", profileId);
-                startActivity(intent1);
-            }
-            @Override
-            public void updateDrawState(TextPaint ds) {
-                super.updateDrawState(ds);
-                ds.setUnderlineText(false);
-            }
-        };
-        ss.setSpan(clickableSpan, 91, 100, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        // TextView textView = (TextView) findViewById(R.id.hello);
-        txtTestimonial.setText(ss);
-        txtTestimonial.setMovementMethod(LinkMovementMethod.getInstance());
-        txtTestimonial.setHighlightColor(getResources().getColor(R.color.colorPrimary));
-
-
-        btnSignIn.setOnClickListener(this);
-        imgGoogle.setOnClickListener(this);
-
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -1100,15 +1078,6 @@ public class EditProfileActivity extends AppCompatActivity implements
         // Customizing G+ button
         btnSignIn.setSize(SignInButton.SIZE_ICON_ONLY);
         btnSignIn.setScopes(gso.getScopeArray());
-
-        new HttpAsyncTaskAssociation().execute(Utility.BASE_URL+"GetAssociationList");
-
-        if (type.equals("edit"))
-        {
-            Utility.freeMemory();
-            new HttpAsyncTaskUserProfile().execute(Utility.BASE_URL+"GetUserProfile");
-            new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");
-        }
 
         array = new String[]{"Accommodations", "Information", "Accounting", "Information technology", "Advertising",
                 "Insurance", "Aerospace", "Journalism & News", "Agriculture & Agribusiness", "Legal Services", "Air Transportation",
@@ -1144,8 +1113,30 @@ public class EditProfileActivity extends AppCompatActivity implements
             tvEventInfo.setVisibility(View.GONE);
         }
 
-    }
+        generateHashkey();
 
+        camera_permission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+        if (camera_permission != PackageManager.PERMISSION_GRANTED) {
+            Log.i("Camera Permission", "Permission to record denied");
+            makeRequest();
+        }
+
+        llTelePhoneBox1 = (LinearLayout)findViewById(R.id.llTelephoneBox1);
+        llTelePhoneBox2 = (LinearLayout)findViewById(R.id.llTelephoneBox2);
+        llMobileBox1 = (LinearLayout)findViewById(R.id.llMobileBox1);
+        llMobileBox2 = (LinearLayout)findViewById(R.id.llMobileBox2);
+        llFaxBox1 = (LinearLayout)findViewById(R.id.llFaxBox1);
+        llFaxBox2 = (LinearLayout)findViewById(R.id.llFaxBox2);
+        ccp1 = (CountryCodePicker) findViewById(R.id.ccp1);
+        ccp2 = (CountryCodePicker) findViewById(R.id.ccp2);
+        ccp3 = (CountryCodePicker) findViewById(R.id.ccp3);
+        ccp4 = (CountryCodePicker) findViewById(R.id.ccp4);
+        ccp5 = (CountryCodePicker) findViewById(R.id.ccp5);
+        ccp6 = (CountryCodePicker) findViewById(R.id.ccp6);
+        ivTeleAdd = (ImageView)findViewById(R.id.ivTeleAdd);
+        ivMobAdd = (ImageView)findViewById(R.id.ivMobAdd);
+        ivFaxAdd = (ImageView)findViewById(R.id.ivFaxAdd);
+    }
     @Override
     protected void onPause() {
         Utility.freeMemory();
@@ -2480,6 +2471,25 @@ public class EditProfileActivity extends AppCompatActivity implements
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(result.getUri()));
                    // originalBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
 
+                    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
+
+                    File destination = new File(Environment.getExternalStorageDirectory(),
+                            System.currentTimeMillis() + ".jpg");
+
+                    FileOutputStream fo;
+                    try {
+                        destination.createNewFile();
+                        fo = new FileOutputStream(destination);
+                        fo.write(bytes.toByteArray());
+                        fo.close();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
                     final_ImgBase64 = BitMapToString(bitmap);
                     //   Upload();
 
@@ -2581,6 +2591,15 @@ public class EditProfileActivity extends AppCompatActivity implements
                 break;
             case R.id.imgGoogle:
                 signIn();
+                break;
+            case R.id.imgProfileShare:
+                String shareBody = "I'm giving you a free redemption points on the Circle app (up to ₹25). To accept, use code '" + refer + "' to sign up. Enjoy!"
+                        + System.lineSeparator() + "Details: https://www.circle8.asia/invite/" + refer;
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, tvPersonName.getText().toString());
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(sharingIntent, "Share Profile Via"));
                 break;
         }
     }
@@ -3658,11 +3677,11 @@ public class EditProfileActivity extends AppCompatActivity implements
 
                     etAttachFile.setText(Attachment_FileName);
 
-                    if (Card_Front.equalsIgnoreCase("") || Card_Back.equalsIgnoreCase("")) {
+                   /* if (Card_Front.equalsIgnoreCase("") || Card_Back.equalsIgnoreCase("")) {
                         appbar.setVisibility(View.GONE);
                     } else {
                         appbar.setVisibility(View.VISIBLE);
-                    }
+                    }*/
 
                     txtCardFront.setText(Card_Front);
                     txtCardBack.setText(Card_Back);
@@ -3672,22 +3691,22 @@ public class EditProfileActivity extends AppCompatActivity implements
                         Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/" + UserPhoto).resize(300,300).onlyScaleDown().skipMemoryCache().into(imgProfile);
                     }
 
-                    image = new ArrayList<>();
+                   /* image = new ArrayList<>();
                     image.add(Utility.BASE_IMAGE_URL+"Cards/" + Card_Front);
                     image.add(Utility.BASE_IMAGE_URL+"Cards/" + Card_Back);
-                    myPager = new CardSwipe(getApplicationContext(), image);
+                    myPager = new CardSwipe(getApplicationContext(), image);*/
 
-                    mViewPager.setClipChildren(false);
+                   /* mViewPager.setClipChildren(false);
                     mViewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
                     mViewPager.setOffscreenPageLimit(1);
                     //  mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
                     mViewPager.setAdapter(myPager);
-
-                    viewPager1.setClipChildren(false);
+*/
+                   /* viewPager1.setClipChildren(false);
                     viewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
                     viewPager1.setOffscreenPageLimit(1);
                     // viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
-                    viewPager1.setAdapter(myPager);
+                    viewPager1.setAdapter(myPager);*/
 
                 } else {
                     Toast.makeText(getApplicationContext(), "Not able to load Profile..", Toast.LENGTH_LONG).show();
@@ -3797,6 +3816,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                     if (success.equalsIgnoreCase("1")) {
 
                         if (fromActivity.equalsIgnoreCase("manage")){
+                            Toast.makeText(getApplicationContext(), "Successfully Updated", Toast.LENGTH_SHORT).show();
                             finish();
                         }else {
                             Toast.makeText(getApplicationContext(), "Successfully Updated", Toast.LENGTH_SHORT).show();

@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
@@ -631,18 +632,41 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
-                Bitmap bitmap;
+                Bitmap bitmap = null;
 
                 try {
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(result.getUri()));
                     // originalBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
+
+                    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
+
+                    File destination = new File(Environment.getExternalStorageDirectory(),
+                            System.currentTimeMillis() + ".jpg");
+
+                    FileOutputStream fo;
+                    try {
+                        destination.createNewFile();
+                        fo = new FileOutputStream(destination);
+                        fo.write(bytes.toByteArray());
+                        fo.close();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    civProfilePic.setImageBitmap(bitmap);
+
+
+
 
                     image = ConvertBitmapToString(bitmap);
                     final_ImgBase64 = BitMapToString(bitmap);
                     // final_ImgBase64 = resizeBase64Image(s);
                     Log.d("base64string ", final_ImgBase64);
 //                  Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
-                    civProfilePic.setImageBitmap(bitmap);
+                  //  civProfilePic.setImageBitmap(bitmap);
 
                 } catch (FileNotFoundException e) {
                     // TODO Auto-generated catch block

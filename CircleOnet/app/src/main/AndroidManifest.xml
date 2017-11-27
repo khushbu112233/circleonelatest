@@ -33,6 +33,7 @@
     <uses-feature android:name="android.hardware.camera" android:required="false" />
 
     <application
+        android:supportsRtl="true"
         android:name=".ApplicationUtils.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -216,7 +217,8 @@
         <activity
             android:name=".Activity.EditProfileActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionbar" />
+            android:theme="@style/NoActionbar"
+            android:noHistory="true"/>
         <activity
             android:name=".Activity.FingerPrintLogin"
             android:label="CircleOne"

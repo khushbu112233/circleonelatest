@@ -868,7 +868,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                 QBUser currentUser = getUserFromSession();
                 //loginToChat(currentUser);
                 Boolean aBoolean = SharedPrefsHelper.getInstance().hasQbUser();
-                Toast.makeText(getApplicationContext(), aBoolean.toString(), Toast.LENGTH_LONG).show();
+               // Toast.makeText(getApplicationContext(), aBoolean.toString(), Toast.LENGTH_LONG).show();
                 ChatHelper.getInstance().loginToChat(currentUser, new QBEntityCallback<Void>() {
                     @Override
                     public void onSuccess(Void result, Bundle bundle) {
@@ -879,7 +879,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                        // finish();
 
 
-                        Toast.makeText(getApplicationContext(), selectedUsers.toString(), Toast.LENGTH_LONG).show();
+                      //  Toast.makeText(getApplicationContext(), selectedUsers.toString(), Toast.LENGTH_LONG).show();
 
 
                         ArrayList<Integer> occupantIdsList = new ArrayList<Integer>();

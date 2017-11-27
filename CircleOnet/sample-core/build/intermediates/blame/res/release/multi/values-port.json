@@ -1,53 +1,5 @@
 [
     {
-        "outputFile": "F:\\Kajal\\CircleOneNew\\CircleOnet\\sample-core\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-port\\values-port.xml",
-        "map": [
-            {
-                "to": {
-                    "startLine": 2,
-                    "startColumn": 4,
-                    "startOffset": 55,
-                    "endColumn": 55,
-                    "endOffset": 106
-                },
-                "from": {
-                    "file": "C:\\Users\\LENOVO\\.android\\build-cache\\1e3ebd073e83074f5db9b9bc65ca6dbee0488383\\output\\res\\values-port\\values-port.xml",
-                    "position": {
-                        "startLine": 2,
-                        "startColumn": 4,
-                        "startOffset": 55,
-                        "endColumn": 55,
-                        "endOffset": 106
-                    }
-                }
-            }
-        ]
-    },
-    {
-        "outputFile": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-port\\values-port.xml",
-        "map": [
-            {
-                "to": {
-                    "startLine": 2,
-                    "startColumn": 4,
-                    "startOffset": 55,
-                    "endColumn": 55,
-                    "endOffset": 106
-                },
-                "from": {
-                    "file": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\values-port\\values-port.xml",
-                    "position": {
-                        "startLine": 2,
-                        "startColumn": 4,
-                        "startOffset": 55,
-                        "endColumn": 55,
-                        "endOffset": 106
-                    }
-                }
-            }
-        ]
-    },
-    {
         "outputFile": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-port\\values-port.xml",
         "map": [
             {
