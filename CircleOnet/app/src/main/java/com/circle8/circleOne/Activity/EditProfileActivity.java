@@ -334,9 +334,13 @@ public class EditProfileActivity extends AppCompatActivity implements
         activity = EditProfileActivity.this;
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-        initUI();
-        populate();
+       /* AsyncTaskRunner runner = new AsyncTaskRunner();
+        String sleepTime = "200";
+        runner.execute(sleepTime);*/
 
+
+       initUI();
+        populate();
         imgProfileShare.setOnClickListener(this);
 
         SpannableString ss = new SpannableString("Ask your friends to write a Testimonial for you(100 words or less),Please choose from your CircleOne contacts and send a request.");
@@ -961,6 +965,56 @@ public class EditProfileActivity extends AppCompatActivity implements
 
     }
 
+
+    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
+
+        private String resp;
+        ProgressDialog progressDialog;
+
+        @Override
+        protected String doInBackground(String... params) {
+            publishProgress("Sleeping..."); // Calls onProgressUpdate()
+            try {
+                int time = Integer.parseInt(params[0])*1000;
+
+                Thread.sleep(time);
+                resp = "Slept for " + params[0] + " seconds";
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                resp = e.getMessage();
+            } catch (Exception e) {
+                e.printStackTrace();
+                resp = e.getMessage();
+            }
+            return resp;
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            // execution of result of Long time consuming operation
+            progressDialog.dismiss();
+            //finalResult.setText(result);
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+            initUI();
+            progressDialog = ProgressDialog.show(EditProfileActivity.this,
+                    "ProgressDialog",
+                    "Wait for seconds");
+        }
+
+
+        @Override
+        protected void onProgressUpdate(String... text) {
+            populate();
+            //finalResult.setText(text[0]);
+
+        }
+    }
+
     private void populate(){
         new HttpAsyncTaskAssociation().execute(Utility.BASE_URL+"GetAssociationList");
 
@@ -1487,6 +1541,10 @@ public class EditProfileActivity extends AppCompatActivity implements
     @Override
     protected void onResume() {
         super.onResume();
+
+       // initUI();
+        //
+        // populate();
         callbackManager = CallbackManager.Factory.create();
 
         loginButton = (LoginButton) findViewById(R.id.login_button);

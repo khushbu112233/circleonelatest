@@ -15,6 +15,8 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowAnimationStyle">@null</item>
         <item name="android:windowDisablePreview">true</item>
+        <item name="android:windowBackground">@drawable/blue_card</item>
+
         <!-- Customize your theme here. -->
     </style>
 

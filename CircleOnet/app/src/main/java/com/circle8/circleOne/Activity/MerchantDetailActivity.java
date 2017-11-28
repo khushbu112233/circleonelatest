@@ -196,7 +196,7 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
             public void onClick(View view)
             {
                 AlertDialog.Builder builder;
-                builder = new AlertDialog.Builder(getApplicationContext(), R.style.Blue_AlertDialog);
+                builder = new AlertDialog.Builder(MerchantDetailActivity.this, R.style.Blue_AlertDialog);
 
                 builder.setTitle("CircleOne")
                         .setMessage("Are you sure you want to exit to "+websiteURL)
