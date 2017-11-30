@@ -44,7 +44,6 @@ import java.util.HashMap;
 
 public class ManageMyProfile extends AppCompatActivity
 {
-
     private ListView listView ;
     private ArrayList<NewCardModel> newCardModelArrayList ;
     private NewCardRequestAdapter newCardRequestAdapter ;

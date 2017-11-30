@@ -30,6 +30,7 @@ import com.circle8.circleOne.Model.ListAdapter1;
 import com.circle8.circleOne.Model.ListCell;
 import com.circle8.circleOne.Model.MerchantGetAllModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.ExpandableHeightListView;
 import com.circle8.circleOne.Utils.Utility;
 
 import org.apache.http.HttpResponse;
@@ -62,7 +63,8 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
     private ImageView ivCirclePlus, ivHouse ;
     private TextView tvPoints, tvMerchant ;
 
-    private ListView redeemListView, earnListView ;
+    private ListView redeemListView ;
+    private ListView earnListView ;
 
     private ExpandableListView expListView;
     ExpandableListAdapter1 expListAdapter ;
@@ -90,6 +92,10 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
     List<String> categoryList = new ArrayList<>() ;
     List<String> subCategoryList = new ArrayList<>() ;
     HashMap<String, List<String>> categorysData = new HashMap<String, List<String>>();
+
+    //for Earn points
+    EarnPointsAdapter earnPointsAdapter ;
+    ArrayList<EarnPointsModel> earnPointsModelsList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -195,7 +201,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
             }
         });
 
-        earnListView = (ListView)RewardView.findViewById(R.id.listView_Earn);
+        earnListView = (ListView) RewardView.findViewById(R.id.listView_Earn);
     }
 
     private void init1()
@@ -389,6 +395,8 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
 
             tvPoints.setTextColor(getResources().getColor(R.color.white));
             tvMerchant.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+            tvHistory.setAlpha((float) 0.5);
         }
         if( v == llMerchantBox)
         {
@@ -402,19 +410,23 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
 
             tvPoints.setTextColor(getResources().getColor(R.color.colorPrimary));
             tvMerchant.setTextColor(getResources().getColor(R.color.white));
+
+            tvHistory.setAlpha((float) 0.5);
         }
         if( v == tvHistory)
         {
+            tvHistory.setAlpha((float) 1.0);
+
             HistoryView.setVisibility(View.GONE);
             HistoryListView.setVisibility(View.VISIBLE);
             MerchantView.setVisibility(View.GONE);
             RewardView.setVisibility(View.GONE);
 
-            ivCirclePlus.setImageResource(R.drawable.ic_circle_plus);
-            ivHouse.setImageResource(R.drawable.ic_house);
+            tvPoints.setTextColor(getResources().getColor(R.color.colorPrimary));
+            tvMerchant.setTextColor(getResources().getColor(R.color.colorPrimary));
 
-            tvPoints.setTextColor(getResources().getColor(R.color.white));
-            tvMerchant.setTextColor(getResources().getColor(R.color.white));
+            ivCirclePlus.setImageResource(R.drawable.ic_circle_plus_blue);
+            ivHouse.setImageResource(R.drawable.ic_house_blue);
         }
         if ( v == imgBack)
         {
@@ -1140,20 +1152,18 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                             String Benefit_Desc = productListObj.getString("Benefit_Desc");
                             String Benefit_Date = productListObj.getString("Benefit_Date");
 
-                            ArrayList<EarnPointsModel> earnPointsModelsList = new ArrayList<>();
-
                             EarnPointsModel earnPointsModel = new EarnPointsModel();
-                            earnPointsModel.setEarnId(Earned_ID);
-                            earnPointsModel.setPointEarned(Points_Earned);
-                            earnPointsModel.setBenefitName(Benefit_Name);
-                            earnPointsModel.setBenefitDesc(Benefit_Desc);
-                            earnPointsModel.setBenefitDate(Benefit_Date);
+                            earnPointsModel.setEarnId(productListObj.getString("Earned_ID"));
+                            earnPointsModel.setPointEarned(productListObj.getString("Points_Earned"));
+                            earnPointsModel.setBenefitName(productListObj.getString("Benefit_Name"));
+                            earnPointsModel.setBenefitDesc(productListObj.getString("Benefit_Desc"));
+                            earnPointsModel.setBenefitDate(productListObj.getString("Benefit_Date"));
                             earnPointsModelsList.add(earnPointsModel);
-
-                            EarnPointsAdapter earnPointsAdapter = new EarnPointsAdapter(RewardsPointsActivity.this, earnPointsModelsList);
-                            earnListView.setAdapter(earnPointsAdapter);
-                            earnPointsAdapter.notifyDataSetChanged();
                         }
+
+                        earnPointsAdapter = new EarnPointsAdapter(RewardsPointsActivity.this, earnPointsModelsList);
+                        earnListView.setAdapter(earnPointsAdapter);
+                        earnPointsAdapter.notifyDataSetChanged();
                     }
                     else
                     {

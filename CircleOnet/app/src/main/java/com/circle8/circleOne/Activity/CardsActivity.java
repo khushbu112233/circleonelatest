@@ -318,7 +318,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             }
         });*/
         getSupportActionBar().setShowHideAnimationEnabled(false);
-        new HttpAsyncTaskNotification().execute(Utility.BASE_URL+"CountNewNotification");
+//        new HttpAsyncTaskNotification().execute(Utility.BASE_URL+"CountNewNotification");
         googlePlayServicesHelper = new GooglePlayServicesHelper();
 
         pushBroadcastReceiver = new PushBroadcastReceiver();
@@ -375,8 +375,8 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             Utility.freeMemory();
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
         }
-        else {
-
+        else
+        {
             new HttpAsyncTaskNotification().execute(Utility.BASE_URL + "CountNewNotification");
         }
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -651,8 +651,6 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 }
             }
         });
-
-
     }
 
 
@@ -797,7 +795,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             getSupportActionBar().setShowHideAnimationEnabled(false);
             textView = (TextView) findViewById(R.id.mytext);
             txtNotificationCountAction = (TextView) findViewById(R.id.txtNotificationCountAction);
-            txtNotificationCountAction.setVisibility(View.VISIBLE);
+            txtNotificationCountAction.setVisibility(View.GONE);
             // cardCount = db.getActiveNFCCount();
             SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
@@ -1937,34 +1935,42 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         protected void onPostExecute(String result) {
           //  dialog.dismiss();
             //  Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-            try {
-                if (result == "") {
+            try
+            {
+                if (result == "")
+                {
                     Toast.makeText(getApplicationContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
-                } else {
+                }
+                else
+                {
                     JSONObject response = new JSONObject(result);
                     String message = response.getString("message");
                     String success = response.getString("success");
                     String Count = response.getString("Count");
 
-                    if (success.equals("1")) {
+                    if (success.equals("1"))
+                    {
                         NotificationCount = Count;
-                        if (NotificationCount.equals("0")) {
+                        if (NotificationCount.equals("0"))
+                        {
                             txtNotificationCountAction.setVisibility(View.GONE);
                         }
-                        else {
+                        else
+                        {
                             txtNotificationCountAction.setVisibility(View.VISIBLE);
                         }
                         txtNotificationCountAction.setText(NotificationCount);
-                    } else {
+                    }
+                    else
+                    {
                         txtNotificationCountAction.setVisibility(View.GONE);
                         NotificationCount = "0";
                         txtNotificationCountAction.setText(NotificationCount);
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     }
-
                 }
-
-            } catch (JSONException e) {
+            }
+            catch (JSONException e) {
                 e.printStackTrace();
             }
         }

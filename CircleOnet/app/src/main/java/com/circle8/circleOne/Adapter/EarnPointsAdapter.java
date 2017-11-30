@@ -77,7 +77,7 @@ public class EarnPointsAdapter extends BaseAdapter
         int pos = position+1;
 
         holder.tvEarnPoints.setText("+ "+earnPointsModelArrayList.get(position).getPointEarned().toString());
-        holder.tvBenefitName.setText(pos+".  "+earnPointsModelArrayList.get(position).getBenefitName().toString());
+        holder.tvBenefitName.setText(pos+". "+earnPointsModelArrayList.get(position).getBenefitName().toString());
         holder.tvBenefitDesc.setText(earnPointsModelArrayList.get(position).getBenefitDesc().toString());
         holder.tvBenefitDate.setText(earnPointsModelArrayList.get(position).getBenefitDate().toString());
 

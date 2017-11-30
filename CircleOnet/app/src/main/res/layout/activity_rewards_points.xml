@@ -158,7 +158,7 @@
                     android:layout_below="@+id/tvLine"
                     android:layout_marginTop="5dp"
                     android:textAllCaps="true"
-                    android:text="Tap the card for details"
+                    android:text=""
                     android:textAlignment="textStart"
                     android:textColor="@android:color/white"
                     android:textSize="09dp" />
@@ -170,7 +170,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="40"
+                android:text=""
                 android:textColor="@android:color/white"
                 android:textSize="30dp"
                 android:textStyle="bold" />

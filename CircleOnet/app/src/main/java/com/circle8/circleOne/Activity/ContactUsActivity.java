@@ -96,24 +96,75 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
         }
         if ( v == fbUrl)
         {
-            Utility.freeMemory();
-            Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
-            intent.putExtra("url", "https://www.facebook.com/circleoneasia/");
-            startActivity(intent);
+            AlertDialog.Builder builder;
+            builder = new AlertDialog.Builder(ContactUsActivity.this, R.style.Blue_AlertDialog);
+            builder.setTitle("CircleOne")
+                    .setMessage("Are you sure you want to exit to Facebook?")
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which)
+                        {
+                            Utility.freeMemory();
+                            Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
+                            intent.putExtra("url", "https://www.facebook.com/circleoneasia/");
+                            startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // do nothing
+                            dialog.dismiss();
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_map)
+                    .show();
         }
         if ( v == linkedInUrl)
         {
-            Utility.freeMemory();
-            Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
-            intent.putExtra("url", "https://www.linkedin.com/company/13454864/");
-            startActivity(intent);
+            AlertDialog.Builder builder;
+            builder = new AlertDialog.Builder(ContactUsActivity.this, R.style.Blue_AlertDialog);
+            builder.setTitle("CircleOne")
+                    .setMessage("Are you sure you want to exit to LinkedIn?")
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which)
+                        {
+                            Utility.freeMemory();
+                            Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
+                            intent.putExtra("url", "https://www.linkedin.com/company/13454864/");
+                            startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // do nothing
+                            dialog.dismiss();
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_map)
+                    .show();
         }
         if ( v == twitterUrl)
         {
-            Utility.freeMemory();
-            Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
-            intent.putExtra("url", "https://twitter.com/Circle8Asia");
-            startActivity(intent);
+            AlertDialog.Builder builder;
+            builder = new AlertDialog.Builder(ContactUsActivity.this, R.style.Blue_AlertDialog);
+            builder.setTitle("CircleOne")
+                    .setMessage("Are you sure you want to exit to Twitter?")
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which)
+                        {
+                            Utility.freeMemory();
+                            Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
+                            intent.putExtra("url", "https://twitter.com/Circle8Asia");
+                            startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // do nothing
+                            dialog.dismiss();
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_map)
+                    .show();
         }
         if ( v == googleUrl)
         {
