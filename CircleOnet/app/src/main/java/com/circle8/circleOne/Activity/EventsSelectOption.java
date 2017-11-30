@@ -169,7 +169,7 @@ public class EventsSelectOption extends AppCompatActivity
 
     public void allEvents(View v)
     {
-        CardsActivity.setActionBarTitle("Events");
+       // CardsActivity.setActionBarTitle("Events");
         searchOpt = "AllEvents";
         searchKeyWord = "";
 //        EventsFragment.callSecond();
@@ -190,7 +190,7 @@ public class EventsSelectOption extends AppCompatActivity
         }
         else
         {
-            CardsActivity.setActionBarTitle("Events");
+           // CardsActivity.setActionBarTitle("Events");
 
             searchOpt = "CompanyAssociation";
 
@@ -217,7 +217,7 @@ public class EventsSelectOption extends AppCompatActivity
         }
         else
         {
-            CardsActivity.setActionBarTitle("Events");
+          //  CardsActivity.setActionBarTitle("Events");
 
             searchOpt = "Industry";
 

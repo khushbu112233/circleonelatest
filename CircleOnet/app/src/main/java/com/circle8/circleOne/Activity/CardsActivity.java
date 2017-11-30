@@ -1497,6 +1497,9 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         super.onResume();
         Utility.freeMemory();
         checkPlayServices();
+        if (mViewPager.getCurrentItem() == 2){
+            setActionBarTitle("Events");
+        }
         getSupportActionBar().setShowHideAnimationEnabled(false);
         if (!done) {
             NdefMessage[] msgs = null;

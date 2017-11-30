@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.circle8.circleOne.Model.EventModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
+import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -127,16 +128,17 @@ public class EventsAdapter extends ArrayAdapter
         }
         else
         {
-            /*Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Events/"+eventModelArrayList.get(position).getEvent_Image())
-                    .resize(378,250).onlyScaleDown().skipMemoryCache().noFade().into(holder.image);*/
+            Utility.freeMemory();
+            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Events/"+eventModelArrayList.get(position).getEvent_Image())
+                    .resize(378,250).onlyScaleDown().skipMemoryCache().noFade().into(holder.image);
 //            holder.image.setImageBitmap(eventModelArrayList.get(position).getBitmapImg());
-            try {
+           /* try {
                 url = new URI(Utility.BASE_IMAGE_URL+"Events/"+eventModelArrayList.get(position).getEvent_Image());
                // new SendHttpRequestTask().execute();
                 new ImageLoader( url, holder.image, 300, 300 ).execute();
             } catch (URISyntaxException e) {
                 e.printStackTrace();
-            }
+            }*/
 
 
 /*            imageUrl = Utility.BASE_IMAGE_URL+"Events/"+eventModelArrayList.get(position).getEvent_Image();
@@ -224,8 +226,12 @@ public class EventsAdapter extends ArrayAdapter
             HttpResponse response;
             try {
                 response = client.execute( httpGet );
+                Utility.freeMemory();
                 is = new BufferedInputStream( response.getEntity().getContent() );
+                Utility.freeMemory();
                 Bitmap bitmap = BitmapFactory.decodeStream(is);
+                is.close();
+                Utility.freeMemory();
                 if( preferredWidth > 0 && preferredHeight > 0 && bitmap.getWidth() > preferredWidth && bitmap.getHeight() > preferredHeight ) {
                     return Bitmap.createScaledBitmap(bitmap, preferredWidth, preferredHeight, false);
                 } else {
@@ -233,13 +239,7 @@ public class EventsAdapter extends ArrayAdapter
                 }
             }
             catch (IOException e){}
-            finally {
-                try {
-                    is.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+
             return null;
         }
 

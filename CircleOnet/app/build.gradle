@@ -26,8 +26,8 @@ android {
         applicationId "com.circle8.circleOne"
         minSdkVersion 18
         targetSdkVersion 25
-        versionCode 3
-        versionName "1.0.2"
+        versionCode 4
+        versionName "1.0.3"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [onesignal_app_id               : "8cc4b927-da5f-4152-805d-bf3b40e53773",
@@ -35,8 +35,7 @@ android {
     }
     buildTypes {
         release {
-            shrinkResources true
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -47,7 +46,7 @@ android {
 
     dexOptions {
         // Prevent OutOfMemory with MultiDex during the build phase
-        javaMaxHeapSize "16g"
+        javaMaxHeapSize "4g"
     }
     lintOptions {
         abortOnError false

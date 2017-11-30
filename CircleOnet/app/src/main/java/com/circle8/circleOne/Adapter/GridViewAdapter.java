@@ -107,6 +107,7 @@ public class GridViewAdapter extends BaseSwipeAdapter
     @Override
     public View generateView(final int position, ViewGroup parent)
     {
+        Utility.freeMemory();
         View v = LayoutInflater.from(context).inflate(R.layout.grid_list2_layout, null);
 
         final SwipeLayout swipeLayout = (SwipeLayout) v.findViewById(getSwipeLayoutResourceId(position));

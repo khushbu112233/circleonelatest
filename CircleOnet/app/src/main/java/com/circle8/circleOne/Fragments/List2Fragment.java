@@ -1068,17 +1068,25 @@ public class List2Fragment extends Fragment
         gridAdapter.notifyDataSetChanged();
 
         if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
-            CardsActivity.setActionBarTitle("Cards - " + nfcModel.size() + "/"+ CardsActivity.Connection_Limit);
+            if (CardsActivity.mViewPager.getCurrentItem() == 0) {
+                CardsActivity.setActionBarTitle("Cards - " + nfcModel.size() + "/" + CardsActivity.Connection_Limit);
+            }
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
-            CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
+            if (CardsActivity.mViewPager.getCurrentItem() == 0) {
+                CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
+            }
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
-            CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
+            if (CardsActivity.mViewPager.getCurrentItem() == 0) {
+                CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
+            }
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("SearchConnect"))
         {
-            CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
+            if (CardsActivity.mViewPager.getCurrentItem() == 0) {
+                CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
+            }
         }
 
         gridAdapter.setMode(Attributes.Mode.Single);

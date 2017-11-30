@@ -389,7 +389,7 @@ public class EventsFragment extends Fragment
             rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
 
-            CardsActivity.setActionBarTitle("Events");
+           // CardsActivity.setActionBarTitle("Events");
 
             try
             {
@@ -589,7 +589,7 @@ public class EventsFragment extends Fragment
             rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
 
-            CardsActivity.setActionBarTitle("Events");
+           // CardsActivity.setActionBarTitle("Events");
 
             eventModelArrayList.clear();
             try
