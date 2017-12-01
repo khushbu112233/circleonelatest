@@ -133,8 +133,6 @@ public class EventsFragment extends Fragment
 
 //        callFirst();
 
-
-
        /* try
         {
             Intent eGet = getActivity().getIntent();

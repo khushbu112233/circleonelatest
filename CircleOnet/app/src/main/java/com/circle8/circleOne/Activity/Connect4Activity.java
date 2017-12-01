@@ -27,10 +27,10 @@ public class Connect4Activity extends AppCompatActivity
 {
 
     private ImageView imgBack, imgCards, imgConnect, imgEvents, imgProfile, imgConnecting;
-    TextView txtAsk, txtLink, txtCongratulations;
+    TextView txtAsk, txtLink, txtCongratulations, txtProfileName;
     String level = "";
     ImageView level1, level2, level3, level4, level5, level6, level7, ivImage1;
-    String profile;
+    String profile, profileName ="" ;
 
     String connectLevel = "";
     String userName1 = "", userName2 = "", userName3 = "", userName4 = "", userName5 = "", userName6 = "", userName7 = "";
@@ -54,6 +54,7 @@ public class Connect4Activity extends AppCompatActivity
         imgConnect = (ImageView) findViewById(R.id.imgConnect);
         imgEvents = (ImageView) findViewById(R.id.imgEvents);
         imgProfile = (ImageView) findViewById(R.id.imgProfile);
+        txtProfileName = (TextView)findViewById(R.id.txtProfileName);
         txtLink = (TextView) findViewById(R.id.txtLink);
         txtAsk = (TextView) findViewById(R.id.txtAsk);
         level1 = (ImageView) findViewById(R.id.imgLevel1);
@@ -65,10 +66,12 @@ public class Connect4Activity extends AppCompatActivity
         level7 = (ImageView) findViewById(R.id.imgLevel7);
         ivImage1 = (ImageView) findViewById(R.id.ivImage1);
         txtCongratulations = (TextView) findViewById(R.id.txtCongratulations);
+
         Utility.freeMemory();
         Intent intent = getIntent();
         level = intent.getStringExtra("level");
         profile = intent.getStringExtra("profile");
+        profileName = intent.getStringExtra("profileName");
         connectLevel = intent.getStringExtra("connectLevel");
         userName1 = intent.getStringExtra("userName1");
         userPhoto1 = intent.getStringExtra("userPhoto1");
@@ -91,6 +94,8 @@ public class Connect4Activity extends AppCompatActivity
         userName7 = intent.getStringExtra("userName7");
         userPhoto7 = intent.getStringExtra("userPhoto7");
         userProfileId7 = intent.getStringExtra("userProfileId7");
+
+        txtProfileName.setText(profileName);
 
         try
         {

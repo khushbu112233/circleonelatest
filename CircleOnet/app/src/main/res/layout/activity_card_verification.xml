@@ -88,7 +88,10 @@
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Please tap on card to verify card"/>
+            android:text="Please tap on card to verify card"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:textAlignment="center"/>
 
         <RelativeLayout
             android:elevation="15dp"

@@ -38,7 +38,7 @@ public class Connect3Activity extends AppCompatActivity
     private ImageView imgBack, imgCards, imgConnect, imgEvents, imgProfile, imgConnecting, imgConnecting1;
     TextView txtConnecting;
     int x = 0;
-    String profile;
+    String profileImg, profileName;
     LoginSession loginSession ;
     String UserId = "", friendUserID = "";
     ArrayList<Level7thConnectionModel> allTags;
@@ -73,8 +73,10 @@ public class Connect3Activity extends AppCompatActivity
         UserId = user.get(LoginSession.KEY_USERID);      // name
 
         Intent intent = getIntent();
-        profile = intent.getStringExtra("profile");
+        profileImg = intent.getStringExtra("profile");
         friendUserID = intent.getStringExtra("friendUserID");
+        profileName = intent.getStringExtra("profileName");
+
         allTags = new ArrayList<>();
        // Toast.makeText(getApplicationContext(), level, Toast.LENGTH_LONG).show();
        /* Handler handler = new Handler();
@@ -160,12 +162,7 @@ public class Connect3Activity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
                 go.putExtra("viewpager_position", 0);
-
                 startActivity(go);
                 finish();
                 Utility.freeMemory();
@@ -176,12 +173,7 @@ public class Connect3Activity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
                 go.putExtra("viewpager_position", 1);
-
                 startActivity(go);
                 finish();
                 Utility.freeMemory();
@@ -192,12 +184,7 @@ public class Connect3Activity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
                 go.putExtra("viewpager_position", 2);
-
                 startActivity(go);
                 finish();
                 Utility.freeMemory();
@@ -208,12 +195,7 @@ public class Connect3Activity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
                 go.putExtra("viewpager_position", 3);
-
                 startActivity(go);
                 finish();
                 Utility.freeMemory();
@@ -245,7 +227,8 @@ public class Connect3Activity extends AppCompatActivity
         {
             Intent go = new Intent(getApplicationContext(), Connect4Activity.class);
             go.putExtra("level", level);
-            go.putExtra("profile", profile);
+            go.putExtra("profile", profileImg);
+            go.putExtra("profileName", profileName);
             go.putExtra("connectLevel", connectLevel);
             go.putExtra("userName1", userName1);
             go.putExtra("userPhoto1", userPhoto1);

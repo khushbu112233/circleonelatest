@@ -97,7 +97,7 @@ public class ConnectActivity extends AppCompatActivity
     LinearLayout lnrWeb, lnrmail, lnrnum, lnrmob;
 
     LoginSession loginSession;
-    String profileImg = "", friendUserID = "", user_id = "";
+    String profileImg = "", friendUserID = "", user_id = "", profileName = "";
     public static JSONArray selectedStrings1 = new JSONArray();
 
     int motionLength = 0;
@@ -444,6 +444,7 @@ public class ConnectActivity extends AppCompatActivity
                                 Intent go = new Intent(getApplicationContext(),Connect3Activity.class);
                                 go.putExtra("profile", profileImg);
                                 go.putExtra("friendUserID", friendUserID);
+                                go.putExtra("profileName", profileName);
                                 startActivity(go);
                                // finish();
                             }
@@ -471,6 +472,7 @@ public class ConnectActivity extends AppCompatActivity
                                 Intent go = new Intent(getApplicationContext(),Connect3Activity.class);
                                 go.putExtra("profile", profileImg);
                                 go.putExtra("friendUserID", friendUserID);
+                                go.putExtra("profileName", profileName);
                                 startActivity(go);
                                // finish();
                             }
@@ -917,6 +919,8 @@ public class ConnectActivity extends AppCompatActivity
 
                     profileImg = Utility.BASE_IMAGE_URL+"UserProfile/"+profile.getString("UserPhoto");
                     displayProfile = profile.getString("UserPhoto");
+                    profileName = profile.getString("FirstName")+" "+profile.getString("LastName");
+
                     if(profile.getString("UserPhoto").equalsIgnoreCase(""))
                     {
                         ivProfileImage.setImageResource(R.drawable.usr_white1);

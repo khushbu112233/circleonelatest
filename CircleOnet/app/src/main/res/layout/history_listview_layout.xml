@@ -17,7 +17,7 @@
         android:id="@+id/tvHistoryListInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="There is no history available."
+        android:text="There is no history points."
         android:layout_centerInParent="true"
         android:visibility="gone"/>
 
