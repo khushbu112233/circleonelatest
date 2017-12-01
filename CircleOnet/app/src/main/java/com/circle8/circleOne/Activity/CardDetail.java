@@ -62,6 +62,13 @@ import com.circle8.circleOne.chat.DialogsAdapter;
 import com.circle8.circleOne.chat.DialogsManager;
 import com.circle8.circleOne.chat.qb.QbChatDialogMessageListenerImp;
 import com.circle8.circleOne.chat.qb.QbDialogHolder;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.quickblox.auth.session.QBSessionManager;
 import com.quickblox.chat.QBChatService;
 import com.quickblox.chat.QBIncomingMessagesManager;
@@ -108,7 +115,7 @@ import be.appfoundry.nfclibrary.utilities.interfaces.NfcReadUtility;
 import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CardDetail extends NfcActivity implements DialogsManager.ManagingDialogsCallbacks, View.OnClickListener
+public class CardDetail extends NfcActivity implements DialogsManager.ManagingDialogsCallbacks, View.OnClickListener, OnMapReadyCallback
 {
     ExpandableHeightListView lstTestimonial;
     ViewPager mViewPager, viewPager1;
@@ -180,6 +187,8 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
     ImageView imgChat;
     String CurrentUserEmail = "";
     public static int occupant_id = 0;
+
+    GoogleMap googleMaps ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -361,6 +370,10 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 
             new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL + "Testimonial/Fetch");
         }
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
         imgProfileShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1016,6 +1029,26 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                         .show();
             }
         });
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap)
+    {
+        googleMaps = googleMap ;
+
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(20);
+        googleMaps.setMyLocationEnabled(true);
+        googleMaps.animateCamera(zoom);
+    }
+
+    private void createMarker(Double Lat, Double Lang)
+    {
+        LatLng location = new LatLng(Lat,Lang);
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(15);
+
+        googleMaps.addMarker(new MarkerOptions().position(location).title(""));
+        googleMaps.moveCamera(CameraUpdateFactory.newLatLng(location));
+//        googleMaps.animateCamera(zoom);
     }
 
 

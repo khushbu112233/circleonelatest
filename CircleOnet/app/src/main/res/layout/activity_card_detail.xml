@@ -878,6 +878,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="15dp"
+                    android:layout_marginBottom="10dp"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -896,16 +897,31 @@
                         android:textSize="13sp" />
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/ivMap"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="10dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_map" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp">
+
+                        <fragment
+                            android:id="@+id/map"
+                            android:name="com.google.android.gms.maps.SupportMapFragment"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:id="@+id/ivMap"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="10dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_map"
+                        android:visibility="gone"/>
 
                     <com.circle8.circleOne.Utils.orkebyTextView
                         android:id="@+id/lblAttachment"
@@ -931,7 +947,6 @@
                         android:textSize="13sp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" />
-
 
                     <RelativeLayout
                         android:visibility="gone"
