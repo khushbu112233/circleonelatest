@@ -161,6 +161,8 @@ public class GroupDetailActivity extends AppCompatActivity
         profile_id = user.get(LoginSession.KEY_PROFILEID);
         user_id = user.get(LoginSession.KEY_USERID);
 
+//        Toast.makeText(getApplicationContext(),"ProID & UID: "+ profile_id+" "+user_id, Toast.LENGTH_LONG).show();
+
         Intent intent = getIntent();
         group_id = intent.getStringExtra("group_id");
         group_Name = intent.getStringExtra("groupName");
@@ -283,15 +285,34 @@ public class GroupDetailActivity extends AppCompatActivity
             }
         });
 
-       /* listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position,long arg3) {
+            public void onItemClick(AdapterView<?> parent, View view, int position,long arg3)
+            {
                 view.setSelected(true);
+                String profileID = groupDetailModelArrayList.get(position).getProfileid() ;
+                Intent iPut = new Intent(GroupDetailActivity.this, CardDetail.class);
+                iPut.putExtra("profile_id", profileID);
+                startActivity(iPut);
+                finish();
             }
-        });*/
+        });
 
-        listView.setMultiChoiceModeListener(new MultiChoiceModeListener() {
+     /*  listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+           @Override
+           public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l)
+           {
+               Toast.makeText(getApplicationContext(),groupDetailModelArrayList.get(position).getProfileid(),Toast.LENGTH_SHORT).show();
+           }
 
+           @Override
+           public void onNothingSelected(AdapterView<?> adapterView) {
+
+           }
+       });*/
+
+        listView.setMultiChoiceModeListener(new MultiChoiceModeListener()
+        {
             @Override
             public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean cecked)
             {
@@ -447,7 +468,6 @@ public class GroupDetailActivity extends AppCompatActivity
                                 // Close CAB
                                 mode.finish();
                                 selected.clear();
-
                             }
                         });
                         AlertDialog alert =  builder.create();
@@ -1125,7 +1145,6 @@ public class GroupDetailActivity extends AppCompatActivity
                     groupDetailAdapter = new GroupDetailAdapter(mContext, R.layout.group_detail_items, groupDetailModelArrayList);
                     listView.setAdapter(groupDetailAdapter);
                     groupDetailAdapter.notifyDataSetChanged();
-
                     // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
                 }
                 else

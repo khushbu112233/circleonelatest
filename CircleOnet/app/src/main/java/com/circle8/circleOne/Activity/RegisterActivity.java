@@ -101,8 +101,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.circle8.circleOne.Utils.Validation.validate;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, AsyncRequest.OnAsyncRequestComplete {
-
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, AsyncRequest.OnAsyncRequestComplete
+{
     public static EditText etFirstName, etLastName, etPassword, etConfirmPass, etPhone, etEmail;
     public static TextView tvUsernameInfo, tvFirstnameInfo, tvLastnameInfo, tvPasswordInfo, tvRePasswordInfo, tvEmailInfo, tvPhoneInfo;
     private LinearLayout lnrRegister;
@@ -397,11 +397,31 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        if (v == imgBack) {
+        if (v == imgBack)
+        {
             Utility.freeMemory();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
             finish();
+
+            AlertDialog.Builder alert = new AlertDialog.Builder(RegisterActivity.this, R.style.Blue_AlertDialog);
+            alert.setMessage("Are you sure you want to leave this page");
+            alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //do your work here
+                    dialog.dismiss();
+                    finish();
+                }
+            });
+            alert.setNegativeButton("No", new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            alert.show();
         }
         if (v == ivMale) {
             Utility.freeMemory();

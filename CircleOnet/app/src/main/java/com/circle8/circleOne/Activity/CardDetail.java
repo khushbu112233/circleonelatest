@@ -116,12 +116,12 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
     private CardSwipe myPager;
     private ImageView imgCards, imgConnect, imgEvents, imgProfile, imgBack, imgCard, imgMap;
     private static final String TAG = NFCDemo.class.getName();
-    private LinearLayout llWebsiteBox, llEmailBox, llMobileBox, llTeleBox, llFaxBox, llAddressBox;
+    private LinearLayout llWebsiteBox, llEmailBox, llMobileBox, llTeleBox, llFaxBox, llAddressBox, llIndustryBox;
     ImageView fbUrl, linkedInUrl, twitterUrl, googleUrl, youtubeUrl;
     NfcReadUtility mNfcReadUtility = new NfcReadUtilityImpl();
     ProgressDialog mProgressDialog;
     DatabaseHelper db;
-    TextView txtName, txtCompany, txtWebsite, txtEmail, txtPH, txtWork, txtMob, txtAddress, txtRemark, txtDesi;
+    TextView txtName, txtCompany, txtWebsite, txtEmail, txtPH, txtWork, txtMob, txtAddress, txtRemark, txtDesi, txtIndustry;
     CircleImageView imgProfileCard;
     String user_id = "", profile_id, currentUser_ProfileId = "", DateInitiated = "";
     StickyScrollView scroll;
@@ -165,7 +165,6 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
     LinearLayout lnrNfcLocation;
     Boolean netCheck= false;
 
-
     private QBSystemMessagesManager systemMessagesManager;
     public static ArrayList<QBUser> selectedUsers = new ArrayList<QBUser>();
 
@@ -188,13 +187,16 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         super.onCreate(savedInstanceState);
         Utility.freeMemory();
         setContentView(R.layout.activity_card_detail);
+
         referralCodeSession = new ReferralCodeSession(getApplicationContext());
         loginSession = new LoginSession(getApplicationContext());
+
         HashMap<String, String> user = loginSession.getUserDetails();
         user_id = user.get(LoginSession.KEY_USERID);
         currentUser_ProfileId = user.get(LoginSession.KEY_PROFILEID);
         CurrentQ_ID = user.get(LoginSession.KEY_QID);
         CurrentUserEmail = user.get(LoginSession.KEY_EMAIL);
+
         imgProfileShare = (ImageView) findViewById(R.id.imgProfileShare);
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager1 = (ViewPager) findViewById(R.id.viewPager1);
@@ -221,6 +223,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         txtAddress = (TextView) findViewById(R.id.txtAddress);
         txtRemark = (TextView) findViewById(R.id.txtRemark);
         txtDesi = (TextView) findViewById(R.id.txtDesi);
+        txtIndustry = (TextView)findViewById(R.id.txtIndustry);
         scroll = (StickyScrollView) findViewById(R.id.scroll);
         imgAddGroupFriend = (ImageView) findViewById(R.id.imgAddGroupFriend);
         llWebsiteBox = (LinearLayout) findViewById(R.id.llWebsiteBox);
@@ -230,6 +233,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         llFaxBox = (LinearLayout) findViewById(R.id.llFaxBox);
         llAddressBox = (LinearLayout) findViewById(R.id.llAddressBox);
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+        llIndustryBox = (LinearLayout)findViewById(R.id.llIndustryBox);
         fbUrl = (ImageView) findViewById(R.id.fbUrl);
         googleUrl = (ImageView) findViewById(R.id.googleUrl);
         youtubeUrl = (ImageView) findViewById(R.id.youtubeUrl);
@@ -258,11 +262,13 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         txtMore = (TextView) findViewById(R.id.txtMore);
         final HashMap<String, String> referral = referralCodeSession.getReferralDetails();
         refer = referral.get(ReferralCodeSession.KEY_REFERRAL);
+
         Intent intent = getIntent();
         profile_id = intent.getStringExtra("profile_id");
         DateInitiated = intent.getStringExtra("DateInitiated");
         String lat = intent.getStringExtra("lat");
         String lon = intent.getStringExtra("long");
+
         dialogsManager = new DialogsManager();
         SpannableString ss = new SpannableString("Ask your friends to write a Testimonial for you(100 words or less),Please choose from your CircleOne contacts and send a request.");
         ClickableSpan clickableSpan = new ClickableSpan() {
@@ -283,18 +289,26 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         txtTestimonial.setMovementMethod(LinkMovementMethod.getInstance());
         txtTestimonial.setHighlightColor(getResources().getColor(R.color.colorPrimary));
 
-        if ((lat.equals("") || lat.equals("null") || lat == null || lat.isEmpty()) && (lon.equals("") || lon.equals("null") || lon == null || lon.isEmpty()))
+        try
         {
-            lnrNfcLocation.setVisibility(View.GONE);
-        }
-        else
-        {
-            lnrNfcLocation.setVisibility(View.VISIBLE);
-            Latitude = Double.parseDouble(lat);
-            Longitude = Double.parseDouble(lon);
+            if ((lat.equals("") || lat.equals("null") || lat == null || lat.isEmpty()) && (lon.equals("") || lon.equals("null") || lon == null || lon.isEmpty()))
+            {
+                lnrNfcLocation.setVisibility(View.GONE);
+            }
+            else
+            {
+                lnrNfcLocation.setVisibility(View.VISIBLE);
+                Latitude = Double.parseDouble(lat);
+                Longitude = Double.parseDouble(lon);
 
-             getAddress();
+                getAddress();
+            }
         }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
 //        Toast.makeText(getApplicationContext(), DateInitiated.toString(),Toast.LENGTH_SHORT).show();
 
 
@@ -1793,8 +1807,6 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                     backCardImg = jsonObject.getString("Card_Back");
                     Q_ID = jsonObject.getString("Q_ID");
 
-
-
                     if (Q_ID.equals("") || Q_ID == null || Q_ID.equals("")){
                         imgChat.setVisibility(View.GONE);
                     }
@@ -1938,6 +1950,13 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                         txtDesi.setVisibility(View.GONE);
                     } else {
                         txtDesi.setText(Designation);
+                    }
+
+                    if (IndustryName.equalsIgnoreCase("") || IndustryName == null)
+                    {
+                        llIndustryBox.setVisibility(View.GONE);
+                    } else {
+                        txtIndustry.setText(IndustryName);
                     }
 
                     if (CompanyName.equalsIgnoreCase("")

@@ -165,8 +165,7 @@
                                 android:layout_centerInParent="true"
                                 android:layout_width="70dp"
                                 android:layout_height="70dp"
-                                android:src="@drawable/round_white_profile"
-                                />
+                                android:src="@drawable/round_white_profile" />
 
                             <ImageView
                                 android:id="@+id/ivMiniCamera"
@@ -175,7 +174,8 @@
                                 android:src="@drawable/ic_white_camera"
                                 android:layout_alignParentRight="false"
                                 android:layout_marginTop="50dp"
-                                android:layout_marginLeft="50dp"/>
+                                android:layout_marginLeft="50dp" />
+
                         </RelativeLayout>
                         <com.circle8.circleOne.Utils.HelveticaLightTextView
                             android:id="@+id/tvPhotoUpload"

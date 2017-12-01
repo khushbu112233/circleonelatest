@@ -85,7 +85,6 @@ public class EventsAdapter extends ArrayAdapter
         {
             Utility.freeMemory();
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-            Utility.freeMemory();
             row = inflater.inflate(layoutResourceId, parent, false);
             holder = new ViewHolder();
             holder.txtTitle = (TextView) row.findViewById(R.id.txtEventTitle);

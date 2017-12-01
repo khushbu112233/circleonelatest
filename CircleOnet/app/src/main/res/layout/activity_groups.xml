@@ -251,7 +251,7 @@
                 android:layout_below="@+id/rlPhoto"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
-                android:textColor="@color/unselected" />
+                android:textColor="@color/black" />
             <com.circle8.circleOne.Utils.cgTextView
                 android:id="@+id/tvCircleNameInfo"
                 android:layout_width="wrap_content"
@@ -269,7 +269,7 @@
                 android:layout_height="50dp"
                 android:hint="Description"
                 android:textColorHint="@color/unselected"
-                android:textColor="@color/unselected"
+                android:textColor="@color/black"
                 android:background="@drawable/event_back"
                 android:maxLines="2"
                 android:textSize="14sp"

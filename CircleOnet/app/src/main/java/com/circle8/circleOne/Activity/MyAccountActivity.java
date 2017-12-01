@@ -140,6 +140,8 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     String editStatus = "None";
     RelativeLayout rltGender;
 
+    boolean profilePicPress = false ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -521,6 +523,14 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     {
         if ( v == imgProfile)
         {
+
+            if (profilePicPress)
+            {
+                CropImage.activity(null).setGuidelines(CropImageView.Guidelines.ON).start(MyAccountActivity.this);
+                return;
+            }
+
+
           /*  final AlertDialog alertDialog = new AlertDialog.Builder(MyAccountActivity.this).create();
             LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             final View dialogView = inflater.inflate(R.layout.imageview_popup, null);
@@ -569,9 +579,6 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             wmlp.y = 400;   //y position
             dialog.show();
 */
-            CropImage.activity(null)
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .start(MyAccountActivity.this);
         }
         if ( v == ivEditImg)
         {
@@ -585,8 +592,10 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             etDD.setEnabled(true);
             etMM.setEnabled(true);
             etYYYY.setEnabled(true);
-            imgProfile.setEnabled(true);
+//            imgProfile.setEnabled(true);
             rltGender.setEnabled(true);
+
+            profilePicPress = true ;
 
 /*
             etFirstName.setVisibility(View.VISIBLE);
@@ -637,9 +646,9 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         if ( v == ivMiniCamera)
         {
            // selectImage();
-            CropImage.activity(null)
+           /* CropImage.activity(null)
                     .setGuidelines(CropImageView.Guidelines.ON)
-                    .start(MyAccountActivity.this);
+                    .start(MyAccountActivity.this);*/
         }
         if( v == tvSave)
         {
