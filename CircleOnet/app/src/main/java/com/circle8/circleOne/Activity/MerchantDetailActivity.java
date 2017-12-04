@@ -549,6 +549,7 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
                                 }
 
                                 String fullAddress = Addr1+Addr2+Addr3+Addr4+City+State+Country+PostalCode;
+
                                 merchantLocationModel.setFullAddress(fullAddress);
                                 merchantLocationModelArrayList.add(merchantLocationModel);
 

@@ -186,7 +186,7 @@
                             android:layout_marginBottom="3dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Slide down to view the front &amp; back card images"
+                            android:text="Slide down to view the front &amp; back"
                             android:textColor="@color/white"/>
 
                         <com.circle8.circleOne.Utils.HelveticaLightTextView
