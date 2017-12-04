@@ -303,7 +303,7 @@
                             <com.circle8.circleOne.Utils.cgTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Please ensure all delivery details are correct"
+                                android:text="Deliver to:"
                                 android:textColor="@color/colorPrimary"
                                 android:layout_centerVertical="true"/>
                             <ImageView
