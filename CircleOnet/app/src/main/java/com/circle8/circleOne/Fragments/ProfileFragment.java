@@ -711,6 +711,17 @@ public class ProfileFragment extends Fragment
                                     tvMob.setText(allTags.get(i).getMobile1());
                                     tvWork.setText(allTags.get(i).getPhone1());
 
+
+                                    if(allTags.get(i).getIndustry().equalsIgnoreCase("")
+                                            || allTags.get(i).getIndustry().equalsIgnoreCase("null"))
+                                    {
+                                        llIndustryBox.setVisibility(View.GONE);
+                                    }
+                                    else
+                                    {
+                                        textIndustry.setText(allTags.get(i).getIndustry());
+                                    }
+
                                     if (allTags.get(i).getAttachment_FileName().toString().equals("") || allTags.get(i).getAttachment_FileName().toString() == null ||
                                             allTags.get(i).getAttachment_FileName().toString().equals("null")) {
 
@@ -764,8 +775,21 @@ public class ProfileFragment extends Fragment
                                             listAssociation = new ArrayList<String>();
                                             for (int i1 = 0; i1 < array.length(); i1++) {
 
-                                                listAssociation.add(array.getString(i1));
-                                                associationString += array.getString(i1) + " / ";
+                                                String name1 = array.getString(i1).toString();
+                                                String kept = name1.substring(0, name1.indexOf(":"));
+                                                String remainder = name1.substring(name1.indexOf(":") + 1, name1.length());
+
+
+                                                listAssociation.add(remainder);
+
+                                                if (i1 == array.length()-1){
+                                                    associationString += remainder ;
+                                                }else {
+                                                    associationString += remainder + " / ";
+                                                }
+
+
+                                               // associationString += remainder + " / ";
                                             }
                                             txtAssociationList.setText(associationString);
                                             int countAssociation;
@@ -798,7 +822,22 @@ public class ProfileFragment extends Fragment
                                             for (int i1 = 0; i1 < arrayEvents.length(); i1++) {
 
                                                 listEvents.add(arrayEvents.getString(i1));
-                                                eventString += arrayEvents.getString(i1) + " / ";
+                                                String remainder = "";
+                                                String name1 = arrayEvents.getString(i1);
+                                                if (name1.contains(":")) {
+                                                    //String kept = name.substring(0, name.indexOf(":"));
+                                                    remainder = name1.substring(name1.indexOf(":") + 1, name1.length());
+                                                }
+                                                else {
+                                                    remainder = name1;
+                                                }
+                                                if (i1 == arrayEvents.length()-1){
+                                                    eventString += remainder ;
+                                                }else {
+                                                    eventString += remainder + " / ";
+                                                }
+
+
                                             }
                                             txtEventsListFinal.setText(eventString);
                                             int countEvents;
@@ -1328,7 +1367,7 @@ public class ProfileFragment extends Fragment
                         nfcModelTag.setYoutube(object.getString("Youtube"));
                         nfcModelTag.setAttachment_FileName(object.getString("Attachment_FileName"));
                         nfcModelTag.setProfile(object.getString("ProfileName"));
-
+                        nfcModelTag.setIndustry(object.getString("IndustryName"));
                        /* array = object.getJSONArray("Association_Name");
                         for (int i1 = 0; i1 < array.length(); i1++){
 
@@ -1340,7 +1379,14 @@ public class ProfileFragment extends Fragment
                         //  GetData(getContext());
 
                     }
-                    displayProfile = allTags.get(profileIndex).getUserPhoto();
+
+                    try {
+                        displayProfile = allTags.get(profileIndex).getUserPhoto();
+                    }catch (Exception e){
+                        profileSession.createProfileSession("0");
+                        profileIndex = 0;
+                        displayProfile = allTags.get(profileIndex).getUserPhoto();
+                    }
 
                     TestimonialProfileId = allTags.get(profileIndex).getProfileID();
 
@@ -1409,7 +1455,7 @@ public class ProfileFragment extends Fragment
                             String name = array.getString(i1);
                             String remainder;
                             if (name.contains(":")) {
-                                //String kept = name.substring(0, name.indexOf(":"));
+                                String kept = name.substring(0, name.indexOf(":"));
                                 remainder = name.substring(name.indexOf(":") + 1, name.length());
                             }
                             else {
@@ -1594,15 +1640,15 @@ public class ProfileFragment extends Fragment
                     {
                         tvWork.setText(allTags.get(profileIndex).getPhone1()+"   "+allTags.get(profileIndex).getPhone2());
                     }
-                  /*  if(allTags.get(0).getIndustry().equalsIgnoreCase("")
-                            || allTags.get(0).getIndustry().equalsIgnoreCase("null"))
+                    if(allTags.get(profileIndex).getIndustry().equalsIgnoreCase("")
+                            || allTags.get(profileIndex).getIndustry().equalsIgnoreCase("null"))
                     {
                         llIndustryBox.setVisibility(View.GONE);
                     }
                     else
                     {
-                        textIndustry.setText(allTags.get(0).getIndustry());
-                    }*/
+                        textIndustry.setText(allTags.get(profileIndex).getIndustry());
+                    }
                     /*tvAddress.setText(allTags.get(0).getAddress1()+ " "+allTags.get(0).getAddress2() + " "
                             + allTags.get(0).getAddress3()  + " "
                             + allTags.get(0).getAddress4() + " "

@@ -102,7 +102,7 @@ public class SubscriptionAdapter extends BaseAdapter
         holder.tvConnect_Group.setText(subscriptionModelArrayList.get(position).getConnectionLimit()+" contacts, up to " +
                                 subscriptionModelArrayList.get(position).getGroupLimit()+" circles,");
         holder.tvConnection.setText("up to "+subscriptionModelArrayList.get(position).getMonthlyConnectionLimit()+" connections per month.");
-        holder.tvAmount.setText("SGD $"+subscriptionModelArrayList.get(position).getPrice());
+        holder.tvAmount.setText("S$"+subscriptionModelArrayList.get(position).getPrice());
 
         String left_connection = subscriptionModelArrayList.get(position).getLetf_connection();
         String packageName = subscriptionModelArrayList.get(position).getPackageName();
