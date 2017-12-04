@@ -48,6 +48,7 @@ import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.Adapter.TextRecyclerAdapter;
 import com.circle8.circleOne.Fragments.ProfileFragment;
 import com.circle8.circleOne.Helper.LoginSession;
+import com.circle8.circleOne.Helper.ReferralCodeSession;
 import com.circle8.circleOne.Model.ProfileModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
@@ -142,6 +143,8 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     RelativeLayout rltGender;
 
     boolean profilePicPress = false ;
+    TextView tvReferral;
+    ReferralCodeSession referralCodeSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -175,7 +178,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         etAddress2 = (EditText)findViewById(R.id.etAddress2);
         etPhone = (EditText)findViewById(R.id.etPhone);
 
-        tvReferenceCode = (TextView)findViewById(R.id.tvReferenceCode);
+        tvReferral = (TextView)findViewById(R.id.tvReferral);
 
         tvFirstName = (TextView) findViewById(R.id.tvFirstName);
         tvLastName = (TextView)findViewById(R.id.tvLastName);
@@ -244,7 +247,9 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
        // new HttpAsyncTaskFetchLoginData().execute("http://circle8.asia:8999/Onet.svc/UserLogin");
 
         etUserName.setText(user.get(LoginSession.KEY_EMAIL));
-
+        referralCodeSession = new ReferralCodeSession(getApplicationContext());
+        HashMap<String, String> referral = referralCodeSession.getReferralDetails();
+        tvReferral.setText(referral.get(ReferralCodeSession.KEY_REFERRAL));
         try {
             String str[] = user.get(LoginSession.KEY_DOB).split("/");
             String day = str[0];

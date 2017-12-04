@@ -124,7 +124,7 @@ public class NewCardRequestActivity extends AppCompatActivity
                         i.putExtra("company", allTags.get(position).getCompanyName());
                         i.putExtra("profile", allTags.get(position).getProfile());
                         i.putExtra("image", allTags.get(position).getUserPhoto());
-                        i.putExtra("phone", allTags.get(position).getPhone1());
+                        i.putExtra("phone", allTags.get(position).getMobile1());
                         i.putExtra("profileID", allTags.get(position).getProfileID());
                         i.putExtra("Card_Front", allTags.get(position).getCard_Front());
                         i.putExtra("Card_Back", allTags.get(position).getCard_Back());
