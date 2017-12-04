@@ -324,17 +324,34 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
             public void onClick(View v)
             {
                 Utility.freeMemory();
-                nfcModel1.clear();
-                allTaggs.clear();
-                try
+                if (searchText.getText().toString().length() == 0)
                 {
-                    gridAdapter.notifyDataSetChanged();
+                    pageno = 1;
+                    nfcModel1.clear();
+                    allTaggs.clear();
+                    try
+                    {
+                        gridAdapter.notifyDataSetChanged();
+                    } catch (Exception e) {
+                    }
+                    callFirst();
+                    tvFriendInfo.setVisibility(View.GONE);
                 }
-                catch (Exception e)
+
+                if (searchText.getText().toString().length() > 0)
                 {
-                    e.printStackTrace();
+                    nfcModel1.clear();
+                    allTaggs.clear();
+                    try
+                    {
+                        gridAdapter.notifyDataSetChanged();
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                    new HttpAsyncTaskSearch().execute(Utility.BASE_URL+"SearchConnect");
                 }
-                new HttpAsyncTaskSearch().execute(Utility.BASE_URL+"SearchConnect");
             }
         });
 
@@ -343,17 +360,35 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
                 Utility.freeMemory();
-                nfcModel1.clear();
-                allTaggs.clear();
-                try
+
+                if (searchText.getText().toString().length() == 0)
                 {
-                    gridAdapter.notifyDataSetChanged();
+                    pageno = 1;
+                    nfcModel1.clear();
+                    allTaggs.clear();
+                    try
+                    {
+                        gridAdapter.notifyDataSetChanged();
+                    } catch (Exception e) {
+                    }
+                    callFirst();
+                    tvFriendInfo.setVisibility(View.GONE);
                 }
-                catch (Exception e)
+
+                if (searchText.getText().toString().length() > 0)
                 {
-                    e.printStackTrace();
+                    nfcModel1.clear();
+                    allTaggs.clear();
+                    try
+                    {
+                        gridAdapter.notifyDataSetChanged();
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                    new HttpAsyncTaskSearch().execute(Utility.BASE_URL+"SearchConnect");
                 }
-                new HttpAsyncTaskSearch().execute(Utility.BASE_URL+"SearchConnect");
 
                 return true;
             }

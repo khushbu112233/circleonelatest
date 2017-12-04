@@ -210,6 +210,13 @@ public class EventsFragment extends Fragment
 
                         callFirst();
                     }
+
+                   /* if (s.length() == 0)
+                    {
+                        EventsSelectOption.searchOpt = "ClearSearch";
+                        tvEventInfo.setVisibility(View.GONE);
+
+                    }*/
                 }
                 catch (Exception e)
                 {
@@ -237,9 +244,31 @@ public class EventsFragment extends Fragment
                 {
                     e.printStackTrace();
                 }*/
-                eventSearchBy = "Name";
+                if (searchText.getText().toString().length() == 0)
+                {
+                    EventsSelectOption.searchOpt = "ClearSearch";
+                    callFirst();
+                }
+
+                if (searchText.getText().toString().length() > 0)
+                {
+                    eventModelArrayList.clear();
+                    try
+                    {
+                        gridAdapter.notifyDataSetChanged();
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                    eventSearchBy = "Name";
+                    eventSearchKey = searchText.getText().toString();
+                    new HttpAsyncTaskSearchEvent().execute(Utility.BASE_URL+"Events/Search");
+                }
+
+               /* eventSearchBy = "Name";
                 eventSearchKey = searchText.getText().toString();
-                new HttpAsyncTaskSearchEvent().execute(Utility.BASE_URL+"Events/Search");
+                new HttpAsyncTaskSearchEvent().execute(Utility.BASE_URL+"Events/Search");*/
 //                searchEvent();
             }
         });
@@ -249,18 +278,28 @@ public class EventsFragment extends Fragment
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
                 Utility.freeMemory();
-                eventModelArrayList.clear();
-                try
+
+                if (searchText.getText().toString().length() == 0)
                 {
-                    gridAdapter.notifyDataSetChanged();
+                    EventsSelectOption.searchOpt = "ClearSearch";
+                    callFirst();
                 }
-                catch (Exception e)
+
+                if (searchText.getText().toString().length() > 0)
                 {
-                    e.printStackTrace();
+                    eventModelArrayList.clear();
+                    try
+                    {
+                        gridAdapter.notifyDataSetChanged();
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                    eventSearchBy = "Name";
+                    eventSearchKey = searchText.getText().toString();
+                    new HttpAsyncTaskSearchEvent().execute(Utility.BASE_URL+"Events/Search");
                 }
-                eventSearchBy = "Name";
-                eventSearchKey = searchText.getText().toString();
-                new HttpAsyncTaskSearchEvent().execute(Utility.BASE_URL+"Events/Search");
 //                searchEvent();
 
                 return true;
