@@ -16,6 +16,7 @@ import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -54,6 +55,7 @@ import com.circle8.circleOne.Model.NFCModel;
 import com.circle8.circleOne.Model.TestimonialModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.ExpandableHeightListView;
+import com.circle8.circleOne.Utils.GeocodingLocation;
 import com.circle8.circleOne.Utils.StickyScrollView;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.chat.ChatActivity;
@@ -1048,7 +1050,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 
         googleMaps.addMarker(new MarkerOptions().position(location).title(""));
         googleMaps.moveCamera(CameraUpdateFactory.newLatLng(location));
-//        googleMaps.animateCamera(zoom);
+        googleMaps.animateCamera(zoom);
     }
 
 
@@ -1296,10 +1298,9 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 
     public void getAddress()
     {
-
         Address locationAddress = getAddress(Latitude,Longitude);
 
-        if(locationAddress!=null)
+        if(locationAddress != null)
         {
             String address = locationAddress.getAddressLine(0);
             String address1 = locationAddress.getAddressLine(1);
@@ -1965,12 +1966,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 //                    txtWebsite.setText(jsonObject.getString("Website"));
 
                     personName = jsonObject.getString("FirstName") + " " + jsonObject.getString("LastName");
-                    personAddress = jsonObject.getString("Address1") + " " + jsonObject.getString("Address2")
-                            + " " + jsonObject.getString("Address3") + " " + jsonObject.getString("Address4")
-                            + " " + jsonObject.getString("City") + " " + jsonObject.getString("State")
-                            + " " + jsonObject.getString("Country") + " " + jsonObject.getString("Postalcode");
 
-                   // txtRemark.setText(personAddress);
                     if (personName.equalsIgnoreCase("") || personName.equalsIgnoreCase(null)) {
                         txtName.setText("Person");
                     } else {
@@ -2040,14 +2036,6 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                         txtMob.setText(Mobile1);
                     }
 
-                    if (personAddress == null
-                            || personAddress.equalsIgnoreCase("")) {
-                        txtAddress.setText("Address");
-                        llAddressBox.setVisibility(View.GONE);
-                    } else {
-                        txtAddress.setText(personAddress);
-                    }
-
                     if (Fax1.equalsIgnoreCase("")
                             || Fax1.equalsIgnoreCase(null)) {
                         txtWork.setText("Fax");
@@ -2102,6 +2090,36 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                     //   viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
                     viewPager1.setAdapter(myPager);
 
+                    String add1 = jsonObject.getString("Address1");
+                    String add2 = jsonObject.getString("Address2");
+                    String add3 = jsonObject.getString("Address3");
+                    String add4 = jsonObject.getString("Address4");
+                    String city = jsonObject.getString("City");
+                    String state = jsonObject.getString("State");
+                    String country = jsonObject.getString("Country");
+                    String postalCode = jsonObject.getString("Postalcode");
+
+                    if (!add1.equals("")) { add1 = add1+", "; }
+                    if (!add2.equals("")) { add2 = add2+", "; }
+                    if (!add3.equals("")) { add3 = add3+", "; }
+                    if (!add4.equals("")) { add4 = add4+", "; }
+                    if (!city.equals("")) { city = city+", "; }
+                    if (!state.equals("")) { state = state+", "; }
+                    if (!country.equals("")) { country = country+" "; }
+                    if (!postalCode.equals("")) { postalCode = postalCode ; }
+
+                    personAddress = add1+add2+add3+add4+city+state+country+postalCode ;
+                    txtAddress.setText(personAddress);
+
+                    String fullAddress =
+                            jsonObject.getString("Address1")+" "+jsonObject.getString("Address2")+" "+
+                            jsonObject.getString("Address3")+" "+jsonObject.getString("Address4")+" "+
+                            jsonObject.getString("City")+" "+jsonObject.getString("State")+" "+
+                            jsonObject.getString("Country")+" "+jsonObject.getString("Postalcode");
+
+                    GeocodingLocation locationAddress = new GeocodingLocation();
+                    locationAddress.getAddressFromLocation(fullAddress, getApplicationContext(), new GeocoderHandler());
+
                         /*FriendConnection nfcModelTag = new FriendConnection();
                         nfcModelTag.setName(object.getString("FirstName") + " " + object.getString("LastName"));
                         nfcModelTag.setCompany(object.getString("CompanyName"));
@@ -2125,6 +2143,43 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private class GeocoderHandler extends Handler
+    {
+        @Override
+        public void handleMessage(Message message)
+        {
+            String locationAddress;
+            String latLang ;
+            String msg ;
+            switch (message.what)
+            {
+                case 1:
+                    Bundle bundle = message.getData();
+                    locationAddress = bundle.getString("address");
+                    latLang = bundle.getString("latlang");
+
+                    msg = bundle.getString("message");
+                    if (msg.equalsIgnoreCase("Get Latitude and Longitude for this address location."))
+                    {
+                        Double Latitude = bundle.getDouble("latitude");
+                        Double Longitude = bundle.getDouble("longitude");
+
+                        createMarker(Latitude,Longitude);
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
+                    }
+
+                    break;
+                default:
+                    locationAddress = null;
+                    latLang = null ;
+            }
+//            tvLatLang.setText(latLang+" of "+locationAddress);
         }
     }
 

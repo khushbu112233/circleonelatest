@@ -118,7 +118,7 @@
                 android:layout_height="wrap_content"
                 android:text="Event Type"/>
 
-            <com.circle8.circleOne.Utils.cgTextView
+            <com.circle8.circleOne.Utils.cgBoldTextView
                 android:visibility="visible"
                 android:id="@+id/tvEventTitle1"
                 android:textAllCaps="true"
