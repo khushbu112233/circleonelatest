@@ -138,6 +138,7 @@ import java.security.GeneralSecurityException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -280,6 +281,10 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         Connection_Limit = user.get(LoginSession.KEY_CONNECTION_LIMIT);
         Connection_Left = user.get(LoginSession.KEY_CONNECTION_LEFT);
 //        Toast.makeText(getApplicationContext(), name + " " + email + " " + image + " " + gender, Toast.LENGTH_LONG).show();
+
+        if (Connection_Limit.equalsIgnoreCase("100000")){
+            Connection_Limit = DecimalFormatSymbols.getInstance().getInfinity();
+        }
 
         if (checkPlayServices()) {
             Utility.freeMemory();
