@@ -447,18 +447,39 @@ public class List1Fragment extends Fragment
             @Override
             public void onClick(View v)
             {
-                nfcModel.clear();
-                allTags.clear();
-                try
+                if (searchText.getText().toString().length() == 0)
                 {
-                    mAdapter.notifyDataSetChanged();
-                } catch (Exception e) {
+                    nfcModel.clear();
+                    pageno = 1;
+                    allTags.clear();
+                    try {
+                        mAdapter.notifyDataSetChanged();
+                    } catch (Exception e) {
+                    }
+
+                    try {
+                        mAdapter1.notifyDataSetChanged();
+                    } catch (Exception e) {
+                    }
+                    callFirst();
+                    tvFriendInfo.setVisibility(View.GONE);
                 }
-                try {
-                    mAdapter1.notifyDataSetChanged();
-                } catch (Exception e) {
+
+                if (searchText.getText().toString().length() > 0)
+                {
+                    nfcModel.clear();
+                    allTags.clear();
+                    try
+                    {
+                        mAdapter.notifyDataSetChanged();
+                    } catch (Exception e) {
+                    }
+                    try {
+                        mAdapter1.notifyDataSetChanged();
+                    } catch (Exception e) {
+                    }
+                    new HttpAsyncTaskSearch().execute(Utility.BASE_URL+"SearchConnect");
                 }
-                new HttpAsyncTaskSearch().execute(Utility.BASE_URL+"SearchConnect");
             }
         });
 
@@ -466,18 +487,39 @@ public class List1Fragment extends Fragment
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
-                nfcModel.clear();
-                allTags.clear();
-                try
+                if (searchText.getText().toString().length() == 0)
                 {
-                    mAdapter.notifyDataSetChanged();
-                } catch (Exception e) {
+                    nfcModel.clear();
+                    pageno = 1;
+                    allTags.clear();
+                    try {
+                        mAdapter.notifyDataSetChanged();
+                    } catch (Exception e) {
+                    }
+
+                    try {
+                        mAdapter1.notifyDataSetChanged();
+                    } catch (Exception e) {
+                    }
+                    callFirst();
+                    tvFriendInfo.setVisibility(View.GONE);
                 }
-                try {
-                    mAdapter1.notifyDataSetChanged();
-                } catch (Exception e) {
+
+                if (searchText.getText().toString().length() > 0)
+                {
+                    nfcModel.clear();
+                    allTags.clear();
+                    try
+                    {
+                        mAdapter.notifyDataSetChanged();
+                    } catch (Exception e) {
+                    }
+                    try {
+                        mAdapter1.notifyDataSetChanged();
+                    } catch (Exception e) {
+                    }
+                    new HttpAsyncTaskSearch().execute(Utility.BASE_URL+"SearchConnect");
                 }
-                new HttpAsyncTaskSearch().execute(Utility.BASE_URL+"SearchConnect");
 
                 return true;
             }

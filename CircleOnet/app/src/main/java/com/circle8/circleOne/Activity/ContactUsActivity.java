@@ -269,7 +269,6 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
             Utility.freeMemory();
             AlertDialog.Builder builder;
             builder = new AlertDialog.Builder(ContactUsActivity.this, R.style.Blue_AlertDialog);
-
             builder.setTitle("Redirect to Web Browser")
                     .setMessage("Are you sure you want to redirect to Web Browser ?")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {

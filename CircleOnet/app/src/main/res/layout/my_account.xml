@@ -326,6 +326,16 @@
                         android:singleLine="true"
                         android:visibility="gone"/>
                 </LinearLayout>
+                <com.circle8.circleOne.Utils.HelveticaLightTextView
+                    android:visibility="gone"
+                    android:id="@+id/tvFirstNameInfo"
+                    android:layout_weight="1"
+                    android:textColor="@color/unselected"
+                    android:textSize="10sp"
+                    android:text="Enter First Name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -375,34 +385,16 @@
                         android:singleLine="true"
                         android:visibility="gone"/>
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_marginTop="0dp"
+                <com.circle8.circleOne.Utils.HelveticaLightTextView
+                    android:visibility="gone"
+                    android:id="@+id/tvLastNameInfo"
+                    android:layout_weight="1"
+                    android:textColor="@color/unselected"
+                    android:textSize="10sp"
+                    android:text="Enter Last Name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginLeft="20dp">
-                    <com.circle8.circleOne.Utils.HelveticaLightTextView
-                        android:visibility="gone"
-                        android:id="@+id/tvFirstNameInfo"
-                        android:layout_weight="1"
-                        android:textColor="@color/unselected"
-                        android:textSize="10sp"
-                        android:text="Enter First Name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"/>
-                    <com.circle8.circleOne.Utils.HelveticaLightTextView
-                        android:visibility="gone"
-                        android:id="@+id/tvLastNameInfo"
-                        android:layout_weight="1"
-                        android:textColor="@color/unselected"
-                        android:textSize="10sp"
-                        android:text="Enter Last Name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"/>
-                </LinearLayout>
+                    android:layout_marginLeft="15dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -553,8 +545,6 @@
                             app:ccp_textSize="15dp"
                             app:ccpDialog_textColor="@color/colorPrimary"
                             app:ccp_contentColor="@color/black"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="15dp"
                             app:ccp_showNameCode="false"
                             app:ccp_showPhoneCode="true"
                             app:ccp_showFlag="false"
@@ -749,6 +739,37 @@
 
                     </LinearLayout>
 
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="0dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+                    <com.circle8.circleOne.Utils.HelveticaLightTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Reference Code: "
+                        android:textColor="@color/colorPrimary"
+                        android:layout_marginRight="0dp"
+                        android:layout_weight="0.7"/>
+                    <com.circle8.circleOne.Utils.HelveticaLightTextView
+                        android:id="@+id/tvReferenceCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="5dp"
+                        android:paddingTop="5dp"
+                        android:textSize="13sp"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:layout_weight="0.3"
+                        android:visibility="visible"/>
                 </LinearLayout>
 
                 <com.circle8.circleOne.Utils.HelveticaLightTextView

@@ -103,6 +103,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             etPasswordAgain, etEmail, etAddress1 , etAddress2, etPhone ;
     private TextView tvUserName, tvFirstName, tvLastName, tvPassword,
             tvPasswordAgain, tvEmail, tvPhone, tvDD, tvMM, tvYYYY ;
+    private TextView tvReferenceCode ;
     private CircleImageView imgProfile ;
     private TextView tvSave, tvCancel, txtGender ;
     private ImageView ivFemaleround, ivFemaleImg, ivConnect, ivMiniCamera,
@@ -173,6 +174,8 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         etAddress1 = (EditText)findViewById(R.id.etAddress1);
         etAddress2 = (EditText)findViewById(R.id.etAddress2);
         etPhone = (EditText)findViewById(R.id.etPhone);
+
+        tvReferenceCode = (TextView)findViewById(R.id.tvReferenceCode);
 
         tvFirstName = (TextView) findViewById(R.id.tvFirstName);
         tvLastName = (TextView)findViewById(R.id.tvLastName);

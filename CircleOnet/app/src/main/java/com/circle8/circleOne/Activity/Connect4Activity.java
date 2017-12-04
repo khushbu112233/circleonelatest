@@ -49,6 +49,7 @@ public class Connect4Activity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connect4);
+
         imgBack = (ImageView) findViewById(R.id.imgBack);
         imgCards = (ImageView) findViewById(R.id.imgCards);
         imgConnect = (ImageView) findViewById(R.id.imgConnect);

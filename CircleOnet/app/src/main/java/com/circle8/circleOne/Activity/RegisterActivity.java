@@ -514,7 +514,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 phone_no = code + " " + contact;
             }
 
-            if (!validate(user_name, first_name, last_name, password, c_password, phone_no, email)) {
+            if (!validate(user_name, first_name, last_name, password, c_password, phone_no, email))
+            {
                 Toast.makeText(getApplicationContext(), "Please fill all required fields", Toast.LENGTH_SHORT).show();
             }
            /* else if (refferelCode.equals("")){

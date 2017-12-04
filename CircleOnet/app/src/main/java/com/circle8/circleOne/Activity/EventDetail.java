@@ -3,10 +3,13 @@ package com.circle8.circleOne.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -47,7 +50,7 @@ public class EventDetail extends AppCompatActivity
     private TextView actionText;
     private ImageView imgDrawer, imgCards, imgConnect, imgEvents, imgProfile, imgLogo, imgEvent;
     private int actionBarHeight;
-    private TextView tvEventTitle, tvEventDate, tvEventDesc, tvEventType, tvEventAddress, tvCompanyName, tvIndustryName ;
+    private TextView tvEventTitle,tvEventTitle1, tvEventDate, tvEventDesc, tvEventType, tvEventAddress, tvCompanyName, tvIndustryName ;
     private ListView listViewTimeShow ;
     private LinearLayout llShowTime ;
 
@@ -84,6 +87,7 @@ public class EventDetail extends AppCompatActivity
         txtBook = (TextView) findViewById(R.id.txtBook);
         txtRegister = (TextView) findViewById(R.id.txtRegister);
         tvEventTitle = (TextView)findViewById(R.id.tvEventTitle);
+        tvEventTitle1 = (TextView)findViewById(R.id.tvEventTitle1);
         tvEventDate = (TextView)findViewById(R.id.tvEventDate);
         tvEventType = (TextView)findViewById(R.id.tvEventType);
         tvEventDesc = (TextView)findViewById(R.id.tvEventDesc);
@@ -140,21 +144,57 @@ public class EventDetail extends AppCompatActivity
 
         txtRegister.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 Utility.freeMemory();
-                Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
-                intent.putExtra("url", eventRegister);
-                startActivity(intent);
+                AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(EventDetail.this, R.style.Blue_AlertDialog);
+                builder.setTitle("Circle One")
+                        .setMessage("Are you sure you want to exit to "+eventRegister+"?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
+                                intent.putExtra("url", eventRegister);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_menu_set_as)
+                        .show();
             }
         });
 
         txtBook.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 Utility.freeMemory();
-                Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
-                intent.putExtra("url", eventBook);
-                startActivity(intent);
+                AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(EventDetail.this, R.style.Blue_AlertDialog);
+                builder.setTitle("Circle One")
+                        .setMessage("Are you sure you want to exit to "+eventBook+"?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
+                                intent.putExtra("url", eventBook);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_menu_set_as)
+                        .show();
             }
         });
 
@@ -321,10 +361,12 @@ public class EventDetail extends AppCompatActivity
                             || eventDetail.getString("Event_Name").equals("null"))
                     {
                         tvEventTitle.setVisibility(View.GONE);
+                        tvEventTitle1.setVisibility(View.GONE);
                     }
                     else
                     {
                         tvEventTitle.setText(eventDetail.getString("Event_Name"));
+                        tvEventTitle1.setText(eventDetail.getString("Event_Name"));
                     }
 
                     if(eventDetail.getString("Event_Type").equals("")
@@ -451,20 +493,20 @@ public class EventDetail extends AppCompatActivity
                     {
                         JSONArray showTiming = response.getJSONArray("showTimings");
 
-                        for(int i = 0; i<= showTiming.length() ; i++)
+                        for(int i = 0; i< showTiming.length() ; i++)
                         {
                             JSONObject tList = showTiming.getJSONObject(i);
+
                             EventModel eventModel1 = new EventModel();
                             tList.getString("Event_Highlights");
                             eventModel1.setEventDate(tList.getString("Event_Highlight_Date"));
                             eventModel1.setStartDate(tList.getString("Start_Time"));
                             eventModel1.setEndDate(tList.getString("End_Time"));
                             eventModelArrayList1.add(eventModel1);
-
-                            EventDetailAdapter eventDetailAdapter = new EventDetailAdapter(getApplicationContext(), eventModelArrayList1);
-                            listViewTimeShow.setAdapter(eventDetailAdapter);
-                            eventDetailAdapter.notifyDataSetChanged();
                         }
+                        EventDetailAdapter eventDetailAdapter = new EventDetailAdapter(getApplicationContext(), eventModelArrayList1);
+                        listViewTimeShow.setAdapter(eventDetailAdapter);
+                        eventDetailAdapter.notifyDataSetChanged();
                     }
                     catch (JSONException e)
                     {

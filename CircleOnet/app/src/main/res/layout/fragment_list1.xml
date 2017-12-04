@@ -30,7 +30,7 @@
             android:focusableInTouchMode="true"
             android:imeOptions="actionSearch"
             android:inputType="textAutoComplete|textAutoCorrect"
-            android:textColor="#9FA0A0"
+            android:textColor="@color/black"
             android:textColorHint="#9FA0A0"/>
 
         <ImageView

@@ -187,7 +187,8 @@ public class List4Fragment extends Fragment
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
                 Intent intent = new Intent(getContext(), CardDetail.class);
                 intent.putExtra("tag_id", nfcModel1.get(position).getNfc_tag());
                 intent.putExtra("profile_id", nfcModel1.get(position).getProfile_id());
@@ -303,17 +304,35 @@ public class List4Fragment extends Fragment
             public void onClick(View v)
             {
                 Utility.freeMemory();
-                nfcModel1.clear();
-                allTaggs.clear();
-                try
+
+                if (searchText.getText().toString().length() == 0)
                 {
-                    gridAdapter.notifyDataSetChanged();
+                    pageno = 1;
+                    nfcModel1.clear();
+                    allTaggs.clear();
+                    try
+                    {
+                        gridAdapter.notifyDataSetChanged();
+                    } catch (Exception e) {
+                    }
+                    callFirst();
+                    tvFriendInfo.setVisibility(View.GONE);
                 }
-                catch (Exception e)
+
+                if (searchText.getText().toString().length() > 0 )
                 {
-                    e.printStackTrace();
+                    nfcModel1.clear();
+                    allTaggs.clear();
+                    try
+                    {
+                        gridAdapter.notifyDataSetChanged();
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                    new HttpAsyncTaskSearch().execute(Utility.BASE_URL+"SearchConnect");
                 }
-                new HttpAsyncTaskSearch().execute(Utility.BASE_URL+"SearchConnect");
             }
         });
 
@@ -322,17 +341,34 @@ public class List4Fragment extends Fragment
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
                 Utility.freeMemory();
-                nfcModel1.clear();
-                allTaggs.clear();
-                try
+                if (searchText.getText().toString().length() == 0)
                 {
-                    gridAdapter.notifyDataSetChanged();
+                    pageno = 1;
+                    nfcModel1.clear();
+                    allTaggs.clear();
+                    try
+                    {
+                        gridAdapter.notifyDataSetChanged();
+                    } catch (Exception e) {
+                    }
+                    callFirst();
+                    tvFriendInfo.setVisibility(View.GONE);
                 }
-                catch (Exception e)
+
+                if (searchText.getText().toString().length() > 0 )
                 {
-                    e.printStackTrace();
+                    nfcModel1.clear();
+                    allTaggs.clear();
+                    try
+                    {
+                        gridAdapter.notifyDataSetChanged();
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                    new HttpAsyncTaskSearch().execute(Utility.BASE_URL+"SearchConnect");
                 }
-                new HttpAsyncTaskSearch().execute(Utility.BASE_URL+"SearchConnect");
 
                 return true;
             }

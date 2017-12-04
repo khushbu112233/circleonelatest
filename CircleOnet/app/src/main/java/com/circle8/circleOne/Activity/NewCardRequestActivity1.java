@@ -74,7 +74,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
     String recycle_image1, recycle_image2;
     ViewPager mViewPager1, mViewPager2;
     private String image;
-    LinearLayout llBlueCardSample, llGoldCardSample;
+    private ImageView ivLaserCard, ivNormalCard ;
     TextView cardNumberField, monthField, yearField, cvcField;
     Stripe stripe;
     Card card;
@@ -118,8 +118,6 @@ public class NewCardRequestActivity1 extends AppCompatActivity
         txtNormalCost = (TextView) findViewById(R.id.txtNormalCost);
         txtNormalDesc = (TextView) findViewById(R.id.txtNormalDesc);
         ivSubmit = (ImageView) findViewById(R.id.ivSubmit);
-        llGoldCardSample = (LinearLayout) findViewById(R.id.llGoldCardSample);
-        llBlueCardSample = (LinearLayout) findViewById(R.id.llBlueCardSample);
         tvPerson = (TextView) findViewById(R.id.tvPersonName);
         tvDesignation = (TextView) findViewById(R.id.tvDesignation);
         tvCompany = (TextView) findViewById(R.id.tvCompany);
@@ -130,6 +128,9 @@ public class NewCardRequestActivity1 extends AppCompatActivity
         etPhone = (EditText) findViewById(R.id.etPhone);
         etAddress1 = (EditText) findViewById(R.id.etAddress1);
         etAddress2 = (EditText) findViewById(R.id.etAddress2);
+
+        ivLaserCard = (ImageView)findViewById(R.id.ivLaserCard);
+        ivNormalCard = (ImageView)findViewById(R.id.ivNormalCard);
 
         mViewPager1 = (ViewPager) findViewById(R.id.viewPager);
         mViewPager2 = (ViewPager) findViewById(R.id.viewPager1);
@@ -352,30 +353,41 @@ public class NewCardRequestActivity1 extends AppCompatActivity
             }
         });
 
-        llGoldCardSample.setOnClickListener(new View.OnClickListener() {
+        ivLaserCard.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
+            public void onClick(View view)
             {
-                llBlueCardSample.setAlpha(0.4f);
-                llGoldCardSample.setAlpha(1.0f);
+                ivLaserCard.setAlpha(1.0f);
+                txtLaserCost.setAlpha(1.0f);
+                txtLaserDesc.setAlpha(1.0f);
+
+                ivNormalCard.setAlpha(0.4f);
+                txtNormalCost.setAlpha(0.4f);
+                txtNormalDesc.setAlpha(0.4f);
+
                 PhysicalCardTypeID = "1";
                 Price = laserPrintCost;
                 int amt = Integer.parseInt(Price);
                 amount = amt * 100;
-                //llBlueCardSample.setEnabled(false);
             }
         });
 
-        llBlueCardSample.setOnClickListener(new View.OnClickListener() {
+        ivNormalCard.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                llGoldCardSample.setAlpha(0.4f);
-                llBlueCardSample.setAlpha(1.0f);
+            public void onClick(View view)
+            {
+                ivLaserCard.setAlpha(0.4f);
+                txtLaserCost.setAlpha(0.4f);
+                txtLaserDesc.setAlpha(0.4f);
+
+                ivNormalCard.setAlpha(1.0f);
+                txtNormalCost.setAlpha(1.0f);
+                txtNormalDesc.setAlpha(1.0f);
+
                 PhysicalCardTypeID = "2";
                 Price = normalPrintCost;
                 int amt = Integer.parseInt(Price);
                 amount = amt * 100;
-                //llGoldCardSample.setEnabled(false);
             }
         });
 

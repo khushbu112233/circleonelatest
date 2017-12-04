@@ -32,7 +32,7 @@
                 android:focusableInTouchMode="true"
                 android:imeOptions="actionSearch"
                 android:inputType="textAutoComplete|textAutoCorrect"
-                android:textColor="#9FA0A0"
+                android:textColor="@color/black"
                 android:textColorHint="#9FA0A0"/>
             <ImageView
                 android:layout_marginRight="10dp"
@@ -110,7 +110,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/more_progress"
                     android:padding="5dp"
-                    android:text="More Loading.."
+                    android:text="Loading More..."
                     android:textColor="@color/colorPrimary"
                     android:textSize="15sp"
                     android:layout_marginLeft="10dp"/>

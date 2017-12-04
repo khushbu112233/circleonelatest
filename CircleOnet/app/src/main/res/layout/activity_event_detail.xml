@@ -63,7 +63,6 @@
 
         </LinearLayout>
 
-
     </FrameLayout>
 
     <ScrollView
@@ -120,6 +119,17 @@
                 android:text="Event Type"/>
 
             <com.circle8.circleOne.Utils.cgTextView
+                android:visibility="visible"
+                android:id="@+id/tvEventTitle1"
+                android:textAllCaps="true"
+                android:textSize="18dp"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/colorAccent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Event Name"/>
+
+            <com.circle8.circleOne.Utils.cgTextView
                 android:id="@+id/tvEventDesc"
                 android:layout_marginTop="10dp"
                 android:textSize="12dp"
@@ -133,7 +143,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <com.circle8.circleOne.Utils.cgBoldTextView
+                <com.circle8.circleOne.Utils.cgTextView
                     android:layout_marginTop="15dp"
                     android:textAllCaps="true"
                     android:textSize="13dp"
@@ -158,7 +168,7 @@
 Monday - April 3, 2017 - 9:30am - 5:00pm
 Monday - April 3, 2017 - 9:30am - 5:00pm"/>
 -->
-            <com.circle8.circleOne.Utils.cgBoldTextView
+            <com.circle8.circleOne.Utils.cgTextView
                 android:id="@+id/cgBoldTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
