@@ -175,7 +175,7 @@ public class NotificationAdapter extends BaseAdapter
                 holder.txtRequestedTestRec.setVisibility(View.VISIBLE);
             }*/
             holder.txtTestPurposeRec.setText(purpose);
-            holder.txtTestNameRec.setText(testimonialModels.get(position).getFirstName());
+            holder.txtTestNameRec.setText(testimonialModels.get(position).getFirstName() + " " + testimonialModels.get(position).getLastName());
         }
 
         /*else if (purpose.equalsIgnoreCase("Connection Accepted"))
@@ -254,7 +254,7 @@ public class NotificationAdapter extends BaseAdapter
             else if (purpose.equalsIgnoreCase("Connection Requested")) {
                 holder.txtFriendPurpose.setText("I would like to connect with you!");
             }
-            holder.txtFriendName.setText(testimonialModels.get(position).getFirstName());
+            holder.txtFriendName.setText(testimonialModels.get(position).getFirstName() + " " + testimonialModels.get(position).getLastName());
         }
 
         else if (purpose.equalsIgnoreCase("Recieved Testimonial Request"))
@@ -281,7 +281,7 @@ public class NotificationAdapter extends BaseAdapter
             }*/
 
             holder.txtTestPurpose.setText(purpose);
-            holder.txtTestName.setText(testimonialModels.get(position).getFirstName());
+            holder.txtTestName.setText(testimonialModels.get(position).getFirstName() + " " + testimonialModels.get(position).getLastName());
         }
 
         else if (purpose.equalsIgnoreCase("Card Shared"))
@@ -308,7 +308,7 @@ public class NotificationAdapter extends BaseAdapter
             }*/
 
             holder.txtSharePurpose.setText(purpose);
-            holder.txtShareName.setText(testimonialModels.get(position).getFirstName());
+            holder.txtShareName.setText(testimonialModels.get(position).getFirstName() + " " + testimonialModels.get(position).getLastName());
         }
         else if (purpose.equalsIgnoreCase("Connection Card Access Request"))
         {
@@ -335,7 +335,7 @@ public class NotificationAdapter extends BaseAdapter
             }*/
 
             holder.txtNfcPurpose.setText(purpose);
-            holder.txtNfcName.setText(testimonialModels.get(position).getFirstName());
+            holder.txtNfcName.setText(testimonialModels.get(position).getFirstName() + " " + testimonialModels.get(position).getLastName());
         }
 
         /*else if (purpose.equalsIgnoreCase("Sent Testimonial Request"))
@@ -403,7 +403,7 @@ public class NotificationAdapter extends BaseAdapter
             else {
                 holder.txtFriendPurpose.setText(purpose);
             }
-            holder.txtFriendName.setText(testimonialModels.get(position).getFirstName());
+            holder.txtFriendName.setText(testimonialModels.get(position).getFirstName() + " " + testimonialModels.get(position).getLastName());
         }
 
         vi.setOnClickListener(new View.OnClickListener() {

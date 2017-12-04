@@ -701,6 +701,36 @@
                 </RelativeLayout>
 
                     <LinearLayout
+                    android:id="@+id/llWebsiteBox"
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/ic_web"
+                        android:onClick="openWebPage"/>
+
+                    <com.circle8.circleOne.Utils.cgTextView
+                        android:textIsSelectable="true"
+                        android:id="@+id/txtWebsite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:hint="Website"
+                        android:textAlignment="center"
+                        android:textColor="#6b6c6e"
+                        android:textSize="13sp"
+                        android:onClick="openWebPage"/>
+                </LinearLayout>
+
+                    <LinearLayout
                         android:id="@+id/llIndustryBox"
                         android:background="@color/white"
                         android:layout_width="match_parent"
@@ -731,36 +761,6 @@
                     </LinearLayout>
 
                     <LinearLayout
-                    android:id="@+id/llWebsiteBox"
-                    android:background="@color/white"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="15dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginRight="20dp"
-                        android:src="@drawable/ic_web"
-                        android:onClick="openWebPage"/>
-
-                    <com.circle8.circleOne.Utils.cgTextView
-                        android:textIsSelectable="true"
-                        android:id="@+id/txtWebsite"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:hint="Website"
-                        android:textAlignment="center"
-                        android:textColor="#6b6c6e"
-                        android:textSize="13sp"
-                        android:onClick="openWebPage"/>
-                </LinearLayout>
-
-                <LinearLayout
                     android:id="@+id/llEmailBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -239,7 +239,7 @@
         <com.circle8.circleOne.Utils.orkebyTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Reward Points         "
+            android:text="Rewards         "
             android:textSize="15dp"
             android:layout_marginLeft="20dp"
             android:textColor="@android:color/white" />
