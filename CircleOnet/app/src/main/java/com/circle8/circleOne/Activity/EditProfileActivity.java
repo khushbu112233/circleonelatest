@@ -339,8 +339,13 @@ public class EditProfileActivity extends AppCompatActivity implements
         runner.execute(sleepTime);*/
 
 
-       initUI();
-        populate();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                initUI();
+                populate();
+            }
+        });
         imgProfileShare.setOnClickListener(this);
 
         SpannableString ss = new SpannableString("Ask your friends to write a Testimonial for you(100 words or less),Please choose from your CircleOne contacts and send a request.");
@@ -1024,7 +1029,6 @@ public class EditProfileActivity extends AppCompatActivity implements
             new HttpAsyncTaskUserProfile().execute(Utility.BASE_URL+"GetUserProfile");
             new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");
         }
-
     }
 
     public void initUI(){
@@ -1146,22 +1150,6 @@ public class EditProfileActivity extends AppCompatActivity implements
         gridView.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.mytextview, array));
         gridView.setExpanded(true);
 
-        List<String> stringList = new ArrayList<String>(Arrays.asList(array));
-        eventList = new ArrayList<AssociationModel>();
-        for (int i = 0; i < array.length; i++) {
-            Utility.freeMemory();
-            AssociationModel st = new AssociationModel(String.valueOf(i), stringList.get(i), false );
-
-            eventList.add(st);
-
-            mAdapter1 = new CardViewDataAdapter(eventList);
-
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(EditProfileActivity.this, 5, GridLayoutManager.HORIZONTAL, false);
-            recyclerEvents.setAdapter(mAdapter1);
-            recyclerEvents.setLayoutManager(gridLayoutManager);
-
-
-        }
 
         if (addEventList.size() == 0) {
             tvEventInfo.setVisibility(View.VISIBLE);
@@ -1169,7 +1157,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             tvEventInfo.setVisibility(View.GONE);
         }
 
-        generateHashkey();
+       // generateHashkey();
 
         camera_permission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
         if (camera_permission != PackageManager.PERMISSION_GRANTED) {
@@ -3133,6 +3121,23 @@ public class EditProfileActivity extends AppCompatActivity implements
 //            rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
+
+                List<String> stringList = new ArrayList<String>(Arrays.asList(array));
+                eventList = new ArrayList<AssociationModel>();
+                for (int i = 0; i < array.length; i++) {
+                    Utility.freeMemory();
+                    AssociationModel st = new AssociationModel(String.valueOf(i), stringList.get(i), false );
+
+                    eventList.add(st);
+
+                    mAdapter1 = new CardViewDataAdapter(eventList);
+
+                    GridLayoutManager gridLayoutManager = new GridLayoutManager(EditProfileActivity.this, 5, GridLayoutManager.HORIZONTAL, false);
+                    recyclerEvents.setAdapter(mAdapter1);
+                    recyclerEvents.setLayoutManager(gridLayoutManager);
+                }
+
+
                 if (result != null) {
                     associationList = new ArrayList<AssociationModel>();
                     JSONObject jsonObject = new JSONObject(result);

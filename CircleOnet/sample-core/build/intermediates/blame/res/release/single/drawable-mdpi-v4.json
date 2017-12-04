@@ -44,12 +44,12 @@
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable-mdpi-v4\\abc_ic_star_black_36dp.png"
     },
     {
-        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\drawable-mdpi-v4\\qb_logo.png",
-        "source": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\src\\main\\res\\drawable-mdpi\\qb_logo.png"
-    },
-    {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\drawable-mdpi-v4\\abc_list_longpressed_holo.9.png",
         "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable-mdpi-v4\\abc_list_longpressed_holo.9.png"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\drawable-mdpi-v4\\qb_logo.png",
+        "source": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\src\\main\\res\\drawable-mdpi\\qb_logo.png"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\drawable-mdpi-v4\\notification_bg_normal_pressed.9.png",
@@ -72,12 +72,12 @@
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable-mdpi-v4\\abc_ic_menu_paste_mtrl_am_alpha.png"
     },
     {
-        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\drawable-mdpi-v4\\common_google_signin_btn_text_dark_normal_background.9.png",
-        "source": "C:\\Users\\admin\\.android\\build-cache\\40e67b10ae84a0014964c993eae40c1524cd41b6\\output\\res\\drawable-mdpi-v4\\common_google_signin_btn_text_dark_normal_background.9.png"
-    },
-    {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\drawable-mdpi-v4\\common_google_signin_btn_text_dark_normal_background.9.png",
         "source": "C:\\Users\\ample-arch\\.android\\build-cache\\5ff72c9178d33ff95f1748cd94d9160b71a78efa\\output\\res\\drawable-mdpi-v4\\common_google_signin_btn_text_dark_normal_background.9.png"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\drawable-mdpi-v4\\common_google_signin_btn_text_dark_normal_background.9.png",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\40e67b10ae84a0014964c993eae40c1524cd41b6\\output\\res\\drawable-mdpi-v4\\common_google_signin_btn_text_dark_normal_background.9.png"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\drawable-mdpi-v4\\abc_ab_share_pack_mtrl_alpha.9.png",
@@ -104,12 +104,12 @@
         "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable-mdpi-v4\\abc_btn_switch_to_on_mtrl_00012.9.png"
     },
     {
-        "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\drawable-mdpi-v4\\abc_ic_star_black_36dp.png",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable-mdpi-v4\\abc_ic_star_black_36dp.png"
-    },
-    {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\drawable-mdpi-v4\\abc_scrubber_control_to_pressed_mtrl_005.png",
         "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable-mdpi-v4\\abc_scrubber_control_to_pressed_mtrl_005.png"
+    },
+    {
+        "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\drawable-mdpi-v4\\abc_ic_star_black_36dp.png",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable-mdpi-v4\\abc_ic_star_black_36dp.png"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\drawable-mdpi-v4\\googleg_disabled_color_18.png",
