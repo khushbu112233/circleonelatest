@@ -3135,8 +3135,6 @@ public class EditProfileActivity extends AppCompatActivity implements
                     GridLayoutManager gridLayoutManager = new GridLayoutManager(EditProfileActivity.this, 5, GridLayoutManager.HORIZONTAL, false);
                     recyclerEvents.setAdapter(mAdapter1);
                     recyclerEvents.setLayoutManager(gridLayoutManager);
-
-
                 }
 
 
