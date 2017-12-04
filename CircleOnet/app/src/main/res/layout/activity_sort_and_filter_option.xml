@@ -343,16 +343,14 @@
 
                 <ImageView
                     android:id="@+id/imgGroupIcon"
+                    android:layout_centerVertical="true"
                     android:backgroundTint="@color/colorAccent"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
                     android:src="@drawable/ic_group_list"
-                    android:layout_marginLeft="14dp"
+                    android:layout_marginLeft="10dp"
                     android:contentDescription="Home!"
-                    android:layout_alignBottom="@+id/cgTextView"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="14dp" />
+                    android:layout_marginTop="0dp" />
 
                 <com.circle8.circleOne.Utils.cgTextView
                     android:layout_toRightOf="@+id/imgGroupIcon"

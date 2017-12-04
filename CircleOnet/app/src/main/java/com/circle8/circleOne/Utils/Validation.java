@@ -17,10 +17,10 @@ public class Validation
     {
         boolean valid = true ;
 
-        if(userName.isEmpty() || userName.length() < 3 )
+        if(userName.isEmpty() || userName.length() < 1 )
         {
 //            RegisterActivity.etUserName.setError("Minimum 3 Characters.");
-            RegisterActivity.tvUsernameInfo.setText("Min 3 Characters");
+            RegisterActivity.tvUsernameInfo.setText("Mini 1 Characters");
             RegisterActivity.tvUsernameInfo.setVisibility(View.VISIBLE);
             valid = false ;
         }
@@ -30,10 +30,10 @@ public class Validation
             RegisterActivity.tvUsernameInfo.setVisibility(View.GONE);
         }
 
-        if(firstName.isEmpty() || firstName.length() < 3 )
+        if(firstName.isEmpty() || firstName.length() < 1 )
         {
 //            RegisterActivity.etFirstName.setError("Minimum 3 Characters.");
-            RegisterActivity.tvFirstnameInfo.setText("Min 3 Characters");
+            RegisterActivity.tvFirstnameInfo.setText("Mini 1 Characters");
             RegisterActivity.tvFirstnameInfo.setVisibility(View.VISIBLE);
             valid = false ;
         }
@@ -43,10 +43,10 @@ public class Validation
             RegisterActivity.tvFirstnameInfo.setVisibility(View.GONE);
         }
 
-        if(lastName.isEmpty() || lastName.length() < 3 )
+        if(lastName.isEmpty() || lastName.length() < 1 )
         {
 //            RegisterActivity.etLastName.setError("Minimum 3 Characters.");
-            RegisterActivity.tvLastnameInfo.setText("Min 3 Characters");
+            RegisterActivity.tvLastnameInfo.setText("Mini 1 Characters");
             RegisterActivity.tvLastnameInfo.setVisibility(View.VISIBLE);
             valid = false ;
         }

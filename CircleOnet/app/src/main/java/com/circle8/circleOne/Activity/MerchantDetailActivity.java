@@ -214,7 +214,7 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
                                 dialog.dismiss();
                             }
                         })
-                        .setIcon(android.R.drawable.ic_dialog_map)
+                        .setIcon(android.R.drawable.ic_menu_set_as)
                         .show();
             }
         });

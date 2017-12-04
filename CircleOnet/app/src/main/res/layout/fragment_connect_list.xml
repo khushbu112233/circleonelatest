@@ -90,7 +90,7 @@
             android:focusableInTouchMode="true"
             android:imeOptions="actionSearch"
             android:inputType="textAutoComplete|textAutoCorrect"
-            android:textColor="#626567"
+            android:textColor="@color/black"
             android:textColorHint="#626567"/>
 
         <ImageView
