@@ -126,10 +126,10 @@ public class Validation
     {
         boolean valid = true ;
 
-        if(firstName.isEmpty() || firstName.length() < 3 )
+        if(firstName.isEmpty() || firstName.length() < 1 )
         {
 //            RegisterActivity.etFirstName.setError("Minimum 3 Characters.");
-            MyAccountActivity.tvFirstNameInfo.setText("Mini 3 Characters");
+            MyAccountActivity.tvFirstNameInfo.setText("Mini 1 Characters");
             MyAccountActivity.tvFirstNameInfo.setVisibility(View.VISIBLE);
             valid = false ;
         }
@@ -139,10 +139,10 @@ public class Validation
             MyAccountActivity.tvFirstNameInfo.setVisibility(View.GONE);
         }
 
-        if(lastName.isEmpty() || lastName.length() < 3 )
+        if(lastName.isEmpty() || lastName.length() < 1 )
         {
 //            RegisterActivity.etLastName.setError("Minimum 3 Characters.");
-            MyAccountActivity.tvLastNameInfo.setText("Mini 3 Characters");
+            MyAccountActivity.tvLastNameInfo.setText("Mini 1 Characters");
             MyAccountActivity.tvLastNameInfo.setVisibility(View.VISIBLE);
             valid = false ;
         }

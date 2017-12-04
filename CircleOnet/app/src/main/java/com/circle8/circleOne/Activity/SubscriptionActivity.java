@@ -133,7 +133,6 @@ public class SubscriptionActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-
                 String package_Name = subscriptionModelArrayList.get(position).getPackageName();
                 String packageId = subscriptionModelArrayList.get(position).getPackageID();
                 String contacts_limit = subscriptionModelArrayList.get(position).getConnectionLimit();

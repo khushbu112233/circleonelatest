@@ -217,12 +217,16 @@ public class NewCardRequestActivity1 extends AppCompatActivity
             public void onClick(View v)
             {
 
-                if (PhysicalCardTypeID.equals("")){
+                if (PhysicalCardTypeID.equals(""))
+                {
                     Toast.makeText(getApplicationContext(), "Please select card type", Toast.LENGTH_LONG).show();
-                }else {
-
-                    if (card_back.equals("") && card_front.equals("")) {
-                        try {
+                }
+                else
+                {
+                    if (card_back.equals("") && card_front.equals(""))
+                    {
+                        try
+                        {
                             final_ImgBase64Back = BitMapToString(cardBackBmp);
                             new HttpAsyncTaskBackUpload().execute(Utility.BASE_URL + "ImgUpload");
                         } catch (Exception e) {
@@ -230,7 +234,8 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                             card_back = "";
                         }
 
-                        try {
+                        try
+                        {
                             final_ImgBase64Front = BitMapToString(cardFrontBmp);
                             new HttpAsyncTaskFrontUpload().execute(Utility.BASE_URL + "ImgUpload");
                         } catch (Exception e) {

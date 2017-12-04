@@ -184,7 +184,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:textAlignment="center"
-                            android:text="Photo Upload"
+                            android:text="Upload Photo"
                             android:textStyle="bold"
                             android:textColor="@color/white"/>
                     </LinearLayout>

@@ -466,7 +466,8 @@
                                     android:textSize="12sp"
                                     android:textColor="@color/colorPrimary"
                                     android:layout_weight="0.5"
-                                    android:gravity="center"/>
+                                    android:gravity="center"
+                                    android:layout_marginRight="3dp"/>
                                 <com.circle8.circleOne.Utils.cgTextView
                                     android:id="@+id/txtNormalCost"
                                     android:layout_width="match_parent"
@@ -474,7 +475,8 @@
                                     android:text="SGD $25/pc"
                                     android:textColor="@color/colorPrimary"
                                     android:gravity="center"
-                                    android:layout_weight="0.5"/>
+                                    android:layout_weight="0.5"
+                                    android:layout_marginLeft="3dp"/>
                             </LinearLayout>
 
                             <LinearLayout
@@ -489,13 +491,15 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="120dp"
                                     android:src="@drawable/card_sample_gold"
-                                    android:layout_weight="0.5" />
+                                    android:layout_weight="0.5"
+                                    android:layout_marginRight="3dp"/>
                                 <ImageView
                                     android:id="@+id/ivNormalCard"
                                     android:layout_width="match_parent"
                                     android:layout_height="120dp"
                                     android:src="@drawable/card_sample_blue"
-                                    android:layout_weight="0.5"/>
+                                    android:layout_weight="0.5"
+                                    android:layout_marginLeft="3dp"/>
                             </LinearLayout>
 
                             <LinearLayout
@@ -511,7 +515,8 @@
                                     android:textSize="12sp"
                                     android:textColor="@color/colorPrimary"
                                     android:layout_weight="0.5"
-                                    android:gravity="center" />
+                                    android:gravity="center"
+                                    android:layout_marginRight="3dp"/>
                                 <com.circle8.circleOne.Utils.cgTextView
                                     android:id="@+id/txtNormalDesc"
                                     android:layout_width="match_parent"
@@ -519,7 +524,8 @@
                                     android:text="Standard"
                                     android:textColor="@color/colorPrimary"
                                     android:gravity="center"
-                                    android:layout_weight="0.5"/>
+                                    android:layout_weight="0.5"
+                                    android:layout_marginLeft="3dp"/>
                             </LinearLayout>
 
                         </LinearLayout>
