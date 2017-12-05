@@ -1031,7 +1031,8 @@ public class EditProfileActivity extends AppCompatActivity implements
         }
     }
 
-    public void initUI(){
+    public void initUI()
+    {
         txtAttachDelete = (TextView) findViewById(R.id.txtAttachDelete);
         recyclerEvents = (RecyclerView) findViewById(R.id.recyclerEvents);
         edtProfileName = (EditText) findViewById(R.id.edtProfileName);
@@ -1180,6 +1181,14 @@ public class EditProfileActivity extends AppCompatActivity implements
         ivTeleAdd = (ImageView)findViewById(R.id.ivTeleAdd);
         ivMobAdd = (ImageView)findViewById(R.id.ivMobAdd);
         ivFaxAdd = (ImageView)findViewById(R.id.ivFaxAdd);
+
+        ccp1.setCountryForNameCode("SG");
+        ccp2.setCountryForNameCode("SG");
+        ccp3.setCountryForNameCode("SG");
+        ccp4.setCountryForNameCode("SG");
+        ccp5.setCountryForNameCode("SG");
+        ccp6.setCountryForNameCode("SG");
+
     }
     @Override
     protected void onPause() {

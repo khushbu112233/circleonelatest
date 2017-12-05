@@ -493,6 +493,7 @@
                                 android:src="@drawable/ic_mob_blue" />
 
                             <com.hbb20.CountryCodePicker
+                                app:ccp_defaultNameCode="SG"
                                 app:ccp_defaultPhoneCode="65"
                                 android:visibility="visible"
                                 app:ccpDialog_searchEditTextTint="@color/colorPrimary"
@@ -603,7 +604,6 @@
                             </LinearLayout>
 
                         </LinearLayout>
-
 
                         <LinearLayout
                             android:id="@+id/llTelephoneBox1"
