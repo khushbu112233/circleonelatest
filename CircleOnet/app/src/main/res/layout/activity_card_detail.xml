@@ -880,13 +880,11 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="10dp"
                     android:orientation="horizontal">
-
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginRight="20dp"
                         android:src="@drawable/ic_location" />
-
                     <com.circle8.circleOne.Utils.cgTextView
                         android:id="@+id/txtAddress"
                         android:layout_width="wrap_content"
@@ -897,7 +895,8 @@
                         android:textSize="13sp" />
                 </LinearLayout>
 
-                    <RelativeLayout
+                    <LinearLayout
+                        android:id="@+id/llMapView"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:layout_marginLeft="20dp"
@@ -909,7 +908,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"/>
 
-                    </RelativeLayout>
+                    </LinearLayout>
 
                     <ImageView
                         android:id="@+id/ivMap"
@@ -1011,6 +1010,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
                     android:background="@color/colorPrimary"></View>
 
                 <RelativeLayout

@@ -125,7 +125,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
     private CardSwipe myPager;
     private ImageView imgCards, imgConnect, imgEvents, imgProfile, imgBack, imgCard, imgMap;
     private static final String TAG = NFCDemo.class.getName();
-    private LinearLayout llWebsiteBox, llEmailBox, llMobileBox, llTeleBox, llFaxBox, llAddressBox, llIndustryBox;
+    private LinearLayout llWebsiteBox, llEmailBox, llMobileBox, llTeleBox, llFaxBox, llAddressBox, llIndustryBox, llMapView;
     ImageView fbUrl, linkedInUrl, twitterUrl, googleUrl, youtubeUrl;
     NfcReadUtility mNfcReadUtility = new NfcReadUtilityImpl();
     ProgressDialog mProgressDialog;
@@ -245,6 +245,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         llAddressBox = (LinearLayout) findViewById(R.id.llAddressBox);
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         llIndustryBox = (LinearLayout)findViewById(R.id.llIndustryBox);
+        llMapView = (LinearLayout)findViewById(R.id.llMapView);
         fbUrl = (ImageView) findViewById(R.id.fbUrl);
         googleUrl = (ImageView) findViewById(R.id.googleUrl);
         youtubeUrl = (ImageView) findViewById(R.id.youtubeUrl);
@@ -1042,6 +1043,34 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(20);
         googleMaps.setMyLocationEnabled(true);
         googleMaps.animateCamera(zoom);
+
+    }
+
+    public LatLng getLocationFromAddress(Context context, String strAddress)
+    {
+        Geocoder coder = new Geocoder(context);
+        List<Address> address;
+        LatLng p1 = null;
+
+        try
+        {
+            address = coder.getFromLocationName(strAddress, 5);
+            if(address == null)
+            {
+                return null;
+            }
+            Address location = address.get(0);
+            location.getLatitude();
+            location.getLongitude();
+
+            p1 = new LatLng(location.getLatitude(), location.getLongitude());
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return p1;
+
     }
 
     private void createMarker(Double Lat, Double Lang)
@@ -1051,6 +1080,16 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 
         googleMaps.addMarker(new MarkerOptions().position(location).title(""));
         googleMaps.moveCamera(CameraUpdateFactory.newLatLng(location));
+        googleMaps.animateCamera(zoom);
+    }
+
+    private void createMarker1(String fullAddress, String addressTitle)
+    {
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(15);
+
+        LatLng address = getLocationFromAddress(CardDetail.this, fullAddress);
+        googleMaps.addMarker(new MarkerOptions().position(address).title(addressTitle));
+        googleMaps.moveCamera(CameraUpdateFactory.newLatLng(address));
         googleMaps.animateCamera(zoom);
     }
 
@@ -2093,6 +2132,12 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                     //   viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
                     viewPager1.setAdapter(myPager);
 
+                    String fullAddress =
+                            jsonObject.getString("Address1")+" "+jsonObject.getString("Address2")+" "+
+                                    jsonObject.getString("Address3")+" "+jsonObject.getString("Address4")+" "+
+                                    jsonObject.getString("City")+" "+jsonObject.getString("State")+" "+
+                                    jsonObject.getString("Country")+" "+jsonObject.getString("Postalcode");
+
                     String add1 = jsonObject.getString("Address1");
                     String add2 = jsonObject.getString("Address2");
                     String add3 = jsonObject.getString("Address3");
@@ -2112,16 +2157,21 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                     if (!postalCode.equals("")) { postalCode = postalCode ; }
 
                     personAddress = add1+add2+add3+add4+city+state+country+postalCode ;
-                    txtAddress.setText(personAddress);
 
-                    String fullAddress =
-                            jsonObject.getString("Address1")+" "+jsonObject.getString("Address2")+" "+
-                            jsonObject.getString("Address3")+" "+jsonObject.getString("Address4")+" "+
-                            jsonObject.getString("City")+" "+jsonObject.getString("State")+" "+
-                            jsonObject.getString("Country")+" "+jsonObject.getString("Postalcode");
+                    if (personAddress.isEmpty() || personAddress.toString().length() == 0)
+                    {
+                        llAddressBox.setVisibility(View.GONE);
+                        llMapView.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        txtAddress.setText(personAddress);
+                        GeocodingLocation locationAddress = new GeocodingLocation();
+                        locationAddress.getAddressFromLocation(fullAddress, getApplicationContext(), new GeocoderHandler());
 
-                    GeocodingLocation locationAddress = new GeocodingLocation();
-                    locationAddress.getAddressFromLocation(fullAddress, getApplicationContext(), new GeocoderHandler());
+//                       createMarker1(personAddress,(add1+add2));
+
+                    }
 
                         /*FriendConnection nfcModelTag = new FriendConnection();
                         nfcModelTag.setName(object.getString("FirstName") + " " + object.getString("LastName"));
@@ -2171,10 +2221,12 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                         Double Longitude = bundle.getDouble("longitude");
 
                         createMarker(Latitude,Longitude);
+                        llMapView.setVisibility(View.VISIBLE);
                     }
                     else
                     {
-                        Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
+                        llMapView.setVisibility(View.GONE);
                     }
 
                     break;
