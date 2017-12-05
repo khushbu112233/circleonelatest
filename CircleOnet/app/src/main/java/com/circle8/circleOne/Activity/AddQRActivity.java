@@ -92,6 +92,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
         imgBack = (ImageView)findViewById(R.id.imgBack);
         session = new LoginSession(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
+        Utility.deleteCache(getApplicationContext());
 
         profileId = user.get(LoginSession.KEY_PROFILEID);
        /* mScannerView = new ZXingScannerView(this);
@@ -127,8 +128,9 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Utility.deleteCache(getApplicationContext());
                 Utility.freeMemory();
+                Utility.deleteCache(getApplicationContext());
                 finish();
             }
         });
@@ -137,6 +139,8 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
 
     @Override
     protected void onPause() {
+        Utility.deleteCache(getApplicationContext());
+
         Utility.freeMemory();
         super.onPause();
     }
@@ -145,6 +149,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
             throws GeneralSecurityException, IOException {
 
         try {
+            Utility.deleteCache(getApplicationContext());
             Utility.freeMemory();
             byte[] value_bytes = Base64.decode(value, 0);
             byte[] key_bytes = getKeyBytes(key);

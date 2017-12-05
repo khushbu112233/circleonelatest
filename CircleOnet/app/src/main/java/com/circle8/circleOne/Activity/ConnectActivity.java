@@ -114,7 +114,6 @@ public class ConnectActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        Utility.freeMemory();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connect2);
         Utility.freeMemory();

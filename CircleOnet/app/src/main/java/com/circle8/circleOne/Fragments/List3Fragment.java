@@ -115,6 +115,8 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         mContext = List3Fragment.this.getContext() ;
+        Utility.deleteCache(getContext());
+
         Utility.freeMemory();
         db = new DatabaseHelper(getContext());
         id = new ArrayList<Integer>();
@@ -164,6 +166,8 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                 intent.putExtra("lat", nfcModel1.get(position).getLatitude());
                 intent.putExtra("long", nfcModel1.get(position).getLongitude());
                 getContext().startActivity(intent);
+                Utility.deleteCache(getContext());
+
                 Utility.freeMemory();
             }
         });
@@ -272,6 +276,8 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
                     gridAdapter.Filter(text);
                 }*/
+                Utility.deleteCache(getContext());
+
                 Utility.freeMemory();
                 try
                 {
@@ -323,6 +329,8 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
             @Override
             public void onClick(View v)
             {
+                Utility.deleteCache(getContext());
+
                 Utility.freeMemory();
                 if (searchText.getText().toString().length() == 0)
                 {
@@ -359,6 +367,8 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
+                Utility.deleteCache(getContext());
+
                 Utility.freeMemory();
 
                 if (searchText.getText().toString().length() == 0)
@@ -399,6 +409,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
 
     @Override
     public void onPause() {
+        Utility.deleteCache(getContext());
         Utility.freeMemory();
         super.onPause();
     }

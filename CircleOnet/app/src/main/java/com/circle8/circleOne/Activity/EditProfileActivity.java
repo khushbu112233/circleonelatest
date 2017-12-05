@@ -2204,6 +2204,27 @@ public class EditProfileActivity extends AppCompatActivity implements
             Log.d("InputStream", e.getLocalizedMessage());
         }
 
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                List<String> stringList = new ArrayList<String>(Arrays.asList(array));
+                eventList = new ArrayList<AssociationModel>();
+                for (int i = 0; i < array.length; i++) {
+                    Utility.freeMemory();
+                    AssociationModel st = new AssociationModel(String.valueOf(i), stringList.get(i), false );
+
+                    eventList.add(st);
+
+                    mAdapter1 = new CardViewDataAdapter(eventList);
+
+                    GridLayoutManager gridLayoutManager = new GridLayoutManager(EditProfileActivity.this, 5, GridLayoutManager.HORIZONTAL, false);
+                    recyclerEvents.setAdapter(mAdapter1);
+                    recyclerEvents.setLayoutManager(gridLayoutManager);
+                }
+            }
+        });
+
         // 11. return result
         return result;
     }
@@ -3122,22 +3143,6 @@ public class EditProfileActivity extends AppCompatActivity implements
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
 
-                List<String> stringList = new ArrayList<String>(Arrays.asList(array));
-                eventList = new ArrayList<AssociationModel>();
-                for (int i = 0; i < array.length; i++) {
-                    Utility.freeMemory();
-                    AssociationModel st = new AssociationModel(String.valueOf(i), stringList.get(i), false );
-
-                    eventList.add(st);
-
-                    mAdapter1 = new CardViewDataAdapter(eventList);
-
-                    GridLayoutManager gridLayoutManager = new GridLayoutManager(EditProfileActivity.this, 5, GridLayoutManager.HORIZONTAL, false);
-                    recyclerEvents.setAdapter(mAdapter1);
-                    recyclerEvents.setLayoutManager(gridLayoutManager);
-                }
-
-
                 if (result != null) {
                     associationList = new ArrayList<AssociationModel>();
                     JSONObject jsonObject = new JSONObject(result);
@@ -3226,13 +3231,13 @@ public class EditProfileActivity extends AppCompatActivity implements
                             finish();
                         }else {
                             Toast.makeText(getApplicationContext(), "Successfully Added", Toast.LENGTH_SHORT).show();
-                            Intent go = new Intent(getApplicationContext(), CardsActivity.class);
+                         /*   Intent go = new Intent(getApplicationContext(), CardsActivity.class);
 
                             // you pass the position you want the viewpager to show in the extra,
                             // please don't forget to define and initialize the position variable
                             // properly
                             go.putExtra("viewpager_position", 3);
-                            startActivity(go);
+                            startActivity(go);*/
                             finish();
                         }
                     } else {
@@ -3915,13 +3920,13 @@ public class EditProfileActivity extends AppCompatActivity implements
                             finish();
                         }else {
                             Toast.makeText(getApplicationContext(), "Successfully Updated", Toast.LENGTH_SHORT).show();
-                            Intent go = new Intent(getApplicationContext(), CardsActivity.class);
+                          /*  Intent go = new Intent(getApplicationContext(), CardsActivity.class);
 
                             // you pass the position you want the viewpager to show in the extra,
                             // please don't forget to define and initialize the position variable
                             // properly
                             go.putExtra("viewpager_position", 3);
-                            startActivity(go);
+                            startActivity(go);*/
                             finish();
                         }
                     } else {

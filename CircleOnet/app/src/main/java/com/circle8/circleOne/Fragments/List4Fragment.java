@@ -104,6 +104,8 @@ public class List4Fragment extends Fragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Utility.freeMemory();
+        Utility.deleteCache(getContext());
+
     }
 
     @Override
@@ -112,6 +114,8 @@ public class List4Fragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_list4, container, false);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         Utility.freeMemory();
+        Utility.deleteCache(getContext());
+
         mContext = List4Fragment.this.getContext();
         pageno = 1;
         db = new DatabaseHelper(getContext());
@@ -197,6 +201,8 @@ public class List4Fragment extends Fragment
                 intent.putExtra("long", nfcModel1.get(position).getLongitude());
                 getContext().startActivity(intent);
                 Utility.freeMemory();
+                Utility.deleteCache(getContext());
+
             }
         });
 
@@ -254,7 +260,9 @@ public class List4Fragment extends Fragment
                     gridAdapter.Filter(text);
                 }*/
                 Utility.freeMemory();
-               try
+                Utility.deleteCache(getContext());
+
+                try
                {
                    if (s.length() <= 0)
                    {
@@ -304,6 +312,8 @@ public class List4Fragment extends Fragment
             public void onClick(View v)
             {
                 Utility.freeMemory();
+                Utility.deleteCache(getContext());
+
 
                 if (searchText.getText().toString().length() == 0)
                 {
@@ -341,6 +351,8 @@ public class List4Fragment extends Fragment
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
                 Utility.freeMemory();
+                Utility.deleteCache(getContext());
+
                 if (searchText.getText().toString().length() == 0)
                 {
                     pageno = 1;
@@ -381,6 +393,8 @@ public class List4Fragment extends Fragment
     @Override
     public void onPause() {
         Utility.freeMemory();
+        Utility.deleteCache(getContext());
+
         super.onPause();
     }
 

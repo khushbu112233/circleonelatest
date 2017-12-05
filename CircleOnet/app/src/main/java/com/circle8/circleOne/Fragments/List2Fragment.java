@@ -147,7 +147,7 @@ public class List2Fragment extends Fragment
         session = new LoginSession(getContext());
         HashMap<String, String> user = session.getUserDetails();
         UserId = user.get(LoginSession.KEY_USERID);
-
+        Utility.deleteCache(getContext());
         callFirst();
 
         /*GestureDetector.OnGestureListener gestureListener = new MyOnGestureListener();
@@ -252,6 +252,8 @@ public class List2Fragment extends Fragment
             @Override
             public void onClick(View v)
             {
+                Utility.deleteCache(getContext());
+
                 Utility.freeMemory();
                 if (searchText.getText().toString().length() == 0)
                 {
@@ -288,6 +290,8 @@ public class List2Fragment extends Fragment
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
                 Utility.freeMemory();
+                Utility.deleteCache(getContext());
+
                 if (searchText.getText().toString().length() == 0)
                 {
                     pageno = 1;
@@ -327,6 +331,7 @@ public class List2Fragment extends Fragment
     @Override
     public void onPause() {
         Utility.freeMemory();
+        Utility.deleteCache(getContext());
         super.onPause();
     }
 

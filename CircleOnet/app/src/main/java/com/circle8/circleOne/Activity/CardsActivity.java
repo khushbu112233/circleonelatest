@@ -243,6 +243,8 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         String date1 = format.format(Date.parse(stringDate));
 
         Toast.makeText(getApplicationContext(), "Time: " + date1, Toast.LENGTH_LONG).show();   */
+        Utility.freeMemory();
+        Utility.deleteCache(getApplicationContext());
 
         netCheck = Utility.isNetworkAvailable(getApplicationContext());
 
@@ -288,6 +290,8 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
 
         if (checkPlayServices()) {
             Utility.freeMemory();
+            Utility.deleteCache(getApplicationContext());
+
             // Building the GoogleApi client
             buildGoogleApiClient();
         }
@@ -388,6 +392,8 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 Utility.freeMemory();
+                Utility.deleteCache(getApplicationContext());
+
                 mViewPager.setCurrentItem(tab.getPosition(), false);
                 getSupportActionBar().setShowHideAnimationEnabled(false);
                 if (tab.getPosition() == 3) {
@@ -432,6 +438,8 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             public void onTabUnselected(TabLayout.Tab tab)
             {
                 Utility.freeMemory();
+                Utility.deleteCache(getApplicationContext());
+
                 int i = tab.getPosition();
                 if (i == 0) {
                     View view = tab.getCustomView();
@@ -487,6 +495,8 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onPageSelected(int position) {
                 Utility.freeMemory();
+                Utility.deleteCache(getApplicationContext());
+
                 getSupportActionBar().setShowHideAnimationEnabled(false);
                 if (position == 0) {
                     CardsFragment.mViewPager.setCurrentItem(nested_position);
@@ -533,6 +543,8 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
+                Utility.deleteCache(getApplicationContext());
+
                 int pos = mViewPager.getCurrentItem();
                 if (pos == 0) {
                     Intent intent = new Intent(getApplicationContext(), SortAndFilterOption.class);
@@ -597,11 +609,15 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
     protected void onDestroy() {
         super.onDestroy();
         Utility.freeMemory();
+        Utility.deleteCache(getApplicationContext());
+
     }
 
 
     protected synchronized void buildGoogleApiClient() {
         Utility.freeMemory();
+        Utility.deleteCache(getApplicationContext());
+
        /* mGoogleApiClient = new GoogleApiClient.Builder(CardsActivity.this)
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
@@ -662,6 +678,8 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Utility.freeMemory();
+        Utility.deleteCache(getApplicationContext());
+
         try {
 
             final LocationSettingsStates states = LocationSettingsStates.fromIntent(data);
@@ -738,6 +756,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
     }
     public static void getLocation() {
         Utility.freeMemory();
+
         if (isPermissionGranted) {
 
             try
@@ -756,6 +775,8 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
 
     private boolean checkPlayServices() {
         Utility.freeMemory();
+        Utility.deleteCache(getApplicationContext());
+
         GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
 
         int resultCode = googleApiAvailability.isGooglePlayServicesAvailable(this);

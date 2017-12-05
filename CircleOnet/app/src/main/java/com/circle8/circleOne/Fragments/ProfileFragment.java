@@ -184,6 +184,8 @@ public class ProfileFragment extends Fragment
         Utility.freeMemory();
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getContext());
+        Utility.deleteCache(getContext());
+
         //   getActivity().requestWindowFeature(Window.FEATURE_NO_TITLE);
     }
 
@@ -264,6 +266,8 @@ public class ProfileFragment extends Fragment
         session = new LoginSession(getContext());
         appbar = (AppBarLayout) view.findViewById(R.id.appbar);
         Utility.freeMemory();
+        Utility.deleteCache(getContext());
+
         rlProgressDialog = (RelativeLayout)view.findViewById(R.id.rlProgressDialog);
         tvProgressing = (TextView)view.findViewById(R.id.txtProgressing);
         ivConnecting1 = (ImageView)view.findViewById(R.id.imgConnecting1) ;
@@ -310,6 +314,8 @@ public class ProfileFragment extends Fragment
                 final Dialog dialog = new Dialog(getActivity());
                 dialog.setContentView(R.layout.imageview_popup);
                 Utility.freeMemory();
+                Utility.deleteCache(getContext());
+
                 ImageView ivViewImage = (ImageView)dialog.findViewById(R.id.ivViewImage);
                 if (displayProfile.equals(""))
                 {
@@ -343,6 +349,8 @@ public class ProfileFragment extends Fragment
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
+                Utility.deleteCache(getContext());
+
                 Intent intent = new Intent(getContext(), AttachmentDisplay.class);
                 intent.putExtra("url", Utility.BASE_IMAGE_URL+"Other_doc/"+txtAttachment.getText().toString());
                 startActivity(intent);
@@ -353,6 +361,8 @@ public class ProfileFragment extends Fragment
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
+                Utility.deleteCache(getContext());
+
                 if (strfbUrl!=null) {
                     if (!strfbUrl.startsWith("http://") && !strfbUrl.startsWith("https://"))
                         strfbUrl = "http://" + strfbUrl;
@@ -366,6 +376,8 @@ public class ProfileFragment extends Fragment
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
+                Utility.deleteCache(getContext());
+
                 if (strgoogleUrl!=null) {
                     if (!strgoogleUrl.startsWith("http://") && !strgoogleUrl.startsWith("https://"))
                         strgoogleUrl = "http://" + strgoogleUrl;
@@ -379,6 +391,8 @@ public class ProfileFragment extends Fragment
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
+                Utility.deleteCache(getContext());
+
                 if (stryoutubeUrl!=null) {
                     if (!stryoutubeUrl.startsWith("http://") && !stryoutubeUrl.startsWith("https://"))
                         stryoutubeUrl = "http://" + stryoutubeUrl;
@@ -392,6 +406,8 @@ public class ProfileFragment extends Fragment
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
+                Utility.deleteCache(getContext());
+
                 if (strtwitterUrl!=null) {
                     if (!strtwitterUrl.startsWith("http://") && !strtwitterUrl.startsWith("https://"))
                         strtwitterUrl = "http://" + strtwitterUrl;
@@ -414,6 +430,8 @@ public class ProfileFragment extends Fragment
         });
 
         Utility.freeMemory();
+        Utility.deleteCache(getContext());
+
         allTaggs = new ArrayList<>();
        /* lnrMap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -447,6 +465,8 @@ public class ProfileFragment extends Fragment
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
+                Utility.deleteCache(getContext());
+
                 Intent intent = new Intent(getContext(), TestimonialActivity.class);
                 intent.putExtra("ProfileId", TestimonialProfileId);
                 intent.putExtra("from", "profile");
@@ -458,6 +478,8 @@ public class ProfileFragment extends Fragment
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
+                Utility.deleteCache(getContext());
+
                 Intent intent1 = new Intent(getContext(), SearchGroupMembers.class);
                 intent1.putExtra("from", "profile");
                 intent1.putExtra("ProfileId", TestimonialProfileId);
@@ -520,6 +542,8 @@ public class ProfileFragment extends Fragment
             @Override
             public void onPageScrolled(final int position, final float positionOffset, final int positionOffsetPixels) {
                 Utility.freeMemory();
+                Utility.deleteCache(getContext());
+
                 if (mScrollState == ViewPager.SCROLL_STATE_IDLE) {
                     return;
                 }
@@ -534,6 +558,8 @@ public class ProfileFragment extends Fragment
             @Override
             public void onPageScrollStateChanged(final int state) {
                 Utility.freeMemory();
+                Utility.deleteCache(getContext());
+
                 mScrollState = state;
                 if (state == ViewPager.SCROLL_STATE_IDLE) {
                     mViewPager.setCurrentItem(viewPager1.getCurrentItem(), false);
@@ -649,6 +675,8 @@ public class ProfileFragment extends Fragment
             public void onClick(View v) {
 
                 Utility.freeMemory();
+                Utility.deleteCache(getContext());
+
                 String shareBody = "I’m ready to connect with you and share our growing network on the CircleOne app. I’m currently a user with CircleOne and would like to invite you to join the Circle so we’ll both be able to take our professional newtorks a step further. Use the code '" + refer +
                         "' for a quick and simple registration! https://circle8.asia/mobileApp.html";
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -663,6 +691,8 @@ public class ProfileFragment extends Fragment
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
+                Utility.deleteCache(getContext());
+
                 ContextThemeWrapper ctw = new ContextThemeWrapper(getContext(), R.style.Blue_AlertDialog);
                 PopupMenu popup = new PopupMenu(ctw, imgProfileMenu);
                 //Inflating the Popup using xml file
@@ -1162,6 +1192,8 @@ public class ProfileFragment extends Fragment
     @Override
     public void onPause() {
         Utility.freeMemory();
+        Utility.deleteCache(getContext());
+
         super.onPause();
     }
 

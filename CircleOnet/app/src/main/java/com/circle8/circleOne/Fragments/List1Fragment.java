@@ -66,6 +66,7 @@ import java.util.List;
 import java.util.Locale;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
+import static com.google.android.gms.internal.zzahg.runOnUiThread;
 
 public class List1Fragment extends Fragment
 {
@@ -182,8 +183,15 @@ public class List1Fragment extends Fragment
         //viewPager = (ViewPager)view.findViewById(R.id.viewPager);
         lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
         line = view.findViewById(R.id.view);
-        initRecyclerView1(recyclerView1, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter);
-        initRecyclerView2(recyclerView2, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter1);
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                initRecyclerView1(recyclerView1, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter);
+                initRecyclerView2(recyclerView2, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter1);
+
+            }
+        });
 
         searchText = (AutoCompleteTextView) view.findViewById(R.id.searchView);
         InputMethodManager keyboard = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -531,6 +539,8 @@ public class List1Fragment extends Fragment
     @Override
     public void onPause() {
         Utility.freeMemory();
+        Utility.deleteCache(getContext());
+
         super.onPause();
     }
 

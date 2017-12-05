@@ -22,6 +22,7 @@ public class AttachmentDisplay extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attachment_display);
         Utility.freeMemory();
+        Utility.deleteCache(getApplicationContext());
         webView = (WebView)findViewById(R.id.webView1);
         Intent i = getIntent();
         url = i.getStringExtra("url");
@@ -35,12 +36,15 @@ public class AttachmentDisplay extends AppCompatActivity {
     @Override
     protected void onPause() {
         Utility.freeMemory();
+        Utility.deleteCache(getApplicationContext());
+
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Utility.deleteCache(getApplicationContext());
         Utility.freeMemory();
     }
 

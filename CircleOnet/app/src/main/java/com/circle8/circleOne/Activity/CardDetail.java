@@ -196,9 +196,9 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        Utility.freeMemory();
         setContentView(R.layout.activity_card_detail);
-
+        Utility.freeMemory();
+        Utility.deleteCache(getApplicationContext());
         referralCodeSession = new ReferralCodeSession(getApplicationContext());
         loginSession = new LoginSession(getApplicationContext());
 
@@ -329,6 +329,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 
         if (netCheck == false){
             Utility.freeMemory();
+            Utility.deleteCache(getApplicationContext());
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
         }
         else {
@@ -1143,6 +1144,8 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
     protected void onDestroy() {
         super.onDestroy();
         Utility.freeMemory();
+        Utility.deleteCache(getApplicationContext());
+
     }
 
     @Override
@@ -2256,6 +2259,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 
     @Override
     protected void onPause() {
+        Utility.deleteCache(getApplicationContext());
         Utility.freeMemory();
         super.onPause();
         if (getNfcAdapter() != null) {
