@@ -99,7 +99,6 @@ public class WriteTestimonialActivity extends AppCompatActivity implements View.
         {
             Picasso.with(WriteTestimonialActivity.this).load(Utility.BASE_IMAGE_URL+"UserProfile/" +userImg).resize(300,300).onlyScaleDown().skipMemoryCache().into(imgProfile);
         }
-
     }
 
     @Override
@@ -143,7 +142,7 @@ public class WriteTestimonialActivity extends AppCompatActivity implements View.
         }
         if( v == tvCancel)
         {
-
+            finish();
         }
         if ( v == imgBack)
         {

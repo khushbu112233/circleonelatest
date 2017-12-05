@@ -168,7 +168,7 @@ public class NotificationAdapter extends BaseAdapter
                 Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
                         .resize(300,300).onlyScaleDown().skipMemoryCache().into(holder.imgTestRec);
             }
-           /* if (testimonialModels.get(position).getStatus().equalsIgnoreCase("Requested"))
+            /* if (testimonialModels.get(position).getStatus().equalsIgnoreCase("Requested"))
             {
                 holder.btnTestAcceptRec.setVisibility(View.GONE);
                 holder.btnTestRejectRec.setVisibility(View.GONE);
@@ -368,6 +368,7 @@ public class NotificationAdapter extends BaseAdapter
             lnrFriend.setVisibility(View.VISIBLE);
             lnrTestReq.setVisibility(View.GONE);
             lnrTestRec.setVisibility(View.GONE);
+
             if (testimonialModels.get(position).getUserPhoto().equals(""))
             {
                 holder.imgFriend.setImageResource(R.drawable.usr);
@@ -408,7 +409,8 @@ public class NotificationAdapter extends BaseAdapter
 
         vi.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 if ((testimonialModels.get(position).getShared_ProfileID().toString().equalsIgnoreCase("") ||
                         testimonialModels.get(position).getShared_ProfileID().toString().equalsIgnoreCase("null") ||
                         testimonialModels.get(position).getShared_ProfileID().toString().equalsIgnoreCase(null))
@@ -422,7 +424,8 @@ public class NotificationAdapter extends BaseAdapter
                     intent.putExtra("ProfileID", profileId);
                     activity.startActivity(intent);
                 }
-                else {
+                else
+                {
                     Intent intent = new Intent(activity, ConnectActivity.class);
                     intent.putExtra("friendProfileID", testimonialModels.get(position).getShared_ProfileID());
                     intent.putExtra("friendUserID", testimonialModels.get(position).getShared_UserID());
@@ -436,21 +439,26 @@ public class NotificationAdapter extends BaseAdapter
             @Override
             public void onClick(View v)
             {
-                /*Intent in = new Intent(activity, WriteTestimonialActivity.class);
-                in.putExtra("ProfileID", profileId);
-                in.putExtra("FriendProfileID", testimonialModels.get(posi).getFriendProfileID());
-                in.putExtra("UserImg", testimonialModels.get(posi).getUserPhoto());
-                in.putExtra("UserName",testimonialModels.get(posi).getFirstName()+" "+testimonialModels.get(posi).getLastName());
-                activity.startActivity(in);*/
                 posi = position;
-                final AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
-//                LayoutInflater inflater = activity.getLayoutInflater();
-                final View dialogView = inflater.inflate(R.layout.textimonial_write, null);
 
+                String userImg = testimonialModels.get(posi).getUserPhoto();
+                String userName = testimonialModels.get(posi).getFirstName()+" "+testimonialModels.get(posi).getLastName();
+                String friendProfileId = testimonialModels.get(posi).getFriendProfileID();
+
+//                Toast.makeText(activity,friendProfileId+" "+userName,Toast.LENGTH_LONG).show();
+
+                Intent in = new Intent(activity, WriteTestimonialActivity.class);
+                in.putExtra("ProfileID", profileId);
+                in.putExtra("FriendProfileID", friendProfileId);
+                in.putExtra("UserImg", userImg);
+                in.putExtra("UserName", userName);
+                activity.startActivity(in);
+
+                /*final AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
+                final View dialogView = inflater.inflate(R.layout.textimonial_write, null);
                 etTextMonial = (EditText)dialogView.findViewById(R.id.etTestiMonial);
                 Button btnWrite = (Button)dialogView.findViewById(R.id.btnWrite);
                 Button btnCancel = (Button)dialogView.findViewById(R.id.btnCancel);
-
                 btnWrite.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v)
@@ -476,9 +484,8 @@ public class NotificationAdapter extends BaseAdapter
                         alertDialog.dismiss();
                     }
                 });
-
                 alertDialog.setView(dialogView);
-                alertDialog.show();
+                alertDialog.show();*/
             }
         });
 
