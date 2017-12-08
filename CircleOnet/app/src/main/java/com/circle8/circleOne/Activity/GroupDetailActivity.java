@@ -267,7 +267,7 @@ public class GroupDetailActivity extends AppCompatActivity
 
                     listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
                     ivShareImg.setImageResource(R.drawable.group_selected);
-                    Toast.makeText(getApplicationContext(), "no member selected", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "select member(s) to be removed from circle", Toast.LENGTH_LONG).show();
                   //  GroupDetailAdapter.chCheckBox.setVisibility(View.GONE);
                 }
 

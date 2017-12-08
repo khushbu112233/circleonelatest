@@ -1,11 +1,13 @@
 package com.circle8.circleOne.Activity;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
@@ -18,6 +20,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -117,8 +120,7 @@ import be.appfoundry.nfclibrary.utilities.interfaces.NfcReadUtility;
 import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CardDetail extends NfcActivity implements DialogsManager.ManagingDialogsCallbacks, View.OnClickListener, OnMapReadyCallback
-{
+public class CardDetail extends NfcActivity implements DialogsManager.ManagingDialogsCallbacks, View.OnClickListener, OnMapReadyCallback {
     ExpandableHeightListView lstTestimonial;
     ViewPager mViewPager, viewPager1;
     private ArrayList<String> image = new ArrayList<>();
@@ -157,22 +159,22 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
     ArrayList<String> groupDesc = new ArrayList<>();
 
     ListView listView1, groupListView;
-    RecyclerView recycler_view ;
-    TextView tvAddedGroupInfo ;
+    RecyclerView recycler_view;
+    TextView tvAddedGroupInfo;
     private String displayProfile;
-    public static ArrayList<TestimonialModel> allTaggs ;
+    public static ArrayList<TestimonialModel> allTaggs;
     private CustomAdapter customAdapter;
     RelativeLayout rltTestimonial, rltTestimonialList;
 
-    private RelativeLayout rlProgressDialog ;
-    private TextView tvProgressing ;
-    private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+    private RelativeLayout rlProgressDialog;
+    private TextView tvProgressing;
+    private ImageView ivConnecting1, ivConnecting2, ivConnecting3;
     TextView txtAttachment, lblAttachment;
     ReferralCodeSession referralCodeSession;
     String refer;
     double Latitude, Longitude;
     LinearLayout lnrNfcLocation;
-    Boolean netCheck= false;
+    Boolean netCheck = false;
 
     private QBSystemMessagesManager systemMessagesManager;
     public static ArrayList<QBUser> selectedUsers = new ArrayList<QBUser>();
@@ -190,11 +192,10 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
     String CurrentUserEmail = "";
     public static int occupant_id = 0;
 
-    GoogleMap googleMaps ;
+    GoogleMap googleMaps;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_detail);
         Utility.freeMemory();
@@ -234,7 +235,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         txtAddress = (TextView) findViewById(R.id.txtAddress);
         txtRemark = (TextView) findViewById(R.id.txtRemark);
         txtDesi = (TextView) findViewById(R.id.txtDesi);
-        txtIndustry = (TextView)findViewById(R.id.txtIndustry);
+        txtIndustry = (TextView) findViewById(R.id.txtIndustry);
         scroll = (StickyScrollView) findViewById(R.id.scroll);
         imgAddGroupFriend = (ImageView) findViewById(R.id.imgAddGroupFriend);
         llWebsiteBox = (LinearLayout) findViewById(R.id.llWebsiteBox);
@@ -244,30 +245,30 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         llFaxBox = (LinearLayout) findViewById(R.id.llFaxBox);
         llAddressBox = (LinearLayout) findViewById(R.id.llAddressBox);
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
-        llIndustryBox = (LinearLayout)findViewById(R.id.llIndustryBox);
-        llMapView = (LinearLayout)findViewById(R.id.llMapView);
+        llIndustryBox = (LinearLayout) findViewById(R.id.llIndustryBox);
+        llMapView = (LinearLayout) findViewById(R.id.llMapView);
         fbUrl = (ImageView) findViewById(R.id.fbUrl);
         googleUrl = (ImageView) findViewById(R.id.googleUrl);
         youtubeUrl = (ImageView) findViewById(R.id.youtubeUrl);
         twitterUrl = (ImageView) findViewById(R.id.twitterUrl);
         linkedInUrl = (ImageView) findViewById(R.id.linkedInUrl);
-        groupListView = (ListView)findViewById(R.id.groupListView);
-        recycler_view = (RecyclerView)findViewById(R.id.recycler_view);
-        tvAddedGroupInfo = (TextView)findViewById(R.id.tvAddedGroupInfo);
+        groupListView = (ListView) findViewById(R.id.groupListView);
+        recycler_view = (RecyclerView) findViewById(R.id.recycler_view);
+        tvAddedGroupInfo = (TextView) findViewById(R.id.tvAddedGroupInfo);
         lstTestimonial = (ExpandableHeightListView) findViewById(R.id.lstTestimonial);
         rltTestimonial = (RelativeLayout) findViewById(R.id.rltTestimonial);
         rltTestimonialList = (RelativeLayout) findViewById(R.id.rltTestimonialList);
         list = new ArrayList<CharSequence>();
         listGroupId = new ArrayList<String>();
         txtTestimonial = (TextView) findViewById(R.id.txtTestimonial);
-        tvDateInitiated = (TextView)findViewById(R.id.tvDateInitiated);
+        tvDateInitiated = (TextView) findViewById(R.id.tvDateInitiated);
         txtAttachment = (TextView) findViewById(R.id.txtAttachment);
         lblAttachment = (TextView) findViewById(R.id.lblAttachment);
-        rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
-        tvProgressing = (TextView)findViewById(R.id.txtProgressing);
-        ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
-        ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
-        ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
+        rlProgressDialog = (RelativeLayout) findViewById(R.id.rlProgressDialog);
+        tvProgressing = (TextView) findViewById(R.id.txtProgressing);
+        ivConnecting1 = (ImageView) findViewById(R.id.imgConnecting1);
+        ivConnecting2 = (ImageView) findViewById(R.id.imgConnecting2);
+        ivConnecting3 = (ImageView) findViewById(R.id.imgConnecting3);
         imgChat = (ImageView) findViewById(R.id.imgChat);
         netCheck = Utility.isNetworkAvailable(getApplicationContext());
 
@@ -288,6 +289,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
             public void onClick(View textView) {
 
             }
+
             @Override
             public void updateDrawState(TextPaint ds) {
                 super.updateDrawState(ds);
@@ -301,23 +303,17 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         txtTestimonial.setMovementMethod(LinkMovementMethod.getInstance());
         txtTestimonial.setHighlightColor(getResources().getColor(R.color.colorPrimary));
 
-        try
-        {
-            if ((lat.equals("") || lat.equals("null") || lat == null || lat.isEmpty()) && (lon.equals("") || lon.equals("null") || lon == null || lon.isEmpty()))
-            {
+        try {
+            if ((lat.equals("") || lat.equals("null") || lat == null || lat.isEmpty()) && (lon.equals("") || lon.equals("null") || lon == null || lon.isEmpty())) {
                 lnrNfcLocation.setVisibility(View.GONE);
-            }
-            else
-            {
+            } else {
                 lnrNfcLocation.setVisibility(View.VISIBLE);
                 Latitude = Double.parseDouble(lat);
                 Longitude = Double.parseDouble(lon);
 
                 getAddress();
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -328,40 +324,39 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 
         allTaggs = new ArrayList<>();
 
-        if (netCheck == false){
+        if (netCheck == false) {
             Utility.freeMemory();
             Utility.deleteCache(getApplicationContext());
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
-        }
-        else {
+        } else {
 
-        googlePlayServicesHelper = new GooglePlayServicesHelper();
+            googlePlayServicesHelper = new GooglePlayServicesHelper();
 
-        pushBroadcastReceiver = new PushBroadcastReceiver();
+            pushBroadcastReceiver = new PushBroadcastReceiver();
 
-        allDialogsMessagesListener = new AllDialogsMessageListener();
-        systemMessagesListener = new SystemMessagesListener();
+            allDialogsMessagesListener = new AllDialogsMessageListener();
+            systemMessagesListener = new SystemMessagesListener();
 
-        dialogsManager = new DialogsManager();
+            dialogsManager = new DialogsManager();
 
-        currentUser = ChatHelper.getCurrentUser();
+            currentUser = ChatHelper.getCurrentUser();
 
-        incomingMessagesManager = QBChatService.getInstance().getIncomingMessagesManager();
-        systemMessagesManager = QBChatService.getInstance().getSystemMessagesManager();
+            incomingMessagesManager = QBChatService.getInstance().getIncomingMessagesManager();
+            systemMessagesManager = QBChatService.getInstance().getSystemMessagesManager();
 
-        if (incomingMessagesManager != null) {
-            incomingMessagesManager.addDialogMessageListener(allDialogsMessagesListener != null
-                    ? allDialogsMessagesListener : new AllDialogsMessageListener());
-        }
+            if (incomingMessagesManager != null) {
+                incomingMessagesManager.addDialogMessageListener(allDialogsMessagesListener != null
+                        ? allDialogsMessagesListener : new AllDialogsMessageListener());
+            }
 
-        if (systemMessagesManager != null) {
-            systemMessagesManager.addSystemMessageListener(systemMessagesListener != null
-                    ? systemMessagesListener : new SystemMessagesListener());
-        }
+            if (systemMessagesManager != null) {
+                systemMessagesManager.addSystemMessageListener(systemMessagesListener != null
+                        ? systemMessagesListener : new SystemMessagesListener());
+            }
 
-        dialogsManager.addManagingDialogsCallbackListener(this);
+            dialogsManager.addManagingDialogsCallbackListener(this);
 
-       // new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/Fetch");
+            // new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/Fetch");
             if (profile_id.equals("")) {
                 Toast.makeText(CardDetail.this, "Having no profile ID", Toast.LENGTH_LONG).show();
             } else {
@@ -402,26 +397,22 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
-                intent.putExtra("url", Utility.BASE_IMAGE_URL+"Other_doc/"+txtAttachment.getText().toString());
+                intent.putExtra("url", Utility.BASE_IMAGE_URL + "Other_doc/" + txtAttachment.getText().toString());
                 startActivity(intent);
             }
         });
 
         imgProfileCard.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 final Dialog dialog = new Dialog(CardDetail.this);
                 dialog.setContentView(R.layout.imageview_popup);
 
-                ImageView ivViewImage = (ImageView)dialog.findViewById(R.id.ivViewImage);
-                if (displayProfile.equals(""))
-                {
+                ImageView ivViewImage = (ImageView) dialog.findViewById(R.id.ivViewImage);
+                if (displayProfile.equals("")) {
                     ivViewImage.setImageResource(R.drawable.usr_1);
-                }
-                else
-                {
-                    Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+displayProfile).skipMemoryCache().placeholder(R.drawable.usr_1)
+                } else {
+                    Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL + "UserProfile/" + displayProfile).skipMemoryCache().placeholder(R.drawable.usr_1)
                             .resize(500, 500)
                             .onlyScaleDown()
                             .into(ivViewImage);
@@ -433,7 +424,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                     public void onClick(View v) {
                         dialog.dismiss();
                         Intent intent = new Intent(getApplicationContext(), ImageZoom.class);
-                        intent.putExtra("displayProfile", Utility.BASE_IMAGE_URL+"UserProfile/"+displayProfile);
+                        intent.putExtra("displayProfile", Utility.BASE_IMAGE_URL + "UserProfile/" + displayProfile);
                         startActivity(intent);
                     }
                 });
@@ -447,13 +438,12 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 
         imgAddGroupFriend.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 final CharSequence[] dialogList = list.toArray(new CharSequence[list.size()]);
                 final AlertDialog.Builder builderDialog = new AlertDialog.Builder(CardDetail.this);
-                LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View dialogView = inflater.inflate(R.layout.edit_groups_popup, null);
-                listView1 = (ListView)dialogView.findViewById(R.id.listView);
+                listView1 = (ListView) dialogView.findViewById(R.id.listView);
                 TextView tvGroupInfo = (TextView) dialogView.findViewById(R.id.tvGroupInfo);
                 Button btnAddToGroup = (Button) dialogView.findViewById(R.id.btnAddToGroup);
                 Button btnCancelGroup = (Button) dialogView.findViewById(R.id.btnCancelGroup);
@@ -462,15 +452,12 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 
                 final AlertDialog alertDialog = builderDialog.create();
                 alertDialog.setCancelable(false);
-                if(groupName.size() == 0)
-                {
+                if (groupName.size() == 0) {
                     tvGroupInfo.setVisibility(View.VISIBLE);
-                }
-                else
-                {
+                } else {
                     tvGroupInfo.setVisibility(View.GONE);
                     ArrayList<GroupModel> groupModelArrayList1 = new ArrayList<GroupModel>();
-                    groupModelArrayList1 = groupModelArrayList ;
+                    groupModelArrayList1 = groupModelArrayList;
 
 //                EditGroupAdapter editGroupAdapter = new EditGroupAdapter(CardDetail.this, groupModelArrayList1);
                     EditGroupAdapter editGroupAdapter = new EditGroupAdapter(CardDetail.this, groupName, groupPhoto, listGroupId);
@@ -490,8 +477,8 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                     public void onClick(View v) {
                         alertDialog.cancel();
                         // make selected item in the comma seprated string
-                      //  Toast.makeText(getApplicationContext(), selectedStrings.toString(), Toast.LENGTH_LONG).show();
-                        new HttpAsyncTaskGroupAddFriend().execute(Utility.BASE_URL+"AddMemberToGroups");
+                        //  Toast.makeText(getApplicationContext(), selectedStrings.toString(), Toast.LENGTH_LONG).show();
+                        new HttpAsyncTaskGroupAddFriend().execute(Utility.BASE_URL + "AddMemberToGroups");
                     }
                 });
                 alertDialog.setView(dialogView);
@@ -608,15 +595,11 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
             public void onClick(View v) {
 
                 boolean result = Utility.checkSMSPermission(CardDetail.this);
-                if (result)
-                {
-                    if (txtMob.getText().toString().equals(""))
-                    {
+                if (result) {
+                    if (txtMob.getText().toString().equals("")) {
                         Toast.makeText(getApplicationContext(), "You are not having contact to SMS..", Toast.LENGTH_LONG).show();
-                    }
-                    else
-                    {
-                        Uri uri = Uri.parse("smsto:"+txtMob.getText().toString());
+                    } else {
+                        Uri uri = Uri.parse("smsto:" + txtMob.getText().toString());
                         Intent it = new Intent(Intent.ACTION_SENDTO, uri);
                         it.putExtra("sms_body", "");
                         startActivity(it);
@@ -899,18 +882,18 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                 QBUser currentUser = getUserFromSession();
                 //loginToChat(currentUser);
                 Boolean aBoolean = SharedPrefsHelper.getInstance().hasQbUser();
-               // Toast.makeText(getApplicationContext(), aBoolean.toString(), Toast.LENGTH_LONG).show();
+                // Toast.makeText(getApplicationContext(), aBoolean.toString(), Toast.LENGTH_LONG).show();
                 ChatHelper.getInstance().loginToChat(currentUser, new QBEntityCallback<Void>() {
                     @Override
                     public void onSuccess(Void result, Bundle bundle) {
                         Log.v(TAG, "Chat login onSuccess()");
 
-                       // ProgressDialogFragment.hide(getSupportFragmentManager());
-                    //    DialogsActivity.start(SplashActivity.this);
-                       // finish();
+                        // ProgressDialogFragment.hide(getSupportFragmentManager());
+                        //    DialogsActivity.start(SplashActivity.this);
+                        // finish();
 
 
-                      //  Toast.makeText(getApplicationContext(), selectedUsers.toString(), Toast.LENGTH_LONG).show();
+                        //  Toast.makeText(getApplicationContext(), selectedUsers.toString(), Toast.LENGTH_LONG).show();
 
 
                         ArrayList<Integer> occupantIdsList = new ArrayList<Integer>();
@@ -928,10 +911,6 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 //QBChatDialog dialog = DialogUtils.buildPrivateDialog(recipientId);
 
 //for creating GROUP dialog
-
-
-
-
 
 
                         QBChatDialog dialog = DialogUtils.buildDialog("Chat with Garry and John", QBDialogType.PRIVATE, occupantIdsList);
@@ -971,22 +950,22 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                             ChatActivity.startForResult(CardDetail.this, 165, existingPrivateDialog);
                             finish();
                         } else {*/
-                            //  ProgressDialogFragment.show(getSupportFragmentManager(), R.string.create_chat);
-                          //  createDialog(selectedUsers);
-                     //   }
+                        //  ProgressDialogFragment.show(getSupportFragmentManager(), R.string.create_chat);
+                        //  createDialog(selectedUsers);
+                        //   }
 
                     }
 
                     @Override
                     public void onError(QBResponseException e) {
-                      //  ProgressDialogFragment.hide(getSupportFragmentManager());
+                        //  ProgressDialogFragment.hide(getSupportFragmentManager());
                         Log.w(TAG, "Chat login onError(): " + e);
 
                     }
                 });
 
 
-              //  ChatActivity.chatMessageListener = new ChatActivity.ChatMessageListener();
+                //  ChatActivity.chatMessageListener = new ChatActivity.ChatMessageListener();
                /* Toast.makeText(getApplicationContext(), selectedUsers.toString(), Toast.LENGTH_LONG).show();
                 ChatHelper.getInstance().createDialogWithSelectedUsers(selectedUsers,
                         new QBEntityCallback<QBChatDialog>() {
@@ -1036,13 +1015,23 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap)
-    {
-        googleMaps = googleMap ;
+    public void onMapReady(GoogleMap googleMap) {
+        googleMaps = googleMap;
 
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(20);
-        googleMaps.setMyLocationEnabled(true);
-        googleMaps.animateCamera(zoom);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            googleMaps.setMyLocationEnabled(true);
+            googleMaps.animateCamera(zoom);
+
+            return;
+        }
 
     }
 
@@ -2098,7 +2087,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                         displayProfile = userImg;
                     }
 
-                    if (frontCardImg.equalsIgnoreCase("") || backCardImg.equalsIgnoreCase("")) {
+                    if (frontCardImg.equalsIgnoreCase("") && backCardImg.equalsIgnoreCase("")) {
                         appBarLayout.setVisibility(View.GONE);
                     } else {
                         appBarLayout.setVisibility(View.VISIBLE);

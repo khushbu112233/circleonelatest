@@ -63,6 +63,7 @@ import com.circle8.circleOne.Adapter.AddEventAdapter;
 import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.Adapter.CardViewDataAdapter;
 import com.circle8.circleOne.Adapter.CustomAdapter;
+import com.circle8.circleOne.Fragments.ProfileFragment;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Helper.ProfileSession;
 import com.circle8.circleOne.Helper.ReferralCodeSession;
@@ -1150,7 +1151,6 @@ public class EditProfileActivity extends AppCompatActivity implements
                 "Travel", "Fine Arts", "Utilities", "Food & Beverage", "Video Game", "Green Technology", "Web Services", "Health"};
         gridView.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.mytextview, array));
         gridView.setExpanded(true);
-
 
         if (addEventList.size() == 0) {
             tvEventInfo.setVisibility(View.VISIBLE);
@@ -3240,13 +3240,13 @@ public class EditProfileActivity extends AppCompatActivity implements
                             finish();
                         }else {
                             Toast.makeText(getApplicationContext(), "Successfully Added", Toast.LENGTH_SHORT).show();
-                         /*   Intent go = new Intent(getApplicationContext(), CardsActivity.class);
+                            Intent go = new Intent(getApplicationContext(), CardsActivity.class);
 
                             // you pass the position you want the viewpager to show in the extra,
                             // please don't forget to define and initialize the position variable
                             // properly
                             go.putExtra("viewpager_position", 3);
-                            startActivity(go);*/
+                            startActivity(go);
                             finish();
                         }
                     } else {
@@ -3922,20 +3922,28 @@ public class EditProfileActivity extends AppCompatActivity implements
                     String UserID = jsonObject.getString("UserID");
                     String ProfileID = jsonObject.getString("ProfileID");
 
-                    if (success.equalsIgnoreCase("1")) {
+                    if (success.equalsIgnoreCase("1"))
+                    {
 
-                        if (fromActivity.equalsIgnoreCase("manage")){
+                        if (fromActivity.equalsIgnoreCase("manage"))
+                        {
                             Toast.makeText(getApplicationContext(), "Successfully Updated", Toast.LENGTH_SHORT).show();
                             finish();
-                        }else {
+                        }
+                        else
+                        {
                             Toast.makeText(getApplicationContext(), "Successfully Updated", Toast.LENGTH_SHORT).show();
-                          /*  Intent go = new Intent(getApplicationContext(), CardsActivity.class);
+                            Intent go = new Intent(getApplicationContext(), CardsActivity.class);
 
                             // you pass the position you want the viewpager to show in the extra,
                             // please don't forget to define and initialize the position variable
                             // properly
                             go.putExtra("viewpager_position", 3);
-                            startActivity(go);*/
+                            startActivity(go);
+
+                          //ProfileFragment.callMyProfile();
+
+
                             finish();
                         }
                     } else {

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -32,6 +33,11 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpResponse;
@@ -47,7 +53,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -68,6 +77,10 @@ public class GridViewAdapter extends BaseSwipeAdapter
     int posi ;
     LoginSession session ;
     String profile_id ;
+    private LayoutInflater inflater;
+    private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
+
+    private DisplayImageOptions options;
 
     ArrayList<FriendConnection> nfcModelList1 = new ArrayList<>();
     ArrayList<FriendConnection> nfcModelListFilter1 = new ArrayList<>();
@@ -97,6 +110,34 @@ public class GridViewAdapter extends BaseSwipeAdapter
         session = new LoginSession(context);
         HashMap<String, String> user = session.getUserDetails();
         profile_id = user.get(LoginSession.KEY_PROFILEID);
+
+        inflater = LayoutInflater.from(context);
+
+        options = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.drawable.ic_stub)
+                .showImageOnFail(R.drawable.ic_error)
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .considerExifParams(true)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .build();
+    }
+
+    private static class AnimateFirstDisplayListener extends SimpleImageLoadingListener {
+
+        static final List<String> displayedImages = Collections.synchronizedList(new LinkedList<String>());
+
+        @Override
+        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+            if (loadedImage != null) {
+                ImageView imageView = (ImageView) view;
+                boolean firstDisplay = !displayedImages.contains(imageUri);
+                if (firstDisplay) {
+                    FadeInBitmapDisplayer.animate(imageView, 500);
+                    displayedImages.add(imageUri);
+                }
+            }
+        }
     }
 
     @Override
@@ -269,7 +310,9 @@ public class GridViewAdapter extends BaseSwipeAdapter
             holder.image.setVisibility(View.VISIBLE);
             holder.defaultCard.setVisibility(View.GONE);
             //imageView.setImageResource(nfcModelList.get(position).getCard_front());
-            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Cards/" + nfcModelList1.get(position).getCard_front()).resize(400,280).onlyScaleDown().skipMemoryCache().into(holder.image);
+            ImageLoader.getInstance().displayImage(Utility.BASE_IMAGE_URL+"Cards/" + nfcModelList1.get(position).getCard_front(), holder.image, options, animateFirstListener);
+
+          //  Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Cards/" + nfcModelList1.get(position).getCard_front()).resize(400,280).onlyScaleDown().skipMemoryCache().into(holder.image);
         }
 
         // holder.imageTitle.setText(name);

@@ -731,6 +731,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 }
             });
         }
+
     }
 
     public void handleSignInResult(GoogleSignInResult result) {
@@ -1521,6 +1522,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         super.onResume();
         Utility.freeMemory();
         checkPlayServices();
+
         if (mViewPager.getCurrentItem() == 2){
             setActionBarTitle("Events");
         }
@@ -1699,6 +1701,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         if (tabLayout.getSelectedTabPosition() == 3)
         {
             CardsActivity.setActionBarTitle("Profile");
+            //ProfileFragment.callMyProfile();
         }
         else if (tabLayout.getSelectedTabPosition() == 2)
         {
@@ -1709,6 +1712,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             CardsActivity.setActionBarTitle("Connect");
         }
     }
+
 
    /* @Override
     public void onResume() {

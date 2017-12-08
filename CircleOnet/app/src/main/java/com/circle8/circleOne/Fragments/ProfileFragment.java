@@ -1,7 +1,9 @@
 package com.circle8.circleOne.Fragments;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -117,62 +119,64 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 public class ProfileFragment extends Fragment
 {
     // private ProgressBar firstBar = null;
-    ImageView imgProfileShare, imgProfileMenu, imgQR, ivEditProfile;
-    TextView tvPersonName, tvProfileName ;
+    static ImageView imgProfileShare, imgProfileMenu, imgQR, ivEditProfile;
+    static TextView tvPersonName, tvProfileName ;
     public final static int QRcodeWidth = 500 ;
-    Bitmap bitmap ;
-    ProgressDialog progressDialog ;
-    ArrayList<String> profile_array, NameArray, DesignationArray, profileImage_array;
+    static Bitmap bitmap ;
+    static ProgressDialog progressDialog ;
+    static ArrayList<String> profile_array, NameArray, DesignationArray, profileImage_array;
     private LoginButton loginButton;
     private LoginSession session;
-    private String UserID = "";
-    ImageView imgBack, imgAdd;
-    String associationString = "", eventString = "";
+    private static String UserID = "";
+    static ImageView imgBack, imgAdd;
+    static String associationString = "", eventString = "";
     public static ArrayList<ProfileModel> allTags ;
-    JSONArray array, arrayEvents;
-    List<String> listAssociation, listEvents;
-    String profileId = "";
-    TextView txtNoAssociation, txtNoEvent;
+    static JSONArray array, arrayEvents;
+    static List<String> listAssociation, listEvents;
+    static String profileId = "";
+    static TextView txtNoAssociation, txtNoEvent;
     private int i = 0;
-    TextView tvDesignation, tvCompany, tvName, tvCompanyName, tvDesi,
+    static TextView tvDesignation, tvCompany, tvName, tvCompanyName, tvDesi,
             tvAssociation, tvAddress, tvWebsite, tvMail, tvMob, tvWork, textIndustry;
-    ProfileModel nfcModelTag;
-    CircleImageView imgProfile;
-    LinearLayout lnrMob, lnrWork, lnrWebsite, lnrMap, llNameBox, llCompanyBox,
+    static ProfileModel nfcModelTag;
+    static CircleImageView imgProfile;
+    static LinearLayout lnrMob, lnrWork, lnrWebsite, lnrMap, llNameBox, llCompanyBox,
             llIndustryBox, llDesignationBox, llAssociationBox , llMailBox;
-    ViewPager mViewPager, viewPager1;
-    String recycle_image1, recycle_image2 ;
-    private ArrayList<String> image = new ArrayList<>();
-    private CardSwipe myPager ;
+    static ViewPager mViewPager, viewPager1;
+    static String recycle_image1, recycle_image2 ;
+    private static ArrayList<String> image = new ArrayList<>();
+    private static CardSwipe myPager ;
     public static ArrayList<TestimonialModel> allTaggs ;
-    String TestimonialProfileId = "";
-    ExpandableHeightListView lstTestimonial;
-    TextView txtTestimonial, txtMore;
-    CustomAdapter customAdapter;
-    ImageView fbUrl, linkedInUrl, twitterUrl, googleUrl, youtubeUrl;
-    String strfbUrl, strlinkedInUrl, strtwitterUrl, strgoogleUrl, stryoutubeUrl;
-    ArrayList<String> title_array = new ArrayList<String>();
-    ArrayList<String> notice_array = new ArrayList<String>();
+    static String TestimonialProfileId = "";
+    static ExpandableHeightListView lstTestimonial;
+    static TextView txtTestimonial, txtMore;
+    static CustomAdapter customAdapter;
+    static ImageView fbUrl, linkedInUrl, twitterUrl, googleUrl, youtubeUrl;
+    static String strfbUrl, strlinkedInUrl, strtwitterUrl, strgoogleUrl, stryoutubeUrl;
+    static ArrayList<String> title_array = new ArrayList<String>();
+    static ArrayList<String> notice_array = new ArrayList<String>();
     String Address1 = "", Address2 = "", Address3 = "", Address4 = "", City = "", State = "", Country = "", Postalcode = "", Website = "", Attachment_FileName = "";
-    String personName , personAddress ;
+    static String personName , personAddress ;
     private CallbackManager callbackManager;
-    View view;
-    AppBarLayout appbar;
-    private String displayProfile ;
-    private String secretKey = "1234567890234561";
+    static View view;
+    static AppBarLayout appbar;
+    private static String displayProfile ;
+    private static String secretKey = "1234567890234561";
     private static RelativeLayout rlProgressDialog ;
     private static TextView tvProgressing ;
     private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
-    RecyclerView recyclerAssociation, recyclerEvents;
-    String barName;
-    JSONArray jsonArray;
+    static RecyclerView recyclerAssociation, recyclerEvents;
+    static String barName;
+    static JSONArray jsonArray;
     public static int profileIndex;
-    TextView txtAttachment, lblAttachment;
-    ProfileSession profileSession;
-    ReferralCodeSession referralCodeSession;
+    static TextView txtAttachment, lblAttachment;
+    static ProfileSession profileSession;
+    static ReferralCodeSession referralCodeSession;
     private String refer;
-    TextView txtAssociationList, txtEventsListFinal;
+    static TextView txtAssociationList, txtEventsListFinal;
     String Q_ID = "";
+
+    public static Activity mContext ;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -197,6 +201,9 @@ public class ProfileFragment extends Fragment
         //  getActivity().requestWindowFeature(Window.FEATURE_NO_TITLE);
         //  ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
+
+        mContext = ProfileFragment.this.getActivity();
+
         callbackManager = CallbackManager.Factory.create();
         profileSession = new ProfileSession(getContext());
         llNameBox = (LinearLayout)view.findViewById(R.id.llNameBox);
@@ -275,7 +282,10 @@ public class ProfileFragment extends Fragment
         ivConnecting3 = (ImageView)view.findViewById(R.id.imgConnecting3) ;
 
 //        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetUserProfile");
-        new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
+//        new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
+
+        /* Call api for my profile */
+        callMyProfile();
 
         HashMap<String, String> user = session.getUserDetails();
         UserID = user.get(LoginSession.KEY_USERID);
@@ -304,8 +314,6 @@ public class ProfileFragment extends Fragment
         txtTestimonial.setText(ss);
         txtTestimonial.setMovementMethod(LinkMovementMethod.getInstance());
         txtTestimonial.setHighlightColor(getResources().getColor(R.color.colorPrimary));
-
-
 
         imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -473,6 +481,7 @@ public class ProfileFragment extends Fragment
                 startActivity(intent);
             }
         });
+
 
         imgAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1119,13 +1128,47 @@ public class ProfileFragment extends Fragment
         return view;
     }
 
+    public static void callMyProfile()
+    {
+        new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
+    }
+
     @Override
-    public void onResume() {
+    public void onResume()
+    {
         super.onResume();
+       /* HashMap<String, String> profile = profileSession.getProfileDetails();
+        profileIndex = Integer.parseInt(profile.get(ProfileSession.KEY_PROFILE_INDEX));
+        callMyProfile();*/
+
+
+        HashMap<String, String> user = session.getUserDetails();
+        UserID = user.get(LoginSession.KEY_USERID);
+
+        HashMap<String, String> profile = profileSession.getProfileDetails();
+        profileIndex = Integer.parseInt(profile.get(ProfileSession.KEY_PROFILE_INDEX));
+
+        new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
+//        new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser)
+        {
+            Utility.freeMemory();
+            Utility.deleteCache(getContext());
+        }
+    }
+
+   /* @Override
+    public void onStart() {
+        super.onStart();
         HashMap<String, String> profile = profileSession.getProfileDetails();
         profileIndex = Integer.parseInt(profile.get(ProfileSession.KEY_PROFILE_INDEX));
         new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
-    }
+    }*/
 
     /* @Override
     public void onResume() {
@@ -1162,7 +1205,7 @@ public class ProfileFragment extends Fragment
         });
     }*/
 
-    public String encrypt(String value, String key)
+    public static String encrypt(String value, String key)
             throws UnsupportedEncodingException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException
     {
         byte[] value_bytes = value.getBytes("UTF-8");
@@ -1170,7 +1213,7 @@ public class ProfileFragment extends Fragment
         return Base64.encodeToString(encrypt(value_bytes, key_bytes, key_bytes), 0);
     }
 
-    public byte[] encrypt(byte[] paramArrayOfByte1, byte[] paramArrayOfByte2, byte[] paramArrayOfByte3)
+    public static byte[] encrypt(byte[] paramArrayOfByte1, byte[] paramArrayOfByte2, byte[] paramArrayOfByte3)
             throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException
     {
         // setup AES cipher in CBC mode with PKCS #5 padding
@@ -1181,7 +1224,7 @@ public class ProfileFragment extends Fragment
         return localCipher.doFinal(paramArrayOfByte1);
     }
 
-    private byte[] getKeyBytes(String paramString)
+    private static byte[] getKeyBytes(String paramString)
             throws UnsupportedEncodingException
     {
         byte[] arrayOfByte1 = new byte[16];
@@ -1249,7 +1292,7 @@ public class ProfileFragment extends Fragment
     };
 
 
-    public  String POST5(String url)
+    public static String POST5(String url)
     {
         InputStream inputStream = null;
         String result = "";
@@ -1306,7 +1349,7 @@ public class ProfileFragment extends Fragment
         return result;
     }
 
-    private class HttpAsyncTaskProfiles extends AsyncTask<String, Void, String>
+    public static class HttpAsyncTaskProfiles extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
 
@@ -1514,11 +1557,11 @@ public class ProfileFragment extends Fragment
                             countEvents = arrayEvents.length();
                         }
 
-                        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), countAssociation, GridLayoutManager.HORIZONTAL, false);
+                        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, countAssociation, GridLayoutManager.HORIZONTAL, false);
                         recyclerAssociation.setAdapter(new TextRecyclerAdapter(listAssociation));
                         recyclerAssociation.setLayoutManager(gridLayoutManager);
 
-                        GridLayoutManager gridLayoutManager1 = new GridLayoutManager(getContext(), countEvents, GridLayoutManager.HORIZONTAL, false);
+                        GridLayoutManager gridLayoutManager1 = new GridLayoutManager(mContext, countEvents, GridLayoutManager.HORIZONTAL, false);
                         recyclerEvents.setAdapter(new TextRecyclerAdapter(listEvents));
                         recyclerEvents.setLayoutManager(gridLayoutManager1);
                         if (listAssociation.size() == 0){
@@ -1715,7 +1758,7 @@ public class ProfileFragment extends Fragment
                     }
                     else {
                         try {
-                            Picasso.with(getContext()).load(Utility.BASE_IMAGE_URL + "UserProfile/" + allTags.get(profileIndex).getUserPhoto())
+                            Picasso.with(mContext).load(Utility.BASE_IMAGE_URL + "UserProfile/" + allTags.get(profileIndex).getUserPhoto())
                                     .resize(300,300).onlyScaleDown().skipMemoryCache().into(imgProfile);
                         }
                         catch (Exception e){}
@@ -1757,16 +1800,16 @@ public class ProfileFragment extends Fragment
 
                     image.add(recycle_image1);
                     image.add(recycle_image2);
-                    myPager = new CardSwipe(getContext(), image);
+                    myPager = new CardSwipe(mContext, image);
 
                     mViewPager.setClipChildren(false);
-                    mViewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+                    mViewPager.setPageMargin(mContext.getResources().getDimensionPixelOffset(R.dimen.pager_margin));
                     mViewPager.setOffscreenPageLimit(1);
                     //   mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
                     mViewPager.setAdapter(myPager);
 
                     viewPager1.setClipChildren(false);
-                    viewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+                    viewPager1.setPageMargin(mContext.getResources().getDimensionPixelOffset(R.dimen.pager_margin));
                     viewPager1.setOffscreenPageLimit(1);
                     //   viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
                     viewPager1.setAdapter(myPager);
@@ -1795,7 +1838,7 @@ public class ProfileFragment extends Fragment
                 }
                 else
                 {
-                    Toast.makeText(getContext(), "Not able to load Profiles..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "Not able to load Profiles..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -1873,7 +1916,7 @@ public class ProfileFragment extends Fragment
         return result;
     }
 
-    private class HttpAsyncTaskTestimonial extends AsyncTask<String, Void, String>
+    private static class HttpAsyncTaskTestimonial extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
 
@@ -1944,13 +1987,13 @@ public class ProfileFragment extends Fragment
                             allTaggs.add(nfcModelTag);
                         }
                     }
-                    customAdapter = new CustomAdapter(getActivity(), allTaggs);
+                    customAdapter = new CustomAdapter(mContext, allTaggs);
                     lstTestimonial.setAdapter(customAdapter);
                     lstTestimonial.setExpanded(true);
                 }
                 else
                 {
-                    Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "Not able to load Cards..", Toast.LENGTH_LONG).show();
                 }
             }
             catch (JSONException e) {
@@ -1959,7 +2002,7 @@ public class ProfileFragment extends Fragment
         }
     }
 
-    public String POST2(String url)
+    public static String POST2(String url)
     {
         InputStream inputStream = null;
         String result = "";
@@ -2152,7 +2195,7 @@ public class ProfileFragment extends Fragment
         }
     }
 
-    Bitmap TextToImageEncode(String Value)
+    static Bitmap TextToImageEncode(String Value)
     {
         String text=Value; // Whatever you need to encode in the QR code
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
@@ -2180,14 +2223,14 @@ public class ProfileFragment extends Fragment
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
     }*/
 
-    public  void CustomProgressDialog(final String loading)
+    public static void CustomProgressDialog(final String loading)
     {
         rlProgressDialog.setVisibility(View.VISIBLE);
         tvProgressing.setText(loading);
 
-        Animation anim = AnimationUtils.loadAnimation(getActivity(),R.anim.anticlockwise);
+        Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.anticlockwise);
         ivConnecting1.startAnimation(anim);
-        Animation anim1 = AnimationUtils.loadAnimation(getActivity(),R.anim.clockwise);
+        Animation anim1 = AnimationUtils.loadAnimation(mContext, R.anim.clockwise);
         ivConnecting2.startAnimation(anim1);
 
         int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.

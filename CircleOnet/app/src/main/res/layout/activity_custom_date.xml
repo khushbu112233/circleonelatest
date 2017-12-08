@@ -106,7 +106,7 @@
                 app:dayOfWeekTextColor="#6b6c6e"
                 app:disabledDayBackgroundColor="@color/white"
                 app:disabledDayTextColor="@color/day_disabled_text_color"
-                app:selectedDayBackgroundColor="@color/colorPrimary"
+                app:selectedDayBackgroundColor="@color/day_disabled_text_color"
                 app:titleLayoutBackgroundColor="@color/white"
                 app:weekLayoutBackgroundColor="@color/white"/>
 

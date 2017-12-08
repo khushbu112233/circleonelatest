@@ -1,10 +1,14 @@
 package com.circle8.circleOne.ApplicationUtils;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.os.Build;
+import android.os.StrictMode;
+import android.provider.SyncStateContract;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 import android.util.Base64;
@@ -19,6 +23,10 @@ import com.circle8.circleOne.Utils.Consts;
 import com.facebook.FacebookSdk;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.onesignal.OSNotification;
 import com.onesignal.OSNotificationAction;
 import com.onesignal.OSNotificationOpenResult;
@@ -43,7 +51,7 @@ public class MyApplication extends CoreApp
     private GsonBuilder builder;
 
     private CustomSharedPreference shared;
-
+    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     @Override
     protected void attachBaseContext(Context base)
     {
@@ -56,7 +64,7 @@ public class MyApplication extends CoreApp
     public void onCreate()
     {
         super.onCreate();
-
+        initImageLoader(getApplicationContext());
         mInstance = this ;
 
         FacebookSdk.sdkInitialize(getApplicationContext());
@@ -87,6 +95,23 @@ public class MyApplication extends CoreApp
                 .init();
 
         MyApplication app = this;//(BeaconScannerApp)this.getApplication();
+    }
+
+    public static void initImageLoader(Context context) {
+        // This configuration tuning is custom. You can tune every option, you may tune some of them,
+        // or you can create default configuration by
+        //  ImageLoaderConfiguration.createDefault(this);
+        // method.
+        ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(context);
+        config.threadPriority(Thread.NORM_PRIORITY - 2);
+        config.denyCacheImageMultipleSizesInMemory();
+        config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
+        config.diskCacheSize(50 * 1024 * 1024); // 50 MiB
+        config.tasksProcessingOrder(QueueProcessingType.LIFO);
+        config.writeDebugLogs(); // Remove for release app
+
+        // Initialize ImageLoader with configuration.
+        ImageLoader.getInstance().init(config.build());
     }
 
     private void initSampleConfigs() {

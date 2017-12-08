@@ -74,7 +74,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@color/white"
-        android:layout_below="@+id/rlProgressDialog"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 

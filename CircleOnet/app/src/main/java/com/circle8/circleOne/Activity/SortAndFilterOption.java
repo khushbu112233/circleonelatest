@@ -133,7 +133,7 @@ public class SortAndFilterOption extends AppCompatActivity
         lnrAllCards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SortType = "asc";
+                SortType = "desc";
                 CardListApi = "GetFriendConnection";
                 List1Fragment.allTags.clear();
                 List1Fragment.progressStatus = "FILTER";
@@ -231,7 +231,7 @@ public class SortAndFilterOption extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                SortType = "desc";
+                SortType = "asc";
                 CardListApi = "GetFriendConnection";
                 List1Fragment.allTags.clear();
                 List1Fragment.progressStatus = "FILTER";

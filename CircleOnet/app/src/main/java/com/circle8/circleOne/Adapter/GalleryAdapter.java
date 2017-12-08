@@ -2,6 +2,8 @@ package com.circle8.circleOne.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.EmbossMaskFilter;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
@@ -20,9 +22,19 @@ import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Model.FriendConnection;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.CircleBitmapDisplayer;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -42,6 +54,40 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
     public static int posi = 0;
     DatabaseHelper db;
     RelativeLayout defaultCard;
+    private LayoutInflater inflater;
+    private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
+
+    private DisplayImageOptions options;
+
+    GalleryAdapter(Context context) {
+        inflater = LayoutInflater.from(context);
+
+        options = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.drawable.ic_stub)
+                .showImageOnFail(R.drawable.ic_error)
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .considerExifParams(true)
+                .displayer(new CircleBitmapDisplayer(Color.WHITE, 5))
+                .build();
+    }
+
+    private static class AnimateFirstDisplayListener extends SimpleImageLoadingListener {
+
+        static final List<String> displayedImages = Collections.synchronizedList(new LinkedList<String>());
+
+        @Override
+        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+            if (loadedImage != null) {
+                ImageView imageView = (ImageView) view;
+                boolean firstDisplay = !displayedImages.contains(imageUri);
+                if (firstDisplay) {
+                    FadeInBitmapDisplayer.animate(imageView, 500);
+                    displayedImages.add(imageUri);
+                }
+            }
+        }
+    }
 
     private static TextView tvPersonName, tvPersonProfile, tvPersonWebsite, tvPersonAddress, tvPersonContact,
             tvPersonNameLast, tvPersonMobile;
@@ -82,6 +128,17 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
         this.nfcModelList = nfcModel ;
 //        this.nfcModelListFilter = new ArrayList<NFCModel>();
         this.nfcModelListFilter.addAll(nfcModelList);
+
+        inflater = LayoutInflater.from(applicationContext);
+
+        options = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.drawable.ic_stub)
+                .showImageOnFail(R.drawable.ic_error)
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .considerExifParams(true)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .build();
     }
 
     @Override
@@ -183,7 +240,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             imageView.setVisibility(View.VISIBLE);
             defaultCard.setVisibility(View.GONE);
             //imageView.setImageResource(nfcModelList.get(position).getCard_front());
-            Picasso.with(mContext).load(Utility.BASE_IMAGE_URL+"Cards/"+nfcModelList.get(position).getCard_front()).skipMemoryCache().into(imageView);
+            ImageLoader.getInstance().displayImage(Utility.BASE_IMAGE_URL+"Cards/"+nfcModelList.get(position).getCard_front(), imageView, options, animateFirstListener);
+           // Picasso.with(mContext).load(Utility.BASE_IMAGE_URL+"Cards/"+nfcModelList.get(position).getCard_front()).skipMemoryCache().into(imageView);
         }
 
         pos = holder.getAdapterPosition();

@@ -1,1 +1,1 @@
-include ':app', ':library', ':nfclib', ':carousel', ':linkedin-sdk', ':sample-core'
+include ':app', ':library', ':nfclib', ':carousel', ':linkedin-sdk', ':sample-core', ':imgLoaderlibrary'

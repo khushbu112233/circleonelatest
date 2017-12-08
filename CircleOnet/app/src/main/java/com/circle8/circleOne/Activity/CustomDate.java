@@ -63,6 +63,7 @@ public class CustomDate extends AppCompatActivity
         imgLogo = (ImageView) findViewById(R.id.imgLogo);
         dateSelect = (TextView) findViewById(R.id.dateSelect);
         actionText.setText("Events");
+
         imgLogo.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
         calendarView = (CustomCalendarView) findViewById(R.id.calendar_view);
         btnSearch = (Button) findViewById(R.id.btnSearch);
@@ -233,7 +234,6 @@ public class CustomDate extends AppCompatActivity
                     startActivity(userIntent);
                     finish();
 //                    overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-
                 }
             }
         });

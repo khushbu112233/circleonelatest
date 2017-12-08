@@ -26,8 +26,8 @@ android {
         applicationId "com.circle8.circleOne"
         minSdkVersion 18
         targetSdkVersion 25
-        versionCode 4
-        versionName "1.0.3"
+        versionCode 5
+        versionName "1.0.4"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [onesignal_app_id               : "8cc4b927-da5f-4152-805d-bf3b40e53773",
@@ -141,6 +141,9 @@ dependencies {
 
     compile "com.quickblox:quickblox-android-sdk-extensions:$rootProject.qbSdkVersion"
     compile 'io.reactivex:rxandroid:1.1.0'
+
+    compile project(':imgLoaderlibrary')
+    compile 'com.squareup.okhttp:okhttp:2.4.0'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

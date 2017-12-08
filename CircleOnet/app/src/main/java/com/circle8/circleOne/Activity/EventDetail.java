@@ -48,7 +48,7 @@ import java.util.ArrayList;
 public class EventDetail extends AppCompatActivity
 {
     private TextView actionText;
-    private ImageView imgDrawer, imgCards, imgConnect, imgEvents, imgProfile, imgLogo, imgEvent;
+    private ImageView imgDrawer, imgCards, imgConnect, imgEvents, imgProfile, imgBack, imgEvent;
     private int actionBarHeight;
     private TextView tvEventTitle,tvEventTitle1, tvEventDate, tvEventDesc, tvEventType, tvEventAddress, tvCompanyName, tvIndustryName ;
     private ListView listViewTimeShow ;
@@ -81,9 +81,11 @@ public class EventDetail extends AppCompatActivity
         imgConnect = (ImageView) findViewById(R.id.imgConnect);
         imgEvents = (ImageView) findViewById(R.id.imgEvents);
         imgProfile = (ImageView) findViewById(R.id.imgProfile);
-        imgLogo = (ImageView) findViewById(R.id.imgLogo);
+        imgBack = (ImageView) findViewById(R.id.imgLogo);
         actionText = (TextView) findViewById(R.id.mytext);
         actionText.setText("Events");
+        imgBack.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
+
         txtBook = (TextView) findViewById(R.id.txtBook);
         txtRegister = (TextView) findViewById(R.id.txtRegister);
         tvEventTitle = (TextView)findViewById(R.id.tvEventTitle);
@@ -102,16 +104,17 @@ public class EventDetail extends AppCompatActivity
 
         new HttpAsyncTask().execute(Utility.BASE_URL+"Events/GetDetails");
 
-        imgLogo.setOnClickListener(new View.OnClickListener() {
+        imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
                 //Toast.makeText(getApplicationContext(), "Hello", Toast.LENGTH_LONG).show();
-                TypedValue tv = new TypedValue();
+               /* TypedValue tv = new TypedValue();
                 if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
                     actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
                 }
-                showDialog(EventDetail.this, 0, actionBarHeight);
+                showDialog(EventDetail.this, 0, actionBarHeight);*/
+               finish();
             }
         });
 

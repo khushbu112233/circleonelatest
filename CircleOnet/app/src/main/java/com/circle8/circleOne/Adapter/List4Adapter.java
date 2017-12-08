@@ -249,6 +249,14 @@ public class List4Adapter extends BaseSwipeAdapter
         return v;
     }
 
+    static class ViewHolder
+    {
+        TextView imageDesc;
+        TextView imageName;
+        TextView imageDesignation;
+        CircleImageView image;
+    }
+
     @Override
     public void fillValues(final int position, View convertView)
     {
@@ -338,13 +346,6 @@ public class List4Adapter extends BaseSwipeAdapter
     @Override
     public long getItemId(int position) {
         return position;
-    }
-
-    static class ViewHolder {
-        TextView imageDesc;
-        TextView imageName;
-        TextView imageDesignation;
-        CircleImageView image;
     }
 
     public void Filter(String charText)

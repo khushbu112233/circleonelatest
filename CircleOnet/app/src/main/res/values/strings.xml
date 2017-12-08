@@ -131,4 +131,6 @@
     <string name="error_leave_chat">Error leaving room</string>
     <string name="net_check">check for data connection</string>
 
+    <string name="descr_image">Image</string>
+
 </resources>
