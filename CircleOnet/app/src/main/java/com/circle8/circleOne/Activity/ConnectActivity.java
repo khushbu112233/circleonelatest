@@ -158,6 +158,8 @@ public class ConnectActivity extends AppCompatActivity
         ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
         ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
 
+        boolean result1 = Utility.checkContactPermission(ConnectActivity.this);
+
         rlAdd.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             public void onGlobalLayout() {
                 int height = rlAdd.getHeight();
@@ -966,36 +968,41 @@ public class ConnectActivity extends AppCompatActivity
                             rlAdd.setEnabled(false);
                         }
                         else if (!Mobile1.equalsIgnoreCase("")){
-                            Boolean aBoolean = contactExists(getApplicationContext(), Mobile1.toString());
-                            if (aBoolean == true) {
-                                ivAddRound.setImageResource(R.drawable.round_blue);
-                                tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
-                             //   tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
-                                tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted));
-                                rlAdd.setEnabled(true);
-                            }
-                            else {
-                                ivAddRound.setImageResource(R.drawable.round_gray);
-                                tvAdd.setTextColor(getResources().getColor(R.color.unselected));
-                              //  tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
-                                tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
-                                rlAdd.setEnabled(false);
+                            boolean result1 = Utility.checkContactPermission(ConnectActivity.this);
+                            if (result1) {
+                                Boolean aBoolean = contactExists(getApplicationContext(), Mobile1.toString());
+                                if (aBoolean == true) {
+                                    ivAddRound.setImageResource(R.drawable.round_blue);
+                                    tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                    //   tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                    tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted));
+                                    rlAdd.setEnabled(true);
+                                } else {
+                                    ivAddRound.setImageResource(R.drawable.round_gray);
+                                    tvAdd.setTextColor(getResources().getColor(R.color.unselected));
+                                    //  tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
+                                    tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
+                                    rlAdd.setEnabled(false);
+                                }
                             }
                         }
                         else if (!Mobile2.equalsIgnoreCase("")){
-                            Boolean aBoolean = contactExists(getApplicationContext(), Mobile2.toString());
-                            if (aBoolean == true) {
-                                ivAddRound.setImageResource(R.drawable.round_blue);
-                                tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
-                               // tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
-                                tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted));
-                                rlAdd.setEnabled(true);
-                            }else {
-                                ivAddRound.setImageResource(R.drawable.round_gray);
-                                tvAdd.setTextColor(getResources().getColor(R.color.unselected));
-                              //  tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
-                                tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
-                                rlAdd.setEnabled(false);
+                            boolean result1 = Utility.checkContactPermission(ConnectActivity.this);
+                            if (result1) {
+                                Boolean aBoolean = contactExists(getApplicationContext(), Mobile2.toString());
+                                if (aBoolean == true) {
+                                    ivAddRound.setImageResource(R.drawable.round_blue);
+                                    tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                    // tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                    tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted));
+                                    rlAdd.setEnabled(true);
+                                } else {
+                                    ivAddRound.setImageResource(R.drawable.round_gray);
+                                    tvAdd.setTextColor(getResources().getColor(R.color.unselected));
+                                    //  tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
+                                    tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
+                                    rlAdd.setEnabled(false);
+                                }
                             }
                         }
 
