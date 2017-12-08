@@ -481,7 +481,11 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                         alertDialog.cancel();
                         // make selected item in the comma seprated string
                         //  Toast.makeText(getApplicationContext(), selectedStrings.toString(), Toast.LENGTH_LONG).show();
-                        new HttpAsyncTaskGroupAddFriend().execute(Utility.BASE_URL + "AddMemberToGroups");
+                        if (selectedStrings.length() == 0){
+                            Toast.makeText(getApplicationContext(), "Please select any circle", Toast.LENGTH_LONG).show();
+                        }else {
+                            new HttpAsyncTaskGroupAddFriend().execute(Utility.BASE_URL + "AddMemberToGroups");
+                        }
                     }
                 });
                 alertDialog.setView(dialogView);
