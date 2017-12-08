@@ -1103,5 +1103,21 @@
             android:layout_marginRight="10dp"
             android:visibility="gone"/>
 
+        <com.circle8.circleOne.Utils.cgTextView
+            android:id="@+id/tvSendMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="55dp"
+            android:layout_centerHorizontal="true"
+            android:text="Send Message"
+            android:textColor="@color/white"
+            android:background="@drawable/shape_chat"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingRight="15dp"
+            android:paddingLeft="15dp"
+            android:visibility="gone"/>
+
     </RelativeLayout>
 </RelativeLayout>

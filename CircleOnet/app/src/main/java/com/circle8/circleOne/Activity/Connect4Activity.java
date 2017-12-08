@@ -249,6 +249,7 @@ public class Connect4Activity extends AppCompatActivity
                     Intent go = new Intent(getApplicationContext(), Connect5Activity.class);
                     go.putExtra("level", level);
                     go.putExtra("profile", profile);
+                    go.putExtra("profileName",profileName);
                     go.putExtra("connectLevel", connectLevel);
                     go.putExtra("userName1",userName1);
                     go.putExtra("userPhoto1",userPhoto1);

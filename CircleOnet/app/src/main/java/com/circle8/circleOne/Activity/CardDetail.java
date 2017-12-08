@@ -147,6 +147,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
     LoginSession loginSession;
     String strfbUrl = "", strlinkedInUrl = "", strtwitterUrl = "", strgoogleUrl = "", stryoutubeUrl = "";
     AppBarLayout appBarLayout;
+    TextView tvSendMessage ;
 
     String FirstName = "", LastName = "", UserPhoto = "", Phone1 = "", Phone2 = "", Mobile1 = "", Mobile2 = "", Fax1 = "",
             Fax2 = "", Email1 = "", Email2 = "", IndustryName = "", CompanyName = "", CompanyProfile = "", Designation = "",
@@ -270,6 +271,8 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         ivConnecting2 = (ImageView) findViewById(R.id.imgConnecting2);
         ivConnecting3 = (ImageView) findViewById(R.id.imgConnecting3);
         imgChat = (ImageView) findViewById(R.id.imgChat);
+        tvSendMessage = (TextView)findViewById(R.id.tvSendMessage);
+
         netCheck = Utility.isNetworkAvailable(getApplicationContext());
 
         txtMore = (TextView) findViewById(R.id.txtMore);
@@ -875,7 +878,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
             }
         });
 
-        imgChat.setOnClickListener(new View.OnClickListener() {
+        tvSendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 registerQbChatListeners();
@@ -1873,13 +1876,16 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                     Q_ID = jsonObject.getString("Q_ID");
 
                     if (Q_ID.equals("") || Q_ID == null || Q_ID.equals("")){
-                        imgChat.setVisibility(View.GONE);
+//                        imgChat.setVisibility(View.GONE);
+                        tvSendMessage.setVisibility(View.GONE);
                     }
                     else if (CurrentQ_ID.equals("")){
-                        imgChat.setVisibility(View.GONE);
+//                        imgChat.setVisibility(View.GONE);
+                        tvSendMessage.setVisibility(View.GONE);
                     }
                     else {
-                        imgChat.setVisibility(View.VISIBLE);
+//                        imgChat.setVisibility(View.VISIBLE);
+                        tvSendMessage.setVisibility(View.VISIBLE);
                         occupant_id = Integer.parseInt(Q_ID);
 
                         List<Integer> tags = new ArrayList<>();

@@ -19,12 +19,12 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
     private ImageView imgBack, imgCards, imgConnect, imgEvents, imgProfile, imgConnecting;
 
     String level = "0";
-    String profile;
+    String profile,profileName;
     TextView txtCongratulations, txtLink;
     CircleImageView ivImage1;
     CircleImageView level1, level2, level3, level4, level5, level6, level7;
     CircleImageView ivProfile1, ivProfile2, ivProfile3, ivProfile4, ivProfile5, ivProfile6, ivProfile7;
-    TextView txtName1, txtName2, txtName3, txtName4, txtName5, txtName6, txtName7;
+    TextView txtProfileName, txtName1, txtName2, txtName3, txtName4, txtName5, txtName6, txtName7;
     RelativeLayout rltLevel1, rltLevel2, rltLevel3, rltLevel4, rltLevel5, rltLevel6, rltLevel7;
 
     String connectLevel = "";
@@ -42,6 +42,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         Intent intent = getIntent();
         level = intent.getStringExtra("level");
         profile = intent.getStringExtra("profile");
+        profileName = intent.getStringExtra("profileName");
         connectLevel = intent.getStringExtra("connectLevel");
         userName1 = intent.getStringExtra("userName1");
         userPhoto1 = intent.getStringExtra("userPhoto1");
@@ -88,6 +89,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         ivProfile6 = (CircleImageView) findViewById(R.id.ivProfile6);
         ivProfile7 = (CircleImageView) findViewById(R.id.ivProfile7);
 
+        txtProfileName = (TextView)findViewById(R.id.txtProfileName);
         txtName1 = (TextView) findViewById(R.id.txtName1);
         txtName2 = (TextView) findViewById(R.id.txtName2);
         txtName3 = (TextView) findViewById(R.id.txtName3);
@@ -107,6 +109,8 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         txtLink = (TextView) findViewById(R.id.txtLink);
         txtCongratulations = (TextView) findViewById(R.id.txtCongratulations);
 
+        txtProfileName.setText(profileName);
+
         try
         {
             Utility.freeMemory();
@@ -125,7 +129,10 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
+                Utility.freeMemory();
+
                /* Intent go = new Intent(getApplicationContext(),Connect4Activity.class);
                 go.putExtra("level", level);
                 go.putExtra("profile", profile);
@@ -134,8 +141,35 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
                /* Intent go = new Intent(getApplicationContext(),CardsActivity.class);
                 go.putExtra("viewpager_position", 1);
                 startActivity(go);*/
+
+                Intent go = new Intent(getApplicationContext(), Connect4Activity.class);
+                go.putExtra("level", level);
+                go.putExtra("profile", profile);
+                go.putExtra("profileName",profileName);
+                go.putExtra("connectLevel", connectLevel);
+                go.putExtra("userName1",userName1);
+                go.putExtra("userPhoto1",userPhoto1);
+                go.putExtra("userProfileId1",userProfileId1);
+                go.putExtra("userName2",userName2);
+                go.putExtra("userPhoto2",userPhoto2);
+                go.putExtra("userProfileId2",userProfileId2);
+                go.putExtra("userName3",userName3);
+                go.putExtra("userPhoto3",userPhoto3);
+                go.putExtra("userProfileId3",userProfileId3);
+                go.putExtra("userName4",userName4);
+                go.putExtra("userPhoto4",userPhoto4);
+                go.putExtra("userProfileId4",userProfileId4);
+                go.putExtra("userName5",userName5);
+                go.putExtra("userPhoto5",userPhoto5);
+                go.putExtra("userProfileId5",userProfileId5);
+                go.putExtra("userName6",userName6);
+                go.putExtra("userPhoto6",userPhoto6);
+                go.putExtra("userProfileId6",userProfileId6);
+                go.putExtra("userName7",userName7);
+                go.putExtra("userPhoto7",userPhoto7);
+                go.putExtra("userProfileId7",userProfileId7);
+                startActivity(go);
                 finish();
-                Utility.freeMemory();
             }
         });
 
@@ -144,13 +178,13 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             Utility.freeMemory();
           //  txtCongratulations.setVisibility(View.GONE);
             txtLink.setText("You have no established connections");
-            rltLevel1.setVisibility(View.INVISIBLE);
+            /*rltLevel1.setVisibility(View.INVISIBLE);
             rltLevel2.setVisibility(View.INVISIBLE);
             rltLevel3.setVisibility(View.INVISIBLE);
             rltLevel4.setVisibility(View.INVISIBLE);
             rltLevel5.setVisibility(View.INVISIBLE);
             rltLevel6.setVisibility(View.INVISIBLE);
-            rltLevel7.setVisibility(View.INVISIBLE);
+            rltLevel7.setVisibility(View.INVISIBLE);*/
 
             txtName1.setVisibility(View.INVISIBLE);
             txtName2.setVisibility(View.INVISIBLE);
@@ -168,25 +202,25 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             level6.setVisibility(View.VISIBLE);
             level7.setVisibility(View.VISIBLE);
 
-            ivProfile1.setVisibility(View.VISIBLE);
-            ivProfile2.setVisibility(View.VISIBLE);
-            ivProfile3.setVisibility(View.VISIBLE);
-            ivProfile4.setVisibility(View.VISIBLE);
-            ivProfile5.setVisibility(View.VISIBLE);
-            ivProfile6.setVisibility(View.VISIBLE);
-            ivProfile7.setVisibility(View.VISIBLE);
+            ivProfile1.setVisibility(View.INVISIBLE);
+            ivProfile2.setVisibility(View.INVISIBLE);
+            ivProfile3.setVisibility(View.INVISIBLE);
+            ivProfile4.setVisibility(View.INVISIBLE);
+            ivProfile5.setVisibility(View.INVISIBLE);
+            ivProfile6.setVisibility(View.INVISIBLE);
+            ivProfile7.setVisibility(View.INVISIBLE);
         }
         if (level.equals("1"))
         {
           //  txtCongratulations.setVisibility(View.VISIBLE);
             txtLink.setText("you are now 1 connection away");
-            rltLevel1.setVisibility(View.VISIBLE);
+           /* rltLevel1.setVisibility(View.VISIBLE);
             rltLevel2.setVisibility(View.INVISIBLE);
             rltLevel3.setVisibility(View.INVISIBLE);
             rltLevel4.setVisibility(View.INVISIBLE);
             rltLevel5.setVisibility(View.INVISIBLE);
             rltLevel6.setVisibility(View.INVISIBLE);
-            rltLevel7.setVisibility(View.INVISIBLE);
+            rltLevel7.setVisibility(View.INVISIBLE);*/
 
             txtName1.setVisibility(View.VISIBLE);
             txtName2.setVisibility(View.INVISIBLE);
@@ -214,24 +248,24 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
                 Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile1);
             }
 
-            ivProfile2.setVisibility(View.VISIBLE);
-            ivProfile3.setVisibility(View.VISIBLE);
-            ivProfile4.setVisibility(View.VISIBLE);
-            ivProfile5.setVisibility(View.VISIBLE);
-            ivProfile6.setVisibility(View.VISIBLE);
-            ivProfile7.setVisibility(View.VISIBLE);
+            ivProfile2.setVisibility(View.INVISIBLE);
+            ivProfile3.setVisibility(View.INVISIBLE);
+            ivProfile4.setVisibility(View.INVISIBLE);
+            ivProfile5.setVisibility(View.INVISIBLE);
+            ivProfile6.setVisibility(View.INVISIBLE);
+            ivProfile7.setVisibility(View.INVISIBLE);
         }
         else if (level.equals("2"))
         {
           //  txtCongratulations.setVisibility(View.VISIBLE);
             txtLink.setText("you are now 2 connections away");
-            rltLevel1.setVisibility(View.VISIBLE);
+            /*rltLevel1.setVisibility(View.VISIBLE);
             rltLevel2.setVisibility(View.VISIBLE);
             rltLevel3.setVisibility(View.INVISIBLE);
             rltLevel4.setVisibility(View.INVISIBLE);
             rltLevel5.setVisibility(View.INVISIBLE);
             rltLevel6.setVisibility(View.INVISIBLE);
-            rltLevel7.setVisibility(View.INVISIBLE);
+            rltLevel7.setVisibility(View.INVISIBLE);*/
 
             txtName1.setVisibility(View.VISIBLE);
             txtName2.setVisibility(View.VISIBLE);
@@ -263,24 +297,24 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
                 Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile2);
             }
 
-            ivProfile3.setVisibility(View.VISIBLE);
-            ivProfile4.setVisibility(View.VISIBLE);
-            ivProfile5.setVisibility(View.VISIBLE);
-            ivProfile6.setVisibility(View.VISIBLE);
-            ivProfile7.setVisibility(View.VISIBLE);
+            ivProfile3.setVisibility(View.INVISIBLE);
+            ivProfile4.setVisibility(View.INVISIBLE);
+            ivProfile5.setVisibility(View.INVISIBLE);
+            ivProfile6.setVisibility(View.INVISIBLE);
+            ivProfile7.setVisibility(View.INVISIBLE);
         }
         else if (level.equals("3"))
         {
             Utility.freeMemory();
             //txtCongratulations.setVisibility(View.VISIBLE);
             txtLink.setText("you are now 3 connections away");
-            rltLevel1.setVisibility(View.VISIBLE);
+           /* rltLevel1.setVisibility(View.VISIBLE);
             rltLevel2.setVisibility(View.VISIBLE);
             rltLevel3.setVisibility(View.VISIBLE);
             rltLevel4.setVisibility(View.INVISIBLE);
             rltLevel5.setVisibility(View.INVISIBLE);
             rltLevel6.setVisibility(View.INVISIBLE);
-            rltLevel7.setVisibility(View.INVISIBLE);
+            rltLevel7.setVisibility(View.INVISIBLE);*/
 
             txtName1.setVisibility(View.VISIBLE);
             txtName2.setVisibility(View.VISIBLE);
@@ -315,22 +349,22 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
                 Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile3);
             }
 
-            ivProfile4.setVisibility(View.VISIBLE);
-            ivProfile5.setVisibility(View.VISIBLE);
-            ivProfile6.setVisibility(View.VISIBLE);
-            ivProfile7.setVisibility(View.VISIBLE);
+            ivProfile4.setVisibility(View.INVISIBLE);
+            ivProfile5.setVisibility(View.INVISIBLE);
+            ivProfile6.setVisibility(View.INVISIBLE);
+            ivProfile7.setVisibility(View.INVISIBLE);
         }
         else if (level.equals("4"))
         {
            // txtCongratulations.setVisibility(View.VISIBLE);
             txtLink.setText("you are now 4 connections away");
-            rltLevel1.setVisibility(View.VISIBLE);
+            /*rltLevel1.setVisibility(View.VISIBLE);
             rltLevel2.setVisibility(View.VISIBLE);
             rltLevel3.setVisibility(View.VISIBLE);
             rltLevel4.setVisibility(View.VISIBLE);
             rltLevel5.setVisibility(View.INVISIBLE);
             rltLevel6.setVisibility(View.INVISIBLE);
-            rltLevel7.setVisibility(View.INVISIBLE);
+            rltLevel7.setVisibility(View.INVISIBLE);*/
 
             txtName1.setVisibility(View.VISIBLE);
             txtName2.setVisibility(View.VISIBLE);
@@ -368,21 +402,21 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
                 Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile4);
             }
 
-            ivProfile5.setVisibility(View.VISIBLE);
-            ivProfile6.setVisibility(View.VISIBLE);
-            ivProfile7.setVisibility(View.VISIBLE);
+            ivProfile5.setVisibility(View.INVISIBLE);
+            ivProfile6.setVisibility(View.INVISIBLE);
+            ivProfile7.setVisibility(View.INVISIBLE);
         }
         else if (level.equals("5"))
         {
           //  txtCongratulations.setVisibility(View.VISIBLE);
             txtLink.setText("you are now 5 connections away");
-            rltLevel1.setVisibility(View.VISIBLE);
+            /*rltLevel1.setVisibility(View.VISIBLE);
             rltLevel2.setVisibility(View.VISIBLE);
             rltLevel3.setVisibility(View.VISIBLE);
             rltLevel4.setVisibility(View.VISIBLE);
             rltLevel5.setVisibility(View.VISIBLE);
             rltLevel6.setVisibility(View.INVISIBLE);
-            rltLevel7.setVisibility(View.INVISIBLE);
+            rltLevel7.setVisibility(View.INVISIBLE);*/
 
             txtName1.setVisibility(View.VISIBLE);
             txtName2.setVisibility(View.VISIBLE);
@@ -424,20 +458,20 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
                 Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto5).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile5);
             }
 
-            ivProfile6.setVisibility(View.VISIBLE);
-            ivProfile7.setVisibility(View.VISIBLE);
+            ivProfile6.setVisibility(View.INVISIBLE);
+            ivProfile7.setVisibility(View.INVISIBLE);
         }
         else if (level.equals("6"))
         {
           //  txtCongratulations.setVisibility(View.VISIBLE);
             txtLink.setText("you are now 6 connections away");
-            rltLevel1.setVisibility(View.VISIBLE);
+            /*rltLevel1.setVisibility(View.VISIBLE);
             rltLevel2.setVisibility(View.VISIBLE);
             rltLevel3.setVisibility(View.VISIBLE);
             rltLevel4.setVisibility(View.VISIBLE);
             rltLevel5.setVisibility(View.VISIBLE);
             rltLevel6.setVisibility(View.VISIBLE);
-            rltLevel7.setVisibility(View.INVISIBLE);
+            rltLevel7.setVisibility(View.INVISIBLE);*/
 
             txtName1.setVisibility(View.VISIBLE);
             txtName2.setVisibility(View.VISIBLE);
@@ -482,19 +516,19 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
                 Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto6).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile6);
             }
 
-            ivProfile7.setVisibility(View.VISIBLE);
+            ivProfile7.setVisibility(View.INVISIBLE);
         }
         else if (level.equals("7"))
         {
           //  txtCongratulations.setVisibility(View.VISIBLE);
             txtLink.setText("you are now 7 connections away");
-            rltLevel1.setVisibility(View.VISIBLE);
+            /*rltLevel1.setVisibility(View.VISIBLE);
             rltLevel2.setVisibility(View.VISIBLE);
             rltLevel3.setVisibility(View.VISIBLE);
             rltLevel4.setVisibility(View.VISIBLE);
             rltLevel5.setVisibility(View.VISIBLE);
             rltLevel6.setVisibility(View.VISIBLE);
-            rltLevel7.setVisibility(View.VISIBLE);
+            rltLevel7.setVisibility(View.VISIBLE);*/
 
             txtName1.setVisibility(View.VISIBLE);
             txtName2.setVisibility(View.VISIBLE);
@@ -634,6 +668,39 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
     protected void onDestroy() {
         super.onDestroy();
         Utility.freeMemory();
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent go = new Intent(getApplicationContext(), Connect4Activity.class);
+        go.putExtra("level", level);
+        go.putExtra("profile", profile);
+        go.putExtra("profileName",profileName);
+        go.putExtra("connectLevel", connectLevel);
+        go.putExtra("userName1",userName1);
+        go.putExtra("userPhoto1",userPhoto1);
+        go.putExtra("userProfileId1",userProfileId1);
+        go.putExtra("userName2",userName2);
+        go.putExtra("userPhoto2",userPhoto2);
+        go.putExtra("userProfileId2",userProfileId2);
+        go.putExtra("userName3",userName3);
+        go.putExtra("userPhoto3",userPhoto3);
+        go.putExtra("userProfileId3",userProfileId3);
+        go.putExtra("userName4",userName4);
+        go.putExtra("userPhoto4",userPhoto4);
+        go.putExtra("userProfileId4",userProfileId4);
+        go.putExtra("userName5",userName5);
+        go.putExtra("userPhoto5",userPhoto5);
+        go.putExtra("userProfileId5",userProfileId5);
+        go.putExtra("userName6",userName6);
+        go.putExtra("userPhoto6",userPhoto6);
+        go.putExtra("userProfileId6",userProfileId6);
+        go.putExtra("userName7",userName7);
+        go.putExtra("userPhoto7",userPhoto7);
+        go.putExtra("userProfileId7",userProfileId7);
+        startActivity(go);
+        finish();
     }
 
     @Override

@@ -308,6 +308,19 @@
 
                 </RelativeLayout>
 
+                <com.circle8.circleOne.Utils.orkebyTextView
+                    android:id="@+id/txtProfileName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="false"
+                    android:layout_centerVertical="false"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginTop="150dp"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:layout_below="@+id/ivImage1"/>
 
                 <com.circle8.circleOne.Utils.orkebyTextView
                     android:id="@+id/txtName1"
