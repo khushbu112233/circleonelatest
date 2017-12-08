@@ -20,6 +20,7 @@ public class NotificationModel {
     String Shared_UserID = "";
     String Shared_ProfileID = "";
     String Viewed_Flag = "";
+    String listCount = "";
 
     public NotificationModel() {
     }
@@ -134,5 +135,13 @@ public class NotificationModel {
 
     public void setPurpose(String purpose) {
         Purpose = purpose;
+    }
+
+    public String getListCount() {
+        return listCount;
+    }
+
+    public void setListCount(String listCount) {
+        this.listCount = listCount;
     }
 }

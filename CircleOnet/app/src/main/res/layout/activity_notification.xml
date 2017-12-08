@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -17,7 +18,9 @@
         android:id="@+id/listNotification"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="fill" />
+        android:gravity="fill"
+        android:layout_above="@+id/rlLoadMore"
+        android:stackFromBottom="true"/>
 
     <RelativeLayout
         android:id="@+id/rlProgressDialog"
@@ -79,6 +82,30 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="0.3"/>
         </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal"
+        android:id="@+id/rlLoadMore"
+        android:padding="3dp"
+        android:visibility="gone">
+        <ProgressBar
+            android:id="@+id/more_progress"
+            android:layout_width="35dp"
+            android:layout_height="35dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/more_progress"
+            android:padding="5dp"
+            android:text="Loading More..."
+            android:textColor="@color/colorPrimary"
+            android:textSize="15sp"
+            android:layout_marginLeft="10dp"/>
     </RelativeLayout>
 
 </RelativeLayout>

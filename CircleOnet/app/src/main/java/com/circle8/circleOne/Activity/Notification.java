@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Adapter.NotificationAdapter;
+import com.circle8.circleOne.Fragments.List4Fragment;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.NotificationModel;
 import com.circle8.circleOne.R;
@@ -56,6 +58,15 @@ public class Notification extends AppCompatActivity
     public static TextView tvProgressing ;
     public static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
 
+    static ArrayList<NotificationModel> allTagsList = new ArrayList<>();
+    static RelativeLayout rlLoadMore ;
+    static int numberCount, listSize;
+    public static int pageno = 1 ;
+    static String counts = "0" ;
+
+    public static String progressStatus = "FIRST";
+    public static String comeFirst = "Yes" ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -63,6 +74,7 @@ public class Notification extends AppCompatActivity
         setContentView(R.layout.activity_notification);
 
         mContext = Notification.this ;
+        pageno = 1;
 
         final ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -70,17 +82,22 @@ public class Notification extends AppCompatActivity
         getSupportActionBar().setShowHideAnimationEnabled(false);
         textView = (TextView) findViewById(R.id.mytext);
         imgLogo = (ImageView) findViewById(R.id.imgLogo);
-        textView.setText("Notifications - 0");
         ImageView drawer = (ImageView) findViewById(R.id.drawer);
         drawer.setVisibility(View.GONE);
         imgLogo.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
 
+        textView.setText("Notifications - 0");
+
         listNotification = (ListView) findViewById(R.id.listNotification);
+
         loginSession = new LoginSession(getApplicationContext());
         HashMap<String, String> user = loginSession.getUserDetails();
         UserId = user.get(LoginSession.KEY_USERID);
+//        Toast.makeText(getApplicationContext(),UserId,Toast.LENGTH_SHORT).show();
+
         allTags = new ArrayList<>();
 
+        rlLoadMore = (RelativeLayout)findViewById(R.id.rlLoadMore);
         rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
         tvProgressing = (TextView)findViewById(R.id.txtProgressing);
         ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
@@ -137,8 +154,8 @@ public class Notification extends AppCompatActivity
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("numofrecords", "30" );
-            jsonObject.accumulate("pageno", "1" );
+            jsonObject.accumulate("numofrecords", "10" );
+            jsonObject.accumulate("pageno", pageno );
             jsonObject.accumulate("userid", UserId );
 
             // 4. convert JSONObject to JSON to String
@@ -174,6 +191,7 @@ public class Notification extends AppCompatActivity
             Log.d("InputStream", e.getLocalizedMessage());
         }
 
+        pageno++ ;
         // 11. return result
         return result;
     }
@@ -205,8 +223,16 @@ public class Notification extends AppCompatActivity
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
 
-            String loading = "Notification" ;
-            CustomProgressDialog(loading);
+            if (progressStatus.equalsIgnoreCase("LOAD MORE"))
+            {
+
+            }
+            else
+            {
+                String loading = "Notification" ;
+                CustomProgressDialog(loading);
+            }
+
         }
 
         @Override
@@ -222,12 +248,30 @@ public class Notification extends AppCompatActivity
             rlProgressDialog.setVisibility(View.GONE);
             try
             {
-                if (result != null) {
+                if (result != null)
+                {
                     JSONObject jsonObject = new JSONObject(result);
+                    counts = jsonObject.getString("Count");
                     JSONArray jsonArray = jsonObject.getJSONArray("notification");
+
                     // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
 
-                    textView.setText("Notifications - "+jsonArray.length());
+                    if (pageno == 2)
+                    {
+                        textView.setText("Notifications - "+jsonObject.getString("Count"));
+                    }
+
+                    if (counts.equals("0") || counts == null)
+                    {
+                        numberCount = 0 ;
+                    }
+                    else
+                    {
+                        numberCount = Integer.parseInt(counts);
+                    }
+
+                    rlLoadMore.setVisibility(View.GONE);
+
                     for (int i = 0; i < jsonArray.length(); i++)
                     {
                         JSONObject object = jsonArray.getJSONObject(i);
@@ -247,11 +291,49 @@ public class Notification extends AppCompatActivity
                         nfcModelTag.setShared_UserID(object.getString("Shared_UserID"));
                         nfcModelTag.setShared_ProfileID(object.getString("Shared_ProfileID"));
                         nfcModelTag.setViewed_Flag(object.getString("Viewed_Flag"));
+                        nfcModelTag.setListCount(counts);
                         allTags.add(nfcModelTag);
                     }
 
-                    notificationAdapter = new NotificationAdapter(mContext, allTags);
-                    listNotification.setAdapter(notificationAdapter);
+                    listSize = allTags.size();
+
+                    /*notificationAdapter = new NotificationAdapter(mContext, allTags);
+                    listNotification.setAdapter(notificationAdapter);*/
+
+                    GetData(mContext);
+
+                    listNotification.setOnScrollListener(new AbsListView.OnScrollListener()
+                    {
+                        @Override
+                        public void onScrollStateChanged(AbsListView view, int scrollState)
+                        {
+                            // TODO Auto-generated method stub
+
+                            progressStatus = "LOAD MORE";
+
+                            int threshold = 1;
+                            int count = listNotification.getCount();
+
+                            if (scrollState == SCROLL_STATE_IDLE)
+                            {
+                                if (listSize <= numberCount)
+                                {
+                                    if (listNotification.getLastVisiblePosition() >= count - threshold)
+                                    {
+                                        rlLoadMore.setVisibility(View.VISIBLE);
+                                        // Execute LoadMoreDataTask AsyncTask
+                                        new HttpAsyncTask().execute(Utility.BASE_URL+"Notification");
+                                    }
+                                }
+                                else {  }
+                            }
+                        }
+                        @Override
+                        public void onScroll(AbsListView view, int firstVisibleItem,
+                                             int visibleItemCount, int totalItemCount) {
+                            // TODO Auto-generated method stub
+                        }
+                    });
                 }
                 else
                 {
@@ -298,6 +380,34 @@ public class Notification extends AppCompatActivity
                 }
             }, i);
         }
+    }
+
+    public static void GetData(Context context)
+    {
+        allTagsList.clear();
+
+        for (NotificationModel reTag : allTags)
+        {
+            NotificationModel nfcModelTag = new NotificationModel();
+            nfcModelTag.setFriendUserID(reTag.getFriendUserID());
+            nfcModelTag.setFriendProfileID(reTag.getFriendProfileID());
+            nfcModelTag.setMyUserID(reTag.getMyUserID());
+            nfcModelTag.setMyProfileID(reTag.getMyProfileID());
+            nfcModelTag.setFirstName(reTag.getFirstName());
+            nfcModelTag.setLastName(reTag.getLastName());
+            nfcModelTag.setUserPhoto(reTag.getUserPhoto());
+            nfcModelTag.setPurpose(reTag.getPurpose());
+            nfcModelTag.setNotificationID(reTag.getNotificationID());
+            nfcModelTag.setStatus(reTag.getStatus());
+            nfcModelTag.setShared_UserID(reTag.getShared_UserID());
+            nfcModelTag.setShared_ProfileID(reTag.getShared_ProfileID());
+            nfcModelTag.setViewed_Flag(reTag.getViewed_Flag());
+            nfcModelTag.setListCount(reTag.getListCount());
+            allTagsList.add(nfcModelTag);
+        }
+
+        notificationAdapter = new NotificationAdapter(mContext, allTagsList);
+        listNotification.setAdapter(notificationAdapter);
     }
 
 }

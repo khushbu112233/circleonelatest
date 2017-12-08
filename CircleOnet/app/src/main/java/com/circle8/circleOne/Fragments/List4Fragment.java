@@ -314,7 +314,6 @@ public class List4Fragment extends Fragment
                 Utility.freeMemory();
                 Utility.deleteCache(getContext());
 
-
                 if (searchText.getText().toString().length() == 0)
                 {
                     pageno = 1;
@@ -710,8 +709,8 @@ public class List4Fragment extends Fragment
 
                     listSize = allTaggs.size();
 
-                    listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-
+                    listView.setOnScrollListener(new AbsListView.OnScrollListener()
+                    {
                         @Override
                         public void onScrollStateChanged(AbsListView view, int scrollState)
                         {
@@ -722,10 +721,12 @@ public class List4Fragment extends Fragment
                             int threshold = 1;
                             int count = listView.getCount();
 
-                            if (scrollState == SCROLL_STATE_IDLE) {
+                            if (scrollState == SCROLL_STATE_IDLE)
+                            {
                                 if (listSize <= numberCount)
                                 {
-                                    if (listView.getLastVisiblePosition() >= count - threshold) {
+                                    if (listView.getLastVisiblePosition() >= count - threshold)
+                                    {
                                         rlLoadMore.setVisibility(View.VISIBLE);
                                         // Execute LoadMoreDataTask AsyncTask
                                         new HttpAsyncTask().execute(Utility.BASE_URL+SortAndFilterOption.CardListApi);
@@ -742,8 +743,8 @@ public class List4Fragment extends Fragment
                             // TODO Auto-generated method stub
 
                         }
-
                     });
+
                 } else {
                     Toast.makeText(mContext, "Not able to load Cards..", Toast.LENGTH_LONG).show();
                 }
@@ -1034,7 +1035,8 @@ public class List4Fragment extends Fragment
             nfcModel.add(nfcModelTag);
         }*/
 
-        for (FriendConnection reTag : allTaggs) {
+        for (FriendConnection reTag : allTaggs)
+        {
             FriendConnection nfcModelTag = new FriendConnection();
 //            nfcModelTag.setId(reTag.getId());
             nfcModelTag.setName(reTag.getName());
