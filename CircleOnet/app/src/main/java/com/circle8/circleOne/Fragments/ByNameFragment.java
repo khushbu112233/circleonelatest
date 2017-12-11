@@ -275,7 +275,6 @@ public class ByNameFragment extends Fragment
                     {
                         numberCount = Integer.parseInt(counts);
                     }
-
                     rlLoadMore.setVisibility(View.GONE);
 
                     /*connectTags.clear();
