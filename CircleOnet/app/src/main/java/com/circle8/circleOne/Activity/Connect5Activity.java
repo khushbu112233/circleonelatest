@@ -245,7 +245,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             }
             else
             {
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile1);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).placeholder(R.drawable.usr2).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile1);
             }
 
             ivProfile2.setVisibility(View.INVISIBLE);

@@ -216,7 +216,6 @@ public class NewCardRequestActivity1 extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-
                 if (PhysicalCardTypeID.equals(""))
                 {
                     Toast.makeText(getApplicationContext(), "Please select card type", Toast.LENGTH_LONG).show();
@@ -244,27 +243,29 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                         }
                     }
 
-
-                    if (amount == 0) {
+                    if (amount == 0)
+                    {
                         new HttpAsyncRequestTask().execute(Utility.BASE_URL + "Physical_Card/Order");
-                    } else {
-
-
-                        try {
+                    }
+                    else
+                    {
+                        try
+                        {
                             stripe = new Stripe("pk_test_6fZCC6Gu2kwYLUQxJhGte65l");
-                        } catch (AuthenticationException e) {
+                        }
+                        catch (AuthenticationException e) {
                             e.printStackTrace();
                         }
 
-               /* alertDialog = new AlertDialog.Builder(NewCardRequestActivity1.this).create();
-                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View dialogView = inflater.inflate(R.layout.activity_stripe_1, null);
-                cardNumberField = (TextView) dialogView.findViewById(R.id.cardNumber);
-                monthField = (TextView) dialogView.findViewById(R.id.month);
-                yearField = (TextView) dialogView.findViewById(R.id.year);
-                cvcField = (TextView) dialogView.findViewById(R.id.cvc);
-                alertDialog.setView(dialogView);
-                alertDialog.show();*/
+                           /* alertDialog = new AlertDialog.Builder(NewCardRequestActivity1.this).create();
+                            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                            View dialogView = inflater.inflate(R.layout.activity_stripe_1, null);
+                            cardNumberField = (TextView) dialogView.findViewById(R.id.cardNumber);
+                            monthField = (TextView) dialogView.findViewById(R.id.month);
+                            yearField = (TextView) dialogView.findViewById(R.id.year);
+                            cvcField = (TextView) dialogView.findViewById(R.id.cvc);
+                            alertDialog.setView(dialogView);
+                            alertDialog.show();*/
 
                         // new payment mode
                         alertDialog = new AlertDialog.Builder(NewCardRequestActivity1.this).create();

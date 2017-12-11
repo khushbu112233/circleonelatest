@@ -136,7 +136,7 @@
                     android:id="@+id/tvRewardName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="CircleOne Reward Points"
+                    android:text="CIRCLEONE REWARD POINTS"
                     android:textAlignment="textStart"
                     android:textColor="@android:color/white"
                     android:textSize="13dp"

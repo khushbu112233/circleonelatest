@@ -809,12 +809,17 @@ public class EditProfileActivity extends AppCompatActivity implements
                     }
                 }
 
-                if (!edtFax1.getText().toString().equals("")) {
-                    try {
-                        if (ccp5.getSelectedCountryCodeWithPlus() != null) {
+                if (!edtFax1.getText().toString().equals(""))
+                {
+                    try
+                    {
+                        if (ccp5.getSelectedCountryCodeWithPlus() != null)
+                        {
                             Fax1 = ccp5.getSelectedCountryCodeWithPlus() + " " + edtFax1.getText().toString();
                         }
-                    } catch (Exception e) {
+                    }
+                    catch (Exception e)
+                    {
                         Fax1 = ccp5.getDefaultCountryCodeWithPlus() + " " + edtFax1.getText().toString();
                     }
                 }

@@ -387,7 +387,7 @@ public class ConnectActivity extends AppCompatActivity
                 if (result) {
                     //Boolean aBoolean = contactExists(getApplicationContext(), txtMob.getText().toString());
 
-                        TranslateAnimation slide1 = new TranslateAnimation(0, -(motionLength), 0, 0);
+                        TranslateAnimation slide1 = new TranslateAnimation(0, -(motionLength+22), 0, 0);
                         slide1.setDuration(1000);
                         ivConnectImg.startAnimation(slide1);
 
@@ -402,14 +402,13 @@ public class ConnectActivity extends AppCompatActivity
                                 new HttpAsyncAddFriendTask().execute(Utility.BASE_URL+"FriendConnection_Operation");
 
                             }
-                        }, 1600);
+                        }, 1700);
                         // Second Things
                         ivAddRound.setImageResource(R.drawable.round_blue);
                         tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
                        // tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
                         tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted));
                     }
-
             }
         });
 
@@ -430,7 +429,7 @@ public class ConnectActivity extends AppCompatActivity
 
                     if (aBoolean == true)
                     {
-                        TranslateAnimation slide1 = new TranslateAnimation(0, motionLength, 0, 0);
+                        TranslateAnimation slide1 = new TranslateAnimation(0, (motionLength+22), 0, 0);
                         slide1.setDuration(1000);
                         ivConnectImg.startAnimation(slide1);
 
@@ -449,7 +448,7 @@ public class ConnectActivity extends AppCompatActivity
                                 startActivity(go);
                                // finish();
                             }
-                        }, 1600);
+                        }, 1700);
                         // Second Things
                         ivConnectRound.setImageResource(R.drawable.round_blue);
                         tvConnect.setTextColor(getResources().getColor(R.color.colorPrimary));
@@ -458,7 +457,7 @@ public class ConnectActivity extends AppCompatActivity
                     }
                     else
                     {
-                        TranslateAnimation slide1 = new TranslateAnimation(0, motionLength, 0, 0);
+                        TranslateAnimation slide1 = new TranslateAnimation(0, motionLength+22, 0, 0);
                         slide1.setDuration(1000);
                         ivConnectImg.startAnimation(slide1);
 
