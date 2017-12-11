@@ -356,7 +356,7 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
             dialog.show();
             dialog.setCancelable(false);*/
 
-            String loading = "Deleting Circle Member" ;
+            String loading = "Deleting circle member" ;
             GroupDetailActivity.CustomProgressDialog(loading);
         }
 

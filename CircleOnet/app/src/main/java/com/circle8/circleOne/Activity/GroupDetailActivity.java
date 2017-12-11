@@ -704,7 +704,7 @@ public class GroupDetailActivity extends AppCompatActivity
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
 
-            String loading = "Deleting Circle" ;
+            String loading = "Deleting circle" ;
             CustomProgressDialog(loading);
         }
 
@@ -884,7 +884,7 @@ public class GroupDetailActivity extends AppCompatActivity
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
 
-            String loading = "Creating Circle" ;
+            String loading = "Creating circle" ;
             CustomProgressDialog(loading);
         }
 
@@ -1445,7 +1445,7 @@ public class GroupDetailActivity extends AppCompatActivity
 //            dialog.show();
             dialog.setCancelable(false);
 
-            String loading = "Deleting Circle Member" ;
+            String loading = "Deleting circle member" ;
             CustomProgressDialog(loading);
         }
 

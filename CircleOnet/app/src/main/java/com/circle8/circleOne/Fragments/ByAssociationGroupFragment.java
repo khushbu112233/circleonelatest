@@ -198,7 +198,7 @@ public class ByAssociationGroupFragment extends Fragment
             }
             else
             {
-                String loading = "Searching Records" ;
+                String loading = "Searching records" ;
                 CustomProgressDialog(loading);
             }
         }
@@ -220,7 +220,7 @@ public class ByAssociationGroupFragment extends Fragment
             {
                 if(result == "")
                 {
-                    Toast.makeText(getContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Slow Internet Connection", Toast.LENGTH_LONG).show();
                 }
                 else
                 {

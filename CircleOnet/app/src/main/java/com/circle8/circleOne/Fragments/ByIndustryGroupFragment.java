@@ -189,7 +189,7 @@ public class ByIndustryGroupFragment extends Fragment
             }
             else
             {
-                String loading = "Searching Records" ;
+                String loading = "Searching records" ;
                 CustomProgressDialog(loading);
             }
         }

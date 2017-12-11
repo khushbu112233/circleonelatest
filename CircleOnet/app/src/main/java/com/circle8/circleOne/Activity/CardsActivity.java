@@ -1947,7 +1947,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         protected void onPreExecute() {
             super.onPreExecute();
             dialog = new ProgressDialog(CardsActivity.this);
-            dialog.setMessage("Adding Records...");
+            dialog.setMessage("Adding records...");
             //dialog.setTitle("Saving Reminder");
          //   dialog.show();
             dialog.setCancelable(false);
@@ -2014,7 +2014,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         protected void onPreExecute() {
             super.onPreExecute();
             dialog = new ProgressDialog(CardsActivity.this);
-            dialog.setMessage("Adding Records...");
+            dialog.setMessage("Adding records...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
             dialog.setCancelable(false);

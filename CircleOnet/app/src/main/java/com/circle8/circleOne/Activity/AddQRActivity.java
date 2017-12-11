@@ -364,7 +364,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
         protected void onPreExecute() {
             super.onPreExecute();
             dialog = new ProgressDialog(AddQRActivity.this);
-            dialog.setMessage("Adding Records...");
+            dialog.setMessage("Adding records...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
             dialog.setCancelable(false);

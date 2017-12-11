@@ -1190,7 +1190,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             dialog.show();
             dialog.setCancelable(false);*/
 
-            String loading = "Upload Photo" ;
+            String loading = "Upload photo" ;
             CustomProgressDialog(loading);
         }
 
@@ -1311,7 +1311,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             dialog.show();
             dialog.setCancelable(false);*/
 
-            String loading = "Update Registering" ;
+            String loading = "Update registering" ;
             CustomProgressDialog(loading);
         }
 
@@ -1462,7 +1462,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             dialog.show();
             dialog.setCancelable(false);*/
 
-            String loading = "My Account" ;
+            String loading = "My account" ;
             CustomProgressDialog(loading);
         }
 
@@ -1632,7 +1632,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
 
-            String loading = "My Account" ;
+            String loading = "My account" ;
             CustomProgressDialog(loading);
         }
 

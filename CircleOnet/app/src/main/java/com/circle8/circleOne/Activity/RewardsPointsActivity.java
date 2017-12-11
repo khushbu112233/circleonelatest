@@ -452,7 +452,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
             dialog.show();
             dialog.setCancelable(false);*/
 
-            String loading = "Get All" ;
+            String loading = "Get all" ;
             CustomProgressDialog(loading);
         }
 
@@ -655,7 +655,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
             dialog.show();
             dialog.setCancelable(false);*/
 
-            String loading = "Get Product Category" ;
+            String loading = "Get product category" ;
             CustomProgressDialog(loading);
         }
 
@@ -756,7 +756,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
             dialog.show();
             dialog.setCancelable(false);*/
 
-            String loading = "Get Products" ;
+            String loading = "Get products" ;
             CustomProgressDialog(loading);
         }
 
@@ -864,7 +864,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
             dialog.show();
             dialog.setCancelable(false);*/
 
-            String loading = "Get Product By Category" ;
+            String loading = "Get product by category" ;
             CustomProgressDialog(loading);
         }
 
@@ -1003,7 +1003,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
             dialog.show();
             dialog.setCancelable(false);*/
 
-            String loading = "Get Balance" ;
+            String loading = "Get balance" ;
             CustomProgressDialog(loading);
         }
 

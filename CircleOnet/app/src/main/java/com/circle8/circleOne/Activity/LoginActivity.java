@@ -1064,7 +1064,7 @@ public class LoginActivity extends AppCompatActivity implements
             dialog.show();
             dialog.setCancelable(false);*/
 
-            String loading = "Logging In";
+            String loading = "Logging in";
             CustomProgressDialog(loading);
         }
 
@@ -1866,7 +1866,7 @@ public class LoginActivity extends AppCompatActivity implements
             progress.setMessage("Logging in...");
             progress.setCanceledOnTouchOutside(false);
             progress.show();*/
-            String loading = "Logging In";
+            String loading = "Logging in";
             CustomProgressDialog(loading);
             linkededinApiHelper();
         }
@@ -2024,7 +2024,7 @@ public class LoginActivity extends AppCompatActivity implements
             mProgressDialog.setIndeterminate(true);
         }
         mProgressDialog.show();*/
-        String loading = "Google Login";
+        String loading = "Google login";
         CustomProgressDialog(loading);
     }
 
@@ -2193,7 +2193,7 @@ public class LoginActivity extends AppCompatActivity implements
             //dialog.setTitle("Saving Reminder");
             dialog.show();
             dialog.setCancelable(false);*/
-            String loading = "Logging In";
+            String loading = "Logging in";
             CustomProgressDialog(loading);
         }
 

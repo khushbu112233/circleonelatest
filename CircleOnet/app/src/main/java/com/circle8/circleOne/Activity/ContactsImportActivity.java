@@ -309,7 +309,7 @@ public class ContactsImportActivity extends AppCompatActivity
         arrayListPhoneName = new ArrayList<>();
         arrayListPhoneNumber = new ArrayList<>();
 
-        String loading = "Loading Contacts" ;
+        String loading = "Loading contacts" ;
         CustomProgressDialog(loading);
 
         Cursor cursor = cntx.getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
@@ -411,7 +411,7 @@ public class ContactsImportActivity extends AppCompatActivity
             dialog.show();
             dialog.setCancelable(false);*/
 
-            String loading = "Sending Request" ;
+            String loading = "Sending request" ;
             CustomProgressDialog(loading);
         }
 

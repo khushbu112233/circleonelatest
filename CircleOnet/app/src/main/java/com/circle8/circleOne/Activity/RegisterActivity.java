@@ -1348,7 +1348,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         protected void onPreExecute() {
             super.onPreExecute();
             dialog = new ProgressDialog(RegisterActivity.this);
-            dialog.setMessage("Verifying..please Check your Mail..");
+            dialog.setMessage("Verifying..please Check your mail..");
             //dialog.setTitle("Saving Reminder");
            // dialog.show();
             dialog.setCancelable(false);

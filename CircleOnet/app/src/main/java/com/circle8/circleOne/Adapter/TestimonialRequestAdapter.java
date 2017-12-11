@@ -336,7 +336,7 @@ public class TestimonialRequestAdapter extends BaseSwipeAdapter
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
 
-            String loading = "Deleting Records";
+            String loading = "Deleting records";
             TestimonialRequest.CustomProgressDialog(loading);
 
         }
@@ -357,7 +357,7 @@ public class TestimonialRequestAdapter extends BaseSwipeAdapter
             {
                 if(result == "")
                 {
-                    Toast.makeText(context, "Check Internet Connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Slow Internet Connection", Toast.LENGTH_LONG).show();
                 }
                 else
                 {

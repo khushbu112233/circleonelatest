@@ -713,24 +713,24 @@ public class List1Fragment extends Fragment
 //            rlProgressDialog.setVisibility(View.VISIBLE);
             if (progressStatus.equalsIgnoreCase("FIRST"))
             {
-                String loading = "Fetching Cards" ;
+                String loading = "Fetching cards" ;
                 CustomProgressDialog(loading);
 
                 progressStatus = "SECOND";
             }
             else if (progressStatus.equalsIgnoreCase("SECOND"))
             {
-                String loading = "Fetching Cards" ;
+                String loading = "Fetching cards" ;
                 CustomProgressDialog(loading);
             }
             else if (progressStatus.equalsIgnoreCase("DELETE"))
             {
-                String loading = "Refreshing Cards" ;
+                String loading = "Refreshing cards" ;
                 CustomProgressDialog(loading);
             }
             else if (progressStatus.equalsIgnoreCase("FILTER"))
             {
-                String loading = "Fetching Cards" ;
+                String loading = "Fetching cards" ;
                 CustomProgressDialog(loading);
             }
             else
@@ -889,7 +889,7 @@ public class List1Fragment extends Fragment
         protected void onPreExecute() {
 
             progressBar = new ProgressDialog(getContext());
-            progressBar.setMessage("Loading Data..");
+            progressBar.setMessage("Loading data..");
             progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progressBar.setIndeterminate(true);
             progressBar.setCancelable(false);
@@ -1172,7 +1172,7 @@ public class List1Fragment extends Fragment
             {
                 if (result == "")
                 {
-                    Toast.makeText(getContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Slow Internet Connection", Toast.LENGTH_LONG).show();
                 }
                 else
                 {

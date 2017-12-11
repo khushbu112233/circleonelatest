@@ -278,7 +278,7 @@ public class GroupTag extends AppCompatActivity
         protected void onPreExecute() {
             super.onPreExecute();
             dialog = new ProgressDialog(GroupTag.this);
-            dialog.setMessage("Creating Group...");
+            dialog.setMessage("Creating group...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
             dialog.setCancelable(false);
@@ -324,7 +324,7 @@ public class GroupTag extends AppCompatActivity
         protected void onPreExecute() {
             super.onPreExecute();
             dialog = new ProgressDialog(GroupTag.this);
-            dialog.setMessage("Fetching Groups...");
+            dialog.setMessage("Fetching groups...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
             dialog.setCancelable(false);

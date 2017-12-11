@@ -169,7 +169,7 @@ public class WriteTestimonialActivity extends AppCompatActivity implements View.
             dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
-            String loading = "Writing Testimonial";
+            String loading = "Writing testimonial";
             CustomProgressDialog(loading);
         }
 

@@ -255,7 +255,7 @@ public class NewCardRequestActivity extends AppCompatActivity
             dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
-            String loading = "Fetching Profiles" ;
+            String loading = "Fetching profiles" ;
             CustomProgressDialog(loading);
         }
 

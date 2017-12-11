@@ -159,7 +159,7 @@ public class TestimonialActivity extends AppCompatActivity
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
 
-            String loading = "Fetching Testimonial" ;
+            String loading = "Fetching testimonial" ;
             CustomProgressDialog(loading);
         }
 

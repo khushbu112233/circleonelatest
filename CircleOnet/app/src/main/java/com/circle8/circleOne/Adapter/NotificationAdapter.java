@@ -693,7 +693,7 @@ public class NotificationAdapter extends BaseAdapter
             dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
-            String loading = "Please Wait";
+            String loading = "Please wait";
             Notification.CustomProgressDialog(loading);
         }
 
@@ -711,7 +711,7 @@ public class NotificationAdapter extends BaseAdapter
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result.equals("")) {
-                    Toast.makeText(activity, "Check Internet Connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, "Slow Internet Connection", Toast.LENGTH_LONG).show();
                 } else {
                     JSONObject response = new JSONObject(result);
                     String message = response.getString("message");
@@ -756,7 +756,7 @@ public class NotificationAdapter extends BaseAdapter
             dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
-            String loading = "Please Wait";
+            String loading = "Please wait";
             Notification.CustomProgressDialog(loading);
         }
 
@@ -774,7 +774,7 @@ public class NotificationAdapter extends BaseAdapter
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result.equals("")) {
-                    Toast.makeText(activity, "Check Internet Connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, "Slow Internet Connection", Toast.LENGTH_LONG).show();
                 } else {
                     JSONObject response = new JSONObject(result);
                     String message = response.getString("message");
@@ -812,7 +812,7 @@ public class NotificationAdapter extends BaseAdapter
             dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
-            String loading = "Writing Testimonial";
+            String loading = "Writing testimonial";
             Notification.CustomProgressDialog(loading);
         }
 
@@ -833,7 +833,7 @@ public class NotificationAdapter extends BaseAdapter
             {
                 if (result.equals(""))
                 {
-                    Toast.makeText(activity, "Check Internet Connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, "Slow Internet Connection", Toast.LENGTH_LONG).show();
                 }
                 else
                 {
@@ -891,7 +891,7 @@ public class NotificationAdapter extends BaseAdapter
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result.equals("")) {
-                    Toast.makeText(activity, "Check Internet Connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, "Slow Internet Connection", Toast.LENGTH_LONG).show();
                 } else {
                     JSONObject response = new JSONObject(result);
                     String message = response.getString("message");
@@ -947,7 +947,7 @@ public class NotificationAdapter extends BaseAdapter
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result.equals("")) {
-                    Toast.makeText(activity, "Check Internet Connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, "Slow Internet Connection", Toast.LENGTH_LONG).show();
                 } else {
                     JSONObject response = new JSONObject(result);
                     String message = response.getString("message");
@@ -985,7 +985,7 @@ public class NotificationAdapter extends BaseAdapter
             dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
-            String loading = "Accepting Friend Request";
+            String loading = "Accepting friend request";
             Notification.CustomProgressDialog(loading);
         }
 
@@ -1004,7 +1004,7 @@ public class NotificationAdapter extends BaseAdapter
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result.equals("")) {
-                    Toast.makeText(activity, "Check Internet Connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, "Slow Internet Connection", Toast.LENGTH_LONG).show();
                 } else {
                     JSONObject response = new JSONObject(result);
                     String message = response.getString("message");

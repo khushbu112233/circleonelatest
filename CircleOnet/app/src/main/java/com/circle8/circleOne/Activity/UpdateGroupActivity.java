@@ -333,7 +333,7 @@ public class UpdateGroupActivity extends AppCompatActivity
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
 
-            String loading = "Updating Circle" ;
+            String loading = "Updating circle" ;
             CustomProgressDialog(loading);
         }
 

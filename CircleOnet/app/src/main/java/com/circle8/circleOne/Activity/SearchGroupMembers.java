@@ -602,7 +602,7 @@ public class SearchGroupMembers extends AppCompatActivity
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
 
-            String loading = "Adding Friend" ;
+            String loading = "Adding friend" ;
             CustomProgressDialog(loading);
         }
 

@@ -38,6 +38,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -176,6 +177,8 @@ public class ProfileFragment extends Fragment
     static TextView txtAssociationList, txtEventsListFinal;
     String Q_ID = "";
 
+    AlertDialog QR_AlertDialog ;
+
     public static Activity mContext ;
 
     public ProfileFragment() {
@@ -249,7 +252,7 @@ public class ProfileFragment extends Fragment
         txtAssociationList = (TextView) view.findViewById(R.id.txtAssociationList);
         txtEventsListFinal = (TextView) view.findViewById(R.id.txtEventsListfinal);
         progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Generating Qr Code...");
+        progressDialog.setMessage("Generating Qr code...");
         progressDialog.setCancelable(false);
         allTags = new ArrayList<>();
         referralCodeSession = new ReferralCodeSession(getContext());
@@ -1057,9 +1060,10 @@ public class ProfileFragment extends Fragment
 
                 //                    barName = encrypt(TestimonialProfileId, secretKey);
 
-                AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                QR_AlertDialog = new AlertDialog.Builder(getActivity()).create();
                 LayoutInflater inflater = getActivity().getLayoutInflater();
                 final View dialogView = inflater.inflate(R.layout.person_qrcode, null);
+                FrameLayout fl_QRFrame = (FrameLayout)dialogView.findViewById(R.id.fl_QrFrame);
                 TextView tvBarName = (TextView)dialogView.findViewById(R.id.tvBarName);
                 ImageView ivBarImage = (ImageView)dialogView.findViewById(R.id.ivBarImage);
 //                tvBarName.setText(barName);
@@ -1067,14 +1071,22 @@ public class ProfileFragment extends Fragment
 
                 ColorDrawable dialogColor = new ColorDrawable(getResources().getColor(R.color.colorPrimary));
                 dialogColor.setAlpha(70);
-                alertDialog.getWindow().setBackgroundDrawable(dialogColor);
+                QR_AlertDialog.getWindow().setBackgroundDrawable(dialogColor);
                 // alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
                 tvBarName.setText(tvPersonName.getText().toString());
 //                    bitmap = TextToImageEncode(barName);
                 ivBarImage.setImageBitmap(bitmap);
-                alertDialog.setView(dialogView);
-                alertDialog.show();
 
+                fl_QRFrame.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view)
+                    {
+                        QR_AlertDialog.dismiss();
+                    }
+                });
+
+                QR_AlertDialog.setView(dialogView);
+                QR_AlertDialog.show();
             }
         });
 
@@ -1364,7 +1376,7 @@ public class ProfileFragment extends Fragment
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
 
-            String loading = "Fetching Profile" ;
+            String loading = "Fetching profile" ;
             CustomProgressDialog(loading);
         }
 

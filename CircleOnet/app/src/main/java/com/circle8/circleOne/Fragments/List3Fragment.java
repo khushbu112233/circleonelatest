@@ -523,7 +523,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
             {
                 if(result == "")
                 {
-                    Toast.makeText(getContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Slow Internet Connection", Toast.LENGTH_LONG).show();
                 }
                 else
                 {
@@ -639,7 +639,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
         {
             super.onPreExecute();
             dialog = new ProgressDialog(mContext);
-            dialog.setMessage("Fetching Cards...");
+            dialog.setMessage("Fetching cards...");
             //dialog.setTitle("Saving Reminder");
             dialog.setCancelable(false);
             /*if(comeAtTime.equalsIgnoreCase("FIRST"))
@@ -656,7 +656,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
 
             if (progressStatus.equalsIgnoreCase("FIRST"))
             {
-                String loading = "Fetching Cards" ;
+                String loading = "Fetching cards" ;
                 CustomProgressDialog(loading);
 
                 progressStatus = "SECOND";
@@ -671,7 +671,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
             }
             else if (progressStatus.equalsIgnoreCase("DELETE"))
             {
-                String loading = "Refreshing Cards" ;
+                String loading = "Refreshing cards" ;
                 CustomProgressDialog(loading);
             }
             else

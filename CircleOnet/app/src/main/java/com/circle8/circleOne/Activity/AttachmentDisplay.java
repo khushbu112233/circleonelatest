@@ -12,8 +12,8 @@ import android.widget.Toast;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
 
-public class AttachmentDisplay extends AppCompatActivity {
-
+public class AttachmentDisplay extends AppCompatActivity
+{
     private WebView webView;
     String url;
     Boolean net_check = false;

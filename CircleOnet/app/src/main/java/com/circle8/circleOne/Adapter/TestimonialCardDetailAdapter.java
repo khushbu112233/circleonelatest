@@ -202,7 +202,7 @@ public class TestimonialCardDetailAdapter extends BaseSwipeAdapter
             dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
-            String loading = "Deleting Records";
+            String loading = "Deleting records";
             TestimonialActivity.CustomProgressDialog(loading);
         }
 
@@ -222,7 +222,7 @@ public class TestimonialCardDetailAdapter extends BaseSwipeAdapter
             {
                 if(result == "")
                 {
-                    Toast.makeText(context, "Check Internet Connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Slow Internet Connection", Toast.LENGTH_LONG).show();
                 }
                 else
                 {

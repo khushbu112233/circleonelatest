@@ -408,7 +408,7 @@ public class GridViewAdapter extends BaseSwipeAdapter
             dialog.show();
             dialog.setCancelable(false);*/
 
-            String loading = "Deleting Records";
+            String loading = "Deleting records";
             List2Fragment.CustomProgressDialog(loading);
         }
 
@@ -428,7 +428,7 @@ public class GridViewAdapter extends BaseSwipeAdapter
             {
                 if(result == "")
                 {
-                    Toast.makeText(context, "Check Internet Connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Slow Internet Connection", Toast.LENGTH_LONG).show();
                 }
                 else
                 {

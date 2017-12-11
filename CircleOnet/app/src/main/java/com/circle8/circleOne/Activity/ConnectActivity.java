@@ -743,7 +743,7 @@ public class ConnectActivity extends AppCompatActivity
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
 
-            String loading = "Requesting Friend" ;
+            String loading = "Requesting friend" ;
             CustomProgressDialog(loading);
         }
 
@@ -838,7 +838,7 @@ public class ConnectActivity extends AppCompatActivity
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
 
-            String loading = "Displaying Records" ;
+            String loading = "Displaying records" ;
             CustomProgressDialog(loading);
         }
 
@@ -1131,7 +1131,7 @@ public class ConnectActivity extends AppCompatActivity
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
 
-            String loading = "Adding Friend" ;
+            String loading = "Adding friend" ;
             CustomProgressDialog(loading);
         }
 

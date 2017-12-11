@@ -994,7 +994,7 @@ public class GroupsActivity extends AppCompatActivity
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
 
-            String loading = "Creating Circle" ;
+            String loading = "Creating circle" ;
             CustomProgressDialog(loading);
         }
 
@@ -1058,7 +1058,7 @@ public class GroupsActivity extends AppCompatActivity
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
 
-            String loading = "Updating Circle" ;
+            String loading = "Updating circle" ;
             CustomProgressDialog(loading);
         }
 
@@ -1234,7 +1234,7 @@ public class GroupsActivity extends AppCompatActivity
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
 
-            String loading = "Fetching Circles" ;
+            String loading = "Fetching circles" ;
             CustomProgressDialog(loading);
         }
 

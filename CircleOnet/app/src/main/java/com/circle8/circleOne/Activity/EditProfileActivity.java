@@ -1359,7 +1359,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
-            String loading = "Deleting Profile" ;
+            String loading = "Deleting profile" ;
             CustomProgressDialog(loading);
         }
 
@@ -2529,7 +2529,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             progress.setCanceledOnTouchOutside(false);
             progress.show();*/
 
-            String loading = "Logging In" ;
+            String loading = "Logging in" ;
             CustomProgressDialog(loading);
 
             linkededinApiHelper();
@@ -2675,7 +2675,7 @@ public class EditProfileActivity extends AppCompatActivity implements
 
         mProgressDialog.show();*/
 
-        String loading = "Google Login" ;
+        String loading = "Google login" ;
         CustomProgressDialog(loading);
     }
 
@@ -3208,7 +3208,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
-            String loading = "Creating Profile" ;
+            String loading = "Creating profile" ;
             CustomProgressDialog(loading);
         }
 
@@ -3472,7 +3472,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
-            String loading = "Profile Loading" ;
+            String loading = "Profile loading" ;
             CustomProgressDialog(loading);
         }
 
@@ -3898,7 +3898,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
 
-            String loading = "Updating Profile" ;
+            String loading = "Updating profile" ;
             CustomProgressDialog(loading);
         }
 
@@ -4195,7 +4195,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             dialog.setMessage("Finding Events...");
             dialog.show();*/
 
-            String loading = "Finding Events" ;
+            String loading = "Finding events" ;
             CustomProgressDialog(loading);
         }
 

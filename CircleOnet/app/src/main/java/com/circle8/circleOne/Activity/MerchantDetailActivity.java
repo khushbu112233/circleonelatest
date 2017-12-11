@@ -353,7 +353,7 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
             dialog.show();
             dialog.setCancelable(false);*/
 
-            String loading = "Get Merchant Detail" ;
+            String loading = "Get merchant detail" ;
             CustomProgressDialog(loading);
         }
 

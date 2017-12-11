@@ -409,7 +409,7 @@ public class EventsFragment extends Fragment
             dialog.setMessage("Finding Events...");
             dialog.show();*/
 
-            String loading = "Finding Events" ;
+            String loading = "Finding events" ;
             CustomProgressDialog(loading);
         }
 
@@ -609,7 +609,7 @@ public class EventsFragment extends Fragment
             dialog.setMessage("Finding Events...");
             dialog.show();*/
 
-            String loading = "Searching Events" ;
+            String loading = "Searching events" ;
             CustomProgressDialog(loading);
         }
 

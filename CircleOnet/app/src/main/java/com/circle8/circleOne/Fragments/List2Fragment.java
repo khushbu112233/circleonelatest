@@ -370,7 +370,7 @@ public class List2Fragment extends Fragment
             {
                 if (result == "")
                 {
-                    Toast.makeText(getContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Slow Internet Connection", Toast.LENGTH_LONG).show();
                 }
                 else
                 {
@@ -548,7 +548,7 @@ public class List2Fragment extends Fragment
             //   allTags = new ArrayList<>();
             if (progressStatus.equalsIgnoreCase("FIRST"))
             {
-                String loading = "Fetching Cards" ;
+                String loading = "Fetching cards" ;
                 CustomProgressDialog(loading);
 
                 progressStatus = "SECOND";
@@ -563,7 +563,7 @@ public class List2Fragment extends Fragment
             }
             else if (progressStatus.equalsIgnoreCase("DELETE"))
             {
-                String loading = "Refreshing Cards" ;
+                String loading = "Refreshing cards" ;
                 CustomProgressDialog(loading);
             }
             else

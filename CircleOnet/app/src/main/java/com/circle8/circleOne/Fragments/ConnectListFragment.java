@@ -430,7 +430,7 @@ public class ConnectListFragment extends Fragment
         protected void onPreExecute() {
             super.onPreExecute();
             dialog = new ProgressDialog(getActivity());
-            dialog.setMessage("Searching Records...");
+            dialog.setMessage("Searching records...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
             dialog.setCancelable(false);
@@ -454,7 +454,7 @@ public class ConnectListFragment extends Fragment
             {
                 if(result == "")
                 {
-                    Toast.makeText(getContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Slow Internet Connection", Toast.LENGTH_LONG).show();
                 }
                 else
                 {

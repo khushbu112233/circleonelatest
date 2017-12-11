@@ -446,7 +446,7 @@ public class List3Adapter extends BaseSwipeAdapter
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
 
-            String loading = "Deleting Records";
+            String loading = "Deleting records";
             List3Fragment.CustomProgressDialog(loading);
         }
 
@@ -466,7 +466,7 @@ public class List3Adapter extends BaseSwipeAdapter
             {
                 if(result == "")
                 {
-                    Toast.makeText(context, "Check Internet Connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Slow Internet Connection", Toast.LENGTH_LONG).show();
                 }
                 else
                 {

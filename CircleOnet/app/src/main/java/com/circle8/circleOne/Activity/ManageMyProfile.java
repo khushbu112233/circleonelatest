@@ -295,7 +295,7 @@ public class ManageMyProfile extends AppCompatActivity
             dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
-            String loading = "Fetching Profiles" ;
+            String loading = "Fetching profiles" ;
             CustomProgressDialog(loading);
         }
 
@@ -406,7 +406,7 @@ public class ManageMyProfile extends AppCompatActivity
             dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
-            String loading = "Deleting Profile" ;
+            String loading = "Deleting profile" ;
             CustomProgressDialog(loading);
         }
 

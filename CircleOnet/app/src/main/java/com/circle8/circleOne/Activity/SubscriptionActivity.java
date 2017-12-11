@@ -464,7 +464,7 @@ public class SubscriptionActivity extends AppCompatActivity
             dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
-            String loading = "Cancelling Subscription" ;
+            String loading = "Cancelling subscription" ;
             CustomProgressDialog(loading);
         }
 
@@ -518,7 +518,7 @@ public class SubscriptionActivity extends AppCompatActivity
             dialog.setCancelable(false);*/
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
-            String loading = "Updating Subscription" ;
+            String loading = "Updating subscription" ;
             CustomProgressDialog(loading);
         }
 

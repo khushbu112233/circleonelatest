@@ -167,7 +167,7 @@ public class GroupsItemsAdapter1 extends BaseAdapter
         {
             super.onPreExecute();
             dialog = new ProgressDialog(context);
-            dialog.setMessage("Loading Members..");
+            dialog.setMessage("Loading members..");
             dialog.show();
             dialog.setCancelable(false);
         }

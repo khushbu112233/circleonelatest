@@ -258,7 +258,7 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
             dialog.show();
             dialog.setCancelable(false);*/
 
-            String loading = "Activating NFC Card" ;
+            String loading = "Activating NFC card" ;
             CustomProgressDialog(loading);
         }
 

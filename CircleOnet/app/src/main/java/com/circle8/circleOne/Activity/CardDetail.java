@@ -1461,7 +1461,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         {
             super.onPreExecute();
             dialog = new ProgressDialog(CardDetail.this);
-            dialog.setMessage("Fetching Testimonials...");
+            dialog.setMessage("Fetching testimonials...");
             //dialog.setTitle("Saving Reminder");
             // dialog.show();
             dialog.setCancelable(false);
@@ -1706,7 +1706,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         {
             super.onPreExecute();
             dialog = new ProgressDialog(CardDetail.this);
-            dialog.setMessage("Fetching Circles...");
+            dialog.setMessage("Fetching circles...");
             //dialog.show();
             dialog.setCancelable(false);
 
@@ -1781,7 +1781,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
             dialog.setCancelable(false);
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
-            String loading = "Adding Friend" ;
+            String loading = "Adding friend" ;
             CustomProgressDialog(loading);
         }
 
