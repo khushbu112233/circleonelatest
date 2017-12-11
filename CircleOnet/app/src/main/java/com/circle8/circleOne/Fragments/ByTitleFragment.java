@@ -210,7 +210,7 @@ public class ByTitleFragment extends Fragment
             }
             else
             {
-                String loading = "Notification" ;
+                String loading = "Searching Records" ;
                 CustomProgressDialog(loading);
             }
         }
@@ -487,7 +487,6 @@ public class ByTitleFragment extends Fragment
                     {
                         tvProgressing.setText(loading+"...");
                     }
-
                 }
             }, i);
         }

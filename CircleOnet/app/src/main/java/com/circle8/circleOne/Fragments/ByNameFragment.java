@@ -229,7 +229,7 @@ public class ByNameFragment extends Fragment
             }
             else
             {
-                String loading = "Notification" ;
+                String loading = "Searching Records" ;
                 CustomProgressDialog(loading);
             }
         }
