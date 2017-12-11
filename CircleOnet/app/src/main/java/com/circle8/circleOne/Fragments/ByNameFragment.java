@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
@@ -26,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Activity.ConnectActivity;
+import com.circle8.circleOne.Activity.Notification;
 import com.circle8.circleOne.Adapter.ConnectListAdapter;
 import com.circle8.circleOne.Adapter.List5Adapter;
 import com.circle8.circleOne.Helper.LoginSession;
@@ -77,6 +79,12 @@ public class ByNameFragment extends Fragment
     private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
     Boolean netCheck = false;
 
+    static RelativeLayout rlLoadMore ;
+    static int numberCount, listSize;
+    public static int pageno = 1 ;
+    static String counts = "0" ;
+    public static String progressStatus = "FIRST";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,  Bundle savedInstanceState)
     {
@@ -95,6 +103,9 @@ public class ByNameFragment extends Fragment
         ivConnecting1 = (ImageView)view.findViewById(R.id.imgConnecting1) ;
         ivConnecting2 = (ImageView)view.findViewById(R.id.imgConnecting2) ;
         ivConnecting3 = (ImageView)view.findViewById(R.id.imgConnecting3) ;
+
+        rlLoadMore = (RelativeLayout)view.findViewById(R.id.rlLoadMore);
+        pageno = 1;
 
         listView.setVisibility(View.GONE);
 //        tvDataInfo.setVisibility(View.VISIBLE);
@@ -154,13 +165,11 @@ public class ByNameFragment extends Fragment
                 if(s.length() == 0)
                 {
                     listView.setVisibility(View.GONE);
-                    tvDataInfo.setVisibility(View.GONE);
                     connectTags.clear();
 //                    connectListAdapter.notifyDataSetChanged();
 //                    GetData(getContext());
                     tvDataInfo.setVisibility(View.VISIBLE);
                 }
-
             }
 
             @Override
@@ -174,14 +183,12 @@ public class ByNameFragment extends Fragment
            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
            {
                Intent intent = new Intent(getContext(), ConnectActivity.class);
-               intent.putExtra("friendProfileID", connectTags.get(position).getProfile_id());
-               intent.putExtra("friendUserID", connectTags.get(position).getUserID());
+               intent.putExtra("friendProfileID", connectLists.get(position).getProfile_id());
+               intent.putExtra("friendUserID", connectLists.get(position).getUserID());
                intent.putExtra("ProfileID", profileID);
                getContext().startActivity(intent);
            }
        });
-
-
 
         return view;
     }
@@ -216,8 +223,15 @@ public class ByNameFragment extends Fragment
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
 
-            String loading = "Searching" ;
-            CustomProgressDialog(loading);
+            if (progressStatus.equalsIgnoreCase("LOAD MORE"))
+            {
+
+            }
+            else
+            {
+                String loading = "Notification" ;
+                CustomProgressDialog(loading);
+            }
         }
 
         @Override
@@ -246,13 +260,25 @@ public class ByNameFragment extends Fragment
                     String success = response.getString("success");
                     String findBy = response.getString("FindBy");
                     String search = response.getString("Search");
-                    String count = response.getString("count");
                     String pageno = response.getString("pageno");
                     String recordno = response.getString("numofrecords");
 
+                    counts = response.getString("count");
+
                     JSONArray connect = response.getJSONArray("connect");
 
-                    connectTags.clear();
+                    if (counts.equals("0") || counts == null)
+                    {
+                        numberCount = 0 ;
+                    }
+                    else
+                    {
+                        numberCount = Integer.parseInt(counts);
+                    }
+
+                    rlLoadMore.setVisibility(View.GONE);
+
+                    /*connectTags.clear();
                     try
                     {
                         connectListAdapter.notifyDataSetChanged();
@@ -260,20 +286,20 @@ public class ByNameFragment extends Fragment
                     catch (Exception e)
                     {
                         e.printStackTrace();
-                    }
+                    }*/
 
                     if(connect.length() == 0)
                     {
-                        tvDataInfo.setVisibility(View.VISIBLE);
+//                        tvDataInfo.setVisibility(View.VISIBLE);
                         connectTags.clear();
                         try {connectListAdapter.notifyDataSetChanged();}
                         catch (Exception e) { e.printStackTrace();}
                     }
                     else
                     {
-                        tvDataInfo.setVisibility(View.GONE);
+//                        tvDataInfo.setVisibility(View.GONE);
 
-                        for(int i = 0 ; i <= connect.length() ; i++ )
+                        for(int i = 0 ; i < connect.length() ; i++ )
                         {
                             JSONObject iCon = connect.getJSONObject(i);
                             ConnectList connectModel = new ConnectList();
@@ -295,12 +321,47 @@ public class ByNameFragment extends Fragment
                             connectModel.setWebsite(iCon.getString("Website"));
                             connectTags.add(connectModel);
 
-                            connectListAdapter = new ConnectListAdapter(getContext(),R.layout.grid_list5_layout, connectTags);
+                           /* connectListAdapter = new ConnectListAdapter(getContext(),R.layout.grid_list5_layout, connectTags);
                             listView.setAdapter(connectListAdapter);
-                            connectListAdapter.notifyDataSetChanged();
-
-//                            GetData(getContext());
+                            connectListAdapter.notifyDataSetChanged();*/
                         }
+
+                        GetData(getContext());
+                        listSize = connectTags.size();
+
+                        listView.setOnScrollListener(new AbsListView.OnScrollListener()
+                        {
+                            @Override
+                            public void onScrollStateChanged(AbsListView view, int scrollState)
+                            {
+                                // TODO Auto-generated method stub
+
+                                progressStatus = "LOAD MORE";
+
+                                int threshold = 1;
+                                int count = listView.getCount();
+
+                                if (scrollState == SCROLL_STATE_IDLE)
+                                {
+                                    if (listSize <= numberCount)
+                                    {
+                                        if (listView.getLastVisiblePosition() >= count - threshold)
+                                        {
+                                            rlLoadMore.setVisibility(View.VISIBLE);
+                                            // Execute LoadMoreDataTask AsyncTask
+                                            new HttpAsyncTask().execute(Utility.BASE_URL+"SearchConnect");
+                                        }
+                                    }
+                                    else {  }
+                                }
+                            }
+                            @Override
+                            public void onScroll(AbsListView view, int firstVisibleItem,
+                                                 int visibleItemCount, int totalItemCount) {
+                                // TODO Auto-generated method stub
+                            }
+                        });
+
                     }
                 }
             }
@@ -319,6 +380,7 @@ public class ByNameFragment extends Fragment
         {
             ConnectList connectModelTag = new ConnectList();
             connectModelTag.setUserID(reTag.getUserID());
+            connectModelTag.setProfile_id(reTag.getProfile_id());
             connectModelTag.setFirstname(reTag.getFirstname());
             connectModelTag.setLastname(reTag.getLastname());
             connectModelTag.setCompanyname(reTag.getCompanyname());
@@ -332,13 +394,24 @@ public class ByNameFragment extends Fragment
             connectLists.add(connectModelTag);
         }
 
+        if (connectLists.size() == 0)
+        {
+            tvDataInfo.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            tvDataInfo.setVisibility(View.GONE);
+
+            connectListAdapter = new ConnectListAdapter(getContext(), R.layout.grid_list5_layout, connectLists);
+            listView.setAdapter(connectListAdapter);
+            connectListAdapter.notifyDataSetChanged();
+        }
+
      /*   gridAdapter = new List4Adapter(getContext(), R.layout.grid_list4_layout, nfcModel1);
         listView.setAdapter(gridAdapter);
         gridAdapter.notifyDataSetChanged();*/
 
-        connectListAdapter = new ConnectListAdapter(getContext(),R.layout.grid_list5_layout, connectLists);
-        listView.setAdapter(connectListAdapter);
-        connectListAdapter.notifyDataSetChanged();
+
 
        /* list5Adapter = new List5Adapter(getContext(), R.layout.grid_list4_layout, connectLists);
         listView.setAdapter(list5Adapter);
@@ -365,7 +438,7 @@ public class ByNameFragment extends Fragment
             jsonObject.accumulate("SearchType", "Global" );
             jsonObject.accumulate("UserID", userID );
             jsonObject.accumulate("numofrecords", "10" );
-            jsonObject.accumulate("pageno", "1" );
+            jsonObject.accumulate("pageno", pageno );
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -401,6 +474,7 @@ public class ByNameFragment extends Fragment
             Log.d("InputStream", e.getLocalizedMessage());
         }
 
+        pageno++;
         // 11. return result
         return result;
     }

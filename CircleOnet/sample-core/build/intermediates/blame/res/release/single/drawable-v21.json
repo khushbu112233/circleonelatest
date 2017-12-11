@@ -4,6 +4,18 @@
         "source": "C:\\Users\\admin\\.android\\build-cache\\2ff66b8a8431f9fd1c2c1d8d9e9340f98155e5ac\\output\\res\\drawable-v21\\notification_action_background.xml"
     },
     {
+        "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\drawable-v21\\avd_show_password.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\98fdb4f559d7e4df02720fe4ee6e5526e3f6145a\\output\\res\\drawable-v21\\avd_show_password.xml"
+    },
+    {
+        "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\drawable-v21\\notification_action_background.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\75a908df38441cacdb49dd81bd2576a489b3ae79\\output\\res\\drawable-v21\\notification_action_background.xml"
+    },
+    {
+        "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\drawable-v21\\design_bottom_navigation_item_background.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\98fdb4f559d7e4df02720fe4ee6e5526e3f6145a\\output\\res\\drawable-v21\\design_bottom_navigation_item_background.xml"
+    },
+    {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\drawable-v21\\design_bottom_navigation_item_background.xml",
         "source": "C:\\Users\\admin\\.android\\build-cache\\8ec4f77cf4f1b1bb5b166efdac7877b127171219\\output\\res\\drawable-v21\\design_bottom_navigation_item_background.xml"
     },
@@ -12,8 +24,24 @@
         "source": "C:\\Users\\admin\\.android\\build-cache\\8ec4f77cf4f1b1bb5b166efdac7877b127171219\\output\\res\\drawable-v21\\avd_show_password.xml"
     },
     {
+        "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\drawable-v21\\abc_btn_colored_material.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable-v21\\abc_btn_colored_material.xml"
+    },
+    {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\drawable-v21\\design_password_eye.xml",
         "source": "C:\\Users\\admin\\.android\\build-cache\\8ec4f77cf4f1b1bb5b166efdac7877b127171219\\output\\res\\drawable-v21\\design_password_eye.xml"
+    },
+    {
+        "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\drawable-v21\\design_password_eye.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\98fdb4f559d7e4df02720fe4ee6e5526e3f6145a\\output\\res\\drawable-v21\\design_password_eye.xml"
+    },
+    {
+        "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\drawable-v21\\abc_action_bar_item_background_material.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable-v21\\abc_action_bar_item_background_material.xml"
+    },
+    {
+        "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\drawable-v21\\avd_hide_password.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\98fdb4f559d7e4df02720fe4ee6e5526e3f6145a\\output\\res\\drawable-v21\\avd_hide_password.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\drawable-v21\\avd_hide_password.xml",
@@ -22,6 +50,10 @@
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\drawable-v21\\abc_btn_colored_material.xml",
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable-v21\\abc_btn_colored_material.xml"
+    },
+    {
+        "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\drawable-v21\\abc_edit_text_material.xml",
+        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable-v21\\abc_edit_text_material.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\CircleOneNewAcc\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\release\\drawable-v21\\abc_action_bar_item_background_material.xml",
