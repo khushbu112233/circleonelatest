@@ -695,7 +695,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Contact Info"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/unselected"
                         android:textSize="15sp" />
 
                 </RelativeLayout>
@@ -1103,7 +1103,7 @@
             android:layout_marginRight="10dp"
             android:visibility="gone"/>
 
-        <com.circle8.circleOne.Utils.cgTextView
+        <com.circle8.circleOne.Utils.cgBoldTextView
             android:id="@+id/tvSendMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

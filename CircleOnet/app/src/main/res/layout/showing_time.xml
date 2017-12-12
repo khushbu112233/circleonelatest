@@ -18,21 +18,21 @@
             android:layout_height="wrap_content"
             android:text="Date"
             android:layout_weight="0.6"
-            android:textColor="@color/black"/>
+            android:textColor="@color/unselected"/>
         <com.circle8.circleOne.Utils.cgTextView
             android:id="@+id/tvStartTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="St Time"
             android:layout_weight="0.2"
-            android:textColor="@color/black"/>
+            android:textColor="@color/unselected"/>
         <com.circle8.circleOne.Utils.cgTextView
             android:id="@+id/tvEndTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="En Time"
             android:layout_weight="0.2"
-            android:textColor="@color/black"/>
+            android:textColor="@color/unselected"/>
     </LinearLayout>
 
 </LinearLayout>
