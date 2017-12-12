@@ -387,7 +387,7 @@ public class ConnectActivity extends AppCompatActivity
                 if (result) {
                     //Boolean aBoolean = contactExists(getApplicationContext(), txtMob.getText().toString());
 
-                        TranslateAnimation slide1 = new TranslateAnimation(0, -(motionLength+22), 0, 0);
+                        TranslateAnimation slide1 = new TranslateAnimation(0, -(motionLength+13), 0, 0);
                         slide1.setDuration(1000);
                         ivConnectImg.startAnimation(slide1);
 
@@ -429,7 +429,7 @@ public class ConnectActivity extends AppCompatActivity
 
                     if (aBoolean == true)
                     {
-                        TranslateAnimation slide1 = new TranslateAnimation(0, (motionLength+22), 0, 0);
+                        TranslateAnimation slide1 = new TranslateAnimation(0, (motionLength+13), 0, 0);
                         slide1.setDuration(1000);
                         ivConnectImg.startAnimation(slide1);
 
@@ -457,7 +457,7 @@ public class ConnectActivity extends AppCompatActivity
                     }
                     else
                     {
-                        TranslateAnimation slide1 = new TranslateAnimation(0, motionLength+22, 0, 0);
+                        TranslateAnimation slide1 = new TranslateAnimation(0, motionLength+13, 0, 0);
                         slide1.setDuration(1000);
                         ivConnectImg.startAnimation(slide1);
 
