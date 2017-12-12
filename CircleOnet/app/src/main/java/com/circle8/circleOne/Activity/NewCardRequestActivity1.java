@@ -297,6 +297,9 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                         etPhone.setEnabled(false);
                         etAddress1.setEnabled(false);
                         etAddress2.setEnabled(false);
+                        ivLaserCard.setEnabled(false);
+                        ivNormalCard.setEnabled(false);
+                        ivSubmit.setEnabled(false);
 /*
                         if (lay_Enable)
                         {
@@ -471,6 +474,9 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                     etPhone.setEnabled(true);
                     etAddress1.setEnabled(true);
                     etAddress2.setEnabled(true);
+                    ivLaserCard.setEnabled(true);
+                    ivNormalCard.setEnabled(true);
+                    ivSubmit.setEnabled(true);
                 }
             }
         });
@@ -489,6 +495,9 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                 etPhone.setEnabled(true);
                 etAddress1.setEnabled(true);
                 etAddress2.setEnabled(true);
+                ivLaserCard.setEnabled(true);
+                ivNormalCard.setEnabled(true);
+                ivSubmit.setEnabled(true);
             }
         });
 
@@ -981,7 +990,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                     }
                     else
                     {
-                        txtLaserCost.setText("SGD$"+laserPrintCost+"/pc");
+                        txtLaserCost.setText("S$"+laserPrintCost+"/pc");
                         tvAmount.setText("S$"+laserPrintCost);
                     }
 
@@ -1001,7 +1010,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                     }
                     else
                     {
-                        txtNormalCost.setText("SGD$"+normalPrintCost+"/pc");
+                        txtNormalCost.setText("S$"+normalPrintCost+"/pc");
                         tvAmount.setText("S$"+normalPrintCost);
                     }
 

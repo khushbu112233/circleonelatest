@@ -210,7 +210,7 @@ public class HistoryActivity extends AppCompatActivity
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("UserId",user_id);
-            jsonObject.accumulate("numofrecords", "10");
+            jsonObject.accumulate("numofrecords", "100");
             jsonObject.accumulate("pageno", "1" );
 
             // 4. convert JSONObject to JSON to String
