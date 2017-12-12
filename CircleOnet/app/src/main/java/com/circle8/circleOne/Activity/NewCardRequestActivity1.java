@@ -8,6 +8,7 @@ import android.graphics.PixelFormat;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +32,7 @@ import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.Adapter.CardSwipeBitmap;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.StickyScrollView;
 import com.circle8.circleOne.Utils.Utility;
 import com.squareup.picasso.Picasso;
 import com.stripe.android.Stripe;
@@ -99,6 +101,15 @@ public class NewCardRequestActivity1 extends AppCompatActivity
     private String email;
     String Price;
 
+    /*for stripe payment*/
+    CoordinatorLayout main_contains;
+    ImageView ivTransImg ;
+    RelativeLayout rlStripeScreen ;
+    EditText etCardNumber, etCardHolderName, etExMonth, etExYear, etSecurityCode, etMobileNumber ;
+    TextView tvPay, tvCancel, tvAmount ;
+    StickyScrollView scrollView ;
+    boolean lay_Enable = false ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -140,6 +151,21 @@ public class NewCardRequestActivity1 extends AppCompatActivity
         ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
         ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
         ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
+
+        /*for stripe payment screen*/
+        main_contains = (CoordinatorLayout)findViewById(R.id.main_content);
+        ivTransImg = (ImageView)findViewById(R.id.ivTransImg);
+        rlStripeScreen = (RelativeLayout)findViewById(R.id.rlStripeScreen);
+        etCardNumber = (EditText)findViewById(R.id.etCardNumber);
+        etCardHolderName = (EditText)findViewById(R.id.etCardHolderName);
+        etExMonth = (EditText)findViewById(R.id.etExMonth);
+        etExYear = (EditText)findViewById(R.id.etExYear);
+        etSecurityCode = (EditText)findViewById(R.id.etSecurityCode);
+        etMobileNumber = (EditText)findViewById(R.id.etMobileNumber);
+        tvPay = (TextView)findViewById(R.id.tvPay);
+        tvCancel = (TextView)findViewById(R.id.tvCancel);
+        tvAmount = (TextView)findViewById(R.id.tvAmount);
+        scrollView = (StickyScrollView)findViewById(R.id.scroll);
 
         Intent i = getIntent();
         image = i.getStringExtra("image");
@@ -257,6 +283,23 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                             e.printStackTrace();
                         }
 
+                        for ( int i = 0; i < main_contains.getChildCount();  i++ )
+                        {
+                            View view = main_contains.getChildAt(i);
+                            view.setEnabled(false); // Or whatever you want to do with the view.
+                        }
+
+                        ivTransImg.setVisibility(View.VISIBLE);
+                        rlStripeScreen.setVisibility(View.VISIBLE);
+/*
+                        if (lay_Enable)
+                        {
+                            ivTransImg.setVisibility(View.VISIBLE);
+                            rlStripeScreen.setVisibility(View.VISIBLE);
+                            return ;
+                        }
+*/
+
                            /* alertDialog = new AlertDialog.Builder(NewCardRequestActivity1.this).create();
                             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                             View dialogView = inflater.inflate(R.layout.activity_stripe_1, null);
@@ -267,8 +310,8 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                             alertDialog.setView(dialogView);
                             alertDialog.show();*/
 
-                        // new payment mode
-                        alertDialog = new AlertDialog.Builder(NewCardRequestActivity1.this).create();
+                        /*new payment mode alert-dialog*/
+                        /*alertDialog = new AlertDialog.Builder(NewCardRequestActivity1.this).create();
                         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                         View dialogView = inflater.inflate(R.layout.stripe_payment_screen1, null);
 
@@ -353,9 +396,81 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                         alertDialog.setView(dialogView);
                         alertDialog.setCancelable(false);
                         alertDialog.getWindow().setFormat(PixelFormat.TRANSLUCENT);
-                        alertDialog.show();
+                        alertDialog.show();*/
                     }
                 }
+            }
+        });
+
+        etExMonth.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {     }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+                int month = 0;
+                if (s.toString().equals("")) {  }
+                else
+                {
+                    try { month = Integer.parseInt(s.toString()); }
+                    catch (Exception e){ etExMonth.setText(""); }
+
+                    if (month > 12)
+                    {
+                        Toast.makeText(getApplicationContext(), "selected month is not proper", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {     }
+        });
+
+        tvPay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                numberOnCard = etCardNumber.getText().toString();
+                nameOnCard = etCardHolderName.getText().toString();
+                exYearOnCard = etExYear.getText().toString();
+                exMonthOnCard = etExMonth.getText().toString();
+                cvvOnCard = etSecurityCode.getText().toString();
+                mobileNoOnCard = etMobileNumber.getText().toString();
+
+                if (numberOnCard.isEmpty()) {
+                    Toast.makeText(NewCardRequestActivity1.this, "Enter Card No.", Toast.LENGTH_SHORT).show();
+                } else if (nameOnCard.isEmpty()) {
+                    Toast.makeText(NewCardRequestActivity1.this, "Enter Holder Name", Toast.LENGTH_SHORT).show();
+                } else if (exMonthOnCard.isEmpty()) {
+                    Toast.makeText(NewCardRequestActivity1.this, "Enter Expiry Month", Toast.LENGTH_SHORT).show();
+                } else if (exYearOnCard.isEmpty()) {
+                    Toast.makeText(NewCardRequestActivity1.this, "Enter Expiry Year", Toast.LENGTH_SHORT).show();
+                } else if (cvvOnCard.isEmpty()) {
+                    Toast.makeText(NewCardRequestActivity1.this, "Enter CVV No.", Toast.LENGTH_SHORT).show();
+                } else if (mobileNoOnCard.isEmpty()) {
+                    Toast.makeText(NewCardRequestActivity1.this, "Enter Mobile No.", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    cardPayment();
+                    ivTransImg.setVisibility(View.GONE);
+                    rlStripeScreen.setVisibility(View.GONE);
+
+                    lay_Enable = true ;
+                }
+            }
+        });
+
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                ivTransImg.setVisibility(View.GONE);
+                rlStripeScreen.setVisibility(View.GONE);
+
+                lay_Enable = true ;
             }
         });
 
@@ -844,10 +959,12 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                     if (laserPrintCost.equalsIgnoreCase("0"))
                     {
                         txtLaserCost.setText("Free for a Limited Period");
+                        tvAmount.setText("SGD $"+laserPrintCost+"/Pc");
                     }
                     else
                     {
                         txtLaserCost.setText("SGD $"+laserPrintCost+"/Pc");
+                        tvAmount.setText("SGD $"+laserPrintCost+"/Pc");
                     }
 
                     PhysicalCardLaserId = "1";
@@ -862,10 +979,12 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                     if (normalPrintCost.equalsIgnoreCase("0"))
                     {
                         txtNormalCost.setText("Free for a Limited Period");
+                        tvAmount.setText("SGD $"+normalPrintCost+"/Pc");
                     }
                     else
                     {
                         txtNormalCost.setText("SGD $"+normalPrintCost+"/Pc");
+                        tvAmount.setText("SGD $"+normalPrintCost+"/Pc");
                     }
 
 
