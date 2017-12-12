@@ -132,5 +132,6 @@
     <string name="net_check">check for data connection</string>
 
     <string name="descr_image">Image</string>
+    <string name="spinner_title">Select contact type</string>
 
 </resources>

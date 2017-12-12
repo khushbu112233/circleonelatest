@@ -291,6 +291,12 @@ public class NewCardRequestActivity1 extends AppCompatActivity
 
                         ivTransImg.setVisibility(View.VISIBLE);
                         rlStripeScreen.setVisibility(View.VISIBLE);
+
+                        etPerson.setEnabled(false);
+                        etCompany.setEnabled(false);
+                        etPhone.setEnabled(false);
+                        etAddress1.setEnabled(false);
+                        etAddress2.setEnabled(false);
 /*
                         if (lay_Enable)
                         {
@@ -459,6 +465,12 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                     rlStripeScreen.setVisibility(View.GONE);
 
                     lay_Enable = true ;
+
+                    etPerson.setEnabled(true);
+                    etCompany.setEnabled(true);
+                    etPhone.setEnabled(true);
+                    etAddress1.setEnabled(true);
+                    etAddress2.setEnabled(true);
                 }
             }
         });
@@ -471,6 +483,12 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                 rlStripeScreen.setVisibility(View.GONE);
 
                 lay_Enable = true ;
+
+                etPerson.setEnabled(true);
+                etCompany.setEnabled(true);
+                etPhone.setEnabled(true);
+                etAddress1.setEnabled(true);
+                etAddress2.setEnabled(true);
             }
         });
 
@@ -953,18 +971,18 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                     //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
 
                    // Type = object.getString("Type");
-                    txtLaserDesc.setText(object.getString("Description"));
+//                    txtLaserDesc.setText(object.getString("Description"));
 
                     laserPrintCost = object.getString("Cost");
                     if (laserPrintCost.equalsIgnoreCase("0"))
                     {
                         txtLaserCost.setText("Free for a Limited Period");
-                        tvAmount.setText("SGD $"+laserPrintCost+"/Pc");
+                        tvAmount.setText("S$"+laserPrintCost);
                     }
                     else
                     {
-                        txtLaserCost.setText("SGD $"+laserPrintCost+"/Pc");
-                        tvAmount.setText("SGD $"+laserPrintCost+"/Pc");
+                        txtLaserCost.setText("SGD$"+laserPrintCost+"/pc");
+                        tvAmount.setText("S$"+laserPrintCost);
                     }
 
                     PhysicalCardLaserId = "1";
@@ -973,20 +991,19 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                     //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
 
                   //  Type = object.getString("Type");
-                    txtNormalDesc.setText(object1.getString("Description"));
+//                    txtNormalDesc.setText(object1.getString("Description"));
                     normalPrintCost = object1.getString("Cost") ;
 
                     if (normalPrintCost.equalsIgnoreCase("0"))
                     {
                         txtNormalCost.setText("Free for a Limited Period");
-                        tvAmount.setText("SGD $"+normalPrintCost+"/Pc");
+                        tvAmount.setText("S$"+normalPrintCost);
                     }
                     else
                     {
-                        txtNormalCost.setText("SGD $"+normalPrintCost+"/Pc");
-                        tvAmount.setText("SGD $"+normalPrintCost+"/Pc");
+                        txtNormalCost.setText("SGD$"+normalPrintCost+"/pc");
+                        tvAmount.setText("S$"+normalPrintCost);
                     }
-
 
                    // txtNormalCost.setText("SGD $"+normalPrintCost+"/Pc");
 //                    txtNormalCost.setText(object1.getString("Cost"));

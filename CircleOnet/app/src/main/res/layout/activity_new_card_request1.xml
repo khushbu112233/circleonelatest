@@ -265,7 +265,7 @@
                     android:orientation="vertical"
                     android:background="@color/white">
 
-                    <com.circle8.circleOne.Utils.cgBoldTextView
+                    <com.circle8.circleOne.Utils.cgTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Uploaded Successfully"
@@ -990,7 +990,7 @@
                     android:weightSum="1"
                     android:gravity="center_vertical">
 
-                    <com.circle8.circleOne.Utils.cgBoldTextView
+                    <com.circle8.circleOne.Utils.cgTextView
                         android:id="@+id/tvPay"
                         android:textSize="20dp"
                         android:layout_width="wrap_content"
@@ -1000,7 +1000,7 @@
                         android:layout_weight="0.5"
                         android:gravity="right"
                         android:layout_marginRight="60dp"/>
-                    <com.circle8.circleOne.Utils.cgBoldTextView
+                    <com.circle8.circleOne.Utils.cgTextView
                         android:id="@+id/tvCancel"
                         android:textSize="20dp"
                         android:layout_width="wrap_content"
@@ -1017,7 +1017,5 @@
         </RelativeLayout>
 
     </RelativeLayout>
-
-
 
 </RelativeLayout>

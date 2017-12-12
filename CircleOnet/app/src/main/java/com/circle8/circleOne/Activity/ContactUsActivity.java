@@ -1,23 +1,57 @@
 package com.circle8.circleOne.Activity;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.circle8.circleOne.Adapter.CardSwipe;
+import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.RxContacts.Contact;
+import com.circle8.circleOne.Utils.GeocodingLocation;
 import com.circle8.circleOne.Utils.Utility;
+import com.quickblox.core.QBEntityCallback;
+import com.quickblox.core.exception.QBResponseException;
+import com.quickblox.users.QBUsers;
+import com.quickblox.users.model.QBUser;
+import com.squareup.picasso.Picasso;
 
-public class ContactUsActivity extends AppCompatActivity implements View.OnClickListener
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+public class ContactUsActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener
 {
     private ImageView ivMessage, ivPhone ;
     private TextView tvAddress1, tvAddress2, tvWebsite, tvEmail, tvPhone, tvFax ;
@@ -25,15 +59,48 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
     private EditText etSubject, etDescription ;
     private ImageView imgBack;
     private LinearLayout lnrAddress, lnrEmail, lnrContact, lnrWebsite ;
-    private String subject, description ;
-    ImageView fbUrl, linkedInUrl, twitterUrl, googleUrl, youtubeUrl;
+    private ImageView fbUrl, linkedInUrl, twitterUrl, googleUrl, youtubeUrl;
+    private Spinner spContactType ;
+
+    private String subject, description, email, contactNo, contactType ;
+    private LoginSession session;
+
+    private RelativeLayout rlProgressDialog;
+    private TextView tvProgressing;
+    private ImageView ivConnecting1, ivConnecting2, ivConnecting3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_us);
+
         Utility.freeMemory();
+
+        session = new LoginSession(getApplicationContext());
+        HashMap<String, String> user = session.getUserDetails();
+        email = user.get(LoginSession.KEY_EMAIL);
+        try
+        {
+            if (user.get(LoginSession.KEY_PHONE).contains(" "))
+            {
+                String name = user.get(LoginSession.KEY_PHONE);
+                String kept = name.substring(0, name.indexOf(" "));
+                String remainder = name.substring(name.indexOf(" ") + 1, name.length());
+                kept = kept.replaceAll("//+", "");
+
+                contactNo = kept+" "+remainder ;
+            }
+            else
+            {
+                contactNo = user.get(LoginSession.KEY_PHONE) ;
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
         imgBack = (ImageView) findViewById(R.id.imgBack);
         tvCompany = (TextView)findViewById(R.id.tvCompanyName);
         tvPartner = (TextView)findViewById(R.id.tvPartner);
@@ -59,6 +126,15 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
         googleUrl = (ImageView) findViewById(R.id.googleUrl);
         youtubeUrl = (ImageView) findViewById(R.id.youtubeUrl);
 
+        spContactType = (Spinner)findViewById(R.id.spContactType);
+        spContactType.setOnItemSelectedListener(this);
+
+        rlProgressDialog = (RelativeLayout) findViewById(R.id.rlProgressDialog);
+        tvProgressing = (TextView) findViewById(R.id.txtProgressing);
+        ivConnecting1 = (ImageView) findViewById(R.id.imgConnecting1);
+        ivConnecting2 = (ImageView) findViewById(R.id.imgConnecting2);
+        ivConnecting3 = (ImageView) findViewById(R.id.imgConnecting3);
+
         imgBack.setOnClickListener(this);
         lnrAddress.setOnClickListener(this);
         ivMessage.setOnClickListener(this);
@@ -71,6 +147,19 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
         twitterUrl.setOnClickListener(this);
         googleUrl.setOnClickListener(this);
         youtubeUrl.setOnClickListener(this);
+
+        // Spinner Drop down elements
+        List<String> contactType = new ArrayList<String>();
+        contactType.add("Contact Type");
+        contactType.add("General");
+        contactType.add("Sales");
+        contactType.add("Accounts");
+        contactType.add("Marketing");
+        contactType.add("Business Development");
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, contactType);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spContactType.setAdapter(dataAdapter);
 
     }
 
@@ -298,7 +387,11 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
             subject = etSubject.getText().toString();
             description = etDescription.getText().toString();
 
-            if (subject.isEmpty())
+            if (contactType.equalsIgnoreCase("Contact Type"))
+            {
+                Toast.makeText(getApplicationContext(),"Select Contact Type",Toast.LENGTH_SHORT).show();
+            }
+            else if (subject.isEmpty())
             {
                 Toast.makeText(getApplicationContext(),"Enter Subject",Toast.LENGTH_SHORT).show();
             }
@@ -308,12 +401,12 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
             }
             else
             {
-//                Toast.makeText(getApplicationContext(),"Send",Toast.LENGTH_SHORT).show();
-
-                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"+"general@circle.asia"));
+               /* Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"+"general@circle.asia"));
                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
                 emailIntent.putExtra(Intent.EXTRA_TEXT, description);
-                startActivity(Intent.createChooser(emailIntent, "Choose mail options..."));
+                startActivity(Intent.createChooser(emailIntent, "Choose mail options..."));*/
+
+                new HttpAsyncTaskSendMessage().execute("http://circle8.asia:8082/Onet.svc/ContactUs");
             }
         }
         if ( v == tvCancel)
@@ -321,4 +414,180 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
             finish();
         }
     }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+    {
+        contactType = adapterView.getItemAtPosition(i).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+    private class HttpAsyncTaskSendMessage extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            /*dialog = new ProgressDialog(ContactUsActivity.this);
+            dialog.setMessage("Sending...");
+            dialog.show();
+            dialog.setCancelable(false);*/
+
+            String loading = "Sending" ;
+            CustomProgressDialog(loading);
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return SendMessagePost(urls[0]);
+        }
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
+
+            try
+            {
+                if (result != null)
+                {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String success = jsonObject.getString("success").toString();
+                    String message = jsonObject.getString("message").toString();
+
+                    if (success.equals("1"))
+                    {
+                        etSubject.setText(null);
+                        etDescription.setText(null);
+
+                        Toast.makeText(getApplicationContext(),"Send Successfully",Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
+                    }
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public String SendMessagePost(String url) {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("Contact_Type", contactType);
+            jsonObject.accumulate("Desc", description);
+            jsonObject.accumulate("Email", email);
+            jsonObject.accumulate("Mobile", contactNo);
+            jsonObject.accumulate("Subject", subject);
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+        while ((line = bufferedReader.readLine()) != null)
+            result += line;
+
+        inputStream.close();
+        return result;
+    }
+
+    public void CustomProgressDialog(final String loading)
+    {
+        rlProgressDialog.setVisibility(View.VISIBLE);
+        tvProgressing.setText(loading);
+
+        Animation anim = AnimationUtils.loadAnimation(ContactUsActivity.this,R.anim.anticlockwise);
+        ivConnecting1.startAnimation(anim);
+        Animation anim1 = AnimationUtils.loadAnimation(ContactUsActivity.this,R.anim.clockwise);
+        ivConnecting2.startAnimation(anim1);
+
+        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
+        for (int i = 350; i <= SPLASHTIME; i = i + 350)
+        {
+            final int j = i;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run()
+                {
+                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
+                    {
+                        tvProgressing.setText(loading+".");
+                    }
+                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
+                    {
+                        tvProgressing.setText(loading+"..");
+                    }
+                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+
+                }
+            }, i);
+        }
+    }
+
+
 }

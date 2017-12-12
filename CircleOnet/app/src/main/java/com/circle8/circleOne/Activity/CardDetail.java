@@ -170,6 +170,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
     private RelativeLayout rlProgressDialog;
     private TextView tvProgressing;
     private ImageView ivConnecting1, ivConnecting2, ivConnecting3;
+
     TextView txtAttachment, lblAttachment;
     ReferralCodeSession referralCodeSession;
     String refer;

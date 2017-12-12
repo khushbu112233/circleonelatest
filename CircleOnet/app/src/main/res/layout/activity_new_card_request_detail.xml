@@ -291,7 +291,7 @@
                         android:id="@+id/txtUse1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="a current design"
+                        android:text="your current design"
                         android:textColor="@color/colorPrimary"/>
                 </LinearLayout>
 

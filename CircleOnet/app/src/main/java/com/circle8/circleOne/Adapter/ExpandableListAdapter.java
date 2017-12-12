@@ -152,7 +152,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
             holder = (ViewHolder)row.getTag();
         }
 
-        holder.item.setTypeface(null, Typeface.BOLD);
+        holder.item.setTypeface(null, Typeface.NORMAL);
         holder.item.setText(laptopName);
 
 /*

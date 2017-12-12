@@ -150,7 +150,7 @@
                     android:textColor="@color/colorAccent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Show Timings"/>
+                    android:text="Event Date &amp; Time"/>
                 <ListView
                     android:id="@+id/listViewTimeShow"
                     android:layout_width="match_parent"

@@ -14,14 +14,80 @@
         android:layout_width="match_parent"
         android:layout_height="245dp" />
 
-    <android.support.design.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/main_content"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/white">
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/rlProgressDialog"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@color/colorPrimary"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:elevation="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_centerVertical="true"
+                android:weightSum="1">
+
+                <RelativeLayout
+                    android:layout_centerInParent="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.6"
+                    android:gravity="right"
+                    android:layout_marginRight="15dp">
+
+                    <ImageView
+                        android:layout_centerInParent="true"
+                        android:id="@+id/imgConnecting1"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/round1" />
+                    <ImageView
+                        android:layout_centerInParent="true"
+                        android:id="@+id/imgConnecting2"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/round2" />
+                    <ImageView
+                        android:layout_centerInParent="true"
+                        android:id="@+id/imgConnecting3"
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:src="@drawable/round3" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txtProgressing"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="0dp"
+                    android:textSize="15dp"
+                    android:layout_below="@+id/imgConnecting"
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Connecting."
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.4"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <android.support.design.widget.CoordinatorLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/main_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/white">
 
         <android.support.design.widget.AppBarLayout
             android:background="@android:color/transparent"
@@ -388,6 +454,21 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="15dp"
+                            android:layout_marginTop="5dp">
+
+                            <Spinner
+                                android:id="@+id/spContactType"
+                                android:layout_width="170dp"
+                                android:layout_height="wrap_content"
+                                android:prompt="@string/spinner_title" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="15dp"
                             android:layout_marginTop="0dp">
                             <com.circle8.circleOne.Utils.cgEditView
                                 android:id="@+id/etSubject"
@@ -403,7 +484,8 @@
                                 android:layout_below="@+id/rlPhoto"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="0dp"
-                                android:textColor="@color/black" />
+                                android:textColor="@color/black"
+                                android:singleLine="true"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -441,7 +523,7 @@
                             android:weightSum="1"
                             android:gravity="center">
 
-                            <com.circle8.circleOne.Utils.cgBoldTextView
+                            <com.circle8.circleOne.Utils.cgTextView
                                 android:id="@+id/tvSend"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -452,7 +534,7 @@
                                 android:layout_weight="0.5"
                                 android:gravity="center"/>
 
-                            <com.circle8.circleOne.Utils.cgBoldTextView
+                            <com.circle8.circleOne.Utils.cgTextView
                                 android:id="@+id/tvCancel"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -477,5 +559,6 @@
 
     </android.support.design.widget.CoordinatorLayout>
 
+    </RelativeLayout>
 
 </RelativeLayout>
