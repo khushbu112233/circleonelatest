@@ -102,7 +102,7 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/more_progress"
             android:padding="5dp"
-            android:text="Loading More..."
+            android:text="Loading more..."
             android:textColor="@color/colorPrimary"
             android:textSize="15sp"
             android:layout_marginLeft="10dp"/>

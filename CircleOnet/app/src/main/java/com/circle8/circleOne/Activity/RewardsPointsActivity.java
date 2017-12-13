@@ -1110,7 +1110,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
             dialog.show();
             dialog.setCancelable(false);*/
 
-            String loading = "Get history earn points" ;
+            String loading = "Fetching products" ;
             CustomProgressDialog(loading);
         }
 

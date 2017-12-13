@@ -85,6 +85,7 @@ public class EventDetail extends AppCompatActivity
         actionText = (TextView) findViewById(R.id.mytext);
         actionText.setText("Events");
         imgBack.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
+        imgDrawer.setVisibility(View.GONE);
 
         txtBook = (TextView) findViewById(R.id.txtBook);
         txtRegister = (TextView) findViewById(R.id.txtRegister);
@@ -289,7 +290,7 @@ public class EventDetail extends AppCompatActivity
         {
             super.onPreExecute();
             dialog = new ProgressDialog(EventDetail.this);
-            dialog.setMessage("Get Event Detail...");
+            dialog.setMessage("Fetching event...");
             dialog.show();
         }
 

@@ -118,11 +118,6 @@ public class ByCompanyFragment  extends Fragment
             public void onClick(View v) {
                 String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
 
-                String Findby = "name";
-                String Search = "Circle One" ;
-                String rc_no = "10";
-                String page_no = "1";
-
                 listView.setVisibility(View.VISIBLE);
                 connectTags.clear();
                 if (netCheck == false){
@@ -130,7 +125,6 @@ public class ByCompanyFragment  extends Fragment
                     Toast.makeText(getContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
                 }
                 else {
-
                     new HttpAsyncTask().execute(Utility.BASE_URL + "SearchConnect");
                 }
             }
@@ -146,7 +140,6 @@ public class ByCompanyFragment  extends Fragment
                     Toast.makeText(getContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
                 }
                 else {
-
                     connectTags.clear();
                     new HttpAsyncTask().execute(Utility.BASE_URL + "SearchConnect");
                 }
@@ -165,10 +158,12 @@ public class ByCompanyFragment  extends Fragment
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
-                if(s.length() <= 0)
+                if(s.length() == 0)
                 {
-                    listView.setVisibility(View.GONE);
+                    pageno = 1 ;
                     connectTags.clear();
+                    connectLists.clear();
+                    listView.setStackFromBottom(false);
                     tvDataInfo.setVisibility(View.VISIBLE);
                 }
 
@@ -288,7 +283,7 @@ public class ByCompanyFragment  extends Fragment
                     }
                     else
                     {
-//                        tvDataInfo.setVisibility(View.GONE);
+                        tvDataInfo.setVisibility(View.GONE);
 
                         for(int i = 0 ; i < connect.length() ; i++ )
                         {
@@ -328,6 +323,11 @@ public class ByCompanyFragment  extends Fragment
                                 // TODO Auto-generated method stub
 
                                 progressStatus = "LOAD MORE";
+
+                                if (listSize > 7)
+                                {
+                                    listView.setStackFromBottom(true);
+                                }
 
                                 int threshold = 1;
                                 int count = listView.getCount();
@@ -371,6 +371,7 @@ public class ByCompanyFragment  extends Fragment
         {
             ConnectList connectModelTag = new ConnectList();
             connectModelTag.setUserID(reTag.getUserID());
+            connectModelTag.setProfile_id(reTag.getProfile_id());
             connectModelTag.setFirstname(reTag.getFirstname());
             connectModelTag.setLastname(reTag.getLastname());
             connectModelTag.setCompanyname(reTag.getCompanyname());

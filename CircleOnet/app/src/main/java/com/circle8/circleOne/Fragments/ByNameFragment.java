@@ -121,6 +121,7 @@ public class ByNameFragment extends Fragment
             {
                 String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
                 listView.setVisibility(View.VISIBLE);
+                tvDataInfo.setVisibility(View.GONE);
                 if (netCheck == false){
                     Utility.freeMemory();
                     Toast.makeText(getContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
@@ -138,13 +139,13 @@ public class ByNameFragment extends Fragment
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
                 listView.setVisibility(View.VISIBLE);
+                tvDataInfo.setVisibility(View.GONE);
 
                 if (netCheck == false){
                     Utility.freeMemory();
                     Toast.makeText(getContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
                 }
                 else {
-
                     connectTags.clear();
                     new ByNameFragment.HttpAsyncTask().execute(Utility.BASE_URL + "SearchConnect");
                 }
@@ -164,10 +165,11 @@ public class ByNameFragment extends Fragment
             {
                 if(s.length() == 0)
                 {
-                    listView.setVisibility(View.GONE);
+                    pageno = 1 ;
+//                    listView.setVisibility(View.GONE);
                     connectTags.clear();
-//                    connectListAdapter.notifyDataSetChanged();
-//                    GetData(getContext());
+                    connectLists.clear();
+                    listView.setStackFromBottom(false);
                     tvDataInfo.setVisibility(View.VISIBLE);
                 }
             }
@@ -296,7 +298,7 @@ public class ByNameFragment extends Fragment
                     }
                     else
                     {
-//                        tvDataInfo.setVisibility(View.GONE);
+                        tvDataInfo.setVisibility(View.GONE);
 
                         for(int i = 0 ; i < connect.length() ; i++ )
                         {
@@ -336,6 +338,11 @@ public class ByNameFragment extends Fragment
                                 // TODO Auto-generated method stub
 
                                 progressStatus = "LOAD MORE";
+
+                                if (listSize > 7)
+                                {
+                                    listView.setStackFromBottom(true);
+                                }
 
                                 int threshold = 1;
                                 int count = listView.getCount();
@@ -400,7 +407,6 @@ public class ByNameFragment extends Fragment
         else
         {
             tvDataInfo.setVisibility(View.GONE);
-
             connectListAdapter = new ConnectListAdapter(getContext(), R.layout.grid_list5_layout, connectLists);
             listView.setAdapter(connectListAdapter);
             connectListAdapter.notifyDataSetChanged();
@@ -409,8 +415,6 @@ public class ByNameFragment extends Fragment
      /*   gridAdapter = new List4Adapter(getContext(), R.layout.grid_list4_layout, nfcModel1);
         listView.setAdapter(gridAdapter);
         gridAdapter.notifyDataSetChanged();*/
-
-
 
        /* list5Adapter = new List5Adapter(getContext(), R.layout.grid_list4_layout, connectLists);
         listView.setAdapter(list5Adapter);

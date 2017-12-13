@@ -130,7 +130,6 @@ public class ByAssociationFragment  extends Fragment
                     Toast.makeText(getActivity(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
                 }
                 else {
-
                     new HttpAsyncTask().execute(Utility.BASE_URL + "SearchConnect");
                 }
             }
@@ -146,8 +145,6 @@ public class ByAssociationFragment  extends Fragment
                     Toast.makeText(getContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
                 }
                 else {
-
-                    listView.setVisibility(View.VISIBLE);
                     connectTags.clear();
                     new HttpAsyncTask().execute(Utility.BASE_URL + "SearchConnect");
                 }
@@ -167,8 +164,10 @@ public class ByAssociationFragment  extends Fragment
                 Utility.freeMemory();
                 if(s.length() == 0)
                 {
-                    listView.setVisibility(View.GONE);
+                    pageno = 1 ;
                     connectTags.clear();
+                    connectLists.clear();
+                    listView.setStackFromBottom(false);
                     tvDataInfo.setVisibility(View.VISIBLE);
                 }
                /* else if(s.length() >= 1)
@@ -303,7 +302,7 @@ public class ByAssociationFragment  extends Fragment
                     }
                     else
                     {
-//                        tvDataInfo.setVisibility(View.GONE);
+                        tvDataInfo.setVisibility(View.GONE);
 
                         for(int i = 0 ; i < connect.length() ; i++ )
                         {
@@ -343,6 +342,11 @@ public class ByAssociationFragment  extends Fragment
                                 // TODO Auto-generated method stub
 
                                 progressStatus = "LOAD MORE";
+
+                                if (listSize > 7)
+                                {
+                                    listView.setStackFromBottom(true);
+                                }
 
                                 int threshold = 1;
                                 int count = listView.getCount();
@@ -385,6 +389,7 @@ public class ByAssociationFragment  extends Fragment
         {
             ConnectList connectModelTag = new ConnectList();
             connectModelTag.setUserID(reTag.getUserID());
+            connectModelTag.setProfile_id(reTag.getProfile_id());
             connectModelTag.setFirstname(reTag.getFirstname());
             connectModelTag.setLastname(reTag.getLastname());
             connectModelTag.setCompanyname(reTag.getCompanyname());

@@ -123,8 +123,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="fill"
-        android:layout_above="@+id/rlLoadMore"
-        android:stackFromBottom="true"/>
+        android:layout_above="@+id/rlLoadMore" />
 
     <TextView
         android:id="@+id/tvDataInfo"
@@ -156,7 +155,7 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/more_progress"
             android:padding="5dp"
-            android:text="Loading More..."
+            android:text="Loading more..."
             android:textColor="@color/colorPrimary"
             android:textSize="15sp"
             android:layout_marginLeft="10dp"/>

@@ -146,8 +146,11 @@ public class ByTitleFragment extends Fragment
             {
                 if(s.length() == 0)
                 {
-                    listView.setVisibility(View.GONE);
+//                    listView.setVisibility(View.GONE);
+                    pageno = 1;
                     connectTags.clear();
+                    connectLists.clear();
+                    listView.setStackFromBottom(false);
                     tvDataInfo.setVisibility(View.VISIBLE);
                 }
 
@@ -268,7 +271,7 @@ public class ByTitleFragment extends Fragment
                     }
                     else
                     {
-//                        tvDataInfo.setVisibility(View.GONE);
+                        tvDataInfo.setVisibility(View.GONE);
                         for(int i = 0 ; i < connect.length() ; i++ )
                         {
                             JSONObject iCon = connect.getJSONObject(i);
@@ -307,6 +310,11 @@ public class ByTitleFragment extends Fragment
                                 // TODO Auto-generated method stub
 
                                 progressStatus = "LOAD MORE";
+
+                                if (listSize > 7)
+                                {
+                                    listView.setStackFromBottom(true);
+                                }
 
                                 int threshold = 1;
                                 int count = listView.getCount();
