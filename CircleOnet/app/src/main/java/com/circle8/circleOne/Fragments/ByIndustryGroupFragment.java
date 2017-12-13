@@ -117,8 +117,6 @@ public class ByIndustryGroupFragment extends Fragment
             @Override
             public void onClick(View v) {
                 String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
-
-                listView.setVisibility(View.VISIBLE);
                 connectTags.clear();
                 new HttpAsyncTask().execute(Utility.BASE_URL+"SearchConnect");
             }
@@ -128,7 +126,6 @@ public class ByIndustryGroupFragment extends Fragment
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
-                listView.setVisibility(View.VISIBLE);
                 connectTags.clear();
                 new HttpAsyncTask().execute(Utility.BASE_URL+"SearchConnect");
                 return true;
@@ -146,9 +143,11 @@ public class ByIndustryGroupFragment extends Fragment
             {
                 if(s.length() == 0)
                 {
-                    listView.setVisibility(View.GONE);
-                    tvDataInfo.setVisibility(View.GONE);
+                    pageno = 1 ;
+                    tvDataInfo.setVisibility(View.VISIBLE);
                     connectTags.clear();
+                    connectLists.clear();
+                    listView.setStackFromBottom(false);
                     SearchGroupMembers.selectedStrings = new JSONArray();
                 }
             }
@@ -246,7 +245,7 @@ public class ByIndustryGroupFragment extends Fragment
                     }
                     else
                     {
-//                        tvDataInfo.setVisibility(View.GONE);
+                        tvDataInfo.setVisibility(View.GONE);
 
                         for(int i = 0 ; i < connect.length() ; i++ )
                         {
@@ -286,6 +285,11 @@ public class ByIndustryGroupFragment extends Fragment
                                 // TODO Auto-generated method stub
 
                                 progressStatus = "LOAD MORE";
+
+                                if (listSize > 7)
+                                {
+                                    listView.setStackFromBottom(true);
+                                }
 
                                 int threshold = 1;
                                 int count = listView.getCount();

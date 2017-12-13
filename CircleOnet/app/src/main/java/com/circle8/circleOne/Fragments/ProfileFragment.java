@@ -701,7 +701,8 @@ public class ProfileFragment extends Fragment
 
         imgProfileMenu.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 Utility.freeMemory();
                 Utility.deleteCache(getContext());
 
@@ -715,10 +716,11 @@ public class ProfileFragment extends Fragment
                 popup.getMenu().add("Add New Profile");
                 popup.getMenu().add("Close");
                 //registering popup with OnMenuItemClickListener
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+                {
+                    public boolean onMenuItemClick(MenuItem item)
+                    {
                         //Toast.makeText(getContext(),"You Clicked : " + item.getTitle(),Toast.LENGTH_SHORT).show();
-
 
                         if (item.getTitle().toString().equals("Add New Profile"))
                         {
@@ -1046,7 +1048,7 @@ public class ProfileFragment extends Fragment
                     }
                 });
 
-                popup.show();//showing popup men
+                popup.show();//showing popup menu
             }
         });
 
