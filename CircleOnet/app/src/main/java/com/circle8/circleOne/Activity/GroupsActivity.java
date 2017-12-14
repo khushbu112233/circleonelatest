@@ -89,7 +89,7 @@ public class GroupsActivity extends AppCompatActivity
     public static ArrayList<GroupModel> groupModelArrayList;
 
     public static ImageView imgBack, ivAlphaImg;
-    RelativeLayout llBottom;
+    public static RelativeLayout llBottom;
     String GroupName, GroupDesc, group_id;
     private String GroupImage = "";
     CharSequence[] items ;
@@ -206,7 +206,8 @@ public class GroupsActivity extends AppCompatActivity
                 ivAlphaImg.setVisibility(View.VISIBLE);
                 rlLayTwo.setVisibility(View.VISIBLE);
                 listView.setEnabled(false);
-
+                GroupDisplayAdapter.tvEditGroup.setEnabled(false);
+                GroupDisplayAdapter.imgGroup.setEnabled(false);
 //                Intent in = new Intent(GroupsActivity.this, CreateGroupActivity.class);
 //                startActivity(in);
 
@@ -471,6 +472,9 @@ public class GroupsActivity extends AppCompatActivity
                 ivAlphaImg.setVisibility(View.GONE);
                 rlLayTwo.setVisibility(View.GONE);
                 listView.setEnabled(true);
+                llBottom.setEnabled(true);
+                GroupDisplayAdapter.tvEditGroup.setEnabled(true);
+                GroupDisplayAdapter.imgGroup.setEnabled(true);
 
                 etCircleName.setText(null);
                 etCircleDesc.setText(null);

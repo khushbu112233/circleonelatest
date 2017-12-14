@@ -50,8 +50,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
-public class ByNameGroupFragment extends Fragment {
-
+public class ByNameGroupFragment extends Fragment
+{
     private ListView listView;
     private TextView tvDataInfo ;
     private String find_by = "NAME" ;
@@ -249,7 +249,7 @@ public class ByNameGroupFragment extends Fragment {
 
                     if(connect.length() == 0)
                     {
-//                        tvDataInfo.setVisibility(View.VISIBLE);
+                        tvDataInfo.setVisibility(View.VISIBLE);
                         connectTags.clear();
                         try {connectListAdapter.notifyDataSetChanged();}
                         catch (Exception e) { e.printStackTrace();}

@@ -85,11 +85,10 @@ public class GroupDetailActivity extends AppCompatActivity
 {
     public static ListView listView ;
     private static CircleImageView imgProfile ;
-    private static ImageView ivChangeProfImg, ivBackImg, ivMenuImg, ivShareImg, ivEditImg ;
+    private static ImageView ivChangeProfImg, ivMenuImg, ivShareImg, ivEditImg, imgBack, ivDelete ;
     private static TextView tvGroupName, tvGroupDesc, tvMemberInfo ;
 
     private static GroupDetailAdapter groupDetailAdapter ;
-    ImageView imgBack;
     private static ArrayList<GroupDetailModel> groupDetailModelArrayList = new ArrayList<>();
 
     JSONArray selectArray = new JSONArray();
@@ -121,7 +120,6 @@ public class GroupDetailActivity extends AppCompatActivity
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     String image;
     public static JSONArray selectedStrings = new JSONArray();
-    ImageView ivDelete;
 
     public static RelativeLayout rlProgressDialog ;
     private static TextView tvProgressing ;
@@ -1082,8 +1080,15 @@ public class GroupDetailActivity extends AppCompatActivity
             dialog.show();
             dialog.setCancelable(false);*/
 
-
             CustomProgressDialog(loading);
+
+            ivShareImg.setEnabled(false);
+            ivEditImg.setEnabled(false);
+            ivDelete.setEnabled(false);
+            listView.setEnabled(false);
+            ivMenuImg.setEnabled(false);
+            imgProfile.setEnabled(false);
+            imgBack.setEnabled(false);
         }
 
         @Override
@@ -1098,6 +1103,14 @@ public class GroupDetailActivity extends AppCompatActivity
             Utility.freeMemory();
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
+
+            ivShareImg.setEnabled(true);
+            ivEditImg.setEnabled(true);
+            ivDelete.setEnabled(true);
+            listView.setEnabled(true);
+            ivMenuImg.setEnabled(true);
+            imgProfile.setEnabled(true);
+            imgBack.setEnabled(true);
 
             try
             {
