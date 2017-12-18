@@ -84,7 +84,7 @@
                         android:gravity="left"
                         android:visibility="visible"
                         android:id="@+id/txtTestPurpose"
-                        android:layout_width="120dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp" />
 
@@ -93,7 +93,7 @@
                         android:gravity="left"
                         android:visibility="visible"
                         android:id="@+id/txtTestName"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -113,9 +113,9 @@
                     android:layout_gravity="center_vertical|left"
                     android:id="@+id/btnTestWrite"
                     android:textSize="12sp"
-                    android:layout_weight="3"
+                    android:layout_weight="0"
                     style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="90dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:text="Write"/>
 
@@ -126,9 +126,9 @@
                     android:background="@drawable/txt_box_blue"
                     android:layout_marginRight="10dp"
                     android:textSize="12sp"
-                    android:layout_weight="3"
+                    android:layout_weight="0"
                     style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="90dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     android:text="Reject"/>
             </LinearLayout>
@@ -171,7 +171,7 @@
                         android:gravity="left"
                         android:visibility="visible"
                         android:id="@+id/txtTestPurposeRec"
-                        android:layout_width="120dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp" />
 
@@ -180,7 +180,7 @@
                         android:gravity="left"
                         android:visibility="visible"
                         android:id="@+id/txtTestNameRec"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -200,9 +200,9 @@
                     android:layout_gravity="center_vertical|left"
                     android:id="@+id/btnTestAcceptRec"
                     android:textSize="12sp"
-                    android:layout_weight="3"
+                    android:layout_weight="0"
                     style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="90dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:text="Accept"/>
 
@@ -213,9 +213,9 @@
                     android:background="@drawable/txt_box_blue"
                     android:layout_marginRight="10dp"
                     android:textSize="12sp"
-                    android:layout_weight="3"
+                    android:layout_weight="0"
                     style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="90dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     android:text="Reject"/>
             </LinearLayout>
@@ -258,7 +258,7 @@
                         android:gravity="left"
                         android:visibility="visible"
                         android:id="@+id/txtFriendPurpose"
-                        android:layout_width="120dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp" />
 
@@ -267,7 +267,7 @@
                         android:gravity="left"
                         android:visibility="visible"
                         android:id="@+id/txtFriendName"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -286,9 +286,9 @@
                     android:layout_gravity="center_vertical|left"
                     android:id="@+id/btnAcceptFriend"
                     android:textSize="12sp"
-                    android:layout_weight="3"
+                    android:layout_weight="0"
                     style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="90dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:text="Accept"/>
 
@@ -299,9 +299,9 @@
                     android:background="@drawable/txt_box_blue"
                     android:layout_marginRight="10dp"
                     android:textSize="12sp"
-                    android:layout_weight="3"
+                    android:layout_weight="0"
                     style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="90dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     android:text="Reject"/>
             </LinearLayout>
@@ -345,7 +345,7 @@
                         android:gravity="left"
                         android:visibility="visible"
                         android:id="@+id/txtSharePurpose"
-                        android:layout_width="120dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp" />
 
@@ -354,7 +354,7 @@
                         android:gravity="left"
                         android:visibility="visible"
                         android:id="@+id/txtShareName"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -374,9 +374,9 @@
                     android:layout_gravity="center_vertical|left"
                     android:id="@+id/btnReqShare"
                     android:textSize="12sp"
-                    android:layout_weight="3"
+                    android:layout_weight="0"
                     style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="90dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:text="Show"/>
 
@@ -387,9 +387,9 @@
                     android:background="@drawable/txt_box_blue"
                     android:layout_marginRight="10dp"
                     android:textSize="12sp"
-                    android:layout_weight="3"
+                    android:layout_weight="0"
                     style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="90dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     android:text="Cancel"/>
             </LinearLayout>
@@ -432,7 +432,7 @@
                         android:gravity="left"
                         android:visibility="visible"
                         android:id="@+id/txtNfcPurpose"
-                        android:layout_width="120dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp" />
 
@@ -461,9 +461,9 @@
                     android:layout_gravity="center_vertical|left"
                     android:id="@+id/btnAllowNfc"
                     android:textSize="12sp"
-                    android:layout_weight="3"
+                    android:layout_weight="0"
                     style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="90dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:text="Allow"/>
 
@@ -474,9 +474,9 @@
                     android:background="@drawable/txt_box_blue"
                     android:layout_marginRight="10dp"
                     android:textSize="12sp"
-                    android:layout_weight="3"
+                    android:layout_weight="0"
                     style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="90dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     android:text="Cancel"/>
             </LinearLayout>

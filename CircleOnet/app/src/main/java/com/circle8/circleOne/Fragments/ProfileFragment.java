@@ -3,8 +3,6 @@ package com.circle8.circleOne.Fragments;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -30,12 +28,10 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Base64;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
@@ -49,11 +45,8 @@ import com.circle8.circleOne.Activity.AttachmentDisplay;
 import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.Activity.EditProfileActivity;
 import com.circle8.circleOne.Activity.ImageZoom;
-import com.circle8.circleOne.Activity.LoginActivity;
-import com.circle8.circleOne.Activity.MyAccountActivity;
 import com.circle8.circleOne.Activity.SearchGroupMembers;
 import com.circle8.circleOne.Activity.TestimonialActivity;
-import com.circle8.circleOne.Activity.TestimonialRequest;
 import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.Adapter.CustomAdapter;
 import com.circle8.circleOne.Adapter.TextRecyclerAdapter;
@@ -80,7 +73,6 @@ import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.squareup.picasso.Picasso;
 
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -101,7 +93,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.Exchanger;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -111,8 +102,6 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -706,7 +695,7 @@ public class ProfileFragment extends Fragment
                 Utility.freeMemory();
                 Utility.deleteCache(getContext());
 
-                ContextThemeWrapper ctw = new ContextThemeWrapper(getContext(), R.style.Blue_AlertDialog);
+                ContextThemeWrapper ctw = new ContextThemeWrapper(getContext(), R.style.CustomPopupTheme);
                 PopupMenu popup = new PopupMenu(ctw, imgProfileMenu);
                 //Inflating the Popup using xml file
                 popup.getMenuInflater().inflate(R.menu.profile_popup_menu, popup.getMenu());
@@ -811,6 +800,16 @@ public class ProfileFragment extends Fragment
 
                                     session.createLoginSession(Q_ID, allTags.get(i).getProfileID(), user_id, first_name + " " + last_name, email_id, user_img, gender, user_pass, date_DOB, phone_no, Connection_Limit, Connection_Left);
 
+
+                                    if (allTags.get(i).getUserPhoto().equals(""))
+                                    {
+                                        imgProfile.setImageResource(R.drawable.usr_white1);
+                                    }
+                                    else {
+                                        Picasso.with(getContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+allTags.get(i).getUserPhoto())
+                                                .resize(300,300).onlyScaleDown().skipMemoryCache().into(imgProfile);
+                                    }
+
                                     try {
                                         JSONObject object = jsonArray.getJSONObject(i);
                                         try {
@@ -909,16 +908,6 @@ public class ProfileFragment extends Fragment
                                         }catch (Exception e){}
                                     } catch (JSONException e) {
                                         e.printStackTrace();
-                                    }
-
-
-                                    if (allTags.get(i).getUserPhoto().equals(""))
-                                    {
-                                        imgProfile.setImageResource(R.drawable.usr_white1);
-                                    }
-                                    else {
-                                        Picasso.with(getContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+allTags.get(i).getUserPhoto())
-                                                .resize(300,300).onlyScaleDown().skipMemoryCache().into(imgProfile);
                                     }
 
                                     if (allTags.get(i).getCard_Front().equalsIgnoreCase("") && allTags.get(i).getCard_Back().equalsIgnoreCase("")) {
@@ -1479,6 +1468,18 @@ public class ProfileFragment extends Fragment
 
                     TestimonialProfileId = allTags.get(profileIndex).getProfileID();
 
+                    if (allTags.get(profileIndex).getUserPhoto().equals(""))
+                    {
+                        imgProfile.setImageResource(R.drawable.usr_white1);
+                    }
+                    else {
+                        try {
+                            Picasso.with(mContext).load(Utility.BASE_IMAGE_URL + "UserProfile/" + allTags.get(profileIndex).getUserPhoto())
+                                    .resize(300,300).onlyScaleDown().skipMemoryCache().into(imgProfile);
+                        }
+                        catch (Exception e){}
+                    }
+
 //                    tvName.setText(allTags.get(0).getFirstName() + " "+ allTags.get(0).getLastName());
 //                    tvPersonName.setText(allTags.get(0).getFirstName() + " "+ allTags.get(0).getLastName());
                     personName = allTags.get(profileIndex).getFirstName() + " "+ allTags.get(profileIndex).getLastName() ;
@@ -1766,17 +1767,6 @@ public class ProfileFragment extends Fragment
                     }
 
                     image = new ArrayList<>();
-                    if (allTags.get(profileIndex).getUserPhoto().equals(""))
-                    {
-                        imgProfile.setImageResource(R.drawable.usr_white1);
-                    }
-                    else {
-                        try {
-                            Picasso.with(mContext).load(Utility.BASE_IMAGE_URL + "UserProfile/" + allTags.get(profileIndex).getUserPhoto())
-                                    .resize(300,300).onlyScaleDown().skipMemoryCache().into(imgProfile);
-                        }
-                        catch (Exception e){}
-                    }
 
                     new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");
 
