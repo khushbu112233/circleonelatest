@@ -20,8 +20,16 @@
         "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\5b612ff36a6e98a22be9796604b9cda69bf39da3\\output\\res\\layout-v21\\notification_template_custom_big.xml"
     },
     {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_template_custom_big.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\2ff66b8a8431f9fd1c2c1d8d9e9340f98155e5ac\\output\\res\\layout-v21\\notification_template_custom_big.xml"
+    },
+    {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_action_tombstone.xml",
         "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\5b612ff36a6e98a22be9796604b9cda69bf39da3\\output\\res\\layout-v21\\notification_action_tombstone.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_template_icon_group.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\2ff66b8a8431f9fd1c2c1d8d9e9340f98155e5ac\\output\\res\\layout-v21\\notification_template_icon_group.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_action_tombstone.xml",
@@ -30,5 +38,13 @@
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_template_icon_group.xml",
         "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\5b612ff36a6e98a22be9796604b9cda69bf39da3\\output\\res\\layout-v21\\notification_template_icon_group.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_action.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\2ff66b8a8431f9fd1c2c1d8d9e9340f98155e5ac\\output\\res\\layout-v21\\notification_action.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_action_tombstone.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\2ff66b8a8431f9fd1c2c1d8d9e9340f98155e5ac\\output\\res\\layout-v21\\notification_action_tombstone.xml"
     }
 ]

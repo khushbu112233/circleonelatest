@@ -43,7 +43,6 @@ public class WriteTestimonialActivity extends AppCompatActivity implements View.
     private TextView tvUserName, tvSend, tvCancel ;
     private EditText etTestimonial1, etTestimonial2, etTestimonial3,
             etTestimonial4, etTestimonial5, etTestimonial6 ;
-
     private RelativeLayout rlProgressDialog ;
     private TextView tvProgressing ;
     private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
@@ -125,13 +124,13 @@ public class WriteTestimonialActivity extends AppCompatActivity implements View.
             String testimonial2 = etTestimonial2.getText().toString();
             String testimonial3 = etTestimonial3.getText().toString();
 
-            if (testimonial1.isEmpty())
+            if (testimonial_String.isEmpty())
             {
-                Toast.makeText(getApplicationContext(),"Please Write first field Testimonial",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Please write testimonial",Toast.LENGTH_SHORT).show();
             }
-            else if (testimonial2.isEmpty())
+            else if (testimonial_String.length() < 100)
             {
-                Toast.makeText(getApplicationContext(),"Please Write second field Testimonial",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Please write testimonial at least 100 words",Toast.LENGTH_SHORT).show();
             }
             else
             {
@@ -190,7 +189,7 @@ public class WriteTestimonialActivity extends AppCompatActivity implements View.
             {
                 if (result.equals(""))
                 {
-                    Toast.makeText(getApplicationContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Server connection error", Toast.LENGTH_LONG).show();
                 }
                 else
                 {
@@ -200,7 +199,7 @@ public class WriteTestimonialActivity extends AppCompatActivity implements View.
 
                     if (success.equals("1"))
                     {
-                        Toast.makeText(getApplicationContext(), "Testimonial Written Successfully..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Successfully testimonial has been written.", Toast.LENGTH_SHORT).show();
                         Notification.webCall();
                         finish();
                     }
