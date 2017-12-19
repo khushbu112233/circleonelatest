@@ -3,9 +3,8 @@ package com.circle8.circleOne.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,16 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.circle8.circleOne.ApplicationUtils.MyApplication;
-import com.circle8.circleOne.Helper.CustomSharedPreference;
-import com.circle8.circleOne.Model.UserObject;
 import com.circle8.circleOne.R;
-import com.circle8.circleOne.Utils.PrefUtils;
 import com.circle8.circleOne.Utils.Utility;
-import com.circle8.circleOne.Walkthrough.HelpActivity;
-import com.facebook.login.LoginManager;
-import com.google.gson.Gson;
-import com.linkedin.platform.LISessionManager;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -33,10 +24,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 public class ForgotActivity extends AppCompatActivity
 {
@@ -203,18 +193,6 @@ public class ForgotActivity extends AppCompatActivity
 
         // 11. return result
         return result;
-    }
-
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while ((line = bufferedReader.readLine()) != null)
-            result += line;
-
-        inputStream.close();
-        return result;
-
     }
 
 

@@ -45,6 +45,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+
 public class EventDetail extends AppCompatActivity
 {
     private TextView actionText;
@@ -587,15 +589,6 @@ public class EventDetail extends AppCompatActivity
         return result;
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while((line = bufferedReader.readLine()) != null)
-            result += line;
-        Utility.freeMemory();
-        inputStream.close();
-        return result;
-    }
+
 }
 

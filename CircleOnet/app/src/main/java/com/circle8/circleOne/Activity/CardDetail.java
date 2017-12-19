@@ -89,7 +89,9 @@ import com.quickblox.chat.utils.DialogUtils;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.QBResponseException;
 import com.quickblox.sample.core.gcm.GooglePlayServicesHelper;
+import com.quickblox.sample.core.ui.dialog.ProgressDialogFragment;
 import com.quickblox.sample.core.utils.SharedPrefsHelper;
+import com.quickblox.sample.core.utils.Toaster;
 import com.quickblox.sample.core.utils.constant.GcmConsts;
 import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
@@ -117,6 +119,8 @@ import be.appfoundry.nfclibrary.activities.NfcActivity;
 import be.appfoundry.nfclibrary.utilities.interfaces.NfcReadUtility;
 import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 public class CardDetail extends NfcActivity implements DialogsManager.ManagingDialogsCallbacks, View.OnClickListener, OnMapReadyCallback {
     ExpandableHeightListView lstTestimonial;
@@ -885,28 +889,26 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
             @Override
             public void onClick(View view) {
                 registerQbChatListeners();
+                QBUser currentUser = getUserFromSession();
+                //loginToChat(currentUser);
+                Boolean aBoolean = SharedPrefsHelper.getInstance().hasQbUser();
+                // Toast.makeText(getApplicationContext(), aBoolean.toString(), Toast.LENGTH_LONG).show();
+                ChatHelper.getInstance().loginToChat(currentUser, new QBEntityCallback<Void>() {
+                    @Override
+                    public void onSuccess(Void result, Bundle bundle) {
+                        Log.v(TAG, "Chat login onSuccess()");
 
-                try {
-                    QBUser currentUser = getUserFromSession();
-                    //loginToChat(currentUser);
-                    Boolean aBoolean = SharedPrefsHelper.getInstance().hasQbUser();
-                    // Toast.makeText(getApplicationContext(), aBoolean.toString(), Toast.LENGTH_LONG).show();
-                    ChatHelper.getInstance().loginToChat(currentUser, new QBEntityCallback<Void>() {
-                        @Override
-                        public void onSuccess(Void result, Bundle bundle) {
-                            Log.v(TAG, "Chat login onSuccess()");
-
-                            // ProgressDialogFragment.hide(getSupportFragmentManager());
-                            //    DialogsActivity.start(SplashActivity.this);
-                            // finish();
+                        // ProgressDialogFragment.hide(getSupportFragmentManager());
+                        //    DialogsActivity.start(SplashActivity.this);
+                        // finish();
 
 
-                            //  Toast.makeText(getApplicationContext(), selectedUsers.toString(), Toast.LENGTH_LONG).show();
+                        //  Toast.makeText(getApplicationContext(), selectedUsers.toString(), Toast.LENGTH_LONG).show();
 
 
-                            ArrayList<Integer> occupantIdsList = new ArrayList<Integer>();
-                            occupantIdsList.add(Integer.parseInt(CurrentQ_ID));
-                            occupantIdsList.add(occupant_id);
+                        ArrayList<Integer> occupantIdsList = new ArrayList<Integer>();
+                        occupantIdsList.add(Integer.parseInt(CurrentQ_ID));
+                        occupantIdsList.add(occupant_id);
 /*
                         QBChatDialog dialog = new QBChatDialog();
                         dialog.setName("Chat with Garry and John");
@@ -921,23 +923,23 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 //for creating GROUP dialog
 
 
-                            QBChatDialog dialog = DialogUtils.buildDialog("Chat with Garry and John", QBDialogType.PRIVATE, occupantIdsList);
+                        QBChatDialog dialog = DialogUtils.buildDialog("Chat with Garry and John", QBDialogType.PRIVATE, occupantIdsList);
 
-                            QBRestChatService.createChatDialog(dialog).performAsync(new QBEntityCallback<QBChatDialog>() {
-                                @Override
-                                public void onSuccess(QBChatDialog result, Bundle params) {
-                                    //ChatActivity.startForResult(CardDetail.this, 165, result);
-                                    ChatHelper.getInstance();
-                                    Intent intent = new Intent(CardDetail.this, ChatActivity.class);
-                                    intent.putExtra(ChatActivity.EXTRA_DIALOG_ID, result);
-                                    startActivity(intent);
-                                }
+                        QBRestChatService.createChatDialog(dialog).performAsync(new QBEntityCallback<QBChatDialog>() {
+                            @Override
+                            public void onSuccess(QBChatDialog result, Bundle params) {
+                                //ChatActivity.startForResult(CardDetail.this, 165, result);
+                                ChatHelper.getInstance();
+                                Intent intent = new Intent(CardDetail.this, ChatActivity.class);
+                                intent.putExtra(ChatActivity.EXTRA_DIALOG_ID, result);
+                                startActivity(intent);
+                            }
 
-                                @Override
-                                public void onError(QBResponseException responseException) {
+                            @Override
+                            public void onError(QBResponseException responseException) {
 
-                                }
-                            });
+                            }
+                        });
 
 
                         /*if (isPrivateDialogExist(selectedUsers)) {
@@ -958,23 +960,19 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                             ChatActivity.startForResult(CardDetail.this, 165, existingPrivateDialog);
                             finish();
                         } else {*/
-                            //  ProgressDialogFragment.show(getSupportFragmentManager(), R.string.create_chat);
-                            //  createDialog(selectedUsers);
-                            //   }
+                        //  ProgressDialogFragment.show(getSupportFragmentManager(), R.string.create_chat);
+                        //  createDialog(selectedUsers);
+                        //   }
 
-                        }
+                    }
 
-                        @Override
-                        public void onError(QBResponseException e) {
-                            //  ProgressDialogFragment.hide(getSupportFragmentManager());
-                            Log.w(TAG, "Chat login onError(): " + e);
+                    @Override
+                    public void onError(QBResponseException e) {
+                        //  ProgressDialogFragment.hide(getSupportFragmentManager());
+                        Log.w(TAG, "Chat login onError(): " + e);
 
-                        }
-                    });
-                }catch (Exception e){
-                    Toast.makeText(getApplicationContext(), "Not able to connect to chat", Toast.LENGTH_LONG).show();
-                    return;
-                }
+                    }
+                });
 
 
                 //  ChatActivity.chatMessageListener = new ChatActivity.ChatMessageListener();
@@ -2294,17 +2292,6 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         }
 
         // 11. return result
-        return result;
-    }
-
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while ((line = bufferedReader.readLine()) != null)
-            result += line;
-
-        inputStream.close();
         return result;
     }
 

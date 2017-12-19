@@ -2,7 +2,6 @@ package com.circle8.circleOne.Activity;
 
 import android.Manifest;
 import android.annotation.TargetApi;
-import android.app.Dialog;
 import android.app.KeyguardManager;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -35,9 +34,7 @@ import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
@@ -63,7 +60,6 @@ import com.circle8.circleOne.MultiContactPicker;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.PrefUtils;
 import com.circle8.circleOne.Utils.Utility;
-import com.circle8.circleOne.Walkthrough.HelpActivity;
 import com.circle8.circleOne.chat.ChatHelper;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -109,9 +105,7 @@ import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.QBResponseException;
 import com.quickblox.core.helper.StringifyArrayList;
 import com.quickblox.sample.core.ui.dialog.ProgressDialogFragment;
-import com.quickblox.sample.core.utils.ErrorUtils;
 import com.quickblox.sample.core.utils.SharedPrefsHelper;
-import com.quickblox.sample.core.utils.Toaster;
 import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
 import com.twitter.sdk.android.Twitter;
@@ -131,10 +125,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -149,6 +140,7 @@ import javax.crypto.SecretKey;
 
 import io.fabric.sdk.android.Fabric;
 
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 import static com.circle8.circleOne.Utils.Validation.validateLogin;
 
 public class LoginActivity extends AppCompatActivity implements
@@ -934,17 +926,6 @@ public class LoginActivity extends AppCompatActivity implements
         mGoogleApiClient.connect();
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while ((line = bufferedReader.readLine()) != null)
-            result += line;
-
-        inputStream.close();
-        return result;
-
-    }
 
     public String POSTQ_ID(String url) {
         InputStream inputStream = null;

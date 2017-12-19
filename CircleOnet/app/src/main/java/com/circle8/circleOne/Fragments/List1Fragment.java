@@ -66,6 +66,7 @@ import java.util.List;
 import java.util.Locale;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 import static com.google.android.gms.internal.zzahg.runOnUiThread;
 
 public class List1Fragment extends Fragment
@@ -668,17 +669,7 @@ public class List1Fragment extends Fragment
         return result;
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while ((line = bufferedReader.readLine()) != null)
-            result += line;
 
-        inputStream.close();
-        return result;
-
-    }
 
     public static class HttpAsyncTask extends AsyncTask<String, Void, String>
     {
