@@ -96,6 +96,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static com.circle8.circleOne.Activity.RegisterActivity.BitMapToString;
 import static com.circle8.circleOne.Activity.RegisterActivity.ConvertBitmapToString;
 import static com.circle8.circleOne.Utils.Utility.imageCalculateSize;
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 import static com.circle8.circleOne.Utils.Validation.updateRegisterValidate;
 import static com.circle8.circleOne.Utils.Validation.validate;
 
@@ -1593,17 +1594,6 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     }
 
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException
-    {
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while((line = bufferedReader.readLine()) != null)
-            result += line;
-
-        inputStream.close();
-        return result;
-    }
 
     public  void CustomProgressDialog(final String loading)
     {

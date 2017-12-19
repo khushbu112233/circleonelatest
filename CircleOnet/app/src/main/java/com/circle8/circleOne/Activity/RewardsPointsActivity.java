@@ -2,7 +2,6 @@ package com.circle8.circleOne.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,9 +20,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.Adapter.EarnPointsAdapter;
 import com.circle8.circleOne.Adapter.ExpandableListAdapter1;
 import com.circle8.circleOne.Adapter.MerchantExpandableAdapter;
@@ -45,16 +41,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 public class RewardsPointsActivity extends AppCompatActivity implements View.OnClickListener
 {
@@ -171,16 +166,6 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         expListView = (ExpandableListView)MerchantView.findViewById(R.id.laptop_list);
         ivAdImg = (ImageView)MerchantView.findViewById(R.id.ivAdImg);
 
-
-                Glide.with(this).load(R.drawable.cosmos)
-                .asBitmap()
-                .into(new BitmapImageViewTarget(ivAdImg) {
-                    @Override
-                    public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
-                        super.onResourceReady(drawable, anim);
-                        ivAdImg.setImageBitmap(drawable);
-                    }
-                });
         setGroupIndicatorToRight();
 
         expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener()
@@ -990,17 +975,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         return result;
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException
-    {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while ((line = bufferedReader.readLine()) != null)
-            result += line;
 
-        inputStream.close();
-        return result;
-    }
 
     private class HttpAsyncGetBalance extends AsyncTask<String, Void, String>
     {

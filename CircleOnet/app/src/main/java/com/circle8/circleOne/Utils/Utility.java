@@ -15,7 +15,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 
 import java.io.ByteArrayOutputStream;
+import java.io.BufferedReader;
+
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -32,8 +37,9 @@ public class Utility
     /**
      * Uat for 8082
      */
-    public static final String BASE_IMAGE_URL = "http://circle8.asia/App_imgLib/";
-//    public static final String BASE_URL = "http://circle8.asia:8999/Onet.svc/";
+//    public static final String BASE_IMAGE_URL = "http://circle8.asia:8083/";
+    //khushbu last commented
+  public static final String BASE_URL = "http://circle8.asia:8999/Onet.svc/";
 
     /**
      * Development for 8081
@@ -45,8 +51,10 @@ public class Utility
     /**
      *Production  for 8999
      */
-    //public static final String BASE_IMAGE_URL = "http://circle8.asia/App_imgLib/";
-    public static final String BASE_URL = "http://circle8.asia:8999/Onet.svc/";
+    public static final String BASE_IMAGE_URL = "http://circle8.asia/App_imgLib/";
+   // public static final String BASE_URL = "http://circle8.asia:8999/Onet.svc/";
+
+   // public static final String BASE_URL = "http://circle8.asia:8082/Onet.svc/";
 
     public static void freeMemory(){
         System.runFinalization();
@@ -267,5 +275,14 @@ public class Utility
             return false;
         }
     }
+    public static String convertInputStreamToString(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+        while ((line = bufferedReader.readLine()) != null)
+            result += line;
 
+        inputStream.close();
+        return result;
+    }
 }

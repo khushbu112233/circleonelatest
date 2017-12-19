@@ -64,6 +64,7 @@ import java.util.HashMap;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.circle8.circleOne.R.id.tvAddress;
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 import static java.security.AccessController.getContext;
 
 public class MerchantDetailActivity extends FragmentActivity implements OnMapReadyCallback
@@ -649,17 +650,6 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
         return result;
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException
-    {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while ((line = bufferedReader.readLine()) != null)
-            result += line;
-
-        inputStream.close();
-        return result;
-    }
 
     public  void CustomProgressDialog(final String loading)
     {

@@ -194,18 +194,14 @@
                                     android:layout_marginLeft="15dp"
                                     android:src="@drawable/ic_profile_white" />
 
-                                <TextView
-                                    android:textStyle="bold"
+                                <ImageView
                                     android:id="@+id/imgDone"
-                                    android:padding="3dp"
-                                    android:textSize="14sp"
                                     android:layout_marginBottom="10dp"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Save"
-                                    android:textColor="@color/white"/>
+                                    android:src="@drawable/ic_save_white"/>
 
                                 <ImageView
                                     android:id="@+id/ivProfileDelete"
@@ -215,7 +211,7 @@
                                     android:layout_alignParentRight="true"
                                     android:layout_marginBottom="10dp"
                                     android:layout_marginRight="15dp"
-                                    android:src="@drawable/ic_delete_black_24dp" />
+                                    android:src="@drawable/ic_delete_white" />
 
                             </RelativeLayout>
 
@@ -319,7 +315,7 @@
                                 android:layout_width="25dp"
                                 android:layout_height="25dp"
                                 android:layout_marginRight="15dp"
-                                android:src="@drawable/new_profile" />
+                                android:src="@drawable/new_profile1" />
 
                             <com.circle8.circleOne.Utils.cgEditView
                                 android:id="@+id/edtProfileName"
@@ -1329,7 +1325,7 @@
                                 android:layout_height="20dp"
                                 android:layout_marginRight="20dp"
                                 android:layout_weight="0.0"
-                                android:src="@drawable/ic_association_blue" />
+                                android:src="@drawable/ic_association" />
 
                             <Spinner
                                 android:visibility="gone"

@@ -2,7 +2,6 @@ package com.circle8.circleOne.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -10,6 +9,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -21,16 +23,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.circle8.circleOne.Activity.CardsActivity;
-import com.circle8.circleOne.Activity.EventDetail;
 import com.circle8.circleOne.Activity.EventsSelectOption;
 import com.circle8.circleOne.Adapter.EventsAdapter;
 import com.circle8.circleOne.Helper.LoginSession;
@@ -48,7 +45,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -57,6 +53,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -64,7 +62,7 @@ public class EventsFragment extends Fragment
 {
     public static Context mContext ;
 
-    private static ListView listView;
+    private static RecyclerView listView;
     public static EventsAdapter gridAdapter;
     private TextView actionText;
     RelativeLayout lnrSearch;
@@ -119,8 +117,12 @@ public class EventsFragment extends Fragment
 
         lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
         line = view.findViewById(R.id.view);
-        listView = (ListView)view.findViewById(R.id.listEvents);
+        listView = (RecyclerView) view.findViewById(R.id.listEvents);
 
+        final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext.getApplicationContext());
+
+        listView.setLayoutManager(mLayoutManager);
+        listView.setItemAnimator(new DefaultItemAnimator());
         if (EventsSelectOption.searchOpt.equals("AllEvents"))
         {
             callFirst();
@@ -173,7 +175,7 @@ public class EventsFragment extends Fragment
             e.printStackTrace();
         }*/
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+   /*     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
@@ -182,7 +184,7 @@ public class EventsFragment extends Fragment
                 startActivity(intent);
             }
         });
-
+*/
         searchText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -585,17 +587,7 @@ public class EventsFragment extends Fragment
         return result;
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException
-    {
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while((line = bufferedReader.readLine()) != null)
-            result += line;
 
-        inputStream.close();
-        return result;
-    }
 
     private static class HttpAsyncTaskSearchEvent extends AsyncTask<String, Void, String>
     {

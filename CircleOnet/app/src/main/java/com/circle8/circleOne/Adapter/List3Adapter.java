@@ -322,6 +322,7 @@ public class List3Adapter extends BaseSwipeAdapter
 
         if (nfcModelList1.get(position).getCard_front().equals(""))
         {
+
             holder.image.setVisibility(View.GONE);
             holder.defaultCard.setVisibility(View.VISIBLE);
             try

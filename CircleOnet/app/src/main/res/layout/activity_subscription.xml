@@ -3,21 +3,25 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rlListView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.circle8.circleOne.Activity.SubscriptionActivity">
 
-    <RelativeLayout
-        android:id="@+id/rlLayOne"
+    <ImageView
+        android:id="@+id/ivAlphaImg"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:alpha="0.8"
+        android:visibility="gone"/>
 
-        <RelativeLayout
-            android:elevation="15dp"
-            android:id="@+id/rlTabBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorAccent" >
+    <RelativeLayout
+        android:elevation="15dp"
+        android:id="@+id/rlTabBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent" >
             <ImageView
                 android:id="@+id/imgBack"
                 android:layout_marginTop="5dp"
@@ -58,18 +62,16 @@
                 android:src="@drawable/ic_dehaze_black_24dp"/>
         </RelativeLayout>
 
-        <ListView
-            android:id="@+id/listView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/rlTabBar"
-            android:layout_margin="0dp"
-            android:dividerHeight="1dp"
-            android:divider="@color/colorPrimary">
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rlTabBar"
+        android:layout_margin="0dp"
+        android:dividerHeight="1dp"
+        android:divider="@color/colorPrimary">
 
-        </ListView>
-
-    </RelativeLayout>
+    </ListView>
 
     <RelativeLayout
         android:id="@+id/rlProgressDialog"
@@ -131,431 +133,6 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="0.3"/>
         </LinearLayout>
-    </RelativeLayout>
-
-    <ImageView
-        android:id="@+id/ivAlphaImg"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
-        android:alpha="0.8"
-        android:visibility="gone"/>
-
-    <RelativeLayout
-        android:id="@+id/rlLayTwo"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true">
-
-            <LinearLayout
-                android:id="@+id/llPackageDetails"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:visibility="visible">
-
-                <RelativeLayout
-                    android:id="@+id/rlLeftConnection"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="00dp"
-                    android:layout_marginLeft="0dp"
-                    android:visibility="gone">
-                    <ImageView
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:src="@drawable/up_expandable"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"/>
-                    <com.circle8.circleOne.Utils.GillSans
-                        android:id="@+id/tvLeftConnection"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2 connections left, until end of this month"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"/>
-                </RelativeLayout>
-
-                <com.circle8.circleOne.Utils.GillSans
-                    android:id="@+id/tvPackageName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Free Package"
-                    android:textSize="17dp"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="00dp"
-                    android:layout_marginTop="0dp"
-                    android:textColor="@color/white"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="1"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginRight="0dp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="0.9"
-                        android:layout_marginTop="8dp"
-                        android:layout_gravity="center_vertical">
-                        <com.circle8.circleOne.Utils.GillSans
-                            android:id="@+id/tvContact_Group"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="200 contacts, up to 5 groups,"
-                            android:textColor="@color/white"
-                            android:textSize="12sp"/>
-                        <com.circle8.circleOne.Utils.GillSans
-                            android:id="@+id/tvConnection"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="0 connections per month"
-                            android:textColor="@color/white"
-                            android:layout_marginTop="5dp"
-                            android:textSize="12sp"
-                            android:layout_marginBottom="5dp"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="0.1"
-                        android:layout_gravity="center_vertical">
-                        <com.circle8.circleOne.Utils.GillSans
-                            android:id="@+id/tvAmount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="S&amp;0"
-                            android:textStyle="bold"
-                            android:textSize="25dp"
-                            android:layout_gravity="right"
-                            android:textColor="@color/white"/>
-                        <com.circle8.circleOne.Utils.GillSans
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="/user/month billed"
-                            android:layout_gravity="right"
-                            android:textColor="@color/white"
-                            android:textSize="14sp"
-                            android:layout_marginTop="0dp"/>
-                    </LinearLayout>
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <ScrollView
-                android:layout_below="@+id/llPackageDetails"
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="0dp"
-                android:layout_marginRight="0dp"
-                android:layout_marginBottom="0dp">
-                <LinearLayout
-                    android:id="@+id/llCardValues"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    >
-
-                    <LinearLayout
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:orientation="horizontal"
-                        android:weightSum="3"
-                        android:gravity="center"
-                        android:layout_marginTop="5dp">
-                        <ImageView
-                            android:id="@+id/ivVisa"
-                            android:layout_width="30dp"
-                            android:layout_height="25dp"
-                            android:src="@drawable/visa_blue"
-                            android:layout_weight="1" />
-                        <ImageView
-                            android:id="@+id/ivMasterCard"
-                            android:layout_width="30dp"
-                            android:layout_height="25dp"
-                            android:src="@drawable/mastercard_blue"
-                            android:layout_weight="1"/>
-                        <ImageView
-                            android:id="@+id/ivAmex"
-                            android:layout_width="30dp"
-                            android:layout_height="25dp"
-                            android:src="@drawable/amex_blue"
-                            android:layout_weight="1"/>
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/colorPrimary"
-                        android:layout_marginTop="2dp"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginTop="15dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:weightSum="1">
-                        <com.circle8.circleOne.Utils.cgTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Card No.: "
-                            android:textSize="12sp"
-                            android:textColor="@color/unselected"
-                            android:layout_marginRight="0dp"
-                            android:layout_weight="0.75"/>
-                        <com.circle8.circleOne.Utils.cgEditView
-                            android:id="@+id/etCardNumber"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:paddingBottom="10dp"
-                            android:paddingLeft="10dp"
-                            android:hint=""
-                            android:inputType="number"
-                            android:backgroundTint="@color/colorPrimary"
-                            android:textColorHint="@color/colorPrimary"
-                            android:textColor="@color/black"
-                            android:textSize="12sp"
-                            android:enabled="true"
-                            android:layout_weight="0.25"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginTop="5dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:weightSum="1">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.75"
-                            android:orientation="vertical">
-                            <com.circle8.circleOne.Utils.cgTextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Name of"
-                                android:textSize="12sp"
-                                android:textColor="@color/unselected"
-                                android:layout_marginRight="0dp" />
-                            <com.circle8.circleOne.Utils.cgTextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Card Holder"
-                                android:textSize="10sp"
-                                android:textColor="@color/unselected"
-                                android:layout_marginRight="0dp" />
-                        </LinearLayout>
-                        <com.circle8.circleOne.Utils.cgEditView
-                            android:id="@+id/etCardHolderName"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:paddingBottom="10dp"
-                            android:paddingLeft="10dp"
-                            android:hint=""
-                            android:inputType="textPersonName"
-                            android:backgroundTint="@color/colorPrimary"
-                            android:textColorHint="@color/colorPrimary"
-                            android:textColor="@color/black"
-                            android:textSize="12sp"
-                            android:enabled="true"
-                            android:layout_weight="0.25"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginTop="5dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:layout_weight="1">
-                        <com.circle8.circleOne.Utils.cgTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Expiry Date: "
-                            android:textSize="12sp"
-                            android:textColor="@color/unselected"
-                            android:layout_marginRight="0dp"
-                            android:layout_weight="0.75"/>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.25"
-                            android:orientation="horizontal"
-                            android:weightSum="1">
-                            <com.circle8.circleOne.Utils.cgEditView
-                                android:id="@+id/etExMonth"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:paddingBottom="10dp"
-                                android:paddingLeft="10dp"
-                                android:hint="MM"
-                                android:inputType="number"
-                                android:maxLength="2"
-                                android:backgroundTint="@color/colorPrimary"
-                                android:textColorHint="@color/unselected"
-                                android:textColor="@color/black"
-                                android:textSize="12sp"
-                                android:enabled="true"
-                                android:layout_weight="0.5"/>
-                            <com.circle8.circleOne.Utils.cgTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="/"
-                                android:textColor="@color/colorPrimary"
-                                android:layout_gravity="bottom"
-                                android:layout_marginBottom="2dp"/>
-                            <com.circle8.circleOne.Utils.cgEditView
-                                android:id="@+id/etExYear"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:paddingBottom="10dp"
-                                android:paddingLeft="10dp"
-                                android:hint="YYYY"
-                                android:inputType="number"
-                                android:maxLength="4"
-                                android:backgroundTint="@color/colorPrimary"
-                                android:textColorHint="@color/unselected"
-                                android:textColor="@color/black"
-                                android:textSize="12sp"
-                                android:enabled="true"
-                                android:layout_weight="0.5"/>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginTop="5dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:layout_weight="1">
-                        <com.circle8.circleOne.Utils.cgTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="CVV: "
-                            android:textSize="12sp"
-                            android:textColor="@color/unselected"
-                            android:layout_marginRight="0dp"
-                            android:layout_weight="0.75"/>
-                        <com.circle8.circleOne.Utils.cgEditView
-                            android:id="@+id/etSecurityCode"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:paddingBottom="10dp"
-                            android:paddingLeft="10dp"
-                            android:hint=""
-                            android:inputType="number"
-                            android:maxLength="3"
-                            android:backgroundTint="@color/colorPrimary"
-                            android:textColorHint="@color/colorPrimary"
-                            android:textColor="@color/black"
-                            android:textSize="12sp"
-                            android:enabled="true"
-                            android:layout_weight="0.25"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginTop="5dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:weightSum="1">
-                        <com.circle8.circleOne.Utils.cgTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Mobile No.: "
-                            android:textSize="12sp"
-                            android:textColor="@color/unselected"
-                            android:layout_marginRight="0dp"
-                            android:layout_weight="0.75"/>
-                        <com.circle8.circleOne.Utils.cgEditView
-                            android:id="@+id/etMobileNumber"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:paddingBottom="10dp"
-                            android:inputType="number"
-                            android:paddingLeft="10dp"
-                            android:hint=""
-                            android:backgroundTint="@color/colorPrimary"
-                            android:textColorHint="@color/colorPrimary"
-                            android:textColor="@color/black"
-                            android:textSize="13sp"
-                            android:enabled="true"
-                            android:layout_weight="0.25"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:id="@+id/llBottom"
-                        android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:weightSum="1"
-                        android:gravity="center_vertical">
-
-                        <com.circle8.circleOne.Utils.cgTextView
-                            android:id="@+id/tvPay"
-                            android:textSize="20dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Pay"
-                            android:textColor="@color/colorPrimary"
-                            android:layout_weight="0.5"
-                            android:gravity="right"
-                            android:layout_marginRight="60dp"/>
-                        <com.circle8.circleOne.Utils.cgTextView
-                            android:id="@+id/tvCancel"
-                            android:textSize="20dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Cancel"
-                            android:textColor="@color/colorPrimary"
-                            android:layout_weight="0.5"
-                            android:layout_marginLeft="60dp"/>
-                    </LinearLayout>
-
-                </LinearLayout>
-            </ScrollView>
-
-        </RelativeLayout>
-
     </RelativeLayout>
 
 </RelativeLayout>

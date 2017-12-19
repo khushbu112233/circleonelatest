@@ -51,6 +51,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+
 public class ContactUsActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener
 {
     private ImageView ivMessage, ivPhone ;
@@ -539,17 +541,6 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
         }
 
         // 11. return result
-        return result;
-    }
-
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while ((line = bufferedReader.readLine()) != null)
-            result += line;
-
-        inputStream.close();
         return result;
     }
 

@@ -6,11 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -19,18 +18,16 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.circle8.circleOne.Adapter.GroupsItemsAdapter;
 import com.circle8.circleOne.Adapter.SortAndFilterAdapter;
 import com.circle8.circleOne.Adapter.SortAndFilterProfileAdapter;
 import com.circle8.circleOne.Fragments.List1Fragment;
 import com.circle8.circleOne.Fragments.List2Fragment;
-import com.circle8.circleOne.Fragments.List3Fragment;
-import com.circle8.circleOne.Fragments.List4Fragment;
+import com.circle8.circleOne.Fragments.List3Fragment1;
+import com.circle8.circleOne.Fragments.List4Fragment1;
 import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.GroupModel;
@@ -48,12 +45,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 
 public class SortAndFilterOption extends AppCompatActivity
@@ -149,20 +145,26 @@ public class SortAndFilterOption extends AppCompatActivity
                 }
 
                 try {
-                    List3Fragment.gridAdapter.notifyDataSetChanged();
-                    List3Fragment.allTags = db.getActiveNFC();
-                    List3Fragment.nfcModel.clear();
+                    List3Fragment1.gridAdapter.notifyDataSetChanged();
+                    List3Fragment1.allTags = db.getActiveNFC();
+                    List3Fragment1.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List3Fragment.GetData(getApplicationContext());
+                    List3Fragment1.GetData(getApplicationContext());
                 } catch (Exception e) {
 
                 }
                 try {
+                    List4Fragment1.gridAdapter.notifyDataSetChanged();
+                    List4Fragment1.allTags = db.getActiveNFC();
+                    List4Fragment1.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List4Fragment1.GetData(getApplicationContext());
+/*
                     List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.allTags = db.getActiveNFC();
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List4Fragment.GetData(getApplicationContext());
+                    List4Fragment.GetData(getApplicationContext());*/
                 } catch (Exception e) {
 
                 }
@@ -246,7 +248,7 @@ public class SortAndFilterOption extends AppCompatActivity
 
                 }
 
-                try {
+            /*    try {
                     List3Fragment.gridAdapter.notifyDataSetChanged();
                     List3Fragment.allTags = db.getActiveNFC();
                     List3Fragment.nfcModel.clear();
@@ -254,13 +256,27 @@ public class SortAndFilterOption extends AppCompatActivity
                     List3Fragment.GetData(getApplicationContext());
                 } catch (Exception e) {
 
+                }*/
+                try {
+                    List3Fragment1.gridAdapter.notifyDataSetChanged();
+                    List3Fragment1.allTags = db.getActiveNFC();
+                    List3Fragment1.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List3Fragment1.GetData(getApplicationContext());
+                } catch (Exception e) {
+
                 }
                 try {
-                    List4Fragment.gridAdapter.notifyDataSetChanged();
+                   /* List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.allTags = db.getActiveNFC();
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List4Fragment.GetData(getApplicationContext());
+                    List4Fragment.GetData(getApplicationContext());*/
+                    List4Fragment1.gridAdapter.notifyDataSetChanged();
+                    List4Fragment1.allTags = db.getActiveNFC();
+                    List4Fragment1.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List4Fragment1.GetData(getApplicationContext());
                 } catch (Exception e) {
 
                 }
@@ -305,20 +321,25 @@ public class SortAndFilterOption extends AppCompatActivity
                 }
 
                 try {
-                    List3Fragment.gridAdapter.notifyDataSetChanged();
-                    List3Fragment.allTags = db.getActiveNFC();
-                    List3Fragment.nfcModel.clear();
+                    List3Fragment1.gridAdapter.notifyDataSetChanged();
+                    List3Fragment1.allTags = db.getActiveNFC();
+                    List3Fragment1.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List3Fragment.GetData(getApplicationContext());
+                    List3Fragment1.GetData(getApplicationContext());
                 } catch (Exception e) {
 
                 }
                 try {
-                    List4Fragment.gridAdapter.notifyDataSetChanged();
+                 /*   List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.allTags = db.getActiveNFC();
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List4Fragment.GetData(getApplicationContext());
+                    List4Fragment.GetData(getApplicationContext());*/
+                    List4Fragment1.gridAdapter.notifyDataSetChanged();
+                    List4Fragment1.allTags = db.getActiveNFC();
+                    List4Fragment1.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List4Fragment1.GetData(getApplicationContext());
                 } catch (Exception e) {
 
                 }
@@ -363,20 +384,25 @@ public class SortAndFilterOption extends AppCompatActivity
                 }
 
                 try {
-                    List3Fragment.gridAdapter.notifyDataSetChanged();
-                    List3Fragment.allTags = db.getActiveNFC();
-                    List3Fragment.nfcModel.clear();
+                    List3Fragment1.gridAdapter.notifyDataSetChanged();
+                    List3Fragment1.allTags = db.getActiveNFC();
+                    List3Fragment1.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List3Fragment.GetData(getApplicationContext());
+                    List3Fragment1.GetData(getApplicationContext());
                 } catch (Exception e) {
 
                 }
                 try {
-                    List4Fragment.gridAdapter.notifyDataSetChanged();
+                   /* List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.allTags = db.getActiveNFC();
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List4Fragment.GetData(getApplicationContext());
+                    List4Fragment.GetData(getApplicationContext());*/
+                    List4Fragment1.gridAdapter.notifyDataSetChanged();
+                    List4Fragment1.allTags = db.getActiveNFC();
+                    List4Fragment1.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List4Fragment1.GetData(getApplicationContext());
                 } catch (Exception e) {
 
                 }
@@ -492,20 +518,25 @@ public class SortAndFilterOption extends AppCompatActivity
                 }
 
                 try {
-                    List3Fragment.gridAdapter.notifyDataSetChanged();
-                    List3Fragment.allTags = db.getActiveNFC();
-                    List3Fragment.nfcModel.clear();
+                    List3Fragment1.gridAdapter.notifyDataSetChanged();
+                    List3Fragment1.allTags = db.getActiveNFC();
+                    List3Fragment1.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List3Fragment.GetData(getApplicationContext());
+                    List3Fragment1.GetData(getApplicationContext());
                 } catch (Exception e) {
 
                 }
                 try {
-                    List4Fragment.gridAdapter.notifyDataSetChanged();
+                  /*  List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.allTags = db.getActiveNFC();
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List4Fragment.GetData(getApplicationContext());
+                    List4Fragment.GetData(getApplicationContext());*/
+                    List4Fragment1.gridAdapter.notifyDataSetChanged();
+                    List4Fragment1.allTags = db.getActiveNFC();
+                    List4Fragment1.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List4Fragment1.GetData(getApplicationContext());
                 } catch (Exception e) {
 
                 }
@@ -554,20 +585,25 @@ public class SortAndFilterOption extends AppCompatActivity
                     }
 
                     try {
-                        List3Fragment.gridAdapter.notifyDataSetChanged();
-                        List3Fragment.allTags = db.getActiveNFC();
-                        List3Fragment.nfcModel.clear();
+                        List3Fragment1.gridAdapter.notifyDataSetChanged();
+                        List3Fragment1.allTags = db.getActiveNFC();
+                        List3Fragment1.nfcModel.clear();
                         //  nfcModelList.clear();
-                        List3Fragment.GetData(getApplicationContext());
+                        List3Fragment1.GetData(getApplicationContext());
                     } catch (Exception e) {
 
                     }
                     try {
-                        List4Fragment.gridAdapter.notifyDataSetChanged();
+                       /* List4Fragment.gridAdapter.notifyDataSetChanged();
                         List4Fragment.allTags = db.getActiveNFC();
                         List4Fragment.nfcModel.clear();
                         //  nfcModelList.clear();
-                        List4Fragment.GetData(getApplicationContext());
+                        List4Fragment.GetData(getApplicationContext());*/
+                        List4Fragment1.gridAdapter.notifyDataSetChanged();
+                        List4Fragment1.allTags = db.getActiveNFC();
+                        List4Fragment1.nfcModel.clear();
+                        //  nfcModelList.clear();
+                        List4Fragment1.GetData(getApplicationContext());
                     } catch (Exception e) {
 
                     }
@@ -615,20 +651,25 @@ public class SortAndFilterOption extends AppCompatActivity
                     }
 
                     try {
-                        List3Fragment.gridAdapter.notifyDataSetChanged();
-                        List3Fragment.allTags = db.getActiveNFC();
-                        List3Fragment.nfcModel.clear();
+                        List3Fragment1.gridAdapter.notifyDataSetChanged();
+                        List3Fragment1.allTags = db.getActiveNFC();
+                        List3Fragment1.nfcModel.clear();
                         //  nfcModelList.clear();
-                        List3Fragment.GetData(getApplicationContext());
+                        List3Fragment1.GetData(getApplicationContext());
                     } catch (Exception e) {
 
                     }
                     try {
-                        List4Fragment.gridAdapter.notifyDataSetChanged();
+                     /*   List4Fragment.gridAdapter.notifyDataSetChanged();
                         List4Fragment.allTags = db.getActiveNFC();
                         List4Fragment.nfcModel.clear();
                         //  nfcModelList.clear();
-                        List4Fragment.GetData(getApplicationContext());
+                        List4Fragment.GetData(getApplicationContext());*/
+                        List4Fragment1.gridAdapter.notifyDataSetChanged();
+                        List4Fragment1.allTags = db.getActiveNFC();
+                        List4Fragment1.nfcModel.clear();
+                        //  nfcModelList.clear();
+                        List4Fragment1.GetData(getApplicationContext());
                     } catch (Exception e) {
 
                     }
@@ -676,20 +717,25 @@ public class SortAndFilterOption extends AppCompatActivity
                     }
 
                     try {
-                        List3Fragment.gridAdapter.notifyDataSetChanged();
-                        List3Fragment.allTags = db.getActiveNFC();
-                        List3Fragment.nfcModel.clear();
+                        List3Fragment1.gridAdapter.notifyDataSetChanged();
+                        List3Fragment1.allTags = db.getActiveNFC();
+                        List3Fragment1.nfcModel.clear();
                         //  nfcModelList.clear();
-                        List3Fragment.GetData(getApplicationContext());
+                        List3Fragment1.GetData(getApplicationContext());
                     } catch (Exception e) {
 
                     }
                     try {
-                        List4Fragment.gridAdapter.notifyDataSetChanged();
+                      /*  List4Fragment.gridAdapter.notifyDataSetChanged();
                         List4Fragment.allTags = db.getActiveNFC();
                         List4Fragment.nfcModel.clear();
                         //  nfcModelList.clear();
-                        List4Fragment.GetData(getApplicationContext());
+                        List4Fragment.GetData(getApplicationContext());*/
+                        List4Fragment1.gridAdapter.notifyDataSetChanged();
+                        List4Fragment1.allTags = db.getActiveNFC();
+                        List4Fragment1.nfcModel.clear();
+                        //  nfcModelList.clear();
+                        List4Fragment1.GetData(getApplicationContext());
                     } catch (Exception e) {
 
                     }
@@ -738,20 +784,25 @@ public class SortAndFilterOption extends AppCompatActivity
                     }
 
                     try {
-                        List3Fragment.gridAdapter.notifyDataSetChanged();
-                        List3Fragment.allTags = db.getActiveNFC();
-                        List3Fragment.nfcModel.clear();
+                        List3Fragment1.gridAdapter.notifyDataSetChanged();
+                        List3Fragment1.allTags = db.getActiveNFC();
+                        List3Fragment1.nfcModel.clear();
                         //  nfcModelList.clear();
-                        List3Fragment.GetData(getApplicationContext());
+                        List3Fragment1.GetData(getApplicationContext());
                     } catch (Exception e) {
 
                     }
                     try {
-                        List4Fragment.gridAdapter.notifyDataSetChanged();
+                      /*  List4Fragment.gridAdapter.notifyDataSetChanged();
                         List4Fragment.allTags = db.getActiveNFC();
                         List4Fragment.nfcModel.clear();
                         //  nfcModelList.clear();
-                        List4Fragment.GetData(getApplicationContext());
+                        List4Fragment.GetData(getApplicationContext());*/
+                        List4Fragment1.gridAdapter.notifyDataSetChanged();
+                        List4Fragment1.allTags = db.getActiveNFC();
+                        List4Fragment1.nfcModel.clear();
+                        //  nfcModelList.clear();
+                        List4Fragment1.GetData(getApplicationContext());
                     } catch (Exception e) {
 
                     }
@@ -802,21 +853,26 @@ public class SortAndFilterOption extends AppCompatActivity
                 }
 
                 try {
-                    List3Fragment.gridAdapter.notifyDataSetChanged();
-                    List3Fragment.allTags = db.getActiveNFC();
-                    List3Fragment.nfcModel.clear();
+                    List3Fragment1.gridAdapter.notifyDataSetChanged();
+                    List3Fragment1.allTags = db.getActiveNFC();
+                    List3Fragment1.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List3Fragment.GetData(getApplicationContext());
+                    List3Fragment1.GetData(getApplicationContext());
                 } catch (Exception e) {
 
                 }
                 try
                 {
-                    List4Fragment.gridAdapter.notifyDataSetChanged();
+                  /*  List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.allTags = db.getActiveNFC();
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List4Fragment.GetData(getApplicationContext());
+                    List4Fragment.GetData(getApplicationContext());*/
+                    List4Fragment1.gridAdapter.notifyDataSetChanged();
+                    List4Fragment1.allTags = db.getActiveNFC();
+                    List4Fragment1.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List4Fragment1.GetData(getApplicationContext());
                 } catch (Exception e) {
 
                 }
@@ -1245,15 +1301,6 @@ public class SortAndFilterOption extends AppCompatActivity
         return result;
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while ((line = bufferedReader.readLine()) != null)
-            result += line;
 
-        inputStream.close();
-        return result;
-    }
 
 }

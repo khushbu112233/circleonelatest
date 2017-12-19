@@ -63,6 +63,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static com.circle8.circleOne.Activity.RegisterActivity.BitMapToString;
 import static com.circle8.circleOne.Activity.RegisterActivity.ConvertBitmapToString;
 import static com.circle8.circleOne.Activity.RegisterActivity.rotateImage;
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 public class GroupsActivity extends AppCompatActivity
 {
@@ -76,7 +77,7 @@ public class GroupsActivity extends AppCompatActivity
     public static ArrayList<GroupModel> groupModelArrayList;
 
     public static ImageView imgBack, ivAlphaImg;
-    public static RelativeLayout llBottom;
+    RelativeLayout llBottom;
     String GroupName, GroupDesc, group_id;
     private String GroupImage = "";
     CharSequence[] items ;
@@ -193,8 +194,7 @@ public class GroupsActivity extends AppCompatActivity
                 ivAlphaImg.setVisibility(View.VISIBLE);
                 rlLayTwo.setVisibility(View.VISIBLE);
                 listView.setEnabled(false);
-                GroupDisplayAdapter.tvEditGroup.setEnabled(false);
-                GroupDisplayAdapter.imgGroup.setEnabled(false);
+
 //                Intent in = new Intent(GroupsActivity.this, CreateGroupActivity.class);
 //                startActivity(in);
 
@@ -459,9 +459,6 @@ public class GroupsActivity extends AppCompatActivity
                 ivAlphaImg.setVisibility(View.GONE);
                 rlLayTwo.setVisibility(View.GONE);
                 listView.setEnabled(true);
-                llBottom.setEnabled(true);
-                GroupDisplayAdapter.tvEditGroup.setEnabled(true);
-                GroupDisplayAdapter.imgGroup.setEnabled(true);
 
                 etCircleName.setText(null);
                 etCircleDesc.setText(null);
@@ -1450,18 +1447,6 @@ public class GroupsActivity extends AppCompatActivity
 
         // 11. return result
         return result;
-    }
-
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while ((line = bufferedReader.readLine()) != null)
-            result += line;
-
-        inputStream.close();
-        return result;
-
     }
 
     public void CustomProgressDialog(final String loading)

@@ -3,9 +3,9 @@ package com.circle8.circleOne.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -17,15 +17,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.circle8.circleOne.Adapter.CardSwipe;
-import com.circle8.circleOne.Adapter.NewCardRequestAdapter;
-import com.circle8.circleOne.Fragments.ProfileFragment;
+import com.circle8.circleOne.Adapter.NewCardRequestAdapter1;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.NewCardModel;
 import com.circle8.circleOne.Model.ProfileModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
-import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -36,18 +33,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 public class NewCardRequestActivity extends AppCompatActivity
 {
     private ListView listView ;
     private ArrayList<NewCardModel> newCardModelArrayList ;
-    private NewCardRequestAdapter newCardRequestAdapter ;
+    private NewCardRequestAdapter1 newCardRequestAdapter ;
     public static ArrayList<ProfileModel> allTags ;
     private String UserID = "";
     private LoginSession session;
@@ -229,17 +225,6 @@ public class NewCardRequestActivity extends AppCompatActivity
         return result;
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while((line = bufferedReader.readLine()) != null)
-            result += line;
-
-        inputStream.close();
-        return result;
-
-    }
 
     private class HttpAsyncTaskProfiles extends AsyncTask<String, Void, String>
     {
@@ -323,7 +308,7 @@ public class NewCardRequestActivity extends AppCompatActivity
                         //  GetData(getContext());
                     }
 
-                    newCardRequestAdapter = new NewCardRequestAdapter(NewCardRequestActivity.this, R.layout.new_card_request_parameter, allTags);
+                    newCardRequestAdapter = new NewCardRequestAdapter1(NewCardRequestActivity.this, R.layout.new_card_request_parameter, allTags);
                     listView.setAdapter(newCardRequestAdapter);
 
                 }

@@ -1,26 +1,30 @@
 package com.circle8.circleOne.Activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Adapter.NewCardRequestAdapter;
 import com.circle8.circleOne.Helper.LoginSession;
+import com.circle8.circleOne.Interface.ItemClickProfile;
+import com.circle8.circleOne.Interface.ItemLongClickProfile;
 import com.circle8.circleOne.Model.NewCardModel;
 import com.circle8.circleOne.Model.ProfileModel;
 import com.circle8.circleOne.R;
@@ -35,16 +39,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+
 public class ManageMyProfile extends AppCompatActivity
+
 {
-    private ListView listView ;
+
+    private RecyclerView listView ;
     private ArrayList<NewCardModel> newCardModelArrayList ;
     private NewCardRequestAdapter newCardRequestAdapter ;
     public static ArrayList<ProfileModel> allTags ;
@@ -55,10 +60,13 @@ public class ManageMyProfile extends AppCompatActivity
     RelativeLayout llBottomAdd;
     String ProfileID = "";
 
-    private RelativeLayout rlProgressDialog ;
-    private TextView tvProgressing ;
-    private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
-
+    public static RelativeLayout rlProgressDialog ;
+    private static TextView tvProgressing ;
+    private static ImageView ivConnecting1;
+    private static ImageView ivConnecting2;
+    private ImageView ivConnecting3 ;
+    ItemClickProfile itemClickProfile;
+    ItemLongClickProfile itemLongClickProfile;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -66,7 +74,7 @@ public class ManageMyProfile extends AppCompatActivity
         setContentView(R.layout.activity_manage_my_profile);
 
         session = new LoginSession(getApplicationContext());
-        listView = (ListView)findViewById(R.id.listView);
+        listView = (RecyclerView) findViewById(R.id.listView);
         imgBack = (ImageView) findViewById(R.id.imgBack);
         llBottomAdd = (RelativeLayout) findViewById(R.id.llBottomAdd);
         HashMap<String, String> user = session.getUserDetails();
@@ -80,6 +88,54 @@ public class ManageMyProfile extends AppCompatActivity
         ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
         ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
 
+        itemClickProfile = new ItemClickProfile() {
+            @Override
+            public void OnItemClickProfile(int position) {
+
+
+                Intent intent = new Intent(getApplicationContext(), EditProfileActivity.class);
+                intent.putExtra("type", "edit");
+                intent.putExtra("profile_id", allTags.get(position).getProfileID());
+                intent.putExtra("activity", "manage");
+                startActivity(intent);
+            }
+        };
+        itemLongClickProfile =  new ItemLongClickProfile() {
+            @Override
+            public void OnItemLongClickProfile(final int position) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(
+                        ManageMyProfile.this, R.style.Blue_AlertDialog);
+                alert.setMessage("Do you want to delete this profile?");
+                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //do your work here
+                        ProfileID = allTags.get(position).getProfileID();
+                        dialog.dismiss();
+                        new HttpAsyncTaskProfileDelete().execute(Utility.BASE_URL+"DeleteProfile");
+
+                    }
+                });
+                alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                alert.show();
+
+
+            }
+        };
+
+
+        final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+
+        listView.setLayoutManager(mLayoutManager);
+        listView.setItemAnimator(new DefaultItemAnimator());
         new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
 
         imgBack.setOnClickListener(new View.OnClickListener() {
@@ -100,7 +156,7 @@ public class ManageMyProfile extends AppCompatActivity
             }
         });
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+  /*      listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), EditProfileActivity.class);
@@ -110,8 +166,8 @@ public class ManageMyProfile extends AppCompatActivity
                 startActivity(intent);
             }
         });
-
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+*/
+       /* listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(
@@ -141,7 +197,7 @@ public class ManageMyProfile extends AppCompatActivity
                 return true;
             }
         });
-
+*/
     }
 
     @Override
@@ -268,17 +324,6 @@ public class ManageMyProfile extends AppCompatActivity
         return result;
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while((line = bufferedReader.readLine()) != null)
-            result += line;
-
-        inputStream.close();
-        return result;
-
-    }
 
     private class HttpAsyncTaskProfiles extends AsyncTask<String, Void, String>
     {
@@ -296,7 +341,7 @@ public class ManageMyProfile extends AppCompatActivity
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
             String loading = "Fetching profiles" ;
-            CustomProgressDialog(loading);
+            CustomProgressDialog(loading,getApplicationContext());
         }
 
         @Override
@@ -368,6 +413,8 @@ public class ManageMyProfile extends AppCompatActivity
 
 //                    newCardRequestAdapter = new NewCardRequestAdapter(getApplicationContext(), allTags);
                     newCardRequestAdapter = new NewCardRequestAdapter(ManageMyProfile.this, R.layout.new_card_request_parameter, allTags);
+                    newCardRequestAdapter.onItemclick(itemClickProfile);
+                    newCardRequestAdapter.onItemLongClick(itemLongClickProfile);
                     listView.setAdapter(newCardRequestAdapter);
                     newCardRequestAdapter.notifyDataSetChanged();
 
@@ -407,7 +454,7 @@ public class ManageMyProfile extends AppCompatActivity
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
             String loading = "Deleting profile" ;
-            CustomProgressDialog(loading);
+            CustomProgressDialog(loading,getApplicationContext());
         }
 
         @Override
@@ -448,14 +495,14 @@ public class ManageMyProfile extends AppCompatActivity
         }
     }
 
-    public void CustomProgressDialog(final String loading)
+    public static void CustomProgressDialog(final String loading, Context context)
     {
         rlProgressDialog.setVisibility(View.VISIBLE);
         tvProgressing.setText(loading);
 
-        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
+        Animation anim = AnimationUtils.loadAnimation(context,R.anim.anticlockwise);
         ivConnecting1.startAnimation(anim);
-        Animation anim1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.clockwise);
+        Animation anim1 = AnimationUtils.loadAnimation(context,R.anim.clockwise);
         ivConnecting2.startAnimation(anim1);
 
         int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.

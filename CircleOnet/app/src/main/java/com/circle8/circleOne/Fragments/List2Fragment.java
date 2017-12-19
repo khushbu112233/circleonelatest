@@ -60,6 +60,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -830,16 +832,6 @@ public class List2Fragment extends Fragment
         return result;
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while ((line = bufferedReader.readLine()) != null)
-            result += line;
-
-        inputStream.close();
-        return result;
-    }
 
    /* GestureDetector.SimpleOnGestureListener simpleOnGestureListener
             = new GestureDetector.SimpleOnGestureListener()

@@ -15,9 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -51,17 +49,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static android.R.attr.bitmap;
 import static com.circle8.circleOne.Activity.EditProfileActivity.BitMapToString;
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 public class NewCardRequestActivity1 extends AppCompatActivity
 {
@@ -110,7 +105,6 @@ public class NewCardRequestActivity1 extends AppCompatActivity
     TextView tvPay, tvCancel, tvAmount ;
     StickyScrollView scrollView ;
     boolean lay_Enable = false ;
-    boolean open_Stripe = false ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -288,8 +282,6 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                         for ( int i = 0; i < main_contains.getChildCount();  i++ )
                         {
                             View view = main_contains.getChildAt(i);
-                            view.setFilterTouchesWhenObscured(false);
-                            view.setClickable(false);
                             view.setEnabled(false); // Or whatever you want to do with the view.
                         }
 
@@ -324,7 +316,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                             alertDialog.show();*/
 
                         /*new payment mode alert-dialog*/
-                        /*alertDialog = new AlertDialog.Builder(NewCardRequestActivity1.this).create();
+                        alertDialog = new AlertDialog.Builder(NewCardRequestActivity1.this).create();
                         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                         View dialogView = inflater.inflate(R.layout.stripe_payment_screen1, null);
 
@@ -409,7 +401,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                         alertDialog.setView(dialogView);
                         alertDialog.setCancelable(false);
                         alertDialog.getWindow().setFormat(PixelFormat.TRANSLUCENT);
-                        alertDialog.show();*/
+                        alertDialog.show();
                     }
                 }
             }
@@ -568,7 +560,6 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                 }
             }
         });
-
     }
 
     @Override
@@ -867,17 +858,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
         return result;
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while ((line = bufferedReader.readLine()) != null)
-            result += line;
 
-        inputStream.close();
-        return result;
-
-    }
 
     public String POST1(String url)
     {

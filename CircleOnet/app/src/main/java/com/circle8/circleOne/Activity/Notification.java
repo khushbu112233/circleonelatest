@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -20,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Adapter.NotificationAdapter;
-import com.circle8.circleOne.Fragments.List4Fragment;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.NotificationModel;
 import com.circle8.circleOne.R;
@@ -42,9 +42,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+
 public class Notification extends AppCompatActivity
 {
-    static ListView listNotification;
+    static RecyclerView listNotification;
     LoginSession loginSession;
     static String UserId = "";
     static ArrayList<NotificationModel> allTags;
@@ -88,7 +90,7 @@ public class Notification extends AppCompatActivity
 
         textView.setText("Notifications - 0");
 
-        listNotification = (ListView) findViewById(R.id.listNotification);
+        listNotification = (RecyclerView) findViewById(R.id.listNotification);
 
         loginSession = new LoginSession(getApplicationContext());
         HashMap<String, String> user = loginSession.getUserDetails();
@@ -196,18 +198,6 @@ public class Notification extends AppCompatActivity
         return result;
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException
-    {
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while((line = bufferedReader.readLine()) != null)
-            result += line;
-
-        inputStream.close();
-        return result;
-    }
-
     private static class HttpAsyncTask extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -301,7 +291,7 @@ public class Notification extends AppCompatActivity
                     listNotification.setAdapter(notificationAdapter);*/
 
                     GetData(mContext);
-
+/*
                     listNotification.setOnScrollListener(new AbsListView.OnScrollListener()
                     {
                         @Override
@@ -312,7 +302,7 @@ public class Notification extends AppCompatActivity
                             progressStatus = "LOAD MORE";
 
                             int threshold = 1;
-                            int count = listNotification.getCount();
+                            int count = listNotification.getChildCount();
 
                             if (scrollState == SCROLL_STATE_IDLE)
                             {
@@ -333,7 +323,7 @@ public class Notification extends AppCompatActivity
                                              int visibleItemCount, int totalItemCount) {
                             // TODO Auto-generated method stub
                         }
-                    });
+                    });*/
                 }
                 else
                 {

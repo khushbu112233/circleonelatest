@@ -51,6 +51,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+
 /**
  * Created by ample-arch on 8/28/2017.
  */
@@ -473,16 +475,6 @@ public class ByIndustryFragment extends Fragment
         return result;
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while((line = bufferedReader.readLine()) != null)
-            result += line;
-
-        inputStream.close();
-        return result;
-    }
 
     public void CustomProgressDialog(final String loading)
     {
