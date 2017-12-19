@@ -10,10 +10,10 @@ import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.NfcF;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -24,20 +24,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.circle8.circleOne.Adapter.MerchantAddressAdapter;
-import com.circle8.circleOne.Adapter.MerchantProductAdapter;
-import com.circle8.circleOne.Model.MerchantLocationModel;
-import com.circle8.circleOne.Model.MerchantProductModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
-import com.stripe.android.model.Card;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -120,6 +114,8 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
 
 
     public static final byte[] MIME_TEXT = "application/com.circle8.circleOne".getBytes();
+    public static final byte[] MIME_TEXT1 = "application/com.amplearch.circleone".getBytes();
+
     @Override
     public void onNewIntent(Intent intent) {
         String action = intent.getAction();
@@ -151,6 +147,46 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
                                     payload.length - langCodeLen - 1, textEncoding);
                             String decryptstr = decrypt(s1, secretKey);
                             arrayNFC.add(decryptstr);
+                        }
+                        else if (recs[j].getTnf() == NdefRecord.TNF_MIME_MEDIA && Arrays.equals(recs[j].getType(), MIME_TEXT1)) {
+
+                            byte[] payload = recs[j].getPayload();
+                            String textEncoding = ((payload[0] & 0200) == 0) ? "UTF-8" : "UTF-16";
+                            int langCodeLen = payload[0] & 0077;
+
+                                   /* s += ("\n" +
+                                            new String(payload, langCodeLen + 1,
+                                                    payload.length - langCodeLen - 1, textEncoding) );*/
+                            String s1 = new String(payload, langCodeLen + 1,
+                                    payload.length - langCodeLen - 1, textEncoding);
+                            String decryptstr = decrypt(s1, secretKey);
+                            arrayNFC.add(decryptstr);
+                        }
+                        else {
+                            NdefMessage[] msgs = null;
+
+                            try {
+                                msgs = new NdefMessage[data.length];
+                                for (int i1 = 0; i1 < data.length; i1++) {
+                                    msgs[i1] = (NdefMessage) data[i1];
+                                }
+
+                                byte[] payload = msgs[0].getRecords()[0].getPayload();
+
+                                String message = new String(payload);
+                /* 把tag的資訊放到textview裡面 */
+                                // mEtMessage.setText(new String(payload));
+
+                                message = message.substring(1, message.length());
+
+                                String decryptstr = decrypt(message, secretKey);
+                                arrayNFC.add(decryptstr);
+
+                            } catch (GeneralSecurityException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }
