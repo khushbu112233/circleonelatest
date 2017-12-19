@@ -324,7 +324,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                             alertDialog.show();*/
 
                         /*new payment mode alert-dialog*/
-                        /*alertDialog = new AlertDialog.Builder(NewCardRequestActivity1.this).create();
+                        alertDialog = new AlertDialog.Builder(NewCardRequestActivity1.this).create();
                         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                         View dialogView = inflater.inflate(R.layout.stripe_payment_screen1, null);
 
@@ -409,7 +409,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                         alertDialog.setView(dialogView);
                         alertDialog.setCancelable(false);
                         alertDialog.getWindow().setFormat(PixelFormat.TRANSLUCENT);
-                        alertDialog.show();*/
+                        alertDialog.show();
                     }
                 }
             }

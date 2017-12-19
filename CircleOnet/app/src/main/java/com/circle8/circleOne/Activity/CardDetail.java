@@ -1168,6 +1168,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
     private QBUser getUserFromSession()
     {
         QBUser user = SharedPrefsHelper.getInstance().getQbUser();
+        Log.e("user",""+user);
         user.setId(QBSessionManager.getInstance().getSessionParameters().getUserId());
         return user;
     }
