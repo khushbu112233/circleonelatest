@@ -27,7 +27,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Activity.ConnectActivity;
-import com.circle8.circleOne.Activity.Notification;
 import com.circle8.circleOne.Adapter.ConnectListAdapter;
 import com.circle8.circleOne.Adapter.List5Adapter;
 import com.circle8.circleOne.Helper.LoginSession;
@@ -341,7 +340,7 @@ public class ByNameFragment extends Fragment
 
                                 progressStatus = "LOAD MORE";
 
-                                if (listSize > 7)
+                                if (listSize > 10)
                                 {
                                     listView.setStackFromBottom(true);
                                 }

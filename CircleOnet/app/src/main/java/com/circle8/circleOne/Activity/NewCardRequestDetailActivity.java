@@ -56,7 +56,9 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.circle8.circleOne.Activity.EditProfileActivity.BitMapToString;
+
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+
 
 public class NewCardRequestDetailActivity extends AppCompatActivity
 {
@@ -946,10 +948,27 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
 
                     //  final_ImgBase64 = BitMapToString(bitmap);
                     //   Upload();
+                    long size = Utility.imageCalculateSize(bitmap);
 
                     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
-
+                    if (size > 500000){
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bytes);
+                    }
+                    else if (size > 400000){
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 55, bytes);
+                    }
+                    else if (size > 300000){
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
+                    }
+                    else if (size > 200000){
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, bytes);
+                    }
+                    else if (size > 100000){
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bytes);
+                    }
+                    else {
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+                    }
                     File destination = new File(Environment.getExternalStorageDirectory(),
                             System.currentTimeMillis() + ".jpg");
 

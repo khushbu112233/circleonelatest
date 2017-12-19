@@ -1,52 +1,40 @@
 package com.circle8.circleOne.Activity;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.circle8.circleOne.Adapter.CardSwipe;
-import com.circle8.circleOne.Adapter.GroupAdapter;
 import com.circle8.circleOne.Adapter.GroupDisplayAdapter;
 import com.circle8.circleOne.Adapter.GroupsItemsAdapter;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.GroupModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
-import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -69,7 +57,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -710,10 +697,27 @@ public class GroupsActivity extends AppCompatActivity
                 try {
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(result.getUri()));
                     // originalBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
+                    long size = Utility.imageCalculateSize(bitmap);
 
                     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
-
+                    if (size > 500000){
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bytes);
+                    }
+                    else if (size > 400000){
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 55, bytes);
+                    }
+                    else if (size > 300000){
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
+                    }
+                    else if (size > 200000){
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, bytes);
+                    }
+                    else if (size > 100000){
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bytes);
+                    }
+                    else {
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+                    }
                     File destination = new File(Environment.getExternalStorageDirectory(),
                             System.currentTimeMillis() + ".jpg");
 

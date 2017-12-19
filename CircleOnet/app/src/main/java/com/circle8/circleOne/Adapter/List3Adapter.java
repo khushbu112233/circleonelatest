@@ -384,7 +384,7 @@ public class List3Adapter extends BaseSwipeAdapter
             holder.defaultCard.setVisibility(View.GONE);
             //imageView.setImageResource(nfcModelList.get(position).getCard_front());
             Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Cards/"+nfcModelList1.get(position).getCard_front())
-                    .resize(400,280).onlyScaleDown().skipMemoryCache().into(holder.image);
+                    .resize(400,280).onlyScaleDown().into(holder.image);
         }
 
         //Picasso.with(context).load("http://circle8.asia/App_ImgLib/Cards/" + nfcModelList1.get(position).getCard_front()).into(holder.image);

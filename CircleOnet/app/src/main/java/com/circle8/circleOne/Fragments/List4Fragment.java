@@ -54,6 +54,7 @@ import java.util.List;
 
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
+
 public class List4Fragment extends Fragment
 {
     public static ListView listView;
@@ -93,6 +94,7 @@ public class List4Fragment extends Fragment
     public static RelativeLayout rlProgressDialog ;
     public static TextView tvProgressing ;
     public static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+    public static String count;
 
     public List4Fragment() {
         // Required empty public constructor
@@ -497,7 +499,7 @@ public class List4Fragment extends Fragment
                     String success = response.getString("success");
                     String findBy = response.getString("FindBy");
                     String search = response.getString("Search");
-                    String count = response.getString("count");
+                    count = response.getString("count");
                     String pageno = response.getString("pageno");
                     String recordno = response.getString("numofrecords");
 
@@ -662,7 +664,7 @@ public class List4Fragment extends Fragment
                     JSONObject jsonObject = new JSONObject(result);
 //                    numberCount = Integer.parseInt(jsonObject.getString("count")) ;
 
-                    String count = jsonObject.getString("count");
+                    count = jsonObject.getString("count");
                     if (count.equals("") || count.equals("null")) {
                         numberCount = 0;
                     } else {
@@ -1057,22 +1059,22 @@ public class List4Fragment extends Fragment
 
         if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
             if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + nfcModel1.size() + "/" + CardsActivity.Connection_Limit);
+                CardsActivity.setActionBarTitle("Cards - " + count + "/" + CardsActivity.Connection_Limit);
             }
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
             if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + nfcModel1.size());
+                CardsActivity.setActionBarTitle("Cards - " + count);
             }
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
             if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + nfcModel1.size());
+                CardsActivity.setActionBarTitle("Cards - " + count);
             }
         }
         else  {
             if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + nfcModel1.size());
+                CardsActivity.setActionBarTitle("Cards - " + count);
             }
         }
 
