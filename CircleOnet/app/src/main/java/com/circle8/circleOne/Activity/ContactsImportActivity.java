@@ -54,6 +54,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+
 public class ContactsImportActivity extends AppCompatActivity
 {
     private static final int PERMISSION_REQUEST_CONTACT = 111;
@@ -516,18 +518,6 @@ public class ContactsImportActivity extends AppCompatActivity
         return result;
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException
-    {
-        Utility.freeMemory();
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while((line = bufferedReader.readLine()) != null)
-            result += line;
-
-        inputStream.close();
-        return result;
-    }
 
     public void CustomProgressDialog(final String loading)
     {

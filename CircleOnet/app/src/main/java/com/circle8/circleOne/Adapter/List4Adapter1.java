@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.circle8.circleOne.Activity.CardDetail;
 import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.Fragments.List1Fragment;
@@ -96,6 +98,8 @@ public class List4Adapter1 extends  RecyclerView.Adapter<List4Adapter1.MyViewHol
         CircleImageView image;
         FrameLayout fm_img,deleteLayout;
         FrameLayout fm_front;
+        Button delete;
+        SwipeRevealLayout swipe;
 
         public MyViewHolder(View view) {
             super(view);
@@ -110,18 +114,20 @@ public class List4Adapter1 extends  RecyclerView.Adapter<List4Adapter1.MyViewHol
             fm_img = (FrameLayout)view.findViewById(R.id.fm_img);
             fm_front = (FrameLayout)view.findViewById(R.id.fm_front);
             deleteLayout = (FrameLayout)view.findViewById(R.id.delete_layout);
-
+            delete = (Button)view.findViewById(R.id.delete);
+            swipe  = (SwipeRevealLayout)view.findViewById(R.id.swipe);
         }
-        public void bind(final int position1) {
-            deleteLayout.setOnClickListener(new View.OnClickListener() {
+        public void bind() {
+            delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Log.e("delete_click",""+getAdapterPosition());
                     // nfcModelList1.remove(getAdapterPosition());
-                    posi  = position1 ;
+                    posi  = getAdapterPosition() ;
 
+                    swipe.close(true);
                     new HttpAsyncTask().execute(Utility.BASE_URL+"FriendConnection_Operation");
-
+                    notifyItemRemoved(getAdapterPosition());
                 }
             });
 
@@ -152,7 +158,7 @@ public class List4Adapter1 extends  RecyclerView.Adapter<List4Adapter1.MyViewHol
     @Override
     public void onBindViewHolder(final MyViewHolder holder,final int position) {
 
-        holder.bind(position);
+
         String name = nfcModelList1.get(position).getName();
         String company = nfcModelList1.get(position).getCompany();
         String email = nfcModelList1.get(position).getEmail();
@@ -203,7 +209,7 @@ public class List4Adapter1 extends  RecyclerView.Adapter<List4Adapter1.MyViewHol
             holder.image.setImageResource(R.drawable.usr);
         }
 
-
+        holder.bind();
         //   Profile profile = profileList.get(position);
         holder.fm_front.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -67,6 +67,8 @@ import me.dm7.barcodescanner.core.IViewFinder;
 import me.dm7.barcodescanner.core.ViewFinderView;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+
 public class AddQRActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler
 {
     Button btnRescan ;
@@ -344,17 +346,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
         return result;
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while ((line = bufferedReader.readLine()) != null)
-            result += line;
 
-        inputStream.close();
-        return result;
-
-    }
 
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {

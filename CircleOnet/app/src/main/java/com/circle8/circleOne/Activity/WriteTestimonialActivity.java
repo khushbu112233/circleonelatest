@@ -3,9 +3,9 @@ package com.circle8.circleOne.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -29,12 +29,11 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 public class WriteTestimonialActivity extends AppCompatActivity implements View.OnClickListener
 {
@@ -273,17 +272,7 @@ public class WriteTestimonialActivity extends AppCompatActivity implements View.
         return result;
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while ((line = bufferedReader.readLine()) != null)
-            result += line;
 
-        inputStream.close();
-        return result;
-
-    }
 
     public  void CustomProgressDialog(final String loading)
     {

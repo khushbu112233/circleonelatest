@@ -2,7 +2,6 @@ package com.circle8.circleOne.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,8 +24,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Activity.SearchGroupMembers;
-import com.circle8.circleOne.Adapter.ConnectListAdapter;
-import com.circle8.circleOne.Adapter.List5Adapter;
 import com.circle8.circleOne.Adapter.SearchGroupMemberAdapter;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.ConnectList;
@@ -42,16 +39,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
-public class ByNameGroupFragment extends Fragment
-{
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+
+public class ByNameGroupFragment extends Fragment {
+
     private ListView listView;
     private TextView tvDataInfo ;
     private String find_by = "NAME" ;
@@ -249,7 +245,7 @@ public class ByNameGroupFragment extends Fragment
 
                     if(connect.length() == 0)
                     {
-                        tvDataInfo.setVisibility(View.VISIBLE);
+//                        tvDataInfo.setVisibility(View.VISIBLE);
                         connectTags.clear();
                         try {connectListAdapter.notifyDataSetChanged();}
                         catch (Exception e) { e.printStackTrace();}
@@ -396,16 +392,7 @@ public class ByNameGroupFragment extends Fragment
         return result;
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while((line = bufferedReader.readLine()) != null)
-            result += line;
 
-        inputStream.close();
-        return result;
-    }
 
     public void CustomProgressDialog(final String loading)
     {

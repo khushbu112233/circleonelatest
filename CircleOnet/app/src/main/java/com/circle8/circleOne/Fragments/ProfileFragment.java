@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
@@ -103,6 +104,8 @@ import javax.crypto.spec.SecretKeySpec;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -167,7 +170,7 @@ public class ProfileFragment extends Fragment
     String Q_ID = "";
 
     AlertDialog QR_AlertDialog ;
-
+    private long lastClickTime = 0;
     public static Activity mContext ;
 
     public ProfileFragment() {
@@ -692,8 +695,16 @@ public class ProfileFragment extends Fragment
             @Override
             public void onClick(View v)
             {
+
                 Utility.freeMemory();
                 Utility.deleteCache(getContext());
+
+
+                if (SystemClock.elapsedRealtime() - lastClickTime < 1000){
+                    return;
+                }
+
+                lastClickTime = SystemClock.elapsedRealtime();
 
                 ContextThemeWrapper ctw = new ContextThemeWrapper(getContext(), R.style.CustomPopupTheme);
                 PopupMenu popup = new PopupMenu(ctw, imgProfileMenu);
@@ -800,16 +811,6 @@ public class ProfileFragment extends Fragment
 
                                     session.createLoginSession(Q_ID, allTags.get(i).getProfileID(), user_id, first_name + " " + last_name, email_id, user_img, gender, user_pass, date_DOB, phone_no, Connection_Limit, Connection_Left);
 
-
-                                    if (allTags.get(i).getUserPhoto().equals(""))
-                                    {
-                                        imgProfile.setImageResource(R.drawable.usr_white1);
-                                    }
-                                    else {
-                                        Picasso.with(getContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+allTags.get(i).getUserPhoto())
-                                                .resize(300,300).onlyScaleDown().skipMemoryCache().into(imgProfile);
-                                    }
-
                                     try {
                                         JSONObject object = jsonArray.getJSONObject(i);
                                         try {
@@ -908,6 +909,16 @@ public class ProfileFragment extends Fragment
                                         }catch (Exception e){}
                                     } catch (JSONException e) {
                                         e.printStackTrace();
+                                    }
+
+
+                                    if (allTags.get(i).getUserPhoto().equals(""))
+                                    {
+                                        imgProfile.setImageResource(R.drawable.usr_white1);
+                                    }
+                                    else {
+                                        Picasso.with(getContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+allTags.get(i).getUserPhoto())
+                                                .resize(300,300).onlyScaleDown().skipMemoryCache().into(imgProfile);
                                     }
 
                                     if (allTags.get(i).getCard_Front().equalsIgnoreCase("") && allTags.get(i).getCard_Back().equalsIgnoreCase("")) {
@@ -1038,6 +1049,7 @@ public class ProfileFragment extends Fragment
                 });
 
                 popup.show();//showing popup menu
+
             }
         });
 
@@ -1468,18 +1480,6 @@ public class ProfileFragment extends Fragment
 
                     TestimonialProfileId = allTags.get(profileIndex).getProfileID();
 
-                    if (allTags.get(profileIndex).getUserPhoto().equals(""))
-                    {
-                        imgProfile.setImageResource(R.drawable.usr_white1);
-                    }
-                    else {
-                        try {
-                            Picasso.with(mContext).load(Utility.BASE_IMAGE_URL + "UserProfile/" + allTags.get(profileIndex).getUserPhoto())
-                                    .resize(300,300).onlyScaleDown().skipMemoryCache().into(imgProfile);
-                        }
-                        catch (Exception e){}
-                    }
-
 //                    tvName.setText(allTags.get(0).getFirstName() + " "+ allTags.get(0).getLastName());
 //                    tvPersonName.setText(allTags.get(0).getFirstName() + " "+ allTags.get(0).getLastName());
                     personName = allTags.get(profileIndex).getFirstName() + " "+ allTags.get(profileIndex).getLastName() ;
@@ -1767,6 +1767,17 @@ public class ProfileFragment extends Fragment
                     }
 
                     image = new ArrayList<>();
+                    if (allTags.get(profileIndex).getUserPhoto().equals(""))
+                    {
+                        imgProfile.setImageResource(R.drawable.usr_white1);
+                    }
+                    else {
+                        try {
+                            Picasso.with(mContext).load(Utility.BASE_IMAGE_URL + "UserProfile/" + allTags.get(profileIndex).getUserPhoto())
+                                    .resize(300,300).onlyScaleDown().skipMemoryCache().into(imgProfile);
+                        }
+                        catch (Exception e){}
+                    }
 
                     new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");
 
@@ -2117,17 +2128,6 @@ public class ProfileFragment extends Fragment
         return result;
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while((line = bufferedReader.readLine()) != null)
-            result += line;
-
-        inputStream.close();
-        return result;
-
-    }
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String>
     {

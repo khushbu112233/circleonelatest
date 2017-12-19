@@ -53,6 +53,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -585,17 +587,7 @@ public class EventsFragment extends Fragment
         return result;
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException
-    {
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while((line = bufferedReader.readLine()) != null)
-            result += line;
 
-        inputStream.close();
-        return result;
-    }
 
     private static class HttpAsyncTaskSearchEvent extends AsyncTask<String, Void, String>
     {

@@ -109,6 +109,8 @@ public class Help2Activity extends AppCompatActivity
         Utility.freeMemory();
         questionsList = new ArrayList<String>();
         questionsList.add("My Account:");
+        questionsList.add("Editing Your Profile:");
+        questionsList.add("Changing Your Password:");
         questionsList.add("Scan QR Code:");
         questionsList.add("Lost or Stolen Cards:");
         questionsList.add("Request for a New Card:");
@@ -136,16 +138,11 @@ public class Help2Activity extends AppCompatActivity
         // preparing laptops collection(child)
         String[] firstAnswer =
                 {
-                         "Editing Your Profile: ",
-                         " 1) Under ‘My Account’, tap on the pencil icon",
-                         " 2) Here you can update your contact number, email as well as your profile pitcture",
-                         " 3) *Fields are compulsory and have to be filled before saving",
-                         " 4) Tap ‘Save’ once you’re done to finalise changes",
-                        "Changing Your Password: ",
-                        " 1) Under ‘My Account’, tap on the pencil icon",
-                        " 2) Tap on the masked field below your name to change your password",
-                        " 3) Re-enter your new password in the field directly below it",
-                        " 4) Tap ‘Save’ once you’re done to finalise changes"
+                         "Change Your Password",
+                         "1) Under My Account, click 'Profile'",
+                         "2) Click 'Change Password'" ,
+                         "3) Enter new password",
+                         "4) Click ‘Save’"
                 };
         String[] secondAnswer =
                 {
@@ -300,7 +297,7 @@ public class Help2Activity extends AppCompatActivity
         {
             if (question.equals("My Account:"))
             {
-                loadChild(firstAnswer);
+//                loadChild(firstAnswer);
             }
             else if (question.equals("Lost or Stolen Cards:"))
             {
@@ -365,6 +362,14 @@ public class Help2Activity extends AppCompatActivity
             else if (question.equals("Connect:"))
             {
                 loadChild(seventeen);
+            }
+            else if (question.equals("Editing Your Profile:"))
+            {
+                loadChild(eighteen);
+            }
+            else if (question.equals("Changing Your Password:"))
+            {
+                loadChild(nineteen);
             }
             else if (question.equals("Scan QR Code:"))
             {

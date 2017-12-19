@@ -61,7 +61,7 @@ public class List3Adapter1 extends RecyclerView.Adapter<List3Adapter1.MyViewHold
     Context context;
     static String ProfileId="";
     LoginSession session;
-    private int posi ;
+    int posi ;
     private final ViewBinderHelper binderHelper = new ViewBinderHelper();
 /*
     @Override
@@ -116,16 +116,17 @@ public class List3Adapter1 extends RecyclerView.Adapter<List3Adapter1.MyViewHold
 
         }
 
-        public void bind(final int position1) {
-            deleteLayout.setOnClickListener(new View.OnClickListener() {
+        public void bind() {
+            delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Log.e("delete_click",""+getAdapterPosition());
                    // nfcModelList1.remove(getAdapterPosition());
-                    posi  = position1 ;
-
+                    posi  = getAdapterPosition() ;
+                    Log.e("Bind",""+posi);
+                    swipeLayout.close(true);
                     new HttpAsyncTask().execute(Utility.BASE_URL+"FriendConnection_Operation");
-
+                    notifyItemRemoved(getAdapterPosition());
                 }
             });
 
@@ -156,9 +157,6 @@ public class List3Adapter1 extends RecyclerView.Adapter<List3Adapter1.MyViewHold
 
     @Override
     public void onBindViewHolder(final List3Adapter1.MyViewHolder holder,final int position) {
-
-
-        holder.bind(position);
 
         String name = nfcModelList1.get(position).getName();
         String company = nfcModelList1.get(position).getCompany();
@@ -314,6 +312,8 @@ public class List3Adapter1 extends RecyclerView.Adapter<List3Adapter1.MyViewHold
         });*/
 
         //   Profile profile = profileList.get(position);
+        holder.bind();
+
         holder.fm_front.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

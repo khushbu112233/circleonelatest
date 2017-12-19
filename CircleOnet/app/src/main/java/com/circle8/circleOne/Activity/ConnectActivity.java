@@ -67,6 +67,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.circle8.circleOne.R.id.rlConnect;
 import static com.circle8.circleOne.R.id.view;
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 public class ConnectActivity extends AppCompatActivity
 {
@@ -1105,16 +1106,6 @@ public class ConnectActivity extends AppCompatActivity
         return result;
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while((line = bufferedReader.readLine()) != null)
-            result += line;
-        Utility.freeMemory();
-        inputStream.close();
-        return result;
-    }
 
     private class HttpAsyncTaskGroupAddFriend extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;

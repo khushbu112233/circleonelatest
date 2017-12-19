@@ -79,16 +79,18 @@ import android.widget.AbsListView.MultiChoiceModeListener;
 import static com.circle8.circleOne.Activity.RegisterActivity.BitMapToString;
 import static com.circle8.circleOne.Activity.RegisterActivity.ConvertBitmapToString;
 import static com.circle8.circleOne.Activity.RegisterActivity.rotateImage;
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 import static java.security.AccessController.getContext;
 
 public class GroupDetailActivity extends AppCompatActivity
 {
     public static ListView listView ;
     private static CircleImageView imgProfile ;
-    private static ImageView ivChangeProfImg, ivMenuImg, ivShareImg, ivEditImg, imgBack, ivDelete ;
+    private static ImageView ivChangeProfImg, ivBackImg, ivMenuImg, ivShareImg, ivEditImg ;
     private static TextView tvGroupName, tvGroupDesc, tvMemberInfo ;
 
     private static GroupDetailAdapter groupDetailAdapter ;
+    ImageView imgBack;
     private static ArrayList<GroupDetailModel> groupDetailModelArrayList = new ArrayList<>();
 
     JSONArray selectArray = new JSONArray();
@@ -120,6 +122,7 @@ public class GroupDetailActivity extends AppCompatActivity
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     String image;
     public static JSONArray selectedStrings = new JSONArray();
+    ImageView ivDelete;
 
     public static RelativeLayout rlProgressDialog ;
     private static TextView tvProgressing ;
@@ -1054,18 +1057,6 @@ public class GroupDetailActivity extends AppCompatActivity
         return result;
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        Utility.freeMemory();
-        String line = "";
-        String result = "";
-        while ((line = bufferedReader.readLine()) != null)
-            result += line;
-
-        inputStream.close();
-        return result;
-
-    }
 
     private static class HttpAsyncTaskGroup extends AsyncTask<String, Void, String>
     {
@@ -1080,15 +1071,8 @@ public class GroupDetailActivity extends AppCompatActivity
             dialog.show();
             dialog.setCancelable(false);*/
 
-            CustomProgressDialog(loading);
 
-            ivShareImg.setEnabled(false);
-            ivEditImg.setEnabled(false);
-            ivDelete.setEnabled(false);
-            listView.setEnabled(false);
-            ivMenuImg.setEnabled(false);
-            imgProfile.setEnabled(false);
-            imgBack.setEnabled(false);
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -1103,14 +1087,6 @@ public class GroupDetailActivity extends AppCompatActivity
             Utility.freeMemory();
 //            dialog.dismiss();
             rlProgressDialog.setVisibility(View.GONE);
-
-            ivShareImg.setEnabled(true);
-            ivEditImg.setEnabled(true);
-            ivDelete.setEnabled(true);
-            listView.setEnabled(true);
-            ivMenuImg.setEnabled(true);
-            imgProfile.setEnabled(true);
-            imgBack.setEnabled(true);
 
             try
             {

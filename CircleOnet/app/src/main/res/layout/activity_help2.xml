@@ -67,7 +67,7 @@
             android:paddingRight="10dp"
             android:layout_toLeftOf="@+id/imgSearch"
             android:paddingLeft="10dp"
-            android:hint="Filter by Keywords"
+            android:hint="Filter by Key Words"
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -2,9 +2,9 @@ package com.circle8.circleOne.Activity;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -15,11 +15,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.circle8.circleOne.Adapter.EventsAdapter;
 import com.circle8.circleOne.Adapter.HistoryAdapter;
-import com.circle8.circleOne.Fragments.EventsFragment;
 import com.circle8.circleOne.Helper.LoginSession;
-import com.circle8.circleOne.Model.EventModel;
 import com.circle8.circleOne.Model.HistoryModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
@@ -33,12 +30,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 public class HistoryActivity extends AppCompatActivity
 {
@@ -251,18 +247,6 @@ public class HistoryActivity extends AppCompatActivity
         return result;
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException
-    {
-        Utility.freeMemory();
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while((line = bufferedReader.readLine()) != null)
-            result += line;
-
-        inputStream.close();
-        return result;
-    }
 
     public void CustomProgressDialog(final String loading)
     {
