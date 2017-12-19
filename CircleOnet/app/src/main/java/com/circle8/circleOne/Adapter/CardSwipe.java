@@ -66,7 +66,7 @@ public class CardSwipe extends PagerAdapter
         try
         {
             imageView = (ImageView)view.findViewById(R.id.ivImages);
-            Log.e("str_share",""+image.get(position));
+            //Log.e("str_share",""+image.get(position));
 //            imageView.setImageResource(image.get(position));
         //   Bitmap bmp = BitmapFactory.decodeByteArray(image.get(position), 0, image.get(position).length);
             // ImageView image = (ImageView) findViewById(R.id.imageView1);

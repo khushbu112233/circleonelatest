@@ -52,7 +52,7 @@
         android:background="@color/colorPrimary">
     </View>
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         tools:listitem="@layout/row_events"
         android:layout_above="@+id/view1"
         android:layout_below="@+id/view"

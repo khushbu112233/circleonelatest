@@ -1,23 +1,27 @@
 package com.circle8.circleOne.Adapter;
 
-import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
-import android.util.Log;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.circle8.circleOne.Activity.EventDetail;
 import com.circle8.circleOne.Model.EventModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
-import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -28,9 +32,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -38,7 +40,7 @@ import java.util.ArrayList;
  * Created by admin on 06/09/2017.
  */
 
-public class EventsAdapter extends ArrayAdapter
+public class EventsAdapter  extends  RecyclerView.Adapter<EventsAdapter.MyViewHolder>
 {
     private Context context;
     private int layoutResourceId;
@@ -48,10 +50,8 @@ public class EventsAdapter extends ArrayAdapter
     private ArrayList<EventModel> eventModelArrayList ;
     URI url = null;
     String imageUrl = "";
-    ViewHolder holder = null;
     public EventsAdapter(Context context, int layoutResourceId, ArrayList<Integer> image, ArrayList<String> title, ArrayList<String> desc)
     {
-        super(context, layoutResourceId, title);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.image = image;
@@ -61,75 +61,49 @@ public class EventsAdapter extends ArrayAdapter
 
     public EventsAdapter(Context context, int row_events, ArrayList<EventModel> eventModelArrayList)
     {
-        super(context, row_events, eventModelArrayList);
         Utility.freeMemory();
         this.layoutResourceId = row_events;
         this.context = context;
         this.eventModelArrayList = eventModelArrayList ;
     }
 
-    static class ViewHolder
-    {
-        TextView txtTitle;
-        TextView txtDesc;
-        ImageView image;
-    }
+    @Override
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.row_events, parent, false);
+
+        return new MyViewHolder(itemView);    }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
-    {
-        View row = convertView;
-
-        holder = null;
-        if (row == null)
-        {
-            Utility.freeMemory();
-            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-            row = inflater.inflate(layoutResourceId, parent, false);
-            holder = new ViewHolder();
-            holder.txtTitle = (TextView) row.findViewById(R.id.txtEventTitle);
-            holder.txtDesc = (TextView) row.findViewById(R.id.txtEventDetail);
-            holder.image = (ImageView) row.findViewById(R.id.imgEvents);
-            row.setTag(holder);
-        }
-        else
-        {
-            Utility.freeMemory();
-            holder = (ViewHolder) row.getTag();
-        }
-
-        /*holder.txtTitle.setText(title.get(position));
-        holder.txtDesc.setText(desc.get(position));*/
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
         holder.txtTitle.setText(eventModelArrayList.get(position).getEvent_Name());
         holder.txtDesc.setText(eventModelArrayList.get(position).getEvent_StartDate()+" To "
                 +eventModelArrayList.get(position).getEvent_EndDate());
-        Utility.freeMemory();
-
-        final ViewHolder finalHolder = holder;
-      /*  MyAsync obj = new MyAsync(){
-            @Override
-            protected void onPostExecute(Bitmap bmp) {
-                super.onPostExecute(bmp);
 
 
-
-
-                finalHolder.image.setImageBitmap(bmp);
-
-            }
-        };*/
 
         if(eventModelArrayList.get(position).getEvent_Image().equalsIgnoreCase("")
                 || eventModelArrayList.get(position).getEvent_Image().equalsIgnoreCase("null") )
         {
             holder.image.setImageResource(R.drawable.ic_event_default);
+            holder.progressBar1.setVisibility(View.GONE);
         }
         else
         {
-            Utility.freeMemory();
-            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Events/"+eventModelArrayList.get(position).getEvent_Image())
-                    .resize(378,250).onlyScaleDown().skipMemoryCache().noFade().into(holder.image);
+            holder.progressBar1.setVisibility(View.VISIBLE);
+            Glide.with(context).load(Utility.BASE_IMAGE_URL+"Events/"+eventModelArrayList.get(position).getEvent_Image())
+                    .asBitmap()
+                    .into(new BitmapImageViewTarget(holder.image) {
+                        @Override
+                        public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                            super.onResourceReady(drawable, anim);
+                            holder.progressBar1.setVisibility(View.GONE);
+                            holder.image.setImageBitmap(drawable);
+                        }
+                    });
+            //Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Events/"+eventModelArrayList.get(position).getEvent_Image()).resize(378,250).onlyScaleDown().skipMemoryCache().noFade().into(holder.image);
+
 //            holder.image.setImageBitmap(eventModelArrayList.get(position).getBitmapImg());
            /* try {
                 url = new URI(Utility.BASE_IMAGE_URL+"Events/"+eventModelArrayList.get(position).getEvent_Image());
@@ -144,11 +118,46 @@ public class EventsAdapter extends ArrayAdapter
             obj.execute();*/
 
         }
-//        holder.image.setImageResource(image.get(position));
-
-
-        return row;
+        holder.ll_event.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, EventDetail.class);
+                intent.putExtra("Event_ID", eventModelArrayList.get(position).getEvent_ID());
+                context.startActivity(intent);
+            }
+        });
     }
+
+    @Override
+    public int getItemCount() {
+        return eventModelArrayList.size();
+    }
+    public class MyViewHolder extends RecyclerView.ViewHolder  {
+
+        TextView txtTitle;
+        TextView txtDesc;
+        ImageView image;
+        FrameLayout fm_img;
+        ProgressBar progressBar1;
+        LinearLayout ll_event;
+
+        public MyViewHolder(View row) {
+            super(row);
+
+
+            txtTitle = (TextView) row.findViewById(R.id.txtEventTitle);
+            txtDesc = (TextView) row.findViewById(R.id.txtEventDetail);
+            image = (ImageView) row.findViewById(R.id.imgEvents);
+            fm_img =(FrameLayout)row.findViewById(R.id.fm_img);
+            progressBar1 = (ProgressBar)row.findViewById(R.id.progressBar1);
+            ll_event = (LinearLayout)row.findViewById(R.id.ll_event);
+
+
+
+        }
+    }
+
+
 
     /*private class SendHttpRequestTask extends AsyncTask<String, Void, Bitmap> {
         @Override
@@ -242,9 +251,9 @@ public class EventsAdapter extends ArrayAdapter
             return null;
         }
 
-    public void onPostExecute( Bitmap drawable ) {
-        imageView.setImageBitmap(drawable);
+        public void onPostExecute( Bitmap drawable ) {
+            imageView.setImageBitmap(drawable);
+        }
     }
-}
 
 }

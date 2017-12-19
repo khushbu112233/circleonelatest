@@ -57,7 +57,6 @@ import com.circle8.circleOne.Fragments.EventsFragment;
 import com.circle8.circleOne.Fragments.List1Fragment;
 import com.circle8.circleOne.Fragments.List2Fragment;
 import com.circle8.circleOne.Fragments.List3Fragment;
-import com.circle8.circleOne.Fragments.List4Fragment;
 import com.circle8.circleOne.Fragments.ProfileFragment;
 import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;

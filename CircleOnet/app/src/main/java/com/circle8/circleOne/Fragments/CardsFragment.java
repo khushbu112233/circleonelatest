@@ -69,10 +69,10 @@ public class CardsFragment extends Fragment
                     setActionBarTitle("Cards - " + List2Fragment.nfcModel.size() + "/" + Connection_Limit);
                 }
                 else if (tab.getPosition() == 2) {
-                    setActionBarTitle("Cards - " + List3Fragment.nfcModel1.size() + "/" + Connection_Limit);
+                    setActionBarTitle("Cards - " + List3Fragment1.allTaggs.size() + "/" + Connection_Limit);
                 }
                 else if (tab.getPosition() == 3) {
-                    setActionBarTitle("Cards - " + List4Fragment.nfcModel1.size() + "/" + Connection_Limit);
+                    setActionBarTitle("Cards - " + List4Fragment1.nfcModel1.size() + "/" + Connection_Limit);
                 }
                 InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(tabLayout.getApplicationWindowToken(), 0);
@@ -120,14 +120,14 @@ public class CardsFragment extends Fragment
                 getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                 InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(getActivity().getWindow().getDecorView().getWindowToken(), 0);
-                return new List3Fragment();
+                return new List3Fragment1();
             }
             else if (position == 3)
             {
                 getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                 InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(getActivity().getWindow().getDecorView().getWindowToken(), 0);
-                return new List4Fragment();
+                return new List4Fragment1();
             }
             else
             {

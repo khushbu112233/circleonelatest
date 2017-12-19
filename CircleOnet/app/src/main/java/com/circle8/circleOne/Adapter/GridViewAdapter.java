@@ -11,17 +11,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.Activity.CardDetail;
 import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.Fragments.List1Fragment;
 import com.circle8.circleOne.Fragments.List2Fragment;
-import com.circle8.circleOne.Fragments.List3Fragment;
-import com.circle8.circleOne.Fragments.List4Fragment;
+import com.circle8.circleOne.Fragments.List3Fragment1;
+import com.circle8.circleOne.Fragments.List4Fragment1;
 import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.FriendConnection;
@@ -244,12 +249,16 @@ public class GridViewAdapter extends BaseSwipeAdapter
         holder.tvPersonAddress = (TextView) row.findViewById(R.id.tvPersonAddress);
         holder.tvPersonContact = (TextView) row.findViewById(R.id.tvPersonMobile);
         holder.tvPersonNameLast = (TextView) row.findViewById(R.id.tvPersonNameLast);
+        holder.fm_img = (FrameLayout) row.findViewById(R.id.fm_img);
+        holder.progressBar1 = (ProgressBar)row.findViewById(R.id.progressBar1);
 
         row.setTag(holder);
 
         if (nfcModelList1.get(position).getCard_front().equals(""))
         {
             holder.image.setVisibility(View.GONE);
+            holder.fm_img.setVisibility(View.GONE);
+            holder.progressBar1.setVisibility(View.GONE);
             holder.defaultCard.setVisibility(View.VISIBLE);
             try
             {
@@ -307,11 +316,23 @@ public class GridViewAdapter extends BaseSwipeAdapter
         }
         else
         {
+            holder.fm_img.setVisibility(View.VISIBLE);
             holder.image.setVisibility(View.VISIBLE);
+            holder.progressBar1.setVisibility(View.VISIBLE);
             holder.defaultCard.setVisibility(View.GONE);
             //imageView.setImageResource(nfcModelList.get(position).getCard_front());
-            ImageLoader.getInstance().displayImage(Utility.BASE_IMAGE_URL+"Cards/" + nfcModelList1.get(position).getCard_front(), holder.image, options, animateFirstListener);
-
+         //   ImageLoader.getInstance().displayImage(Utility.BASE_IMAGE_URL+"Cards/" + nfcModelList1.get(position).getCard_front(), holder.image, options, animateFirstListener);
+            final ViewHolder finalHolder = holder;
+            Glide.with(context).load(Utility.BASE_IMAGE_URL+"Cards/" + nfcModelList1.get(position).getCard_front())
+                    .asBitmap()
+                    .into(new BitmapImageViewTarget(finalHolder.image) {
+                        @Override
+                        public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                            super.onResourceReady(drawable, anim);
+                            finalHolder.progressBar1.setVisibility(View.GONE);
+                            finalHolder.image.setImageBitmap(drawable);
+                        }
+                    });
           //  Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Cards/" + nfcModelList1.get(position).getCard_front()).resize(400,280).onlyScaleDown().skipMemoryCache().into(holder.image);
         }
 
@@ -366,8 +387,10 @@ public class GridViewAdapter extends BaseSwipeAdapter
 
     static class ViewHolder {
         TextView imageTitle;
+        FrameLayout fm_img;
         ImageView image;
         RelativeLayout defaultCard;
+        ProgressBar progressBar1;
         TextView tvPersonName, tvPersonProfile, tvPersonWebsite, tvPersonAddress, tvPersonContact, tvPersonNameLast;
 
     }
@@ -440,14 +463,14 @@ public class GridViewAdapter extends BaseSwipeAdapter
                     {
                         List1Fragment.progressStatus = "DELETE";
                         List2Fragment.progressStatus = "DELETE";
-                        List3Fragment.progressStatus = "DELETE";
-                        List4Fragment.progressStatus = "DELETE";
+                        List3Fragment1.progressStatus = "DELETE";
+                        List4Fragment1.progressStatus = "DELETE";
 
                         Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_LONG).show();
                         List1Fragment.webCall();
                         List2Fragment.webCall();
-                        List3Fragment.webCall();
-                        List4Fragment.webCall();
+                        List3Fragment1.webCall();
+                        List4Fragment1.webCall();
                     }
                     else
                     {

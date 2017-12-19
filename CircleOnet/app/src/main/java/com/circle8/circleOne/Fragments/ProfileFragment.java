@@ -3,8 +3,6 @@ package com.circle8.circleOne.Fragments;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -13,6 +11,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
@@ -30,12 +29,10 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Base64;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
@@ -49,11 +46,8 @@ import com.circle8.circleOne.Activity.AttachmentDisplay;
 import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.Activity.EditProfileActivity;
 import com.circle8.circleOne.Activity.ImageZoom;
-import com.circle8.circleOne.Activity.LoginActivity;
-import com.circle8.circleOne.Activity.MyAccountActivity;
 import com.circle8.circleOne.Activity.SearchGroupMembers;
 import com.circle8.circleOne.Activity.TestimonialActivity;
-import com.circle8.circleOne.Activity.TestimonialRequest;
 import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.Adapter.CustomAdapter;
 import com.circle8.circleOne.Adapter.TextRecyclerAdapter;
@@ -80,7 +74,6 @@ import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.squareup.picasso.Picasso;
 
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -101,7 +94,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.Exchanger;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -111,8 +103,6 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -178,7 +168,7 @@ public class ProfileFragment extends Fragment
     String Q_ID = "";
 
     AlertDialog QR_AlertDialog ;
-
+    private long lastClickTime = 0;
     public static Activity mContext ;
 
     public ProfileFragment() {
@@ -703,10 +693,18 @@ public class ProfileFragment extends Fragment
             @Override
             public void onClick(View v)
             {
+
                 Utility.freeMemory();
                 Utility.deleteCache(getContext());
 
-                ContextThemeWrapper ctw = new ContextThemeWrapper(getContext(), R.style.Blue_AlertDialog);
+
+                if (SystemClock.elapsedRealtime() - lastClickTime < 1000){
+                    return;
+                }
+
+                lastClickTime = SystemClock.elapsedRealtime();
+
+                ContextThemeWrapper ctw = new ContextThemeWrapper(getContext(), R.style.CustomPopupTheme);
                 PopupMenu popup = new PopupMenu(ctw, imgProfileMenu);
                 //Inflating the Popup using xml file
                 popup.getMenuInflater().inflate(R.menu.profile_popup_menu, popup.getMenu());
@@ -1049,6 +1047,7 @@ public class ProfileFragment extends Fragment
                 });
 
                 popup.show();//showing popup menu
+
             }
         });
 
