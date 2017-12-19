@@ -491,7 +491,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 if (position == 0) {
                     CardsFragment.mViewPager.setCurrentItem(nested_position);
                     getSupportActionBar().show();
-                    setActionBarTitle("Cards - " + List1Fragment.nfcModel.size() + "/"+ Connection_Limit);
+                    setActionBarTitle("Cards - " + List1Fragment.count + "/"+ Connection_Limit);
                     setActionBarRightImage(R.drawable.ic_drawer);
                     setActionBarRightImagevisible();
                 } else if (position == 1) {

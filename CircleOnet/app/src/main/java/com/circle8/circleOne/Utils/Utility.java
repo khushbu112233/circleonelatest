@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -13,6 +14,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -61,6 +63,19 @@ public class Utility
         String formattedDate = df.format(c.getTime());
         return formattedDate;
     }
+
+    public static long imageCalculateSize(Bitmap bitmapOrg){
+        Bitmap bitmap = bitmapOrg;
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] imageInByte = stream.toByteArray();
+        long lengthbmp = imageInByte.length;
+        long MEGABYTE = 1024L * 1024L;
+        long b = lengthbmp / MEGABYTE;
+
+        return b;
+    }
+
 
     public static boolean checkStoragePermission(final Context context)
     {

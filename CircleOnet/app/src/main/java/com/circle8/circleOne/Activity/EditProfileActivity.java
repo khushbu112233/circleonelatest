@@ -12,8 +12,6 @@ import android.content.pm.Signature;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.graphics.PointF;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,11 +22,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.view.WindowCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -41,7 +37,6 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Base64;
 import android.util.Log;
-import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -63,7 +58,6 @@ import com.circle8.circleOne.Adapter.AddEventAdapter;
 import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.Adapter.CardViewDataAdapter;
 import com.circle8.circleOne.Adapter.CustomAdapter;
-import com.circle8.circleOne.Fragments.ProfileFragment;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Helper.ProfileSession;
 import com.circle8.circleOne.Helper.ReferralCodeSession;
@@ -123,7 +117,6 @@ import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterAuthClient;
-
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -2581,10 +2574,27 @@ public class EditProfileActivity extends AppCompatActivity implements
                 try {
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(result.getUri()));
                    // originalBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
+                    long size = Utility.imageCalculateSize(bitmap);
 
                     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
-
+                    if (size > 500000){
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bytes);
+                    }
+                    else if (size > 400000){
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 55, bytes);
+                    }
+                    else if (size > 300000){
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
+                    }
+                    else if (size > 200000){
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, bytes);
+                    }
+                    else if (size > 100000){
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bytes);
+                    }
+                    else {
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+                    }
                     File destination = new File(Environment.getExternalStorageDirectory(),
                             System.currentTimeMillis() + ".jpg");
 

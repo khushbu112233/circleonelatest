@@ -101,7 +101,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
     public static RelativeLayout rlProgressDialog ;
     public static TextView tvProgressing ;
     public static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
-    static String count;
+    public static String count1;
 
     public List3Fragment() {
         // Required empty public constructor
@@ -532,7 +532,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                     String success = response.getString("success");
                     String findBy = response.getString("FindBy");
                     String search = response.getString("Search");
-                    count = response.getString("count");
+                    count1 = response.getString("count");
                     String pageno = response.getString("pageno");
                     String recordno = response.getString("numofrecords");
 
@@ -704,14 +704,14 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                     JSONObject jsonObject = new JSONObject(result);
                     totalArray = jsonObject.getString("count");
 
-                    count = jsonObject.getString("count");
-                    if(count.equals("") || count.equals("null"))
+                    count1 = jsonObject.getString("count");
+                    if(count1.equals("") || count1.equals("null"))
                     {
                         numberCount = 0 ;
                     }
                     else
                     {
-                        numberCount = Integer.parseInt(count);
+                        numberCount = Integer.parseInt(count1);
                     }
 //                    Toast.makeText(mContext,"Counts: "+numberCount,Toast.LENGTH_SHORT).show();
 
@@ -765,7 +765,6 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                         public void onScrollStateChanged(AbsListView view, int scrollState)
                         {
                             // TODO Auto-generated method stub
-
                             progressStatus = "LOAD MORE";
 
                             int threshold = 1;
@@ -777,9 +776,15 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                                 {
                                     if (listView.getLastVisiblePosition() >= count - threshold)
                                     {
-                                        rlLoadMore.setVisibility(View.VISIBLE);
+                                        listView.setStackFromBottom(true);
+                                       // rlLoadMore.setVisibility(View.VISIBLE);
                                         new HttpAsyncTask().execute(Utility.BASE_URL+SortAndFilterOption.CardListApi);
                                     }
+                                    else {
+                                        listView.setStackFromBottom(false);
+                                    }
+                                }
+                                else {
                                 }
                             }
                         }
@@ -972,22 +977,22 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
 
         if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
             if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + nfcModel1.size() + "/" + CardsActivity.Connection_Limit);
+                CardsActivity.setActionBarTitle("Cards - " + count1 + "/" + CardsActivity.Connection_Limit);
             }
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
             if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + nfcModel1.size());
+                CardsActivity.setActionBarTitle("Cards - " + count1);
             }
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
             if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + nfcModel1.size());
+                CardsActivity.setActionBarTitle("Cards - " + count1);
             }
         }
         else{
             if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + nfcModel1.size());
+                CardsActivity.setActionBarTitle("Cards - " + count1);
             }
         }
 

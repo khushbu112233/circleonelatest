@@ -95,6 +95,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.circle8.circleOne.Activity.RegisterActivity.BitMapToString;
 import static com.circle8.circleOne.Activity.RegisterActivity.ConvertBitmapToString;
+import static com.circle8.circleOne.Utils.Utility.imageCalculateSize;
 import static com.circle8.circleOne.Utils.Validation.updateRegisterValidate;
 import static com.circle8.circleOne.Utils.Validation.validate;
 
@@ -889,8 +890,31 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                     // originalBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
                     Utility.freeMemory();
 
+                    long size = Utility.imageCalculateSize(bitmap);
+                    //Toast.makeText(getApplicationContext(), String.valueOf(size), Toast.LENGTH_LONG).show();
+
                     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
+
+
+                    if (size > 500000){
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bytes);
+                    }
+                    else if (size > 400000){
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 55, bytes);
+                    }
+                    else if (size > 300000){
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
+                    }
+                    else if (size > 200000){
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, bytes);
+                    }
+                    else if (size > 100000){
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bytes);
+                    }
+                    else {
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+                    }
+                 //   bitmap.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
 
                     File destination = new File(Environment.getExternalStorageDirectory(),
                             System.currentTimeMillis() + ".jpg");
@@ -915,7 +939,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
 //                  Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                     //    Upload();
                     imgProfile.setImageBitmap(bitmap);
-
+                    bitmap.recycle();
                 } catch (FileNotFoundException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();

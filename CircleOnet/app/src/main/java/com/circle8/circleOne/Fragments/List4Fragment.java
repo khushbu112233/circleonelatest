@@ -94,7 +94,7 @@ public class List4Fragment extends Fragment
     public static RelativeLayout rlProgressDialog ;
     public static TextView tvProgressing ;
     public static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
-    static String count;
+    public static String count;
 
     public List4Fragment() {
         // Required empty public constructor

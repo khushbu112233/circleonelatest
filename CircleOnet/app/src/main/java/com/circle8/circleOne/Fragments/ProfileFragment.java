@@ -240,6 +240,23 @@ public class ProfileFragment extends Fragment
         recyclerEvents = (RecyclerView) view.findViewById(R.id.recyclerEvents);
         txtAssociationList = (TextView) view.findViewById(R.id.txtAssociationList);
         txtEventsListFinal = (TextView) view.findViewById(R.id.txtEventsListfinal);
+        imgQR = (ImageView) view.findViewById(R.id.imgQR);
+        imgAdd = (ImageView) view.findViewById(R.id.imgAdd);
+        //  firstBar = (ProgressBar)view.findViewById(R.id.firstBar);
+        tvPersonName = (TextView)view.findViewById(R.id.tvPersonName);
+        tvProfileName = (TextView) view.findViewById(R.id.tvProfileName);
+        imgProfileShare = (ImageView) view.findViewById(R.id.imgProfileShare);
+        imgProfileMenu = (ImageView) view.findViewById(R.id.imgProfileMenu);
+        ivEditProfile = (ImageView)view.findViewById(R.id.ivEditProfile);
+        loginButton = (LoginButton) view.findViewById(R.id.login_button);
+        session = new LoginSession(getContext());
+        appbar = (AppBarLayout) view.findViewById(R.id.appbar);
+        rlProgressDialog = (RelativeLayout)view.findViewById(R.id.rlProgressDialog);
+        tvProgressing = (TextView)view.findViewById(R.id.txtProgressing);
+        ivConnecting1 = (ImageView)view.findViewById(R.id.imgConnecting1) ;
+        ivConnecting2 = (ImageView)view.findViewById(R.id.imgConnecting2) ;
+        ivConnecting3 = (ImageView)view.findViewById(R.id.imgConnecting3) ;
+
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Generating Qr code...");
         progressDialog.setCancelable(false);
@@ -253,25 +270,13 @@ public class ProfileFragment extends Fragment
         profileIndex = Integer.parseInt(profile.get(ProfileSession.KEY_PROFILE_INDEX));
 
         listAssociation = new ArrayList<>();
-        imgQR = (ImageView) view.findViewById(R.id.imgQR);
-        imgAdd = (ImageView) view.findViewById(R.id.imgAdd);
-        //  firstBar = (ProgressBar)view.findViewById(R.id.firstBar);
-        tvPersonName = (TextView)view.findViewById(R.id.tvPersonName);
-        tvProfileName = (TextView) view.findViewById(R.id.tvProfileName);
-        imgProfileShare = (ImageView) view.findViewById(R.id.imgProfileShare);
-        imgProfileMenu = (ImageView) view.findViewById(R.id.imgProfileMenu);
-        ivEditProfile = (ImageView)view.findViewById(R.id.ivEditProfile);
-        loginButton = (LoginButton) view.findViewById(R.id.login_button);
-        session = new LoginSession(getContext());
-        appbar = (AppBarLayout) view.findViewById(R.id.appbar);
         Utility.freeMemory();
         Utility.deleteCache(getContext());
+        HashMap<String, String> user = session.getUserDetails();
+        UserID = user.get(LoginSession.KEY_USERID);
+        profileId = user.get(LoginSession.KEY_PROFILEID);
+        Q_ID = user.get(LoginSession.KEY_QID);
 
-        rlProgressDialog = (RelativeLayout)view.findViewById(R.id.rlProgressDialog);
-        tvProgressing = (TextView)view.findViewById(R.id.txtProgressing);
-        ivConnecting1 = (ImageView)view.findViewById(R.id.imgConnecting1) ;
-        ivConnecting2 = (ImageView)view.findViewById(R.id.imgConnecting2) ;
-        ivConnecting3 = (ImageView)view.findViewById(R.id.imgConnecting3) ;
 
 //        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetUserProfile");
 //        new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
@@ -279,10 +284,6 @@ public class ProfileFragment extends Fragment
         /* Call api for my profile */
         callMyProfile();
 
-        HashMap<String, String> user = session.getUserDetails();
-        UserID = user.get(LoginSession.KEY_USERID);
-        profileId = user.get(LoginSession.KEY_PROFILEID);
-        Q_ID = user.get(LoginSession.KEY_QID);
 
         SpannableString ss = new SpannableString("Ask your friends to write a Testimonial for you(100 words or less),Please choose from your CircleOne contacts and send a request.");
         ClickableSpan clickableSpan = new ClickableSpan() {

@@ -5,21 +5,19 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.design.widget.AppBarLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -34,8 +32,6 @@ import android.widget.Toast;
 import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -62,7 +58,6 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.circle8.circleOne.Activity.EditProfileActivity.BitMapToString;
-import static com.circle8.circleOne.Activity.EditProfileActivity.activity;
 
 public class NewCardRequestDetailActivity extends AppCompatActivity
 {
@@ -952,10 +947,27 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
 
                     //  final_ImgBase64 = BitMapToString(bitmap);
                     //   Upload();
+                    long size = Utility.imageCalculateSize(bitmap);
 
                     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
-
+                    if (size > 500000){
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bytes);
+                    }
+                    else if (size > 400000){
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 55, bytes);
+                    }
+                    else if (size > 300000){
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
+                    }
+                    else if (size > 200000){
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, bytes);
+                    }
+                    else if (size > 100000){
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bytes);
+                    }
+                    else {
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+                    }
                     File destination = new File(Environment.getExternalStorageDirectory(),
                             System.currentTimeMillis() + ".jpg");
 

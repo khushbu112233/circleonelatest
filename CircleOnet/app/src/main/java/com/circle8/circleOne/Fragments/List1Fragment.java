@@ -127,7 +127,7 @@ public class List1Fragment extends Fragment
     private static RelativeLayout rlProgressDialog ;
     private static TextView tvProgressing ;
     private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
-    static String count = "";
+    public static String count = "";
 
     public List1Fragment() {
         // Required empty public constructor

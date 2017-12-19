@@ -63,16 +63,16 @@ public class CardsFragment extends Fragment
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 0) {
-                    setActionBarTitle("Cards - " + List1Fragment.nfcModel.size() + "/" + Connection_Limit);
+                    setActionBarTitle("Cards - " + List1Fragment.count + "/" + Connection_Limit);
                 }
                 else if (tab.getPosition() == 1) {
-                    setActionBarTitle("Cards - " + List2Fragment.nfcModel.size() + "/" + Connection_Limit);
+                    setActionBarTitle("Cards - " + List2Fragment.count + "/" + Connection_Limit);
                 }
                 else if (tab.getPosition() == 2) {
-                    setActionBarTitle("Cards - " + List3Fragment.nfcModel1.size() + "/" + Connection_Limit);
+                    setActionBarTitle("Cards - " + List3Fragment.count1 + "/" + Connection_Limit);
                 }
                 else if (tab.getPosition() == 3) {
-                    setActionBarTitle("Cards - " + List4Fragment.nfcModel1.size() + "/" + Connection_Limit);
+                    setActionBarTitle("Cards - " + List4Fragment.count + "/" + Connection_Limit);
                 }
                 InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(tabLayout.getApplicationWindowToken(), 0);
