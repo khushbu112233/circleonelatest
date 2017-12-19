@@ -7,16 +7,17 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
-import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,13 +48,11 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.circle8.circleOne.Adapter.TestimonialRequestAdapter.context;
-
 /**
  * Created by admin on 08/29/2017.
  */
 
-public class NotificationAdapter extends BaseAdapter
+public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.MyViewHolder>
 {
     private Context activity;
     ArrayList<NotificationModel> testimonialModels;
@@ -72,83 +71,104 @@ public class NotificationAdapter extends BaseAdapter
         this.activity = a;
         this.testimonialModels = testimonialModels;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
-
-    public int getCount() {
-        return testimonialModels.size();
-    }
-
-    public Object getItem(int position) {
-        return position;
-    }
-
-    public long getItemId(int position) {
-        return position;
-    }
-
-    static class ViewHolder
-    {
-        CircleImageView imgTestReq, imgTestRec, imgFriend, imgShare, imgNfc;
-        TextView txtNfcPurpose, txtNfcName, txtSharePurpose, txtShareName, txtTestPurpose, txtTestName, txtTestPurposeRec, txtTestNameRec, txtFriendPurpose, txtFriendName, txtRequested, txtRequestedTestReq, txtRequestedTestRec;
-        Button btnAllowNfc, btnNfcCancel, btnTestWrite, btnTestReject, btnTestAcceptRec, btnTestRejectRec, btnAcceptFriend, btnRejectFriend, btnShareRequest, btnShareCancel;
-    }
-
-    public View getView(final int position, View convertView, ViewGroup parent)
-    {
-        View vi = convertView;
-        ViewHolder holder = null;
-
-        if (convertView == null)
-        {
-            vi = inflater.inflate(R.layout.notification_item, null);
-            holder = new ViewHolder();
-            holder.imgShare = (CircleImageView) vi.findViewById(R.id.imgShare);
-            holder.imgTestReq = (CircleImageView) vi.findViewById(R.id.imgTestReq);
-            holder.imgTestRec = (CircleImageView) vi.findViewById(R.id.imgTestRec);
-            holder.imgFriend = (CircleImageView) vi.findViewById(R.id.imgFriend);
-            holder.txtRequested = (TextView) vi.findViewById(R.id.txtRequested);
-            holder.txtTestPurpose = (TextView) vi.findViewById(R.id.txtTestPurpose);
-            holder.txtTestName = (TextView) vi.findViewById(R.id.txtTestName);
-            holder.txtTestPurposeRec = (TextView) vi.findViewById(R.id.txtTestPurposeRec);
-            holder.txtTestNameRec = (TextView) vi.findViewById(R.id.txtTestNameRec);
-            holder.txtFriendPurpose = (TextView) vi.findViewById(R.id.txtFriendPurpose);
-            holder.txtFriendName = (TextView) vi.findViewById(R.id.txtFriendName);
-            holder.txtRequestedTestReq = (TextView) vi.findViewById(R.id.txtRequestedTestReq);
-            holder.txtRequestedTestRec = (TextView) vi.findViewById(R.id.txtRequestedTestRec);
-            holder.btnTestWrite = (Button) vi.findViewById(R.id.btnTestWrite);
-            holder.btnTestReject = (Button) vi.findViewById(R.id.btnTestReject);
-            holder.btnTestAcceptRec = (Button) vi.findViewById(R.id.btnTestAcceptRec);
-            holder.btnTestRejectRec = (Button) vi.findViewById(R.id.btnTestRejectRec);
-            holder.btnAcceptFriend = (Button) vi.findViewById(R.id.btnAcceptFriend);
-            holder.btnRejectFriend = (Button) vi.findViewById(R.id.btnRejectFriend);
-            holder.txtShareName = (TextView) vi.findViewById(R.id.txtShareName);
-            holder.txtSharePurpose = (TextView) vi.findViewById(R.id.txtSharePurpose);
-            holder.btnShareRequest = (Button) vi.findViewById(R.id.btnReqShare);
-            holder.btnShareCancel = (Button) vi.findViewById(R.id.btnShareCancel);
-            holder.txtNfcName = (TextView) vi.findViewById(R.id.txtNfcName);
-            holder.txtNfcPurpose = (TextView) vi.findViewById(R.id.txtNfcPurpose);
-            holder.btnAllowNfc = (Button) vi.findViewById(R.id.btnAllowNfc);
-            holder.btnNfcCancel = (Button) vi.findViewById(R.id.btnNfcCancel);
-            holder.imgNfc = (CircleImageView) vi.findViewById(R.id.imgNfc);
-
-            vi.setTag(holder);
-        }
-        else
-        {
-            holder = (ViewHolder)vi.getTag();
-        }
-
         loginSession = new LoginSession(activity);
         HashMap<String, String> user = loginSession.getUserDetails();
 
         profileId = user.get(LoginSession.KEY_PROFILEID);
         UserId = user.get(LoginSession.KEY_USERID);
-        lnrFriend = (LinearLayout) vi.findViewById(R.id.lnrFriend);
-        lnrTestReq = (LinearLayout) vi.findViewById(R.id.lnrTestReq);
-        lnrTestRec = (LinearLayout) vi.findViewById(R.id.lnrTestRec);
-        lnrShare = (LinearLayout) vi.findViewById(R.id.lnrShare);
-        lnrNFC = (LinearLayout) vi.findViewById(R.id.lnrNFC);
 
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder  {
+        CircleImageView imgTestReq, imgTestRec, imgFriend, imgShare, imgNfc;
+        TextView txtNfcPurpose, txtNfcName, txtSharePurpose, txtShareName, txtTestPurpose, txtTestName, txtTestPurposeRec, txtTestNameRec, txtFriendPurpose, txtFriendName, txtRequested, txtRequestedTestReq, txtRequestedTestRec;
+        Button btnAllowNfc, btnNfcCancel, btnTestWrite, btnTestReject, btnTestAcceptRec, btnTestRejectRec, btnAcceptFriend, btnRejectFriend, btnShareRequest, btnShareCancel;
+        FrameLayout fm_img;
+        ProgressBar progressBar1;
+        public MyViewHolder(View vi) {
+            super(vi);
+
+
+            fm_img =(FrameLayout)vi.findViewById(R.id.fm_img);
+            progressBar1 = (ProgressBar)vi.findViewById(R.id.progressBar1);
+            imgShare = (CircleImageView) vi.findViewById(R.id.imgShare);
+            imgTestReq = (CircleImageView) vi.findViewById(R.id.imgTestReq);
+            imgTestRec = (CircleImageView) vi.findViewById(R.id.imgTestRec);
+            imgFriend = (CircleImageView) vi.findViewById(R.id.imgFriend);
+            txtRequested = (TextView) vi.findViewById(R.id.txtRequested);
+            txtTestPurpose = (TextView) vi.findViewById(R.id.txtTestPurpose);
+            txtTestName = (TextView) vi.findViewById(R.id.txtTestName);
+            txtTestPurposeRec = (TextView) vi.findViewById(R.id.txtTestPurposeRec);
+            txtTestNameRec = (TextView) vi.findViewById(R.id.txtTestNameRec);
+            txtFriendPurpose = (TextView) vi.findViewById(R.id.txtFriendPurpose);
+            txtFriendName = (TextView) vi.findViewById(R.id.txtFriendName);
+            txtRequestedTestReq = (TextView) vi.findViewById(R.id.txtRequestedTestReq);
+            txtRequestedTestRec = (TextView) vi.findViewById(R.id.txtRequestedTestRec);
+            btnTestWrite = (Button) vi.findViewById(R.id.btnTestWrite);
+            btnTestReject = (Button) vi.findViewById(R.id.btnTestReject);
+            btnTestAcceptRec = (Button) vi.findViewById(R.id.btnTestAcceptRec);
+            btnTestRejectRec = (Button) vi.findViewById(R.id.btnTestRejectRec);
+            btnAcceptFriend = (Button) vi.findViewById(R.id.btnAcceptFriend);
+            btnRejectFriend = (Button) vi.findViewById(R.id.btnRejectFriend);
+            txtShareName = (TextView) vi.findViewById(R.id.txtShareName);
+            txtSharePurpose = (TextView) vi.findViewById(R.id.txtSharePurpose);
+            btnShareRequest = (Button) vi.findViewById(R.id.btnReqShare);
+            btnShareCancel = (Button) vi.findViewById(R.id.btnShareCancel);
+            txtNfcName = (TextView) vi.findViewById(R.id.txtNfcName);
+            txtNfcPurpose = (TextView) vi.findViewById(R.id.txtNfcPurpose);
+            btnAllowNfc = (Button) vi.findViewById(R.id.btnAllowNfc);
+            btnNfcCancel = (Button) vi.findViewById(R.id.btnNfcCancel);
+            imgNfc = (CircleImageView) vi.findViewById(R.id.imgNfc);
+
+            lnrFriend = (LinearLayout) vi.findViewById(R.id.lnrFriend);
+            lnrTestReq = (LinearLayout) vi.findViewById(R.id.lnrTestReq);
+            lnrTestRec = (LinearLayout) vi.findViewById(R.id.lnrTestRec);
+            lnrShare = (LinearLayout) vi.findViewById(R.id.lnrShare);
+            lnrNFC = (LinearLayout) vi.findViewById(R.id.lnrNFC);
+            final int pos = getAdapterPosition();
+            vi.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view)
+                {
+                    if ((testimonialModels.get(pos).getShared_ProfileID().toString().equalsIgnoreCase("") ||
+                            testimonialModels.get(pos).getShared_ProfileID().toString().equalsIgnoreCase("null") ||
+                            testimonialModels.get(pos).getShared_ProfileID().toString().equalsIgnoreCase(null))
+                            && (testimonialModels.get(pos).getShared_UserID().toString().equalsIgnoreCase("") ||
+                            testimonialModels.get(pos).getShared_UserID().toString().equalsIgnoreCase("null") ||
+                            testimonialModels.get(pos).getShared_UserID().toString().equalsIgnoreCase(null)))
+                    {
+                        Intent intent = new Intent(activity, ConnectActivity.class);
+                        intent.putExtra("friendProfileID", testimonialModels.get(pos).getFriendProfileID());
+                        intent.putExtra("friendUserID", testimonialModels.get(pos).getFriendUserID());
+                        intent.putExtra("ProfileID", profileId);
+                        activity.startActivity(intent);
+                    }
+                    else
+                    {
+                        Intent intent = new Intent(activity, ConnectActivity.class);
+                        intent.putExtra("friendProfileID", testimonialModels.get(pos).getShared_ProfileID());
+                        intent.putExtra("friendUserID", testimonialModels.get(pos).getShared_UserID());
+                        intent.putExtra("ProfileID", profileId);
+                        activity.startActivity(intent);
+                    }
+                }
+            });
+
+
+        }
+    }
+
+    @Override
+    public NotificationAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.new_card_request_parameter, parent, false);
+
+        return new MyViewHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(NotificationAdapter.MyViewHolder holder, final int position) {
         String purpose = testimonialModels.get(position).getPurpose();
 
         if (purpose.equalsIgnoreCase("Recieved Testimonial"))
@@ -177,53 +197,6 @@ public class NotificationAdapter extends BaseAdapter
             holder.txtTestPurposeRec.setText(purpose);
             holder.txtTestNameRec.setText(testimonialModels.get(position).getFirstName() + " " + testimonialModels.get(position).getLastName());
         }
-
-        /*else if (purpose.equalsIgnoreCase("Connection Accepted"))
-        {
-            lnrFriend.setVisibility(View.VISIBLE);
-            lnrTestReq.setVisibility(View.GONE);
-            lnrTestRec.setVisibility(View.GONE);
-            if (testimonialModels.get(position).getUserPhoto().equals(""))
-            {
-                holder.imgFriend.setImageResource(R.drawable.usr);
-            }
-            else
-            {
-                Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgFriend);
-            }
-            if (testimonialModels.get(position).getStatus().equalsIgnoreCase("Accepted"))
-            {
-                holder.btnAcceptFriend.setVisibility(View.GONE);
-                holder.btnRejectFriend.setVisibility(View.GONE);
-                holder.txtRequested.setVisibility(View.VISIBLE);
-                holder.txtRequested.setText("Accepted");
-            }
-            holder.txtFriendPurpose.setText(purpose);
-            holder.txtFriendName.setText(testimonialModels.get(position).getFirstName());
-        }*/
-
-        /*else if (purpose.equalsIgnoreCase("Access Right Accepted"))
-        {
-            lnrFriend.setVisibility(View.VISIBLE);
-            lnrTestReq.setVisibility(View.GONE);
-            lnrTestRec.setVisibility(View.GONE);
-            if (testimonialModels.get(position).getUserPhoto().equals(""))
-            {
-                holder.imgFriend.setImageResource(R.drawable.usr);
-            }
-            else
-            {
-                Picasso.with(activity).load("http://circle8.asia/App_ImgLib/UserProfile/" + testimonialModels.get(position).getUserPhoto()).into(holder.imgFriend);
-            }
-
-                holder.btnAcceptFriend.setVisibility(View.GONE);
-                holder.btnRejectFriend.setVisibility(View.GONE);
-                holder.txtRequested.setVisibility(View.VISIBLE);
-            holder.txtRequested.setText("Accepted");
-            holder.txtFriendPurpose.setText(purpose);
-            holder.txtFriendName.setText(testimonialModels.get(position).getFirstName());
-        }*/
-
         else if (purpose.equalsIgnoreCase("Access Right Requested") || purpose.equalsIgnoreCase("Connection Requested"))
         {
             lnrNFC.setVisibility(View.GONE);
@@ -407,33 +380,6 @@ public class NotificationAdapter extends BaseAdapter
             holder.txtFriendName.setText(testimonialModels.get(position).getFirstName() + " " + testimonialModels.get(position).getLastName());
         }
 
-        vi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                if ((testimonialModels.get(position).getShared_ProfileID().toString().equalsIgnoreCase("") ||
-                        testimonialModels.get(position).getShared_ProfileID().toString().equalsIgnoreCase("null") ||
-                        testimonialModels.get(position).getShared_ProfileID().toString().equalsIgnoreCase(null))
-                        && (testimonialModels.get(position).getShared_UserID().toString().equalsIgnoreCase("") ||
-                        testimonialModels.get(position).getShared_UserID().toString().equalsIgnoreCase("null") ||
-                        testimonialModels.get(position).getShared_UserID().toString().equalsIgnoreCase(null)))
-                {
-                    Intent intent = new Intent(activity, ConnectActivity.class);
-                    intent.putExtra("friendProfileID", testimonialModels.get(position).getFriendProfileID());
-                    intent.putExtra("friendUserID", testimonialModels.get(position).getFriendUserID());
-                    intent.putExtra("ProfileID", profileId);
-                    activity.startActivity(intent);
-                }
-                else
-                {
-                    Intent intent = new Intent(activity, ConnectActivity.class);
-                    intent.putExtra("friendProfileID", testimonialModels.get(position).getShared_ProfileID());
-                    intent.putExtra("friendUserID", testimonialModels.get(position).getShared_UserID());
-                    intent.putExtra("ProfileID", profileId);
-                    activity.startActivity(intent);
-                }
-            }
-        });
 
         holder.btnTestWrite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -508,7 +454,7 @@ public class NotificationAdapter extends BaseAdapter
             @Override
             public void onClick(View v) {
                 posi = position;
-              //  new HttpAsyncTaskAcceptFriend().execute(Utility.BASE_URL+"ShareProfile/Request");
+                //  new HttpAsyncTaskAcceptFriend().execute(Utility.BASE_URL+"ShareProfile/Request");
                 Intent intent = new Intent(activity, ConnectActivity.class);
                 intent.putExtra("friendProfileID", testimonialModels.get(position).getShared_ProfileID());
                 intent.putExtra("friendUserID", testimonialModels.get(position).getShared_UserID());
@@ -677,7 +623,15 @@ public class NotificationAdapter extends BaseAdapter
             }
         });
 
-        return vi;
+    }
+
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemCount() {
+        return 0;
     }
 
     private class HttpAsyncTaskAcceptTestimonial extends AsyncTask<String, Void, String> {
