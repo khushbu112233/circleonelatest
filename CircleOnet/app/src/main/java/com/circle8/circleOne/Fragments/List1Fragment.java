@@ -37,7 +37,6 @@ import com.azoft.carousellayoutmanager.CarouselLayoutManager;
 import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
 import com.azoft.carousellayoutmanager.CenterScrollListener;
 import com.circle8.circleOne.Activity.CardsActivity;
-import com.circle8.circleOne.Activity.GroupsActivity;
 import com.circle8.circleOne.Activity.SortAndFilterOption;
 import com.circle8.circleOne.Adapter.GalleryAdapter;
 import com.circle8.circleOne.Adapter.GalleryAdapter1;
@@ -63,9 +62,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
-import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
 import static com.google.android.gms.internal.zzahg.runOnUiThread;
 
 public class List1Fragment extends Fragment
@@ -130,6 +127,7 @@ public class List1Fragment extends Fragment
     private static RelativeLayout rlProgressDialog ;
     private static TextView tvProgressing ;
     private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+    static String count = "";
 
     public List1Fragment() {
         // Required empty public constructor
@@ -762,7 +760,7 @@ public class List1Fragment extends Fragment
                     JSONObject jsonObject = new JSONObject(result);
 
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
-                    String count = jsonObject.getString("count");
+                    count = jsonObject.getString("count");
 
                     if (count.equals("") || count.equals("null"))
                     {
@@ -1181,7 +1179,7 @@ public class List1Fragment extends Fragment
                     String success = response.getString("success");
                     String findBy = response.getString("FindBy");
                     String search = response.getString("Search");
-                    String count = response.getString("count");
+                    count = response.getString("count");
                     String pageno = response.getString("pageno");
                     String recordno = response.getString("numofrecords");
 
@@ -1368,25 +1366,25 @@ public class List1Fragment extends Fragment
         if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetFriendConnection"))
         {
             if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + nfcModel.size() + "/" + CardsActivity.Connection_Limit);
+                CardsActivity.setActionBarTitle("Cards - " + count + "/" + CardsActivity.Connection_Limit);
             }
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetProfileConnection"))
         {
             if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
+                CardsActivity.setActionBarTitle("Cards - " + count);
             }
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection"))
         {
             if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
+                CardsActivity.setActionBarTitle("Cards - " + count);
             }
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("SearchConnect"))
         {
             if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
+                CardsActivity.setActionBarTitle("Cards - " + count);
             }
         }
 

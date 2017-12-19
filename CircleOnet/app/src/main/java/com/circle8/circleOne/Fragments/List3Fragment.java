@@ -56,7 +56,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -102,6 +101,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
     public static RelativeLayout rlProgressDialog ;
     public static TextView tvProgressing ;
     public static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+    static String count;
 
     public List3Fragment() {
         // Required empty public constructor
@@ -532,7 +532,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                     String success = response.getString("success");
                     String findBy = response.getString("FindBy");
                     String search = response.getString("Search");
-                    String count = response.getString("count");
+                    count = response.getString("count");
                     String pageno = response.getString("pageno");
                     String recordno = response.getString("numofrecords");
 
@@ -704,7 +704,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                     JSONObject jsonObject = new JSONObject(result);
                     totalArray = jsonObject.getString("count");
 
-                    String count = jsonObject.getString("count");
+                    count = jsonObject.getString("count");
                     if(count.equals("") || count.equals("null"))
                     {
                         numberCount = 0 ;

@@ -59,7 +59,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -104,6 +103,7 @@ public class List2Fragment extends Fragment
     public static RelativeLayout rlProgressDialog ;
     public static TextView tvProgressing ;
     public static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
+    static String count;
 
     public List2Fragment() {
         // Required empty public constructor
@@ -379,7 +379,7 @@ public class List2Fragment extends Fragment
                     String success = response.getString("success");
                     String findBy = response.getString("FindBy");
                     String search = response.getString("Search");
-                    String count = response.getString("count");
+                    count = response.getString("count");
                     String pageno = response.getString("pageno");
                     String recordno = response.getString("numofrecords");
 
@@ -596,7 +596,7 @@ public class List2Fragment extends Fragment
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
 
-                    String count = jsonObject.getString("count");
+                    count = jsonObject.getString("count");
 
                     if (count.equals("") || count.equals("null")) {
                         numberCount = 0;
@@ -1106,23 +1106,23 @@ public class List2Fragment extends Fragment
 
         if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
             if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + nfcModel.size() + "/" + CardsActivity.Connection_Limit);
+                CardsActivity.setActionBarTitle("Cards - " + count + "/" + CardsActivity.Connection_Limit);
             }
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
             if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
+                CardsActivity.setActionBarTitle("Cards - " + count);
             }
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
             if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
+                CardsActivity.setActionBarTitle("Cards - " + count);
             }
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("SearchConnect"))
         {
             if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + nfcModel.size());
+                CardsActivity.setActionBarTitle("Cards - " + count);
             }
         }
 
