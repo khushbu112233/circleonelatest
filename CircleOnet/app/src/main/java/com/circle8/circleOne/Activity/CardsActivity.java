@@ -20,7 +20,6 @@ import android.location.Location;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
-import android.nfc.NfcManager;
 import android.nfc.Tag;
 import android.nfc.tech.NfcF;
 import android.os.AsyncTask;
@@ -54,9 +53,9 @@ import android.widget.Toast;
 import com.circle8.circleOne.Fragments.CardsFragment;
 import com.circle8.circleOne.Fragments.ConnectFragment;
 import com.circle8.circleOne.Fragments.EventsFragment;
-import com.circle8.circleOne.Fragments.List1Fragment;
-import com.circle8.circleOne.Fragments.List2Fragment;
+
 import com.circle8.circleOne.Fragments.List3Fragment;
+
 import com.circle8.circleOne.Fragments.ProfileFragment;
 import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
@@ -68,13 +67,9 @@ import com.circle8.circleOne.Utils.CircularTextView;
 import com.circle8.circleOne.Utils.CustomViewPager;
 import com.circle8.circleOne.Utils.PrefUtils;
 import com.circle8.circleOne.Utils.Utility;
-import com.circle8.circleOne.chat.ChatActivity;
 import com.circle8.circleOne.chat.ChatHelper;
-import com.circle8.circleOne.chat.CheckboxUsersAdapter;
-import com.circle8.circleOne.chat.DialogsActivity;
 import com.circle8.circleOne.chat.DialogsAdapter;
 import com.circle8.circleOne.chat.DialogsManager;
-import com.circle8.circleOne.chat.SelectUsersActivity;
 import com.circle8.circleOne.chat.qb.QbChatDialogMessageListenerImp;
 import com.circle8.circleOne.chat.qb.QbDialogHolder;
 import com.facebook.login.LoginManager;
@@ -111,7 +106,6 @@ import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.QBResponseException;
 import com.quickblox.messages.services.SubscribeService;
 import com.quickblox.sample.core.gcm.GooglePlayServicesHelper;
-import com.quickblox.sample.core.ui.dialog.ProgressDialogFragment;
 import com.quickblox.sample.core.utils.SharedPrefsHelper;
 import com.quickblox.sample.core.utils.constant.GcmConsts;
 import com.quickblox.users.QBUsers;
@@ -124,7 +118,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.jivesoftware.smack.filter.MessageTypeFilter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -153,7 +146,6 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import be.appfoundry.nfclibrary.activities.NfcActivity;
 import be.appfoundry.nfclibrary.utilities.interfaces.NfcReadUtility;
 import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
 import io.fabric.sdk.android.Fabric;
@@ -227,6 +219,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
     String CardCode = "";
     Boolean netCheck= false;
     public static final byte[] MIME_TEXT = "application/com.circle8.circleOne".getBytes();
+    public static final byte[] MIME_TEXT1 = "application/com.amplearch.circleone".getBytes();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -1554,6 +1547,44 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                                     String decryptstr = decrypt(s1, secretKey);
                                     arrayNFC.add(decryptstr);
                                 }
+                                else if (recs[j].getTnf() == NdefRecord.TNF_MIME_MEDIA && Arrays.equals(recs[j].getType(), MIME_TEXT1)) {
+
+                                    byte[] payload = recs[j].getPayload();
+                                    String textEncoding = ((payload[0] & 0200) == 0) ? "UTF-8" : "UTF-16";
+                                    int langCodeLen = payload[0] & 0077;
+
+                                   /* s += ("\n" +
+                                            new String(payload, langCodeLen + 1,
+                                                    payload.length - langCodeLen - 1, textEncoding) );*/
+                                    String s1 = new String(payload, langCodeLen + 1,
+                                            payload.length - langCodeLen - 1, textEncoding);
+                                    String decryptstr = decrypt(s1, secretKey);
+                                    arrayNFC.add(decryptstr);
+                                }
+                                else {
+                                    try {
+                                        msgs = new NdefMessage[rawMsgs.length];
+                                        for (int i1 = 0; i1 < rawMsgs.length; i1++) {
+                                            msgs[i1] = (NdefMessage) rawMsgs[i1];
+                                        }
+
+                                        byte[] payload = msgs[0].getRecords()[0].getPayload();
+
+                                        String message = new String(payload);
+                /* 把tag的資訊放到textview裡面 */
+                                        // mEtMessage.setText(new String(payload));
+
+                                        message = message.substring(1, message.length());
+
+                                        String decryptstr = decrypt(message, secretKey);
+                                        arrayNFC.add(decryptstr);
+
+                                    } catch (GeneralSecurityException e) {
+                                        e.printStackTrace();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                             }
                         }
                     } catch (Exception e) {
@@ -1756,8 +1787,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 for (int i = 0; i < data.length; i++) {
                     NdefRecord[] recs = ((NdefMessage)data[i]).getRecords();
                     for (int j = 0; j < recs.length; j++) {
-                        if (recs[j].getTnf() == NdefRecord.TNF_MIME_MEDIA &&
-                                Arrays.equals(recs[j].getType(), MIME_TEXT)) {
+                        if (recs[j].getTnf() == NdefRecord.TNF_MIME_MEDIA && Arrays.equals(recs[j].getType(), MIME_TEXT)) {
 
                             byte[] payload = recs[j].getPayload();
                             String textEncoding = ((payload[0] & 0200) == 0) ? "UTF-8" : "UTF-16";
@@ -1770,6 +1800,47 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                                     payload.length - langCodeLen - 1, textEncoding);
                             String decryptstr = decrypt(s1, secretKey);
                             arrayNFC.add(decryptstr);
+                        }
+                        else if (recs[j].getTnf() == NdefRecord.TNF_MIME_MEDIA && Arrays.equals(recs[j].getType(), MIME_TEXT1)) {
+
+                            byte[] payload = recs[j].getPayload();
+                            String textEncoding = ((payload[0] & 0200) == 0) ? "UTF-8" : "UTF-16";
+                            int langCodeLen = payload[0] & 0077;
+
+                            s += ("\n" +
+                                    new String(payload, langCodeLen + 1,
+                                            payload.length - langCodeLen - 1, textEncoding) );
+                            String s1 = new String(payload, langCodeLen + 1,
+                                    payload.length - langCodeLen - 1, textEncoding);
+                            String decryptstr = decrypt(s1, secretKey);
+                            arrayNFC.add(decryptstr);
+                        }
+                        else {
+                            try {
+
+
+                                NdefMessage[] msgs = null;
+                                msgs = new NdefMessage[data.length];
+                                for (int i1 = 0; i1 < data.length; i1++) {
+                                    msgs[i1] = (NdefMessage) data[i1];
+                                }
+
+                                byte[] payload = msgs[0].getRecords()[0].getPayload();
+
+                                String message = new String(payload);
+                /* 把tag的資訊放到textview裡面 */
+                                // mEtMessage.setText(new String(payload));
+
+                                message = message.substring(1, message.length());
+
+                                String decryptstr = decrypt(message, secretKey);
+                                arrayNFC.add(decryptstr);
+
+                            } catch (GeneralSecurityException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }

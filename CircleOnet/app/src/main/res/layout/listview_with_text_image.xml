@@ -37,7 +37,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:id="@+id/drawer1"
-            android:src="@drawable/ic_acc"
+            android:src="@drawable/ic_accont_white"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="0dp" />
 
@@ -95,7 +95,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="0dp"
             android:contentDescription="Home!"
-            android:src="@drawable/ic_manage_cards" />
+            android:src="@drawable/ic_manage_cards_white" />
 
         <com.circle8.circleOne.Utils.orkebyTextView
             android:id="@+id/textDrawer2"
@@ -119,7 +119,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:id="@+id/drawer3"
-            android:src="@drawable/ic_new_card"
+            android:src="@drawable/ic_new_card_white"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="0dp" />
         <com.circle8.circleOne.Utils.orkebyTextView
@@ -142,7 +142,7 @@
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/ic_card_verify"
+            android:src="@drawable/ic_card_verify_white"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="0dp" />
         <com.circle8.circleOne.Utils.orkebyTextView
@@ -187,7 +187,7 @@
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/ic_sync_contact_white"
+            android:src="@drawable/ic_sync_contact_white1"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="0dp" />
         <com.circle8.circleOne.Utils.orkebyTextView
@@ -209,7 +209,7 @@
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/ic_profile_white"
+            android:src="@drawable/ic_profile_white1"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="0dp" />
         <com.circle8.circleOne.Utils.orkebyTextView
@@ -233,7 +233,7 @@
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/ic_rewards_white"
+            android:src="@drawable/ic_rewards_white1"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="0dp" />
         <com.circle8.circleOne.Utils.orkebyTextView
@@ -261,7 +261,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="0dp"
             android:contentDescription="Home!"
-            android:src="@drawable/ic_noti" />
+            android:src="@drawable/ic_notification_white" />
 
         <com.circle8.circleOne.Utils.orkebyTextView
             android:id="@+id/textDrawer4"
@@ -297,7 +297,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:id="@+id/drawer5"
-            android:src="@drawable/ic_group"
+            android:src="@drawable/ic_circle_white"
             android:layout_marginLeft="10dp"
             android:contentDescription="Home!"
             android:layout_marginTop="0dp" />
@@ -324,7 +324,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:id="@+id/drawer6"
-            android:src="@drawable/ic_subscribe"
+            android:src="@drawable/ic_subscribe_white"
             android:layout_marginLeft="10dp"
             android:contentDescription="Home!"
             android:layout_marginTop="0dp" />
@@ -350,7 +350,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:id="@+id/drawer7"
-            android:src="@drawable/ic_history"
+            android:src="@drawable/ic_history_white"
             android:layout_marginLeft="10dp"
             android:contentDescription="Home!"
             android:layout_marginTop="0dp" />
@@ -432,7 +432,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:id="@+id/drawer10"
-            android:src="@drawable/ic_contact"
+            android:src="@drawable/ic_contact_white"
             android:layout_marginLeft="10dp"
             android:contentDescription="Home!"
             android:layout_marginTop="0dp" />
@@ -457,7 +457,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:id="@+id/drawer11"
-            android:src="@drawable/ic_help"
+            android:src="@drawable/ic_help_white"
             android:layout_marginLeft="10dp"
             android:contentDescription="Home!"
             android:layout_marginTop="0dp" />
@@ -484,7 +484,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:id="@+id/drawer12"
-                android:src="@drawable/ic_logout"
+                android:src="@drawable/ic_logout_white"
                 android:layout_marginLeft="10dp"
                 android:contentDescription="Home!"
                 android:layout_marginTop="0dp" />

@@ -17,6 +17,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -109,6 +110,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
     TextView tvPay, tvCancel, tvAmount ;
     StickyScrollView scrollView ;
     boolean lay_Enable = false ;
+    boolean open_Stripe = false ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -286,6 +288,8 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                         for ( int i = 0; i < main_contains.getChildCount();  i++ )
                         {
                             View view = main_contains.getChildAt(i);
+                            view.setFilterTouchesWhenObscured(false);
+                            view.setClickable(false);
                             view.setEnabled(false); // Or whatever you want to do with the view.
                         }
 
@@ -564,6 +568,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                 }
             }
         });
+
     }
 
     @Override

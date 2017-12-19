@@ -2,10 +2,11 @@ package com.circle8.circleOne.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -20,9 +21,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.Adapter.EarnPointsAdapter;
 import com.circle8.circleOne.Adapter.ExpandableListAdapter1;
-
 import com.circle8.circleOne.Adapter.MerchantExpandableAdapter;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.EarnPointsModel;
@@ -30,7 +33,6 @@ import com.circle8.circleOne.Model.ListAdapter1;
 import com.circle8.circleOne.Model.ListCell;
 import com.circle8.circleOne.Model.MerchantGetAllModel;
 import com.circle8.circleOne.R;
-import com.circle8.circleOne.Utils.ExpandableHeightListView;
 import com.circle8.circleOne.Utils.Utility;
 
 import org.apache.http.HttpResponse;
@@ -169,6 +171,16 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         expListView = (ExpandableListView)MerchantView.findViewById(R.id.laptop_list);
         ivAdImg = (ImageView)MerchantView.findViewById(R.id.ivAdImg);
 
+
+                Glide.with(this).load(R.drawable.cosmos)
+                .asBitmap()
+                .into(new BitmapImageViewTarget(ivAdImg) {
+                    @Override
+                    public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                        super.onResourceReady(drawable, anim);
+                        ivAdImg.setImageBitmap(drawable);
+                    }
+                });
         setGroupIndicatorToRight();
 
         expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener()

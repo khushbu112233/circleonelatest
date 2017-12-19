@@ -58,8 +58,6 @@ import java.util.HashMap;
 public class SubscriptionActivity extends AppCompatActivity
 {
     private ListView listView ;
-    private RelativeLayout  rlListView ;
-
     private ArrayList<SubscriptionModel> subscriptionModelArrayList ;
 
     private SubscriptionAdapter subscriptionAdapter ;
@@ -69,7 +67,7 @@ public class SubscriptionActivity extends AppCompatActivity
     Token tok;
     String strToken;
     AlertDialog alertDialog;
-    ImageView imgBack, ivAlphaImg ;
+    ImageView imgBack ;
 
     private RelativeLayout rlProgressDialog ;
     private TextView tvProgressing ;
@@ -78,6 +76,12 @@ public class SubscriptionActivity extends AppCompatActivity
     private String PackageName, SubscriptionID;
     String UserId = "";
     private LoginSession session;
+
+    /*for stripe payment screen*/
+    RelativeLayout rlLayOne, rlLayTwo ;
+    ImageView ivAlphaImg ;
+    EditText etCardNumber, etCardHolderName, etExMonth, etExYear, etSecurityCode, etMobileNumber ;
+    TextView tvPackageName, tvConnect_Group, tvConnection, tvAmount, tvPay, tvCancel ;
 
     int width, height;
     WindowManager.LayoutParams params;
@@ -114,10 +118,21 @@ public class SubscriptionActivity extends AppCompatActivity
         ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
         ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
 
-        rlListView = (RelativeLayout)findViewById(R.id.rlListView);
-
-//        tvPay = (TextView)findViewById(R.id.tvPay);
-//        tvCancel = (TextView)findViewById(R.id.tvCancel);
+        /*for stripe payment declaration*/
+        rlLayOne = (RelativeLayout)findViewById(R.id.rlLayOne);
+        rlLayTwo = (RelativeLayout)findViewById(R.id.rlLayTwo);
+        tvPackageName = (TextView)findViewById(R.id.tvPackageName);
+        tvConnect_Group = (TextView)findViewById(R.id.tvContact_Group);
+        tvConnection = (TextView)findViewById(R.id.tvConnection);
+        tvAmount = (TextView)findViewById(R.id.tvAmount);
+        etCardNumber = (EditText)findViewById(R.id.etCardNumber);
+        etCardHolderName = (EditText)findViewById(R.id.etCardHolderName);
+        etExMonth = (EditText)findViewById(R.id.etExMonth);
+        etExYear = (EditText)findViewById(R.id.etExYear);
+        etSecurityCode = (EditText)findViewById(R.id.etSecurityCode);
+        etMobileNumber = (EditText)findViewById(R.id.etMobileNumber);
+        tvPay = (TextView)findViewById(R.id.tvPay);
+        tvCancel = (TextView)findViewById(R.id.tvCancel);
 
         new HttpAsyncTaskGetUserSubscription().execute(Utility.BASE_URL+"Subscription/GetUserSubscription");
      //   new HttpAsyncTask().execute(Utility.BASE_URL+"Subscription/GetPackageList");
@@ -168,22 +183,32 @@ public class SubscriptionActivity extends AppCompatActivity
                         }
                     });
                     alert.show();
-
-                }else if (!packageId.equalsIgnoreCase(default_PackageId)) {
-                    if (default_PackageId.equals("1")) {
+                }
+                else if (!packageId.equalsIgnoreCase(default_PackageId))
+                {
+                    if (default_PackageId.equals("1"))
+                    {
                         //key = "firstpay";
+                        listView.setEnabled(false);
                         ivAlphaImg.setVisibility(View.VISIBLE);
+                        rlLayTwo.setVisibility(View.VISIBLE);
 
                         int price = Integer.parseInt(subscriptionModelArrayList.get(position).getPrice());
                         amount = price * 100;
 
-                        try {
+                        try
+                        {
                             stripe = new Stripe("pk_live_d0uXEesOC2Qg5919ul4t7Ocl");
                         } catch (AuthenticationException e) {
                             e.printStackTrace();
                         }
 
-                        alertDialog = new AlertDialog.Builder(SubscriptionActivity.this).create();
+                        tvPackageName.setText(package_Name);
+                        tvConnect_Group.setText(contacts_limit + " contacts, up to " + groups_limit + " circles,");
+                        tvConnection.setText("up to " + month_connect_limit + " connections per month.");
+                        tvAmount.setText("S$" + price);
+
+                        /*alertDialog = new AlertDialog.Builder(SubscriptionActivity.this).create();
                         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                         View dialogView = inflater.inflate(R.layout.stripe_payment_screen, null);
 
@@ -213,18 +238,16 @@ public class SubscriptionActivity extends AppCompatActivity
                         tvConnection.setText("up to " + month_connect_limit + " connections per month.");
                         tvAmount.setText("SGD $" + price);
 
-                /*cardNumberField = (TextView) dialogView.findViewById(R.id.cardNumber);
-                monthField = (TextView) dialogView.findViewById(R.id.month);
-                yearField = (TextView) dialogView.findViewById(R.id.year);
-                cvcField = (TextView) dialogView.findViewById(R.id.cvc);*/
-//                cvcField = (TextView) dialogView.findViewById(R.id.cvc);
-//                cardHolderName = (TextView) dialogView.findViewById(R.id.cardHolderName);
+                        *//*cardNumberField = (TextView) dialogView.findViewById(R.id.cardNumber);
+                        monthField = (TextView) dialogView.findViewById(R.id.month);
+                        yearField = (TextView) dialogView.findViewById(R.id.year);
+                        cvcField = (TextView) dialogView.findViewById(R.id.cvc);*//*
+                        //                cvcField = (TextView) dialogView.findViewById(R.id.cvc);
+                        //                cardHolderName = (TextView) dialogView.findViewById(R.id.cardHolderName);
 
                         tvPay.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-
-
                                 numberOnCard = etCardNumber.getText().toString();
                                 nameOnCard = etCardHolderName.getText().toString();
                                 exYearOnCard = etExYear.getText().toString();
@@ -263,16 +286,57 @@ public class SubscriptionActivity extends AppCompatActivity
                         alertDialog.setView(dialogView);
                         alertDialog.setCancelable(false);
                         alertDialog.getWindow().setFormat(PixelFormat.TRANSLUCENT);
-//                alertDialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-//                alertDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
                         alertDialog.show();
                         Window window = alertDialog.getWindow();
-                        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);*/
                     }
-                    else {
+                    else
+                    {
                         new HttpAsyncTaskUpdateSub().execute("http://circle8.asia/Checkout/Updatesubscription");
                     }
                 }
+            }
+        });
+
+        tvPay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                numberOnCard = etCardNumber.getText().toString();
+                nameOnCard = etCardHolderName.getText().toString();
+                exYearOnCard = etExYear.getText().toString();
+                exMonthOnCard = etExMonth.getText().toString();
+                cvvOnCard = etSecurityCode.getText().toString();
+                mobileNoOnCard = etMobileNumber.getText().toString();
+
+                if (numberOnCard.isEmpty()) {
+                    Toast.makeText(SubscriptionActivity.this, "Enter Card No.", Toast.LENGTH_SHORT).show();
+                } else if (nameOnCard.isEmpty()) {
+                    Toast.makeText(SubscriptionActivity.this, "Enter Holder Name", Toast.LENGTH_SHORT).show();
+                } else if (exMonthOnCard.isEmpty()) {
+                    Toast.makeText(SubscriptionActivity.this, "Enter Expiry Month", Toast.LENGTH_SHORT).show();
+                } else if (exYearOnCard.isEmpty()) {
+                    Toast.makeText(SubscriptionActivity.this, "Enter Expiry Year", Toast.LENGTH_SHORT).show();
+                } else if (cvvOnCard.isEmpty()) {
+                    Toast.makeText(SubscriptionActivity.this, "Enter CVV No.", Toast.LENGTH_SHORT).show();
+                } else if (mobileNoOnCard.isEmpty()) {
+                    Toast.makeText(SubscriptionActivity.this, "Enter Mobile No.", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    cardPayment();
+                    listView.setEnabled(true);
+                    ivAlphaImg.setVisibility(View.GONE);
+                    rlLayTwo.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listView.setEnabled(true);
+                ivAlphaImg.setVisibility(View.GONE);
+                rlLayTwo.setVisibility(View.GONE);
             }
         });
 

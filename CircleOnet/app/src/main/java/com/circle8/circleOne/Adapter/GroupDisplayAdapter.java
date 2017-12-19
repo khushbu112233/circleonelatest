@@ -41,6 +41,9 @@ public class GroupDisplayAdapter extends BaseAdapter
     LoginSession session;
     String profile_id, user_id;
 
+    public static CircleImageView imgGroup ;
+    public static TextView tvGroupName, tvGroupDesc, tvMemberCount, tvEditGroup ;
+
     CharSequence[] items ;
     private String userChoosenTask ;
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
@@ -73,18 +76,31 @@ public class GroupDisplayAdapter extends BaseAdapter
         return 0;
     }
 
-    static class ViewHolder
+    /*public class ViewHolder
     {
         CircleImageView imgGroup ;
         TextView tvGroupName, tvGroupDesc, tvMemberCount, tvEditGroup ;
-    }
+    }*/
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent)
     {
         View row = convertView;
-        ViewHolder holder = null;
 
+        LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        row = inflater.inflate(R.layout.groups_displaying, null);
+
+        imgGroup = (CircleImageView)row.findViewById(R.id.imgGroup);
+        tvGroupName = (TextView)row.findViewById(R.id.tvGroupName);
+        tvGroupDesc = (TextView)row.findViewById(R.id.tvGroupDesc);
+        tvMemberCount = (TextView)row.findViewById(R.id.tvMemberCount);
+        tvEditGroup = (TextView)row.findViewById(R.id.tvEditGroup);
+
+        tvGroupName.setText(groupModelsList.get(position).getGroup_Name());
+        tvGroupDesc.setText(groupModelsList.get(position).getGroup_Desc());
+        tvMemberCount.setText("("+groupModelsList.get(position).getGroup_member_count()+")");
+
+        /*ViewHolder holder = null;
         if( row == null)
         {
             LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -102,22 +118,23 @@ public class GroupDisplayAdapter extends BaseAdapter
         else
         {
             holder = (ViewHolder)row.getTag();
-        }
+        }*/
 
-        holder.tvGroupName.setText(groupModelsList.get(position).getGroup_Name());
+       /* holder.tvGroupName.setText(groupModelsList.get(position).getGroup_Name());
         holder.tvGroupDesc.setText(groupModelsList.get(position).getGroup_Desc());
-        holder.tvMemberCount.setText("("+groupModelsList.get(position).getGroup_member_count()+")");
+        holder.tvMemberCount.setText("("+groupModelsList.get(position).getGroup_member_count()+")");*/
 
         if (groupModelsList.get(position).getGroup_Photo().equals(""))
         {
-            holder.imgGroup.setImageResource(R.drawable.usr_1);
+//            holder.imgGroup.setImageResource(R.drawable.usr_1);
+            imgGroup.setImageResource(R.drawable.usr_1);
         }
         else
         {
-            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Group/"+groupModelsList.get(position).getGroup_Photo()).resize(300,300).onlyScaleDown().skipMemoryCache().placeholder(R.drawable.usr_1).into(holder.imgGroup);
+            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Group/"+groupModelsList.get(position).getGroup_Photo()).resize(300,300).onlyScaleDown().skipMemoryCache().placeholder(R.drawable.usr_1).into(imgGroup);
         }
 
-        holder.imgGroup.setOnClickListener(new View.OnClickListener() {
+        imgGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -150,20 +167,23 @@ public class GroupDisplayAdapter extends BaseAdapter
                         context.startActivity(intent);
                     }
                 });
-
             }
         });
 
-        holder.tvEditGroup.setOnClickListener(new View.OnClickListener() {
+        tvEditGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                GroupsActivity.ivAlphaImg.setVisibility(View.VISIBLE);
                 GroupsActivity.CreateOrUpdateStatus = "Update";
                 GroupsActivity.tvCreateOrUpdate.setText("Update");
                 GroupsActivity.tvTextView.setText("Update Circle");
+                GroupsActivity.ivAlphaImg.setVisibility(View.VISIBLE);
                 GroupsActivity.rlLayTwo.setVisibility(View.VISIBLE);
                 GroupsActivity.listView.setEnabled(false);
+                GroupsActivity.llBottom.setEnabled(false);
+
+                tvEditGroup.setEnabled(false);
+                ivGroupImage.setEnabled(false);
 
                /* GroupsActivity.grpImg = groupModelsList.get(position).getGroup_Photo();
                 GroupsActivity.grpName = groupModelsList.get(position).getGroup_Name();

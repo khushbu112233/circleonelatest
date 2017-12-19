@@ -6,13 +6,11 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/ivAdImg"
-        android:layout_width="fill_parent"
-        android:layout_height="90dp"
-        android:src="@drawable/cosmos"
         android:scaleType="fitXY"
-        android:adjustViewBounds="true"
-               />
+        android:id="@+id/ivAdImg"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        />
 
     <View
         android:layout_width="match_parent"
