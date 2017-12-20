@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.databinding.DataBindingUtil;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -15,23 +16,21 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Base64;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Fragments.CardsFragment;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
+import com.circle8.circleOne.databinding.ActivityAddQrBinding;
 import com.google.zxing.Result;
 
 import org.apache.http.HttpResponse;
@@ -42,10 +41,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.security.InvalidAlgorithmParameterException;
@@ -71,10 +68,8 @@ import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 public class AddQRActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler
 {
-    Button btnRescan ;
-    ImageView imgBack ;
+
     ZXingScannerView mScannerView ;
-    ViewGroup contentFrame ;
     String scanQr="",scanFormat="" ;
     String profileId = "";
     private LoginSession session;
@@ -82,16 +77,15 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
     private double latitude, longitude;
     String lat = "", lng = "";
     private boolean netCheck;
+    ActivityAddQrBinding mBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_qr);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_qr);
 
-        contentFrame = (ViewGroup) findViewById(R.id.content_frame);
-        btnRescan = (Button)findViewById(R.id.btnRescan);
-        imgBack = (ImageView)findViewById(R.id.imgBack);
+
         session = new LoginSession(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
         Utility.deleteCache(getApplicationContext());
@@ -101,7 +95,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
         contentFrame.addView(mScannerView);
         CameraScann();*/
         netCheck = Utility.isNetworkAvailable(getApplicationContext());
-        btnRescan.setOnClickListener(new View.OnClickListener() {
+        mBinding.btnRescan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -117,7 +111,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
                 return new CustomViewFinderView(context);
             }
         };
-        contentFrame.addView(mScannerView);
+        mBinding.contentFrame.addView(mScannerView);
         CameraScann();
 
        /* Boolean aBoolean = Utility.checkCameraPermission(AddQRActivity.this);
@@ -127,7 +121,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
 //            mScannerView.startCamera();
 //      /*  }*/
 
-        imgBack.setOnClickListener(new View.OnClickListener() {
+        mBinding.imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utility.deleteCache(getApplicationContext());
@@ -188,14 +182,14 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
 //                ", Format = " + rawResult.getBarcodeFormat().toString()+
 //                ", Points = "+rawResult.getResultPoints(), Toast.LENGTH_SHORT).show();
 
-    //    nfcProfileId = decrypt(scanQr, secretKey);
-       // scanQr = rawResult.getText();
+        //    nfcProfileId = decrypt(scanQr, secretKey);
+        // scanQr = rawResult.getText();
         scanFormat = rawResult.getBarcodeFormat().toString();
-    //    new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
+        //    new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/FriendConnection_Operation");
 
         try {
             Utility.freeMemory();
-           // Toast.makeText(getApplicationContext(), rawResult.getText().toString(), Toast.LENGTH_LONG).show();
+            // Toast.makeText(getApplicationContext(), rawResult.getText().toString(), Toast.LENGTH_LONG).show();
             scanQr = decrypt(rawResult.getText().toString(), secretKey);
             if (scanQr.equals("Invalid QRCode")) {
                 Toast.makeText(getApplicationContext(), scanQr, Toast.LENGTH_LONG).show();
@@ -232,7 +226,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                 }
-        }
+            }
 
         } catch (GeneralSecurityException e) {
             e.printStackTrace();

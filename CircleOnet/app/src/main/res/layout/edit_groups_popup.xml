@@ -1,93 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <RelativeLayout
+    >
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:id="@+id/rlTopView"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginTop="5dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Please select the circle(s)"
-            android:textColor="@color/colorPrimary"
-            android:textSize="18dp"
-            android:layout_marginLeft="10dp"
-            android:layout_centerVertical="true"/>
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_up_arrow_blue"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"/>
-        <TextView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorPrimary"
-            android:layout_alignParentBottom="true"/>
-    </RelativeLayout>
+            android:layout_height="wrap_content">
 
-    <ListView
-        android:choiceMode="multipleChoice"
-        android:layout_above="@+id/rltBottomGroup"
-        android:layout_below="@+id/rlTopView"
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="10dp"
-        android:divider="@color/colorPrimary"
-        android:dividerHeight="1dp">
-    </ListView>
+            <RelativeLayout
+                android:id="@+id/rlTopView"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Please select the circle(s)"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_centerVertical="true"/>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_up_arrow_blue"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorPrimary"
+                    android:layout_alignParentBottom="true"/>
+            </RelativeLayout>
 
-    <TextView
-        android:visibility="gone"
-        android:id="@+id/tvGroupInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="You do not have any Circles"
-        android:textColor="@color/colorPrimary"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:layout_below="@+id/rlTopView"/>
+            <ListView
+                android:choiceMode="multipleChoice"
+                android:layout_above="@+id/rltBottomGroup"
+                android:layout_below="@+id/rlTopView"
+                android:id="@+id/listView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="10dp"
+                android:divider="@color/colorPrimary"
+                android:dividerHeight="1dp">
+            </ListView>
 
-    <RelativeLayout
-        android:id="@+id/rltBottomGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tvGroupInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="You do not have any Circles"
+                android:textColor="@color/colorPrimary"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_below="@+id/rlTopView"/>
 
-        <Button
-            android:id="@+id/btnAddToGroup"
-            android:layout_marginLeft="10dp"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add"/>
+            <RelativeLayout
+                android:id="@+id/rltBottomGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true">
 
-        <Button
-            android:id="@+id/btnCancelGroup"
-            android:layout_marginRight="10dp"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cancel"/>
+                <Button
+                    android:id="@+id/btnAddToGroup"
+                    android:layout_marginLeft="10dp"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add"/>
 
-    </RelativeLayout>
+                <Button
+                    android:id="@+id/btnCancelGroup"
+                    android:layout_marginRight="10dp"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cancel"/>
 
-    </RelativeLayout>
+            </RelativeLayout>
 
-</LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>

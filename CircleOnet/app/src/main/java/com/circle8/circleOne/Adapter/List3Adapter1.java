@@ -42,12 +42,11 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 /**
  * Created by admin on 12/14/2017.
@@ -500,6 +499,8 @@ public class List3Adapter1 extends RecyclerView.Adapter<List3Adapter1.MyViewHold
 
             // 10. convert inputstream to string
             if(inputStream != null)
+
+
                 result = convertInputStreamToString(inputStream);
             else
                 result = "Did not work!";
@@ -512,15 +513,4 @@ public class List3Adapter1 extends RecyclerView.Adapter<List3Adapter1.MyViewHold
         return result;
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException
-    {
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while((line = bufferedReader.readLine()) != null)
-            result += line;
-
-        inputStream.close();
-        return result;
-    }
 }

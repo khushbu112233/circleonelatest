@@ -2,24 +2,25 @@ package com.circle8.circleOne.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AbsListView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Adapter.NotificationAdapter;
+import com.circle8.circleOne.Fragments.List4Fragment;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.NotificationModel;
 import com.circle8.circleOne.R;
@@ -34,18 +35,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
-
 public class Notification extends AppCompatActivity
 {
-    static RecyclerView listNotification;
+    static ListView listNotification;
     LoginSession loginSession;
     static String UserId = "";
-    static ArrayList<NotificationModel> allTags;
+    static ArrayList<NotificationModel> allTags = new ArrayList<>();
     static NotificationAdapter notificationAdapter;
     private static TextView textView;
     ImageView imgLogo;
@@ -86,14 +88,12 @@ public class Notification extends AppCompatActivity
 
         textView.setText("Notifications - 0");
 
-        listNotification = (RecyclerView) findViewById(R.id.listNotification);
+        listNotification = (ListView) findViewById(R.id.listNotification);
 
         loginSession = new LoginSession(getApplicationContext());
         HashMap<String, String> user = loginSession.getUserDetails();
         UserId = user.get(LoginSession.KEY_USERID);
 //        Toast.makeText(getApplicationContext(),UserId,Toast.LENGTH_SHORT).show();
-
-        allTags = new ArrayList<>();
 
         rlLoadMore = (RelativeLayout)findViewById(R.id.rlLoadMore);
         rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
@@ -103,15 +103,6 @@ public class Notification extends AppCompatActivity
         ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
 
         callFirst();
-
-        notificationAdapter = new NotificationAdapter(mContext, allTags);
-        final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-
-        listNotification.setLayoutManager(mLayoutManager);
-        listNotification.setItemAnimator(new DefaultItemAnimator());
-
-        listNotification.setAdapter(notificationAdapter);
-
 
         imgLogo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,8 +132,10 @@ public class Notification extends AppCompatActivity
 
     public static void webCall()
     {
+        pageno = 1;
         allTags.clear();
-        notificationAdapter.notifyDataSetChanged();
+        allTagsList.clear();
+        listNotification.setStackFromBottom(false);
         new HttpAsyncTask().execute(Utility.BASE_URL+"Notification");
     }
 
@@ -203,6 +196,18 @@ public class Notification extends AppCompatActivity
         return result;
     }
 
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException
+    {
+        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+        while((line = bufferedReader.readLine()) != null)
+            result += line;
+
+        inputStream.close();
+        return result;
+    }
+
     private static class HttpAsyncTask extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -215,8 +220,6 @@ public class Notification extends AppCompatActivity
             //dialog.setTitle("Saving Reminder");
             dialog.show();
             dialog.setCancelable(false);*/
-            //  nfcModel = new ArrayList<>();
-            //   allTags = new ArrayList<>();
 
             if (progressStatus.equalsIgnoreCase("LOAD MORE"))
             {
@@ -292,40 +295,48 @@ public class Notification extends AppCompatActivity
 
                     listSize = allTags.size();
 
+                    /*notificationAdapter = new NotificationAdapter(mContext, allTags);
+                    listNotification.setAdapter(notificationAdapter);*/
 
                     GetData(mContext);
-                    listNotification.setOnScrollListener(new RecyclerView.OnScrollListener() {
+
+                    listNotification.setOnScrollListener(new AbsListView.OnScrollListener()
+                    {
                         @Override
-                        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                            super.onScrollStateChanged(recyclerView, newState);
+                        public void onScrollStateChanged(AbsListView view, int scrollState)
+                        {
+                            // TODO Auto-generated method stub
 
                             progressStatus = "LOAD MORE";
 
-                            int threshold = 1;
-                            int last = ((LinearLayoutManager) listNotification.getLayoutManager()).findLastVisibleItemPosition();
-                            int first = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
-                            int count = listNotification.getChildCount();
-
-
-                            if (first + count == notificationAdapter.getItemCount()) {
-                                if (listSize <= numberCount) {
-                                    if (last >= count - threshold) {
-                                       // rlLoadMore.setVisibility(View.VISIBLE);
-                                        // Execute LoadMoreDataTask AsyncTask
-                                        new HttpAsyncTask().execute(Utility.BASE_URL + "Notification");
-                                    }
-                                } else {
-                                }
+                            if (listSize > 10)
+                            {
+                                listNotification.setStackFromBottom(true);
                             }
 
-                        }
+                            int threshold = 1;
+                            int count = listNotification.getCount();
 
+                            if (scrollState == SCROLL_STATE_IDLE)
+                            {
+                                if (listSize <= numberCount)
+                                {
+                                    if (listNotification.getLastVisiblePosition() >= count - threshold)
+                                    {
+                                        rlLoadMore.setVisibility(View.VISIBLE);
+                                        // Execute LoadMoreDataTask AsyncTask
+                                        new HttpAsyncTask().execute(Utility.BASE_URL+"Notification");
+                                    }
+                                }
+                                else {  }
+                            }
+                        }
                         @Override
-                        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                            super.onScrolled(recyclerView, dx, dy);
+                        public void onScroll(AbsListView view, int firstVisibleItem,
+                                             int visibleItemCount, int totalItemCount) {
+                            // TODO Auto-generated method stub
                         }
                     });
-
                 }
                 else
                 {
@@ -400,6 +411,7 @@ public class Notification extends AppCompatActivity
 
         notificationAdapter = new NotificationAdapter(mContext, allTagsList);
         listNotification.setAdapter(notificationAdapter);
+        notificationAdapter.notifyDataSetChanged();
     }
 
 }

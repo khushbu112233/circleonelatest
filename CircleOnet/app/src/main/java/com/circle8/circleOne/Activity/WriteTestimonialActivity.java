@@ -127,9 +127,9 @@ public class WriteTestimonialActivity extends AppCompatActivity implements View.
             {
                 Toast.makeText(getApplicationContext(),"Please write testimonial",Toast.LENGTH_SHORT).show();
             }
-            else if (testimonial_String.length() < 100)
+            else if (testimonial_String.length() > 100)
             {
-                Toast.makeText(getApplicationContext(),"Please write testimonial at least 100 words",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Please write Testimonial less than 100 words.",Toast.LENGTH_SHORT).show();
             }
             else
             {
