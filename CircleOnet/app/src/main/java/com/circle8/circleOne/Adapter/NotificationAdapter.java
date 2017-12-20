@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -21,6 +22,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.Activity.ConnectActivity;
 import com.circle8.circleOne.Activity.ImageZoom;
 import com.circle8.circleOne.Activity.Notification;
@@ -180,8 +184,21 @@ public class NotificationAdapter extends BaseAdapter
             else
             {
                 holder.progressBarTestRec.setVisibility(View.VISIBLE);
-                Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
+               /* Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
                         .resize(300,300).onlyScaleDown().into(holder.imgTestRec);
+*/
+                final ViewHolder finalHolder = holder;
+                Glide.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
+                        .asBitmap()
+                        .into(new BitmapImageViewTarget(finalHolder.imgTestRec) {
+                            @Override
+                            public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                                super.onResourceReady(drawable, anim);
+                                finalHolder.progressBarTestRec.setVisibility(View.GONE);
+                                finalHolder.imgTestRec.setImageBitmap(drawable);
+                            }
+                        });
+
             }
             /* if (testimonialModels.get(position).getStatus().equalsIgnoreCase("Requested"))
             {
@@ -255,8 +272,20 @@ public class NotificationAdapter extends BaseAdapter
             {
                 holder.progressBarFriend.setVisibility(View.VISIBLE);
 
-                Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
+              /*  Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
                         .resize(300,300).onlyScaleDown().into(holder.imgFriend);
+*/
+                final ViewHolder finalHolder = holder;
+                Glide.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
+                        .asBitmap()
+                        .into(new BitmapImageViewTarget(finalHolder.imgFriend) {
+                            @Override
+                            public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                                super.onResourceReady(drawable, anim);
+                                finalHolder.progressBarFriend.setVisibility(View.GONE);
+                                finalHolder.imgFriend.setImageBitmap(drawable);
+                            }
+                        });
             }
             holder.btnAcceptFriend.setVisibility(View.VISIBLE);
             holder.btnRejectFriend.setVisibility(View.VISIBLE);
@@ -290,8 +319,20 @@ public class NotificationAdapter extends BaseAdapter
             else
             {
                 holder.progressBarTestReq.setVisibility(View.VISIBLE);
-                Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
+               /* Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
                         .resize(300,300).onlyScaleDown().into(holder.imgTestReq);
+*/
+                final ViewHolder finalHolder = holder;
+                Glide.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
+                        .asBitmap()
+                        .into(new BitmapImageViewTarget(finalHolder.imgTestReq) {
+                            @Override
+                            public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                                super.onResourceReady(drawable, anim);
+                                finalHolder.progressBarTestReq.setVisibility(View.GONE);
+                                finalHolder.imgTestReq.setImageBitmap(drawable);
+                            }
+                        });
             }
 
             /*if (testimonialModels.get(position).getStatus().equals("Requested")){
@@ -319,8 +360,20 @@ public class NotificationAdapter extends BaseAdapter
             else
             {
                 holder.progressBarShare.setVisibility(View.VISIBLE);
-                Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
+                /*Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
                         .resize(300,300).onlyScaleDown().into(holder.imgShare);
+*/
+                final ViewHolder finalHolder = holder;
+                Glide.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
+                        .asBitmap()
+                        .into(new BitmapImageViewTarget(finalHolder.imgShare) {
+                            @Override
+                            public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                                super.onResourceReady(drawable, anim);
+                                finalHolder.progressBarShare.setVisibility(View.GONE);
+                                finalHolder.imgShare.setImageBitmap(drawable);
+                            }
+                        });
             }
 
             /*if (testimonialModels.get(position).getStatus().equals("Requested")){
@@ -347,8 +400,20 @@ public class NotificationAdapter extends BaseAdapter
             else
             {
                 holder.progressBarNFC.setVisibility(View.VISIBLE);
-                Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
+                /*Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
                         .resize(300,300).onlyScaleDown().into(holder.imgNfc);
+*/
+                final ViewHolder finalHolder = holder;
+                Glide.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
+                        .asBitmap()
+                        .into(new BitmapImageViewTarget(finalHolder.imgNfc) {
+                            @Override
+                            public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                                super.onResourceReady(drawable, anim);
+                                finalHolder.progressBarNFC.setVisibility(View.GONE);
+                                finalHolder.imgNfc.setImageBitmap(drawable);
+                            }
+                        });
             }
             holder.btnAllowNfc.setVisibility(View.VISIBLE);
             holder.btnNfcCancel.setVisibility(View.VISIBLE);
@@ -401,8 +466,20 @@ public class NotificationAdapter extends BaseAdapter
             else
             {
                 holder.progressBarFriend.setVisibility(View.VISIBLE);
-                Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
+                /*Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
                         .resize(300,300).onlyScaleDown().into(holder.imgFriend);
+*/
+                final ViewHolder finalHolder = holder;
+                Glide.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
+                        .asBitmap()
+                        .into(new BitmapImageViewTarget(finalHolder.imgFriend) {
+                            @Override
+                            public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                                super.onResourceReady(drawable, anim);
+                                finalHolder.progressBarFriend.setVisibility(View.GONE);
+                                finalHolder.imgFriend.setImageBitmap(drawable);
+                            }
+                        });
             }
             holder.btnAcceptFriend.setVisibility(View.GONE);
             holder.btnRejectFriend.setVisibility(View.GONE);
