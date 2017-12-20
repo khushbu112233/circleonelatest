@@ -69,10 +69,17 @@
             ]
         },
         {
+<<<<<<< HEAD
+            "outputFile": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-land\\values-land.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\admin\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\27b629932eccf17e5e2e58b30b7db234\\res\\values-land\\values-land.xml",
+=======
             "outputFile": "D:\\Khushbu\\CircleOne\\Project\\CircleOneFinal\\CircleOnet\\sample-core\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-land\\values-land.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\4c75e924d1251ddc48e54b6cb7f99ebb\\res\\values-land\\values-land.xml",
+>>>>>>> ce691494fbc08a509e955729efd3b6345b8c1d71
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -91,7 +98,11 @@
                     }
                 },
                 {
+<<<<<<< HEAD
+                    "source": "C:\\Users\\admin\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\9cdf1dca172a69926094cf1be630b9d7\\res\\values-land\\values-land.xml",
+=======
                     "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\6330a685c5b7620076405d1b1d9b08e2\\res\\values-land\\values-land.xml",
+>>>>>>> ce691494fbc08a509e955729efd3b6345b8c1d71
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",
@@ -103,10 +114,17 @@
             ]
         },
         {
+<<<<<<< HEAD
+            "outputFile": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-land\\values-land.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\admin\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\27b629932eccf17e5e2e58b30b7db234\\res\\values-land\\values-land.xml",
+=======
             "outputFile": "D:\\Khushbu\\CircleOne\\Project\\CircleOneFinal\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-land\\values-land.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\4c75e924d1251ddc48e54b6cb7f99ebb\\res\\values-land\\values-land.xml",
+>>>>>>> ce691494fbc08a509e955729efd3b6345b8c1d71
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -125,7 +143,11 @@
                     }
                 },
                 {
+<<<<<<< HEAD
+                    "source": "C:\\Users\\admin\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\9cdf1dca172a69926094cf1be630b9d7\\res\\values-land\\values-land.xml",
+=======
                     "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\6330a685c5b7620076405d1b1d9b08e2\\res\\values-land\\values-land.xml",
+>>>>>>> ce691494fbc08a509e955729efd3b6345b8c1d71
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",

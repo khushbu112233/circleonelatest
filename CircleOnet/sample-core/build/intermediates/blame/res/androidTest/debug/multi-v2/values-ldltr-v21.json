@@ -16,6 +16,21 @@
             ]
         },
         {
+            "outputFile": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-ldltr-v21\\values-ldltr-v21.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\admin\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\9cdf1dca172a69926094cf1be630b9d7\\res\\values-ldltr-v21\\values-ldltr-v21.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "112",
+                        "endOffsets": "163"
+                    }
+                }
+            ]
+        },
+        {
             "outputFile": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-ldltr-v21\\values-ldltr-v21.xml",
             "map": [
                 {
@@ -31,6 +46,12 @@
             ]
         },
         {
+<<<<<<< HEAD
+            "outputFile": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-ldltr-v21\\values-ldltr-v21.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\admin\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\9cdf1dca172a69926094cf1be630b9d7\\res\\values-ldltr-v21\\values-ldltr-v21.xml",
+=======
             "outputFile": "D:\\Khushbu\\CircleOne\\Project\\CircleOneFinal\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-ldltr-v21\\values-ldltr-v21.xml",
             "map": [
                 {
@@ -50,6 +71,7 @@
             "map": [
                 {
                     "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\6330a685c5b7620076405d1b1d9b08e2\\res\\values-ldltr-v21\\values-ldltr-v21.xml",
+>>>>>>> ce691494fbc08a509e955729efd3b6345b8c1d71
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

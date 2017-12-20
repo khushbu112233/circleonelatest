@@ -1,6 +1,9 @@
 [
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\animator-v21\\design_appbar_state_list_animator.xml",
+<<<<<<< HEAD
+        "source": "C:\\Users\\admin\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\27b629932eccf17e5e2e58b30b7db234\\res\\animator-v21\\design_appbar_state_list_animator.xml"
+=======
         "source": "C:\\Users\\admin\\.android\\build-cache\\8ec4f77cf4f1b1bb5b166efdac7877b127171219\\output\\res\\animator-v21\\design_appbar_state_list_animator.xml"
     },
     {
@@ -14,5 +17,6 @@
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\animator-v21\\design_appbar_state_list_animator.xml",
         "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\3d9ae4eeac3844c461c97fd58e58610a\\res\\animator-v21\\design_appbar_state_list_animator.xml"
+>>>>>>> ce691494fbc08a509e955729efd3b6345b8c1d71
     }
 ]

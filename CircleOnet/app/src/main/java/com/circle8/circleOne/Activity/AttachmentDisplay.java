@@ -2,6 +2,7 @@ package com.circle8.circleOne.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,19 +12,21 @@ import android.widget.Toast;
 
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
+import com.circle8.circleOne.databinding.ActivityAttachmentDisplayBinding;
 
 public class AttachmentDisplay extends AppCompatActivity
 {
-    private WebView webView;
     String url;
     Boolean net_check = false;
+    ActivityAttachmentDisplayBinding mBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_attachment_display);
+
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_attachment_display);
+
         Utility.freeMemory();
         Utility.deleteCache(getApplicationContext());
-        webView = (WebView)findViewById(R.id.webView1);
         Intent i = getIntent();
         url = i.getStringExtra("url");
         net_check = Utility.isNetworkAvailable(getApplicationContext());
@@ -53,7 +56,7 @@ public class AttachmentDisplay extends AppCompatActivity
         //Create new webview Client to show progress dialog
         //When opening a url or click on link
         Utility.freeMemory();
-        webView.setWebViewClient(new WebViewClient() {
+        mBinding.webView1.setWebViewClient(new WebViewClient() {
             ProgressDialog progressDialog;
 
             //If you will not use this method url links are opeen in new brower not in webview
@@ -89,7 +92,7 @@ public class AttachmentDisplay extends AppCompatActivity
         });
 
         // Javascript inabled on webview
-        webView.getSettings().setJavaScriptEnabled(true);
+        mBinding.webView1.getSettings().setJavaScriptEnabled(true);
 
         // Other webview options
         /*
@@ -106,7 +109,7 @@ public class AttachmentDisplay extends AppCompatActivity
          */
 
         //Load url in webview
-        webView.loadUrl(url);
+        mBinding.webView1.loadUrl(url);
 
 
     }

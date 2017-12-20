@@ -6,17 +6,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,21 +29,19 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Adapter.EditGroupAdapter;
 import com.circle8.circleOne.Adapter.GroupsRecyclerAdapter;
-import com.circle8.circleOne.Fragments.CardsFragment;
 import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.ConnectProfileModel;
 import com.circle8.circleOne.Model.GroupModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
+import com.circle8.circleOne.databinding.ActivityConnect2Binding;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpResponse;
@@ -55,120 +53,60 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
-import static com.circle8.circleOne.R.id.rlConnect;
-import static com.circle8.circleOne.R.id.view;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 public class ConnectActivity extends AppCompatActivity
 {
-    private ImageView imgBack, imgCards, imgConnect, imgEvents, imgProfile, imgConnecting;
     private static final int PERMISSION_REQUEST_CODE = 200;
-    CircleImageView ivProfileImage;
     int left;
     int right;
-    private  RelativeLayout rlSocial ;
-    private ImageView ivConnectImg, ivAddRound, ivConnectRound ;
-    private TextView tvAdd, tvConnect, txtWeb, txtMail, txtNum, txtMob ;
     View tvConnectLine2, tvConnectLine1;
-    private RelativeLayout rlAdd, rlConnect ;
     private String tag_id, profile_id, friendProfile_id;
-
-    ImageView imgAddGroupFriend;
-    TextView tvAddedGroupInfo ;
-    RecyclerView recycler_view ;
-    ListView listView1, groupListView;
     List<CharSequence> list = new ArrayList<CharSequence>();
     ArrayList<GroupModel> groupModelArrayList = new ArrayList<>();
     ArrayList<String> groupName = new ArrayList<>();
     ArrayList<String> groupPhoto = new ArrayList<>();
     ArrayList<String> listGroupId = new ArrayList<>();
-
     DatabaseHelper db;
-    TextView tvPersonName, tvPersonDesignation, tvCompanyName;
-    LinearLayout lnrWeb, lnrmail, lnrnum, lnrmob;
-
     LoginSession loginSession;
     String profileImg = "", friendUserID = "", user_id = "", profileName = "";
     public static JSONArray selectedStrings1 = new JSONArray();
-
     int motionLength = 0;
     int lineWidth = 0 , roundWidth = 0;
-
     private ArrayList<ConnectProfileModel> connectingTags = new ArrayList<>();
     private String Mobile1 = "", Mobile2 = "";
     private String displayProfile;
-
-    private RelativeLayout rlProgressDialog ;
-    private TextView tvProgressing ;
-    private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
-
+    ActivityConnect2Binding activityConnect2Binding;
+    ListView listView1;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_connect2);
+        activityConnect2Binding = DataBindingUtil.setContentView(this,R.layout.activity_connect2);
         Utility.freeMemory();
         db = new DatabaseHelper(getApplicationContext());
 
-        txtWeb = (TextView)findViewById(R.id.txtWeb);
-        txtMail = (TextView)findViewById(R.id.txtMail);
-        txtNum = (TextView)findViewById(R.id.txtNum);
-        txtMob = (TextView)findViewById(R.id.txtMob);
 
-        imgBack = (ImageView) findViewById(R.id.imgBack);
-        imgCards = (ImageView) findViewById(R.id.imgCards);
-        imgConnect = (ImageView) findViewById(R.id.imgConnect);
-        imgEvents = (ImageView) findViewById(R.id.imgEvents);
-        imgProfile = (ImageView) findViewById(R.id.imgProfile);
-//        imgConnecting = (ImageView) findViewById(R.id.fab);
-        ivProfileImage = (CircleImageView) findViewById(R.id.ivProfileImage);
-        ivConnectImg = (ImageView)findViewById(R.id.iv_ConnectImg);
-        ivAddRound = (ImageView)findViewById(R.id.ivAddRound);
-        ivConnectRound = (ImageView)findViewById(R.id.ivConnectRound);
-
-        tvAdd = (TextView)findViewById(R.id.tvAdd);
-        tvConnect = (TextView)findViewById(R.id.tvConnect);
         tvConnectLine1 = findViewById(R.id.tvConnectLine1);
         tvConnectLine2 = findViewById(R.id.tvConnectLine2);
 
-        tvPersonName = (TextView)findViewById(R.id.tvPersonName);
-        tvPersonDesignation = (TextView)findViewById(R.id.tvPersonDesignation);
-        tvCompanyName = (TextView)findViewById(R.id.tvCompanyName);
 
-        rlAdd = (RelativeLayout)findViewById(R.id.rlAdd);
-        rlConnect = (RelativeLayout)findViewById(R.id.rlConnect);
-        rlSocial = (RelativeLayout)findViewById(R.id.rlSocial);
-
-        recycler_view = (RecyclerView)findViewById(R.id.recycler_view);
-        tvAddedGroupInfo = (TextView)findViewById(R.id.tvAddedGroupInfo);
-        imgAddGroupFriend = (ImageView) findViewById(R.id.imgAddGroupFriend);
-
-        rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
-        tvProgressing = (TextView)findViewById(R.id.txtProgressing);
-        ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
-        ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
-        ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
 
         boolean result1 = Utility.checkContactPermission(ConnectActivity.this);
 
-        rlAdd.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        activityConnect2Binding.rlAdd.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             public void onGlobalLayout() {
-                int height = rlAdd.getHeight();
-                int width = rlAdd.getWidth();
-                int L = rlAdd.getLeft();
-                int T = rlAdd.getTop();
-                int R = rlAdd.getRight();
-                int B = rlAdd.getBottom();
+                int height = activityConnect2Binding.rlAdd.getHeight();
+                int width = activityConnect2Binding.rlAdd.getWidth();
+                int L = activityConnect2Binding.rlAdd.getLeft();
+                int T = activityConnect2Binding.rlAdd.getTop();
+                int R = activityConnect2Binding.rlAdd.getRight();
+                int B = activityConnect2Binding.rlAdd.getBottom();
 
                 roundWidth = width / 2;
                 motionLength = motionLength + roundWidth;
@@ -176,18 +114,18 @@ public class ConnectActivity extends AppCompatActivity
                 System.out.print("ivMale" + height + " " + width + " " + L + " " + R + " " + T + " " + B);
 //                Toast.makeText(RegisterActivity.this, height+" "+width+" "+L+" "+R+" "+T+" "+B,Toast.LENGTH_LONG).show();
                 //don't forget to remove the listener to prevent being called again by future layout events:
-                rlAdd.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                activityConnect2Binding.rlAdd.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
 
-        rlConnect.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        activityConnect2Binding.rlConnect.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             public void onGlobalLayout() {
-                int height = rlConnect.getHeight();
-                int width = rlConnect.getWidth();
-                int L = rlConnect.getLeft();
-                int T = rlConnect.getTop();
-                int R = rlConnect.getRight();
-                int B = rlConnect.getBottom();
+                int height = activityConnect2Binding.rlConnect.getHeight();
+                int width = activityConnect2Binding.rlConnect.getWidth();
+                int L = activityConnect2Binding.rlConnect.getLeft();
+                int T = activityConnect2Binding.rlConnect.getTop();
+                int R = activityConnect2Binding.rlConnect.getRight();
+                int B = activityConnect2Binding.rlConnect.getBottom();
 
                 roundWidth = width / 2;
                 motionLength = motionLength + roundWidth;
@@ -195,24 +133,24 @@ public class ConnectActivity extends AppCompatActivity
                 System.out.print("ivMale" + height + " " + width + " " + L + " " + R + " " + T + " " + B);
 //                Toast.makeText(RegisterActivity.this, height+" "+width+" "+L+" "+R+" "+T+" "+B,Toast.LENGTH_LONG).show();
                 //don't forget to remove the listener to prevent being called again by future layout events:
-                rlConnect.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                activityConnect2Binding.rlConnect.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
 
-        ivConnectImg.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        activityConnect2Binding.ivConnectImg.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             public void onGlobalLayout() {
-                int height = ivConnectImg.getHeight();
-                int width = ivConnectImg.getWidth();
-                int L = ivConnectImg.getLeft();
-                int T = ivConnectImg.getTop();
-                int R = ivConnectImg.getRight();
-                int B = ivConnectImg.getBottom();
+                int height = activityConnect2Binding.ivConnectImg.getHeight();
+                int width = activityConnect2Binding.ivConnectImg.getWidth();
+                int L = activityConnect2Binding.ivConnectImg.getLeft();
+                int T = activityConnect2Binding.ivConnectImg.getTop();
+                int R = activityConnect2Binding.ivConnectImg.getRight();
+                int B = activityConnect2Binding.ivConnectImg.getBottom();
                 lineWidth = width;
                 motionLength = motionLength + lineWidth;
                 System.out.print("ivConnect" + height + " " + width + " " + L + " " + R + " " + T + " " + B);
 //                Toast.makeText(RegisterActivity.this, height+" "+width+" "+L+" "+R+" "+T+" "+B,Toast.LENGTH_LONG).show();
                 //don't forget to remove the listener to prevent being called again by future layout events:
-                ivConnectImg.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                activityConnect2Binding.ivConnectImg.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
 
@@ -336,14 +274,14 @@ public class ConnectActivity extends AppCompatActivity
 //        int x_left = rlConnect.getLeft();
 //        Toast.makeText(getApplicationContext(),"From Left: "+x_left, Toast.LENGTH_SHORT).show();
 
-        ivConnectImg.setOnClickListener(new View.OnClickListener() {
+        activityConnect2Binding.ivConnectImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
             }
         });
 
-        ivProfileImage.setOnClickListener(new View.OnClickListener() {
+        activityConnect2Binding.ivProfileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -379,7 +317,7 @@ public class ConnectActivity extends AppCompatActivity
             }
         });
 
-        rlAdd.setOnClickListener(new View.OnClickListener() {
+        activityConnect2Binding.rlAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -388,28 +326,28 @@ public class ConnectActivity extends AppCompatActivity
                 if (result) {
                     //Boolean aBoolean = contactExists(getApplicationContext(), txtMob.getText().toString());
 
-                        TranslateAnimation slide1 = new TranslateAnimation(0, -(motionLength+13), 0, 0);
-                        slide1.setDuration(1000);
-                        ivConnectImg.startAnimation(slide1);
+                    TranslateAnimation slide1 = new TranslateAnimation(0, -(motionLength+13), 0, 0);
+                    slide1.setDuration(1000);
+                    activityConnect2Binding.ivConnectImg.startAnimation(slide1);
 
-                        //first things
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                ivConnectRound.setImageResource(R.drawable.round_gray);
-                                tvConnect.setTextColor(getResources().getColor(R.color.unselected));
-                               // tvConnectLine2.setTextColor(getResources().getColor(R.color.unselected));
-                                tvConnectLine2.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
-                                new HttpAsyncAddFriendTask().execute(Utility.BASE_URL+"FriendConnection_Operation");
+                    //first things
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            activityConnect2Binding.ivConnectRound.setImageResource(R.drawable.round_gray);
+                            activityConnect2Binding.tvConnect.setTextColor(getResources().getColor(R.color.unselected));
+                            // tvConnectLine2.setTextColor(getResources().getColor(R.color.unselected));
+                            tvConnectLine2.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
+                            new HttpAsyncAddFriendTask().execute(Utility.BASE_URL+"FriendConnection_Operation");
 
-                            }
-                        }, 1700);
-                        // Second Things
-                        ivAddRound.setImageResource(R.drawable.round_blue);
-                        tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
-                       // tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
-                        tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted));
-                    }
+                        }
+                    }, 1700);
+                    // Second Things
+                    activityConnect2Binding.ivAddRound.setImageResource(R.drawable.round_blue);
+                    activityConnect2Binding.tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    // tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted));
+                }
             }
         });
 
@@ -419,7 +357,7 @@ public class ConnectActivity extends AppCompatActivity
             contactExists(getApplicationContext(), "+91 ");
         }
 */
-        rlConnect.setOnClickListener(new View.OnClickListener() {
+        activityConnect2Binding.rlConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -432,14 +370,14 @@ public class ConnectActivity extends AppCompatActivity
                     {
                         TranslateAnimation slide1 = new TranslateAnimation(0, (motionLength+13), 0, 0);
                         slide1.setDuration(1000);
-                        ivConnectImg.startAnimation(slide1);
+                        activityConnect2Binding.ivConnectImg.startAnimation(slide1);
 
                         //first things
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                ivAddRound.setImageResource(R.drawable.round_gray);
-                                tvAdd.setTextColor(getResources().getColor(R.color.unselected));
+                                activityConnect2Binding.ivAddRound.setImageResource(R.drawable.round_gray);
+                                activityConnect2Binding.tvAdd.setTextColor(getResources().getColor(R.color.unselected));
                                 tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
                                 //tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
                                 Intent go = new Intent(getApplicationContext(),Connect3Activity.class);
@@ -447,27 +385,27 @@ public class ConnectActivity extends AppCompatActivity
                                 go.putExtra("friendUserID", friendUserID);
                                 go.putExtra("profileName", profileName);
                                 startActivity(go);
-                               // finish();
+                                // finish();
                             }
                         }, 1700);
                         // Second Things
-                        ivConnectRound.setImageResource(R.drawable.round_blue);
-                        tvConnect.setTextColor(getResources().getColor(R.color.colorPrimary));
-                     //   tvConnectLine2.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        activityConnect2Binding.ivConnectRound.setImageResource(R.drawable.round_blue);
+                        activityConnect2Binding.tvConnect.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        //   tvConnectLine2.setTextColor(getResources().getColor(R.color.colorPrimary));
                         tvConnectLine2.setBackground(getResources().getDrawable(R.drawable.dotted));
                     }
                     else
                     {
                         TranslateAnimation slide1 = new TranslateAnimation(0, motionLength+13, 0, 0);
                         slide1.setDuration(1000);
-                        ivConnectImg.startAnimation(slide1);
+                        activityConnect2Binding.ivConnectImg.startAnimation(slide1);
 
                         //first things
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                ivAddRound.setImageResource(R.drawable.round_gray);
-                                tvAdd.setTextColor(getResources().getColor(R.color.unselected));
+                                activityConnect2Binding.ivAddRound.setImageResource(R.drawable.round_gray);
+                                activityConnect2Binding.tvAdd.setTextColor(getResources().getColor(R.color.unselected));
                                 //tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
                                 tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
                                 Intent go = new Intent(getApplicationContext(),Connect3Activity.class);
@@ -475,20 +413,20 @@ public class ConnectActivity extends AppCompatActivity
                                 go.putExtra("friendUserID", friendUserID);
                                 go.putExtra("profileName", profileName);
                                 startActivity(go);
-                               // finish();
+                                // finish();
                             }
                         }, 1600);
                         // Second Things
-                        ivConnectRound.setImageResource(R.drawable.round_blue);
-                        tvConnect.setTextColor(getResources().getColor(R.color.colorPrimary));
-                      //  tvConnectLine2.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        activityConnect2Binding.ivConnectRound.setImageResource(R.drawable.round_blue);
+                        activityConnect2Binding.tvConnect.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        //  tvConnectLine2.setTextColor(getResources().getColor(R.color.colorPrimary));
                         tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted));
                     }
                 }
             }
         });
 
-        imgBack.setOnClickListener(new View.OnClickListener() {
+        activityConnect2Binding.imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
@@ -516,7 +454,7 @@ public class ConnectActivity extends AppCompatActivity
 //            }
 //        });
 
-        imgCards.setOnClickListener(new View.OnClickListener() {
+        activityConnect2Binding.imgCards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
@@ -532,7 +470,7 @@ public class ConnectActivity extends AppCompatActivity
             }
         });
 
-        imgConnect.setOnClickListener(new View.OnClickListener() {
+        activityConnect2Binding.imgConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
@@ -548,7 +486,7 @@ public class ConnectActivity extends AppCompatActivity
             }
         });
 
-        imgEvents.setOnClickListener(new View.OnClickListener() {
+        activityConnect2Binding.imgEvents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
@@ -564,7 +502,7 @@ public class ConnectActivity extends AppCompatActivity
             }
         });
 
-        imgProfile.setOnClickListener(new View.OnClickListener() {
+        activityConnect2Binding.imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
@@ -580,7 +518,7 @@ public class ConnectActivity extends AppCompatActivity
             }
         });
 
-        imgAddGroupFriend.setOnClickListener(new View.OnClickListener() {
+        activityConnect2Binding.imgAddGroupFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -758,9 +696,9 @@ public class ConnectActivity extends AppCompatActivity
         {
             Utility.freeMemory();
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            activityConnect2Binding.rlProgressDialog.setVisibility(View.GONE);
 
-           // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result == "") {
                     Toast.makeText(getApplicationContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
@@ -771,10 +709,10 @@ public class ConnectActivity extends AppCompatActivity
 
                     if (success.equals("1")) {
                         Toast.makeText(getApplicationContext(), getString(R.string.successful_request_sent), Toast.LENGTH_LONG).show();
-                        ivAddRound.setImageResource(R.drawable.round_gray);
-                        tvAdd.setTextColor(getResources().getColor(R.color.unselected));
+                        activityConnect2Binding.ivAddRound.setImageResource(R.drawable.round_gray);
+                        activityConnect2Binding.tvAdd.setTextColor(getResources().getColor(R.color.unselected));
                         tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
-                        rlAdd.setEnabled(false);
+                        activityConnect2Binding.rlAdd.setEnabled(false);
                     } else {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     }
@@ -798,8 +736,8 @@ public class ConnectActivity extends AppCompatActivity
         try {
             if (cur.moveToFirst()) {
                 //Toast.makeText(getApplicationContext(), "Contact Exists", Toast.LENGTH_LONG).show();
-                ivAddRound.setImageResource(R.drawable.round_blue);
-                tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
+                activityConnect2Binding.ivAddRound.setImageResource(R.drawable.round_blue);
+                activityConnect2Binding.tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
                 //tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
                 tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted));
                 return true;
@@ -809,8 +747,8 @@ public class ConnectActivity extends AppCompatActivity
                 cur.close();
         }
         //Toast.makeText(getApplicationContext(), "Contact doesn't Exists", Toast.LENGTH_LONG).show();
-        ivAddRound.setImageResource(R.drawable.round_gray);
-        tvAdd.setTextColor(getResources().getColor(R.color.unselected));
+        activityConnect2Binding.ivAddRound.setImageResource(R.drawable.round_gray);
+        activityConnect2Binding.tvAdd.setTextColor(getResources().getColor(R.color.unselected));
         //tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
         tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
         return false;
@@ -852,7 +790,7 @@ public class ConnectActivity extends AppCompatActivity
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            activityConnect2Binding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
             Utility.freeMemory();
             try
@@ -907,16 +845,16 @@ public class ConnectActivity extends AppCompatActivity
                     connectingModel.setAttachment_FileName(profile.getString("Attachment_FileName"));
                     connectingTags.add(connectingModel);
 
-                    tvPersonName.setText(profile.getString("FirstName")+" "+profile.getString("LastName"));
-                    tvCompanyName.setText(profile.getString("CompanyName"));
-                    txtWeb.setText(profile.getString("Website"));
-                    txtMail.setText(profile.getString("Email1"));
-                    txtNum.setText(profile.getString("Phone1"));
+                    activityConnect2Binding.tvPersonName.setText(profile.getString("FirstName")+" "+profile.getString("LastName"));
+                    activityConnect2Binding.tvCompanyName.setText(profile.getString("CompanyName"));
+                    activityConnect2Binding.txtWeb.setText(profile.getString("Website"));
+                    activityConnect2Binding.txtMail.setText(profile.getString("Email1"));
+                    activityConnect2Binding.txtNum.setText(profile.getString("Phone1"));
                     // txtWork.setText(tag1.getWork_no());
-                    txtMob.setText(profile.getString("Mobile1"));
+                    activityConnect2Binding.txtMob.setText(profile.getString("Mobile1"));
                     Mobile1 = profile.getString("Mobile1");
                     Mobile2 = profile.getString("Mobile2");
-                    tvPersonDesignation.setText(profile.getString("Designation"));
+                    activityConnect2Binding.tvPersonDesignation.setText(profile.getString("Designation"));
 
                     profileImg = Utility.BASE_IMAGE_URL+"UserProfile/"+profile.getString("UserPhoto");
                     displayProfile = profile.getString("UserPhoto");
@@ -924,29 +862,29 @@ public class ConnectActivity extends AppCompatActivity
 
                     if(profile.getString("UserPhoto").equalsIgnoreCase(""))
                     {
-                        ivProfileImage.setImageResource(R.drawable.usr_white1);
+                        activityConnect2Binding.ivProfileImage.setImageResource(R.drawable.usr_white1);
                     }
                     else
                     {
-                        Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+profile.getString("UserPhoto")).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfileImage);
+                        Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+profile.getString("UserPhoto")).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect2Binding.ivProfileImage);
                     }
 
                     if (Matched.equals("1"))
                     {
-                        ivAddRound.setImageResource(R.drawable.round_blue);
-                        tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
-                      //  tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        activityConnect2Binding.ivAddRound.setImageResource(R.drawable.round_blue);
+                        activityConnect2Binding.tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        //  tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
                         tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted));
-                        rlAdd.setEnabled(true);
+                        activityConnect2Binding. rlAdd.setEnabled(true);
 
                     }
                     else if (Matched.equals("0"))
                     {
-                        ivAddRound.setImageResource(R.drawable.round_gray);
-                        tvAdd.setTextColor(getResources().getColor(R.color.unselected));
-                       // tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
+                        activityConnect2Binding.ivAddRound.setImageResource(R.drawable.round_gray);
+                        activityConnect2Binding.tvAdd.setTextColor(getResources().getColor(R.color.unselected));
+                        // tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
                         tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
-                        rlAdd.setEnabled(false);
+                        activityConnect2Binding.rlAdd.setEnabled(false);
 
                         Intent intent = new Intent(getApplicationContext(), CardDetail.class);
                         intent.putExtra("tag_id", "");
@@ -961,28 +899,28 @@ public class ConnectActivity extends AppCompatActivity
                     {
 
                         if (Mobile1.equalsIgnoreCase("") && Mobile2.equalsIgnoreCase("")){
-                            ivAddRound.setImageResource(R.drawable.round_gray);
-                            tvAdd.setTextColor(getResources().getColor(R.color.unselected));
-                          //  tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
+                            activityConnect2Binding.ivAddRound.setImageResource(R.drawable.round_gray);
+                            activityConnect2Binding.tvAdd.setTextColor(getResources().getColor(R.color.unselected));
+                            //  tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
                             tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
-                            rlAdd.setEnabled(false);
+                            activityConnect2Binding.rlAdd.setEnabled(false);
                         }
                         else if (!Mobile1.equalsIgnoreCase("")){
                             boolean result1 = Utility.checkContactPermission(ConnectActivity.this);
                             if (result1) {
                                 Boolean aBoolean = contactExists(getApplicationContext(), Mobile1.toString());
                                 if (aBoolean == true) {
-                                    ivAddRound.setImageResource(R.drawable.round_blue);
-                                    tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                    activityConnect2Binding.ivAddRound.setImageResource(R.drawable.round_blue);
+                                    activityConnect2Binding.tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
                                     //   tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
                                     tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted));
-                                    rlAdd.setEnabled(true);
+                                    activityConnect2Binding.rlAdd.setEnabled(true);
                                 } else {
-                                    ivAddRound.setImageResource(R.drawable.round_gray);
-                                    tvAdd.setTextColor(getResources().getColor(R.color.unselected));
+                                    activityConnect2Binding.ivAddRound.setImageResource(R.drawable.round_gray);
+                                    activityConnect2Binding.tvAdd.setTextColor(getResources().getColor(R.color.unselected));
                                     //  tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
                                     tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
-                                    rlAdd.setEnabled(false);
+                                    activityConnect2Binding.rlAdd.setEnabled(false);
                                 }
                             }
                         }
@@ -991,17 +929,17 @@ public class ConnectActivity extends AppCompatActivity
                             if (result1) {
                                 Boolean aBoolean = contactExists(getApplicationContext(), Mobile2.toString());
                                 if (aBoolean == true) {
-                                    ivAddRound.setImageResource(R.drawable.round_blue);
-                                    tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                    activityConnect2Binding.ivAddRound.setImageResource(R.drawable.round_blue);
+                                    activityConnect2Binding.tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
                                     // tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
                                     tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted));
-                                    rlAdd.setEnabled(true);
+                                    activityConnect2Binding.rlAdd.setEnabled(true);
                                 } else {
-                                    ivAddRound.setImageResource(R.drawable.round_gray);
-                                    tvAdd.setTextColor(getResources().getColor(R.color.unselected));
+                                    activityConnect2Binding.ivAddRound.setImageResource(R.drawable.round_gray);
+                                    activityConnect2Binding.tvAdd.setTextColor(getResources().getColor(R.color.unselected));
                                     //  tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
                                     tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
-                                    rlAdd.setEnabled(false);
+                                    activityConnect2Binding.rlAdd.setEnabled(false);
                                 }
                             }
                         }
@@ -1014,20 +952,20 @@ public class ConnectActivity extends AppCompatActivity
                                 switch (which){
                                     case DialogInterface.BUTTON_POSITIVE:
                                         //Yes button clicked
-                                        ivAddRound.setImageResource(R.drawable.round_blue);
-                                        tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
-                                       // tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                        activityConnect2Binding.ivAddRound.setImageResource(R.drawable.round_blue);
+                                        activityConnect2Binding.tvAdd.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                        // tvConnectLine1.setTextColor(getResources().getColor(R.color.colorPrimary));
                                         tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted));
-                                        rlAdd.setEnabled(true);
+                                        activityConnect2Binding.rlAdd.setEnabled(true);
                                         break;
 
                                     case DialogInterface.BUTTON_NEGATIVE:
                                         //No button clicked
-                                        ivAddRound.setImageResource(R.drawable.round_gray);
-                                        tvAdd.setTextColor(getResources().getColor(R.color.unselected));
+                                        activityConnect2Binding.ivAddRound.setImageResource(R.drawable.round_gray);
+                                        activityConnect2Binding.tvAdd.setTextColor(getResources().getColor(R.color.unselected));
                                         //tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
                                         tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
-                                        rlAdd.setEnabled(false);
+                                        activityConnect2Binding.rlAdd.setEnabled(false);
                                         break;
                                 }
                             }
@@ -1136,7 +1074,7 @@ public class ConnectActivity extends AppCompatActivity
         {
             Utility.freeMemory();
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            activityConnect2Binding.rlProgressDialog.setVisibility(View.GONE);
 
             try
             {
@@ -1243,7 +1181,7 @@ public class ConnectActivity extends AppCompatActivity
         {
             Utility.freeMemory();
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            activityConnect2Binding.rlProgressDialog.setVisibility(View.GONE);
 
             try
             {
@@ -1384,8 +1322,8 @@ public class ConnectActivity extends AppCompatActivity
 
                     if (groupsArray.length() == 0)
                     {
-                        tvAddedGroupInfo.setVisibility(View.VISIBLE);
-                        recycler_view.setVisibility(View.GONE);
+                        activityConnect2Binding.tvAddedGroupInfo.setVisibility(View.VISIBLE);
+                        activityConnect2Binding.recyclerView.setVisibility(View.GONE);
                     }
                     else
                     {
@@ -1409,11 +1347,11 @@ public class ConnectActivity extends AppCompatActivity
 
                         if (name.size() == 0)
                         {
-                            tvAddedGroupInfo.setVisibility(View.VISIBLE);
+                            activityConnect2Binding.tvAddedGroupInfo.setVisibility(View.VISIBLE);
                         }
                         else
                         {
-                            tvAddedGroupInfo.setVisibility(View.GONE);
+                            activityConnect2Binding.tvAddedGroupInfo.setVisibility(View.GONE);
                         }
                             /*GroupsInCardDetailAdapter groupsInCardDetailAdapter = new GroupsInCardDetailAdapter(CardDetail.this, img,name,desc);
                             groupListView.setAdapter(groupsInCardDetailAdapter);
@@ -1421,10 +1359,10 @@ public class ConnectActivity extends AppCompatActivity
 
                         GroupsRecyclerAdapter groupsRecyclerAdapter = new GroupsRecyclerAdapter(ConnectActivity.this, img, name, desc);
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-                        recycler_view.setLayoutManager(new LinearLayoutManager(ConnectActivity.this, LinearLayoutManager.HORIZONTAL, true));
+                        activityConnect2Binding.recyclerView.setLayoutManager(new LinearLayoutManager(ConnectActivity.this, LinearLayoutManager.HORIZONTAL, true));
 //                             recycler_view.setLayoutManager(mLayoutManager);
-                        recycler_view.setItemAnimator(new DefaultItemAnimator());
-                        recycler_view.setAdapter(groupsRecyclerAdapter);
+                        activityConnect2Binding.recyclerView.setItemAnimator(new DefaultItemAnimator());
+                        activityConnect2Binding.recyclerView.setAdapter(groupsRecyclerAdapter);
                     }
                 }
                 else
@@ -1501,13 +1439,13 @@ public class ConnectActivity extends AppCompatActivity
     public  void CustomProgressDialog(final String loading)
     {
         Utility.freeMemory();
-        rlProgressDialog.setVisibility(View.VISIBLE);
-        tvProgressing.setText(loading);
+        activityConnect2Binding.rlProgressDialog.setVisibility(View.VISIBLE);
+        activityConnect2Binding.txtProgressing.setText(loading);
 
         Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
-        ivConnecting1.startAnimation(anim);
+        activityConnect2Binding.imgConnecting1.startAnimation(anim);
         Animation anim1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.clockwise);
-        ivConnecting2.startAnimation(anim1);
+        activityConnect2Binding.imgConnecting2.startAnimation(anim1);
 
         int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
         for (int i = 350; i <= SPLASHTIME; i = i + 350)
@@ -1519,15 +1457,15 @@ public class ConnectActivity extends AppCompatActivity
                 {
                     if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
                     {
-                        tvProgressing.setText(loading+".");
+                        activityConnect2Binding.txtProgressing.setText(loading+".");
                     }
                     else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
                     {
-                        tvProgressing.setText(loading+"..");
+                        activityConnect2Binding.txtProgressing.setText(loading+"..");
                     }
                     else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
                     {
-                        tvProgressing.setText(loading+"...");
+                        activityConnect2Binding.txtProgressing.setText(loading+"...");
                     }
 
                 }

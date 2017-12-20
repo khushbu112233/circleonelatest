@@ -1,70 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.circle8.circleOne.Activity.AddQRActivity">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <RelativeLayout
-            android:id="@+id/rlTabBar"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_alignParentTop="true"
-            android:background="@color/colorAccent" >
-
-            <ImageView
-                android:id="@+id/imgBack"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-            <com.circle8.circleOne.Utils.cgTextView
-                android:id="@+id/txtTitle"
-                android:textSize="17dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="8dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Scan QR code"
-                android:textColor="@color/white"/>
-            <ImageView
-                android:id="@+id/imgProfileMenu"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_width="22dp"
-                android:layout_height="30dp"
-                android:visibility="gone"
-                android:src="@drawable/ic_dehaze_black_24dp"/>
-        </RelativeLayout>
-
+    xmlns:tools="http://schemas.android.com/tools">
     <FrameLayout
-        android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/rlTabBar"/>
+        tools:context="com.circle8.circleOne.Activity.AddQRActivity">
 
-    <Button
-        android:id="@+id/btnRescan"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:text="Re-Scan"
-        android:textColor="@color/white"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:id="@+id/rlTabBar"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignParentTop="true"
+                android:background="@color/colorAccent" >
 
-    </RelativeLayout>
+                <ImageView
+                    android:id="@+id/imgBack"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+                <com.circle8.circleOne.Utils.cgTextView
+                    android:id="@+id/txtTitle"
+                    android:textSize="17dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Scan QR code"
+                    android:textColor="@color/white"/>
+                <ImageView
+                    android:id="@+id/imgProfileMenu"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="22dp"
+                    android:layout_height="30dp"
+                    android:visibility="gone"
+                    android:src="@drawable/ic_dehaze_black_24dp"/>
+            </RelativeLayout>
 
-</FrameLayout>
+            <FrameLayout
+                android:id="@+id/content_frame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/rlTabBar"/>
+
+            <Button
+                android:id="@+id/btnRescan"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:text="Re-Scan"
+                android:textColor="@color/white"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="40dp"/>
+
+        </RelativeLayout>
+
+    </FrameLayout>
+</layout>

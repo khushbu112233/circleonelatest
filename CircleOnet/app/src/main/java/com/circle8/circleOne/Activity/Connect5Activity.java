@@ -1,43 +1,32 @@
 package com.circle8.circleOne.Activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
+import com.circle8.circleOne.databinding.ActivityConnect5Binding;
 import com.squareup.picasso.Picasso;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Connect5Activity extends AppCompatActivity implements View.OnClickListener
 {
-    private ImageView imgBack, imgCards, imgConnect, imgEvents, imgProfile, imgConnecting;
 
     String level = "0";
     String profile,profileName;
-    TextView txtCongratulations, txtLink;
-    CircleImageView ivImage1;
-    CircleImageView level1, level2, level3, level4, level5, level6, level7;
-    CircleImageView ivProfile1, ivProfile2, ivProfile3, ivProfile4, ivProfile5, ivProfile6, ivProfile7;
-    TextView txtProfileName, txtName1, txtName2, txtName3, txtName4, txtName5, txtName6, txtName7;
-    RelativeLayout rltLevel1, rltLevel2, rltLevel3, rltLevel4, rltLevel5, rltLevel6, rltLevel7;
-
     String connectLevel = "";
     String userName1 = "", userName2 = "", userName3 = "", userName4 = "", userName5 = "", userName6 = "", userName7 = "";
     String userPhoto1 = "", userPhoto2 = "", userPhoto3 = "", userPhoto4 = "", userPhoto5 = "", userPhoto6 = "", userPhoto7 = "" ;
     String userProfileId1 = "", userProfileId2 = "", userProfileId3 = "", userProfileId4 = "", userProfileId5 = "",
             userProfileId6 = "", userProfileId7 = "";
-
+    ActivityConnect5Binding activityConnect5Binding;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_connect5);
+        activityConnect5Binding = DataBindingUtil.setContentView(this,R.layout.activity_connect5);
         Utility.freeMemory();
         Intent intent = getIntent();
         level = intent.getStringExtra("level");
@@ -66,68 +55,26 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         userPhoto7 = intent.getStringExtra("userPhoto7");
         userProfileId7 = intent.getStringExtra("userProfileId7");
 
-        ivImage1 = (CircleImageView) findViewById(R.id.ivImage1);
-        imgBack = (ImageView) findViewById(R.id.imgBack);
-        imgCards = (ImageView) findViewById(R.id.imgCards);
-        imgConnect = (ImageView) findViewById(R.id.imgConnect);
-        imgEvents = (ImageView) findViewById(R.id.imgEvents);
-        imgProfile = (ImageView) findViewById(R.id.imgProfile);
 
-        level1 = (CircleImageView) findViewById(R.id.imgLevel1);
-        level2 = (CircleImageView) findViewById(R.id.imgLevel2);
-        level3 = (CircleImageView) findViewById(R.id.imgLevel3);
-        level4 = (CircleImageView) findViewById(R.id.imgLevel4);
-        level5 = (CircleImageView) findViewById(R.id.imgLevel5);
-        level6 = (CircleImageView) findViewById(R.id.imgLevel6);
-        level7 = (CircleImageView) findViewById(R.id.imgLevel7);
-
-        ivProfile1 = (CircleImageView) findViewById(R.id.ivProfile1);
-        ivProfile2 = (CircleImageView) findViewById(R.id.ivProfile2);
-        ivProfile3 = (CircleImageView) findViewById(R.id.ivProfile3);
-        ivProfile4 = (CircleImageView) findViewById(R.id.ivProfile4);
-        ivProfile5 = (CircleImageView) findViewById(R.id.ivProfile5);
-        ivProfile6 = (CircleImageView) findViewById(R.id.ivProfile6);
-        ivProfile7 = (CircleImageView) findViewById(R.id.ivProfile7);
-
-        txtProfileName = (TextView)findViewById(R.id.txtProfileName);
-        txtName1 = (TextView) findViewById(R.id.txtName1);
-        txtName2 = (TextView) findViewById(R.id.txtName2);
-        txtName3 = (TextView) findViewById(R.id.txtName3);
-        txtName4 = (TextView) findViewById(R.id.txtName4);
-        txtName5 = (TextView) findViewById(R.id.txtName5);
-        txtName6 = (TextView) findViewById(R.id.txtName6);
-        txtName7 = (TextView) findViewById(R.id.txtName7);
-
-        rltLevel1 = (RelativeLayout) findViewById(R.id.rltLevel1);
-        rltLevel2 = (RelativeLayout) findViewById(R.id.rltLevel2);
-        rltLevel3 = (RelativeLayout) findViewById(R.id.rltLevel3);
-        rltLevel4 = (RelativeLayout) findViewById(R.id.rltLevel4);
-        rltLevel5 = (RelativeLayout) findViewById(R.id.rltLevel5);
-        rltLevel6 = (RelativeLayout) findViewById(R.id.rltLevel6);
-        rltLevel7 = (RelativeLayout) findViewById(R.id.rltLevel7);
-
-        txtLink = (TextView) findViewById(R.id.txtLink);
-        txtCongratulations = (TextView) findViewById(R.id.txtCongratulations);
-
-        txtProfileName.setText(profileName);
+        activityConnect5Binding.txtProfileName.setText(profileName);
 
         try
         {
             Utility.freeMemory();
             if (profile.equalsIgnoreCase("") || profile.equalsIgnoreCase("null"))
             {
-                ivImage1.setImageResource(R.drawable.usr);
+                activityConnect5Binding.ivImage1.setImageResource(R.drawable.usr);
             }
             else
             {
-                Picasso.with(getApplicationContext()).load(profile).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivImage1);
+                Picasso.with(getApplicationContext()).load(profile).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivImage1);
             }
         }
         catch (Exception e) {
-            ivImage1.setImageResource(R.drawable.usr);
+            activityConnect5Binding.ivImage1.setImageResource(R.drawable.usr);
         }
 
-        imgBack.setOnClickListener(new View.OnClickListener() {
+        activityConnect5Binding.imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -176,8 +123,8 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         if (level.equals("0"))
         {
             Utility.freeMemory();
-          //  txtCongratulations.setVisibility(View.GONE);
-            txtLink.setText("You have no established connections");
+            //  txtCongratulations.setVisibility(View.GONE);
+            activityConnect5Binding.txtLink.setText("You have no established connections");
             /*rltLevel1.setVisibility(View.INVISIBLE);
             rltLevel2.setVisibility(View.INVISIBLE);
             rltLevel3.setVisibility(View.INVISIBLE);
@@ -186,34 +133,34 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             rltLevel6.setVisibility(View.INVISIBLE);
             rltLevel7.setVisibility(View.INVISIBLE);*/
 
-            txtName1.setVisibility(View.INVISIBLE);
-            txtName2.setVisibility(View.INVISIBLE);
-            txtName3.setVisibility(View.INVISIBLE);
-            txtName4.setVisibility(View.INVISIBLE);
-            txtName5.setVisibility(View.INVISIBLE);
-            txtName6.setVisibility(View.INVISIBLE);
-            txtName7.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.txtName1.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.txtName2.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.txtName3.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.txtName4.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.txtName5.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.txtName6.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.txtName7.setVisibility(View.INVISIBLE);
 
-            level1.setVisibility(View.VISIBLE);
-            level2.setVisibility(View.VISIBLE);
-            level3.setVisibility(View.VISIBLE);
-            level4.setVisibility(View.VISIBLE);
-            level5.setVisibility(View.VISIBLE);
-            level6.setVisibility(View.VISIBLE);
-            level7.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel1.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel2.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel3.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel4.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel5.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel6.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel7.setVisibility(View.VISIBLE);
 
-            ivProfile1.setVisibility(View.INVISIBLE);
-            ivProfile2.setVisibility(View.INVISIBLE);
-            ivProfile3.setVisibility(View.INVISIBLE);
-            ivProfile4.setVisibility(View.INVISIBLE);
-            ivProfile5.setVisibility(View.INVISIBLE);
-            ivProfile6.setVisibility(View.INVISIBLE);
-            ivProfile7.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.ivProfile1.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.ivProfile2.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.ivProfile3.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.ivProfile4.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.ivProfile5.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.ivProfile6.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.ivProfile7.setVisibility(View.INVISIBLE);
         }
         if (level.equals("1"))
         {
-          //  txtCongratulations.setVisibility(View.VISIBLE);
-            txtLink.setText("you are now 1 connection away");
+            //  txtCongratulations.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtLink.setText("you are now 1 connection away");
            /* rltLevel1.setVisibility(View.VISIBLE);
             rltLevel2.setVisibility(View.INVISIBLE);
             rltLevel3.setVisibility(View.INVISIBLE);
@@ -222,43 +169,43 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             rltLevel6.setVisibility(View.INVISIBLE);
             rltLevel7.setVisibility(View.INVISIBLE);*/
 
-            txtName1.setVisibility(View.VISIBLE);
-            txtName2.setVisibility(View.INVISIBLE);
-            txtName3.setVisibility(View.INVISIBLE);
-            txtName4.setVisibility(View.INVISIBLE);
-            txtName5.setVisibility(View.INVISIBLE);
-            txtName6.setVisibility(View.INVISIBLE);
-            txtName7.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.txtName1.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtName2.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.txtName3.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.txtName4.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.txtName5.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.txtName6.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.txtName7.setVisibility(View.INVISIBLE);
 
-            level1.setVisibility(View.VISIBLE);
-            level2.setVisibility(View.VISIBLE);
-            level3.setVisibility(View.VISIBLE);
-            level4.setVisibility(View.VISIBLE);
-            level5.setVisibility(View.VISIBLE);
-            level6.setVisibility(View.VISIBLE);
-            level7.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel1.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel2.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel3.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel4.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel5.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel6.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel7.setVisibility(View.VISIBLE);
 
-            txtName1.setText(userName1);
+            activityConnect5Binding.txtName1.setText(userName1);
             if (userPhoto1.equals(""))
             {
-                ivProfile1.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile1.setImageResource(R.drawable.usr_1);
             }
             else
             {
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).placeholder(R.drawable.usr2).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile1);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).placeholder(R.drawable.usr2).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile1);
             }
 
-            ivProfile2.setVisibility(View.INVISIBLE);
-            ivProfile3.setVisibility(View.INVISIBLE);
-            ivProfile4.setVisibility(View.INVISIBLE);
-            ivProfile5.setVisibility(View.INVISIBLE);
-            ivProfile6.setVisibility(View.INVISIBLE);
-            ivProfile7.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.ivProfile2.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.ivProfile3.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.ivProfile4.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.ivProfile5.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.ivProfile6.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.ivProfile7.setVisibility(View.INVISIBLE);
         }
         else if (level.equals("2"))
         {
-          //  txtCongratulations.setVisibility(View.VISIBLE);
-            txtLink.setText("you are now 2 connections away");
+            //  txtCongratulations.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtLink.setText("you are now 2 connections away");
             /*rltLevel1.setVisibility(View.VISIBLE);
             rltLevel2.setVisibility(View.VISIBLE);
             rltLevel3.setVisibility(View.INVISIBLE);
@@ -267,47 +214,47 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             rltLevel6.setVisibility(View.INVISIBLE);
             rltLevel7.setVisibility(View.INVISIBLE);*/
 
-            txtName1.setVisibility(View.VISIBLE);
-            txtName2.setVisibility(View.VISIBLE);
-            txtName3.setVisibility(View.INVISIBLE);
-            txtName4.setVisibility(View.INVISIBLE);
-            txtName5.setVisibility(View.INVISIBLE);
-            txtName6.setVisibility(View.INVISIBLE);
-            txtName7.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.txtName1.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtName2.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtName3.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.txtName4.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.txtName5.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.txtName6.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.txtName7.setVisibility(View.INVISIBLE);
 
-            level1.setVisibility(View.VISIBLE);
-            level2.setVisibility(View.VISIBLE);
-            level3.setVisibility(View.VISIBLE);
-            level4.setVisibility(View.VISIBLE);
-            level5.setVisibility(View.VISIBLE);
-            level6.setVisibility(View.VISIBLE);
-            level7.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel1.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel2.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel3.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel4.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel5.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel6.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel7.setVisibility(View.VISIBLE);
 
-            txtName1.setText(userName1);
-            txtName2.setText(userName2);
+            activityConnect5Binding.txtName1.setText(userName1);
+            activityConnect5Binding.txtName2.setText(userName2);
 
             if (userPhoto1.equals("") || userPhoto2.equals("") )
             {
-                ivProfile1.setImageResource(R.drawable.usr_1);
-                ivProfile2.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile1.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile2.setImageResource(R.drawable.usr_1);
             }
             else
             {
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile1);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile2);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile1);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile2);
             }
 
-            ivProfile3.setVisibility(View.INVISIBLE);
-            ivProfile4.setVisibility(View.INVISIBLE);
-            ivProfile5.setVisibility(View.INVISIBLE);
-            ivProfile6.setVisibility(View.INVISIBLE);
-            ivProfile7.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.ivProfile3.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.ivProfile4.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.ivProfile5.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.ivProfile6.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.ivProfile7.setVisibility(View.INVISIBLE);
         }
         else if (level.equals("3"))
         {
             Utility.freeMemory();
             //txtCongratulations.setVisibility(View.VISIBLE);
-            txtLink.setText("you are now 3 connections away");
+            activityConnect5Binding.txtLink.setText("you are now 3 connections away");
            /* rltLevel1.setVisibility(View.VISIBLE);
             rltLevel2.setVisibility(View.VISIBLE);
             rltLevel3.setVisibility(View.VISIBLE);
@@ -316,48 +263,48 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             rltLevel6.setVisibility(View.INVISIBLE);
             rltLevel7.setVisibility(View.INVISIBLE);*/
 
-            txtName1.setVisibility(View.VISIBLE);
-            txtName2.setVisibility(View.VISIBLE);
-            txtName3.setVisibility(View.VISIBLE);
-            txtName4.setVisibility(View.INVISIBLE);
-            txtName5.setVisibility(View.INVISIBLE);
-            txtName6.setVisibility(View.INVISIBLE);
-            txtName7.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.txtName1.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtName2.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtName3.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtName4.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.txtName5.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.txtName6.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.txtName7.setVisibility(View.INVISIBLE);
 
-            level1.setVisibility(View.VISIBLE);
-            level2.setVisibility(View.VISIBLE);
-            level3.setVisibility(View.VISIBLE);
-            level4.setVisibility(View.VISIBLE);
-            level5.setVisibility(View.VISIBLE);
-            level6.setVisibility(View.VISIBLE);
-            level7.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel1.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel2.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel3.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel4.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel5.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel6.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel7.setVisibility(View.VISIBLE);
 
-            txtName1.setText(userName1);
-            txtName2.setText(userName2);
-            txtName3.setText(userName3);
+            activityConnect5Binding.txtName1.setText(userName1);
+            activityConnect5Binding.txtName2.setText(userName2);
+            activityConnect5Binding.txtName3.setText(userName3);
 
             if (userPhoto1.equals("") || userPhoto2.equals("") || userPhoto3.equals(""))
             {
-                ivProfile1.setImageResource(R.drawable.usr_1);
-                ivProfile2.setImageResource(R.drawable.usr_1);
-                ivProfile3.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile1.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile2.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile3.setImageResource(R.drawable.usr_1);
             }
             else
             {
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile1);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile2);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile3);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile1);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile2);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile3);
             }
 
-            ivProfile4.setVisibility(View.INVISIBLE);
-            ivProfile5.setVisibility(View.INVISIBLE);
-            ivProfile6.setVisibility(View.INVISIBLE);
-            ivProfile7.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.ivProfile4.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.ivProfile5.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.ivProfile6.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.ivProfile7.setVisibility(View.INVISIBLE);
         }
         else if (level.equals("4"))
         {
-           // txtCongratulations.setVisibility(View.VISIBLE);
-            txtLink.setText("you are now 4 connections away");
+            // txtCongratulations.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtLink.setText("you are now 4 connections away");
             /*rltLevel1.setVisibility(View.VISIBLE);
             rltLevel2.setVisibility(View.VISIBLE);
             rltLevel3.setVisibility(View.VISIBLE);
@@ -366,50 +313,50 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             rltLevel6.setVisibility(View.INVISIBLE);
             rltLevel7.setVisibility(View.INVISIBLE);*/
 
-            txtName1.setVisibility(View.VISIBLE);
-            txtName2.setVisibility(View.VISIBLE);
-            txtName3.setVisibility(View.VISIBLE);
-            txtName4.setVisibility(View.VISIBLE);
-            txtName5.setVisibility(View.INVISIBLE);
-            txtName6.setVisibility(View.INVISIBLE);
-            txtName7.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.txtName1.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtName2.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtName3.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtName4.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtName5.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.txtName6.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.txtName7.setVisibility(View.INVISIBLE);
 
-            level1.setVisibility(View.VISIBLE);
-            level2.setVisibility(View.VISIBLE);
-            level3.setVisibility(View.VISIBLE);
-            level4.setVisibility(View.VISIBLE);
-            level5.setVisibility(View.VISIBLE);
-            level6.setVisibility(View.VISIBLE);
-            level7.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel1.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel2.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel3.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel4.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel5.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel6.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel7.setVisibility(View.VISIBLE);
 
-            txtName1.setText(userName1);
-            txtName2.setText(userName2);
-            txtName3.setText(userName3);
-            txtName4.setText(userName4);
+            activityConnect5Binding.txtName1.setText(userName1);
+            activityConnect5Binding.txtName2.setText(userName2);
+            activityConnect5Binding.txtName3.setText(userName3);
+            activityConnect5Binding.txtName4.setText(userName4);
 
             if (userPhoto1.equals("") || userPhoto2.equals("") || userPhoto3.equals("") || userPhoto4.equals(""))
             {
-                ivProfile1.setImageResource(R.drawable.usr_1);
-                ivProfile2.setImageResource(R.drawable.usr_1);
-                ivProfile3.setImageResource(R.drawable.usr_1);
-                ivProfile4.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile1.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding. ivProfile2.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile3.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile4.setImageResource(R.drawable.usr_1);
             }
             else
             {
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile1);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile2);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile3);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile4);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile1);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile2);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile3);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile4);
             }
 
-            ivProfile5.setVisibility(View.INVISIBLE);
-            ivProfile6.setVisibility(View.INVISIBLE);
-            ivProfile7.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.ivProfile5.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.ivProfile6.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.ivProfile7.setVisibility(View.INVISIBLE);
         }
         else if (level.equals("5"))
         {
-          //  txtCongratulations.setVisibility(View.VISIBLE);
-            txtLink.setText("you are now 5 connections away");
+            //  txtCongratulations.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtLink.setText("you are now 5 connections away");
             /*rltLevel1.setVisibility(View.VISIBLE);
             rltLevel2.setVisibility(View.VISIBLE);
             rltLevel3.setVisibility(View.VISIBLE);
@@ -418,53 +365,53 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             rltLevel6.setVisibility(View.INVISIBLE);
             rltLevel7.setVisibility(View.INVISIBLE);*/
 
-            txtName1.setVisibility(View.VISIBLE);
-            txtName2.setVisibility(View.VISIBLE);
-            txtName3.setVisibility(View.VISIBLE);
-            txtName4.setVisibility(View.VISIBLE);
-            txtName5.setVisibility(View.VISIBLE);
-            txtName6.setVisibility(View.INVISIBLE);
-            txtName7.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.txtName1.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtName2.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtName3.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtName4.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtName5.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtName6.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.txtName7.setVisibility(View.INVISIBLE);
 
-            level1.setVisibility(View.VISIBLE);
-            level2.setVisibility(View.VISIBLE);
-            level3.setVisibility(View.VISIBLE);
-            level4.setVisibility(View.VISIBLE);
-            level5.setVisibility(View.VISIBLE);
-            level6.setVisibility(View.VISIBLE);
-            level7.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel1.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel2.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel3.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel4.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel5.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel6.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel7.setVisibility(View.VISIBLE);
 
-            txtName1.setText(userName1);
-            txtName2.setText(userName2);
-            txtName3.setText(userName3);
-            txtName4.setText(userName4);
-            txtName5.setText(userName5);
+            activityConnect5Binding.txtName1.setText(userName1);
+            activityConnect5Binding.txtName2.setText(userName2);
+            activityConnect5Binding.txtName3.setText(userName3);
+            activityConnect5Binding.txtName4.setText(userName4);
+            activityConnect5Binding.txtName5.setText(userName5);
 
             if (userPhoto1.equals("") || userPhoto2.equals("") || userPhoto3.equals("") || userPhoto4.equals("")
                     || userPhoto5.equals(""))
             {
-                ivProfile1.setImageResource(R.drawable.usr_1);
-                ivProfile2.setImageResource(R.drawable.usr_1);
-                ivProfile3.setImageResource(R.drawable.usr_1);
-                ivProfile4.setImageResource(R.drawable.usr_1);
-                ivProfile5.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile1.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding. ivProfile2.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile3.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile4.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile5.setImageResource(R.drawable.usr_1);
             }
             else
             {
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile1);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile2);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile3);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile4);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto5).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile5);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile1);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile2);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile3);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile4);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto5).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile5);
             }
 
-            ivProfile6.setVisibility(View.INVISIBLE);
-            ivProfile7.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.ivProfile6.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.ivProfile7.setVisibility(View.INVISIBLE);
         }
         else if (level.equals("6"))
         {
-          //  txtCongratulations.setVisibility(View.VISIBLE);
-            txtLink.setText("you are now 6 connections away");
+            //  txtCongratulations.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtLink.setText("you are now 6 connections away");
             /*rltLevel1.setVisibility(View.VISIBLE);
             rltLevel2.setVisibility(View.VISIBLE);
             rltLevel3.setVisibility(View.VISIBLE);
@@ -473,55 +420,55 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             rltLevel6.setVisibility(View.VISIBLE);
             rltLevel7.setVisibility(View.INVISIBLE);*/
 
-            txtName1.setVisibility(View.VISIBLE);
-            txtName2.setVisibility(View.VISIBLE);
-            txtName3.setVisibility(View.VISIBLE);
-            txtName4.setVisibility(View.VISIBLE);
-            txtName5.setVisibility(View.VISIBLE);
-            txtName6.setVisibility(View.VISIBLE);
-            txtName7.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.txtName1.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtName2.setVisibility(View.VISIBLE);
+            activityConnect5Binding. txtName3.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtName4.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtName5.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtName6.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtName7.setVisibility(View.INVISIBLE);
 
-            level1.setVisibility(View.VISIBLE);
-            level2.setVisibility(View.VISIBLE);
-            level3.setVisibility(View.VISIBLE);
-            level4.setVisibility(View.VISIBLE);
-            level5.setVisibility(View.VISIBLE);
-            level6.setVisibility(View.VISIBLE);
-            level7.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel1.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel2.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel3.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel4.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel5.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel6.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel7.setVisibility(View.VISIBLE);
 
-            txtName1.setText(userName1);
-            txtName2.setText(userName2);
-            txtName3.setText(userName3);
-            txtName4.setText(userName4);
-            txtName5.setText(userName5);
-            txtName6.setText(userName6);
+            activityConnect5Binding.txtName1.setText(userName1);
+            activityConnect5Binding.txtName2.setText(userName2);
+            activityConnect5Binding.txtName3.setText(userName3);
+            activityConnect5Binding.txtName4.setText(userName4);
+            activityConnect5Binding.txtName5.setText(userName5);
+            activityConnect5Binding.txtName6.setText(userName6);
 
             if (userPhoto1.equals("") || userPhoto2.equals("") || userPhoto3.equals("") || userPhoto4.equals("")
                     || userPhoto5.equals("") || userPhoto6.equals(""))
             {
-                ivProfile1.setImageResource(R.drawable.usr_1);
-                ivProfile2.setImageResource(R.drawable.usr_1);
-                ivProfile3.setImageResource(R.drawable.usr_1);
-                ivProfile4.setImageResource(R.drawable.usr_1);
-                ivProfile5.setImageResource(R.drawable.usr_1);
-                ivProfile6.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile1.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile2.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile3.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile4.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile5.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile6.setImageResource(R.drawable.usr_1);
             }
             else
             {
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile1);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile2);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile3);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile4);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto5).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile5);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto6).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile6);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile1);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile2);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile3);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile4);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto5).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile5);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto6).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile6);
             }
 
-            ivProfile7.setVisibility(View.INVISIBLE);
+            activityConnect5Binding.ivProfile7.setVisibility(View.INVISIBLE);
         }
         else if (level.equals("7"))
         {
-          //  txtCongratulations.setVisibility(View.VISIBLE);
-            txtLink.setText("you are now 7 connections away");
+            //  txtCongratulations.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtLink.setText("you are now 7 connections away");
             /*rltLevel1.setVisibility(View.VISIBLE);
             rltLevel2.setVisibility(View.VISIBLE);
             rltLevel3.setVisibility(View.VISIBLE);
@@ -530,54 +477,54 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             rltLevel6.setVisibility(View.VISIBLE);
             rltLevel7.setVisibility(View.VISIBLE);*/
 
-            txtName1.setVisibility(View.VISIBLE);
-            txtName2.setVisibility(View.VISIBLE);
-            txtName3.setVisibility(View.VISIBLE);
-            txtName4.setVisibility(View.VISIBLE);
-            txtName5.setVisibility(View.VISIBLE);
-            txtName6.setVisibility(View.VISIBLE);
-            txtName7.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtName1.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtName2.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtName3.setVisibility(View.VISIBLE);
+            activityConnect5Binding. txtName4.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtName5.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtName6.setVisibility(View.VISIBLE);
+            activityConnect5Binding.txtName7.setVisibility(View.VISIBLE);
 
-            level1.setVisibility(View.VISIBLE);
-            level2.setVisibility(View.VISIBLE);
-            level3.setVisibility(View.VISIBLE);
-            level4.setVisibility(View.VISIBLE);
-            level5.setVisibility(View.VISIBLE);
-            level6.setVisibility(View.VISIBLE);
-            level7.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel1.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel2.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel3.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel4.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel5.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel6.setVisibility(View.VISIBLE);
+            activityConnect5Binding.imgLevel7.setVisibility(View.VISIBLE);
 
-            txtName1.setText(userName1);
-            txtName2.setText(userName2);
-            txtName3.setText(userName3);
-            txtName4.setText(userName4);
-            txtName5.setText(userName5);
-            txtName6.setText(userName6);
-            txtName7.setText(userName7);
+            activityConnect5Binding.txtName1.setText(userName1);
+            activityConnect5Binding.txtName2.setText(userName2);
+            activityConnect5Binding.txtName3.setText(userName3);
+            activityConnect5Binding.txtName4.setText(userName4);
+            activityConnect5Binding.txtName5.setText(userName5);
+            activityConnect5Binding.txtName6.setText(userName6);
+            activityConnect5Binding.txtName7.setText(userName7);
 
             if (userPhoto1.equals("") || userPhoto2.equals("") || userPhoto3.equals("") || userPhoto4.equals("")
                     || userPhoto5.equals("") || userPhoto6.equals("") || userPhoto7.equals(""))
             {
-                ivProfile1.setImageResource(R.drawable.usr_1);
-                ivProfile2.setImageResource(R.drawable.usr_1);
-                ivProfile3.setImageResource(R.drawable.usr_1);
-                ivProfile4.setImageResource(R.drawable.usr_1);
-                ivProfile5.setImageResource(R.drawable.usr_1);
-                ivProfile6.setImageResource(R.drawable.usr_1);
-                ivProfile7.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile1.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile2.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding. ivProfile3.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile4.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile5.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile6.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile7.setImageResource(R.drawable.usr_1);
             }
             else
             {
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile1);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile2);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile3);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile4);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto5).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile5);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto6).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile6);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto7).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivProfile7);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile1);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile2);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile3);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile4);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto5).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile5);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto6).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile6);
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto7).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile7);
             }
         }
 
-        imgCards.setOnClickListener(new View.OnClickListener() {
+        activityConnect5Binding.imgCards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
@@ -593,7 +540,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             }
         });
 
-        imgConnect.setOnClickListener(new View.OnClickListener() {
+        activityConnect5Binding.imgConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
@@ -609,7 +556,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             }
         });
 
-        imgEvents.setOnClickListener(new View.OnClickListener() {
+        activityConnect5Binding.imgEvents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
@@ -625,7 +572,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             }
         });
 
-        imgProfile.setOnClickListener(new View.OnClickListener() {
+        activityConnect5Binding.imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
@@ -641,21 +588,21 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             }
         });
 
-        ivProfile1.setOnClickListener(this);
-        ivProfile2.setOnClickListener(this);
-        ivProfile3.setOnClickListener(this);
-        ivProfile4.setOnClickListener(this);
-        ivProfile5.setOnClickListener(this);
-        ivProfile6.setOnClickListener(this);
-        ivProfile7.setOnClickListener(this);
+        activityConnect5Binding.ivProfile1.setOnClickListener(this);
+        activityConnect5Binding.ivProfile2.setOnClickListener(this);
+        activityConnect5Binding. ivProfile3.setOnClickListener(this);
+        activityConnect5Binding.ivProfile4.setOnClickListener(this);
+        activityConnect5Binding.ivProfile5.setOnClickListener(this);
+        activityConnect5Binding.ivProfile6.setOnClickListener(this);
+        activityConnect5Binding.ivProfile7.setOnClickListener(this);
 
-        txtName1.setOnClickListener(this);
-        txtName2.setOnClickListener(this);
-        txtName3.setOnClickListener(this);
-        txtName4.setOnClickListener(this);
-        txtName5.setOnClickListener(this);
-        txtName6.setOnClickListener(this);
-        txtName7.setOnClickListener(this);
+        activityConnect5Binding.txtName1.setOnClickListener(this);
+        activityConnect5Binding.txtName2.setOnClickListener(this);
+        activityConnect5Binding.txtName3.setOnClickListener(this);
+        activityConnect5Binding.txtName4.setOnClickListener(this);
+        activityConnect5Binding.txtName5.setOnClickListener(this);
+        activityConnect5Binding.txtName6.setOnClickListener(this);
+        activityConnect5Binding.txtName7.setOnClickListener(this);
     }
 
     @Override
@@ -706,7 +653,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v)
     {
-        if ( v == ivProfile1)
+        if ( v == activityConnect5Binding.ivProfile1)
         {
             Utility.freeMemory();
             Intent in = new Intent(Connect5Activity.this, CardDetail.class);
@@ -717,7 +664,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             startActivity(in);
             finish();
         }
-        if ( v == ivProfile2)
+        if ( v == activityConnect5Binding.ivProfile2)
         {
             Utility.freeMemory();
             Intent in = new Intent(Connect5Activity.this, CardDetail.class);
@@ -728,7 +675,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             startActivity(in);
             finish();
         }
-        if ( v == ivProfile3)
+        if ( v == activityConnect5Binding.ivProfile3)
         {
             Utility.freeMemory();
             Intent in = new Intent(Connect5Activity.this, CardDetail.class);
@@ -739,7 +686,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             startActivity(in);
             finish();
         }
-        if ( v == ivProfile4)
+        if ( v == activityConnect5Binding.ivProfile4)
         {
             Utility.freeMemory();
             Intent in = new Intent(Connect5Activity.this, CardDetail.class);
@@ -750,7 +697,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             startActivity(in);
             finish();
         }
-        if ( v == ivProfile5)
+        if ( v == activityConnect5Binding.ivProfile5)
         {
             Utility.freeMemory();
             Intent in = new Intent(Connect5Activity.this, CardDetail.class);
@@ -761,7 +708,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             startActivity(in);
             finish();
         }
-        if ( v == ivProfile6)
+        if ( v == activityConnect5Binding.ivProfile6)
         {
             Utility.freeMemory();
             Intent in = new Intent(Connect5Activity.this, CardDetail.class);
@@ -772,7 +719,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             startActivity(in);
             finish();
         }
-        if ( v == ivProfile7)
+        if ( v == activityConnect5Binding.ivProfile7)
         {
             Utility.freeMemory();
             Intent in = new Intent(Connect5Activity.this, CardDetail.class);
