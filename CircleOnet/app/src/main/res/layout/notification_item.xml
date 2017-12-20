@@ -1,130 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <RelativeLayout
-        xmlns:swipe="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+<RelativeLayout
+    xmlns:swipe="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:id="@+id/lnrTestReq"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
         <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:id="@+id/lnrTestReq"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
+            android:orientation="horizontal">
+            <FrameLayout
+                android:id="@+id/fm_imgTestReq"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <FrameLayout
-                    android:id="@+id/fm_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center">
+                android:layout_gravity="center">
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_marginLeft="8dp"
-                        app:civ_border_width="2dp"
-                        app:civ_border_color="@color/colorPrimary"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/usr"
-                        android:id="@+id/imgTestReq"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        />
-
-                    <ProgressBar
-                        android:id="@+id/progressBar1"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:visibility="gone"
-                        android:layout_gravity="center"
-                        />
-
-                </FrameLayout>
-
-
-                <LinearLayout
-                    android:layout_weight="0.5"
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_marginLeft="8dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_gravity="center_vertical|left"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="@color/colorPrimary"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/usr"
+                    android:id="@+id/imgTestReq"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    />
+
+                <ProgressBar
+                    android:id="@+id/progressBarTestReq"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:visibility="gone"
+                    android:layout_gravity="center"
+                    />
+
+            </FrameLayout>
+
+
+            <LinearLayout
+                android:layout_weight="0.5"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="center_vertical|left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    android:gravity="left"
+                    android:visibility="visible"
+                    android:id="@+id/txtTestPurpose"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:textStyle="bold"
-                        android:textColor="@android:color/black"
-                        android:gravity="left"
-                        android:visibility="visible"
-                        android:id="@+id/txtTestPurpose"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:textColor="@android:color/black"
-                        android:gravity="left"
-                        android:visibility="visible"
-                        android:id="@+id/txtTestName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp" />
-                </LinearLayout>
+                    android:textSize="12sp" />
 
                 <TextView
-                    android:visibility="gone"
-                    android:id="@+id/txtRequestedTestReq"
-                    android:textSize="12dp"
-                    android:padding="8dp"
-                    android:background="@drawable/txt_box_blue"
-                    android:layout_gravity="center_vertical|left"
+                    android:textColor="@android:color/black"
+                    android:gravity="left"
+                    android:visibility="visible"
+                    android:id="@+id/txtTestName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Requested"/>
-
-                <Button
-                    android:layout_gravity="center_vertical|left"
-                    android:id="@+id/btnTestWrite"
-                    android:textSize="12sp"
-                    android:layout_weight="0"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:text="Write"/>
-
-                <Button
-                    android:layout_gravity="center_vertical|left"
-                    android:id="@+id/btnTestReject"
-                    android:textColor="@color/colorPrimary"
-                    android:background="@drawable/txt_box_blue"
-                    android:layout_marginRight="10dp"
-                    android:textSize="12sp"
-                    android:layout_weight="0"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="wrap_content"
-                    android:layout_height="28dp"
-                    android:text="Reject"/>
+                    android:textSize="12sp" />
             </LinearLayout>
-        </LinearLayout>
 
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/txtRequestedTestReq"
+                android:textSize="12dp"
+                android:padding="8dp"
+                android:background="@drawable/txt_box_blue"
+                android:layout_gravity="center_vertical|left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Requested"/>
+
+            <Button
+                android:layout_gravity="center_vertical|left"
+                android:id="@+id/btnTestWrite"
+                android:textSize="12sp"
+                android:layout_weight="0"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Write"/>
+
+            <Button
+                android:layout_gravity="center_vertical|left"
+                android:id="@+id/btnTestReject"
+                android:textColor="@color/colorPrimary"
+                android:background="@drawable/txt_box_blue"
+                android:layout_marginRight="10dp"
+                android:textSize="12sp"
+                android:layout_weight="0"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:text="Reject"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_centerInParent="true"
+        android:id="@+id/lnrTestRec"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
         <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_centerInParent="true"
-            android:id="@+id/lnrTestRec"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
+            android:orientation="horizontal">
+
+
+            <FrameLayout
+                android:id="@+id/fm_imgTestRec"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_gravity="center">
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_marginLeft="8dp"
                     app:civ_border_width="2dp"
@@ -135,83 +143,102 @@
                     android:layout_height="50dp"
                     />
 
-                <LinearLayout
-                    android:layout_weight="0.5"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_gravity="center_vertical|left"
+                <ProgressBar
+                    android:id="@+id/progressBarTestRec"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:visibility="gone"
+                    android:layout_gravity="center"
+                    />
+
+            </FrameLayout>
+
+
+            <LinearLayout
+                android:layout_weight="0.5"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="center_vertical|left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    android:gravity="left"
+                    android:visibility="visible"
+                    android:id="@+id/txtTestPurposeRec"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:textStyle="bold"
-                        android:textColor="@android:color/black"
-                        android:gravity="left"
-                        android:visibility="visible"
-                        android:id="@+id/txtTestPurposeRec"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:textColor="@android:color/black"
-                        android:gravity="left"
-                        android:visibility="visible"
-                        android:id="@+id/txtTestNameRec"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp" />
-                </LinearLayout>
+                    android:textSize="12sp" />
 
                 <TextView
-                    android:visibility="gone"
-                    android:id="@+id/txtRequestedTestRec"
-                    android:textSize="12dp"
-                    android:padding="8dp"
-                    android:background="@drawable/txt_box_blue"
-                    android:layout_gravity="center_vertical|left"
+                    android:textColor="@android:color/black"
+                    android:gravity="left"
+                    android:visibility="visible"
+                    android:id="@+id/txtTestNameRec"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Requested"/>
-
-                <Button
-                    android:layout_gravity="center_vertical|left"
-                    android:id="@+id/btnTestAcceptRec"
-                    android:textSize="12sp"
-                    android:layout_weight="0"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:text="Accept"/>
-
-                <Button
-                    android:layout_gravity="center_vertical|left"
-                    android:id="@+id/btnTestRejectRec"
-                    android:textColor="@color/colorPrimary"
-                    android:background="@drawable/txt_box_blue"
-                    android:layout_marginRight="10dp"
-                    android:textSize="12sp"
-                    android:layout_weight="0"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="wrap_content"
-                    android:layout_height="28dp"
-                    android:text="Reject"/>
+                    android:textSize="12sp" />
             </LinearLayout>
-        </LinearLayout>
 
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/txtRequestedTestRec"
+                android:textSize="12dp"
+                android:padding="8dp"
+                android:background="@drawable/txt_box_blue"
+                android:layout_gravity="center_vertical|left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Requested"/>
+
+            <Button
+                android:layout_gravity="center_vertical|left"
+                android:id="@+id/btnTestAcceptRec"
+                android:textSize="12sp"
+                android:layout_weight="0"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Accept"/>
+
+            <Button
+                android:layout_gravity="center_vertical|left"
+                android:id="@+id/btnTestRejectRec"
+                android:textColor="@color/colorPrimary"
+                android:background="@drawable/txt_box_blue"
+                android:layout_marginRight="10dp"
+                android:textSize="12sp"
+                android:layout_weight="0"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:text="Reject"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/lnrFriend"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
         <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:id="@+id/lnrFriend"
-            android:visibility="gone"
-            android:layout_centerInParent="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
+            android:orientation="horizontal">
+
+
+            <FrameLayout
+                android:id="@+id/fm_imgFriend"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_gravity="center">
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_marginLeft="8dp"
                     app:civ_border_width="2dp"
@@ -222,82 +249,101 @@
                     android:layout_height="50dp"
                     />
 
-                <LinearLayout
-                    android:layout_weight="0.5"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_gravity="center_vertical|left"
+                <ProgressBar
+                    android:id="@+id/progressBarFriend"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:visibility="gone"
+                    android:layout_gravity="center"
+                    />
+
+            </FrameLayout>
+
+
+
+            <LinearLayout
+                android:layout_weight="0.5"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="center_vertical|left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    android:gravity="left"
+                    android:visibility="visible"
+                    android:id="@+id/txtFriendPurpose"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:textStyle="bold"
-                        android:textColor="@android:color/black"
-                        android:gravity="left"
-                        android:visibility="visible"
-                        android:id="@+id/txtFriendPurpose"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:textColor="@android:color/black"
-                        android:gravity="left"
-                        android:visibility="visible"
-                        android:id="@+id/txtFriendName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp" />
-                </LinearLayout>
+                    android:textSize="12sp" />
 
                 <TextView
-                    android:visibility="gone"
-                    android:id="@+id/txtRequested"
-                    android:textSize="12dp"
-                    android:padding="8dp"
-                    android:background="@drawable/txt_box_blue"
-                    android:layout_gravity="center_vertical|left"
+                    android:textColor="@android:color/black"
+                    android:gravity="left"
+                    android:visibility="visible"
+                    android:id="@+id/txtFriendName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Requested"/>
-                <Button
-                    android:layout_gravity="center_vertical|left"
-                    android:id="@+id/btnAcceptFriend"
-                    android:textSize="12sp"
-                    android:layout_weight="0"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:text="Accept"/>
-
-                <Button
-                    android:layout_gravity="center_vertical|left"
-                    android:id="@+id/btnRejectFriend"
-                    android:textColor="@color/colorPrimary"
-                    android:background="@drawable/txt_box_blue"
-                    android:layout_marginRight="10dp"
-                    android:textSize="12sp"
-                    android:layout_weight="0"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="wrap_content"
-                    android:layout_height="28dp"
-                    android:text="Reject"/>
+                    android:textSize="12sp" />
             </LinearLayout>
-        </LinearLayout>
 
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/txtRequested"
+                android:textSize="12dp"
+                android:padding="8dp"
+                android:background="@drawable/txt_box_blue"
+                android:layout_gravity="center_vertical|left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Requested"/>
+            <Button
+                android:layout_gravity="center_vertical|left"
+                android:id="@+id/btnAcceptFriend"
+                android:textSize="12sp"
+                android:layout_weight="0"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Accept"/>
+
+            <Button
+                android:layout_gravity="center_vertical|left"
+                android:id="@+id/btnRejectFriend"
+                android:textColor="@color/colorPrimary"
+                android:background="@drawable/txt_box_blue"
+                android:layout_marginRight="10dp"
+                android:textSize="12sp"
+                android:layout_weight="0"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:text="Reject"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:id="@+id/lnrShare"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
         <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:id="@+id/lnrShare"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:id="@+id/fm_imgShare"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_gravity="center">
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_marginLeft="8dp"
                     app:civ_border_width="2dp"
@@ -309,83 +355,101 @@
                     android:layout_height="50dp"
                     />
 
-                <LinearLayout
-                    android:layout_weight="0.5"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_gravity="center_vertical|left"
+                <ProgressBar
+                    android:id="@+id/progressBarShare"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:visibility="gone"
+                    android:layout_gravity="center"
+                    />
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_weight="0.5"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="center_vertical|left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    android:gravity="left"
+                    android:visibility="visible"
+                    android:id="@+id/txtSharePurpose"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:textStyle="bold"
-                        android:textColor="@android:color/black"
-                        android:gravity="left"
-                        android:visibility="visible"
-                        android:id="@+id/txtSharePurpose"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:textColor="@android:color/black"
-                        android:gravity="left"
-                        android:visibility="visible"
-                        android:id="@+id/txtShareName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp" />
-                </LinearLayout>
+                    android:textSize="12sp" />
 
                 <TextView
-                    android:visibility="gone"
-                    android:id="@+id/txtRequestedShare"
-                    android:textSize="12dp"
-                    android:padding="8dp"
-                    android:background="@drawable/txt_box_blue"
-                    android:layout_gravity="center_vertical|left"
+                    android:textColor="@android:color/black"
+                    android:gravity="left"
+                    android:visibility="visible"
+                    android:id="@+id/txtShareName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Requested"/>
-
-                <Button
-                    android:layout_gravity="center_vertical|left"
-                    android:id="@+id/btnReqShare"
-                    android:textSize="12sp"
-                    android:layout_weight="0"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:text="Show"/>
-
-                <Button
-                    android:layout_gravity="center_vertical|left"
-                    android:id="@+id/btnShareCancel"
-                    android:textColor="@color/colorPrimary"
-                    android:background="@drawable/txt_box_blue"
-                    android:layout_marginRight="10dp"
-                    android:textSize="12sp"
-                    android:layout_weight="0"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="wrap_content"
-                    android:layout_height="28dp"
-                    android:text="Cancel"/>
+                    android:textSize="12sp" />
             </LinearLayout>
-        </LinearLayout>
 
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/txtRequestedShare"
+                android:textSize="12dp"
+                android:padding="8dp"
+                android:background="@drawable/txt_box_blue"
+                android:layout_gravity="center_vertical|left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Requested"/>
+
+            <Button
+                android:layout_gravity="center_vertical|left"
+                android:id="@+id/btnReqShare"
+                android:textSize="12sp"
+                android:layout_weight="0"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Show"/>
+
+            <Button
+                android:layout_gravity="center_vertical|left"
+                android:id="@+id/btnShareCancel"
+                android:textColor="@color/colorPrimary"
+                android:background="@drawable/txt_box_blue"
+                android:layout_marginRight="10dp"
+                android:textSize="12sp"
+                android:layout_weight="0"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:text="Cancel"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:id="@+id/lnrNFC"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
         <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:id="@+id/lnrNFC"
-            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
+            android:orientation="horizontal">
+
+
+            <FrameLayout
+                android:id="@+id/fm_imgNFC"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_gravity="center">
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_marginLeft="8dp"
                     app:civ_border_width="2dp"
@@ -396,68 +460,79 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp" />
 
-                <LinearLayout
-                    android:layout_weight="0.5"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_gravity="center_vertical|left"
+                <ProgressBar
+                    android:id="@+id/progressBarNFC"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:visibility="gone"
+                    android:layout_gravity="center"
+                    />
+
+            </FrameLayout>
+
+
+            <LinearLayout
+                android:layout_weight="0.5"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="center_vertical|left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    android:gravity="left"
+                    android:visibility="visible"
+                    android:id="@+id/txtNfcPurpose"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:textStyle="bold"
-                        android:textColor="@android:color/black"
-                        android:gravity="left"
-                        android:visibility="visible"
-                        android:id="@+id/txtNfcPurpose"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:textColor="@android:color/black"
-                        android:gravity="left"
-                        android:visibility="visible"
-                        android:id="@+id/txtNfcName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp" />
-                </LinearLayout>
+                    android:textSize="12sp" />
 
                 <TextView
-                    android:visibility="gone"
-                    android:id="@+id/txtRequestedNfc"
-                    android:textSize="12dp"
-                    android:padding="8dp"
-                    android:background="@drawable/txt_box_blue"
-                    android:layout_gravity="center_vertical|left"
+                    android:textColor="@android:color/black"
+                    android:gravity="left"
+                    android:visibility="visible"
+                    android:id="@+id/txtNfcName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Requested"/>
-
-                <Button
-                    android:layout_gravity="center_vertical|left"
-                    android:id="@+id/btnAllowNfc"
-                    android:textSize="12sp"
-                    android:layout_weight="0"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:text="Allow"/>
-
-                <Button
-                    android:layout_gravity="center_vertical|left"
-                    android:id="@+id/btnNfcCancel"
-                    android:textColor="@color/colorPrimary"
-                    android:background="@drawable/txt_box_blue"
-                    android:layout_marginRight="10dp"
-                    android:textSize="12sp"
-                    android:layout_weight="0"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="wrap_content"
-                    android:layout_height="28dp"
-                    android:text="Cancel"/>
+                    android:textSize="12sp" />
             </LinearLayout>
-        </LinearLayout>
 
-    </RelativeLayout>
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/txtRequestedNfc"
+                android:textSize="12dp"
+                android:padding="8dp"
+                android:background="@drawable/txt_box_blue"
+                android:layout_gravity="center_vertical|left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Requested"/>
+
+            <Button
+                android:layout_gravity="center_vertical|left"
+                android:id="@+id/btnAllowNfc"
+                android:textSize="12sp"
+                android:layout_weight="0"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Allow"/>
+
+            <Button
+                android:layout_gravity="center_vertical|left"
+                android:id="@+id/btnNfcCancel"
+                android:textColor="@color/colorPrimary"
+                android:background="@drawable/txt_box_blue"
+                android:layout_marginRight="10dp"
+                android:textSize="12sp"
+                android:layout_weight="0"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:text="Cancel"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

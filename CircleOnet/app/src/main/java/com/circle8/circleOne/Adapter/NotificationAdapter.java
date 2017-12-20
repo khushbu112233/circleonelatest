@@ -14,8 +14,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -87,6 +89,8 @@ public class NotificationAdapter extends BaseAdapter
         CircleImageView imgTestReq, imgTestRec, imgFriend, imgShare, imgNfc;
         TextView txtNfcPurpose, txtNfcName, txtSharePurpose, txtShareName, txtTestPurpose, txtTestName, txtTestPurposeRec, txtTestNameRec, txtFriendPurpose, txtFriendName, txtRequested, txtRequestedTestReq, txtRequestedTestRec;
         Button btnAllowNfc, btnNfcCancel, btnTestWrite, btnTestReject, btnTestAcceptRec, btnTestRejectRec, btnAcceptFriend, btnRejectFriend, btnShareRequest, btnShareCancel;
+        FrameLayout fm_imgTestReq, fm_imgTestRec, fm_imgFriend, fm_imgShare, fm_imgNFC;
+        ProgressBar progressBarTestReq, progressBarTestRec, progressBarFriend, progressBarShare, progressBarNFC;
     }
 
     public View getView(final int position, View convertView, ViewGroup parent)
@@ -98,6 +102,19 @@ public class NotificationAdapter extends BaseAdapter
         {
             vi = inflater.inflate(R.layout.notification_item, null);
             holder = new ViewHolder();
+            holder.fm_imgTestReq = (FrameLayout) vi.findViewById(R.id.fm_imgTestReq);
+            holder.fm_imgTestRec = (FrameLayout) vi.findViewById(R.id.fm_imgTestRec);
+            holder.fm_imgFriend = (FrameLayout) vi.findViewById(R.id.fm_imgFriend);
+            holder.fm_imgShare = (FrameLayout) vi.findViewById(R.id.fm_imgShare);
+            holder.fm_imgNFC = (FrameLayout) vi.findViewById(R.id.fm_imgNFC);
+
+
+            holder.progressBarTestReq = (ProgressBar) vi.findViewById(R.id.progressBarTestReq);
+            holder.progressBarTestRec = (ProgressBar) vi.findViewById(R.id.progressBarTestRec);
+            holder.progressBarFriend = (ProgressBar) vi.findViewById(R.id.progressBarFriend);
+            holder.progressBarShare = (ProgressBar) vi.findViewById(R.id.progressBarShare);
+            holder.progressBarNFC = (ProgressBar) vi.findViewById(R.id.progressBarNFC);
+
             holder.imgShare = (CircleImageView) vi.findViewById(R.id.imgShare);
             holder.imgTestReq = (CircleImageView) vi.findViewById(R.id.imgTestReq);
             holder.imgTestRec = (CircleImageView) vi.findViewById(R.id.imgTestRec);
@@ -157,10 +174,12 @@ public class NotificationAdapter extends BaseAdapter
 
             if (testimonialModels.get(position).getUserPhoto().equals(""))
             {
+                holder.progressBarTestRec.setVisibility(View.GONE);
                 holder.imgTestRec.setImageResource(R.drawable.usr);
             }
             else
             {
+                holder.progressBarTestRec.setVisibility(View.VISIBLE);
                 Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
                         .resize(300,300).onlyScaleDown().into(holder.imgTestRec);
             }
@@ -229,10 +248,13 @@ public class NotificationAdapter extends BaseAdapter
             lnrTestRec.setVisibility(View.GONE);
             if (testimonialModels.get(position).getUserPhoto().equals(""))
             {
+                holder.progressBarFriend.setVisibility(View.GONE);
                 holder.imgFriend.setImageResource(R.drawable.usr);
             }
             else
             {
+                holder.progressBarFriend.setVisibility(View.VISIBLE);
+
                 Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
                         .resize(300,300).onlyScaleDown().into(holder.imgFriend);
             }
@@ -262,10 +284,12 @@ public class NotificationAdapter extends BaseAdapter
             lnrTestRec.setVisibility(View.GONE);
             if (testimonialModels.get(position).getUserPhoto().equals(""))
             {
+                holder.progressBarTestReq.setVisibility(View.GONE);
                 holder.imgTestReq.setImageResource(R.drawable.usr);
             }
             else
             {
+                holder.progressBarTestReq.setVisibility(View.VISIBLE);
                 Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
                         .resize(300,300).onlyScaleDown().into(holder.imgTestReq);
             }
@@ -289,10 +313,12 @@ public class NotificationAdapter extends BaseAdapter
             lnrTestRec.setVisibility(View.GONE);
             if (testimonialModels.get(position).getUserPhoto().equals(""))
             {
+                holder.progressBarShare.setVisibility(View.GONE);
                 holder.imgShare.setImageResource(R.drawable.usr);
             }
             else
             {
+                holder.progressBarShare.setVisibility(View.VISIBLE);
                 Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
                         .resize(300,300).onlyScaleDown().into(holder.imgShare);
             }
@@ -315,10 +341,12 @@ public class NotificationAdapter extends BaseAdapter
             lnrTestRec.setVisibility(View.GONE);
             if (testimonialModels.get(position).getUserPhoto().equals(""))
             {
+                holder.progressBarNFC.setVisibility(View.GONE);
                 holder.imgNfc.setImageResource(R.drawable.usr);
             }
             else
             {
+                holder.progressBarNFC.setVisibility(View.VISIBLE);
                 Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
                         .resize(300,300).onlyScaleDown().into(holder.imgNfc);
             }
@@ -367,10 +395,12 @@ public class NotificationAdapter extends BaseAdapter
 
             if (testimonialModels.get(position).getUserPhoto().equals(""))
             {
+                holder.progressBarFriend.setVisibility(View.GONE);
                 holder.imgFriend.setImageResource(R.drawable.usr);
             }
             else
             {
+                holder.progressBarFriend.setVisibility(View.VISIBLE);
                 Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + testimonialModels.get(position).getUserPhoto())
                         .resize(300,300).onlyScaleDown().into(holder.imgFriend);
             }

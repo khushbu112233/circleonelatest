@@ -185,17 +185,18 @@
                                     android:src="@drawable/ic_dehaze_black_24dp" />
 
                                 <ImageView
-                                    android:id="@+id/imgProfileShare"
+                                    android:id="@+id/imgDone"
                                     android:layout_width="35dp"
                                     android:layout_height="35dp"
                                     android:layout_alignParentBottom="true"
                                     android:layout_alignParentLeft="true"
                                     android:layout_marginBottom="5dp"
                                     android:layout_marginLeft="15dp"
-                                    android:src="@drawable/ic_profile_white" />
+                                    android:src="@drawable/ic_save_white" />
 
                                 <ImageView
-                                    android:id="@+id/imgDone"
+                                    android:visibility="gone"
+                                    android:id="@+id/imgShare"
                                     android:layout_marginBottom="5dp"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
