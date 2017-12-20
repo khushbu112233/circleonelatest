@@ -82,16 +82,16 @@ public final class R {
     }
     public static final class styleable {
         public static final int[] CustomCalendarView = { 0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003, 0x7f010004, 0x7f010005, 0x7f010006, 0x7f010007, 0x7f010008, 0x7f010009, 0x7f01000a };
-        public static final int CustomCalendarView_calendarBackgroundColor = 3;
         public static final int CustomCalendarView_calendarTitleTextColor = 0;
-        public static final int CustomCalendarView_currentDayOfMonthColor = 10;
-        public static final int CustomCalendarView_dayOfMonthTextColor = 2;
         public static final int CustomCalendarView_dayOfWeekTextColor = 1;
+        public static final int CustomCalendarView_dayOfMonthTextColor = 2;
+        public static final int CustomCalendarView_calendarBackgroundColor = 3;
         public static final int CustomCalendarView_disabledDayBackgroundColor = 4;
         public static final int CustomCalendarView_disabledDayTextColor = 5;
         public static final int CustomCalendarView_selectedDayBackgroundColor = 6;
         public static final int CustomCalendarView_selectedDayTextColor = 7;
-        public static final int CustomCalendarView_titleLayoutBackgroundColor = 9;
         public static final int CustomCalendarView_weekLayoutBackgroundColor = 8;
+        public static final int CustomCalendarView_titleLayoutBackgroundColor = 9;
+        public static final int CustomCalendarView_currentDayOfMonthColor = 10;
     }
 }

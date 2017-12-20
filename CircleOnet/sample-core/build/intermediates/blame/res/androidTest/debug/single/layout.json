@@ -1,19 +1,19 @@
 [
     {
-        "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_media_custom.xml",
-        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\b8c7987c7c71defba920ba4c187a0c4f6cac7870\\output\\res\\layout\\notification_template_media_custom.xml"
-    },
-    {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_alert_dialog_button_bar_material.xml",
         "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\layout\\abc_alert_dialog_button_bar_material.xml"
     },
     {
+        "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_media_custom.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\b8c7987c7c71defba920ba4c187a0c4f6cac7870\\output\\res\\layout\\notification_template_media_custom.xml"
+    },
+    {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_big_media_narrow_custom.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\9ad801a60588ef04bf6e4be10f00fd6ebfff0586\\output\\res\\layout\\notification_template_big_media_narrow_custom.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\30887348d6825dc4b6a19f5a581ab905\\res\\layout\\notification_template_big_media_narrow_custom.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\design_layout_tab_icon.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\98fdb4f559d7e4df02720fe4ee6e5526e3f6145a\\output\\res\\layout\\design_layout_tab_icon.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\3d9ae4eeac3844c461c97fd58e58610a\\res\\layout\\design_layout_tab_icon.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_popup_menu_item_layout.xml",
@@ -41,11 +41,11 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_popup_menu_header_item_layout.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_popup_menu_header_item_layout.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\abc_popup_menu_header_item_layout.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_list_menu_item_checkbox.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_list_menu_item_checkbox.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\abc_list_menu_item_checkbox.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_toolbar.xml",
@@ -65,7 +65,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_big_media_custom.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\9ad801a60588ef04bf6e4be10f00fd6ebfff0586\\output\\res\\layout\\notification_template_big_media_custom.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\30887348d6825dc4b6a19f5a581ab905\\res\\layout\\notification_template_big_media_custom.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_popup_menu_header_item_layout.xml",
@@ -85,7 +85,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_action.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\75a908df38441cacdb49dd81bd2576a489b3ae79\\output\\res\\layout\\notification_action.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\dc06852667f8d071e869ec21b4415f7b\\res\\layout\\notification_action.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_mode_bar.xml",
@@ -93,7 +93,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_bar_view_list_nav_layout.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_action_bar_view_list_nav_layout.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\abc_action_bar_view_list_nav_layout.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_alert_dialog_button_bar_material.xml",
@@ -101,15 +101,15 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_media.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\9ad801a60588ef04bf6e4be10f00fd6ebfff0586\\output\\res\\layout\\notification_template_media.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\30887348d6825dc4b6a19f5a581ab905\\res\\layout\\notification_template_media.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_simple.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_screen_simple.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\abc_screen_simple.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\design_navigation_item.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\98fdb4f559d7e4df02720fe4ee6e5526e3f6145a\\output\\res\\layout\\design_navigation_item.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\3d9ae4eeac3844c461c97fd58e58610a\\res\\layout\\design_navigation_item.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_menu_item_layout.xml",
@@ -137,7 +137,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\design_bottom_sheet_dialog.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\98fdb4f559d7e4df02720fe4ee6e5526e3f6145a\\output\\res\\layout\\design_bottom_sheet_dialog.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\3d9ae4eeac3844c461c97fd58e58610a\\res\\layout\\design_bottom_sheet_dialog.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_list_menu_item_radio.xml",
@@ -145,7 +145,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_expanded_menu_layout.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_expanded_menu_layout.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\abc_expanded_menu_layout.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_search_view.xml",
@@ -157,7 +157,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_list_menu_item_radio.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_list_menu_item_radio.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\abc_list_menu_item_radio.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_expanded_menu_layout.xml",
@@ -169,7 +169,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\design_navigation_menu_item.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\98fdb4f559d7e4df02720fe4ee6e5526e3f6145a\\output\\res\\layout\\design_navigation_menu_item.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\3d9ae4eeac3844c461c97fd58e58610a\\res\\layout\\design_navigation_menu_item.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_media.xml",
@@ -177,7 +177,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_part_chronometer.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\75a908df38441cacdb49dd81bd2576a489b3ae79\\output\\res\\layout\\notification_template_part_chronometer.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\dc06852667f8d071e869ec21b4415f7b\\res\\layout\\notification_template_part_chronometer.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_activity_chooser_view_list_item.xml",
@@ -189,7 +189,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_bar_up_container.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_action_bar_up_container.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\abc_action_bar_up_container.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_custom_big.xml",
@@ -197,7 +197,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\select_dialog_multichoice_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\select_dialog_multichoice_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\select_dialog_multichoice_material.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\tooltip.xml",
@@ -213,7 +213,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_alert_dialog_button_bar_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_alert_dialog_button_bar_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\abc_alert_dialog_button_bar_material.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_activity_chooser_view.xml",
@@ -241,7 +241,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\design_navigation_menu.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\98fdb4f559d7e4df02720fe4ee6e5526e3f6145a\\output\\res\\layout\\design_navigation_menu.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\3d9ae4eeac3844c461c97fd58e58610a\\res\\layout\\design_navigation_menu.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\design_layout_tab_icon.xml",
@@ -257,7 +257,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_search_view.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_search_view.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\abc_search_view.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_media_action.xml",
@@ -269,11 +269,11 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\design_layout_snackbar_include.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\98fdb4f559d7e4df02720fe4ee6e5526e3f6145a\\output\\res\\layout\\design_layout_snackbar_include.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\3d9ae4eeac3844c461c97fd58e58610a\\res\\layout\\design_layout_snackbar_include.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_lines_media.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\9ad801a60588ef04bf6e4be10f00fd6ebfff0586\\output\\res\\layout\\notification_template_lines_media.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\30887348d6825dc4b6a19f5a581ab905\\res\\layout\\notification_template_lines_media.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_media_cancel_action.xml",
@@ -289,7 +289,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\design_layout_tab_text.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\98fdb4f559d7e4df02720fe4ee6e5526e3f6145a\\output\\res\\layout\\design_layout_tab_text.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\3d9ae4eeac3844c461c97fd58e58610a\\res\\layout\\design_layout_tab_text.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_simple_overlay_action_mode.xml",
@@ -297,7 +297,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_mode_bar.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_action_mode_bar.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\abc_action_mode_bar.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_big_media_narrow.xml",
@@ -309,11 +309,11 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_part_time.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\75a908df38441cacdb49dd81bd2576a489b3ae79\\output\\res\\layout\\notification_template_part_time.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\dc06852667f8d071e869ec21b4415f7b\\res\\layout\\notification_template_part_time.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_alert_dialog_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_alert_dialog_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\abc_alert_dialog_material.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_big_media_narrow.xml",
@@ -325,7 +325,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_menu_layout.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_action_menu_layout.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\abc_action_menu_layout.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_bar_view_list_nav_layout.xml",
@@ -333,7 +333,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_big_media.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\9ad801a60588ef04bf6e4be10f00fd6ebfff0586\\output\\res\\layout\\notification_template_big_media.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\30887348d6825dc4b6a19f5a581ab905\\res\\layout\\notification_template_big_media.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\design_navigation_menu_item.xml",
@@ -381,7 +381,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_media_custom.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\9ad801a60588ef04bf6e4be10f00fd6ebfff0586\\output\\res\\layout\\notification_template_media_custom.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\30887348d6825dc4b6a19f5a581ab905\\res\\layout\\notification_template_media_custom.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_search_dropdown_item_icons_2line.xml",
@@ -389,7 +389,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_icon_group.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\75a908df38441cacdb49dd81bd2576a489b3ae79\\output\\res\\layout\\notification_template_icon_group.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\dc06852667f8d071e869ec21b4415f7b\\res\\layout\\notification_template_icon_group.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_expanded_menu_layout.xml",
@@ -401,7 +401,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_bar_title_item.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_action_bar_title_item.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\abc_action_bar_title_item.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_select_dialog_material.xml",
@@ -421,7 +421,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_activity_chooser_view.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_activity_chooser_view.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\abc_activity_chooser_view.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_select_dialog_material.xml",
@@ -437,7 +437,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\design_layout_snackbar.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\98fdb4f559d7e4df02720fe4ee6e5526e3f6145a\\output\\res\\layout\\design_layout_snackbar.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\3d9ae4eeac3844c461c97fd58e58610a\\res\\layout\\design_layout_snackbar.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\design_text_input_password_icon.xml",
@@ -445,15 +445,15 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\design_navigation_item_separator.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\98fdb4f559d7e4df02720fe4ee6e5526e3f6145a\\output\\res\\layout\\design_navigation_item_separator.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\3d9ae4eeac3844c461c97fd58e58610a\\res\\layout\\design_navigation_item_separator.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_mode_close_item_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_action_mode_close_item_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\abc_action_mode_close_item_material.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_simple_overlay_action_mode.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_screen_simple_overlay_action_mode.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\abc_screen_simple_overlay_action_mode.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\design_navigation_menu.xml",
@@ -461,11 +461,11 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\design_text_input_password_icon.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\98fdb4f559d7e4df02720fe4ee6e5526e3f6145a\\output\\res\\layout\\design_text_input_password_icon.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\3d9ae4eeac3844c461c97fd58e58610a\\res\\layout\\design_text_input_password_icon.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\design_bottom_navigation_item.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\98fdb4f559d7e4df02720fe4ee6e5526e3f6145a\\output\\res\\layout\\design_bottom_navigation_item.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\3d9ae4eeac3844c461c97fd58e58610a\\res\\layout\\design_bottom_navigation_item.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_media.xml",
@@ -477,7 +477,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_list_menu_item_layout.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_list_menu_item_layout.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\abc_list_menu_item_layout.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_content_include.xml",
@@ -485,11 +485,11 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\tooltip.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\tooltip.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\tooltip.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_dialog_title_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_dialog_title_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\abc_dialog_title_material.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_bar_view_list_nav_layout.xml",
@@ -505,7 +505,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_media_action.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\9ad801a60588ef04bf6e4be10f00fd6ebfff0586\\output\\res\\layout\\notification_media_action.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\30887348d6825dc4b6a19f5a581ab905\\res\\layout\\notification_media_action.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_simple.xml",
@@ -525,7 +525,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_list_menu_item_icon.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_list_menu_item_icon.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\abc_list_menu_item_icon.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_content_include.xml",
@@ -533,7 +533,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_select_dialog_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_select_dialog_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\abc_select_dialog_material.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_media_custom.xml",
@@ -545,7 +545,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\select_dialog_singlechoice_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\select_dialog_singlechoice_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\select_dialog_singlechoice_material.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_toolbar.xml",
@@ -561,7 +561,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_menu_item_layout.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_action_menu_item_layout.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\abc_action_menu_item_layout.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_dialog_title_material.xml",
@@ -573,7 +573,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\design_navigation_item_header.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\98fdb4f559d7e4df02720fe4ee6e5526e3f6145a\\output\\res\\layout\\design_navigation_item_header.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\3d9ae4eeac3844c461c97fd58e58610a\\res\\layout\\design_navigation_item_header.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\design_navigation_item_separator.xml",
@@ -585,7 +585,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_action_tombstone.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\75a908df38441cacdb49dd81bd2576a489b3ae79\\output\\res\\layout\\notification_action_tombstone.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\dc06852667f8d071e869ec21b4415f7b\\res\\layout\\notification_action_tombstone.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_menu_item_layout.xml",
@@ -593,7 +593,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_content_include.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_screen_content_include.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\abc_screen_content_include.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_icon_group.xml",
@@ -601,7 +601,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_toolbar.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_screen_toolbar.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\abc_screen_toolbar.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_list_menu_item_icon.xml",
@@ -609,7 +609,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_activity_chooser_view_list_item.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_activity_chooser_view_list_item.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\abc_activity_chooser_view_list_item.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_bar_title_item.xml",
@@ -625,11 +625,11 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_popup_menu_item_layout.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_popup_menu_item_layout.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\abc_popup_menu_item_layout.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_big_media_narrow.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\9ad801a60588ef04bf6e4be10f00fd6ebfff0586\\output\\res\\layout\\notification_template_big_media_narrow.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\30887348d6825dc4b6a19f5a581ab905\\res\\layout\\notification_template_big_media_narrow.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\activity_splash.xml",
@@ -649,11 +649,11 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\design_navigation_item_subheader.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\98fdb4f559d7e4df02720fe4ee6e5526e3f6145a\\output\\res\\layout\\design_navigation_item_subheader.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\3d9ae4eeac3844c461c97fd58e58610a\\res\\layout\\design_navigation_item_subheader.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_search_dropdown_item_icons_2line.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_search_dropdown_item_icons_2line.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\abc_search_dropdown_item_icons_2line.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_media_action.xml",
@@ -673,7 +673,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\select_dialog_item_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\select_dialog_item_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\select_dialog_item_material.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_list_menu_item_radio.xml",
@@ -685,7 +685,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_media_cancel_action.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\9ad801a60588ef04bf6e4be10f00fd6ebfff0586\\output\\res\\layout\\notification_media_cancel_action.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\30887348d6825dc4b6a19f5a581ab905\\res\\layout\\notification_media_cancel_action.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_list_menu_item_layout.xml",
@@ -705,7 +705,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_alert_dialog_title_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\abc_alert_dialog_title_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\abc_alert_dialog_title_material.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_search_dropdown_item_icons_2line.xml",
@@ -713,7 +713,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\support_simple_spinner_dropdown_item.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\layout\\support_simple_spinner_dropdown_item.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\layout\\support_simple_spinner_dropdown_item.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_lines_media.xml",
@@ -733,11 +733,11 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_custom_big.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\75a908df38441cacdb49dd81bd2576a489b3ae79\\output\\res\\layout\\notification_template_custom_big.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\dc06852667f8d071e869ec21b4415f7b\\res\\layout\\notification_template_custom_big.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\design_menu_item_action_area.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\98fdb4f559d7e4df02720fe4ee6e5526e3f6145a\\output\\res\\layout\\design_menu_item_action_area.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\3d9ae4eeac3844c461c97fd58e58610a\\res\\layout\\design_menu_item_action_area.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\design_bottom_navigation_item.xml",

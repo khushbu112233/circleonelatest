@@ -13,7 +13,7 @@
         android:label="Tests for com.imanoweb.calendarview.test"
         android:targetPackage="com.imanoweb.calendarview.test" />
 
-    <application>
+    <application android:debuggable="true" >
         <uses-library android:name="android.test.runner" />
     </application>
 

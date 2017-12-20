@@ -12,11 +12,11 @@
         android:handleProfiling="false"
         android:label="Tests for com.quickblox.sample.core.test"
         android:targetPackage="com.quickblox.sample.core.test" />
-    <!-- Required permission for App measurement to run. -->
+    <!-- Permissions required for GCM -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <permission
         android:name="com.quickblox.sample.core.test.permission.C2D_MESSAGE"
@@ -24,7 +24,7 @@
 
     <uses-permission android:name="com.quickblox.sample.core.test.permission.C2D_MESSAGE" />
 
-    <application>
+    <application android:debuggable="true" >
         <uses-library android:name="android.test.runner" />
 
         <service
@@ -40,6 +40,10 @@
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" >
         </service>
+
+        <meta-data
+            android:name="android.support.VERSION"
+            android:value="26.1.0" />
         <!--
  FirebaseMessagingService performs security checks at runtime,
              no need for explicit permissions despite exported="true"
@@ -120,9 +124,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        <meta-data
-            android:name="android.support.VERSION"
-            android:value="26.1.0" />
         <meta-data
             android:name="android.arch.lifecycle.VERSION"
             android:value="27.0.0-SNAPSHOT" />

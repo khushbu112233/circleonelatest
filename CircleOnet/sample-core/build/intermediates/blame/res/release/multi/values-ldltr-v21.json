@@ -24,6 +24,30 @@
         ]
     },
     {
+        "outputFile": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-ldltr-v21\\values-ldltr-v21.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 112,
+                    "endOffset": 163
+                },
+                "from": {
+                    "file": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\values-ldltr-v21\\values-ldltr-v21.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 55,
+                        "endColumn": 112,
+                        "endOffset": 163
+                    }
+                }
+            }
+        ]
+    },
+    {
         "outputFile": "D:\\Khushbu\\CircleOne\\Project\\CircleOnet\\CircleOnet\\sample-core\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-ldltr-v21\\values-ldltr-v21.xml",
         "map": [
             {

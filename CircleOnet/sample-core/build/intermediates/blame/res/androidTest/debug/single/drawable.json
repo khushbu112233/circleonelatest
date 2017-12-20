@@ -1,7 +1,7 @@
 [
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_btn_colored_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_btn_colored_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_btn_colored_material.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_seekbar_tick_mark_material.xml",
@@ -12,12 +12,12 @@
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_btn_borderless_material.xml"
     },
     {
-        "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\notification_bg.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\75a908df38441cacdb49dd81bd2576a489b3ae79\\output\\res\\drawable\\notification_bg.xml"
-    },
-    {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_item_background_holo_dark.xml",
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_item_background_holo_dark.xml"
+    },
+    {
+        "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\notification_bg.xml",
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\dc06852667f8d071e869ec21b4415f7b\\res\\drawable\\notification_bg.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_seekbar_thumb_material.xml",
@@ -32,12 +32,12 @@
         "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_edit_text_material.xml"
     },
     {
-        "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_switch_thumb_material.xml",
-        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_switch_thumb_material.xml"
-    },
-    {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_seekbar_track_material.xml",
         "source": "C:\\Users\\admin\\.android\\build-cache\\07e0ea76ac3e63aaf43284de3e3e9b17a11b1a44\\output\\res\\drawable\\abc_seekbar_track_material.xml"
+    },
+    {
+        "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_switch_thumb_material.xml",
+        "source": "C:\\Users\\Ample-Arch\\.android\\build-cache\\80e15fb6a27684abc5c7f3b65c6c1d4b28eaf131\\output\\res\\drawable\\abc_switch_thumb_material.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_list_selector_background_transition_holo_dark.xml",
@@ -109,7 +109,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_vector_test.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_vector_test.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_vector_test.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\shape_circle.xml",
@@ -129,7 +129,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\navigation_empty_icon.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\98fdb4f559d7e4df02720fe4ee6e5526e3f6145a\\output\\res\\drawable\\navigation_empty_icon.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\3d9ae4eeac3844c461c97fd58e58610a\\res\\drawable\\navigation_empty_icon.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_light.xml",
@@ -137,7 +137,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_light_focused.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\5ff72c9178d33ff95f1748cd94d9160b71a78efa\\output\\res\\drawable\\common_google_signin_btn_text_light_focused.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-11.4.2.aar\\faf37b3986e3a8afdadd4567dd835d83\\res\\drawable\\common_google_signin_btn_text_light_focused.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_dark.xml",
@@ -145,7 +145,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_list_selector_background_transition_holo_dark.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_list_selector_background_transition_holo_dark.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_list_selector_background_transition_holo_dark.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ic_arrow_drop_right_black_24dp.xml",
@@ -153,11 +153,11 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\design_fab_background.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\98fdb4f559d7e4df02720fe4ee6e5526e3f6145a\\output\\res\\drawable\\design_fab_background.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\3d9ae4eeac3844c461c97fd58e58610a\\res\\drawable\\design_fab_background.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ic_voice_search_api_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_ic_voice_search_api_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_ic_voice_search_api_material.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\notification_tile_bg.xml",
@@ -169,7 +169,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_dark.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\5ff72c9178d33ff95f1748cd94d9160b71a78efa\\output\\res\\drawable\\common_google_signin_btn_text_dark.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-11.4.2.aar\\faf37b3986e3a8afdadd4567dd835d83\\res\\drawable\\common_google_signin_btn_text_dark.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\shape_circle.xml",
@@ -201,7 +201,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_text_cursor_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_text_cursor_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_text_cursor_material.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ratingbar_indicator_material.xml",
@@ -209,15 +209,15 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_seekbar_track_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_seekbar_track_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_seekbar_track_material.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_btn_default_mtrl_shape.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_btn_default_mtrl_shape.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_btn_default_mtrl_shape.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\notification_bg_low.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\75a908df38441cacdb49dd81bd2576a489b3ae79\\output\\res\\drawable\\notification_bg_low.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\dc06852667f8d071e869ec21b4415f7b\\res\\drawable\\notification_bg_low.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\design_snackbar_background.xml",
@@ -225,11 +225,11 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_list_selector_background_transition_holo_light.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_list_selector_background_transition_holo_light.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_list_selector_background_transition_holo_light.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_btn_borderless_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_btn_borderless_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_btn_borderless_material.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_disabled.xml",
@@ -245,7 +245,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\notification_icon_background.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\75a908df38441cacdb49dd81bd2576a489b3ae79\\output\\res\\drawable\\notification_icon_background.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\dc06852667f8d071e869ec21b4415f7b\\res\\drawable\\notification_icon_background.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_icon_disabled.xml",
@@ -285,7 +285,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_icon_dark_normal.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\5ff72c9178d33ff95f1748cd94d9160b71a78efa\\output\\res\\drawable\\common_google_signin_btn_icon_dark_normal.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-11.4.2.aar\\faf37b3986e3a8afdadd4567dd835d83\\res\\drawable\\common_google_signin_btn_icon_dark_normal.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\navigation_empty_icon.xml",
@@ -293,7 +293,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_switch_thumb_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_switch_thumb_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_switch_thumb_material.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_seekbar_tick_mark_material.xml",
@@ -309,7 +309,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ic_arrow_drop_right_black_24dp.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_ic_arrow_drop_right_black_24dp.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_ic_arrow_drop_right_black_24dp.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_btn_colored_material.xml",
@@ -321,7 +321,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ic_go_search_api_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_ic_go_search_api_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_ic_go_search_api_material.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\notification_icon_background.xml",
@@ -333,11 +333,11 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_dark_normal.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\5ff72c9178d33ff95f1748cd94d9160b71a78efa\\output\\res\\drawable\\common_google_signin_btn_text_dark_normal.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-11.4.2.aar\\faf37b3986e3a8afdadd4567dd835d83\\res\\drawable\\common_google_signin_btn_text_dark_normal.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_seekbar_thumb_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_seekbar_thumb_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_seekbar_thumb_material.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_seekbar_track_material.xml",
@@ -345,7 +345,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\design_bottom_navigation_item_background.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\98fdb4f559d7e4df02720fe4ee6e5526e3f6145a\\output\\res\\drawable\\design_bottom_navigation_item_background.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\3d9ae4eeac3844c461c97fd58e58610a\\res\\drawable\\design_bottom_navigation_item_background.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ratingbar_small_material.xml",
@@ -361,7 +361,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ic_clear_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_ic_clear_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_ic_clear_material.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_textfield_search_material.xml",
@@ -373,7 +373,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_spinner_textfield_background_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_spinner_textfield_background_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_spinner_textfield_background_material.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\design_bottom_navigation_item_background.xml",
@@ -405,7 +405,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\design_snackbar_background.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\98fdb4f559d7e4df02720fe4ee6e5526e3f6145a\\output\\res\\drawable\\design_snackbar_background.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\3d9ae4eeac3844c461c97fd58e58610a\\res\\drawable\\design_snackbar_background.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_textfield_search_material.xml",
@@ -413,15 +413,15 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_icon_light_focused.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\5ff72c9178d33ff95f1748cd94d9160b71a78efa\\output\\res\\drawable\\common_google_signin_btn_icon_light_focused.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-11.4.2.aar\\faf37b3986e3a8afdadd4567dd835d83\\res\\drawable\\common_google_signin_btn_icon_light_focused.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_list_selector_holo_dark.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_list_selector_holo_dark.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_list_selector_holo_dark.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ic_search_api_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_ic_search_api_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_ic_search_api_material.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_text_cursor_material.xml",
@@ -437,7 +437,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_icon_light.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\5ff72c9178d33ff95f1748cd94d9160b71a78efa\\output\\res\\drawable\\common_google_signin_btn_icon_light.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-11.4.2.aar\\faf37b3986e3a8afdadd4567dd835d83\\res\\drawable\\common_google_signin_btn_icon_light.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_icon_dark_focused.xml",
@@ -445,19 +445,19 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ic_menu_overflow_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_ic_menu_overflow_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_ic_menu_overflow_material.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_icon_dark.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\5ff72c9178d33ff95f1748cd94d9160b71a78efa\\output\\res\\drawable\\common_google_signin_btn_icon_dark.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-11.4.2.aar\\faf37b3986e3a8afdadd4567dd835d83\\res\\drawable\\common_google_signin_btn_icon_dark.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\notification_tile_bg.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\75a908df38441cacdb49dd81bd2576a489b3ae79\\output\\res\\drawable\\notification_tile_bg.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\dc06852667f8d071e869ec21b4415f7b\\res\\drawable\\notification_tile_bg.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\tooltip_frame_light.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\tooltip_frame_light.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\tooltip_frame_light.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_list_selector_holo_dark.xml",
@@ -465,7 +465,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_tab_indicator_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_tab_indicator_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_tab_indicator_material.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_item_background_holo_light.xml",
@@ -473,15 +473,15 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_textfield_search_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_textfield_search_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_textfield_search_material.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_btn_check_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_btn_check_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_btn_check_material.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_cab_background_top_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_cab_background_top_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_cab_background_top_material.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_dark_focused.xml",
@@ -489,11 +489,11 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_edit_text_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_edit_text_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_edit_text_material.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ic_ab_back_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_ic_ab_back_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_ic_ab_back_material.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_dialog_material_background.xml",
@@ -513,15 +513,15 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_disabled.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\5ff72c9178d33ff95f1748cd94d9160b71a78efa\\output\\res\\drawable\\common_google_signin_btn_text_disabled.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-11.4.2.aar\\faf37b3986e3a8afdadd4567dd835d83\\res\\drawable\\common_google_signin_btn_text_disabled.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ratingbar_indicator_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_ratingbar_indicator_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_ratingbar_indicator_material.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_icon_disabled.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\5ff72c9178d33ff95f1748cd94d9160b71a78efa\\output\\res\\drawable\\common_google_signin_btn_icon_disabled.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-11.4.2.aar\\faf37b3986e3a8afdadd4567dd835d83\\res\\drawable\\common_google_signin_btn_icon_disabled.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ratingbar_material.xml",
@@ -557,7 +557,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_icon_light_normal.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\5ff72c9178d33ff95f1748cd94d9160b71a78efa\\output\\res\\drawable\\common_google_signin_btn_icon_light_normal.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-11.4.2.aar\\faf37b3986e3a8afdadd4567dd835d83\\res\\drawable\\common_google_signin_btn_icon_light_normal.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\design_fab_background.xml",
@@ -569,7 +569,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_icon_dark_focused.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\5ff72c9178d33ff95f1748cd94d9160b71a78efa\\output\\res\\drawable\\common_google_signin_btn_icon_dark_focused.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-11.4.2.aar\\faf37b3986e3a8afdadd4567dd835d83\\res\\drawable\\common_google_signin_btn_icon_dark_focused.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_cab_background_top_material.xml",
@@ -581,19 +581,19 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_light_normal.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\5ff72c9178d33ff95f1748cd94d9160b71a78efa\\output\\res\\drawable\\common_google_signin_btn_text_light_normal.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-11.4.2.aar\\faf37b3986e3a8afdadd4567dd835d83\\res\\drawable\\common_google_signin_btn_text_light_normal.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_item_background_holo_light.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_item_background_holo_light.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_item_background_holo_light.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_btn_radio_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_btn_radio_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_btn_radio_material.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_dark_focused.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\5ff72c9178d33ff95f1748cd94d9160b71a78efa\\output\\res\\drawable\\common_google_signin_btn_text_dark_focused.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-11.4.2.aar\\faf37b3986e3a8afdadd4567dd835d83\\res\\drawable\\common_google_signin_btn_text_dark_focused.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_spinner_textfield_background_material.xml",
@@ -601,7 +601,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ratingbar_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_ratingbar_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_ratingbar_material.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_btn_default_mtrl_shape.xml",
@@ -609,7 +609,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_seekbar_tick_mark_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_seekbar_tick_mark_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_seekbar_tick_mark_material.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ratingbar_material.xml",
@@ -625,11 +625,11 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_cab_background_internal_bg.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_cab_background_internal_bg.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_cab_background_internal_bg.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_light.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\5ff72c9178d33ff95f1748cd94d9160b71a78efa\\output\\res\\drawable\\common_google_signin_btn_text_light.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-11.4.2.aar\\faf37b3986e3a8afdadd4567dd835d83\\res\\drawable\\common_google_signin_btn_text_light.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_light_focused.xml",
@@ -641,11 +641,11 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_list_selector_holo_light.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_list_selector_holo_light.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_list_selector_holo_light.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\design_password_eye.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\98fdb4f559d7e4df02720fe4ee6e5526e3f6145a\\output\\res\\drawable\\design_password_eye.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\3d9ae4eeac3844c461c97fd58e58610a\\res\\drawable\\design_password_eye.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\design_fab_background.xml",
@@ -661,7 +661,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_item_background_holo_dark.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_item_background_holo_dark.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_item_background_holo_dark.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_light_focused.xml",
@@ -681,7 +681,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\tooltip_frame_dark.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\tooltip_frame_dark.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\tooltip_frame_dark.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\design_password_eye.xml",
@@ -689,7 +689,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_dialog_material_background.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_dialog_material_background.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_dialog_material_background.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_spinner_textfield_background_material.xml",
@@ -709,7 +709,7 @@
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ratingbar_small_material.xml",
-        "source": "C:\\Users\\ample-arch\\.android\\build-cache\\95a2f650326163adc01176eee161d75cf4a38ae9\\output\\res\\drawable\\abc_ratingbar_small_material.xml"
+        "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable\\abc_ratingbar_small_material.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle One\\Live Project\\CircleOne1\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_vector_test.xml",

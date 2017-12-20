@@ -775,7 +775,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                                 {
                                     if (listView.getLastVisiblePosition() >= count - threshold)
                                     {
-                                        listView.setStackFromBottom(true);
+                                        listView.setStackFromBottom(false);
                                        // rlLoadMore.setVisibility(View.VISIBLE);
                                         new HttpAsyncTask().execute(Utility.BASE_URL+SortAndFilterOption.CardListApi);
                                     }
