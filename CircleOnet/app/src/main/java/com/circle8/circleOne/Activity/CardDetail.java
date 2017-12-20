@@ -89,9 +89,7 @@ import com.quickblox.chat.utils.DialogUtils;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.QBResponseException;
 import com.quickblox.sample.core.gcm.GooglePlayServicesHelper;
-import com.quickblox.sample.core.ui.dialog.ProgressDialogFragment;
 import com.quickblox.sample.core.utils.SharedPrefsHelper;
-import com.quickblox.sample.core.utils.Toaster;
 import com.quickblox.sample.core.utils.constant.GcmConsts;
 import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
@@ -106,10 +104,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -121,6 +117,9 @@ import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+
+;
+;
 
 public class CardDetail extends NfcActivity implements DialogsManager.ManagingDialogsCallbacks, View.OnClickListener, OnMapReadyCallback {
     ExpandableHeightListView lstTestimonial;
@@ -1671,7 +1670,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         rlProgressDialog.setVisibility(View.VISIBLE);
         tvProgressing.setText(loading);
 
-        Animation anim = AnimationUtils.loadAnimation(CardDetail.this,R.anim.anticlockwise);
+        Animation anim = AnimationUtils.loadAnimation(CardDetail.this, R.anim.anticlockwise);
         ivConnecting1.startAnimation(anim);
         Animation anim1 = AnimationUtils.loadAnimation(CardDetail.this,R.anim.clockwise);
         ivConnecting2.startAnimation(anim1);

@@ -196,17 +196,17 @@
 
                                 <ImageView
                                     android:id="@+id/imgDone"
-                                    android:layout_marginBottom="10dp"
+                                    android:layout_marginBottom="5dp"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="35dp"
+                                    android:layout_height="35dp"
                                     android:src="@drawable/ic_save_white"/>
 
                                 <ImageView
                                     android:id="@+id/ivProfileDelete"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="35dp"
+                                    android:layout_height="35dp"
                                     android:layout_alignParentBottom="true"
                                     android:layout_alignParentRight="true"
                                     android:layout_marginBottom="10dp"
