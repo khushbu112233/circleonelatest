@@ -2,14 +2,20 @@ package com.circle8.circleOne.Adapter;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.Fragments.List1Fragment;
 import com.circle8.circleOne.Fragments.List2Fragment;
@@ -27,7 +33,6 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
-import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -255,6 +260,9 @@ public class List4Adapter extends BaseSwipeAdapter
         TextView imageName;
         TextView imageDesignation;
         CircleImageView image;
+        ProgressBar progressBar1;
+        FrameLayout fm_img;
+
     }
 
     @Override
@@ -268,6 +276,9 @@ public class List4Adapter extends BaseSwipeAdapter
         holder.imageName = (TextView) row.findViewById(R.id.textNameList3);
         holder.imageDesignation = (TextView) row.findViewById(R.id.textDescList3);
         holder.image = (CircleImageView) row.findViewById(R.id.imageList4);
+        holder.progressBar1= (ProgressBar)row.findViewById(R.id.progressBar1);
+        holder.fm_img = (FrameLayout) row.findViewById(R.id.fm_img);
+
         row.setTag(holder);
 
         /*holder.imageDesc.setText(data.get(position));
@@ -305,12 +316,28 @@ public class List4Adapter extends BaseSwipeAdapter
         {
             if(nfcModelList1.get(position).getUser_image().equals(""))
             {
+                holder.image.setVisibility(View.GONE);
+                holder.progressBar1.setVisibility(View.GONE);
                 holder.image.setImageResource(R.drawable.usr);
             }
             else
             {
-                Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+nfcModelList1.get(position).getUser_image())
-                        .resize(300,300).onlyScaleDown().skipMemoryCache().into(holder.image);
+                holder.progressBar1.setVisibility(View.VISIBLE);
+                holder.image.setVisibility(View.VISIBLE);
+               /* Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+nfcModelList1.get(position).getUser_image())
+                        .resize(300,300).onlyScaleDown().into(holder.image);*/
+
+                final ViewHolder finalHolder = holder;
+                Glide.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+nfcModelList1.get(position).getUser_image())
+                        .asBitmap()
+                        .into(new BitmapImageViewTarget(finalHolder.image) {
+                            @Override
+                            public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                                super.onResourceReady(drawable, anim);
+                                finalHolder.progressBar1.setVisibility(View.GONE);
+                                finalHolder.image.setImageBitmap(drawable);
+                            }
+                        });
             }
         }
         catch (Exception e)

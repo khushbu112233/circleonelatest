@@ -510,8 +510,8 @@ public class List3Fragment1 extends Fragment
                     {
                         List1Fragment.progressStatus = "DELETE";
                         List2Fragment.progressStatus = "DELETE";
-                        List3Fragment1.progressStatus = "DELETE";
-                        List4Fragment1.progressStatus = "DELETE";
+                        List3Fragment.progressStatus = "DELETE";
+                        List4Fragment.progressStatus = "DELETE";
 
                         Toast.makeText(mContext, "Deleted Successfully", Toast.LENGTH_LONG).show();
                         try

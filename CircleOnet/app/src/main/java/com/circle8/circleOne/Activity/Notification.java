@@ -87,10 +87,6 @@ public class Notification extends AppCompatActivity
         textView.setText("Notifications - 0");
 
         listNotification = (RecyclerView) findViewById(R.id.listNotification);
-        final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-
-        listNotification.setLayoutManager(mLayoutManager);
-        listNotification.setItemAnimator(new DefaultItemAnimator());
 
         loginSession = new LoginSession(getApplicationContext());
         HashMap<String, String> user = loginSession.getUserDetails();
@@ -107,6 +103,15 @@ public class Notification extends AppCompatActivity
         ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
 
         callFirst();
+
+        notificationAdapter = new NotificationAdapter(mContext, allTags);
+        final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+
+        listNotification.setLayoutManager(mLayoutManager);
+        listNotification.setItemAnimator(new DefaultItemAnimator());
+
+        listNotification.setAdapter(notificationAdapter);
+
 
         imgLogo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -287,43 +292,40 @@ public class Notification extends AppCompatActivity
 
                     listSize = allTags.size();
 
-                    /*notificationAdapter = new NotificationAdapter(mContext, allTags);
-                    listNotification.setAdapter(notificationAdapter);*/
 
                     GetData(mContext);
-/*
-                    listNotification.setOnScrollListener(new AbsListView.OnScrollListener()
-                    {
+                    listNotification.setOnScrollListener(new RecyclerView.OnScrollListener() {
                         @Override
-                        public void onScrollStateChanged(AbsListView view, int scrollState)
-                        {
-                            // TODO Auto-generated method stub
+                        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                            super.onScrollStateChanged(recyclerView, newState);
 
                             progressStatus = "LOAD MORE";
 
                             int threshold = 1;
+                            int last = ((LinearLayoutManager) listNotification.getLayoutManager()).findLastVisibleItemPosition();
+                            int first = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
                             int count = listNotification.getChildCount();
 
-                            if (scrollState == SCROLL_STATE_IDLE)
-                            {
-                                if (listSize <= numberCount)
-                                {
-                                    if (listNotification.getLastVisiblePosition() >= count - threshold)
-                                    {
-                                        rlLoadMore.setVisibility(View.VISIBLE);
+
+                            if (first + count == notificationAdapter.getItemCount()) {
+                                if (listSize <= numberCount) {
+                                    if (last >= count - threshold) {
+                                       // rlLoadMore.setVisibility(View.VISIBLE);
                                         // Execute LoadMoreDataTask AsyncTask
-                                        new HttpAsyncTask().execute(Utility.BASE_URL+"Notification");
+                                        new HttpAsyncTask().execute(Utility.BASE_URL + "Notification");
                                     }
+                                } else {
                                 }
-                                else {  }
                             }
+
                         }
+
                         @Override
-                        public void onScroll(AbsListView view, int firstVisibleItem,
-                                             int visibleItemCount, int totalItemCount) {
-                            // TODO Auto-generated method stub
+                        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                            super.onScrolled(recyclerView, dx, dy);
                         }
-                    });*/
+                    });
+
                 }
                 else
                 {

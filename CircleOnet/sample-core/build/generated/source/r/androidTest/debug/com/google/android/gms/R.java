@@ -94,9 +94,9 @@ public final class R {
     }
     public static final class styleable {
         public static final int[] LoadingImageView = { 0x7f0100f0, 0x7f0100f1, 0x7f0100f2 };
-        public static final int LoadingImageView_circleCrop = 2;
-        public static final int LoadingImageView_imageAspectRatio = 1;
         public static final int LoadingImageView_imageAspectRatioAdjust = 0;
+        public static final int LoadingImageView_imageAspectRatio = 1;
+        public static final int LoadingImageView_circleCrop = 2;
         public static final int[] SignInButton = { 0x7f010121, 0x7f010122, 0x7f010123 };
         public static final int SignInButton_buttonSize = 0;
         public static final int SignInButton_colorScheme = 1;

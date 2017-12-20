@@ -26,8 +26,8 @@ import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.circle8.circleOne.Activity.CardDetail;
 import com.circle8.circleOne.Fragments.List1Fragment;
 import com.circle8.circleOne.Fragments.List2Fragment;
-import com.circle8.circleOne.Fragments.List3Fragment1;
-import com.circle8.circleOne.Fragments.List4Fragment1;
+import com.circle8.circleOne.Fragments.List3Fragment;
+import com.circle8.circleOne.Fragments.List4Fragment;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.FriendConnection;
 import com.circle8.circleOne.R;
@@ -353,7 +353,7 @@ public class List3Adapter1 extends RecyclerView.Adapter<List3Adapter1.MyViewHold
             //   allTags = new ArrayList<>();
 
             String loading = "Deleting records";
-            List3Fragment1.CustomProgressDialog(loading);
+            List3Fragment.CustomProgressDialog(loading);
         }
 
         @Override
@@ -366,7 +366,7 @@ public class List3Adapter1 extends RecyclerView.Adapter<List3Adapter1.MyViewHold
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            List3Fragment1.rlProgressDialog.setVisibility(View.GONE);
+            List3Fragment.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -384,16 +384,16 @@ public class List3Adapter1 extends RecyclerView.Adapter<List3Adapter1.MyViewHold
                     {
                         List1Fragment.progressStatus = "DELETE";
                         List2Fragment.progressStatus = "DELETE";
-                        List3Fragment1.progressStatus = "DELETE";
-                        List4Fragment1.progressStatus = "DELETE";
+                        List3Fragment.progressStatus = "DELETE";
+                        List4Fragment.progressStatus = "DELETE";
 
                         Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_LONG).show();
                         try
                         {
                             List1Fragment.webCall();
                             List2Fragment.webCall();
-                            List3Fragment1.webCall();
-                            List4Fragment1.webCall();
+                            List3Fragment.webCall();
+                            List4Fragment.webCall();
                         }
                         catch (Exception e)
                         {

@@ -57,7 +57,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     private Context activity;
     ArrayList<NotificationModel> testimonialModels;
     private static LayoutInflater inflater = null;
-    LinearLayout lnrTestReq, lnrTestRec, lnrFriend, lnrShare, lnrNFC;
+
     private int posi = 0;
     LoginSession loginSession;
     String profileId = "", UserId = "";
@@ -85,6 +85,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         Button btnAllowNfc, btnNfcCancel, btnTestWrite, btnTestReject, btnTestAcceptRec, btnTestRejectRec, btnAcceptFriend, btnRejectFriend, btnShareRequest, btnShareCancel;
         FrameLayout fm_img;
         ProgressBar progressBar1;
+        LinearLayout lnrTestReq, lnrTestRec, lnrFriend, lnrShare, lnrNFC;
         public MyViewHolder(View vi) {
             super(vi);
 
@@ -162,22 +163,25 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public NotificationAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.new_card_request_parameter, parent, false);
-
+                .inflate(R.layout.notification_item, parent, false);
         return new MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(NotificationAdapter.MyViewHolder holder, final int position) {
+
+
         String purpose = testimonialModels.get(position).getPurpose();
 
         if (purpose.equalsIgnoreCase("Recieved Testimonial"))
         {
-            lnrNFC.setVisibility(View.GONE);
-            lnrShare.setVisibility(View.GONE);
-            lnrTestRec.setVisibility(View.VISIBLE);
-            lnrTestReq.setVisibility(View.GONE);
-            lnrFriend.setVisibility(View.GONE);
+
+
+            holder.lnrNFC.setVisibility(View.GONE);
+            holder.lnrShare.setVisibility(View.GONE);
+            holder.lnrTestRec.setVisibility(View.VISIBLE);
+            holder.lnrTestReq.setVisibility(View.GONE);
+            holder.lnrFriend.setVisibility(View.GONE);
 
             if (testimonialModels.get(position).getUserPhoto().equals(""))
             {
@@ -199,11 +203,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         }
         else if (purpose.equalsIgnoreCase("Access Right Requested") || purpose.equalsIgnoreCase("Connection Requested"))
         {
-            lnrNFC.setVisibility(View.GONE);
-            lnrShare.setVisibility(View.GONE);
-            lnrFriend.setVisibility(View.VISIBLE);
-            lnrTestReq.setVisibility(View.GONE);
-            lnrTestRec.setVisibility(View.GONE);
+            holder.lnrNFC.setVisibility(View.GONE);
+            holder.lnrShare.setVisibility(View.GONE);
+            holder.lnrFriend.setVisibility(View.VISIBLE);
+            holder.lnrTestReq.setVisibility(View.GONE);
+            holder.lnrTestRec.setVisibility(View.GONE);
             if (testimonialModels.get(position).getUserPhoto().equals(""))
             {
                 holder.imgFriend.setImageResource(R.drawable.usr);
@@ -232,11 +236,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         else if (purpose.equalsIgnoreCase("Recieved Testimonial Request"))
         {
-            lnrNFC.setVisibility(View.GONE);
-            lnrShare.setVisibility(View.GONE);
-            lnrFriend.setVisibility(View.GONE);
-            lnrTestReq.setVisibility(View.VISIBLE);
-            lnrTestRec.setVisibility(View.GONE);
+            holder.lnrNFC.setVisibility(View.GONE);
+            holder.lnrShare.setVisibility(View.GONE);
+            holder.lnrFriend.setVisibility(View.GONE);
+            holder.lnrTestReq.setVisibility(View.VISIBLE);
+            holder.lnrTestRec.setVisibility(View.GONE);
             if (testimonialModels.get(position).getUserPhoto().equals(""))
             {
                 holder.imgTestReq.setImageResource(R.drawable.usr);
@@ -259,11 +263,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         else if (purpose.equalsIgnoreCase("Card Shared"))
         {
-            lnrNFC.setVisibility(View.GONE);
-            lnrShare.setVisibility(View.VISIBLE);
-            lnrFriend.setVisibility(View.GONE);
-            lnrTestReq.setVisibility(View.GONE);
-            lnrTestRec.setVisibility(View.GONE);
+            holder.lnrNFC.setVisibility(View.GONE);
+            holder.lnrShare.setVisibility(View.VISIBLE);
+            holder.lnrFriend.setVisibility(View.GONE);
+            holder.lnrTestReq.setVisibility(View.GONE);
+            holder.lnrTestRec.setVisibility(View.GONE);
             if (testimonialModels.get(position).getUserPhoto().equals(""))
             {
                 holder.imgShare.setImageResource(R.drawable.usr);
@@ -285,11 +289,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         }
         else if (purpose.equalsIgnoreCase("Connection Card Access Request"))
         {
-            lnrNFC.setVisibility(View.VISIBLE);
-            lnrShare.setVisibility(View.GONE);
-            lnrFriend.setVisibility(View.GONE);
-            lnrTestReq.setVisibility(View.GONE);
-            lnrTestRec.setVisibility(View.GONE);
+            holder.lnrNFC.setVisibility(View.VISIBLE);
+            holder.lnrShare.setVisibility(View.GONE);
+            holder.lnrFriend.setVisibility(View.GONE);
+            holder.lnrTestReq.setVisibility(View.GONE);
+            holder.lnrTestRec.setVisibility(View.GONE);
             if (testimonialModels.get(position).getUserPhoto().equals(""))
             {
                 holder.imgNfc.setImageResource(R.drawable.usr);
@@ -336,11 +340,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         }*/
         else
         {
-            lnrNFC.setVisibility(View.GONE);
-            lnrShare.setVisibility(View.GONE);
-            lnrFriend.setVisibility(View.VISIBLE);
-            lnrTestReq.setVisibility(View.GONE);
-            lnrTestRec.setVisibility(View.GONE);
+            holder.lnrNFC.setVisibility(View.GONE);
+            holder.lnrShare.setVisibility(View.GONE);
+            holder.lnrFriend.setVisibility(View.VISIBLE);
+            holder.lnrTestReq.setVisibility(View.GONE);
+            holder.lnrTestRec.setVisibility(View.GONE);
 
             if (testimonialModels.get(position).getUserPhoto().equals(""))
             {
@@ -625,13 +629,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     }
 
-    public long getItemId(int position) {
-        return position;
-    }
-
     @Override
     public int getItemCount() {
-        return 0;
+        return testimonialModels.size();
     }
 
     private class HttpAsyncTaskAcceptTestimonial extends AsyncTask<String, Void, String> {

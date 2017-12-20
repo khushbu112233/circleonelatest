@@ -25,8 +25,8 @@ import com.circle8.circleOne.Activity.CardDetail;
 import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.Fragments.List1Fragment;
 import com.circle8.circleOne.Fragments.List2Fragment;
-import com.circle8.circleOne.Fragments.List3Fragment1;
-import com.circle8.circleOne.Fragments.List4Fragment1;
+import com.circle8.circleOne.Fragments.List3Fragment;
+import com.circle8.circleOne.Fragments.List4Fragment;
 import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.FriendConnection;
@@ -39,11 +39,9 @@ import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
-import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -463,14 +461,14 @@ public class GridViewAdapter extends BaseSwipeAdapter
                     {
                         List1Fragment.progressStatus = "DELETE";
                         List2Fragment.progressStatus = "DELETE";
-                        List3Fragment1.progressStatus = "DELETE";
-                        List4Fragment1.progressStatus = "DELETE";
+                        List3Fragment.progressStatus = "DELETE";
+                        List4Fragment.progressStatus = "DELETE";
 
                         Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_LONG).show();
                         List1Fragment.webCall();
                         List2Fragment.webCall();
-                        List3Fragment1.webCall();
-                        List4Fragment1.webCall();
+                        List3Fragment.webCall();
+                        List4Fragment.webCall();
                     }
                     else
                     {

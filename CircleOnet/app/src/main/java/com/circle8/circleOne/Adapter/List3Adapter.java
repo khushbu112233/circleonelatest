@@ -2,17 +2,23 @@ package com.circle8.circleOne.Adapter;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.Fragments.List1Fragment;
 import com.circle8.circleOne.Fragments.List2Fragment;
@@ -29,7 +35,6 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
-import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -75,7 +80,6 @@ public class List3Adapter extends BaseSwipeAdapter
     LoginSession session ;
     String profile_id ;
 
-
     public List3Adapter(Context context, int layoutResourceId, ArrayList<byte[]> image,
                         ArrayList<String> data, ArrayList<String> name, ArrayList<String> designation, ArrayList<Integer> id) {
         this.layoutResourceId = layoutResourceId;
@@ -118,7 +122,6 @@ public class List3Adapter extends BaseSwipeAdapter
         HashMap<String, String> user = session.getUserDetails();
         profile_id = user.get(LoginSession.KEY_PROFILEID);
     }
-
 
     @Override
     public int getSwipeLayoutResourceId(int position) {
@@ -252,7 +255,6 @@ public class List3Adapter extends BaseSwipeAdapter
         View row = convertView;
         ViewHolder holder = null;
 
-
         holder = new ViewHolder();
         holder.imageDesc = (TextView) row.findViewById(R.id.textList3);
         holder.imageName = (TextView) row.findViewById(R.id.textNameList3);
@@ -265,6 +267,8 @@ public class List3Adapter extends BaseSwipeAdapter
         holder.tvPersonAddress = (TextView) row.findViewById(R.id.tvPersonAddress);
         holder.tvPersonContact = (TextView) row.findViewById(R.id.tvPersonMobile);
         holder.tvPersonNameLast = (TextView) row.findViewById(R.id.tvPersonNameLast);
+        holder.progressBar1= (ProgressBar)row.findViewById(R.id.progressBar1);
+        holder.fm_img = (FrameLayout) row.findViewById(R.id.fm_img);
 
         row.setTag(holder);
 
@@ -322,8 +326,9 @@ public class List3Adapter extends BaseSwipeAdapter
 
         if (nfcModelList1.get(position).getCard_front().equals(""))
         {
-
+            holder.fm_img.setVisibility(View.GONE);
             holder.image.setVisibility(View.GONE);
+            holder.progressBar1.setVisibility(View.GONE);
             holder.defaultCard.setVisibility(View.VISIBLE);
             try
             {
@@ -380,11 +385,23 @@ public class List3Adapter extends BaseSwipeAdapter
         }
         else
         {
+            holder.fm_img.setVisibility(View.VISIBLE);
+            holder.progressBar1.setVisibility(View.VISIBLE);
             holder.image.setVisibility(View.VISIBLE);
             holder.defaultCard.setVisibility(View.GONE);
             //imageView.setImageResource(nfcModelList.get(position).getCard_front());
-            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Cards/"+nfcModelList1.get(position).getCard_front())
-                    .resize(400,280).onlyScaleDown().into(holder.image);
+
+            final ViewHolder finalHolder = holder;
+            Glide.with(context).load(Utility.BASE_IMAGE_URL+"Cards/"+nfcModelList1.get(position).getCard_front())
+                    .asBitmap()
+                    .into(new BitmapImageViewTarget(finalHolder.image) {
+                        @Override
+                        public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                            super.onResourceReady(drawable, anim);
+                            finalHolder.progressBar1.setVisibility(View.GONE);
+                            finalHolder.image.setImageBitmap(drawable);
+                        }
+                    });
         }
 
         //Picasso.with(context).load("http://circle8.asia/App_ImgLib/Cards/" + nfcModelList1.get(position).getCard_front()).into(holder.image);
@@ -412,6 +429,8 @@ public class List3Adapter extends BaseSwipeAdapter
         TextView imageDesignation;
         ImageView image;
         RelativeLayout defaultCard;
+        ProgressBar progressBar1;
+        FrameLayout fm_img;
         TextView tvPersonName, tvPersonProfile, tvPersonWebsite, tvPersonAddress, tvPersonContact, tvPersonNameLast;
     }
 
