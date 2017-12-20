@@ -1,22 +1,17 @@
 package com.circle8.circleOne.Activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.PixelFormat;
+import android.databinding.DataBindingUtil;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
+import com.circle8.circleOne.databinding.ActivityConnect4Binding;
 import com.squareup.picasso.Picasso;
 import com.stripe.android.Stripe;
 import com.stripe.android.TokenCallback;
@@ -26,47 +21,25 @@ import com.stripe.android.model.Token;
 public class Connect4Activity extends AppCompatActivity
 {
 
-    private ImageView imgBack, imgCards, imgConnect, imgEvents, imgProfile, imgConnecting;
-    TextView txtAsk, txtLink, txtCongratulations, txtProfileName;
     String level = "";
-    ImageView level1, level2, level3, level4, level5, level6, level7, ivImage1;
     String profile, profileName ="" ;
-
     String connectLevel = "";
     String userName1 = "", userName2 = "", userName3 = "", userName4 = "", userName5 = "", userName6 = "", userName7 = "";
     String userPhoto1 = "", userPhoto2 = "", userPhoto3 = "", userPhoto4 = "", userPhoto5 = "", userPhoto6 = "", userPhoto7 = "" ;
     String userProfileId1 = "", userProfileId2 = "", userProfileId3 = "", userProfileId4 = "", userProfileId5 = "",
             userProfileId6 = "", userProfileId7 = "";
-
     Stripe stripe;
     Card card;
     Token tok;
     AlertDialog alertDialog;
     String numberOnCard, nameOnCard, exYearOnCard, exMonthOnCard, cvvOnCard, mobileNoOnCard, strToken ;
-
+    ActivityConnect4Binding activityConnect4Binding;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_connect4);
+       activityConnect4Binding = DataBindingUtil.setContentView(this,R.layout.activity_connect4);
 
-        imgBack = (ImageView) findViewById(R.id.imgBack);
-        imgCards = (ImageView) findViewById(R.id.imgCards);
-        imgConnect = (ImageView) findViewById(R.id.imgConnect);
-        imgEvents = (ImageView) findViewById(R.id.imgEvents);
-        imgProfile = (ImageView) findViewById(R.id.imgProfile);
-        txtProfileName = (TextView)findViewById(R.id.txtProfileName);
-        txtLink = (TextView) findViewById(R.id.txtLink);
-        txtAsk = (TextView) findViewById(R.id.txtAsk);
-        level1 = (ImageView) findViewById(R.id.imgLevel1);
-        level2 = (ImageView) findViewById(R.id.imgLevel2);
-        level3 = (ImageView) findViewById(R.id.imgLevel3);
-        level4 = (ImageView) findViewById(R.id.imgLevel4);
-        level5 = (ImageView) findViewById(R.id.imgLevel5);
-        level6 = (ImageView) findViewById(R.id.imgLevel6);
-        level7 = (ImageView) findViewById(R.id.imgLevel7);
-        ivImage1 = (ImageView) findViewById(R.id.ivImage1);
-        txtCongratulations = (TextView) findViewById(R.id.txtCongratulations);
 
         Utility.freeMemory();
         Intent intent = getIntent();
@@ -96,22 +69,22 @@ public class Connect4Activity extends AppCompatActivity
         userPhoto7 = intent.getStringExtra("userPhoto7");
         userProfileId7 = intent.getStringExtra("userProfileId7");
 
-        txtProfileName.setText(profileName);
+        activityConnect4Binding.txtProfileName.setText(profileName);
 
         try
         {
             Utility.freeMemory();
             if (profile.equalsIgnoreCase("") || profile.equalsIgnoreCase("null"))
             {
-                ivImage1.setImageResource(R.drawable.usr);
+                activityConnect4Binding.ivImage1.setImageResource(R.drawable.usr);
             }
             else
             {
-                Picasso.with(getApplicationContext()).load(profile).resize(300,300).onlyScaleDown().skipMemoryCache().into(ivImage1);
+                Picasso.with(getApplicationContext()).load(profile).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect4Binding.ivImage1);
             }
         }
         catch (Exception e) {
-            ivImage1.setImageResource(R.drawable.usr);
+            activityConnect4Binding.ivImage1.setImageResource(R.drawable.usr);
         }
 
            /* try
@@ -126,122 +99,122 @@ public class Connect4Activity extends AppCompatActivity
             {
                 Utility.freeMemory();
               //  txtCongratulations.setVisibility(View.GONE);
-                txtAsk.setVisibility(View.GONE);
-                txtLink.setText("You have no established connections");
-                level1.setVisibility(View.INVISIBLE);
-                level2.setVisibility(View.INVISIBLE);
-                level3.setVisibility(View.INVISIBLE);
-                level4.setVisibility(View.INVISIBLE);
-                level5.setVisibility(View.INVISIBLE);
-                level6.setVisibility(View.INVISIBLE);
-                level7.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.txtAsk.setVisibility(View.GONE);
+                activityConnect4Binding.txtLink.setText("You have no established connections");
+                activityConnect4Binding.imgLevel1.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.imgLevel2.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.imgLevel3.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.imgLevel4.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.imgLevel5.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.imgLevel6.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.imgLevel7.setVisibility(View.INVISIBLE);
             }
             else if (level.equals("1"))
             {
                // txtCongratulations.setVisibility(View.VISIBLE);
-                txtAsk.setVisibility(View.VISIBLE);
-                txtLink.setText("you are now 1 connection away");
-                level1.setVisibility(View.VISIBLE);
-                level2.setVisibility(View.INVISIBLE);
-                level3.setVisibility(View.INVISIBLE);
-                level4.setVisibility(View.INVISIBLE);
-                level5.setVisibility(View.INVISIBLE);
-                level6.setVisibility(View.INVISIBLE);
-                level7.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.txtAsk.setVisibility(View.VISIBLE);
+                activityConnect4Binding.txtLink.setText("you are now 1 connection away");
+                activityConnect4Binding.imgLevel1.setVisibility(View.VISIBLE);
+                activityConnect4Binding.imgLevel2.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.imgLevel3.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.imgLevel4.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.imgLevel5.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.imgLevel6.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.imgLevel7.setVisibility(View.INVISIBLE);
             }
             else if (level.equals("2"))
             {
               //  txtCongratulations.setVisibility(View.VISIBLE);
-                txtAsk.setVisibility(View.VISIBLE);
-                txtLink.setText("you are now 2 connections away");
-                level1.setVisibility(View.VISIBLE);
-                level2.setVisibility(View.VISIBLE);
-                level3.setVisibility(View.INVISIBLE);
-                level4.setVisibility(View.INVISIBLE);
-                level5.setVisibility(View.INVISIBLE);
-                level6.setVisibility(View.INVISIBLE);
-                level7.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.txtAsk.setVisibility(View.VISIBLE);
+                activityConnect4Binding.txtLink.setText("you are now 2 connections away");
+                activityConnect4Binding.imgLevel1.setVisibility(View.VISIBLE);
+                activityConnect4Binding.imgLevel2.setVisibility(View.VISIBLE);
+                activityConnect4Binding.imgLevel3.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.imgLevel4.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.imgLevel5.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.imgLevel6.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.imgLevel7.setVisibility(View.INVISIBLE);
             }
             else if (level.equals("3"))
             {
               //  txtCongratulations.setVisibility(View.VISIBLE);
-                txtAsk.setVisibility(View.VISIBLE);
-                txtLink.setText("you are now 3 connections away");
-                level1.setVisibility(View.VISIBLE);
-                level2.setVisibility(View.VISIBLE);
-                level3.setVisibility(View.VISIBLE);
-                level4.setVisibility(View.INVISIBLE);
-                level5.setVisibility(View.INVISIBLE);
-                level6.setVisibility(View.INVISIBLE);
-                level7.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.txtAsk.setVisibility(View.VISIBLE);
+                activityConnect4Binding.txtLink.setText("you are now 3 connections away");
+                activityConnect4Binding.imgLevel1.setVisibility(View.VISIBLE);
+                activityConnect4Binding.imgLevel2.setVisibility(View.VISIBLE);
+                activityConnect4Binding.imgLevel3.setVisibility(View.VISIBLE);
+                activityConnect4Binding.imgLevel4.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.imgLevel5.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.imgLevel6.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.imgLevel7.setVisibility(View.INVISIBLE);
             }
             else if (level.equals("4"))
             {
               //  txtCongratulations.setVisibility(View.VISIBLE);
-                txtAsk.setVisibility(View.VISIBLE);
-                txtLink.setText("you are now 4 connections away");
-                level1.setVisibility(View.VISIBLE);
-                level2.setVisibility(View.VISIBLE);
-                level3.setVisibility(View.VISIBLE);
-                level4.setVisibility(View.VISIBLE);
-                level5.setVisibility(View.INVISIBLE);
-                level6.setVisibility(View.INVISIBLE);
-                level7.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.txtAsk.setVisibility(View.VISIBLE);
+                activityConnect4Binding.txtLink.setText("you are now 4 connections away");
+                activityConnect4Binding.imgLevel1.setVisibility(View.VISIBLE);
+                activityConnect4Binding.imgLevel2.setVisibility(View.VISIBLE);
+                activityConnect4Binding.imgLevel3.setVisibility(View.VISIBLE);
+                activityConnect4Binding.imgLevel4.setVisibility(View.VISIBLE);
+                activityConnect4Binding.imgLevel5.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.imgLevel6.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.imgLevel7.setVisibility(View.INVISIBLE);
             }
             else if (level.equals("5"))
             {
                // txtCongratulations.setVisibility(View.VISIBLE);
-                txtAsk.setVisibility(View.VISIBLE);
-                txtLink.setText("you are now 5 connections away");
-                level1.setVisibility(View.VISIBLE);
-                level2.setVisibility(View.VISIBLE);
-                level3.setVisibility(View.VISIBLE);
-                level4.setVisibility(View.VISIBLE);
-                level5.setVisibility(View.VISIBLE);
-                level6.setVisibility(View.INVISIBLE);
-                level7.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.txtAsk.setVisibility(View.VISIBLE);
+                activityConnect4Binding.txtLink.setText("you are now 5 connections away");
+                activityConnect4Binding.imgLevel1.setVisibility(View.VISIBLE);
+                activityConnect4Binding.imgLevel2.setVisibility(View.VISIBLE);
+                activityConnect4Binding.imgLevel3.setVisibility(View.VISIBLE);
+                activityConnect4Binding.imgLevel4.setVisibility(View.VISIBLE);
+                activityConnect4Binding.imgLevel5.setVisibility(View.VISIBLE);
+                activityConnect4Binding.imgLevel6.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.imgLevel7.setVisibility(View.INVISIBLE);
             }
             else if (level.equals("6"))
             {
               //  txtCongratulations.setVisibility(View.VISIBLE);
-                txtAsk.setVisibility(View.VISIBLE);
-                txtLink.setText("you are now 6 connections away");
-                level1.setVisibility(View.VISIBLE);
-                level2.setVisibility(View.VISIBLE);
-                level3.setVisibility(View.VISIBLE);
-                level4.setVisibility(View.VISIBLE);
-                level5.setVisibility(View.VISIBLE);
-                level6.setVisibility(View.VISIBLE);
-                level7.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.txtAsk.setVisibility(View.VISIBLE);
+                activityConnect4Binding.txtLink.setText("you are now 6 connections away");
+                activityConnect4Binding.imgLevel1.setVisibility(View.VISIBLE);
+                activityConnect4Binding.imgLevel2.setVisibility(View.VISIBLE);
+                activityConnect4Binding.imgLevel3.setVisibility(View.VISIBLE);
+                activityConnect4Binding.imgLevel4.setVisibility(View.VISIBLE);
+                activityConnect4Binding.imgLevel5.setVisibility(View.VISIBLE);
+                activityConnect4Binding.imgLevel6.setVisibility(View.VISIBLE);
+                activityConnect4Binding.imgLevel7.setVisibility(View.INVISIBLE);
             }
             else if (level.equals("7"))
             {
                 //  txtCongratulations.setVisibility(View.VISIBLE);
-                txtAsk.setVisibility(View.VISIBLE);
-                txtLink.setText("you are now 7 connections away");
-                level1.setVisibility(View.VISIBLE);
-                level2.setVisibility(View.VISIBLE);
-                level3.setVisibility(View.VISIBLE);
-                level4.setVisibility(View.VISIBLE);
-                level5.setVisibility(View.VISIBLE);
-                level6.setVisibility(View.VISIBLE);
-                level7.setVisibility(View.VISIBLE);
+                activityConnect4Binding.txtAsk.setVisibility(View.VISIBLE);
+                activityConnect4Binding.txtLink.setText("you are now 7 connections away");
+                activityConnect4Binding.imgLevel1.setVisibility(View.VISIBLE);
+                activityConnect4Binding.imgLevel2.setVisibility(View.VISIBLE);
+                activityConnect4Binding.imgLevel3.setVisibility(View.VISIBLE);
+                activityConnect4Binding.imgLevel4.setVisibility(View.VISIBLE);
+                activityConnect4Binding.imgLevel5.setVisibility(View.VISIBLE);
+                activityConnect4Binding.imgLevel6.setVisibility(View.VISIBLE);
+                activityConnect4Binding.imgLevel7.setVisibility(View.VISIBLE);
             }
             else {
-                txtAsk.setVisibility(View.GONE);
-                txtLink.setText("You have no established connections");
-                level1.setVisibility(View.INVISIBLE);
-                level2.setVisibility(View.INVISIBLE);
-                level3.setVisibility(View.INVISIBLE);
-                level4.setVisibility(View.INVISIBLE);
-                level5.setVisibility(View.INVISIBLE);
-                level6.setVisibility(View.INVISIBLE);
-                level7.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.txtAsk.setVisibility(View.GONE);
+                activityConnect4Binding.txtLink.setText("You have no established connections");
+                activityConnect4Binding.imgLevel1.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.imgLevel2.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.imgLevel3.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.imgLevel4.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.imgLevel5.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.imgLevel6.setVisibility(View.INVISIBLE);
+                activityConnect4Binding.imgLevel7.setVisibility(View.INVISIBLE);
             }
 
 
 
-            txtAsk.setOnClickListener(new View.OnClickListener() {
+        activityConnect4Binding.txtAsk.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v)
                 {
@@ -378,7 +351,7 @@ public class Connect4Activity extends AppCompatActivity
                 }
             });
 
-            imgBack.setOnClickListener(new View.OnClickListener() {
+        activityConnect4Binding.imgBack.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v)
                 {
@@ -387,7 +360,7 @@ public class Connect4Activity extends AppCompatActivity
                 }
             });
 
-            imgCards.setOnClickListener(new View.OnClickListener() {
+        activityConnect4Binding.imgCards.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Utility.freeMemory();
@@ -403,7 +376,7 @@ public class Connect4Activity extends AppCompatActivity
                 }
             });
 
-            imgConnect.setOnClickListener(new View.OnClickListener() {
+        activityConnect4Binding.imgConnect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Utility.freeMemory();
@@ -419,7 +392,7 @@ public class Connect4Activity extends AppCompatActivity
                 }
             });
 
-            imgEvents.setOnClickListener(new View.OnClickListener() {
+        activityConnect4Binding.imgEvents.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Utility.freeMemory();
@@ -435,7 +408,7 @@ public class Connect4Activity extends AppCompatActivity
                 }
             });
 
-            imgProfile.setOnClickListener(new View.OnClickListener() {
+        activityConnect4Binding.imgProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Utility.freeMemory();
