@@ -20,7 +20,6 @@ import android.location.Location;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
-import android.nfc.NfcManager;
 import android.nfc.Tag;
 import android.nfc.tech.NfcF;
 import android.os.AsyncTask;
@@ -55,8 +54,6 @@ import com.circle8.circleOne.Fragments.CardsFragment;
 import com.circle8.circleOne.Fragments.ConnectFragment;
 import com.circle8.circleOne.Fragments.EventsFragment;
 import com.circle8.circleOne.Fragments.List1Fragment;
-import com.circle8.circleOne.Fragments.List2Fragment;
-import com.circle8.circleOne.Fragments.List3Fragment;
 import com.circle8.circleOne.Fragments.ProfileFragment;
 import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
@@ -68,13 +65,9 @@ import com.circle8.circleOne.Utils.CircularTextView;
 import com.circle8.circleOne.Utils.CustomViewPager;
 import com.circle8.circleOne.Utils.PrefUtils;
 import com.circle8.circleOne.Utils.Utility;
-import com.circle8.circleOne.chat.ChatActivity;
 import com.circle8.circleOne.chat.ChatHelper;
-import com.circle8.circleOne.chat.CheckboxUsersAdapter;
-import com.circle8.circleOne.chat.DialogsActivity;
 import com.circle8.circleOne.chat.DialogsAdapter;
 import com.circle8.circleOne.chat.DialogsManager;
-import com.circle8.circleOne.chat.SelectUsersActivity;
 import com.circle8.circleOne.chat.qb.QbChatDialogMessageListenerImp;
 import com.circle8.circleOne.chat.qb.QbDialogHolder;
 import com.facebook.login.LoginManager;
@@ -111,7 +104,6 @@ import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.QBResponseException;
 import com.quickblox.messages.services.SubscribeService;
 import com.quickblox.sample.core.gcm.GooglePlayServicesHelper;
-import com.quickblox.sample.core.ui.dialog.ProgressDialogFragment;
 import com.quickblox.sample.core.utils.SharedPrefsHelper;
 import com.quickblox.sample.core.utils.constant.GcmConsts;
 import com.quickblox.users.QBUsers;
@@ -124,14 +116,11 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.jivesoftware.smack.filter.MessageTypeFilter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.security.InvalidAlgorithmParameterException;
@@ -153,7 +142,6 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import be.appfoundry.nfclibrary.activities.NfcActivity;
 import be.appfoundry.nfclibrary.utilities.interfaces.NfcReadUtility;
 import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
 import io.fabric.sdk.android.Fabric;
@@ -760,7 +748,6 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         Utility.freeMemory();
 
         if (isPermissionGranted) {
-
             try
             {
                 mLastLocation = LocationServices.FusedLocationApi
@@ -770,7 +757,6 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             {
                 e.printStackTrace();
             }
-
         }
 
     }
@@ -839,7 +825,6 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             tabLayout = (TabLayout) findViewById(R.id.tabs);
             tabLayout.setupWithViewPager(mViewPager);
             tabLayout.setSelectedTabIndicatorColor(getResources().getColor(android.R.color.white));
-
         }
 
         @Override
@@ -873,7 +858,6 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 CardsFragment.mViewPager.setCurrentItem(nested_position);
             }
         }
-
     }
 
    /* private void createTabIcons() {
