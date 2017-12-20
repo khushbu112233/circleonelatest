@@ -1,37 +1,37 @@
 -- Merging decision tree log ---
 manifest
-ADDED from E:\Jay Nagar\Circle Onet\Live Project\Circle Onet 8\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml:2:1-3:56
-INJECTED from E:\Jay Nagar\Circle Onet\Live Project\Circle Onet 8\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml:2:1-3:56
-INJECTED from E:\Jay Nagar\Circle Onet\Live Project\Circle Onet 8\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml:2:1-3:56
-INJECTED from E:\Jay Nagar\Circle Onet\Live Project\Circle Onet 8\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml:2:1-3:56
-INJECTED from E:\Jay Nagar\Circle Onet\Live Project\Circle Onet 8\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml:2:1-3:56
-INJECTED from E:\Jay Nagar\Circle Onet\Live Project\Circle Onet 8\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml:2:1-3:56
-INJECTED from E:\Jay Nagar\Circle Onet\Live Project\Circle Onet 8\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml:2:1-3:56
+ADDED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml:2:1-3:56
+INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml:2:1-3:56
+INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml:2:1-3:56
+INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml:2:1-3:56
+INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml:2:1-3:56
+INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml:2:1-3:56
+INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml:2:1-3:56
 	package
-		ADDED from E:\Jay Nagar\Circle Onet\Live Project\Circle Onet 8\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml:3:11-54
-		INJECTED from E:\Jay Nagar\Circle Onet\Live Project\Circle Onet 8\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
-		INJECTED from E:\Jay Nagar\Circle Onet\Live Project\Circle Onet 8\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
+		ADDED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml:3:11-54
+		INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
+		INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
 	android:versionName
-		INJECTED from E:\Jay Nagar\Circle Onet\Live Project\Circle Onet 8\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
-		ADDED from E:\Jay Nagar\Circle Onet\Live Project\Circle Onet 8\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml:2:1-3:56
-		INJECTED from E:\Jay Nagar\Circle Onet\Live Project\Circle Onet 8\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
+		INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
+		ADDED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml:2:1-3:56
+		INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
 	android:versionCode
-		INJECTED from E:\Jay Nagar\Circle Onet\Live Project\Circle Onet 8\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
-		ADDED from E:\Jay Nagar\Circle Onet\Live Project\Circle Onet 8\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml:2:1-3:56
-		INJECTED from E:\Jay Nagar\Circle Onet\Live Project\Circle Onet 8\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
+		INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
+		ADDED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml:2:1-3:56
+		INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from E:\Jay Nagar\Circle Onet\Live Project\Circle Onet 8\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml:2:11-69
+		ADDED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml:2:11-69
 uses-sdk
-INJECTED from E:\Jay Nagar\Circle Onet\Live Project\Circle Onet 8\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from E:\Jay Nagar\Circle Onet\Live Project\Circle Onet 8\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
-INJECTED from E:\Jay Nagar\Circle Onet\Live Project\Circle Onet 8\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
-INJECTED from E:\Jay Nagar\Circle Onet\Live Project\Circle Onet 8\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
-INJECTED from E:\Jay Nagar\Circle Onet\Live Project\Circle Onet 8\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
+INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
+INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
+INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
+INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from E:\Jay Nagar\Circle Onet\Live Project\Circle Onet 8\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
-		ADDED from E:\Jay Nagar\Circle Onet\Live Project\Circle Onet 8\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
-		INJECTED from E:\Jay Nagar\Circle Onet\Live Project\Circle Onet 8\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
+		INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
+		ADDED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
+		INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from E:\Jay Nagar\Circle Onet\Live Project\Circle Onet 8\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
-		ADDED from E:\Jay Nagar\Circle Onet\Live Project\Circle Onet 8\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
-		INJECTED from E:\Jay Nagar\Circle Onet\Live Project\Circle Onet 8\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
+		INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
+		ADDED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml
+		INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\imgLoaderlibrary\src\main\AndroidManifest.xml

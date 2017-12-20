@@ -31,6 +31,38 @@
                     }
                 }
             ]
+        },
+        {
+            "outputFile": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-v11\\values-v11.xml",
+            "map": [
+                {
+                    "source": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\library\\build\\intermediates\\bundles\\debug\\res\\values-v11\\values-v11.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "4",
+                        "endColumns": "12",
+                        "endOffsets": "187"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\library\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-v11\\values-v11.xml",
+            "map": [
+                {
+                    "source": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\library\\build\\intermediates\\bundles\\debug\\res\\values-v11\\values-v11.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "4",
+                        "endColumns": "12",
+                        "endOffsets": "187"
+                    }
+                }
+            ]
         }
     ]
 }
