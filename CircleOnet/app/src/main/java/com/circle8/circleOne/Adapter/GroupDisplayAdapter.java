@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
@@ -13,11 +14,14 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.Activity.GroupsActivity;
 import com.circle8.circleOne.Activity.ImageZoom;
-import com.circle8.circleOne.Activity.UpdateGroupActivity;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.GroupModel;
 import com.circle8.circleOne.R;
@@ -77,6 +81,7 @@ public class GroupDisplayAdapter extends BaseAdapter
     {
         CircleImageView imgGroup ;
         TextView tvGroupName, tvGroupDesc, tvMemberCount, tvEditGroup ;
+        ProgressBar progressBar1;
     }
 
     @Override
@@ -96,6 +101,7 @@ public class GroupDisplayAdapter extends BaseAdapter
             holder.tvGroupDesc = (TextView)row.findViewById(R.id.tvGroupDesc);
             holder.tvMemberCount = (TextView)row.findViewById(R.id.tvMemberCount);
             holder.tvEditGroup = (TextView)row.findViewById(R.id.tvEditGroup);
+            holder.progressBar1 = (ProgressBar)row.findViewById(R.id.progressBar1);
 
             row.setTag(holder);
         }
@@ -111,10 +117,24 @@ public class GroupDisplayAdapter extends BaseAdapter
         if (groupModelsList.get(position).getGroup_Photo().equals(""))
         {
             holder.imgGroup.setImageResource(R.drawable.usr_1);
+            holder.progressBar1.setVisibility(View.GONE);
         }
         else
         {
-            Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Group/"+groupModelsList.get(position).getGroup_Photo()).resize(300,300).onlyScaleDown().skipMemoryCache().placeholder(R.drawable.usr_1).into(holder.imgGroup);
+            holder.progressBar1.setVisibility(View.VISIBLE);
+          //  Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Group/"+groupModelsList.get(position).getGroup_Photo()).resize(300,300).onlyScaleDown().skipMemoryCache().placeholder(R.drawable.usr_1).into(holder.imgGroup);
+
+            final ViewHolder finalHolder = holder;
+            Glide.with(context).load(Utility.BASE_IMAGE_URL+"Group/"+groupModelsList.get(position).getGroup_Photo())
+                    .asBitmap()
+                    .into(new BitmapImageViewTarget(finalHolder.imgGroup) {
+                        @Override
+                        public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                            super.onResourceReady(drawable, anim);
+                            finalHolder.progressBar1.setVisibility(View.GONE);
+                            finalHolder.imgGroup.setImageBitmap(drawable);
+                        }
+                    });
         }
 
         holder.imgGroup.setOnClickListener(new View.OnClickListener() {
