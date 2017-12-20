@@ -1,5 +1,14 @@
 -- Merging decision tree log ---
 manifest
+<<<<<<< HEAD
+ADDED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\library\AndroidManifest.xml:1:1-3:12
+INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\library\AndroidManifest.xml:1:1-3:12
+INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\library\AndroidManifest.xml:1:1-3:12
+	package
+		ADDED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\library\AndroidManifest.xml:1:11-46
+		INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\library\AndroidManifest.xml
+		INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\library\AndroidManifest.xml
+=======
 ADDED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\library\AndroidManifest.xml:1:1-3:12
 INJECTED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\library\AndroidManifest.xml:1:1-3:12
 INJECTED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\library\AndroidManifest.xml:1:1-3:12
@@ -7,3 +16,4 @@ INJECTED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\library\And
 		ADDED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\library\AndroidManifest.xml:1:11-46
 		INJECTED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\library\AndroidManifest.xml
 		INJECTED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\library\AndroidManifest.xml
+>>>>>>> ce691494fbc08a509e955729efd3b6345b8c1d71
