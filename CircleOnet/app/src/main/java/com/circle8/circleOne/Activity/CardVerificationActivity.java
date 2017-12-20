@@ -4,47 +4,38 @@ import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.databinding.DataBindingUtil;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.NfcF;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.circle8.circleOne.Adapter.MerchantAddressAdapter;
-import com.circle8.circleOne.Adapter.MerchantProductAdapter;
-import com.circle8.circleOne.Model.MerchantLocationModel;
-import com.circle8.circleOne.Model.MerchantProductModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
-import com.stripe.android.model.Card;
+import com.circle8.circleOne.databinding.ActivityCardVerificationBinding;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.security.InvalidAlgorithmParameterException;
@@ -64,40 +55,28 @@ import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 public class CardVerificationActivity extends AppCompatActivity implements View.OnClickListener
 {
-    ImageView ivBack, ivAddCard ;
     public String secretKey = "1234567890234561";
-    private RelativeLayout rlProgressDialog ;
-    private TextView tvProgressing, txtNoGroup ;
-    private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
     private NfcAdapter mNfcAdapter;
     private PendingIntent mPendingIntent;
     private IntentFilter[] mIntentFilters;
     private String[][] mNFCTechLists;
     ArrayList<String> arrayNFC ;
     String ProfileId = "", CardCode = "";
+    ActivityCardVerificationBinding mActivityCardVerificationBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_card_verification);
+        mActivityCardVerificationBinding = DataBindingUtil.setContentView(this,R.layout.activity_card_verification);
         Utility.freeMemory();
-        ivBack = (ImageView)findViewById(R.id.imgBackCard);
-        ivAddCard = (ImageView)findViewById(R.id.ivAddCard);
-
-        rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
-        tvProgressing = (TextView)findViewById(R.id.txtProgressing);
-        ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
-        ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
-        ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
-        txtNoGroup = (TextView) findViewById(R.id.txtNoGroup);
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
         if (mNfcAdapter != null) {
             //txtNoGroup.setText("Read an NFC tag");
         } else {
-            txtNoGroup.setText("Your current mobile device is not NFC-enabled. \nPlease login via an NFC-enabled device to unlock your card.");
-            ivAddCard.setVisibility(View.GONE);
+            mActivityCardVerificationBinding.txtNoGroup.setText("Your current mobile device is not NFC-enabled. \nPlease login via an NFC-enabled device to unlock your card.");
+            mActivityCardVerificationBinding.ivAddCard.setVisibility(View.GONE);
         }
 
         // create an intent with tag data and deliver to this activity
@@ -115,7 +94,7 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
 
         mNFCTechLists = new String[][] { new String[] { NfcF.class.getName() } };
 
-        ivBack.setOnClickListener(this);
+        mActivityCardVerificationBinding.imgBackCard.setOnClickListener(this);
 
 //        new HttpAsyncActivateNFC().execute(Utility.BASE_URL+"NFCSecurity/ActivateNFC");                               // post
     }
@@ -164,8 +143,8 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
         //Toast.makeText(getApplicationContext(), arrayNFC.toString(), Toast.LENGTH_LONG).show();
         if (arrayNFC.size() == 1){
             Utility.freeMemory();
-            txtNoGroup.setText("Your Card is already verified..");
-            ivAddCard.setVisibility(View.GONE);
+            mActivityCardVerificationBinding.txtNoGroup.setText("Your Card is already verified..");
+            mActivityCardVerificationBinding.ivAddCard.setVisibility(View.GONE);
         }
         else if (arrayNFC.size() == 2){
             Utility.freeMemory();
@@ -176,8 +155,8 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
         }
         else {
             Utility.freeMemory();
-            txtNoGroup.setText("Please use only CircleOne NFC-Card for unlock");
-            ivAddCard.setVisibility(View.GONE);
+            mActivityCardVerificationBinding.txtNoGroup.setText("Please use only CircleOne NFC-Card for unlock");
+            mActivityCardVerificationBinding.ivAddCard.setVisibility(View.GONE);
         }
         //txtNoGroup.setText(s);
     }
@@ -236,12 +215,12 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
     @Override
     public void onClick(View v)
     {
-        if ( v == ivBack)
+        if ( v == mActivityCardVerificationBinding.imgBackCard)
         {
             Utility.freeMemory();
             finish();
         }
-        if ( v == ivAddCard)
+        if ( v == mActivityCardVerificationBinding.ivAddCard)
         {
             Utility.freeMemory();
         }
@@ -274,7 +253,7 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
         {
             Utility.freeMemory();
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            mActivityCardVerificationBinding.rlProgressDialog.setVisibility(View.GONE);
           //  Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -356,13 +335,13 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
     public  void CustomProgressDialog(final String loading)
     {
         Utility.freeMemory();
-        rlProgressDialog.setVisibility(View.VISIBLE);
-        tvProgressing.setText(loading);
+        mActivityCardVerificationBinding.rlProgressDialog.setVisibility(View.VISIBLE);
+        mActivityCardVerificationBinding.txtProgressing.setText(loading);
 
         Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
-        ivConnecting1.startAnimation(anim);
+        mActivityCardVerificationBinding.imgConnecting1.startAnimation(anim);
         Animation anim1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.clockwise);
-        ivConnecting2.startAnimation(anim1);
+        mActivityCardVerificationBinding.imgConnecting2.startAnimation(anim1);
 
         int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
         for (int i = 350; i <= SPLASHTIME; i = i + 350)
@@ -374,15 +353,15 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
                 {
                     if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
                     {
-                        tvProgressing.setText(loading+".");
+                        mActivityCardVerificationBinding.txtProgressing.setText(loading+".");
                     }
                     else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
                     {
-                        tvProgressing.setText(loading+"..");
+                        mActivityCardVerificationBinding.txtProgressing.setText(loading+"..");
                     }
                     else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
                     {
-                        tvProgressing.setText(loading+"...");
+                        mActivityCardVerificationBinding.txtProgressing.setText(loading+"...");
                     }
                 }
             }, i);

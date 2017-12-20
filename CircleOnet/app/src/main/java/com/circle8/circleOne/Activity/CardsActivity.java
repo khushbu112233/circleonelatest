@@ -569,8 +569,8 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             // Get extra data included in the Intent
             String message = intent.getStringExtra(GcmConsts.EXTRA_GCM_MESSAGE);
             Log.v(TAG, "Received broadcast " + intent.getAction() + " with data: " + message);
-          //  requestBuilder.setSkip(skipRecords = 0);
-          //  loadDialogsFromQb(true, true);
+            //  requestBuilder.setSkip(skipRecords = 0);
+            //  loadDialogsFromQb(true, true);
         }
     }
 
@@ -929,20 +929,20 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                /* DialogsActivity.start(CardsActivity.this);
                 finish();
 */
-              //  Toast.makeText(getApplicationContext(), selectedUsers.toString(), Toast.LENGTH_LONG).show();
+                //  Toast.makeText(getApplicationContext(), selectedUsers.toString(), Toast.LENGTH_LONG).show();
 
                 ChatHelper.getInstance().createDialogWithSelectedUsers(selectedUsers,
                         new QBEntityCallback<QBChatDialog>() {
                             @Override
                             public void onSuccess(QBChatDialog dialog, Bundle args) {
-                               // dialogsManager.sendSystemMessageAboutCreatingDialog(systemMessagesManager, dialog);
-                             //   ChatActivity.startForResult(CardsActivity.this, 165, dialog);
+                                // dialogsManager.sendSystemMessageAboutCreatingDialog(systemMessagesManager, dialog);
+                                //   ChatActivity.startForResult(CardsActivity.this, 165, dialog);
                                 //ProgressDialogFragment.hide(getSupportFragmentManager());
                             }
 
                             @Override
                             public void onError(QBResponseException e) {
-                               // ProgressDialogFragment.hide(getSupportFragmentManager());
+                                // ProgressDialogFragment.hide(getSupportFragmentManager());
                             }
                         }
                 );
@@ -953,7 +953,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onClick(View v) {
 
-               // I’m ready to connect with you and share our growing network on the CircleOne app. I’m currently a user with CircleOne and would like to invite you to join the Circle so we’ll both be able to take our professional newtorks a step further. Use the code 'S17806DR' for a quick and simple registration!
+                // I’m ready to connect with you and share our growing network on the CircleOne app. I’m currently a user with CircleOne and would like to invite you to join the Circle so we’ll both be able to take our professional newtorks a step further. Use the code 'S17806DR' for a quick and simple registration!
                 String shareBody = "I’m ready to connect with you and share our growing network on the CircleOne app. I’m currently a user with CircleOne and would like to invite you to join the Circle so we’ll both be able to take our professional newtorks a step further. Use the code '" + refer +
                         "' for a quick and simple registration! https://circle8.asia/mobileApp.html";
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -1117,8 +1117,8 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 Utility.freeMemory();
                 try
                 {
-                  List1Fragment.allTags.clear();
-                  List1Fragment.nfcModel.clear();
+                    List1Fragment.allTags.clear();
+                    List1Fragment.nfcModel.clear();
                 }
                 catch (Exception e)
                 {
@@ -1128,7 +1128,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 ChatHelper.getInstance().destroy();
                 SubscribeService.unSubscribeFromPushes(CardsActivity.this);
                 SharedPrefsHelper.getInstance().removeQbUser();
-              //  LoginActivity.start(DialogsActivity.this);
+                //  LoginActivity.start(DialogsActivity.this);
                 QbDialogHolder.getInstance().clear();
 
                 session.logoutUser();
@@ -1699,14 +1699,14 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
 
-   /* @Override
-    public void onResume() {
-        super.onResume();
+    /* @Override
+     public void onResume() {
+         super.onResume();
 
-        if (mNfcAdapter != null)
-            mNfcAdapter.enableForegroundDispatch(this, mPendingIntent, mIntentFilters, mNFCTechLists);
-    }
-*/
+         if (mNfcAdapter != null)
+             mNfcAdapter.enableForegroundDispatch(this, mPendingIntent, mIntentFilters, mNFCTechLists);
+     }
+ */
     @Override
     public void onPause() {
         Utility.freeMemory();
@@ -1934,7 +1934,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             dialog = new ProgressDialog(CardsActivity.this);
             dialog.setMessage("Adding records...");
             //dialog.setTitle("Saving Reminder");
-         //   dialog.show();
+            //   dialog.show();
             dialog.setCancelable(false);
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
@@ -1948,7 +1948,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
-          //  dialog.dismiss();
+            //  dialog.dismiss();
             //  Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -2017,7 +2017,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         protected void onPostExecute(String result) {
             dialog.dismiss();
             Utility.freeMemory();
-          //  Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            //  Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result == "") {
                     Toast.makeText(getApplicationContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
@@ -2106,7 +2106,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
 
             SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
             String formattedDate = df.format(c.getTime());
-           // Toast.makeText(getApplicationContext(), formattedDate, Toast.LENGTH_LONG).show();
+            // Toast.makeText(getApplicationContext(), formattedDate, Toast.LENGTH_LONG).show();
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Latitude", lat);
@@ -2216,26 +2216,26 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onBackPressed() {
         Utility.freeMemory();
-            if (doubleBackToExitPressedOnce) {
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-                moveTaskToBack(true);
-                android.os.Process.killProcess(android.os.Process.myPid());
-                finish();
+        if (doubleBackToExitPressedOnce) {
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            moveTaskToBack(true);
+            android.os.Process.killProcess(android.os.Process.myPid());
+            finish();
 
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Press BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
             }
-
-            this.doubleBackToExitPressedOnce = true;
-            Toast.makeText(this, "Press BACK again to exit", Toast.LENGTH_SHORT).show();
-
-            new Handler().postDelayed(new Runnable() {
-
-                @Override
-                public void run() {
-                    doubleBackToExitPressedOnce=false;
-                }
-            }, 2000);
+        }, 2000);
 
     }
 }
