@@ -1,6 +1,5 @@
 -- Merging decision tree log ---
 manifest
-<<<<<<< HEAD
 ADDED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml:2:1-7:12
 INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml:2:1-7:12
 INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml:2:1-7:12
@@ -42,46 +41,3 @@ INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\linked
 		INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml
 		ADDED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml
 		INJECTED from E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml
-=======
-ADDED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml:2:1-7:12
-INJECTED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml:2:1-7:12
-INJECTED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml:2:1-7:12
-INJECTED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml:2:1-7:12
-INJECTED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml:2:1-7:12
-INJECTED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml:2:1-7:12
-INJECTED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml:2:1-7:12
-	package
-		ADDED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml:3:5-45
-		INJECTED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml
-		INJECTED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml
-	android:versionName
-		INJECTED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml
-		ADDED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml:2:1-7:12
-		INJECTED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml
-	android:versionCode
-		INJECTED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml
-		ADDED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml:2:1-7:12
-		INJECTED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml
-	xmlns:android
-		ADDED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml:2:11-69
-application
-ADDED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml:5:5-20
-uses-permission#android.permission.INTERNET
-ADDED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml:6:5-66
-	android:name
-		ADDED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml:6:22-64
-uses-sdk
-INJECTED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml
-INJECTED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml
-INJECTED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml
-INJECTED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml
-	android:targetSdkVersion
-		INJECTED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml
-		ADDED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml
-		INJECTED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml
-	android:minSdkVersion
-		INJECTED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml
-		ADDED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml
-		INJECTED from D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\linkedin-sdk\src\main\AndroidManifest.xml
->>>>>>> ce691494fbc08a509e955729efd3b6345b8c1d71

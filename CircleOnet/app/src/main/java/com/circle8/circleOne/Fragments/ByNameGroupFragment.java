@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AbsListView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -39,12 +38,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
-
-import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 public class ByNameGroupFragment extends Fragment {
 
@@ -64,12 +64,6 @@ public class ByNameGroupFragment extends Fragment {
     private RelativeLayout rlProgressDialog ;
     private TextView tvProgressing ;
     private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
-
-    static RelativeLayout rlLoadMore ;
-    static int numberCount, listSize;
-    public static int pageno = 1 ;
-    static String counts = "0" ;
-    public static String progressStatus = "FIRST";
 
     public ByNameGroupFragment() {
         // Required empty public constructor
@@ -109,9 +103,6 @@ public class ByNameGroupFragment extends Fragment {
         listView.setVisibility(View.GONE);
 //        tvDataInfo.setVisibility(View.VISIBLE);
 
-        rlLoadMore = (RelativeLayout)view.findViewById(R.id.rlLoadMore);
-        pageno = 1;
-
         session = new LoginSession(getContext());
         HashMap<String, String> user = session.getUserDetails();
         profileID = user.get(LoginSession.KEY_PROFILEID);
@@ -121,6 +112,8 @@ public class ByNameGroupFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
+
+                listView.setVisibility(View.VISIBLE);
                 connectTags.clear();
                 new HttpAsyncTask().execute(Utility.BASE_URL+"SearchConnect");
             }
@@ -130,6 +123,7 @@ public class ByNameGroupFragment extends Fragment {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
+                listView.setVisibility(View.VISIBLE);
                 connectTags.clear();
                 new HttpAsyncTask().execute(Utility.BASE_URL+"SearchConnect");
                 return true;
@@ -147,12 +141,12 @@ public class ByNameGroupFragment extends Fragment {
             {
                 if(s.length() == 0)
                 {
-                    pageno = 1 ;
+
                     tvDataInfo.setVisibility(View.VISIBLE);
                     connectTags.clear();
                     connectLists.clear();
-                    listView.setStackFromBottom(false);
                     SearchGroupMembers.selectedStrings = new JSONArray();
+//                    GetData(getContext());
                 }
             }
 
@@ -177,18 +171,9 @@ public class ByNameGroupFragment extends Fragment {
             //dialog.setTitle("Saving Reminder");
             // dialog.show();
             dialog.setCancelable(false);*/
-            //  nfcModel = new ArrayList<>();
-            //   allTags = new ArrayList<>();
 
-            if (progressStatus.equalsIgnoreCase("LOAD MORE"))
-            {
-
-            }
-            else
-            {
-                String loading = "Searching records" ;
-                CustomProgressDialog(loading);
-            }
+            String loading = "Searching" ;
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -208,7 +193,7 @@ public class ByNameGroupFragment extends Fragment {
             {
                 if(result == "")
                 {
-                    Toast.makeText(getContext(), "Slow Internet Connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
                 }
                 else
                 {
@@ -217,23 +202,13 @@ public class ByNameGroupFragment extends Fragment {
                     String success = response.getString("success");
                     String findBy = response.getString("FindBy");
                     String search = response.getString("Search");
-                    counts = response.getString("count");
+                    String count = response.getString("count");
                     String pageno = response.getString("pageno");
                     String recordno = response.getString("numofrecords");
 
                     JSONArray connect = response.getJSONArray("connect");
 
-                    if (counts.equals("0") || counts == null)
-                    {
-                        numberCount = 0 ;
-                    }
-                    else
-                    {
-                        numberCount = Integer.parseInt(counts);
-                    }
-                    rlLoadMore.setVisibility(View.GONE);
-
-                   /* connectTags.clear();
+//                    connectTags.clear();
                     try
                     {
                         connectListAdapter.notifyDataSetChanged();
@@ -241,11 +216,11 @@ public class ByNameGroupFragment extends Fragment {
                     catch (Exception e)
                     {
                         e.printStackTrace();
-                    }*/
+                    }
 
                     if(connect.length() == 0)
                     {
-//                        tvDataInfo.setVisibility(View.VISIBLE);
+                        tvDataInfo.setVisibility(View.VISIBLE);
                         connectTags.clear();
                         try {connectListAdapter.notifyDataSetChanged();}
                         catch (Exception e) { e.printStackTrace();}
@@ -279,48 +254,15 @@ public class ByNameGroupFragment extends Fragment {
                             /*connectListAdapter = new SearchGroupMemberAdapter(getContext(),R.layout.row_add_group_member, connectTags);
                             listView.setAdapter(connectListAdapter);
                             connectListAdapter.notifyDataSetChanged();*/
+
+//                            GetData(getContext());
                         }
 
                         GetData(getContext());
-                        listSize = connectTags.size();
 
-                        listView.setOnScrollListener(new AbsListView.OnScrollListener()
-                        {
-                            @Override
-                            public void onScrollStateChanged(AbsListView view, int scrollState)
-                            {
-                                // TODO Auto-generated method stub
-
-                                progressStatus = "LOAD MORE";
-
-                                if (listSize > 7)
-                                {
-                                    listView.setStackFromBottom(true);
-                                }
-
-                                int threshold = 1;
-                                int count = listView.getCount();
-
-                                if (scrollState == SCROLL_STATE_IDLE)
-                                {
-                                    if (listSize <= numberCount)
-                                    {
-                                        if (listView.getLastVisiblePosition() >= count - threshold)
-                                        {
-                                            rlLoadMore.setVisibility(View.VISIBLE);
-                                            // Execute LoadMoreDataTask AsyncTask
-                                            new HttpAsyncTask().execute(Utility.BASE_URL+"SearchConnect");
-                                        }
-                                    }
-                                    else {  }
-                                }
-                            }
-                            @Override
-                            public void onScroll(AbsListView view, int firstVisibleItem,
-                                                 int visibleItemCount, int totalItemCount) {
-                                // TODO Auto-generated method stub
-                            }
-                        });
+                        /*connectListAdapter = new SearchGroupMemberAdapter(getContext(),R.layout.row_add_group_member, connectTags);
+                        listView.setAdapter(connectListAdapter);
+                        connectListAdapter.notifyDataSetChanged();*/
                     }
                 }
             }
@@ -330,6 +272,45 @@ public class ByNameGroupFragment extends Fragment {
             }
         }
     }
+
+    private void GetData(Context context)
+    {
+        connectLists.clear();
+
+        for(ConnectList reTag : connectTags)
+        {
+            ConnectList connectModelTag = new ConnectList();
+            connectModelTag.setUserID(reTag.getUserID());
+            connectModelTag.setProfile_id(reTag.getProfile_id());
+            connectModelTag.setFirstname(reTag.getFirstname());
+            connectModelTag.setLastname(reTag.getLastname());
+            connectModelTag.setCompanyname(reTag.getCompanyname());
+            connectModelTag.setUsername(reTag.getUsername());
+            connectModelTag.setWebsite(reTag.getWebsite());
+            connectModelTag.setPhone(reTag.getPhone());
+            connectModelTag.setDesignation(reTag.getDesignation());
+            connectModelTag.setCard_front(reTag.getCard_front());
+            connectModelTag.setCard_back(reTag.getCard_back());
+            connectModelTag.setUserphoto(reTag.getUserphoto());
+            connectModelTag.setFacebook(reTag.getFacebook());
+            connectModelTag.setTwitter(reTag.getTwitter());
+            connectModelTag.setGoogle(reTag.getGoogle());
+            connectModelTag.setLinkedin(reTag.getLinkedin());
+            connectLists.add(connectModelTag);
+        }
+
+        if (connectLists.size() == 0)
+        {
+            tvDataInfo.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            tvDataInfo.setVisibility(View.GONE);
+            connectListAdapter = new SearchGroupMemberAdapter(context, R.layout.row_add_group_member, connectLists);
+            listView.setAdapter(connectListAdapter);
+        }
+    }
+
 
     public  String POST(String url)
     {
@@ -350,8 +331,8 @@ public class ByNameGroupFragment extends Fragment {
             jsonObject.accumulate("Search", searchText.getText().toString() );
             jsonObject.accumulate("SearchType", "Local" );
             jsonObject.accumulate("UserID", userID );
-            jsonObject.accumulate("numofrecords", "10" );
-            jsonObject.accumulate("pageno", pageno );
+            jsonObject.accumulate("numofrecords", "1000" );
+            jsonObject.accumulate("pageno", "1" );
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -387,12 +368,20 @@ public class ByNameGroupFragment extends Fragment {
             Log.d("InputStream", e.getLocalizedMessage());
         }
 
-        pageno ++;
         // 11. return result
         return result;
     }
 
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+        while((line = bufferedReader.readLine()) != null)
+            result += line;
 
+        inputStream.close();
+        return result;
+    }
 
     public void CustomProgressDialog(final String loading)
     {
@@ -424,45 +413,8 @@ public class ByNameGroupFragment extends Fragment {
                     {
                         tvProgressing.setText(loading+"...");
                     }
-
                 }
             }, i);
-        }
-    }
-
-    private void GetData(Context context)
-    {
-        connectLists.clear();
-
-        for(ConnectList reTag : connectTags)
-        {
-            ConnectList connectModelTag = new ConnectList();
-            connectModelTag.setUserID(reTag.getUserID());
-            connectModelTag.setProfile_id(reTag.getProfile_id());
-            connectModelTag.setFirstname(reTag.getFirstname());
-            connectModelTag.setLastname(reTag.getLastname());
-            connectModelTag.setCompanyname(reTag.getCompanyname());
-            connectModelTag.setUsername(reTag.getUsername());
-            connectModelTag.setWebsite(reTag.getWebsite());
-            connectModelTag.setPhone(reTag.getPhone());
-            connectModelTag.setDesignation(reTag.getDesignation());
-            connectModelTag.setCard_front(reTag.getCard_front());
-            connectModelTag.setCard_back(reTag.getCard_back());
-            connectModelTag.setUserphoto(reTag.getUserphoto());
-            connectLists.add(connectModelTag);
-        }
-
-        if (connectLists.size() == 0)
-        {
-            tvDataInfo.setVisibility(View.VISIBLE);
-        }
-        else
-        {
-            tvDataInfo.setVisibility(View.GONE);
-
-            connectListAdapter = new SearchGroupMemberAdapter(getContext(),R.layout.row_add_group_member, connectLists);
-            listView.setAdapter(connectListAdapter);
-            connectListAdapter.notifyDataSetChanged();
         }
     }
 

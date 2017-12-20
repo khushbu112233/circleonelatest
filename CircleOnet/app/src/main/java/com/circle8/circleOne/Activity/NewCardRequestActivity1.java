@@ -1,10 +1,8 @@
 package com.circle8.circleOne.Activity;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.PixelFormat;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,14 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -316,7 +312,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                             alertDialog.show();*/
 
                         /*new payment mode alert-dialog*/
-                        alertDialog = new AlertDialog.Builder(NewCardRequestActivity1.this).create();
+                       /* alertDialog = new AlertDialog.Builder(NewCardRequestActivity1.this).create();
                         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                         View dialogView = inflater.inflate(R.layout.stripe_payment_screen1, null);
 
@@ -401,7 +397,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                         alertDialog.setView(dialogView);
                         alertDialog.setCancelable(false);
                         alertDialog.getWindow().setFormat(PixelFormat.TRANSLUCENT);
-                        alertDialog.show();
+                        alertDialog.show();*/
                     }
                 }
             }

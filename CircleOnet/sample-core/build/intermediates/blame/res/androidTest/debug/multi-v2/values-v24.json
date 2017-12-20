@@ -1,17 +1,10 @@
 {
     "logs": [
         {
-<<<<<<< HEAD
             "outputFile": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-v24\\values-v24.xml",
             "map": [
                 {
                     "source": "C:\\Users\\admin\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\9cdf1dca172a69926094cf1be630b9d7\\res\\values-v24\\values-v24.xml",
-=======
-            "outputFile": "D:\\Khushbu\\CircleOne\\Project\\CircleOneFinal\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-v24\\values-v24.xml",
-            "map": [
-                {
-                    "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\6330a685c5b7620076405d1b1d9b08e2\\res\\values-v24\\values-v24.xml",
->>>>>>> ce691494fbc08a509e955729efd3b6345b8c1d71
                     "from": {
                         "startLines": "2,3,4,5,6,7",
                         "startColumns": "4,4,4,4,4,4",
@@ -21,11 +14,7 @@
                     }
                 },
                 {
-<<<<<<< HEAD
                     "source": "C:\\Users\\admin\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\040863557888f67ff4529c12cca40e75\\res\\values-v24\\values-v24.xml",
-=======
-                    "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\d430511d7489a8850e4f28d7c3da4c23\\res\\values-v24\\values-v24.xml",
->>>>>>> ce691494fbc08a509e955729efd3b6345b8c1d71
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",
@@ -44,81 +33,10 @@
             ]
         },
         {
-            "outputFile": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-v24\\values-v24.xml",
-            "map": [
-                {
-                    "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\30887348d6825dc4b6a19f5a581ab905\\res\\values-v24\\values-v24.xml",
-                    "from": {
-                        "startLines": "2,3,4,5",
-                        "startColumns": "4,4,4,4",
-                        "startOffsets": "55,121,182,248",
-                        "endColumns": "65,60,65,66",
-                        "endOffsets": "116,177,243,310"
-                    },
-                    "to": {
-                        "startLines": "8,9,10,11",
-                        "startColumns": "4,4,4,4",
-                        "startOffsets": "619,685,746,812",
-                        "endColumns": "65,60,65,66",
-                        "endOffsets": "680,741,807,874"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\values-v24\\values-v24.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7",
-                        "startColumns": "4,4,4,4,4,4",
-                        "startOffsets": "55,212,347,416,480,549",
-                        "endColumns": "156,134,68,63,68,69",
-                        "endOffsets": "207,342,411,475,544,614"
-                    }
-                }
-            ]
-        },
-        {
-            "outputFile": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-v24\\values-v24.xml",
-            "map": [
-                {
-                    "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\30887348d6825dc4b6a19f5a581ab905\\res\\values-v24\\values-v24.xml",
-                    "from": {
-                        "startLines": "2,3,4,5",
-                        "startColumns": "4,4,4,4",
-                        "startOffsets": "55,121,182,248",
-                        "endColumns": "65,60,65,66",
-                        "endOffsets": "116,177,243,310"
-                    },
-                    "to": {
-                        "startLines": "8,9,10,11",
-                        "startColumns": "4,4,4,4",
-                        "startOffsets": "619,685,746,812",
-                        "endColumns": "65,60,65,66",
-                        "endOffsets": "680,741,807,874"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\values-v24\\values-v24.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7",
-                        "startColumns": "4,4,4,4,4,4",
-                        "startOffsets": "55,212,347,416,480,549",
-                        "endColumns": "156,134,68,63,68,69",
-                        "endOffsets": "207,342,411,475,544,614"
-                    }
-                }
-            ]
-        },
-        {
-<<<<<<< HEAD
             "outputFile": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-v24\\values-v24.xml",
             "map": [
                 {
                     "source": "C:\\Users\\admin\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\9cdf1dca172a69926094cf1be630b9d7\\res\\values-v24\\values-v24.xml",
-=======
-            "outputFile": "D:\\Khushbu\\CircleOne\\Project\\CircleOneFinal\\CircleOnet\\sample-core\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-v24\\values-v24.xml",
-            "map": [
-                {
-                    "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\6330a685c5b7620076405d1b1d9b08e2\\res\\values-v24\\values-v24.xml",
->>>>>>> ce691494fbc08a509e955729efd3b6345b8c1d71
                     "from": {
                         "startLines": "2,3,4,5,6,7",
                         "startColumns": "4,4,4,4,4,4",
@@ -128,11 +46,7 @@
                     }
                 },
                 {
-<<<<<<< HEAD
                     "source": "C:\\Users\\admin\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\040863557888f67ff4529c12cca40e75\\res\\values-v24\\values-v24.xml",
-=======
-                    "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\d430511d7489a8850e4f28d7c3da4c23\\res\\values-v24\\values-v24.xml",
->>>>>>> ce691494fbc08a509e955729efd3b6345b8c1d71
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",

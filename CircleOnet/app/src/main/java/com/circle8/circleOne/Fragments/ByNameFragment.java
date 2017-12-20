@@ -223,8 +223,6 @@ public class ByNameFragment extends Fragment
             //dialog.setTitle("Saving Reminder");
            // dialog.show();
             dialog.setCancelable(false);*/
-            //  nfcModel = new ArrayList<>();
-            //   allTags = new ArrayList<>();
 
             if (progressStatus.equalsIgnoreCase("LOAD MORE"))
             {

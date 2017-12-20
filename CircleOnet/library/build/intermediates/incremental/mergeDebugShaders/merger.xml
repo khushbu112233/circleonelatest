@@ -1,6 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
 <merger version="3"><dataSet config="main"><source path="E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\library\src\main\shaders"/></dataSet><dataSet config="debug"><source path="E:\kajal\Android\Circles en\Project\Circle One 4\CircleOnet\library\src\debug\shaders"/></dataSet></merger>
-=======
-<merger version="3"><dataSet config="main"><source path="D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\library\src\main\shaders"/></dataSet><dataSet config="debug"><source path="D:\Khushbu\CircleOne\Project\CircleOneFinal\CircleOnet\library\src\debug\shaders"/></dataSet></merger>
->>>>>>> ce691494fbc08a509e955729efd3b6345b8c1d71
