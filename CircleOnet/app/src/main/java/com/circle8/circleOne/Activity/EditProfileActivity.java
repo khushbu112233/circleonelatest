@@ -168,31 +168,9 @@ public class EditProfileActivity extends AppCompatActivity implements
     ArrayList<String> company, designation, industry, designation_id, company_id, industry_id;
     String association_ID, association_NAME;
     String profileId = "";
-    public static String Card_Front = "";
-    public static String Card_Back = "";
-    public static String FirstName = "";
-    public static String LastName = "";
-    public static String UserPhoto = "";
-    public static String Phone1 = "";
-    public static String Phone2 = "";
-    public static String Mobile1 = "";
-    public static String Mobile2 = "";
-    public static String Fax1 = "";
-    public static String Fax2 = "";
-    public static String Email1 = "";
-    public static String Email2 = "";
-    public static String Youtube = "";
-    public static String Facebook = "";
-    public static String Twitter = "";
-    public static String Google = "";
-    public static String LinkedIn = "";
-    public static String IndustryName = "";
-    public static String CompanyName = "";
-    public static String CompanyProfile = "";
-    public static String Designation = "";
-    public static String ProfileDesc = "";
-    public static String Status = "";
-    public static String Address1 = "", Address2 = "", Address3 = "", Address4 = "", City = "", State = "", Country = "", Postalcode = "", Website = "", Attachment_FileName = "";
+    public static String Card_Front = "",Card_Back = "", FirstName = "", LastName = "",UserPhoto = "",Phone1 = "", Phone2 = "", Mobile1 = "", Mobile2 = ""
+           ,Fax1 = "", Fax2 = "", Email1 = "",Email2 = "", Youtube = "",Facebook = "", Twitter = "", Google = "",LinkedIn = "", IndustryName = ""
+        , CompanyName = "", CompanyProfile = "",Designation = "", ProfileDesc = "",Status = "", Address1 = "", Address2 = "", Address3 = "", Address4 = "", City = "", State = "", Country = "", Postalcode = "", Website = "", Attachment_FileName = "";
     EditText edtUserName, edtWork, edtPrimary, edtEmail, edtProfileDesc, edtCompanyDesc, edtFirstName, edtLastName;
   //  public static ViewPager mViewPager, viewPager1;
     CircleImageView imgProfile;

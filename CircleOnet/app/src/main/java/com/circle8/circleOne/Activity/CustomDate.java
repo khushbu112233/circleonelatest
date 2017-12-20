@@ -3,11 +3,11 @@ package com.circle8.circleOne.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -18,9 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.circle8.circleOne.Fragments.EventsFragment;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
+import com.circle8.circleOne.databinding.ActivityCustomDateBinding;
 import com.stacktips.view.CalendarListener;
 import com.stacktips.view.CustomCalendarView;
 
@@ -38,14 +38,14 @@ public class CustomDate extends AppCompatActivity
     private int actionBarHeight;
     Date date1, date2;
     int i =0;
-
+    ActivityCustomDateBinding activityCustomDateBinding;
     private String startDate = "", endDate = "" ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_custom_date);
+        activityCustomDateBinding  = DataBindingUtil.setContentView(this,R.layout.activity_custom_date);
 
         Utility.freeMemory();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);

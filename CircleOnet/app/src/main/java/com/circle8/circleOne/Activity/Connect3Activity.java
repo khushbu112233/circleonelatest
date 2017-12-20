@@ -1,14 +1,14 @@
 package com.circle8.circleOne.Activity;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +16,7 @@ import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.Level7thConnectionModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
+import com.circle8.circleOne.databinding.ActivityConnect3Binding;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -26,10 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -37,7 +35,6 @@ import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 public class Connect3Activity extends AppCompatActivity
 {
-    private ImageView imgBack, imgCards, imgConnect, imgEvents, imgProfile, imgConnecting, imgConnecting1;
     TextView txtConnecting;
     int x = 0;
     String profileImg, profileName;
@@ -53,20 +50,13 @@ public class Connect3Activity extends AppCompatActivity
 
     String backStatus = "None";
     String level = "";
-
+    ActivityConnect3Binding activityConnect3Binding;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_connect3);
+        activityConnect3Binding  = DataBindingUtil.setContentView(this,R.layout.activity_connect3);
 
-        imgBack = (ImageView) findViewById(R.id.imgBack);
-        imgCards = (ImageView) findViewById(R.id.imgCards);
-        imgConnect = (ImageView) findViewById(R.id.imgConnect);
-        imgEvents = (ImageView) findViewById(R.id.imgEvents);
-        imgProfile = (ImageView) findViewById(R.id.imgProfile);
-        imgConnecting = (ImageView) findViewById(R.id.imgConnecting);
-        imgConnecting1 = (ImageView) findViewById(R.id.imgConnecting1);
         txtConnecting = (TextView) findViewById(R.id.txtConnecting);
         loginSession = new LoginSession(getApplicationContext());
         Utility.freeMemory();
@@ -80,7 +70,7 @@ public class Connect3Activity extends AppCompatActivity
         profileName = intent.getStringExtra("profileName");
 
         allTags = new ArrayList<>();
-       // Toast.makeText(getApplicationContext(), level, Toast.LENGTH_LONG).show();
+        // Toast.makeText(getApplicationContext(), level, Toast.LENGTH_LONG).show();
        /* Handler handler = new Handler();
 
         for (int i = 100; i <= 60000; i=i+100) {
@@ -121,12 +111,12 @@ public class Connect3Activity extends AppCompatActivity
         }, 100);*/
 
         Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
-        imgConnecting.startAnimation(anim);
+        activityConnect3Binding.imgConnecting.startAnimation(anim);
 
         Animation anim1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.clockwise);
-        imgConnecting1.startAnimation(anim1);
+        activityConnect3Binding.imgConnecting1.startAnimation(anim1);
 
-        imgBack.setOnClickListener(new View.OnClickListener() {
+        activityConnect3Binding.imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -160,7 +150,7 @@ public class Connect3Activity extends AppCompatActivity
             new HttpAsyncTask().execute(Utility.BASE_URL+"Connection7Level");
         }
 
-        imgCards.setOnClickListener(new View.OnClickListener() {
+        activityConnect3Binding.imgCards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent go = new Intent(getApplicationContext(),CardsActivity.class);
@@ -171,7 +161,7 @@ public class Connect3Activity extends AppCompatActivity
             }
         });
 
-        imgConnect.setOnClickListener(new View.OnClickListener() {
+        activityConnect3Binding.imgConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent go = new Intent(getApplicationContext(),CardsActivity.class);
@@ -182,7 +172,7 @@ public class Connect3Activity extends AppCompatActivity
             }
         });
 
-        imgEvents.setOnClickListener(new View.OnClickListener() {
+        activityConnect3Binding.imgEvents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent go = new Intent(getApplicationContext(),CardsActivity.class);
@@ -193,7 +183,7 @@ public class Connect3Activity extends AppCompatActivity
             }
         });
 
-        imgProfile.setOnClickListener(new View.OnClickListener() {
+        activityConnect3Binding.imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent go = new Intent(getApplicationContext(),CardsActivity.class);
@@ -335,7 +325,7 @@ public class Connect3Activity extends AppCompatActivity
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String>
     {
-      //  ProgressDialog dialog;
+        //  ProgressDialog dialog;
 
         @Override
         protected void onPreExecute() {
@@ -358,7 +348,7 @@ public class Connect3Activity extends AppCompatActivity
         @Override
         protected void onPostExecute(String result)
         {
-          //  dialog.dismiss();
+            //  dialog.dismiss();
             try
             {
                 Utility.freeMemory();

@@ -323,7 +323,7 @@ public class Notification extends AppCompatActivity
                                 {
                                     if (listNotification.getLastVisiblePosition() >= count - threshold)
                                     {
-                                        rlLoadMore.setVisibility(View.VISIBLE);
+                                       // rlLoadMore.setVisibility(View.VISIBLE);
                                         // Execute LoadMoreDataTask AsyncTask
                                         new HttpAsyncTask().execute(Utility.BASE_URL+"Notification");
                                     }

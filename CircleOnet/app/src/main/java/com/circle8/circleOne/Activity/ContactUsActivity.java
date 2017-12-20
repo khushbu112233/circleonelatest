@@ -3,37 +3,25 @@ package com.circle8.circleOne.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.R;
-import com.circle8.circleOne.RxContacts.Contact;
-import com.circle8.circleOne.Utils.GeocodingLocation;
 import com.circle8.circleOne.Utils.Utility;
-import com.quickblox.core.QBEntityCallback;
-import com.quickblox.core.exception.QBResponseException;
-import com.quickblox.users.QBUsers;
-import com.quickblox.users.model.QBUser;
-import com.squareup.picasso.Picasso;
+import com.circle8.circleOne.databinding.ActivityContactUsBinding;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -43,10 +31,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,27 +40,17 @@ import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 public class ContactUsActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener
 {
-    private ImageView ivMessage, ivPhone ;
-    private TextView tvAddress1, tvAddress2, tvWebsite, tvEmail, tvPhone, tvFax ;
-    private TextView tvCompany, tvPartner, tvSend, tvCancel;
-    private EditText etSubject, etDescription ;
-    private ImageView imgBack;
-    private LinearLayout lnrAddress, lnrEmail, lnrContact, lnrWebsite ;
-    private ImageView fbUrl, linkedInUrl, twitterUrl, googleUrl, youtubeUrl;
-    private Spinner spContactType ;
+
 
     private String subject, description, email, contactNo, contactType ;
     private LoginSession session;
-
-    private RelativeLayout rlProgressDialog;
-    private TextView tvProgressing;
-    private ImageView ivConnecting1, ivConnecting2, ivConnecting3;
+    ActivityContactUsBinding activityContactUsBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contact_us);
+        activityContactUsBinding = DataBindingUtil.setContentView(this,R.layout.activity_contact_us);
 
         Utility.freeMemory();
 
@@ -103,52 +78,21 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
             e.printStackTrace();
         }
 
-        imgBack = (ImageView) findViewById(R.id.imgBack);
-        tvCompany = (TextView)findViewById(R.id.tvCompanyName);
-        tvPartner = (TextView)findViewById(R.id.tvPartner);
-        tvAddress1 = (TextView)findViewById(R.id.tvAddress1);
-        tvWebsite = (TextView)findViewById(R.id.tvWebsite);
-        tvEmail = (TextView)findViewById(R.id.tvMail);
-        tvPhone = (TextView)findViewById(R.id.tvPhone);
-        tvFax = (TextView)findViewById(R.id.tvWork);
-        tvSend = (TextView)findViewById(R.id.tvSend);
-        tvCancel = (TextView)findViewById(R.id.tvCancel);
-        etSubject = (EditText)findViewById(R.id.etSubject);
-        etDescription = (EditText)findViewById(R.id.etDescription);
+        activityContactUsBinding.spContactType.setOnItemSelectedListener(this);
 
-        lnrAddress = (LinearLayout)findViewById(R.id.lnrAddress);
-        lnrEmail = (LinearLayout)findViewById(R.id.llMailBox);
-        lnrContact = (LinearLayout)findViewById(R.id.lnrPhone);
-        lnrWebsite = (LinearLayout)findViewById(R.id.lnrWebsite);
-        ivMessage = (ImageView) findViewById(R.id.ivMessage);
-        ivPhone = (ImageView) findViewById(R.id.ivPhone);
-        fbUrl = (ImageView) findViewById(R.id.fbUrl);
-        linkedInUrl = (ImageView) findViewById(R.id.linkedInUrl);
-        twitterUrl = (ImageView) findViewById(R.id.twitterUrl);
-        googleUrl = (ImageView) findViewById(R.id.googleUrl);
-        youtubeUrl = (ImageView) findViewById(R.id.youtubeUrl);
 
-        spContactType = (Spinner)findViewById(R.id.spContactType);
-        spContactType.setOnItemSelectedListener(this);
-
-        rlProgressDialog = (RelativeLayout) findViewById(R.id.rlProgressDialog);
-        tvProgressing = (TextView) findViewById(R.id.txtProgressing);
-        ivConnecting1 = (ImageView) findViewById(R.id.imgConnecting1);
-        ivConnecting2 = (ImageView) findViewById(R.id.imgConnecting2);
-        ivConnecting3 = (ImageView) findViewById(R.id.imgConnecting3);
-
-        imgBack.setOnClickListener(this);
-        lnrAddress.setOnClickListener(this);
-        ivMessage.setOnClickListener(this);
-        ivPhone.setOnClickListener(this);
-        lnrWebsite.setOnClickListener(this);
-        tvSend.setOnClickListener(this);
-        tvCancel.setOnClickListener(this);
-        fbUrl.setOnClickListener(this);
-        linkedInUrl.setOnClickListener(this);
-        twitterUrl.setOnClickListener(this);
-        googleUrl.setOnClickListener(this);
-        youtubeUrl.setOnClickListener(this);
+        activityContactUsBinding.imgBack.setOnClickListener(this);
+        activityContactUsBinding.lnrAddress.setOnClickListener(this);
+        activityContactUsBinding.ivMessage.setOnClickListener(this);
+        activityContactUsBinding.ivPhone.setOnClickListener(this);
+        activityContactUsBinding.lnrWebsite.setOnClickListener(this);
+        activityContactUsBinding.tvSend.setOnClickListener(this);
+        activityContactUsBinding.tvCancel.setOnClickListener(this);
+        activityContactUsBinding.fbUrl.setOnClickListener(this);
+        activityContactUsBinding.linkedInUrl.setOnClickListener(this);
+        activityContactUsBinding.twitterUrl.setOnClickListener(this);
+        activityContactUsBinding.googleUrl.setOnClickListener(this);
+        activityContactUsBinding.youtubeUrl.setOnClickListener(this);
 
         // Spinner Drop down elements
         List<String> contactType = new ArrayList<String>();
@@ -161,7 +105,7 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, contactType);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spContactType.setAdapter(dataAdapter);
+        activityContactUsBinding.spContactType.setAdapter(dataAdapter);
 
     }
 
@@ -180,12 +124,12 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v)
     {
-        if ( v == imgBack)
+        if ( v == activityContactUsBinding.imgBack)
         {
             Utility.freeMemory();
             finish();
         }
-        if ( v == fbUrl)
+        if ( v == activityContactUsBinding.fbUrl)
         {
             AlertDialog.Builder builder;
             builder = new AlertDialog.Builder(ContactUsActivity.this, R.style.Blue_AlertDialog);
@@ -209,7 +153,7 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
                     .setIcon(android.R.drawable.ic_dialog_map)
                     .show();
         }
-        if ( v == linkedInUrl)
+        if ( v == activityContactUsBinding.linkedInUrl)
         {
             AlertDialog.Builder builder;
             builder = new AlertDialog.Builder(ContactUsActivity.this, R.style.Blue_AlertDialog);
@@ -233,7 +177,7 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
                     .setIcon(android.R.drawable.ic_dialog_map)
                     .show();
         }
-        if ( v == twitterUrl)
+        if ( v == activityContactUsBinding.twitterUrl)
         {
             AlertDialog.Builder builder;
             builder = new AlertDialog.Builder(ContactUsActivity.this, R.style.Blue_AlertDialog);
@@ -257,14 +201,14 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
                     .setIcon(android.R.drawable.ic_dialog_map)
                     .show();
         }
-        if ( v == googleUrl)
+        if ( v == activityContactUsBinding.googleUrl)
         {
             Utility.freeMemory();
             /*Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
             intent.putExtra("url", Utility.BASE_IMAGE_URL+"Other_doc/"+txtAttachment.getText().toString());
             startActivity(intent);*/
         }
-        if ( v == youtubeUrl)
+        if ( v == activityContactUsBinding.youtubeUrl)
         {
             Utility.freeMemory();
            /* Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
@@ -272,7 +216,7 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
             startActivity(intent);*/
         }
 
-        if ( v == lnrAddress)
+        if ( v == activityContactUsBinding.lnrAddress)
         {
             Utility.freeMemory();
             AlertDialog.Builder builder;
@@ -283,7 +227,7 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // continue with delete
-                            String map = "http://maps.google.co.in/maps?q=" + tvAddress1.getText().toString();
+                            String map = "http://maps.google.co.in/maps?q=" + activityContactUsBinding.tvAddress1.getText().toString();
                             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(map));
                             startActivity(intent);
                         }
@@ -297,19 +241,19 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
                     .setIcon(android.R.drawable.ic_dialog_map)
                     .show();
         }
-        if ( v == ivMessage)
+        if ( v == activityContactUsBinding.ivMessage)
         {
             Utility.freeMemory();
             AlertDialog.Builder builder;
             builder = new AlertDialog.Builder(ContactUsActivity.this, R.style.Blue_AlertDialog);
-            builder.setTitle("Mail to "+ tvCompany.getText().toString())
+            builder.setTitle("Mail to "+ activityContactUsBinding.tvCompanyName.getText().toString())
                     .setMessage("Are you sure you want to drop Mail ?")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // continue with delete
                             try
                             {
-                                Intent intent = new Intent (Intent.ACTION_VIEW , Uri.parse("mailto:" + tvEmail.getText().toString()));
+                                Intent intent = new Intent (Intent.ACTION_VIEW , Uri.parse("mailto:" + activityContactUsBinding.tvMail.getText().toString()));
                                 intent.putExtra(Intent.EXTRA_SUBJECT, "");
                                 intent.putExtra(Intent.EXTRA_TEXT, "");
                                 startActivity(intent);
@@ -330,19 +274,19 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
                     .setIcon(android.R.drawable.ic_dialog_email)
                     .show();
         }
-        if ( v == ivPhone)
+        if ( v == activityContactUsBinding.ivPhone)
         {
             Utility.freeMemory();
             AlertDialog.Builder builder;
             builder = new AlertDialog.Builder(ContactUsActivity.this, R.style.Blue_AlertDialog);
 
-            builder.setTitle("Call to "+ tvCompany.getText().toString())
+            builder.setTitle("Call to "+ activityContactUsBinding.tvCompanyName.getText().toString())
                     .setMessage("Are you sure you want to make a Call ?")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // continue with delete
                             Intent intent = new Intent(Intent.ACTION_DIAL);
-                            intent.setData(Uri.parse("tel:"+tvPhone.getText().toString()));
+                            intent.setData(Uri.parse("tel:"+activityContactUsBinding.tvPhone.getText().toString()));
                             startActivity(intent);
                         }
                     })
@@ -355,7 +299,7 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
                     .setIcon(android.R.drawable.ic_menu_call)
                     .show();
         }
-        if ( v == lnrWebsite)
+        if ( v == activityContactUsBinding.lnrWebsite)
         {
             Utility.freeMemory();
             AlertDialog.Builder builder;
@@ -365,7 +309,7 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // continue with delete
-                            String url = tvWebsite.getText().toString();
+                            String url = activityContactUsBinding.tvWebsite.getText().toString();
                             if (url!=null) {
                                 if (!url.startsWith("http://") && !url.startsWith("https://"))
                                     url = "http://" + url;
@@ -383,11 +327,11 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
                     .setIcon(android.R.drawable.ic_menu_set_as)
                     .show();
         }
-        if ( v == tvSend)
+        if ( v == activityContactUsBinding.tvSend)
         {
             Utility.freeMemory();
-            subject = etSubject.getText().toString();
-            description = etDescription.getText().toString();
+            subject = activityContactUsBinding.etSubject.getText().toString();
+            description = activityContactUsBinding.etDescription.getText().toString();
 
             if (contactType.equalsIgnoreCase("Contact Type"))
             {
@@ -411,7 +355,7 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
                 new HttpAsyncTaskSendMessage().execute("http://circle8.asia:8082/Onet.svc/ContactUs");
             }
         }
-        if ( v == tvCancel)
+        if ( v == activityContactUsBinding.tvCancel)
         {
             finish();
         }
@@ -454,7 +398,7 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            activityContactUsBinding.rlProgressDialog.setVisibility(View.GONE);
 
             try
             {
@@ -466,8 +410,8 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
 
                     if (success.equals("1"))
                     {
-                        etSubject.setText(null);
-                        etDescription.setText(null);
+                        activityContactUsBinding.etSubject.setText(null);
+                        activityContactUsBinding.etDescription.setText(null);
 
                         Toast.makeText(getApplicationContext(),"Send Successfully",Toast.LENGTH_SHORT).show();
                     }
@@ -546,13 +490,13 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
 
     public void CustomProgressDialog(final String loading)
     {
-        rlProgressDialog.setVisibility(View.VISIBLE);
-        tvProgressing.setText(loading);
+        activityContactUsBinding.rlProgressDialog.setVisibility(View.VISIBLE);
+        activityContactUsBinding.txtProgressing.setText(loading);
 
         Animation anim = AnimationUtils.loadAnimation(ContactUsActivity.this,R.anim.anticlockwise);
-        ivConnecting1.startAnimation(anim);
+        activityContactUsBinding.imgConnecting1.startAnimation(anim);
         Animation anim1 = AnimationUtils.loadAnimation(ContactUsActivity.this,R.anim.clockwise);
-        ivConnecting2.startAnimation(anim1);
+        activityContactUsBinding.imgConnecting2.startAnimation(anim1);
 
         int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
         for (int i = 350; i <= SPLASHTIME; i = i + 350)
@@ -564,15 +508,15 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
                 {
                     if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
                     {
-                        tvProgressing.setText(loading+".");
+                        activityContactUsBinding.txtProgressing.setText(loading+".");
                     }
                     else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
                     {
-                        tvProgressing.setText(loading+"..");
+                        activityContactUsBinding.txtProgressing.setText(loading+"..");
                     }
                     else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
                     {
-                        tvProgressing.setText(loading+"...");
+                        activityContactUsBinding.txtProgressing.setText(loading+"...");
                     }
 
                 }
