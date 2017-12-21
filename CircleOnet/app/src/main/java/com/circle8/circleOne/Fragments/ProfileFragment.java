@@ -130,11 +130,11 @@ public class ProfileFragment extends Fragment
     static TextView txtNoAssociation, txtNoEvent;
     private int i = 0;
     static TextView tvDesignation, tvCompany, tvName, tvCompanyName, tvDesi,
-            tvAssociation, tvAddress, tvWebsite, tvMail, tvMob, tvWork, textIndustry;
+            tvAssociation, tvAddress, tvWebsite, tvMail, tvMail1, tvMob, tvWork, textIndustry;
     static ProfileModel nfcModelTag;
     static CircleImageView imgProfile;
     static LinearLayout lnrMob, lnrWork, lnrWebsite, lnrMap, llNameBox, llCompanyBox,
-            llIndustryBox, llDesignationBox, llAssociationBox , llMailBox;
+            llIndustryBox, llDesignationBox, llAssociationBox , llMailBox, llMailBox1;
     static ViewPager mViewPager, viewPager1;
     static String recycle_image1, recycle_image2 ;
     private static ArrayList<String> image = new ArrayList<>();
@@ -207,6 +207,7 @@ public class ProfileFragment extends Fragment
         llDesignationBox = (LinearLayout)view.findViewById(R.id.llDesignationBox);
         llAssociationBox = (LinearLayout)view.findViewById(R.id.llAssociationBox);
         llMailBox = (LinearLayout)view.findViewById(R.id.llMailBox);
+        llMailBox1 = (LinearLayout)view.findViewById(R.id.llMailBox1);
         fbUrl = (ImageView) view.findViewById(R.id.fbUrl);
         googleUrl = (ImageView) view.findViewById(R.id.googleUrl);
         youtubeUrl = (ImageView) view.findViewById(R.id.youtubeUrl);
@@ -222,6 +223,7 @@ public class ProfileFragment extends Fragment
         tvAddress = (TextView)view.findViewById(R.id.tvAddress);
         tvWebsite = (TextView)view.findViewById(R.id.tvWebsite);
         tvMail = (TextView)view.findViewById(R.id.tvMail);
+        tvMail1 = (TextView)view.findViewById(R.id.tvMail1);
         tvMob = (TextView)view.findViewById(R.id.tvMob);
         tvWork = (TextView)view.findViewById(R.id.tvWork);
         imgProfile = (CircleImageView) view.findViewById(R.id.imgProfile);
@@ -1713,6 +1715,17 @@ public class ProfileFragment extends Fragment
                     {
                         tvMail.setText(allTags.get(profileIndex).getUserName());
                     }
+
+                    if (allTags.get(profileIndex).getEmail2().equalsIgnoreCase("")
+                            || allTags.get(profileIndex).getEmail2().equalsIgnoreCase("null"))
+                    {
+                        llMailBox1.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        tvMail1.setText(allTags.get(profileIndex).getEmail2());
+                    }
+
                     if(allTags.get(profileIndex).getAssociation().equalsIgnoreCase("")
                             || allTags.get(profileIndex).getAssociation().equalsIgnoreCase("null"))
                     {
