@@ -259,8 +259,7 @@
                                 android:layout_centerInParent="true"
                                 android:layout_width="70dp"
                                 android:layout_height="70dp"
-                                android:src="@drawable/round_white_profile"
-                                />
+                                android:src="@drawable/round_white_profile" />
 
                         </RelativeLayout>
 
@@ -314,8 +313,7 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:tint="@color/colorPrimary"
-                            android:layout_marginRight="15dp"
+                            android:layout_marginRight="20dp"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:src="@drawable/new_profile1"/>
@@ -324,9 +322,6 @@
                             android:id="@+id/tvProfileName"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_alignParentBottom="true"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginBottom="17dp"
                             android:gravity="center"
                             android:text="Profile"
                             android:textAlignment="center"
