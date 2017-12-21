@@ -332,21 +332,21 @@ public class List3Adapter extends BaseSwipeAdapter
             try
             {
                 try {
-                    if (nfcModelList1.get(position).getDesignation().equals("") || nfcModelList1.get(position).getDesignation().equals("null")
+                    if (nfcModelList1.get(position).getDesignation().trim().equals("") || nfcModelList1.get(position).getDesignation().equals("null")
                             || nfcModelList1.get(position).getDesignation() == null) {
                         holder.tvPersonProfile.setVisibility(View.GONE);
                     }
                 }catch (Exception e){}
 
                 try {
-                    if (nfcModelList1.get(position).getEmail().equals("") || nfcModelList1.get(position).getEmail().equals("null")
+                    if (nfcModelList1.get(position).getEmail().trim().equals("") || nfcModelList1.get(position).getEmail().equals("null")
                             || nfcModelList1.get(position).getEmail() == null) {
                         holder.tvPersonWebsite.setVisibility(View.GONE);
                     }
                 }catch (Exception e){}
 
                 try {
-                    if (nfcModelList1.get(position).getAddress().equals("") || nfcModelList1.get(position).getAddress().equalsIgnoreCase("null")
+                    if (nfcModelList1.get(position).getAddress().trim().equals("") || nfcModelList1.get(position).getAddress().equalsIgnoreCase("null")
                             || nfcModelList1.get(position).getAddress() == null) {
                         holder.tvPersonAddress.setVisibility(View.GONE);
                     }
@@ -355,7 +355,7 @@ public class List3Adapter extends BaseSwipeAdapter
                 }
 
                 try {
-                    if (nfcModelList1.get(position).getPh_no().equals("") || nfcModelList1.get(position).getPh_no().equals("null")
+                    if (nfcModelList1.get(position).getPh_no().trim().equals("") || nfcModelList1.get(position).getPh_no().equals("null")
                             || nfcModelList1.get(position).getPh_no() == null) {
                         holder.tvPersonContact.setVisibility(View.GONE);
                     }

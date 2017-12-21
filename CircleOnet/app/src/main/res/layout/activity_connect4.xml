@@ -162,12 +162,12 @@
                         android:id="@+id/txtProfileName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=""
+                        android:text="shani shah"
                         android:textSize="10sp"
                         android:textColor="@color/white"
                         android:layout_centerHorizontal="true"
                         android:layout_below="@+id/rltLevel4"
-                        android:layout_marginTop="-15dp"/>
+                        android:layout_marginTop="-23dp"/>
 
                     <RelativeLayout
                         android:id="@+id/rltLevel1"
