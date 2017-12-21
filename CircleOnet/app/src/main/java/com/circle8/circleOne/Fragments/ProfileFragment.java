@@ -1101,6 +1101,8 @@ public class ProfileFragment extends Fragment
             public void onClick(View v)
             {
 //                Toast.makeText(getContext(),"Edit Profile",Toast.LENGTH_SHORT).show();
+
+                ivEditProfile.setBackground(getResources().getDrawable(R.drawable.ic_edit_gray));
                 Intent intent = new Intent(getContext(), EditProfileActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

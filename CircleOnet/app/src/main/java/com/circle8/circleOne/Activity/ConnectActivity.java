@@ -846,7 +846,25 @@ public class ConnectActivity extends AppCompatActivity
                     connectingTags.add(connectingModel);
 
                     activityConnect2Binding.tvPersonName.setText(profile.getString("FirstName")+" "+profile.getString("LastName"));
-                    activityConnect2Binding.tvCompanyName.setText(profile.getString("CompanyName"));
+
+                    if (profile.getString("Designation").equalsIgnoreCase(""))
+                    {
+                        activityConnect2Binding.tvPersonDesignation.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        activityConnect2Binding.tvPersonDesignation.setText(profile.getString("Designation"));
+                    }
+
+                    if (profile.getString("CompanyName").equalsIgnoreCase(""))
+                    {
+                        activityConnect2Binding.tvCompanyName.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        activityConnect2Binding.tvCompanyName.setText(profile.getString("CompanyName"));
+                    }
+
                     activityConnect2Binding.txtWeb.setText(profile.getString("Website"));
                     activityConnect2Binding.txtMail.setText(profile.getString("Email1"));
                     activityConnect2Binding.txtNum.setText(profile.getString("Phone1"));
@@ -854,8 +872,7 @@ public class ConnectActivity extends AppCompatActivity
                     activityConnect2Binding.txtMob.setText(profile.getString("Mobile1"));
                     Mobile1 = profile.getString("Mobile1");
                     Mobile2 = profile.getString("Mobile2");
-                    activityConnect2Binding.tvPersonDesignation.setText(profile.getString("Designation"));
-
+                    
                     profileImg = Utility.BASE_IMAGE_URL+"UserProfile/"+profile.getString("UserPhoto");
                     displayProfile = profile.getString("UserPhoto");
                     profileName = profile.getString("FirstName")+" "+profile.getString("LastName");

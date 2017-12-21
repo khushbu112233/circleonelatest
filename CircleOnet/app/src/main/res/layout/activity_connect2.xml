@@ -208,14 +208,14 @@
                 <ImageView
                     android:layout_marginLeft="20dp"
                     android:padding="3dp"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:src="@drawable/ic_call_gray"
                     android:layout_marginRight="70dp"/>
                 <ImageView
                     android:padding="3dp"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:src="@drawable/ic_sms_gray"
                     android:layout_marginRight="60dp"/>
                 <ImageView
