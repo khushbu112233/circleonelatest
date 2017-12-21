@@ -737,7 +737,6 @@ public class ProfileFragment extends Fragment
                             intent.putExtra("activity", "profile");
                             startActivity(intent);
                             getActivity().overridePendingTransition (0, 0);
-
                         }
                         else
                         {
@@ -748,7 +747,7 @@ public class ProfileFragment extends Fragment
                                     profileSession.createProfileSession(String.valueOf(i));
                                     profileIndex = i;
 //                                    Toast.makeText(getContext(), profile_array.get(i).toString(), Toast.LENGTH_LONG).show();
-                                    tvProfileName.setText(allTags.get(i).getProfile());
+
                                     tvPersonName.setText(allTags.get(i).getFirstName() + " "+ allTags.get(i).getLastName());
                                     tvDesignation.setText(allTags.get(i).getDesignation());
                                     tvCompany.setText(allTags.get(i).getCompanyName());
@@ -757,7 +756,7 @@ public class ProfileFragment extends Fragment
                                     tvDesi.setText(allTags.get(i).getDesignation());
                                     tvMob.setText(allTags.get(i).getMobile1());
                                     tvWork.setText(allTags.get(i).getPhone1());
-
+                                    tvProfileName.setText(allTags.get(i).getProfile());
 
                                     if(allTags.get(i).getIndustry().equalsIgnoreCase("")
                                             || allTags.get(i).getIndustry().equalsIgnoreCase("null"))

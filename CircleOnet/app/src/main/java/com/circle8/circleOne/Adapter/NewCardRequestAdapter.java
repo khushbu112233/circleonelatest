@@ -86,9 +86,6 @@ public class NewCardRequestAdapter extends RecyclerView.Adapter<NewCardRequestAd
             ivProfile = (CircleImageView)row.findViewById(R.id.imgProfile);
             tvProfile = (TextView)row.findViewById(R.id.tvProfile);
             ll_main = (LinearLayout)row.findViewById(R.id.ll_main);
-
-
-
         }
     }
     @Override

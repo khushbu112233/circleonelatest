@@ -46,9 +46,7 @@ import java.util.HashMap;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 public class ManageMyProfile extends AppCompatActivity
-
 {
-
     private RecyclerView listView ;
     private ArrayList<NewCardModel> newCardModelArrayList ;
     private NewCardRequestAdapter newCardRequestAdapter ;

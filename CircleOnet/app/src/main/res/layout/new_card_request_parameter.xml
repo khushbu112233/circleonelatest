@@ -29,105 +29,105 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical">
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/ic_acc_blue"
-                    android:layout_marginRight="15dp"/>
+                    android:layout_marginRight="10dp"/>
                 <com.circle8.circleOne.Utils.cgTextView
                     android:id="@+id/tvPerson"
-                    android:textAlignment="center"
-                    android:gravity="center"
                     android:textColor="#6b6c6e"
                     android:textSize="13sp"
                     android:text="Person"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical">
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/ic_ceo"
-                    android:layout_marginRight="15dp"/>
+                    android:layout_marginRight="10dp"/>
                 <com.circle8.circleOne.Utils.cgTextView
                     android:id="@+id/tvDesignation"
-                    android:textAlignment="center"
-                    android:gravity="center"
                     android:textColor="#6b6c6e"
                     android:textSize="13sp"
                     android:text="Designation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical">
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/ic_group_blue"
-                    android:layout_marginRight="15dp"/>
+                    android:layout_marginRight="10dp"/>
                 <com.circle8.circleOne.Utils.cgTextView
                     android:id="@+id/tvCompany"
-                    android:textAlignment="center"
-                    android:gravity="center"
                     android:textColor="#6b6c6e"
                     android:textSize="13sp"
                     android:text="Company"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical">
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/ic_mob_blue"
-                    android:layout_marginRight="15dp"/>
+                    android:src="@drawable/ic_phone_blue"
+                    android:layout_marginRight="10dp"/>
                 <com.circle8.circleOne.Utils.cgTextView
                     android:id="@+id/tvPhone"
-                    android:textAlignment="center"
-                    android:gravity="center"
                     android:textColor="#6b6c6e"
                     android:textSize="13sp"
                     android:text="Phone No."
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical">
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/ic_mail_blue"
-                    android:layout_marginRight="15dp"/>
+                    android:layout_marginRight="10dp"/>
                 <com.circle8.circleOne.Utils.cgTextView
                     android:id="@+id/tvEmail"
-                    android:textAlignment="center"
-                    android:gravity="center"
                     android:textColor="#6b6c6e"
                     android:textSize="13sp"
                     android:text="Email"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
         </LinearLayout>
