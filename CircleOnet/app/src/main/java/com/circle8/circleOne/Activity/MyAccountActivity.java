@@ -490,7 +490,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         tvCancel.setOnClickListener(this);
         rlMale.setOnClickListener(this);
         rlFemale.setOnClickListener(this);
-        ivMiniCamera.setOnClickListener(this);
+
         imgBack.setOnClickListener(this);
         ivEditImg.setOnClickListener(this);
         imgProfile.setOnClickListener(this);
@@ -604,6 +604,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             etYYYY.setEnabled(true);
 //            imgProfile.setEnabled(true);
             rltGender.setEnabled(true);
+            ivMiniCamera.setVisibility(View.VISIBLE);
 
             profilePicPress = true ;
 
@@ -653,13 +654,6 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         {
             finish();
         }
-        if ( v == ivMiniCamera)
-        {
-           // selectImage();
-           /* CropImage.activity(null)
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .start(MyAccountActivity.this);*/
-        }
         if( v == tvSave)
         {
             first_name = etFirstName.getText().toString();
@@ -680,7 +674,6 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             if (!contact.equals("")) {
                 phone_no = code + " " + contact;
             }
-
 
             if (!updateRegisterValidate(first_name, last_name, password, c_password, phone_no))
             {

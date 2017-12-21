@@ -173,7 +173,8 @@
                                 android:src="@drawable/ic_white_camera"
                                 android:layout_alignParentRight="false"
                                 android:layout_marginTop="50dp"
-                                android:layout_marginLeft="50dp" />
+                                android:layout_marginLeft="50dp"
+                                android:visibility="gone"/>
 
                         </RelativeLayout>
                         <com.circle8.circleOne.Utils.HelveticaLightTextView
@@ -603,7 +604,7 @@
                         android:textSize="15dp"
                         android:backgroundTint="@color/textColor"
                         android:textColorHint="@color/colorPrimary"
-                        android:text="*DOB :"
+                        android:text="DOB :"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.7"

@@ -92,7 +92,6 @@
                     android:layout_marginLeft="20dp"
                     android:textColor="@color/colorAccent" />
 
-
             </LinearLayout>
 
             <LinearLayout
