@@ -327,7 +327,7 @@ public class ByTitleFragment extends Fragment
                                     {
                                         if (listView.getLastVisiblePosition() >= count - threshold)
                                         {
-                                            rlLoadMore.setVisibility(View.VISIBLE);
+                                           // rlLoadMore.setVisibility(View.VISIBLE);
                                             // Execute LoadMoreDataTask AsyncTask
                                             new HttpAsyncTask().execute(Utility.BASE_URL+"SearchConnect");
                                         }

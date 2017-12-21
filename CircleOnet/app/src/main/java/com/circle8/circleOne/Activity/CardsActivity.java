@@ -108,6 +108,7 @@ import com.quickblox.sample.core.utils.SharedPrefsHelper;
 import com.quickblox.sample.core.utils.constant.GcmConsts;
 import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
+import com.stripe.model.Card;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 
@@ -260,6 +261,9 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 .build();
 
         session = new LoginSession(getApplicationContext());
+
+        new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
         HashMap<String, String> user = session.getUserDetails();
 
 
@@ -306,8 +310,6 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         }
 
         mNFCTechLists = new String[][] { new String[] { NfcF.class.getName() } };
-
-        new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         // mViewPager.setOverScrollMode(View.OVER_SCROLL_NEVER);
        /* mViewPager.setPageTransformer(true, new ViewPager.PageTransformer() {
             @Override
