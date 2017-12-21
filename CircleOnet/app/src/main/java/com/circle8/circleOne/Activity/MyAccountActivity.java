@@ -30,10 +30,14 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Helper.ReferralCodeSession;
 import com.circle8.circleOne.R;
@@ -121,6 +125,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     boolean profilePicPress = false ;
     TextView tvReferral;
     ReferralCodeSession referralCodeSession;
+    ProgressBar progressBar1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -142,7 +147,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         rltGender = (RelativeLayout) findViewById(R.id.rltGender);
         Q_ID = user.get(LoginSession.KEY_QID);
 //        Toast.makeText(getApplicationContext(),email_id+" "+user_pass,Toast.LENGTH_LONG).show();
-
+        progressBar1 = (ProgressBar) findViewById(R.id.progressBar1);
         imgProfile = (CircleImageView)findViewById(R.id.imgProfile);
         etUserName = (EditText)findViewById(R.id.etUserName);
         etFirstName = (EditText)findViewById(R.id.etFirstName);
@@ -292,11 +297,25 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             user_Photo = user.get(LoginSession.KEY_IMAGE);
             if (user_Photo.equals(""))
             {
+                progressBar1.setVisibility(View.GONE);
                 imgProfile.setImageResource(R.drawable.usr_white1);
             }
             else
             {
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+user_Photo).resize(300,300).onlyScaleDown().skipMemoryCache().placeholder(R.drawable.usr_1).into(imgProfile);
+                progressBar1.setVisibility(View.VISIBLE);
+               // Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+user_Photo).resize(300,300).onlyScaleDown().skipMemoryCache().placeholder(R.drawable.usr_1).into(imgProfile);
+
+                Glide.with(this).load(Utility.BASE_IMAGE_URL+"UserProfile/"+user_Photo)
+                        .asBitmap()
+                        .override(300,300)
+                        .into(new BitmapImageViewTarget(imgProfile) {
+                            @Override
+                            public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                                super.onResourceReady(drawable, anim);
+                                progressBar1.setVisibility(View.GONE);
+                                imgProfile.setImageBitmap(drawable);
+                            }
+                        });
             }
         }
         catch (Exception e)

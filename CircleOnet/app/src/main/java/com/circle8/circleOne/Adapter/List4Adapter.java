@@ -315,7 +315,7 @@ public class List4Adapter extends BaseSwipeAdapter
         {
             if(nfcModelList1.get(position).getUser_image().equals(""))
             {
-                holder.image.setVisibility(View.GONE);
+                //holder.image.setVisibility(View.GONE);
                 holder.progressBar1.setVisibility(View.GONE);
                 holder.image.setImageResource(R.drawable.usr);
             }

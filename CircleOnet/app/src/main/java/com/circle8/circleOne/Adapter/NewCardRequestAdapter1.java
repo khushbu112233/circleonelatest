@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -11,10 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.Activity.ImageZoom;
-
 import com.circle8.circleOne.Model.ProfileModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
@@ -80,6 +84,8 @@ public class NewCardRequestAdapter1 extends BaseAdapter
     {
         TextView tvPerson, tvDesignation, tvCompany, tvEmail, tvPhone, tvProfile ;
         CircleImageView ivProfile ;
+        ProgressBar progressBar1;
+
     }
 
     @Override
@@ -103,6 +109,7 @@ public class NewCardRequestAdapter1 extends BaseAdapter
             holder.tvPhone = (TextView)row.findViewById(R.id.tvPhone);
             holder.ivProfile = (CircleImageView)row.findViewById(R.id.imgProfile);
             holder.tvProfile = (TextView)row.findViewById(R.id.tvProfile);
+            holder.progressBar1= (ProgressBar)row.findViewById(R.id.progressBar1);
 
             row.setTag(holder);
         }
@@ -120,12 +127,27 @@ public class NewCardRequestAdapter1 extends BaseAdapter
 
             if (newCardModelArrayList.get(position).getUserPhoto().equals(""))
             {
+                holder.progressBar1.setVisibility(View.GONE);
                 holder.ivProfile.setImageResource(R.drawable.usr_1);
             }
             else
             {
-                Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+newCardModelArrayList.get(position).getUserPhoto())
+                holder.progressBar1.setVisibility(View.VISIBLE);
+                /*Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+newCardModelArrayList.get(position).getUserPhoto())
                         .resize(300,300).onlyScaleDown().skipMemoryCache().into(holder.ivProfile);
+*/
+                final ViewHolder finalHolder = holder;
+                Glide.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/"+newCardModelArrayList.get(position).getUserPhoto())
+                        .asBitmap()
+                        .override(300,300)
+                        .into(new BitmapImageViewTarget(finalHolder.ivProfile) {
+                            @Override
+                            public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                                super.onResourceReady(drawable, anim);
+                                finalHolder.progressBar1.setVisibility(View.GONE);
+                                finalHolder.ivProfile.setImageBitmap(drawable);
+                            }
+                        });
             }
 
             holder.ivProfile.setOnClickListener(new View.OnClickListener() {

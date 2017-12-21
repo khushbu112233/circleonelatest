@@ -2582,11 +2582,11 @@ public class EditProfileActivity extends AppCompatActivity implements
                     //   Upload();
 
                     if (cardType.equals("front")) {
-                        CardSwipe.imageView.setImageBitmap(bitmap);
+                        CardSwipe.holder.imageView.setImageBitmap(bitmap);
                         new HttpAsyncTaskFrontUpload().execute(Utility.BASE_URL+"ImgUpload");
                     }
                     else if (cardType.equals("back")) {
-                        CardSwipe.imageView.setImageBitmap(bitmap);
+                        CardSwipe.holder.imageView.setImageBitmap(bitmap);
                         new HttpAsyncTaskBackUpload().execute(Utility.BASE_URL+"ImgUpload");
                     }
                    /* else if (cropType.equals("attachment")){
@@ -2724,7 +2724,7 @@ public class EditProfileActivity extends AppCompatActivity implements
 
         final_ImgBase64 = BitMapToString(thumbnail);
         //   Upload();
-        CardSwipe.imageView.setImageBitmap(thumbnail);
+        CardSwipe.holder.imageView.setImageBitmap(thumbnail);
         if (cardType.equals("front"))
             new HttpAsyncTaskFrontUpload().execute(Utility.BASE_URL+"ImgUpload");
         else if (cardType.equals("back"))
@@ -2798,7 +2798,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         Log.d("base64string ", final_ImgBase64);
 //                Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
         // Upload();
-        CardSwipe.imageView.setImageBitmap(bitmap);
+        CardSwipe.holder.imageView.setImageBitmap(bitmap);
         if (cardType.equals("front"))
             new HttpAsyncTaskFrontUpload().execute(Utility.BASE_URL+"ImgUpload");
         else if (cardType.equals("back"))
