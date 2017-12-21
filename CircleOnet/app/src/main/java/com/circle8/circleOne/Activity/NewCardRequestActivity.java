@@ -124,6 +124,10 @@ public class NewCardRequestActivity extends AppCompatActivity
                         i.putExtra("profileID", allTags.get(position).getProfileID());
                         i.putExtra("Card_Front", allTags.get(position).getCard_Front());
                         i.putExtra("Card_Back", allTags.get(position).getCard_Back());
+                        i.putExtra("address", allTags.get(position).getAddress1()
+                                + " " + allTags.get(position).getAddress3() + " " + allTags.get(position).getAddress4()
+                                + " " + allTags.get(position).getCity() + " " + allTags.get(position).getState() + " " + allTags.get(position).getState()
+                                + " " + allTags.get(position).getCountry() + " " + allTags.get(position).getPostalcode());
                         startActivity(i);
                     }
                 });

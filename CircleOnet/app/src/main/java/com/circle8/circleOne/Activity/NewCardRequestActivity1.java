@@ -101,6 +101,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
     TextView tvPay, tvCancel, tvAmount ;
     StickyScrollView scrollView ;
     boolean lay_Enable = false ;
+    String address = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -162,6 +163,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
         Intent i = getIntent();
         image = i.getStringExtra("image");
         type = i.getStringExtra("type");
+        address = i.getStringExtra("address");
         profileId = i.getStringExtra("profileID");
         if (type.equals("string")) {
             card_back = i.getStringExtra("card_back");
@@ -220,7 +222,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
         etPerson.setText(i.getStringExtra("person"));
         etCompany.setText(i.getStringExtra("company"));
         etPhone.setText(i.getStringExtra("phone"));
-        etAddress1.setText("");
+        etAddress1.setText(address);
         etAddress2.setText("");
 
         imgBack.setOnClickListener(new View.OnClickListener() {
