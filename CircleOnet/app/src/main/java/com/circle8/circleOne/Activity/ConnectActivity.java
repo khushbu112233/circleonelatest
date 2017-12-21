@@ -872,7 +872,7 @@ public class ConnectActivity extends AppCompatActivity
                     activityConnect2Binding.txtMob.setText(profile.getString("Mobile1"));
                     Mobile1 = profile.getString("Mobile1");
                     Mobile2 = profile.getString("Mobile2");
-                    
+
                     profileImg = Utility.BASE_IMAGE_URL+"UserProfile/"+profile.getString("UserPhoto");
                     displayProfile = profile.getString("UserPhoto");
                     profileName = profile.getString("FirstName")+" "+profile.getString("LastName");
