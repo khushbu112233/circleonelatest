@@ -27,12 +27,24 @@
             app:sl_shadowColor="#AA000000"
             app:sl_shadowRadius="4dp">
 
-            <ImageView
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ProgressBar
+                    android:id="@+id/progressBar1"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:visibility="visible"
+                    android:layout_centerInParent="true"
+                    />
+
+                <ImageView
                 android:id="@+id/image1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY" />
-
+            </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/rltDefaultCard"
                 android:layout_width="match_parent"
