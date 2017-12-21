@@ -210,11 +210,10 @@
                             </LinearLayout>
 
                             <LinearLayout
-
                                 android:layout_alignParentBottom="true"
                                 android:layout_alignParentRight="true"
                                 android:layout_marginRight="15dp"
-                                android:layout_marginBottom="10dp"
+                                android:layout_marginBottom="5dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
@@ -326,6 +325,9 @@
                             android:id="@+id/tvProfileName"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginBottom="17dp"
                             android:gravity="center"
                             android:text="Profile"
                             android:textAlignment="center"
@@ -546,6 +548,32 @@
 
                         <com.circle8.circleOne.Utils.cgTextView
                             android:id="@+id/tvMail"
+                            android:textAlignment="center"
+                            android:gravity="center"
+                            android:textColor="#6b6c6e"
+                            android:textSize="13sp"
+                            android:text="Email Address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llMailBox1"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_marginRight="20dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_mail_blue"/>
+
+                        <com.circle8.circleOne.Utils.cgTextView
+                            android:id="@+id/tvMail1"
                             android:textAlignment="center"
                             android:gravity="center"
                             android:textColor="#6b6c6e"

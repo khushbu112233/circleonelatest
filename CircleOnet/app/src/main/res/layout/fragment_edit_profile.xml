@@ -210,7 +210,7 @@
                                     android:layout_height="35dp"
                                     android:layout_alignParentBottom="true"
                                     android:layout_alignParentRight="true"
-                                    android:layout_marginBottom="10dp"
+                                    android:layout_marginBottom="5dp"
                                     android:layout_marginRight="15dp"
                                     android:src="@drawable/ic_delete_white" />
 
@@ -313,10 +313,16 @@
 
                             <ImageView
                                 android:tint="@color/colorPrimary"
-                                android:layout_width="25dp"
-                                android:layout_height="25dp"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
                                 android:layout_marginRight="15dp"
                                 android:src="@drawable/new_profile1" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="*"
+                                android:textColor="@color/colorPrimary"/>
 
                             <com.circle8.circleOne.Utils.cgEditView
                                 android:id="@+id/edtProfileName"
@@ -325,7 +331,7 @@
                                 android:gravity="center_vertical"
                                 android:paddingBottom="10dp"
                                 android:paddingLeft="10dp"
-                                android:hint="* Profile Name"
+                                android:hint="Profile Name"
                                 android:textSize="13sp"
                                 android:backgroundTint="@color/colorPrimary"/>
                         </LinearLayout>
@@ -352,23 +358,35 @@
                                 android:orientation="horizontal"
                                 android:weightSum="1">
 
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="*"
+                                    android:textColor="@color/colorPrimary"/>
+
                                 <com.circle8.circleOne.Utils.cgEditView
                                     android:id="@+id/edtFirstName"
                                     android:layout_weight="0.5"
                                     android:textSize="13sp"
                                     android:backgroundTint="@color/colorPrimary"
-                                    android:hint="* First Name"
+                                    android:hint="First Name"
                                     android:paddingLeft="10dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:inputType="textPersonName|text"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="*"
+                                    android:textColor="@color/colorPrimary"/>
 
                                 <com.circle8.circleOne.Utils.cgEditView
                                     android:id="@+id/edtLastName"
                                     android:layout_weight="0.5"
                                     android:textSize="13sp"
                                     android:backgroundTint="@color/colorPrimary"
-                                    android:hint="* Last Name"
+                                    android:hint="Last Name"
                                     android:paddingLeft="10dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -404,13 +422,19 @@
                                 android:layout_marginRight="20dp"
                                 android:src="@drawable/ic_ceo" />
 
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="*"
+                                android:textColor="@color/colorPrimary"/>
+
                             <AutoCompleteTextView
                                 android:id="@+id/autoCompleteDesignation"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ems="10"
                                 android:gravity="center_vertical"
-                                android:hint="* Title"
+                                android:hint="Title"
                                 android:paddingBottom="10dp"
                                 android:paddingLeft="10dp"
                                 android:textSize="13sp"
@@ -432,6 +456,12 @@
                                 android:layout_marginRight="20dp"
                                 android:src="@drawable/ic_group_blue" />
 
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="*"
+                                android:textColor="@color/colorPrimary"/>
+
                             <AutoCompleteTextView
                                 android:id="@+id/autoCompleteCompany"
                                 android:layout_width="match_parent"
@@ -440,7 +470,7 @@
                                 android:gravity="center_vertical"
                                 android:paddingBottom="10dp"
                                 android:paddingLeft="10dp"
-                                android:hint="* Company Name"
+                                android:hint="Company Name"
                                 android:textSize="13sp"
                                 android:backgroundTint="@color/colorPrimary"/>
 
@@ -460,6 +490,12 @@
                                 android:layout_height="20dp"
                                 android:layout_marginRight="20dp"
                                 android:src="@drawable/ic_branding" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="*"
+                                android:textColor="@color/colorPrimary"/>
 
                             <AutoCompleteTextView
                                 android:id="@+id/autoCompleteIndustry"
@@ -488,6 +524,12 @@
                                 android:layout_height="20dp"
                                 android:layout_marginRight="20dp"
                                 android:src="@drawable/ic_mob_blue" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="*"
+                                android:textColor="@color/colorPrimary"/>
 
                             <com.hbb20.CountryCodePicker
                                 app:ccp_defaultNameCode="SG"
@@ -522,7 +564,7 @@
                                     android:gravity="center_vertical"
                                     android:paddingBottom="10dp"
                                     android:paddingLeft="10dp"
-                                    android:hint="* Mobile 1"
+                                    android:hint="Mobile 1"
                                     android:textSize="13sp"
                                     android:layout_weight="0.8"
                                     android:layout_marginRight="10dp"
@@ -554,6 +596,12 @@
                                 android:layout_height="20dp"
                                 android:layout_marginRight="20dp"
                                 android:src="@drawable/ic_mob_blue" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="*"
+                                android:textColor="@color/colorPrimary"/>
 
                             <com.hbb20.CountryCodePicker
                                 android:inputType="number"
@@ -872,6 +920,12 @@
                                 android:layout_marginRight="20dp"
                                 android:src="@drawable/ic_mail_blue" />
 
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="*"
+                                android:textColor="@color/colorPrimary"/>
+
                             <com.circle8.circleOne.Utils.cgEditView
                                 android:id="@+id/edtEmail"
                                 android:layout_width="match_parent"
@@ -879,7 +933,7 @@
                                 android:gravity="center_vertical"
                                 android:paddingBottom="10dp"
                                 android:paddingLeft="10dp"
-                                android:hint="* Email1"
+                                android:hint="Email1"
                                 android:textSize="13sp"
                                 android:backgroundTint="@color/colorPrimary"/>
                         </LinearLayout>
