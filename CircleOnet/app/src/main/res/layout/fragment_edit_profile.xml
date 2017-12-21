@@ -315,7 +315,7 @@
                                 android:tint="@color/colorPrimary"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
-                                android:layout_marginRight="15dp"
+                                android:layout_marginRight="20dp"
                                 android:src="@drawable/new_profile1" />
 
                             <TextView

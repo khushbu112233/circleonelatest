@@ -1690,7 +1690,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("Phone2", Phone2);
             jsonObject.accumulate("Postalcode", edtAddress6.getText().toString());
             jsonObject.accumulate("ProfileID", profileId);
-            jsonObject.accumulate("Profile_Desc", ProfileDesc);
+            jsonObject.accumulate("Profile_Desc", edtProfileDesc.getText().toString());
             jsonObject.accumulate("Profile_Type", "");
             jsonObject.accumulate("State", edtAddress4.getText().toString());
             jsonObject.accumulate("Twitter", strTwitter);
@@ -2281,7 +2281,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             jsonObject.accumulate("Phone2", Phone2);
             jsonObject.accumulate("Postalcode", edtAddress6.getText().toString());
             jsonObject.accumulate("ProfileID", profileId);
-            jsonObject.accumulate("Profile_Desc", ProfileDesc);
+            jsonObject.accumulate("Profile_Desc", edtProfileDesc.getText().toString());
             jsonObject.accumulate("Profile_Type", "");
             jsonObject.accumulate("State", edtAddress4.getText().toString());
             jsonObject.accumulate("Twitter", strTwitter);
