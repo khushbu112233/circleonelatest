@@ -1145,7 +1145,6 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 } catch (Exception e) {
                 }
 
-
                 try {
                     mAuth.signOut();
                     Twitter.logOut();
