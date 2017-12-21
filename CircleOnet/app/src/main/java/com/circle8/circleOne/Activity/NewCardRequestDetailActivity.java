@@ -97,7 +97,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
     ImageView ivAlphaImg ;
     private int REQUEST_CAMERA = 0, REQUEST_GALLERY = 1, REQUEST_DOCUMENT = 2, REQUEST_AUDIO = 3;
     String Attach_String = "", attachDoc = "";
-    private String final_attachment = "";
+    private String final_attachment = "", address = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -146,6 +146,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
         profileID = i.getStringExtra("profileID");
         Card_Front = i.getStringExtra("Card_Front");
         Card_Back = i.getStringExtra("Card_Back");
+        address = i.getStringExtra("address");
 
         recycle_image1 =Utility.BASE_IMAGE_URL+"Cards/"+Card_Front ;
         recycle_image2 =Utility.BASE_IMAGE_URL+"Cards/"+Card_Back ;
@@ -221,6 +222,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                 i.putExtra("card_front", Card_Front);
                 i.putExtra("card_back", Card_Back);
                 i.putExtra("type", "string");
+                i.putExtra("address", address);
                 startActivity(i);
 
                 rlLayOne.setEnabled(true);
@@ -275,6 +277,8 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                         i.putExtra("card_front", final_attachment);
                         i.putExtra("card_back", "");
                         i.putExtra("type", "string");
+                        i.putExtra("address", address);
+
                         startActivity(i);
 
                         rlLayOne.setEnabled(true);
@@ -300,6 +304,8 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                     i.putExtra("image", image);
                     i.putExtra("phone",phone);
                     i.putExtra("profileID",profileID);
+                    i.putExtra("address", address);
+
 /*
                     i.putExtra("card_front", CardFront);
                     i.putExtra("card_back", CardBack);
@@ -583,6 +589,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                         i.putExtra("card_back", CardBack);
                         i.putExtra("type", "bitmap");
                         i.putExtra("profileID",profileID);
+                        i.putExtra("address", address);
                         startActivity(i);
 
                         rlLayOne.setEnabled(true);
