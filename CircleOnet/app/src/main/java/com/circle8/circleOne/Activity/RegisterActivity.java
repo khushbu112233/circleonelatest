@@ -642,6 +642,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         startActivityForResult(intent, REQUEST_CAMERA);
     }
 
+    public String getRealPathFromURI(Uri uri) {
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+        return cursor.getString(idx);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -658,6 +665,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                 try {
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(result.getUri()));
+                    if (bitmap.equals("") || bitmap == null) {
+                        bitmap=BitmapFactory.decodeFile(getRealPathFromURI(result.getUri()));
+                    }
                     // originalBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
                     long size = Utility.imageCalculateSize(bitmap);
 

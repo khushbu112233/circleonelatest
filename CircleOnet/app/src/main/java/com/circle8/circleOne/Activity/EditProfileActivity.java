@@ -58,6 +58,7 @@ import com.circle8.circleOne.Adapter.AddEventAdapter;
 import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.Adapter.CardViewDataAdapter;
 import com.circle8.circleOne.Adapter.CustomAdapter;
+import com.circle8.circleOne.Fragments.ProfileFragment;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Helper.ProfileSession;
 import com.circle8.circleOne.Helper.ReferralCodeSession;
@@ -2540,6 +2541,9 @@ public class EditProfileActivity extends AppCompatActivity implements
 
                 try {
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(result.getUri()));
+                    if (bitmap.equals("") || bitmap == null) {
+                        bitmap=BitmapFactory.decodeFile(getRealPathFromURI(result.getUri()));
+                    }
                    // originalBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
                     long size = Utility.imageCalculateSize(bitmap);
 
@@ -3222,13 +3226,13 @@ public class EditProfileActivity extends AppCompatActivity implements
                             finish();
                         }else {
                             Toast.makeText(getApplicationContext(), "Successfully Added", Toast.LENGTH_SHORT).show();
-                            Intent go = new Intent(getApplicationContext(), CardsActivity.class);
+                           /* Intent go = new Intent(getApplicationContext(), CardsActivity.class);
 
                             // you pass the position you want the viewpager to show in the extra,
                             // please don't forget to define and initialize the position variable
                             // properly
                             go.putExtra("viewpager_position", 3);
-                            startActivity(go);
+                            startActivity(go);*/
                             finish();
                         }
                     } else {
@@ -3914,19 +3918,49 @@ public class EditProfileActivity extends AppCompatActivity implements
                         }
                         else
                         {
-                            Toast.makeText(getApplicationContext(), "Successfully Updated", Toast.LENGTH_SHORT).show();
-                            Intent go = new Intent(getApplicationContext(), CardsActivity.class);
 
-                            // you pass the position you want the viewpager to show in the extra,
-                            // please don't forget to define and initialize the position variable
-                            // properly
-                            go.putExtra("viewpager_position", 3);
-                            startActivity(go);
 
                           //ProfileFragment.callMyProfile();
-
-
+                            Toast.makeText(getApplicationContext(), "Successfully Updated", Toast.LENGTH_SHORT).show();
                             finish();
+
+                           /* Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
+                            overridePendingTransition(0, 0);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            finish();
+                            overridePendingTransition(0, 0);
+                            startActivity(intent);*/
+
+                          /*  ProfileFragment.mHandler = new Handler();
+
+                            ProfileFragment.mHandler.postDelayed(ProfileFragment.m_Runnable,1000);
+*/
+                           /* new Thread(new Runnable() {
+
+                                @Override
+                                public void run() {
+
+                                    // TODO Auto-generated method stub
+                                    try {
+
+                                     //   Toast.makeText(getApplicationContext(), "Successfully Updated", Toast.LENGTH_SHORT).show();
+                                        Intent go = new Intent(getApplicationContext(), CardsActivity.class);
+
+                                        // you pass the position you want the viewpager to show in the extra,
+                                        // please don't forget to define and initialize the position variable
+                                        // properly
+                                        go.putExtra("viewpager_position", 3);
+                                        startActivity(go);
+
+                                    } catch (Exception ex) {
+                                        ex.printStackTrace();
+                                    }
+
+
+                                }
+
+
+                            }).start();*/
                         }
                     } else {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();

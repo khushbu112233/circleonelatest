@@ -855,6 +855,13 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         startActivityForResult(intent, REQUEST_CAMERA);
     }
 
+    public String getRealPathFromURI(Uri uri) {
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+        return cursor.getString(idx);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -874,6 +881,9 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                 Utility.freeMemory();
                 try {
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(result.getUri()));
+                    if (bitmap.equals("") || bitmap == null) {
+                        bitmap=BitmapFactory.decodeFile(getRealPathFromURI(result.getUri()));
+                    }
                     // originalBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
                     Utility.freeMemory();
 
