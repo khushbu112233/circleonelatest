@@ -17,15 +17,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_marginLeft="8dp"
-        app:civ_border_width="2dp"
-        app:civ_border_color="@color/colorPrimary"
-        android:layout_gravity="center_vertical"
-        android:src="@drawable/usr"
-        android:id="@+id/imageList4"
-        android:layout_width="70dp"
-        android:layout_height="70dp" />
+
+
+        <FrameLayout
+            android:id="@+id/fm_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_marginLeft="8dp"
+                app:civ_border_width="2dp"
+                app:civ_border_color="@color/colorPrimary"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/usr"
+                android:id="@+id/imageList4"
+                android:layout_width="70dp"
+                android:layout_height="70dp" />
+            <ProgressBar
+                android:id="@+id/progressBar1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                />
+
+        </FrameLayout>
+
 
     <LinearLayout
         android:layout_marginLeft="10dp"

@@ -1,17 +1,21 @@
 package com.circle8.circleOne.Adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Model.ConnectList;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -58,6 +62,7 @@ public class ConnectListAdapter extends BaseAdapter
     {
         TextView nameText, descText, detailText ;
         CircleImageView circleImageView ;
+        ProgressBar progressBar1;
     }
 
     @Override
@@ -76,6 +81,7 @@ public class ConnectListAdapter extends BaseAdapter
             holder.nameText = (TextView)row.findViewById(R.id.textNameList3);
             holder.descText = (TextView)row.findViewById(R.id.textDescList3);
             holder.detailText = (TextView)row.findViewById(R.id.textList3);
+            holder.progressBar1 = (ProgressBar) row.findViewById(R.id.progressBar1);
 
             row.setTag(holder);
         }
@@ -128,8 +134,22 @@ public class ConnectListAdapter extends BaseAdapter
 
             if (connectLists.get(position).getUserphoto().equalsIgnoreCase("")) {
                 holder.circleImageView.setImageResource(R.drawable.usr);
+                holder.progressBar1.setVisibility(View.GONE);
             } else {
-                Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/" + connectLists.get(position).getUserphoto()).resize(300,300).onlyScaleDown().skipMemoryCache().into(holder.circleImageView);
+                holder.progressBar1.setVisibility(View.VISIBLE);
+               // Picasso.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/" + connectLists.get(position).getUserphoto()).resize(300,300).onlyScaleDown().skipMemoryCache().into(holder.circleImageView);
+
+                final ViewHolder finalHolder = holder;
+                Glide.with(context).load(Utility.BASE_IMAGE_URL+"UserProfile/" + connectLists.get(position).getUserphoto())
+                        .asBitmap()
+                        .into(new BitmapImageViewTarget(finalHolder.circleImageView) {
+                            @Override
+                            public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                                super.onResourceReady(drawable, anim);
+                                finalHolder.progressBar1.setVisibility(View.GONE);
+                                finalHolder.circleImageView.setImageBitmap(drawable);
+                            }
+                        });
             }
         }catch (Exception e){}
 
