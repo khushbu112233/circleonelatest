@@ -233,15 +233,24 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             activityConnect5Binding.txtName1.setText(userName1);
             activityConnect5Binding.txtName2.setText(userName2);
 
-            if (userPhoto1.equals("") || userPhoto2.equals("") )
+            if (userPhoto1.equals("")  )
             {
-                activityConnect5Binding.ivProfile1.setImageResource(R.drawable.usr_1);
-                activityConnect5Binding.ivProfile2.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile1.setImageResource(R.drawable.usr_white);
             }
             else
             {
                 Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile1);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile2);
+            }
+
+            if (userPhoto2.equals("")  )
+            {
+                activityConnect5Binding.ivProfile2.setImageResource(R.drawable.usr_white);
+            }
+            else
+            {
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2)
+                        .resize(300,300).onlyScaleDown().skipMemoryCache()
+                        .into(activityConnect5Binding.ivProfile2);
             }
 
             activityConnect5Binding.ivProfile3.setVisibility(View.INVISIBLE);
@@ -283,17 +292,35 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             activityConnect5Binding.txtName2.setText(userName2);
             activityConnect5Binding.txtName3.setText(userName3);
 
-            if (userPhoto1.equals("") || userPhoto2.equals("") || userPhoto3.equals(""))
+            if (userPhoto1.equals("")  )
             {
-                activityConnect5Binding.ivProfile1.setImageResource(R.drawable.usr_1);
-                activityConnect5Binding.ivProfile2.setImageResource(R.drawable.usr_1);
-                activityConnect5Binding.ivProfile3.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile1.setImageResource(R.drawable.usr_white);
             }
             else
             {
                 Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile1);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile2);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile3);
+            }
+
+            if (userPhoto2.equals("")  )
+            {
+                activityConnect5Binding.ivProfile2.setImageResource(R.drawable.usr_white);
+            }
+            else
+            {
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2)
+                        .resize(300,300).onlyScaleDown().skipMemoryCache()
+                        .into(activityConnect5Binding.ivProfile2);
+            }
+
+            if (userPhoto3.equals("")  )
+            {
+                activityConnect5Binding.ivProfile3.setImageResource(R.drawable.usr_white);
+            }
+            else
+            {
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3)
+                        .resize(300,300).onlyScaleDown().skipMemoryCache()
+                        .into(activityConnect5Binding.ivProfile3);
             }
 
             activityConnect5Binding.ivProfile4.setVisibility(View.INVISIBLE);
@@ -334,19 +361,46 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             activityConnect5Binding.txtName3.setText(userName3);
             activityConnect5Binding.txtName4.setText(userName4);
 
-            if (userPhoto1.equals("") || userPhoto2.equals("") || userPhoto3.equals("") || userPhoto4.equals(""))
+            if (userPhoto1.equals("")  )
             {
-                activityConnect5Binding.ivProfile1.setImageResource(R.drawable.usr_1);
-                activityConnect5Binding. ivProfile2.setImageResource(R.drawable.usr_1);
-                activityConnect5Binding.ivProfile3.setImageResource(R.drawable.usr_1);
-                activityConnect5Binding.ivProfile4.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile1.setImageResource(R.drawable.usr_white);
             }
             else
             {
                 Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile1);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile2);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile3);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile4);
+            }
+
+            if (userPhoto2.equals("")  )
+            {
+                activityConnect5Binding.ivProfile2.setImageResource(R.drawable.usr_white);
+            }
+            else
+            {
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2)
+                        .resize(300,300).onlyScaleDown().skipMemoryCache()
+                        .into(activityConnect5Binding.ivProfile2);
+            }
+
+            if (userPhoto3.equals("")  )
+            {
+                activityConnect5Binding.ivProfile3.setImageResource(R.drawable.usr_white);
+            }
+            else
+            {
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3)
+                        .resize(300,300).onlyScaleDown().skipMemoryCache()
+                        .into(activityConnect5Binding.ivProfile3);
+            }
+
+            if (userPhoto4.equals("")  )
+            {
+                activityConnect5Binding.ivProfile4.setImageResource(R.drawable.usr_white);
+            }
+            else
+            {
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4)
+                        .resize(300,300).onlyScaleDown().skipMemoryCache()
+                        .into(activityConnect5Binding.ivProfile4);
             }
 
             activityConnect5Binding.ivProfile5.setVisibility(View.INVISIBLE);
@@ -387,22 +441,57 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             activityConnect5Binding.txtName4.setText(userName4);
             activityConnect5Binding.txtName5.setText(userName5);
 
-            if (userPhoto1.equals("") || userPhoto2.equals("") || userPhoto3.equals("") || userPhoto4.equals("")
-                    || userPhoto5.equals(""))
+            if (userPhoto1.equals("")  )
             {
-                activityConnect5Binding.ivProfile1.setImageResource(R.drawable.usr_1);
-                activityConnect5Binding. ivProfile2.setImageResource(R.drawable.usr_1);
-                activityConnect5Binding.ivProfile3.setImageResource(R.drawable.usr_1);
-                activityConnect5Binding.ivProfile4.setImageResource(R.drawable.usr_1);
-                activityConnect5Binding.ivProfile5.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile1.setImageResource(R.drawable.usr_white);
             }
             else
             {
                 Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile1);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile2);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile3);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile4);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto5).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile5);
+            }
+
+            if (userPhoto2.equals("")  )
+            {
+                activityConnect5Binding.ivProfile2.setImageResource(R.drawable.usr_white);
+            }
+            else
+            {
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2)
+                        .resize(300,300).onlyScaleDown().skipMemoryCache()
+                        .into(activityConnect5Binding.ivProfile2);
+            }
+
+            if (userPhoto3.equals("")  )
+            {
+                activityConnect5Binding.ivProfile3.setImageResource(R.drawable.usr_white);
+            }
+            else
+            {
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3)
+                        .resize(300,300).onlyScaleDown().skipMemoryCache()
+                        .into(activityConnect5Binding.ivProfile3);
+            }
+
+            if (userPhoto4.equals("")  )
+            {
+                activityConnect5Binding.ivProfile4.setImageResource(R.drawable.usr_white);
+            }
+            else
+            {
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4)
+                        .resize(300,300).onlyScaleDown().skipMemoryCache()
+                        .into(activityConnect5Binding.ivProfile4);
+            }
+
+            if (userPhoto5.equals("")  )
+            {
+                activityConnect5Binding.ivProfile5.setImageResource(R.drawable.usr_white);
+            }
+            else
+            {
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto5)
+                        .resize(300,300).onlyScaleDown().skipMemoryCache()
+                        .into(activityConnect5Binding.ivProfile5);
             }
 
             activityConnect5Binding.ivProfile6.setVisibility(View.INVISIBLE);
@@ -443,24 +532,68 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             activityConnect5Binding.txtName5.setText(userName5);
             activityConnect5Binding.txtName6.setText(userName6);
 
-            if (userPhoto1.equals("") || userPhoto2.equals("") || userPhoto3.equals("") || userPhoto4.equals("")
-                    || userPhoto5.equals("") || userPhoto6.equals(""))
+            if (userPhoto1.equals("")  )
             {
-                activityConnect5Binding.ivProfile1.setImageResource(R.drawable.usr_1);
-                activityConnect5Binding.ivProfile2.setImageResource(R.drawable.usr_1);
-                activityConnect5Binding.ivProfile3.setImageResource(R.drawable.usr_1);
-                activityConnect5Binding.ivProfile4.setImageResource(R.drawable.usr_1);
-                activityConnect5Binding.ivProfile5.setImageResource(R.drawable.usr_1);
-                activityConnect5Binding.ivProfile6.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile1.setImageResource(R.drawable.usr_white);
             }
             else
             {
                 Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile1);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile2);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile3);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile4);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto5).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile5);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto6).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile6);
+            }
+
+            if (userPhoto2.equals("")  )
+            {
+                activityConnect5Binding.ivProfile2.setImageResource(R.drawable.usr_white);
+            }
+            else
+            {
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2)
+                        .resize(300,300).onlyScaleDown().skipMemoryCache()
+                        .into(activityConnect5Binding.ivProfile2);
+            }
+
+            if (userPhoto3.equals("")  )
+            {
+                activityConnect5Binding.ivProfile3.setImageResource(R.drawable.usr_white);
+            }
+            else
+            {
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3)
+                        .resize(300,300).onlyScaleDown().skipMemoryCache()
+                        .into(activityConnect5Binding.ivProfile3);
+            }
+
+            if (userPhoto4.equals("")  )
+            {
+                activityConnect5Binding.ivProfile4.setImageResource(R.drawable.usr_white);
+            }
+            else
+            {
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4)
+                        .resize(300,300).onlyScaleDown().skipMemoryCache()
+                        .into(activityConnect5Binding.ivProfile4);
+            }
+
+            if (userPhoto5.equals("")  )
+            {
+                activityConnect5Binding.ivProfile5.setImageResource(R.drawable.usr_white);
+            }
+            else
+            {
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto5)
+                        .resize(300,300).onlyScaleDown().skipMemoryCache()
+                        .into(activityConnect5Binding.ivProfile5);
+            }
+
+            if (userPhoto6.equals("")  )
+            {
+                activityConnect5Binding.ivProfile6.setImageResource(R.drawable.usr_white);
+            }
+            else
+            {
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto6)
+                        .resize(300,300).onlyScaleDown().skipMemoryCache()
+                        .into(activityConnect5Binding.ivProfile6);
             }
 
             activityConnect5Binding.ivProfile7.setVisibility(View.INVISIBLE);
@@ -501,26 +634,79 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             activityConnect5Binding.txtName6.setText(userName6);
             activityConnect5Binding.txtName7.setText(userName7);
 
-            if (userPhoto1.equals("") || userPhoto2.equals("") || userPhoto3.equals("") || userPhoto4.equals("")
-                    || userPhoto5.equals("") || userPhoto6.equals("") || userPhoto7.equals(""))
+            if (userPhoto1.equals("")  )
             {
-                activityConnect5Binding.ivProfile1.setImageResource(R.drawable.usr_1);
-                activityConnect5Binding.ivProfile2.setImageResource(R.drawable.usr_1);
-                activityConnect5Binding. ivProfile3.setImageResource(R.drawable.usr_1);
-                activityConnect5Binding.ivProfile4.setImageResource(R.drawable.usr_1);
-                activityConnect5Binding.ivProfile5.setImageResource(R.drawable.usr_1);
-                activityConnect5Binding.ivProfile6.setImageResource(R.drawable.usr_1);
-                activityConnect5Binding.ivProfile7.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile1.setImageResource(R.drawable.usr_white);
             }
             else
             {
                 Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto1).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile1);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile2);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile3);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile4);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto5).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile5);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto6).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile6);
-                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto7).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect5Binding.ivProfile7);
+            }
+
+            if (userPhoto2.equals("")  )
+            {
+                activityConnect5Binding.ivProfile2.setImageResource(R.drawable.usr_white);
+            }
+            else
+            {
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto2)
+                        .resize(300,300).onlyScaleDown().skipMemoryCache()
+                        .into(activityConnect5Binding.ivProfile2);
+            }
+
+            if (userPhoto3.equals("")  )
+            {
+                activityConnect5Binding.ivProfile3.setImageResource(R.drawable.usr_white);
+            }
+            else
+            {
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto3)
+                        .resize(300,300).onlyScaleDown().skipMemoryCache()
+                        .into(activityConnect5Binding.ivProfile3);
+            }
+
+            if (userPhoto4.equals("")  )
+            {
+                activityConnect5Binding.ivProfile4.setImageResource(R.drawable.usr_white);
+            }
+            else
+            {
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto4)
+                        .resize(300,300).onlyScaleDown().skipMemoryCache()
+                        .into(activityConnect5Binding.ivProfile4);
+            }
+
+            if (userPhoto5.equals("")  )
+            {
+                activityConnect5Binding.ivProfile5.setImageResource(R.drawable.usr_white);
+            }
+            else
+            {
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto5)
+                        .resize(300,300).onlyScaleDown().skipMemoryCache()
+                        .into(activityConnect5Binding.ivProfile5);
+            }
+
+            if (userPhoto6.equals("")  )
+            {
+                activityConnect5Binding.ivProfile6.setImageResource(R.drawable.usr_white);
+            }
+            else
+            {
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto6)
+                        .resize(300,300).onlyScaleDown().skipMemoryCache()
+                        .into(activityConnect5Binding.ivProfile6);
+            }
+
+            if (userPhoto7.equals("")  )
+            {
+                activityConnect5Binding.ivProfile7.setImageResource(R.drawable.usr_white);
+            }
+            else
+            {
+                Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto7)
+                        .resize(300,300).onlyScaleDown().skipMemoryCache()
+                        .into(activityConnect5Binding.ivProfile7);
             }
         }
 

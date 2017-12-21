@@ -107,7 +107,9 @@ public class Notification extends AppCompatActivity
         imgLogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                allTagsList.clear();
+                allTags.clear();
+                pageno = 1;
                 finish();
             }
         });
