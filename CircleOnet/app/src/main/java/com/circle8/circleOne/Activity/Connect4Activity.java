@@ -76,7 +76,7 @@ public class Connect4Activity extends AppCompatActivity
             Utility.freeMemory();
             if (profile.equalsIgnoreCase("") || profile.equalsIgnoreCase("null"))
             {
-                activityConnect4Binding.ivImage1.setImageResource(R.drawable.usr);
+                activityConnect4Binding.ivImage1.setImageResource(R.drawable.usr_white);
             }
             else
             {
@@ -84,7 +84,7 @@ public class Connect4Activity extends AppCompatActivity
             }
         }
         catch (Exception e) {
-            activityConnect4Binding.ivImage1.setImageResource(R.drawable.usr);
+            activityConnect4Binding.ivImage1.setImageResource(R.drawable.usr_white);
         }
 
            /* try
