@@ -8,7 +8,19 @@
         "source": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\library\\build\\intermediates\\bundles\\debug\\res\\drawable\\ic_next.png"
     },
     {
+        "merged": "D:\\Khushbu\\CircleOne\\Project\\CircleOneFinal\\CircleOnet\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\ic_previous.png",
+        "source": "D:\\Khushbu\\CircleOne\\Project\\CircleOneFinal\\CircleOnet\\library\\build\\intermediates\\bundles\\debug\\res\\drawable\\ic_previous.png"
+    },
+    {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\ic_previous.png",
         "source": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\library\\build\\intermediates\\bundles\\debug\\res\\drawable\\ic_previous.png"
+    },
+    {
+        "merged": "D:\\Khushbu\\CircleOne\\Project\\CircleOneFinal\\CircleOnet\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\ic_next.png",
+        "source": "D:\\Khushbu\\CircleOne\\Project\\CircleOneFinal\\CircleOnet\\library\\build\\intermediates\\bundles\\debug\\res\\drawable\\ic_next.png"
+    },
+    {
+        "merged": "D:\\Khushbu\\CircleOne\\Project\\CircleOneFinal\\CircleOnet\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\button_next_month_selector.xml",
+        "source": "D:\\Khushbu\\CircleOne\\Project\\CircleOneFinal\\CircleOnet\\library\\build\\intermediates\\bundles\\debug\\res\\drawable\\button_next_month_selector.xml"
     }
 ]
