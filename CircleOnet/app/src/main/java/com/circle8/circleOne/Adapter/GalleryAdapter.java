@@ -180,21 +180,21 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             try
             {
                 try {
-                    if (nfcModelList.get(position).getDesignation().equals("") || nfcModelList.get(position).getDesignation().equals("null")
+                    if (nfcModelList.get(position).getDesignation().trim().equals("") || nfcModelList.get(position).getDesignation().equals("null")
                             || nfcModelList.get(position).getDesignation() == null) {
                         tvPersonProfile.setVisibility(View.GONE);
                     }
                 }catch (Exception e){}
 
                 try {
-                if (nfcModelList.get(position).getEmail().equals("") || nfcModelList.get(position).getEmail().equals("null")
+                if (nfcModelList.get(position).getEmail().trim().equals("") || nfcModelList.get(position).getEmail().equals("null")
                         || nfcModelList.get(position).getEmail() == null) {
                     tvPersonWebsite.setVisibility(View.GONE);
                 }
                 }catch (Exception e){}
 
                 try {
-                if (nfcModelList.get(position).getAddress().equals("") || nfcModelList.get(position).getAddress().equalsIgnoreCase("null")
+                if (nfcModelList.get(position).getAddress().trim().equals("") || nfcModelList.get(position).getAddress().equalsIgnoreCase("null")
                         || nfcModelList.get(position).getAddress() == null) {
                     tvPersonAddress.setVisibility(View.INVISIBLE);
                 }
@@ -203,7 +203,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
                 }
 
                 try {
-                    if (nfcModelList.get(position).getPh_no().equals("") || nfcModelList.get(position).getPh_no().equals("null")
+                    if (nfcModelList.get(position).getPh_no().trim().equals("") || nfcModelList.get(position).getPh_no().equals("null")
                             || nfcModelList.get(position).getPh_no() == null) {
                         tvPersonMobile.setVisibility(View.INVISIBLE);
                     }
@@ -227,7 +227,11 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             tvPersonNameLast.setText(remainder);
             tvPersonProfile.setText(nfcModelList.get(position).getDesignation());
             tvPersonWebsite.setText("E : " + nfcModelList.get(position).getEmail());
-            tvPersonAddress.setText("A : " + nfcModelList.get(position).getAddress());
+            if (nfcModelList.get(position).getAddress().toString().trim().equals("")){
+                tvPersonAddress.setVisibility(View.GONE);
+            }else {
+                tvPersonAddress.setText("A : " + nfcModelList.get(position).getAddress());
+            }
            // tvPersonContact.setText("T : " + nfcModelList.get(position).getPh_no());
             tvPersonMobile.setText("M : " + nfcModelList.get(position).getPh_no());
         }
