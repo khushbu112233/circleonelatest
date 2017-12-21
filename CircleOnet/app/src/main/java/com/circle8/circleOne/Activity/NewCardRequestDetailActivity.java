@@ -985,7 +985,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                     }
 
 
-                    CardSwipe.imageView.setImageBitmap(bitmap);
+                    CardSwipe.holder.imageView.setImageBitmap(bitmap);
                     myPager.notifyDataSetChanged();
                     if (cardType.equals("front"))
                     {
@@ -1062,7 +1062,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
         Log.d("base64string ", final_ImgBase64);
 //                Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
         // Upload();
-        CardSwipe.imageView.setImageBitmap(bitmap);
+        CardSwipe.holder.imageView.setImageBitmap(bitmap);
         if (cardType.equals("front"))
             new HttpAsyncTaskFrontUpload().execute(Utility.BASE_URL+"ImgUpload");
         else if (cardType.equals("back"))
