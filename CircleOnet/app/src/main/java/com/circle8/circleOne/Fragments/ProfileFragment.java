@@ -105,6 +105,7 @@ import javax.crypto.spec.SecretKeySpec;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.google.android.gms.internal.zzahg.runOnUiThread;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -119,8 +120,8 @@ public class ProfileFragment extends Fragment
     static ProgressDialog progressDialog ;
     static ArrayList<String> profile_array, NameArray, DesignationArray, profileImage_array;
     private LoginButton loginButton;
-    private LoginSession session;
-    private static String UserID = "";
+    private static LoginSession session;
+    public static String UserID = "";
     static ImageView imgBack, imgAdd;
     static String associationString = "", eventString = "";
     public static ArrayList<ProfileModel> allTags ;
@@ -163,15 +164,16 @@ public class ProfileFragment extends Fragment
     static JSONArray jsonArray;
     public static int profileIndex;
     static TextView txtAttachment, lblAttachment;
-    static ProfileSession profileSession;
+    public static ProfileSession profileSession;
     static ReferralCodeSession referralCodeSession;
-    private String refer;
+    private static String refer;
     static TextView txtAssociationList, txtEventsListFinal;
-    String Q_ID = "";
+    static String Q_ID = "";
 
     AlertDialog QR_AlertDialog ;
     private long lastClickTime = 0;
     public static Activity mContext ;
+    public static Handler mHandler;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -263,56 +265,49 @@ public class ProfileFragment extends Fragment
         ivConnecting3 = (ImageView)view.findViewById(R.id.imgConnecting3) ;
 
         progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Generating Qr code...");
-        progressDialog.setCancelable(false);
-        allTags = new ArrayList<>();
+
         referralCodeSession = new ReferralCodeSession(getContext());
-        HashMap<String, String> referral = referralCodeSession.getReferralDetails();
-        try {
-            refer = referral.get(ReferralCodeSession.KEY_REFERRAL);
-        }catch (Exception e){}
-        HashMap<String, String> profile = profileSession.getProfileDetails();
-        profileIndex = Integer.parseInt(profile.get(ProfileSession.KEY_PROFILE_INDEX));
-
-        listAssociation = new ArrayList<>();
-        Utility.freeMemory();
-        Utility.deleteCache(getContext());
-        HashMap<String, String> user = session.getUserDetails();
-        UserID = user.get(LoginSession.KEY_USERID);
-        profileId = user.get(LoginSession.KEY_PROFILEID);
-        Q_ID = user.get(LoginSession.KEY_QID);
-
 
 //        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetUserProfile");
 //        new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
 
         /* Call api for my profile */
-        callMyProfile();
-
-
-        SpannableString ss = new SpannableString("Ask your friends to write a Testimonial for you(100 words or less),Please choose from your CircleOne contacts and send a request.");
-        ClickableSpan clickableSpan = new ClickableSpan() {
+        runOnUiThread(new Runnable() {
             @Override
-            public void onClick(View textView) {
-                Intent intent1 = new Intent(getContext(), SearchGroupMembers.class);
-                intent1.putExtra("from", "profile");
-                intent1.putExtra("ProfileId", TestimonialProfileId);
-                startActivity(intent1);
+            public void run() {
+                callMyProfile();
+            }
+        });
+
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                SpannableString ss = new SpannableString("Ask your friends to write a Testimonial for you(100 words or less),Please choose from your CircleOne contacts and send a request.");
+                ClickableSpan clickableSpan = new ClickableSpan() {
+                    @Override
+                    public void onClick(View textView) {
+                        Intent intent1 = new Intent(getContext(), SearchGroupMembers.class);
+                        intent1.putExtra("from", "profile");
+                        intent1.putExtra("ProfileId", TestimonialProfileId);
+                        startActivity(intent1);
+
+                    }
+                    @Override
+                    public void updateDrawState(TextPaint ds) {
+                        super.updateDrawState(ds);
+                        ds.setUnderlineText(false);
+                    }
+                };
+                ss.setSpan(clickableSpan, 91, 100, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                // TextView textView = (TextView) findViewById(R.id.hello);
+                txtTestimonial.setText(ss);
+                txtTestimonial.setMovementMethod(LinkMovementMethod.getInstance());
+                txtTestimonial.setHighlightColor(getResources().getColor(R.color.colorPrimary));
 
             }
-            @Override
-            public void updateDrawState(TextPaint ds) {
-                super.updateDrawState(ds);
-                ds.setUnderlineText(false);
-            }
-        };
-        ss.setSpan(clickableSpan, 91, 100, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        // TextView textView = (TextView) findViewById(R.id.hello);
-        txtTestimonial.setText(ss);
-        txtTestimonial.setMovementMethod(LinkMovementMethod.getInstance());
-        txtTestimonial.setHighlightColor(getResources().getColor(R.color.colorPrimary));
-
+        });
         imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -1310,7 +1305,6 @@ public class ProfileFragment extends Fragment
         }
     };
 
-
     public static String POST5(String url)
     {
         InputStream inputStream = null;
@@ -1390,6 +1384,24 @@ public class ProfileFragment extends Fragment
         @Override
         protected String doInBackground(String... urls)
         {
+            allTags = new ArrayList<>();
+            HashMap<String, String> referral = referralCodeSession.getReferralDetails();
+            try {
+                refer = referral.get(ReferralCodeSession.KEY_REFERRAL);
+            }catch (Exception e){}
+            HashMap<String, String> profile = profileSession.getProfileDetails();
+            profileIndex = Integer.parseInt(profile.get(ProfileSession.KEY_PROFILE_INDEX));
+
+            listAssociation = new ArrayList<>();
+            Utility.freeMemory();
+            //Utility.deleteCache(getContext());
+            HashMap<String, String> user = session.getUserDetails();
+            UserID = user.get(LoginSession.KEY_USERID);
+            profileId = user.get(LoginSession.KEY_PROFILEID);
+            Q_ID = user.get(LoginSession.KEY_QID);
+
+
+
             return POST5(urls[0]);
         }
         // onPostExecute displays the results of the AsyncTask.

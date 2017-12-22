@@ -63,7 +63,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             Utility.freeMemory();
             if (profile.equalsIgnoreCase("") || profile.equalsIgnoreCase("null"))
             {
-                activityConnect5Binding.ivImage1.setImageResource(R.drawable.usr);
+                activityConnect5Binding.ivImage1.setImageResource(R.drawable.usr_white);
             }
             else
             {
@@ -71,7 +71,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             }
         }
         catch (Exception e) {
-            activityConnect5Binding.ivImage1.setImageResource(R.drawable.usr);
+            activityConnect5Binding.ivImage1.setImageResource(R.drawable.usr_white);
         }
 
         activityConnect5Binding.imgBack.setOnClickListener(new View.OnClickListener() {
@@ -188,7 +188,7 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             activityConnect5Binding.txtName1.setText(userName1);
             if (userPhoto1.equals(""))
             {
-                activityConnect5Binding.ivProfile1.setImageResource(R.drawable.usr_1);
+                activityConnect5Binding.ivProfile1.setImageResource(R.drawable.usr_white);
             }
             else
             {

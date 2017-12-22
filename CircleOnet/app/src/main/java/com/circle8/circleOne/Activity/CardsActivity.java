@@ -57,6 +57,7 @@ import com.circle8.circleOne.Fragments.List1Fragment;
 import com.circle8.circleOne.Fragments.ProfileFragment;
 import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
+import com.circle8.circleOne.Helper.ProfileSession;
 import com.circle8.circleOne.Helper.ReferralCodeSession;
 import com.circle8.circleOne.LocationUtil.PermissionUtils;
 import com.circle8.circleOne.MultiContactPicker;
@@ -108,7 +109,6 @@ import com.quickblox.sample.core.utils.SharedPrefsHelper;
 import com.quickblox.sample.core.utils.constant.GcmConsts;
 import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
-import com.stripe.model.Card;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 
@@ -1512,6 +1512,17 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         if (mViewPager.getCurrentItem() == 2){
             setActionBarTitle("Events");
         }
+
+        if (mViewPager.getCurrentItem() == 3) {
+            HashMap<String, String> user = session.getUserDetails();
+            ProfileFragment.UserID = user.get(LoginSession.KEY_USERID);
+
+            HashMap<String, String> profile = ProfileFragment.profileSession.getProfileDetails();
+            ProfileFragment.profileIndex = Integer.parseInt(profile.get(ProfileSession.KEY_PROFILE_INDEX));
+
+            new ProfileFragment.HttpAsyncTaskProfiles().execute(Utility.BASE_URL + "MyProfiles");
+        }
+
         getSupportActionBar().setShowHideAnimationEnabled(false);
         if (!done) {
             NdefMessage[] msgs = null;
