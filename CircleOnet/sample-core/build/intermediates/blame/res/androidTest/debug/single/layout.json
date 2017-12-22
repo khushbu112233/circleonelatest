@@ -8,12 +8,12 @@
         "source": "C:\\Users\\admin\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\9cdf1dca172a69926094cf1be630b9d7\\res\\layout\\abc_popup_menu_item_layout.xml"
     },
     {
-        "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_media_cancel_action.xml",
-        "source": "C:\\Users\\admin\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\040863557888f67ff4529c12cca40e75\\res\\layout\\notification_media_cancel_action.xml"
-    },
-    {
         "merged": "D:\\Khushbu\\CircleOne\\Project\\CircleOneFinal\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_icon_group.xml",
         "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\a1803e2261063708c4fc962e3d015378\\res\\layout\\notification_template_icon_group.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_media_cancel_action.xml",
+        "source": "C:\\Users\\admin\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\040863557888f67ff4529c12cca40e75\\res\\layout\\notification_media_cancel_action.xml"
     },
     {
         "merged": "D:\\Khushbu\\CircleOne\\Project\\CircleOneFinal\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_dialog_title_material.xml",
@@ -92,12 +92,12 @@
         "source": "C:\\Users\\admin\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\59c43324c1c464c0dd430dfef409cf03\\res\\layout\\notification_action.xml"
     },
     {
-        "merged": "D:\\Khushbu\\CircleOne\\Project\\CircleOneFinal\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\design_navigation_item_separator.xml",
-        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\4c75e924d1251ddc48e54b6cb7f99ebb\\res\\layout\\design_navigation_item_separator.xml"
-    },
-    {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_list_menu_item_radio.xml",
         "source": "C:\\Users\\admin\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\9cdf1dca172a69926094cf1be630b9d7\\res\\layout\\abc_list_menu_item_radio.xml"
+    },
+    {
+        "merged": "D:\\Khushbu\\CircleOne\\Project\\CircleOneFinal\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\design_navigation_item_separator.xml",
+        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\4c75e924d1251ddc48e54b6cb7f99ebb\\res\\layout\\design_navigation_item_separator.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_search_view.xml",
@@ -152,12 +152,12 @@
         "source": "C:\\Users\\admin\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\9cdf1dca172a69926094cf1be630b9d7\\res\\layout\\abc_list_menu_item_checkbox.xml"
     },
     {
-        "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_popup_menu_header_item_layout.xml",
-        "source": "C:\\Users\\admin\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\9cdf1dca172a69926094cf1be630b9d7\\res\\layout\\abc_popup_menu_header_item_layout.xml"
-    },
-    {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_activity_chooser_view.xml",
         "source": "C:\\Users\\admin\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\9cdf1dca172a69926094cf1be630b9d7\\res\\layout\\abc_activity_chooser_view.xml"
+    },
+    {
+        "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_popup_menu_header_item_layout.xml",
+        "source": "C:\\Users\\admin\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\9cdf1dca172a69926094cf1be630b9d7\\res\\layout\\abc_popup_menu_header_item_layout.xml"
     },
     {
         "merged": "D:\\Khushbu\\CircleOne\\Project\\CircleOneFinal\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_bar_view_list_nav_layout.xml",
