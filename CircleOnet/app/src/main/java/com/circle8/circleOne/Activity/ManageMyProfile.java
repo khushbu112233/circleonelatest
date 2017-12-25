@@ -23,8 +23,8 @@ import android.widget.Toast;
 
 import com.circle8.circleOne.Adapter.NewCardRequestAdapter;
 import com.circle8.circleOne.Helper.LoginSession;
-import com.circle8.circleOne.Interface.ItemClickProfile;
-import com.circle8.circleOne.Interface.ItemLongClickProfile;
+import com.circle8.circleOne.Interfaces.ItemClickProfile;
+import com.circle8.circleOne.Interfaces.ItemLongClickProfile;
 import com.circle8.circleOne.Model.NewCardModel;
 import com.circle8.circleOne.Model.ProfileModel;
 import com.circle8.circleOne.R;

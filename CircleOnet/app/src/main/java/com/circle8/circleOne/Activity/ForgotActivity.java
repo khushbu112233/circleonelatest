@@ -2,19 +2,17 @@ package com.circle8.circleOne.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
+import com.circle8.circleOne.databinding.ActivityForgotBinding;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -30,24 +28,15 @@ import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 public class ForgotActivity extends AppCompatActivity
 {
-    private EditText etEmailAddress ;
-    private TextView tvEmailInfo ;
-    private Button btnSubmit ;
     private String email ;
-    private ImageView imgBack ;
-
+    ActivityForgotBinding activityForgotBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forgot);
+        activityForgotBinding = DataBindingUtil. setContentView(this,R.layout.activity_forgot);
         Utility.freeMemory();
-        etEmailAddress = (EditText)findViewById(R.id.etEmailAddress);
-        tvEmailInfo = (TextView) findViewById(R.id.tvEmailInfo);
-        btnSubmit = (Button)findViewById(R.id.btnSubmit);
-        imgBack = (ImageView) findViewById(R.id.imgBack);
-
-        imgBack.setOnClickListener(new View.OnClickListener() {
+        activityForgotBinding.imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ForgotActivity.this, LoginActivity.class));
@@ -55,14 +44,14 @@ public class ForgotActivity extends AppCompatActivity
             }
         });
 
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
+        activityForgotBinding.btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                email = etEmailAddress.getText().toString();
+                email = activityForgotBinding.etEmailAddress.getText().toString();
                 if(email.isEmpty())
                 {
-                    tvEmailInfo.setVisibility(View.VISIBLE);
+                    activityForgotBinding.tvEmailInfo.setVisibility(View.VISIBLE);
                 }
                 else
                 {
@@ -119,7 +108,7 @@ public class ForgotActivity extends AppCompatActivity
 
                     if (success.equals("1"))
                     {
-                          Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
                         //   fingerPrintSession.createLoginSession(UserID, "", userName, "", "");
                         startActivity(new Intent(ForgotActivity.this, LoginActivity.class));
                         finish();

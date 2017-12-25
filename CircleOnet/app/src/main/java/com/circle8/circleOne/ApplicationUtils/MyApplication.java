@@ -7,10 +7,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Build;
-import android.os.StrictMode;
-import android.provider.SyncStateContract;
 import android.support.multidex.MultiDex;
-import android.support.multidex.MultiDexApplication;
 import android.util.Base64;
 import android.util.Log;
 
@@ -18,6 +15,7 @@ import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.ConnectivityReceiver;
 import com.circle8.circleOne.Helper.CustomSharedPreference;
 import com.circle8.circleOne.Model.SampleConfigs;
+import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.ConfigUtils;
 import com.circle8.circleOne.Utils.Consts;
 import com.facebook.FacebookSdk;
@@ -33,13 +31,16 @@ import com.onesignal.OSNotificationOpenResult;
 import com.onesignal.OneSignal;
 import com.quickblox.sample.core.CoreApp;
 import com.quickblox.sample.core.utils.ActivityLifecycle;
-
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
 
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import io.fabric.sdk.android.Fabric;
 
 
 public class MyApplication extends CoreApp
@@ -80,6 +81,11 @@ public class MyApplication extends CoreApp
         }
         catch (PackageManager.NameNotFoundException e) { }
         catch ( NoSuchAlgorithmException e ) {  }
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(
+                getString(R.string.twitter_consumer_key),
+                getString(R.string.twitter_consumer_secret));
+        Fabric.with(this, new Twitter(authConfig));
+        FacebookSdk.sdkInitialize(getApplicationContext());
         ActivityLifecycle.init(this);
         initSampleConfigs();
         builder = new GsonBuilder();

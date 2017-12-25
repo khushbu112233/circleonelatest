@@ -3,10 +3,10 @@ package com.circle8.circleOne.Activity;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -15,43 +15,33 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AbsListView;
+import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.AdapterView;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.Adapter.GroupDetailAdapter;
-import com.circle8.circleOne.Adapter.GroupsItemsAdapter;
-import com.circle8.circleOne.Fragments.ProfileFragment;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.GroupDetailModel;
-import com.circle8.circleOne.Model.GroupModel;
-import com.circle8.circleOne.Model.ProfileModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
+import com.circle8.circleOne.databinding.ActivityGroupDetailBinding;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpResponse;
@@ -63,100 +53,51 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import android.widget.AbsListView.MultiChoiceModeListener;
-
 import static com.circle8.circleOne.Activity.RegisterActivity.BitMapToString;
 import static com.circle8.circleOne.Activity.RegisterActivity.ConvertBitmapToString;
 import static com.circle8.circleOne.Activity.RegisterActivity.rotateImage;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
-import static java.security.AccessController.getContext;
 
 public class GroupDetailActivity extends AppCompatActivity
 {
     public static ListView listView ;
-    private static CircleImageView imgProfile ;
-    private static ImageView ivChangeProfImg, ivBackImg, ivMenuImg, ivShareImg, ivEditImg ;
-    private static TextView tvGroupName, tvGroupDesc, tvMemberInfo ;
-
     private static GroupDetailAdapter groupDetailAdapter ;
-    ImageView imgBack;
     private static ArrayList<GroupDetailModel> groupDetailModelArrayList = new ArrayList<>();
-
     JSONArray selectArray = new JSONArray();
     JSONArray selectArray1 = new JSONArray();
     int selectListPosition ;
     ArrayList<String> selectedList = new ArrayList<>();
-
     private LoginSession session;
     private static String profile_id, user_id ;
     boolean isPressed = false;
-    private ArrayList<String> name = new ArrayList<>();
-    private ArrayList<String> designation = new ArrayList<>();
-    private ArrayList<String> company = new ArrayList<>();
-    private ArrayList<String> email = new ArrayList<>();
-    private ArrayList<String> website = new ArrayList<>();
-    private ArrayList<String> phone = new ArrayList<>();
-    private ArrayList<String> mobile = new ArrayList<>();
-    private ArrayList<String> address = new ArrayList<>();
-    private ArrayList<String> imgprofile = new ArrayList<>();
-
     public static String group_id = "", group_Name, group_Desc, group_Img ;
-
-    CircleImageView ivGroupImage ;
     String GroupName, GroupDesc, GroupImage = "";
     String final_ImgBase64 = "";
-
     CharSequence[] items ;
     private String userChoosenTask ;
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     String image;
     public static JSONArray selectedStrings = new JSONArray();
-    ImageView ivDelete;
-
-    public static RelativeLayout rlProgressDialog ;
-    private static TextView tvProgressing ;
-    private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
-
     private static Activity mContext ;
     public static String loading ;
-
+    public static ActivityGroupDetailBinding activityGroupDetailBinding;
+    CircleImageView ivGroupImage ;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_group_detail);
-
+        activityGroupDetailBinding = DataBindingUtil.setContentView(this,R.layout.activity_group_detail);
         mContext = GroupDetailActivity.this ;
         Utility.freeMemory();
         listView = (ListView)findViewById(R.id.listView);
-        imgProfile = (CircleImageView)findViewById(R.id.imgProfile);
-        imgBack = (ImageView) findViewById(R.id.imgBack);
-        tvGroupName = (TextView)findViewById(R.id.tvGroupName);
-        tvGroupDesc = (TextView)findViewById(R.id.tvGroupPartner);
-        tvMemberInfo = (TextView)findViewById(R.id.tvMemberInfo);
-        ivDelete = (ImageView) findViewById(R.id.ivDelete);
-        ivMenuImg = (ImageView)findViewById(R.id.imgProfileMenu);
-        ivChangeProfImg = (ImageView)findViewById(R.id.imgCamera);
-        ivShareImg = (ImageView)findViewById(R.id.ivProfileShare);
-        ivEditImg = (ImageView)findViewById(R.id.ivEdit);
-
-        rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
-        tvProgressing = (TextView)findViewById(R.id.txtProgressing);
-        ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
-        ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
-        ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
-
         session = new LoginSession(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
         profile_id = user.get(LoginSession.KEY_PROFILEID);
@@ -170,16 +111,16 @@ public class GroupDetailActivity extends AppCompatActivity
         group_Desc = intent.getStringExtra("groupDesc");
         group_Img = intent.getStringExtra("groupImg");
 
-        tvGroupName.setText(group_Name);
-        tvGroupDesc.setText(group_Desc);
+        activityGroupDetailBinding.tvGroupName.setText(group_Name);
+        activityGroupDetailBinding.tvGroupPartner.setText(group_Desc);
 
         if (group_Img.equals(""))
         {
-            imgProfile.setImageResource(R.drawable.usr_white1);
+            activityGroupDetailBinding.imgProfile.setImageResource(R.drawable.usr_white1);
         }
         else
         {
-            Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"Group/"+group_Img).resize(300,300).onlyScaleDown().skipMemoryCache().placeholder(R.drawable.usr_1).into(imgProfile);
+            Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"Group/"+group_Img).resize(300,300).onlyScaleDown().skipMemoryCache().placeholder(R.drawable.usr_1).into(activityGroupDetailBinding.imgProfile);
         }
 
         View v = LayoutInflater.from(getApplicationContext()).inflate(R.layout.group_detail_items, null);
@@ -190,66 +131,66 @@ public class GroupDetailActivity extends AppCompatActivity
             checkBox.setVisibility(View.GONE);
         }*/
 
-       groupDetailModelArrayList.clear();
-       callFirst();
+        groupDetailModelArrayList.clear();
+        callFirst();
 
-       ivMenuImg.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               Utility.freeMemory();
-               PopupMenu popup = new PopupMenu(GroupDetailActivity.this, ivMenuImg);
-               //Inflating the Popup using xml file
-               popup.getMenu().add("Edit Circle");
-               popup.getMenu().add("Delete Circle");
-               //registering popup with OnMenuItemClickListener
-               popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                   public boolean onMenuItemClick(MenuItem item) {
-                       //Toast.makeText(getContext(),"You Clicked : " + item.getTitle(),Toast.LENGTH_SHORT).show();
+        activityGroupDetailBinding.imgProfileMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utility.freeMemory();
+                PopupMenu popup = new PopupMenu(GroupDetailActivity.this, activityGroupDetailBinding.imgProfileMenu);
+                //Inflating the Popup using xml file
+                popup.getMenu().add("Edit Circle");
+                popup.getMenu().add("Delete Circle");
+                //registering popup with OnMenuItemClickListener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        //Toast.makeText(getContext(),"You Clicked : " + item.getTitle(),Toast.LENGTH_SHORT).show();
 
-                       if (item.getTitle().toString().equals("Delete Circle"))
-                       {
-                           AlertDialog.Builder alert = new AlertDialog.Builder(GroupDetailActivity.this, R.style.Blue_AlertDialog);
-                           alert.setMessage("Are you sure want to delete Circle");
-                           alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        if (item.getTitle().toString().equals("Delete Circle"))
+                        {
+                            AlertDialog.Builder alert = new AlertDialog.Builder(GroupDetailActivity.this, R.style.Blue_AlertDialog);
+                            alert.setMessage("Are you sure want to delete Circle");
+                            alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
-                               @Override
-                               public void onClick(DialogInterface dialog, int which) {
-                                   //do your work here
-                                   dialog.dismiss();
-                                   new HttpAsyncTaskGroupDelete().execute(Utility.BASE_URL+"Group/Delete");
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //do your work here
+                                    dialog.dismiss();
+                                    new HttpAsyncTaskGroupDelete().execute(Utility.BASE_URL+"Group/Delete");
 
-                               }
-                           });
-                           alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                }
+                            });
+                            alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
 
-                               @Override
-                               public void onClick(DialogInterface dialog, int which) {
-                                   dialog.dismiss();
-                               }
-                           });
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
 
-                           alert.show();
+                            alert.show();
 
-                       }
-                       else if (item.getTitle().toString().equals("Edit Circle"))
-                       {
-                           Intent in = new Intent(getApplicationContext(), UpdateGroupActivity.class);
-                           in.putExtra("type", "group_detail");
-                           in.putExtra("GroupImage", group_Img);
-                           in.putExtra("GroupName", group_Name);
-                           in.putExtra("GroupDesc", group_Desc);
-                           in.putExtra("GroupID", group_id);
-                           startActivity(in);
-                           finish();
-                       }
-                       return true;
-                   }
-               });
-               popup.show();//showing popup men
-           }
-       });
+                        }
+                        else if (item.getTitle().toString().equals("Edit Circle"))
+                        {
+                            Intent in = new Intent(getApplicationContext(), UpdateGroupActivity.class);
+                            in.putExtra("type", "group_detail");
+                            in.putExtra("GroupImage", group_Img);
+                            in.putExtra("GroupName", group_Name);
+                            in.putExtra("GroupDesc", group_Desc);
+                            in.putExtra("GroupID", group_id);
+                            startActivity(in);
+                            finish();
+                        }
+                        return true;
+                    }
+                });
+                popup.show();//showing popup men
+            }
+        });
 
-        ivShareImg.setOnClickListener(new View.OnClickListener() {
+        activityGroupDetailBinding.ivProfileShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -260,16 +201,16 @@ public class GroupDetailActivity extends AppCompatActivity
                 if(isPressed)
                 {
                     listView.setChoiceMode(ListView.CHOICE_MODE_NONE);
-                    ivShareImg.setImageResource(R.drawable.list_selecting);
+                    activityGroupDetailBinding.ivProfileShare.setImageResource(R.drawable.list_selecting);
                    /* listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
                     GroupDetailAdapter.chCheckBox.setVisibility(View.VISIBLE);*/
                 }
                 else {
 
                     listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-                    ivShareImg.setImageResource(R.drawable.group_selected);
+                    activityGroupDetailBinding.ivProfileShare.setImageResource(R.drawable.group_selected);
                     Toast.makeText(getApplicationContext(), "select member(s) to be removed from circle", Toast.LENGTH_LONG).show();
-                  //  GroupDetailAdapter.chCheckBox.setVisibility(View.GONE);
+                    //  GroupDetailAdapter.chCheckBox.setVisibility(View.GONE);
                 }
 
 
@@ -495,7 +436,7 @@ public class GroupDetailActivity extends AppCompatActivity
         });
 */
 
-        ivDelete.setOnClickListener(new View.OnClickListener() {
+       activityGroupDetailBinding.ivDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -513,12 +454,12 @@ public class GroupDetailActivity extends AppCompatActivity
                                 .getItem(selected.keyAt(i)));
 //                        Toast.makeText(getApplicationContext(), selecteditem, Toast.LENGTH_LONG).show();
                         // Remove  selected items following the ids
-                     //   groupDetailAdapter.remove(selecteditem);
+                        //   groupDetailAdapter.remove(selecteditem);
                     }
                 }
 
                 // Close CAB
-               // mode.finish();
+                // mode.finish();
                 selected.clear();
 
                 if (selectedList.size() == 0)
@@ -534,7 +475,7 @@ public class GroupDetailActivity extends AppCompatActivity
             }
         });
 
-        imgProfile.setOnClickListener(new View.OnClickListener() {
+        activityGroupDetailBinding.imgProfileMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -570,7 +511,7 @@ public class GroupDetailActivity extends AppCompatActivity
             }
         });
 
-        imgBack.setOnClickListener(new View.OnClickListener() {
+        activityGroupDetailBinding.imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -580,7 +521,7 @@ public class GroupDetailActivity extends AppCompatActivity
             }
         });
 
-        ivEditImg.setOnClickListener(new View.OnClickListener() {
+        activityGroupDetailBinding.ivEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -720,7 +661,7 @@ public class GroupDetailActivity extends AppCompatActivity
         {
             Utility.freeMemory();
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            activityGroupDetailBinding.rlProgressDialog.setVisibility(View.GONE);
             try
             {
 
@@ -777,7 +718,7 @@ public class GroupDetailActivity extends AppCompatActivity
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            activityGroupDetailBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result != null)
@@ -900,7 +841,7 @@ public class GroupDetailActivity extends AppCompatActivity
         {
             Utility.freeMemory();
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            activityGroupDetailBinding.rlProgressDialog.setVisibility(View.GONE);
 
             try
             {
@@ -913,16 +854,16 @@ public class GroupDetailActivity extends AppCompatActivity
                     {
                         Toast.makeText(getApplicationContext(), "Circle Updated..", Toast.LENGTH_LONG).show();
 
-                        tvGroupName.setText(GroupName);
-                        tvGroupDesc.setText(GroupDesc);
+                        activityGroupDetailBinding.tvGroupName.setText(GroupName);
+                        activityGroupDetailBinding.tvGroupPartner.setText(GroupDesc);
 
                         if (GroupImage.equals(""))
                         {
-                            imgProfile.setImageResource(R.drawable.usr_white1);
+                            activityGroupDetailBinding.imgProfile.setImageResource(R.drawable.usr_white1);
                         }
                         else
                         {
-                            Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"Group/"+GroupImage).resize(300,300).onlyScaleDown().skipMemoryCache().placeholder(R.drawable.usr_1).into(imgProfile);
+                            Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"Group/"+GroupImage).resize(300,300).onlyScaleDown().skipMemoryCache().placeholder(R.drawable.usr_1).into(activityGroupDetailBinding.imgProfile);
                         }
                     }
                     else
@@ -1086,7 +1027,7 @@ public class GroupDetailActivity extends AppCompatActivity
         {
             Utility.freeMemory();
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            activityGroupDetailBinding.rlProgressDialog.setVisibility(View.GONE);
 
             try
             {
@@ -1098,12 +1039,12 @@ public class GroupDetailActivity extends AppCompatActivity
 
                     if (jsonArray.length() == 0)
                     {
-                        tvMemberInfo.setVisibility(View.VISIBLE);
+                        activityGroupDetailBinding.tvMemberInfo.setVisibility(View.VISIBLE);
                         listView.setVisibility(View.GONE);
                     }
                     else
                     {
-                        tvMemberInfo.setVisibility(View.GONE);
+                        activityGroupDetailBinding.tvMemberInfo.setVisibility(View.GONE);
                         listView.setVisibility(View.VISIBLE);
                     }
                     groupDetailModelArrayList.clear();
@@ -1388,13 +1329,13 @@ public class GroupDetailActivity extends AppCompatActivity
     public static void CustomProgressDialog(final String loading)
     {
         Utility.freeMemory();
-        rlProgressDialog.setVisibility(View.VISIBLE);
-        tvProgressing.setText(loading);
+        activityGroupDetailBinding.rlProgressDialog.setVisibility(View.VISIBLE);
+        activityGroupDetailBinding.txtProgressing.setText(loading);
 
         Animation anim = AnimationUtils.loadAnimation(mContext,R.anim.anticlockwise);
-        ivConnecting1.startAnimation(anim);
+        activityGroupDetailBinding.imgConnecting1.startAnimation(anim);
         Animation anim1 = AnimationUtils.loadAnimation(mContext,R.anim.clockwise);
-        ivConnecting2.startAnimation(anim1);
+        activityGroupDetailBinding.imgConnecting2.startAnimation(anim1);
 
         int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
         for (int i = 350; i <= SPLASHTIME; i = i + 350)
@@ -1406,15 +1347,15 @@ public class GroupDetailActivity extends AppCompatActivity
                 {
                     if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
                     {
-                        tvProgressing.setText(loading+".");
+                        activityGroupDetailBinding.txtProgressing.setText(loading+".");
                     }
                     else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
                     {
-                        tvProgressing.setText(loading+"..");
+                        activityGroupDetailBinding.txtProgressing.setText(loading+"..");
                     }
                     else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
                     {
-                        tvProgressing.setText(loading+"...");
+                        activityGroupDetailBinding.txtProgressing.setText(loading+"...");
                     }
                 }
             }, i);
@@ -1449,7 +1390,7 @@ public class GroupDetailActivity extends AppCompatActivity
         {
             Utility.freeMemory();
 //            dialog.dismiss();
-             rlProgressDialog.setVisibility(View.GONE);
+            activityGroupDetailBinding.rlProgressDialog.setVisibility(View.GONE);
 
             try
             {

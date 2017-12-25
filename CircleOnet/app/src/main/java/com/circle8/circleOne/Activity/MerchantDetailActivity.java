@@ -3,21 +3,17 @@ package com.circle8.circleOne.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,16 +27,12 @@ import com.circle8.circleOne.Model.MerchantLocationModel;
 import com.circle8.circleOne.Model.MerchantProductModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.ExpandableHeightListView;
-import com.circle8.circleOne.Utils.GeocodingLocation;
 import com.circle8.circleOne.Utils.Utility;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.Circle;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
@@ -54,18 +46,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.circle8.circleOne.R.id.tvAddress;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
-import static java.security.AccessController.getContext;
 
 public class MerchantDetailActivity extends FragmentActivity implements OnMapReadyCallback
 {
@@ -259,8 +246,10 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
                     {
                         Double Latitude = bundle.getDouble("latitude");
                         Double Longitude = bundle.getDouble("longitude");
-
-                        createMarker(Latitude,Longitude);
+                        boolean result = Utility.checkLocationPermission(MerchantDetailActivity.this);
+                        if(result) {
+                            createMarker(Latitude, Longitude);
+                        }
                     }
                     else
                     {
@@ -288,9 +277,11 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
                 .fillColor(Color.BLUE));*/
 
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(20);
-        googleMaps.setMyLocationEnabled(true);
-        googleMaps.animateCamera(zoom);
-
+        boolean result = Utility.checkLocationPermission(MerchantDetailActivity.this);
+        if(result) {
+            googleMaps.setMyLocationEnabled(true);
+            googleMaps.animateCamera(zoom);
+        }
        /* LatLng ttc = new LatLng(23.012688,72.522777);
         googleMaps.addMarker(new MarkerOptions().position(ttc).title("Titanium City Center"));
         googleMaps.moveCamera(CameraUpdateFactory.newLatLng(ttc));
@@ -336,8 +327,9 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
         LatLng location = new LatLng(Lat,Lang);
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(15);
 
-        googleMaps.addMarker(new MarkerOptions().position(location).title(storeAddress));
-        googleMaps.moveCamera(CameraUpdateFactory.newLatLng(location));
+            googleMaps.addMarker(new MarkerOptions().position(location).title(storeAddress));
+            googleMaps.moveCamera(CameraUpdateFactory.newLatLng(location));
+
 //        googleMaps.animateCamera(zoom);
     }
 
@@ -565,8 +557,10 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
                                 {
                                     lat = Double.valueOf(Latitude);
                                     lang = Double.valueOf(Longitude);
-
-                                    createMarker(lat,lang);
+                                    boolean result1 = Utility.checkLocationPermission(MerchantDetailActivity.this);
+                                    if(result1) {
+                                        createMarker(lat, lang);
+                                    }
                                 }
 
 //                                GeocodingLocation locationAddress = new GeocodingLocation();

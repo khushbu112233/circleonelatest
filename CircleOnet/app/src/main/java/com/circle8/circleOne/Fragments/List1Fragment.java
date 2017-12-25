@@ -93,7 +93,6 @@ public class List1Fragment extends Fragment
     ImageView imgSearch;
 
     View view;
-
     private String TAG = CardsActivity.class.getSimpleName();
     public static ArrayList<Integer> images;
     public static ArrayList<Integer> images1;
