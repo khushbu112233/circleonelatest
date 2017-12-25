@@ -544,6 +544,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
            // selectImage();
             Utility.freeMemory();
             CropImage.activity(null)
+                    .setCropShape(CropImageView.CropShape.OVAL)
                     .setGuidelines(CropImageView.Guidelines.ON)
                     .start(RegisterActivity.this);
         }

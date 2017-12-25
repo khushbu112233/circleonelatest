@@ -58,7 +58,6 @@ import com.circle8.circleOne.Adapter.AddEventAdapter;
 import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.Adapter.CardViewDataAdapter;
 import com.circle8.circleOne.Adapter.CustomAdapter;
-import com.circle8.circleOne.Fragments.ProfileFragment;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Helper.ProfileSession;
 import com.circle8.circleOne.Helper.ReferralCodeSession;
@@ -299,12 +298,11 @@ public class EditProfileActivity extends AppCompatActivity implements
        /* AsyncTaskRunner runner = new AsyncTaskRunner();
         String sleepTime = "200";
         runner.execute(sleepTime);*/
-
+        initUI();
 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                initUI();
                 populate();
             }
         });
@@ -395,6 +393,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 cropType = "profile";
                 CropImage.activity(null)
+                        .setCropShape(CropImageView.CropShape.OVAL)
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .start(EditProfileActivity.this);
 
