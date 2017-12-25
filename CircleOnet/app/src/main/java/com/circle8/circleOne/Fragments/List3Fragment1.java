@@ -32,7 +32,7 @@ import com.circle8.circleOne.Activity.SortAndFilterOption;
 import com.circle8.circleOne.Adapter.List3Adapter1;
 import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
-import com.circle8.circleOne.Interface.OnImageClick;
+import com.circle8.circleOne.Interfaces.OnImageClick;
 import com.circle8.circleOne.Model.FriendConnection;
 import com.circle8.circleOne.Model.NFCModel;
 import com.circle8.circleOne.R;

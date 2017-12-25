@@ -362,7 +362,7 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            GroupDetailActivity.rlProgressDialog.setVisibility(View.GONE);
+            ((GroupDetailActivity)context).activityGroupDetailBinding.rlProgressDialog.setVisibility(View.GONE);
 
             try
             {

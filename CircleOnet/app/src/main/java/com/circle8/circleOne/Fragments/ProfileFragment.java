@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -59,6 +60,7 @@ import com.circle8.circleOne.Model.TestimonialModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.ExpandableHeightListView;
 import com.circle8.circleOne.Utils.Utility;
+import com.circle8.circleOne.databinding.FragmentEditProfileBinding;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -83,10 +85,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -110,10 +109,11 @@ import static com.google.android.gms.internal.zzahg.runOnUiThread;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProfileFragment extends Fragment
+public class ProfileFragment extends Fragment implements View.OnClickListener
 {
     // private ProgressBar firstBar = null;
-    static ImageView imgProfileShare, imgProfileMenu, imgQR, ivEditProfile;
+
+    static ImageView   imgQR, ivEditProfile;
     static TextView tvPersonName, tvProfileName ;
     public final static int QRcodeWidth = 500 ;
     static Bitmap bitmap ;
@@ -130,7 +130,7 @@ public class ProfileFragment extends Fragment
     static String profileId = "";
     static TextView txtNoAssociation, txtNoEvent;
     private int i = 0;
-    static TextView tvDesignation, tvCompany, tvName, tvCompanyName, tvDesi,
+    static TextView   tvName, tvCompanyName, tvDesi,
             tvAssociation, tvAddress, tvWebsite, tvMail, tvMail1, tvMob, tvWork, textIndustry;
     static ProfileModel nfcModelTag;
     static CircleImageView imgProfile;
@@ -174,7 +174,7 @@ public class ProfileFragment extends Fragment
     private long lastClickTime = 0;
     public static Activity mContext ;
     public static Handler mHandler;
-
+    public static FragmentEditProfileBinding fragmentEditProfileBinding;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -194,13 +194,16 @@ public class ProfileFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_profile, container, false);
-        //  getActivity().requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //  ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+        fragmentEditProfileBinding = DataBindingUtil.inflate(
+                inflater, R.layout.fragment_profile, container, false);
+        view = fragmentEditProfileBinding.getRoot();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
 
         mContext = ProfileFragment.this.getActivity();
 
+        Utility.freeMemory();
+        Utility.deleteCache(getContext());
+        allTaggs = new ArrayList<>();
         callbackManager = CallbackManager.Factory.create();
         profileSession = new ProfileSession(getContext());
         llNameBox = (LinearLayout)view.findViewById(R.id.llNameBox);
@@ -215,8 +218,6 @@ public class ProfileFragment extends Fragment
         youtubeUrl = (ImageView) view.findViewById(R.id.youtubeUrl);
         twitterUrl = (ImageView) view.findViewById(R.id.twitterUrl);
         linkedInUrl = (ImageView) view.findViewById(R.id.linkedInUrl);
-        tvDesignation = (TextView)view.findViewById(R.id.tvDesignation);
-        tvCompany = (TextView)view.findViewById(R.id.tvCompany);
         tvName = (TextView)view.findViewById(R.id.tvName);
         tvCompanyName = (TextView)view.findViewById(R.id.tvCompanyName);
         tvDesi = (TextView)view.findViewById(R.id.tvDesi);
@@ -252,8 +253,6 @@ public class ProfileFragment extends Fragment
         //  firstBar = (ProgressBar)view.findViewById(R.id.firstBar);
         tvPersonName = (TextView)view.findViewById(R.id.tvPersonName);
         tvProfileName = (TextView) view.findViewById(R.id.tvProfileName);
-        imgProfileShare = (ImageView) view.findViewById(R.id.imgProfileShare);
-        imgProfileMenu = (ImageView) view.findViewById(R.id.imgProfileMenu);
         ivEditProfile = (ImageView)view.findViewById(R.id.ivEditProfile);
         loginButton = (LoginButton) view.findViewById(R.id.login_button);
         session = new LoginSession(getContext());
@@ -308,235 +307,16 @@ public class ProfileFragment extends Fragment
 
             }
         });
-        imgProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                final Dialog dialog = new Dialog(getActivity());
-                dialog.setContentView(R.layout.imageview_popup);
-                Utility.freeMemory();
-                Utility.deleteCache(getContext());
-
-                ImageView ivViewImage = (ImageView)dialog.findViewById(R.id.ivViewImage);
-                if (displayProfile.equals(""))
-                {
-                    ivViewImage.setImageResource(R.drawable.usr_white1);
-                }
-                else
-                {
-                    Picasso.with(getActivity()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+displayProfile).placeholder(R.drawable.usr_1)
-                            .resize(300,300).onlyScaleDown().skipMemoryCache().into(ivViewImage);
-                }
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                ivViewImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                        Intent intent = new Intent(getContext(), ImageZoom.class);
-                        intent.putExtra("displayProfile", Utility.BASE_IMAGE_URL+"UserProfile/"+displayProfile);
-                        startActivity(intent);
-                    }
-                });
-
-               /* WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
-                wmlp.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
-                wmlp.y = 300;*/   //y position
-                dialog.show();
-            }
-        });
-
-        txtAttachment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utility.freeMemory();
-                Utility.deleteCache(getContext());
-
-                Intent intent = new Intent(getContext(), AttachmentDisplay.class);
-                intent.putExtra("url", Utility.BASE_IMAGE_URL+"Other_doc/"+txtAttachment.getText().toString());
-                startActivity(intent);
-            }
-        });
-
-        fbUrl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utility.freeMemory();
-                Utility.deleteCache(getContext());
-
-                if (strfbUrl!=null) {
-                    if (!strfbUrl.startsWith("http://") && !strfbUrl.startsWith("https://"))
-                        strfbUrl = "http://" + strfbUrl;
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(strfbUrl));
-                    startActivity(browserIntent);
-                }
-            }
-        });
-
-        googleUrl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utility.freeMemory();
-                Utility.deleteCache(getContext());
-
-                if (strgoogleUrl!=null) {
-                    if (!strgoogleUrl.startsWith("http://") && !strgoogleUrl.startsWith("https://"))
-                        strgoogleUrl = "http://" + strgoogleUrl;
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(strgoogleUrl));
-                    startActivity(browserIntent);
-                }
-            }
-        });
-
-        youtubeUrl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utility.freeMemory();
-                Utility.deleteCache(getContext());
-
-                if (stryoutubeUrl!=null) {
-                    if (!stryoutubeUrl.startsWith("http://") && !stryoutubeUrl.startsWith("https://"))
-                        stryoutubeUrl = "http://" + stryoutubeUrl;
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(stryoutubeUrl));
-                    startActivity(browserIntent);
-                }
-            }
-        });
-
-        twitterUrl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utility.freeMemory();
-                Utility.deleteCache(getContext());
-
-                if (strtwitterUrl!=null) {
-                    if (!strtwitterUrl.startsWith("http://") && !strtwitterUrl.startsWith("https://"))
-                        strtwitterUrl = "http://" + strtwitterUrl;
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(strtwitterUrl));
-                    startActivity(browserIntent);
-                }
-            }
-        });
-
-        linkedInUrl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (strlinkedInUrl!=null) {
-                    if (!strlinkedInUrl.startsWith("http://") && !strlinkedInUrl.startsWith("https://"))
-                        strlinkedInUrl = "http://" + strlinkedInUrl;
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(strlinkedInUrl));
-                    startActivity(browserIntent);
-                }
-            }
-        });
-
-        Utility.freeMemory();
-        Utility.deleteCache(getContext());
-
-        allTaggs = new ArrayList<>();
-       /* lnrMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                AlertDialog.Builder builder;
-                builder = new AlertDialog.Builder(getContext(), R.style.Blue_AlertDialog);
-
-                builder.setTitle("Google Map")
-                        .setMessage("Are you sure you want to redirect to Google Map ?")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // continue with delete
-                                String map = "http://maps.google.co.in/maps?q=" + tvAddress.getText().toString();
-                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(map));
-                                startActivity(intent);
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // do nothing
-                                dialog.dismiss();
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_map)
-                        .show();
-            }
-        });*/
-
-        txtMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utility.freeMemory();
-                Utility.deleteCache(getContext());
-
-                Intent intent = new Intent(getContext(), TestimonialActivity.class);
-                intent.putExtra("ProfileId", TestimonialProfileId);
-                intent.putExtra("from", "profile");
-                startActivity(intent);
-            }
-        });
-
-
-        imgAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utility.freeMemory();
-                Utility.deleteCache(getContext());
-
-                Intent intent1 = new Intent(getContext(), SearchGroupMembers.class);
-                intent1.putExtra("from", "profile");
-                intent1.putExtra("ProfileId", TestimonialProfileId);
-                startActivity(intent1);
-
-//
-//                Intent intent = new Intent(getContext(), TestimonialRequest.class);
-//                intent.putExtra("ProfileId", TestimonialProfileId);
-//                startActivity(intent);
-            }
-        });
-
-        imgBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent go = new Intent(getContext(),CardsActivity.class);
-
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 0);
-                startActivity(go);
-                getActivity().finish();
-                Utility.freeMemory();
-            }
-        });
-
-      /*  lnrMob.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                AlertDialog.Builder builder;
-                builder = new AlertDialog.Builder(getContext(), R.style.Blue_AlertDialog);
-
-                builder.setTitle("Call to "+ tvPersonName.getText().toString())
-                        .setMessage("Are you sure you want to make a Call ?")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // continue with delete
-                                Intent intent = new Intent(Intent.ACTION_DIAL);
-                                intent.setData(Uri.parse("tel:"+tvMob.getText().toString()));
-                                startActivity(intent);
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // do nothing
-                                dialog.dismiss();
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_menu_call)
-                        .show();
-            }
-        });*/
-
+        imgProfile.setOnClickListener(this);
+        txtAttachment.setOnClickListener(this);
+        fbUrl.setOnClickListener(this);
+        googleUrl.setOnClickListener(this);
+        youtubeUrl.setOnClickListener(this);
+        twitterUrl.setOnClickListener(this);
+        linkedInUrl.setOnClickListener(this);
+        txtMore.setOnClickListener(this);
+        imgAdd.setOnClickListener(this);
+        imgBack.setOnClickListener(this);
         viewPager1.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             private int mScrollState = ViewPager.SCROLL_STATE_IDLE;
@@ -569,113 +349,145 @@ public class ProfileFragment extends Fragment
             }
         });
 
+        fragmentEditProfileBinding.imgProfileShare.setOnClickListener(this);
+        fragmentEditProfileBinding.imgProfileMenu.setOnClickListener(this);
+        imgQR.setOnClickListener(this);
+        ivEditProfile.setOnClickListener(this);
 
-       /* lnrWebsite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                AlertDialog.Builder builder;
-                builder = new AlertDialog.Builder(getContext(), R.style.Blue_AlertDialog);
+        return view;
+    }
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
 
-                builder.setTitle("Redirect to Web Browser")
-                        .setMessage("Are you sure you want to redirect to Web Browser ?")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // continue with delete
-                                String url = tvWebsite.getText().toString();
-                                if (url!=null) {
-                                    if (!url.startsWith("http://") && !url.startsWith("https://"))
-                                        url = "http://" + url;
-                                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                                    startActivity(browserIntent);
-                                }
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // do nothing
-                                dialog.dismiss();
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_menu_set_as)
-                        .show();
-            }
-        });*/
+        switch (id) {
+            case R.id.fbUrl:
+                Utility.freeMemory();
+                Utility.deleteCache(getContext());
 
-       /* lnrWork.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                AlertDialog.Builder builder;
+                if (strfbUrl!=null) {
+                    if (!strfbUrl.startsWith("http://") && !strfbUrl.startsWith("https://"))
+                        strfbUrl = "http://" + strfbUrl;
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(strfbUrl));
+                    startActivity(browserIntent);
+                }
+                break;
+            case R.id.googleUrl:
+                Utility.freeMemory();
+                Utility.deleteCache(getContext());
 
-                builder = new AlertDialog.Builder(getContext(), R.style.Blue_AlertDialog);
+                if (strgoogleUrl!=null) {
+                    if (!strgoogleUrl.startsWith("http://") && !strgoogleUrl.startsWith("https://"))
+                        strgoogleUrl = "http://" + strgoogleUrl;
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(strgoogleUrl));
+                    startActivity(browserIntent);
+                }
+                break;
+            case R.id.youtubeUrl:
+                Utility.freeMemory();
+                Utility.deleteCache(getContext());
 
-                builder.setTitle("Call to "+ tvPersonName.getText().toString())
-                        .setMessage("Are you sure you want to make a Call ?")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // continue with delete
-                                Intent intent = new Intent(Intent.ACTION_DIAL);
-                                intent.setData(Uri.parse("tel:"+tvWork.getText().toString()));
-                                startActivity(intent);
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // do nothing
-                                dialog.dismiss();
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_menu_call)
-                        .show();
-            }
-        });
+                if (stryoutubeUrl!=null) {
+                    if (!stryoutubeUrl.startsWith("http://") && !stryoutubeUrl.startsWith("https://"))
+                        stryoutubeUrl = "http://" + stryoutubeUrl;
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(stryoutubeUrl));
+                    startActivity(browserIntent);
+                }
+                break;
+            case R.id.twitterUrl:
+                Utility.freeMemory();
+                Utility.deleteCache(getContext());
 
-        tvMail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (tvMail.getText().toString().equals(""))
+                if (strtwitterUrl!=null) {
+                    if (!strtwitterUrl.startsWith("http://") && !strtwitterUrl.startsWith("https://"))
+                        strtwitterUrl = "http://" + strtwitterUrl;
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(strtwitterUrl));
+                    startActivity(browserIntent);
+                }
+                break;
+            case R.id.linkedInUrl:
+                if (strlinkedInUrl!=null) {
+                    if (!strlinkedInUrl.startsWith("http://") && !strlinkedInUrl.startsWith("https://"))
+                        strlinkedInUrl = "http://" + strlinkedInUrl;
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(strlinkedInUrl));
+                    startActivity(browserIntent);
+                }
+                break;
+            case R.id.txtAttachment:
+                Utility.freeMemory();
+                Utility.deleteCache(getContext());
+                Intent intent = new Intent(getContext(), AttachmentDisplay.class);
+                intent.putExtra("url", Utility.BASE_IMAGE_URL+"Other_doc/"+txtAttachment.getText().toString());
+                startActivity(intent);
+                break ;
+            case R.id.txtMore:
+                Utility.freeMemory();
+                Utility.deleteCache(getContext());
+
+                Intent intent1 = new Intent(getContext(), TestimonialActivity.class);
+                intent1.putExtra("ProfileId", TestimonialProfileId);
+                intent1.putExtra("from", "profile");
+                startActivity(intent1);
+                break;
+            case R.id.imgProfile:
+                final Dialog dialog = new Dialog(getActivity());
+                dialog.setContentView(R.layout.imageview_popup);
+                Utility.freeMemory();
+                Utility.deleteCache(getContext());
+
+                ImageView ivViewImage = (ImageView)dialog.findViewById(R.id.ivViewImage);
+                if (displayProfile.equals(""))
                 {
-
+                    ivViewImage.setImageResource(R.drawable.usr_white1);
                 }
                 else
                 {
-                    AlertDialog.Builder builder;
-                    builder = new AlertDialog.Builder(getContext(), R.style.Blue_AlertDialog);
-                    builder.setTitle("Mail to "+ tvPersonName.getText().toString())
-                            .setMessage("Are you sure you want to drop Mail ?")
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // continue with delete
-                                    try
-                                    {
-                                        Intent intent = new Intent (Intent.ACTION_VIEW , Uri.parse("mailto:" + tvMail.getText().toString()));
-                                        intent.putExtra(Intent.EXTRA_SUBJECT, "");
-                                        intent.putExtra(Intent.EXTRA_TEXT, "");
-                                        startActivity(intent);
-                                    }
-                                    catch(Exception e)
-                                    {
-                                        Toast.makeText(getContext(), "Sorry...You don't have any mail app", Toast.LENGTH_SHORT).show();
-                                        e.printStackTrace();
-                                    }
-                                }
-                            })
-                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // do nothing
-                                    dialog.dismiss();
-                                }
-                            })
-                            .setIcon(android.R.drawable.ic_dialog_email)
-                            .show();
+                    Picasso.with(getActivity()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+displayProfile).placeholder(R.drawable.usr_1)
+                            .resize(300,300).onlyScaleDown().skipMemoryCache().into(ivViewImage);
                 }
-            }
-        });*/
-        imgProfileShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+                ivViewImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(getContext(), ImageZoom.class);
+                        intent.putExtra("displayProfile", Utility.BASE_IMAGE_URL+"UserProfile/"+displayProfile);
+                        startActivity(intent);
+                    }
+                });
+
+               /* WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
+                wmlp.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
+                wmlp.y = 300;*/   //y position
+                dialog.show();
+                break;
+            case R.id.imgAdd:
+                Utility.freeMemory();
+                Utility.deleteCache(getContext());
+
+                Intent intent_search = new Intent(getContext(), SearchGroupMembers.class);
+                intent_search.putExtra("from", "profile");
+                intent_search.putExtra("ProfileId", TestimonialProfileId);
+                startActivity(intent_search);
+
+//
+//                Intent intent = new Intent(getContext(), TestimonialRequest.class);
+//                intent.putExtra("ProfileId", TestimonialProfileId);
+//                startActivity(intent);
+                break;
+            case R.id.imgBack:
+                Intent go = new Intent(getContext(),CardsActivity.class);
+
+                // you pass the position you want the viewpager to show in the extra,
+                // please don't forget to define and initialize the position variable
+                // properly
+                go.putExtra("viewpager_position", 0);
+                startActivity(go);
+                getActivity().finish();
+                Utility.freeMemory();
+                break;
+            case R.id.imgProfileShare:
                 Utility.freeMemory();
                 Utility.deleteCache(getContext());
 
@@ -686,13 +498,43 @@ public class ProfileFragment extends Fragment
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, tvPersonName.getText().toString());
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Share Profile Via"));
-            }
-        });
+                break ;
+            case  R.id.imgQR:
+                //  Toast.makeText(getContext(), "Generating QR Code.. Please Wait..", Toast.LENGTH_LONG).show();
+                Utility.freeMemory();
+                //  Toast.makeText(getContext(), "Generating QR Code.. Please Wait..", Toast.LENGTH_LONG).show();
 
-        imgProfileMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
+                //                    barName = encrypt(TestimonialProfileId, secretKey);
+
+                QR_AlertDialog = new AlertDialog.Builder(getActivity()).create();
+                LayoutInflater inflater = getActivity().getLayoutInflater();
+                final View dialogView = inflater.inflate(R.layout.person_qrcode, null);
+                FrameLayout fl_QRFrame = (FrameLayout)dialogView.findViewById(R.id.fl_QrFrame);
+                TextView tvBarName = (TextView)dialogView.findViewById(R.id.tvBarName);
+                ImageView ivBarImage = (ImageView)dialogView.findViewById(R.id.ivBarImage);
+//                tvBarName.setText(barName);
+                //  alertDialog.setFeatureDrawableAlpha(R.color.colorPrimary, 8);
+
+                ColorDrawable dialogColor = new ColorDrawable(getResources().getColor(R.color.colorPrimary));
+                dialogColor.setAlpha(70);
+                QR_AlertDialog.getWindow().setBackgroundDrawable(dialogColor);
+                // alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
+                tvBarName.setText(tvPersonName.getText().toString());
+//                    bitmap = TextToImageEncode(barName);
+                ivBarImage.setImageBitmap(bitmap);
+
+                fl_QRFrame.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view)
+                    {
+                        QR_AlertDialog.dismiss();
+                    }
+                });
+
+                QR_AlertDialog.setView(dialogView);
+                QR_AlertDialog.show();
+                break;
+            case R.id.imgProfileMenu:
 
                 Utility.freeMemory();
                 Utility.deleteCache(getContext());
@@ -705,7 +547,7 @@ public class ProfileFragment extends Fragment
                 lastClickTime = SystemClock.elapsedRealtime();
 
                 ContextThemeWrapper ctw = new ContextThemeWrapper(getContext(), R.style.CustomPopupTheme);
-                PopupMenu popup = new PopupMenu(ctw, imgProfileMenu);
+                PopupMenu popup = new PopupMenu(ctw, fragmentEditProfileBinding.imgProfileMenu);
                 //Inflating the Popup using xml file
                 popup.getMenuInflater().inflate(R.menu.profile_popup_menu, popup.getMenu());
                 for (String s : profile_array) {
@@ -744,8 +586,8 @@ public class ProfileFragment extends Fragment
 //                                    Toast.makeText(getContext(), profile_array.get(i).toString(), Toast.LENGTH_LONG).show();
 
                                     tvPersonName.setText(allTags.get(i).getFirstName() + " "+ allTags.get(i).getLastName());
-                                    tvDesignation.setText(allTags.get(i).getDesignation());
-                                    tvCompany.setText(allTags.get(i).getCompanyName());
+                                    fragmentEditProfileBinding.tvDesignation.setText(allTags.get(i).getDesignation());
+                                    fragmentEditProfileBinding.tvCompany.setText(allTags.get(i).getCompanyName());
                                     tvName.setText(allTags.get(i).getFirstName() + " "+ allTags.get(i).getLastName());
                                     tvCompanyName.setText(allTags.get(i).getCompanyName());
                                     tvDesi.setText(allTags.get(i).getDesignation());
@@ -830,7 +672,7 @@ public class ProfileFragment extends Fragment
                                                 }
 
 
-                                               // associationString += remainder + " / ";
+                                                // associationString += remainder + " / ";
                                             }
                                             txtAssociationList.setText(associationString);
                                             int countAssociation;
@@ -1046,99 +888,28 @@ public class ProfileFragment extends Fragment
                 });
 
                 popup.show();//showing popup menu
+                break;
+            case R.id.ivEditProfile:
+                //Toast.makeText(getContext(),"Edit Profile",Toast.LENGTH_SHORT).show();
 
-            }
-        });
-
-        imgQR.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                //  Toast.makeText(getContext(), "Generating QR Code.. Please Wait..", Toast.LENGTH_LONG).show();
-                Utility.freeMemory();
-              //  Toast.makeText(getContext(), "Generating QR Code.. Please Wait..", Toast.LENGTH_LONG).show();
-
-                //                    barName = encrypt(TestimonialProfileId, secretKey);
-
-                QR_AlertDialog = new AlertDialog.Builder(getActivity()).create();
-                LayoutInflater inflater = getActivity().getLayoutInflater();
-                final View dialogView = inflater.inflate(R.layout.person_qrcode, null);
-                FrameLayout fl_QRFrame = (FrameLayout)dialogView.findViewById(R.id.fl_QrFrame);
-                TextView tvBarName = (TextView)dialogView.findViewById(R.id.tvBarName);
-                ImageView ivBarImage = (ImageView)dialogView.findViewById(R.id.ivBarImage);
-//                tvBarName.setText(barName);
-                //  alertDialog.setFeatureDrawableAlpha(R.color.colorPrimary, 8);
-
-                ColorDrawable dialogColor = new ColorDrawable(getResources().getColor(R.color.colorPrimary));
-                dialogColor.setAlpha(70);
-                QR_AlertDialog.getWindow().setBackgroundDrawable(dialogColor);
-                // alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
-                tvBarName.setText(tvPersonName.getText().toString());
-//                    bitmap = TextToImageEncode(barName);
-                ivBarImage.setImageBitmap(bitmap);
-
-                fl_QRFrame.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view)
-                    {
-                        QR_AlertDialog.dismiss();
-                    }
-                });
-
-                QR_AlertDialog.setView(dialogView);
-                QR_AlertDialog.show();
-            }
-        });
-
-        ivEditProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-//                Toast.makeText(getContext(),"Edit Profile",Toast.LENGTH_SHORT).show();
-
-               // ivEditProfile.setBackground(getResources().getDrawable(R.drawable.ic_edit_gray));
-                Intent intent = new Intent(getContext(), EditProfileActivity.class);
-                intent.putExtra("type", "edit");
-                intent.putExtra("profile_id", TestimonialProfileId);
-                intent.putExtra("activity", "profile");
-                startActivity(intent);
+                ivEditProfile.setBackground(getResources().getDrawable(R.drawable.ic_edit_gray));
+                Intent intent_edit = new Intent(mContext, EditProfileActivity.class);
+                intent_edit.putExtra("type", "edit");
+                intent_edit.putExtra("profile_id", TestimonialProfileId);
+                intent_edit.putExtra("activity", "profile");
+                startActivity(intent_edit);
                 getActivity().overridePendingTransition (0, 0);
+                Log.e("fr","fr");
 
                /* Intent intent = new Intent(getApplicationContext(), Activity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 overridePendingTransition (0, 0);*/
-            }
-        });
-
-       /* // for bar code generating
-        try
-        {
-            barName = encrypt(TestimonialProfileId, secretKey);
-            bitmap = TextToImageEncode(barName);
+                break;
         }
-        catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
-            e.printStackTrace();
-        } catch (InvalidAlgorithmParameterException e) {
-            e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
-            e.printStackTrace();
-        } catch (BadPaddingException e) {
-            e.printStackTrace();
-        } catch (WriterException e) {
-            e.printStackTrace();
-        }*/
 
-        return view;
     }
-
     public static void callMyProfile()
     {
         new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
@@ -1245,10 +1016,11 @@ public class ProfileFragment extends Fragment
     }
     @Override
     public void onPause() {
+
+        super.onPause();
         Utility.freeMemory();
         Utility.deleteCache(getContext());
 
-        super.onPause();
     }
 
     @Override
@@ -1358,6 +1130,8 @@ public class ProfileFragment extends Fragment
         // 11. return result
         return result;
     }
+
+
 
     public static class HttpAsyncTaskProfiles extends AsyncTask<String, Void, String>
     {
@@ -1674,25 +1448,25 @@ public class ProfileFragment extends Fragment
                     if(allTags.get(profileIndex).getDesignation().equalsIgnoreCase("")
                             || allTags.get(profileIndex).getDesignation().equalsIgnoreCase("null"))
                     {
-                        tvDesignation.setVisibility(View.GONE);
+                        fragmentEditProfileBinding.tvDesignation.setVisibility(View.GONE);
                         llDesignationBox.setVisibility(View.GONE);
                     }
                     else
                     {
-                        tvDesignation.setText(allTags.get(profileIndex).getDesignation());
+                        fragmentEditProfileBinding.tvDesignation.setText(allTags.get(profileIndex).getDesignation());
                         tvDesi.setText(allTags.get(profileIndex).getDesignation());
                     }
-//                    tvCompany.setText(allTags.get(0).getCompanyName());
+//                    fragmentEditProfileBinding.tvCompany.setText(allTags.get(0).getCompanyName());
 //                    tvCompanyName.setText(allTags.get(0).getCompanyName());
                     if(allTags.get(profileIndex).getCompanyName().equalsIgnoreCase("")
                             || allTags.get(profileIndex).getCompanyName().equalsIgnoreCase("null"))
                     {
-                        tvCompany.setVisibility(View.GONE);
+                        fragmentEditProfileBinding.tvCompany.setVisibility(View.GONE);
                         llCompanyBox.setVisibility(View.GONE);
                     }
                     else
                     {
-                        tvCompany.setText(allTags.get(profileIndex).getCompanyName());
+                        fragmentEditProfileBinding.tvCompany.setText(allTags.get(profileIndex).getCompanyName());
                         tvCompanyName.setText(allTags.get(profileIndex).getCompanyName());
                     }
 //                    tvMob.setText(allTags.get(0).getPhone());
@@ -1963,11 +1737,11 @@ public class ProfileFragment extends Fragment
         protected void onPreExecute()
         {
             super.onPreExecute();
-          //  dialog = new ProgressDialog(getActivity());
-          //  dialog.setMessage("Fetching Testimonials...");
+            //  dialog = new ProgressDialog(getActivity());
+            //  dialog.setMessage("Fetching Testimonials...");
             //dialog.setTitle("Saving Reminder");
             // dialog.show();
-           // dialog.setCancelable(false);
+            // dialog.setCancelable(false);
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
         }

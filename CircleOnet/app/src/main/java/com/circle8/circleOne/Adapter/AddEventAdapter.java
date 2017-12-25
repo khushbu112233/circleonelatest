@@ -14,8 +14,6 @@ import com.circle8.circleOne.Utils.Utility;
 
 import java.util.ArrayList;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 /**
  * Created by ample-arch on 8/24/2017.
  */
@@ -88,7 +86,7 @@ public class AddEventAdapter extends BaseAdapter
 
                 if(EditProfileActivity.addEventList.size() == 0)
                 {
-                    EditProfileActivity.tvEventInfo.setVisibility(View.GONE);
+                    ((EditProfileActivity)context).fragmentEditProfileBinding.tvEventInfo.setVisibility(View.GONE);
                 }
             }
         });

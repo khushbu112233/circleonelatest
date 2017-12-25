@@ -10,6 +10,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.database.Cursor;
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -20,7 +21,6 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -43,15 +43,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Adapter.AddEventAdapter;
@@ -65,18 +61,14 @@ import com.circle8.circleOne.Model.AssociationModel;
 import com.circle8.circleOne.Model.EventModel;
 import com.circle8.circleOne.Model.TestimonialModel;
 import com.circle8.circleOne.R;
-import com.circle8.circleOne.Utils.ExpandableHeightGridView;
-import com.circle8.circleOne.Utils.ExpandableHeightListView;
-import com.circle8.circleOne.Utils.StickyScrollView;
 import com.circle8.circleOne.Utils.Utility;
+import com.circle8.circleOne.databinding.FragmentEditProfileBinding;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -97,7 +89,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.TwitterAuthProvider;
-import com.hbb20.CountryCodePicker;
 import com.linkedin.platform.APIHelper;
 import com.linkedin.platform.LISessionManager;
 import com.linkedin.platform.errors.LIApiError;
@@ -110,10 +101,8 @@ import com.neovisionaries.i18n.CountryCode;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
-import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
-import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterAuthClient;
@@ -144,9 +133,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-import io.fabric.sdk.android.Fabric;
-
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 import static junit.framework.Assert.assertEquals;
 
@@ -160,48 +146,26 @@ public class EditProfileActivity extends AppCompatActivity implements
     //for adding event and expande & collapse
     public static ArrayList<String> addEventList = new ArrayList<>();
     public static AddEventAdapter addEventAdapter;
-    public static TextView tvEventInfo;
-    ImageView imgAdd, imgFb, imgLinkedin, imgTwitter, imgGoogle, imgYoutube;
-    ImageView imgDone;
-    AutoCompleteTextView autoCompleteCompany, autoCompleteDesignation, autoCompleteIndustry;
     //String[] languages={"Android ","java","IOS","SQL","JDBC","Web services"};
     ArrayList<String> company, designation, industry, designation_id, company_id, industry_id;
     String association_ID, association_NAME;
     String profileId = "";
     public static String Card_Front = "",Card_Back = "", FirstName = "", LastName = "",UserPhoto = "",Phone1 = "", Phone2 = "", Mobile1 = "", Mobile2 = ""
-           ,Fax1 = "", Fax2 = "", Email1 = "",Email2 = "", Youtube = "",Facebook = "", Twitter = "", Google = "",LinkedIn = "", IndustryName = ""
-        , CompanyName = "", CompanyProfile = "",Designation = "", ProfileDesc = "",Status = "", Address1 = "", Address2 = "", Address3 = "", Address4 = "", City = "", State = "", Country = "", Postalcode = "", Website = "", Attachment_FileName = "";
-    EditText edtUserName, edtWork, edtPrimary, edtEmail, edtProfileDesc, edtCompanyDesc, edtFirstName, edtLastName;
-  //  public static ViewPager mViewPager, viewPager1;
-    CircleImageView imgProfile;
-    TextView tvPersonName, tvDesignation, tvCompany;
-    ExpandableHeightListView lstTestimonial;
-    TextView txtTestimonial, txtMore;
+            ,Fax1 = "", Fax2 = "", Email1 = "",Email2 = "", Youtube = "",Facebook = "", Twitter = "", Google = "",LinkedIn = "", IndustryName = ""
+            , CompanyName = "", CompanyProfile = "",Designation = "", ProfileDesc = "",Status = "", Address1 = "", Address2 = "", Address3 = "", Address4 = "", City = "", State = "", Country = "", Postalcode = "", Website = "", Attachment_FileName = "";
+    //  public static ViewPager mViewPager, viewPager1;
     CustomAdapter customAdapter;
     ArrayList<String> title_array = new ArrayList<String>();
     ArrayList<String> notice_array = new ArrayList<String>();
     String type = "";
     private ProgressDialog progressDialog;
-    EditText edtAddress1, edtAddress2, edtAddress3, edtAddress4, edtAddress6, edtWebsite, etAssociationName;
     String UserID = "";
-    ImageView imgBack;
-    CountryCodePicker ccpCountry;
-    private ExpandableHeightGridView gridView, gridViewAdded;
-    private String[] array;
-    private TextView etAttachFile;
-    private ImageView ivAttachFile;
-    private CharSequence[] items;
     private String userChoosenTask;
-    private String file_path = "";
-    private File file;
+    private String[] array;
+    private CharSequence[] items;
     private int REQUEST_CAMERA = 0, REQUEST_GALLERY = 1, REQUEST_DOCUMENT = 2, REQUEST_AUDIO = 3;
     private int camera_permission;
-    private ArrayList<String> image = new ArrayList<>();
-    private CardSwipe myPager;
     private String addEventString;
-    private LinearLayout llEventBox;
-    private ImageView ivArrowImg, ivArrowImg1;
-    RecyclerView recyclerEvents;
     private String arrowStatus = "DOWN";
     private String arrowStatus1 = "DOWN";
     private LoginSession session;
@@ -209,23 +173,16 @@ public class EditProfileActivity extends AppCompatActivity implements
     private int REQUEST_CAMERA_CARD = 501;
     private static String final_ImgBase64 = "";
     private int cardposition = 0;
-    ImageView ivAttachBackImage, ivAttachFrontImage, ivAddAssociate;
-    static TextView txtCardFront;
-    static TextView txtCardBack;
     static String cardType = "";
     String Attach_String = "";
     String companyID, designationID, industryID, associationID, addressID;
     private ProgressDialog mProgressDialog;
     ArrayList<String> AssoNameList = new ArrayList<>();
     ArrayList<String> AssoIdList = new ArrayList<>();
-    Spinner spnAssociation;
     public static String strFB = "", strLinkedin = "", strGoogle = "", strTwitter = "", strYoutube = "";
     private CallbackManager callbackManager;
-    private LoginButton loginButton;
-    private SignInButton btnSignIn;
     private GoogleApiClient mGoogleApiClient;
     private static final int RC_SIGN_IN = 007;
-    EditText edtWork2, edtPrimary2, edtEmail2, edtFax1, edtFax2;
     private static final int PERMISSIONS_REQUEST_CAMERA = 314;
     FrameLayout FrameScanBotCamera;
     ProfileSession profileSession;
@@ -242,55 +199,31 @@ public class EditProfileActivity extends AppCompatActivity implements
     private Button backButton;
     RelativeLayout rltGallery;
     public static Activity activity;
-    ImageView imgProfileShare;
-    AppBarLayout appbar;
-    ImageView ivProfileDelete;
-
-    private static RelativeLayout rlProgressDialog ;
-    private static TextView tvProgressing ;
-    private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
     private boolean LinkedInFlag = false;
-    private ProgressDialog progress;
-    TextView txtAttachDelete;
     private static final String host = "api.linkedin.com";
     private static final String topCardUrl = "https://" + host + "/v1/people/~:" +
             "(id,email-address,formatted-name,phone-numbers,public-profile-url,picture-url,picture-urls::(original))";
-
     private FirebaseAuth mAuth;
     private TwitterAuthClient client;
     JSONArray arrayAssociation, arrayEvents;
-
     private ArrayList<EventModel> eventModelArrayList = new ArrayList<>();
     private ArrayList<String> eventCategoryIDList = new ArrayList<>();
     private ArrayList<String> eventCategoryNameList = new ArrayList<>();
-    EditText edtProfileName;
     public static String ProfileName;
-    RecyclerView recyclerAssociation;
     private RecyclerView.Adapter mAdapter, mAdapter1;
-
-    LinearLayout llTelePhoneBox1, llTelePhoneBox2, llMobileBox1, llMobileBox2, llFaxBox1, llFaxBox2 ;
-    CountryCodePicker ccp1,ccp2,ccp3,ccp4,ccp5,ccp6;
-    ImageView ivTeleAdd, ivMobAdd, ivFaxAdd ;
     String fromActivity = "";
-
-    StickyScrollView stickyScrollView ;
     String cropType = "";
     ReferralCodeSession referralCodeSession;
     private String refer;
-
+    private ProgressDialog progress;
+    public static FragmentEditProfileBinding fragmentEditProfileBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         supportRequestWindowFeature(WindowCompat.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
-
-        TwitterAuthConfig authConfig = new TwitterAuthConfig(
-                getString(R.string.twitter_consumer_key),
-                getString(R.string.twitter_consumer_secret));
-        Fabric.with(this, new Twitter(authConfig));
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        setContentView(R.layout.fragment_edit_profile);
+        fragmentEditProfileBinding  = DataBindingUtil.setContentView(this,R.layout.fragment_edit_profile);
         Utility.freeMemory();
         activity = EditProfileActivity.this;
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -298,15 +231,11 @@ public class EditProfileActivity extends AppCompatActivity implements
        /* AsyncTaskRunner runner = new AsyncTaskRunner();
         String sleepTime = "200";
         runner.execute(sleepTime);*/
+        Log.e("ac","ac");
         initUI();
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                populate();
-            }
-        });
-        imgProfileShare.setOnClickListener(this);
+        populate();
+        //  new LongOperation().execute();
+        fragmentEditProfileBinding.imgProfileShare.setOnClickListener(this);
 
         SpannableString ss = new SpannableString("Ask your friends to write a Testimonial for you(100 words or less),Please choose from your CircleOne contacts and send a request.");
         ClickableSpan clickableSpan = new ClickableSpan() {
@@ -326,153 +255,31 @@ public class EditProfileActivity extends AppCompatActivity implements
         ss.setSpan(clickableSpan, 91, 100, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         // TextView textView = (TextView) findViewById(R.id.hello);
-        txtTestimonial.setText(ss);
-        txtTestimonial.setMovementMethod(LinkMovementMethod.getInstance());
-        txtTestimonial.setHighlightColor(getResources().getColor(R.color.colorPrimary));
-
-
-        btnSignIn.setOnClickListener(this);
-        imgGoogle.setOnClickListener(this);
-
-        imgYoutube.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utility.freeMemory();
-                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(EditProfileActivity.this);
-                final EditText input = new EditText(EditProfileActivity.this);
-                input.setHint("Enter Youtube Url");
-                alertDialog.setMessage("Youtube");
-                alertDialog.setView(input);
-                alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //do your work here
-                        if (input.getText().toString().equals("")){
-                            Toast.makeText(getApplicationContext(), "Enter youtube url", Toast.LENGTH_LONG).show();
-                        }
-                        else {
-                            dialog.dismiss();
-                            strYoutube = input.getText().toString();
-                        }
-                       // new HttpAsyncTask().execute(Utility.BASE_URL+"FriendConnection_Operation");
-                    }
-                });
-                alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                alertDialog.show();
-            }
-        });
-
-        client = new TwitterAuthClient();
-        imgTwitter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                client.authorize(EditProfileActivity.this, new Callback<TwitterSession>() {
-                    @Override
-                    public void success(Result<TwitterSession> twitterSessionResult) {
-                       // Toast.makeText(EditProfileActivity.this, "success", Toast.LENGTH_SHORT).show();
-                        handleTwitterSession(twitterSessionResult.data);
-                    }
-
-                    @Override
-                    public void failure(TwitterException e) {
-                       // Toast.makeText(EditProfileActivity.this, "failure", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-            }
-        });
-
-        imgProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cropType = "profile";
-                CropImage.activity(null)
-                        .setCropShape(CropImageView.CropShape.OVAL)
-                        .setGuidelines(CropImageView.Guidelines.ON)
-                        .start(EditProfileActivity.this);
-
-            }
-        });
-
-
-        /*imgProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                CropImage.activity(null)
-                        .setGuidelines(CropImageView.Guidelines.ON)
-                        .start(EditProfileActivity.this);
-
-            }
-        });
-*/
-        txtAttachDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                etAttachFile.setText("");
-            }
-        });
-
-        imgFb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /*progressDialog = new ProgressDialog(EditProfileActivity.this);
-                progressDialog.setMessage("Loading...");
-                progressDialog.show();*/
-
-                String loading = "Loading" ;
-                CustomProgressDialog(loading);
-
-                loginButton.performClick();
-
-                loginButton.setPressed(true);
-
-                loginButton.invalidate();
-
-                loginButton.registerCallback(callbackManager, mCallBack);
-
-                loginButton.setPressed(false);
-
-                loginButton.invalidate();
-            }
-        });
-
-        imgBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        imgLinkedin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LinkedInFlag = true;
-                login_linkedin();
-            }
-        });
-
-        imgAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               /* Intent intent = new Intent(getApplicationContext(), TestimonialRequest.class);
-                intent.putExtra("ProfileId", profileId);
-                startActivity(intent);*/
-
-                Intent intent1 = new Intent(getApplicationContext(), SearchGroupMembers.class);
-                intent1.putExtra("from", "profile");
-                intent1.putExtra("ProfileId", profileId);
-                startActivity(intent1);
-
-            }
-        });
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        fragmentEditProfileBinding.txtTestimonial.setText(ss);
+        fragmentEditProfileBinding.txtTestimonial.setMovementMethod(LinkMovementMethod.getInstance());
+        fragmentEditProfileBinding. txtTestimonial.setHighlightColor(getResources().getColor(R.color.colorPrimary));
+        fragmentEditProfileBinding.btnSignIn.setOnClickListener(this);
+        fragmentEditProfileBinding.imgGoogle.setOnClickListener(this);
+        fragmentEditProfileBinding.txtAttachDelete.setOnClickListener(this);
+        fragmentEditProfileBinding.imgFb.setOnClickListener(this);
+        fragmentEditProfileBinding.imgBack.setOnClickListener(this);
+        fragmentEditProfileBinding.imgLinkedin.setOnClickListener(this);
+        fragmentEditProfileBinding.imgAdd.setOnClickListener(this);
+        fragmentEditProfileBinding.ivAttachFrontImage.setOnClickListener(this);
+        fragmentEditProfileBinding.ivAttachBackImage.setOnClickListener(this);
+        fragmentEditProfileBinding.ivArrowImg.setOnClickListener(this);
+        fragmentEditProfileBinding.ivArrowImg1.setOnClickListener(this);
+        fragmentEditProfileBinding.ivProfileDelete.setOnClickListener(this);
+        fragmentEditProfileBinding.ivAttachFile.setOnClickListener(this);
+        fragmentEditProfileBinding.ivTeleAdd.setOnClickListener(this);
+        fragmentEditProfileBinding.ivMobAdd.setOnClickListener(this);
+        fragmentEditProfileBinding.ivFaxAdd.setOnClickListener(this);
+        fragmentEditProfileBinding.imgDone.setOnClickListener(this);
+        fragmentEditProfileBinding.txtMore.setOnClickListener(this);
+        fragmentEditProfileBinding.imgYoutube.setOnClickListener(this);
+        fragmentEditProfileBinding.imgTwitter.setOnClickListener(this);
+        fragmentEditProfileBinding.imgProfile.setOnClickListener(this);
+        fragmentEditProfileBinding.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                Toast.makeText(getApplicationContext(), array[position].toString(), Toast.LENGTH_SHORT).show();
@@ -481,207 +288,98 @@ public class EditProfileActivity extends AppCompatActivity implements
                 addEventList.add(addEventString);
 
                 addEventAdapter = new AddEventAdapter(getApplicationContext(), addEventList);
-                gridViewAdded.setAdapter(addEventAdapter);
-                gridViewAdded.setExpanded(true);
+                fragmentEditProfileBinding.gridViewAdded.setAdapter(addEventAdapter);
+                fragmentEditProfileBinding.gridViewAdded.setExpanded(true);
                 addEventAdapter.notifyDataSetChanged();
 
                 if (addEventList.size() != 0) {
-                    tvEventInfo.setVisibility(View.GONE);
+                    fragmentEditProfileBinding.tvEventInfo.setVisibility(View.GONE);
                 } else if (addEventList.size() == 0) {
-                    tvEventInfo.setVisibility(View.VISIBLE);
+                    fragmentEditProfileBinding.tvEventInfo.setVisibility(View.VISIBLE);
                 }
             }
         });
 
-        ivAttachFrontImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cardType = "front";
 
-                CropImage.activity(null)
-                        .setGuidelines(CropImageView.Guidelines.ON)
-                        .start(EditProfileActivity.this);
-
-               // selectImage();
-            }
-        });
-
-        ivAttachBackImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cardType = "back";
-                CropImage.activity(null)
-                        .setGuidelines(CropImageView.Guidelines.ON)
-                        .start(EditProfileActivity.this);
-              //  selectImage();
-            }
-        });
-
-
-
-        /*viewPager1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (viewPager1.getCurrentItem() == 0) {
-                    selectImage();
-                }
-            }
-        });
-
-        mViewPager.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (viewPager1.getCurrentItem() == 0) {
-                    selectImage();
-                }
-            }
-        });*/
-
-        ivArrowImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (arrowStatus.equalsIgnoreCase("RIGHT"))
-                {
-                    ivArrowImg.setImageResource(R.drawable.ic_down_arrow_blue);
-                    recyclerEvents.setVisibility(View.VISIBLE);
-                    arrowStatus = "DOWN";
-                }
-                else if (arrowStatus.equalsIgnoreCase("DOWN"))
-                {
-                    ivArrowImg.setImageResource(R.drawable.ic_right_arrow_blue);
-                    recyclerEvents.setVisibility(View.GONE);
-                    arrowStatus = "RIGHT";
-                }
-            }
-        });
-
-        ivArrowImg1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                if (arrowStatus1.equalsIgnoreCase("RIGHT"))
-                {
-                    ivArrowImg1.setImageResource(R.drawable.ic_down_arrow_blue);
-                    recyclerAssociation.setVisibility(View.VISIBLE);
-                    arrowStatus1 = "DOWN";
-                }
-                else if (arrowStatus1.equalsIgnoreCase("DOWN"))
-                {
-                    ivArrowImg1.setImageResource(R.drawable.ic_right_arrow_blue);
-                    recyclerAssociation.setVisibility(View.GONE);
-                    arrowStatus1 = "RIGHT";
-                }
-            }
-        });
-
-        ivProfileDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                Utility.freeMemory();
-                AlertDialog.Builder alert = new AlertDialog.Builder(EditProfileActivity.this, R.style.Blue_AlertDialog);
-                alert.setMessage("Are you sure want to delete profile?");
-                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //do your work here
-                        dialog.dismiss();
-                        new HttpAsyncTaskProfileDelete().execute(Utility.BASE_URL+"DeleteProfile");
-                    }
-                });
-                alert.setNegativeButton("No", new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                alert.show();
-            }
-        });
-
-      /*  ivAddAssociate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                final AlertDialog alertDialog = new AlertDialog.Builder(EditProfileActivity.this).create();
-                LayoutInflater inflater = getLayoutInflater();
-                final View dialogView = inflater.inflate(R.layout.association_dialog, null);
-
-                ListView listView1 = (ListView)dialogView.findViewById(R.id.listView_Asso);
-
-//                AssociationAdapter associationAdapter = new AssociationAdapter(EditProfileActivity.this, AssoIdList, AssoNameList );
-                AssociationAdapter associationAdapter = new AssociationAdapter(EditProfileActivity.this, R.layout.association_value, AssoIdList, AssoNameList );
-                listView1.setAdapter(associationAdapter);
-                associationAdapter.notifyDataSetChanged();
-
-                listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                    {
-//                        Toast.makeText(getApplicationContext(),"ID NAME: "+
-//                                AssoIdList.get(position)+" "+AssoNameList.get(position),Toast.LENGTH_LONG).show();
-
-                        associationID = AssoIdList.get(position);
-                        etAssociationName.setText(AssoNameList.get(position));
-                        alertDialog.dismiss();
-                    }
-                });
-
-                alertDialog.setView(dialogView);
-                alertDialog.show();
-            }
-        });
-*/
-      //  new HttpAsyncTaskCompany().execute("http://circle8.asia:8999/Onet.svc/GetCompanyList");
-      //  new HttpAsyncTaskIndustry().execute("http://circle8.asia:8999/Onet.svc/GetIndustryList");
-      //  new HttpAsyncTaskDesignation().execute("http://circle8.asia:8999/Onet.svc/GetDesignationList");
-
-      //  new HttpAsyncTaskEvents().execute("http://circle8.asia:8999/Onet.svc/GetAssociationList");
-//        new HttpAsyncTaskEventList().execute("http://circle8.asia:8999/Onet.svc/Events/List");
-
-        autoCompleteDesignation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        fragmentEditProfileBinding.autoCompleteDesignation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position,
                                     long arg3) {
                 Utility.freeMemory();
-                int selectedPos = designation.indexOf((String) autoCompleteDesignation.getText().toString());
+                int selectedPos = designation.indexOf((String) fragmentEditProfileBinding.autoCompleteDesignation.getText().toString());
                 designationID = designation_id.get(selectedPos);
                 //s1.get(position) is name selected from autocompletetextview
                 // now you can show the value on textview.
             }
         });
 
-        autoCompleteCompany.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        fragmentEditProfileBinding.autoCompleteCompany.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position,
                                     long arg3) {
 
-                int selectedPos = company.indexOf((String) autoCompleteCompany.getText().toString());
+                int selectedPos = company.indexOf((String) fragmentEditProfileBinding.autoCompleteCompany.getText().toString());
                 companyID = company_id.get(selectedPos);
                 //s1.get(position) is name selected from autocompletetextview
                 // now you can show the value on textview.
             }
         });
 
-        autoCompleteIndustry.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        fragmentEditProfileBinding.autoCompleteIndustry.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position,
                                     long arg3) {
                 Utility.freeMemory();
-                int selectedPos = industry.indexOf((String) autoCompleteIndustry.getText().toString());
+                int selectedPos = industry.indexOf((String) fragmentEditProfileBinding.autoCompleteIndustry.getText().toString());
                 industryID = industry_id.get(selectedPos);
                 //s1.get(position) is name selected from autocompletetextview
                 // now you can show the value on textview.
             }
         });
 
-        imgDone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+
+        switch (id) {
+            case R.id.btn_sign_in:
+                signIn();
+                break;
+            case R.id.imgProfile:
+                cropType = "profile";
+                CropImage.activity(null)
+                        .setCropShape(CropImageView.CropShape.OVAL)
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .start(EditProfileActivity.this);
+                break;
+            case R.id.imgTwitter:
+                client.authorize(EditProfileActivity.this, new Callback<TwitterSession>() {
+                    @Override
+                    public void success(Result<TwitterSession> twitterSessionResult) {
+                        // Toast.makeText(EditProfileActivity.this, "success", Toast.LENGTH_SHORT).show();
+                        handleTwitterSession(twitterSessionResult.data);
+                    }
+
+                    @Override
+                    public void failure(TwitterException e) {
+                        // Toast.makeText(EditProfileActivity.this, "failure", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                break;
+            case R.id.txtMore:
+                Utility.freeMemory();
+                Intent intent = new Intent(getApplicationContext(), TestimonialActivity.class);
+                intent.putExtra("ProfileId", profileId);
+                intent.putExtra("from", "editprofile");
+                intent.putExtra("type", type);
+                startActivity(intent);
+                break;
+            case R.id.imgDone:
                 arrayAssociation = new JSONArray();
                 String data = "";
                 List<AssociationModel> stList = ((CardViewDataAdapter) mAdapter)
@@ -729,96 +427,96 @@ public class EditProfileActivity extends AppCompatActivity implements
                      "Selected Students: \n" + arrayEvents, Toast.LENGTH_LONG)
                         .show();*/
 
-               if (!edtWork.getText().toString().equals("")) {
-                   try {
-                       if (ccp1.getSelectedCountryCodeWithPlus() != null) {
-                           Phone1 = ccp1.getSelectedCountryCodeWithPlus() + " " + edtWork.getText().toString();
-                       }
-                   } catch (Exception e) {
-                       Phone1 = ccp1.getDefaultCountryCodeWithPlus() + " " + edtWork.getText().toString();
-                   }
-               }
-
-                if (!edtWork2.getText().toString().equals("")) {
+                if (!fragmentEditProfileBinding.edtWork.getText().toString().equals("")) {
                     try {
-                        if (ccp2.getSelectedCountryCodeWithPlus() != null) {
-                            Phone2 = ccp2.getSelectedCountryCodeWithPlus() + " " + edtWork2.getText().toString();
+                        if (fragmentEditProfileBinding.ccp1.getSelectedCountryCodeWithPlus() != null) {
+                            Phone1 = fragmentEditProfileBinding.ccp1.getSelectedCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtWork.getText().toString();
                         }
                     } catch (Exception e) {
-                        Phone2 = ccp2.getDefaultCountryCodeWithPlus() + " " + edtWork2.getText().toString();
+                        Phone1 = fragmentEditProfileBinding.ccp1.getDefaultCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtWork.getText().toString();
                     }
                 }
 
-                if (!edtPrimary.getText().toString().equals("")) {
+                if (!fragmentEditProfileBinding.edtWork2.getText().toString().equals("")) {
                     try {
-                        if (ccp3.getSelectedCountryCodeWithPlus() != null) {
-                            Mobile1 = ccp3.getSelectedCountryCodeWithPlus() + " " + edtPrimary.getText().toString();
+                        if (fragmentEditProfileBinding.ccp2.getSelectedCountryCodeWithPlus() != null) {
+                            Phone2 = fragmentEditProfileBinding.ccp2.getSelectedCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtWork2.getText().toString();
                         }
                     } catch (Exception e) {
-                        Mobile1 = ccp3.getDefaultCountryCodeWithPlus() + " " + edtPrimary.getText().toString();
+                        Phone2 = fragmentEditProfileBinding.ccp2.getDefaultCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtWork2.getText().toString();
                     }
                 }
 
-                if (!edtPrimary2.getText().toString().equals("")) {
+                if (!fragmentEditProfileBinding.edtPrimary.getText().toString().equals("")) {
                     try {
-                        if (ccp4.getSelectedCountryCodeWithPlus() != null) {
-                            Mobile2 = ccp4.getSelectedCountryCodeWithPlus() + " " + edtPrimary2.getText().toString();
+                        if (fragmentEditProfileBinding.ccp3.getSelectedCountryCodeWithPlus() != null) {
+                            Mobile1 = fragmentEditProfileBinding.ccp3.getSelectedCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtPrimary.getText().toString();
                         }
                     } catch (Exception e) {
-                        Mobile2 = ccp4.getDefaultCountryCodeWithPlus() + " " + edtPrimary2.getText().toString();
+                        Mobile1 = fragmentEditProfileBinding.ccp3.getDefaultCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtPrimary.getText().toString();
                     }
                 }
 
-                if (!edtFax1.getText().toString().equals(""))
+                if (!fragmentEditProfileBinding.edtPrimary2.getText().toString().equals("")) {
+                    try {
+                        if (fragmentEditProfileBinding.ccp4.getSelectedCountryCodeWithPlus() != null) {
+                            Mobile2 = fragmentEditProfileBinding.ccp4.getSelectedCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtPrimary2.getText().toString();
+                        }
+                    } catch (Exception e) {
+                        Mobile2 = fragmentEditProfileBinding.ccp4.getDefaultCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtPrimary2.getText().toString();
+                    }
+                }
+
+                if (!fragmentEditProfileBinding.edtFax1.getText().toString().equals(""))
                 {
                     try
                     {
-                        if (ccp5.getSelectedCountryCodeWithPlus() != null)
+                        if (fragmentEditProfileBinding.ccp5.getSelectedCountryCodeWithPlus() != null)
                         {
-                            Fax1 = ccp5.getSelectedCountryCodeWithPlus() + " " + edtFax1.getText().toString();
+                            Fax1 = fragmentEditProfileBinding.ccp5.getSelectedCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtFax1.getText().toString();
                         }
                     }
                     catch (Exception e)
                     {
-                        Fax1 = ccp5.getDefaultCountryCodeWithPlus() + " " + edtFax1.getText().toString();
+                        Fax1 = fragmentEditProfileBinding.ccp5.getDefaultCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtFax1.getText().toString();
                     }
                 }
 
-                if (!edtFax2.getText().toString().equals("")) {
+                if (!fragmentEditProfileBinding.edtFax2.getText().toString().equals("")) {
                     try {
-                        if (ccp6.getSelectedCountryCodeWithPlus() != null) {
-                            Fax2 = ccp6.getSelectedCountryCodeWithPlus() + " " + edtFax2.getText().toString();
+                        if (fragmentEditProfileBinding.ccp6.getSelectedCountryCodeWithPlus() != null) {
+                            Fax2 = fragmentEditProfileBinding.ccp6.getSelectedCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtFax2.getText().toString();
                         }
                     } catch (Exception e) {
-                        Fax2 = ccp6.getDefaultCountryCodeWithPlus() + " " + edtFax2.getText().toString();
+                        Fax2 = fragmentEditProfileBinding.ccp6.getDefaultCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtFax2.getText().toString();
                     }
                 }
 
                 try
                 {
-                    associationID = AssoIdList.get(spnAssociation.getSelectedItemPosition()).toString();
+                    associationID = AssoIdList.get(fragmentEditProfileBinding.spnAssociation.getSelectedItemPosition()).toString();
                 }
                 catch (Exception e){}
 
-                if (edtProfileName.getText().toString().equals("")){
+                if (fragmentEditProfileBinding.edtProfileName.getText().toString().equals("")){
                     Toast.makeText(getApplicationContext(), "Please enter profile name", Toast.LENGTH_LONG).show();
                 }
-                else if (edtFirstName.getText().toString().equals("")){
+                else if (fragmentEditProfileBinding.edtFirstName.getText().toString().equals("")){
                     Toast.makeText(getApplicationContext(), "Please enter first name", Toast.LENGTH_LONG).show();
                 }
-                else if (edtLastName.getText().toString().equals("")){
+                else if (fragmentEditProfileBinding.edtLastName.getText().toString().equals("")){
                     Toast.makeText(getApplicationContext(), "Please enter last name", Toast.LENGTH_LONG).show();
                 }
-                else if (autoCompleteDesignation.getText().toString().equals("")){
+                else if (fragmentEditProfileBinding.autoCompleteDesignation.getText().toString().equals("")){
                     Toast.makeText(getApplicationContext(), "Please enter title", Toast.LENGTH_LONG).show();
                 }
-                else if (autoCompleteCompany.getText().toString().equals("")){
+                else if (fragmentEditProfileBinding.autoCompleteCompany.getText().toString().equals("")){
                     Toast.makeText(getApplicationContext(), "Please enter company name", Toast.LENGTH_LONG).show();
                 }
-                else if (edtEmail.getText().toString().equals("")){
+                else if (fragmentEditProfileBinding.edtEmail.getText().toString().equals("")){
                     Toast.makeText(getApplicationContext(), "Please enter valid email id", Toast.LENGTH_LONG).show();
                 }
-                else if (edtPrimary.getText().toString().equals("")){
+                else if (fragmentEditProfileBinding.edtPrimary.getText().toString().equals("")){
                     Toast.makeText(getApplicationContext(), "Please enter your mobile number.", Toast.LENGTH_LONG).show();
                 }
                 else {
@@ -829,114 +527,193 @@ public class EditProfileActivity extends AppCompatActivity implements
                         new HttpAsyncTask().execute(Utility.BASE_URL + "UpdateProfile");
                     }
                 }
-            }
-        });
-        txtMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+
+                break;
+            case R.id.imgYoutube:
                 Utility.freeMemory();
-                Intent intent = new Intent(getApplicationContext(), TestimonialActivity.class);
-                intent.putExtra("ProfileId", profileId);
-                intent.putExtra("from", "editprofile");
-                intent.putExtra("type", type);
-                startActivity(intent);
-            }
-        });
-
-        /*viewPager1.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-            private int mScrollState = ViewPager.SCROLL_STATE_IDLE;
-
-            @Override
-            public void onPageScrolled(final int position, final float positionOffset, final int positionOffsetPixels) {
-                Utility.freeMemory();
-                if (mScrollState == ViewPager.SCROLL_STATE_IDLE) {
-                    return;
-                }
-                mViewPager.scrollTo(viewPager1.getScrollX(), viewPager1.getScrollY());
-            }
-
-            @Override
-            public void onPageSelected(final int position) {
-                // mViewPager.setCurrentItem(position, true);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(final int state) {
-                mScrollState = state;
-                Utility.freeMemory();
-                if (state == ViewPager.SCROLL_STATE_IDLE) {
-                    mViewPager.setCurrentItem(viewPager1.getCurrentItem(), false);
-                }
-            }
-        });*/
-
-        ivAttachFile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               /* Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(EditProfileActivity.this);
+                final EditText input = new EditText(EditProfileActivity.this);
+                input.setHint("Enter Youtube Url");
+                alertDialog.setMessage("Youtube");
+                alertDialog.setView(input);
+                alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //do your work here
+                        if (input.getText().toString().equals("")){
+                            Toast.makeText(getApplicationContext(), "Enter youtube url", Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            dialog.dismiss();
+                            strYoutube = input.getText().toString();
+                        }
+                        // new HttpAsyncTask().execute(Utility.BASE_URL+"FriendConnection_Operation");
+                    }
+                });
+                alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                alertDialog.show();
+                break;
+            case R.id.ivAttachFile:
+                /* Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("file*//*");
                 startActivityForResult(intent,PICKFILE_RESULT_CODE);*/
                 Utility.freeMemory();
                 selectFile();
-            }
-        });
-
-        ivTeleAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
+                break;
+            case R.id.ivTeleAdd:
                 Utility.freeMemory();
-                if (llTelePhoneBox2.getVisibility() == View.GONE)
+                if (fragmentEditProfileBinding.llTelephoneBox1.getVisibility() == View.GONE)
                 {
-                    llTelePhoneBox2.setVisibility(View.VISIBLE);
-                    ivTeleAdd.setImageResource(R.drawable.ic_minus_blue);
+                    fragmentEditProfileBinding.llTelephoneBox2.setVisibility(View.VISIBLE);
+                    fragmentEditProfileBinding.ivTeleAdd.setImageResource(R.drawable.ic_minus_blue);
                 }
                 else
                 {
-                    llTelePhoneBox2.setVisibility(View.GONE);
-                    ivTeleAdd.setImageResource(R.drawable.ic_plus_blue);
+                    fragmentEditProfileBinding.llTelephoneBox2.setVisibility(View.GONE);
+                    fragmentEditProfileBinding.ivTeleAdd.setImageResource(R.drawable.ic_plus_blue);
                 }
-            }
-        });
-
-        ivMobAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                if (llMobileBox2.getVisibility() == View.GONE)
+                break;
+            case R.id.ivMobAdd:
+                if (fragmentEditProfileBinding.llMobileBox2.getVisibility() == View.GONE)
                 {
-                    llMobileBox2.setVisibility(View.VISIBLE);
-                    ivMobAdd.setImageResource(R.drawable.ic_minus_blue);
+                    fragmentEditProfileBinding.llMobileBox2.setVisibility(View.VISIBLE);
+                    fragmentEditProfileBinding.ivMobAdd.setImageResource(R.drawable.ic_minus_blue);
                 }
                 else
                 {
-                    llMobileBox2.setVisibility(View.GONE);
-                    ivMobAdd.setImageResource(R.drawable.ic_plus_blue);
+                    fragmentEditProfileBinding.llMobileBox2.setVisibility(View.GONE);
+                    fragmentEditProfileBinding.ivMobAdd.setImageResource(R.drawable.ic_plus_blue);
                 }
-            }
-        });
-
-        ivFaxAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                if (llFaxBox2.getVisibility() == View.GONE)
+                break;
+            case R.id.ivFaxAdd:
+                if (fragmentEditProfileBinding.llFaxBox2.getVisibility() == View.GONE)
                 {
-                    llFaxBox2.setVisibility(View.VISIBLE);
-                    ivFaxAdd.setImageResource(R.drawable.ic_minus_blue);
+                    fragmentEditProfileBinding.llFaxBox2.setVisibility(View.VISIBLE);
+                    fragmentEditProfileBinding.ivFaxAdd.setImageResource(R.drawable.ic_minus_blue);
                 }
                 else
                 {
-                    llFaxBox2.setVisibility(View.GONE);
-                    ivFaxAdd.setImageResource(R.drawable.ic_plus_blue);
+                    fragmentEditProfileBinding.llFaxBox2.setVisibility(View.GONE);
+                    fragmentEditProfileBinding.ivFaxAdd.setImageResource(R.drawable.ic_plus_blue);
                 }
-            }
-        });
+                break;
+            case R.id.imgGoogle:
+                signIn();
+                break;
+            case R.id.imgBack:
+                finish();
+                break;
+            case R.id.txtAttachDelete:
+                fragmentEditProfileBinding.etAttachFile.setText("");
+                break;
+            case R.id.imgLinkedin:
+                LinkedInFlag = true;
+                login_linkedin();
+                break;
+            case R.id.imgAdd:
+                Intent intent1 = new Intent(getApplicationContext(), SearchGroupMembers.class);
+                intent1.putExtra("from", "profile");
+                intent1.putExtra("ProfileId", profileId);
+                startActivity(intent1);
+                break;
+            case R.id.imgFb:
+                String loading = "Loading" ;
+                CustomProgressDialog(loading);
 
+                fragmentEditProfileBinding.loginButton.performClick();
+
+                fragmentEditProfileBinding.loginButton.setPressed(true);
+
+                fragmentEditProfileBinding.loginButton.invalidate();
+
+                fragmentEditProfileBinding.loginButton.registerCallback(callbackManager, mCallBack);
+
+                fragmentEditProfileBinding.loginButton.setPressed(false);
+
+                fragmentEditProfileBinding.loginButton.invalidate();
+
+                break;
+            case R.id.ivAttachFrontImage:
+                cardType = "front";
+
+                CropImage.activity(null)
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .start(EditProfileActivity.this);
+                break;
+            case R.id.ivAttachBackImage:
+                cardType = "back";
+                CropImage.activity(null)
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .start(EditProfileActivity.this);
+                break;
+            case R.id.ivArrowImg:
+                if (arrowStatus.equalsIgnoreCase("RIGHT"))
+                {
+                    fragmentEditProfileBinding.ivArrowImg.setImageResource(R.drawable.ic_down_arrow_blue);
+                    fragmentEditProfileBinding.recyclerEvents.setVisibility(View.VISIBLE);
+                    arrowStatus = "DOWN";
+                }
+                else if (arrowStatus.equalsIgnoreCase("DOWN"))
+                {
+                    fragmentEditProfileBinding.ivArrowImg.setImageResource(R.drawable.ic_right_arrow_blue);
+                    fragmentEditProfileBinding.recyclerEvents.setVisibility(View.GONE);
+                    arrowStatus = "RIGHT";
+                }
+                break;
+            case R.id.ivArrowImg1:
+                if (arrowStatus1.equalsIgnoreCase("RIGHT"))
+                {
+                    fragmentEditProfileBinding.ivArrowImg1.setImageResource(R.drawable.ic_down_arrow_blue);
+                    fragmentEditProfileBinding.recyclerAssociation.setVisibility(View.VISIBLE);
+                    arrowStatus1 = "DOWN";
+                }
+                else if (arrowStatus1.equalsIgnoreCase("DOWN"))
+                {
+                    fragmentEditProfileBinding.ivArrowImg1.setImageResource(R.drawable.ic_right_arrow_blue);
+                    fragmentEditProfileBinding.recyclerAssociation.setVisibility(View.GONE);
+                    arrowStatus1 = "RIGHT";
+                }
+                break;
+            case R.id.ivProfileDelete:
+                Utility.freeMemory();
+                AlertDialog.Builder alert = new AlertDialog.Builder(EditProfileActivity.this, R.style.Blue_AlertDialog);
+                alert.setMessage("Are you sure want to delete profile?");
+                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //do your work here
+                        dialog.dismiss();
+                        new HttpAsyncTaskProfileDelete().execute(Utility.BASE_URL+"DeleteProfile");
+                    }
+                });
+                alert.setNegativeButton("No", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                alert.show();
+                break;
+
+            case R.id.imgProfileShare:
+                Utility.freeMemory();
+                String shareBody = "I’m ready to connect with you and share our growing network on the CircleOne app. I’m currently a user with CircleOne and would like to invite you to join the Circle so we’ll both be able to take our professional newtorks a step further. Use the code '" + refer +
+                        "' for a quick and simple registration! https://circle8.asia/mobileApp.html";
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, fragmentEditProfileBinding.tvPersonName.getText().toString());
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(sharingIntent, "Share Profile Via"));
+                break;
+        }
     }
-
-
     private class AsyncTaskRunner extends AsyncTask<String, String, String> {
 
         private String resp;
@@ -988,7 +765,6 @@ public class EditProfileActivity extends AppCompatActivity implements
 
     private void populate(){
         new HttpAsyncTaskAssociation().execute(Utility.BASE_URL+"GetAssociationList");
-
         if (type.equals("edit"))
         {
             Utility.freeMemory();
@@ -999,96 +775,20 @@ public class EditProfileActivity extends AppCompatActivity implements
 
     public void initUI()
     {
-        txtAttachDelete = (TextView) findViewById(R.id.txtAttachDelete);
-        recyclerEvents = (RecyclerView) findViewById(R.id.recyclerEvents);
-        edtProfileName = (EditText) findViewById(R.id.edtProfileName);
-        ivProfileDelete = (ImageView) findViewById(R.id.ivProfileDelete);
-        imgProfileShare = (ImageView) findViewById(R.id.imgProfileShare);
+        client = new TwitterAuthClient();
         referralCodeSession = new ReferralCodeSession(getApplicationContext());
         HashMap<String, String> referral = referralCodeSession.getReferralDetails();
         refer = referral.get(ReferralCodeSession.KEY_REFERRAL);
         mAuth = FirebaseAuth.getInstance();
-        // editPolygonView.setImageResource(R.drawable.test_receipt);
-        //    originalBitmap = ((BitmapDrawable) editPolygonView.getDrawable()).getBitmap();
-        appbar = (AppBarLayout) findViewById(R.id.appbar);
-        ccpCountry = (CountryCodePicker) findViewById(R.id.ccpAddress5);
-
         profileSession = new ProfileSession(getApplicationContext());
-        rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
-        tvProgressing = (TextView)findViewById(R.id.txtProgressing);
-        ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
-        ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
-        ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
-        recyclerAssociation = (RecyclerView) findViewById(R.id.recyclerAssociation);
-
-        edtWork2 = (EditText) findViewById(R.id.edtWork2);
-        edtPrimary2 = (EditText) findViewById(R.id.edtPrimary2);
-        edtEmail2 = (EditText) findViewById(R.id.edtEmail2);
-        edtFax1 = (EditText) findViewById(R.id.edtFax1);
-        edtFax2 = (EditText) findViewById(R.id.edtFax2);
-        autoCompleteCompany = (AutoCompleteTextView) findViewById(R.id.autoCompleteCompany);
-        autoCompleteDesignation = (AutoCompleteTextView) findViewById(R.id.autoCompleteDesignation);
-        autoCompleteIndustry = (AutoCompleteTextView) findViewById(R.id.autoCompleteIndustry);
-        gridView = (ExpandableHeightGridView) findViewById(R.id.gridView);
-        gridViewAdded = (ExpandableHeightGridView) findViewById(R.id.gridViewAdded);
-        etAttachFile = (TextView) findViewById(R.id.etAttachFile);
-        ivAttachFile = (ImageView) findViewById(R.id.ivAttachFile);
         session = new LoginSession(getApplicationContext());
-        imgDone = (ImageView) findViewById(R.id.imgDone);
-        imgBack = (ImageView) findViewById(R.id.imgBack);
-//        edtUserName = (EditText) findViewById(R.id.edtUserName);
-        edtFirstName = (EditText)findViewById(R.id.edtFirstName);
-        edtLastName = (EditText)findViewById(R.id.edtLastName);
-        edtAddress1 = (EditText) findViewById(R.id.edtAddress1);
-        edtAddress2 = (EditText) findViewById(R.id.edtAddress2);
-        edtAddress3 = (EditText) findViewById(R.id.edtAddress3);
-        edtAddress4 = (EditText) findViewById(R.id.edtAddress4);
-        edtAddress6 = (EditText) findViewById(R.id.edtAddress6);
-        edtWork = (EditText) findViewById(R.id.edtWork);
-        btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
-        edtEmail = (EditText) findViewById(R.id.edtEmail);
-        edtWebsite = (EditText) findViewById(R.id.edtWebsite);
-        edtProfileDesc = (EditText) findViewById(R.id.edtProfileDesc);
-        edtCompanyDesc = (EditText) findViewById(R.id.edtCompanyDesc);
-        edtPrimary = (EditText) findViewById(R.id.edtPrimary);
-        //  mViewPager = (ViewPager) findViewById(R.id.viewPager);
-        // viewPager1 = (ViewPager) findViewById(R.id.viewPager1);
-        imgProfile = (CircleImageView) findViewById(R.id.imgProfile);
-        tvCompany = (TextView) findViewById(R.id.tvCompany);
-        tvDesignation = (TextView) findViewById(R.id.tvDesignation);
-        tvPersonName = (TextView) findViewById(R.id.tvPersonName);
-        lstTestimonial = (ExpandableHeightListView) findViewById(R.id.lstTestimonial);
-        txtTestimonial = (TextView) findViewById(R.id.txtTestimonial);
-        txtMore = (TextView) findViewById(R.id.txtMore);
-        loginButton = (LoginButton) findViewById(R.id.login_button);
-        ivArrowImg = (ImageView) findViewById(R.id.ivArrowImg);
-        ivArrowImg1 = (ImageView) findViewById(R.id.ivArrowImg1);
-        tvEventInfo = (TextView) findViewById(R.id.tvEventInfo);
-        imgAdd = (ImageView) findViewById(R.id.imgAdd);
-        llEventBox = (LinearLayout) findViewById(R.id.llEventBox);
-        ivAttachBackImage = (ImageView) findViewById(R.id.ivAttachBackImage);
-        ivAttachFrontImage = (ImageView) findViewById(R.id.ivAttachFrontImage);
-        txtCardFront = (TextView) findViewById(R.id.txtCardFront);
-        txtCardBack = (TextView) findViewById(R.id.txtCardBack);
-        // ivAddAssociate = (ImageView) findViewById(R.id.ivAddAssociate);
-        //  etAssociationName = (EditText)findViewById(R.id.etAssociationName);
-        spnAssociation = (Spinner) findViewById(R.id.spnAssociation);
-        stickyScrollView = (StickyScrollView)findViewById(R.id.scroll);
-
-        imgYoutube = (ImageView) findViewById(R.id.imgYoutube);
-        imgGoogle = (ImageView) findViewById(R.id.imgGoogle);
-        imgTwitter = (ImageView) findViewById(R.id.imgTwitter);
-        imgLinkedin = (ImageView) findViewById(R.id.imgLinkedin);
-        imgFb = (ImageView) findViewById(R.id.imgFb);
-        loginButton = (LoginButton) findViewById(R.id.login_button);
+        HashMap<String, String> user = session.getUserDetails();
+        UserID = user.get(LoginSession.KEY_USERID);
         Intent intent = getIntent();
         type = intent.getStringExtra("type");
         fromActivity = intent.getStringExtra("activity");
-        HashMap<String, String> user = session.getUserDetails();
-        UserID = user.get(LoginSession.KEY_USERID);
         profileId = intent.getStringExtra("profile_id");
         allTaggs = new ArrayList<>();
-
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -1101,10 +801,9 @@ public class EditProfileActivity extends AppCompatActivity implements
                 .addApi(LocationServices.API)
                 .build();
 
-
         // Customizing G+ button
-        btnSignIn.setSize(SignInButton.SIZE_ICON_ONLY);
-        btnSignIn.setScopes(gso.getScopeArray());
+        fragmentEditProfileBinding.btnSignIn.setSize(SignInButton.SIZE_ICON_ONLY);
+        fragmentEditProfileBinding.btnSignIn.setScopes(gso.getScopeArray());
 
         array = new String[]{"Accommodations", "Information", "Accounting", "Information technology", "Advertising",
                 "Insurance", "Aerospace", "Journalism & News", "Agriculture & Agribusiness", "Legal Services", "Air Transportation",
@@ -1114,16 +813,16 @@ public class EditProfileActivity extends AppCompatActivity implements
                 "Consumer Products", "Retail", "Education", "Service", "Electronics", "Sports", "Employment", "Technology", "Energy",
                 "Telecommunications", "Entertainment & Recreation", "Tourism", "Fashion", "Transportation", "Financial Services",
                 "Travel", "Fine Arts", "Utilities", "Food & Beverage", "Video Game", "Green Technology", "Web Services", "Health"};
-        gridView.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.mytextview, array));
-        gridView.setExpanded(true);
+        fragmentEditProfileBinding.gridView.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.mytextview, array));
+        fragmentEditProfileBinding.gridView.setExpanded(true);
 
         if (addEventList.size() == 0) {
-            tvEventInfo.setVisibility(View.VISIBLE);
+            fragmentEditProfileBinding.tvEventInfo.setVisibility(View.VISIBLE);
         } else {
-            tvEventInfo.setVisibility(View.GONE);
+            fragmentEditProfileBinding.tvEventInfo.setVisibility(View.GONE);
         }
 
-       // generateHashkey();
+        // generateHashkey();
 
         camera_permission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
         if (camera_permission != PackageManager.PERMISSION_GRANTED) {
@@ -1131,34 +830,19 @@ public class EditProfileActivity extends AppCompatActivity implements
             makeRequest();
         }
 
-        llTelePhoneBox1 = (LinearLayout)findViewById(R.id.llTelephoneBox1);
-        llTelePhoneBox2 = (LinearLayout)findViewById(R.id.llTelephoneBox2);
-        llMobileBox1 = (LinearLayout)findViewById(R.id.llMobileBox1);
-        llMobileBox2 = (LinearLayout)findViewById(R.id.llMobileBox2);
-        llFaxBox1 = (LinearLayout)findViewById(R.id.llFaxBox1);
-        llFaxBox2 = (LinearLayout)findViewById(R.id.llFaxBox2);
-        ccp1 = (CountryCodePicker) findViewById(R.id.ccp1);
-        ccp2 = (CountryCodePicker) findViewById(R.id.ccp2);
-        ccp3 = (CountryCodePicker) findViewById(R.id.ccp3);
-        ccp4 = (CountryCodePicker) findViewById(R.id.ccp4);
-        ccp5 = (CountryCodePicker) findViewById(R.id.ccp5);
-        ccp6 = (CountryCodePicker) findViewById(R.id.ccp6);
-        ivTeleAdd = (ImageView)findViewById(R.id.ivTeleAdd);
-        ivMobAdd = (ImageView)findViewById(R.id.ivMobAdd);
-        ivFaxAdd = (ImageView)findViewById(R.id.ivFaxAdd);
-
-        ccp1.setCountryForNameCode("SG");
-        ccp2.setCountryForNameCode("SG");
-        ccp3.setCountryForNameCode("SG");
-        ccp4.setCountryForNameCode("SG");
-        ccp5.setCountryForNameCode("SG");
-        ccp6.setCountryForNameCode("SG");
+        fragmentEditProfileBinding.ccp1.setCountryForNameCode("SG");
+        fragmentEditProfileBinding.ccp2.setCountryForNameCode("SG");
+        fragmentEditProfileBinding.ccp3.setCountryForNameCode("SG");
+        fragmentEditProfileBinding.ccp4.setCountryForNameCode("SG");
+        fragmentEditProfileBinding.ccp5.setCountryForNameCode("SG");
+        fragmentEditProfileBinding.ccp6.setCountryForNameCode("SG");
 
     }
     @Override
     protected void onPause() {
-        Utility.freeMemory();
+
         super.onPause();
+        Utility.freeMemory();
     }
 
     @Override
@@ -1166,7 +850,27 @@ public class EditProfileActivity extends AppCompatActivity implements
         super.onDestroy();
         Utility.freeMemory();
     }
+    /*  public class LongOperation extends AsyncTask<String, Void, String> {
 
+          @Override
+          protected String doInBackground(String... params) {
+              initUI();
+              return "1";
+          }
+
+          @Override
+          protected void onPostExecute(String result) {
+              if(result.equalsIgnoreCase("1"))
+              {
+
+
+                  populate();
+              }
+          }
+
+
+
+      }*/
     private void handleTwitterSession(TwitterSession session)
     {
         Log.d("TAG", "handleTwitterSession:" + session);
@@ -1199,7 +903,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                             finish();
 */
                             strTwitter = "https://twitter.com/" + user.getDisplayName();
-                            imgTwitter.setImageResource(R.drawable.icon_twitter);
+                            fragmentEditProfileBinding.imgTwitter.setImageResource(R.drawable.icon_twitter);
 
                             mAuth.signOut();
                             com.twitter.sdk.android.Twitter.logOut();
@@ -1225,8 +929,8 @@ public class EditProfileActivity extends AppCompatActivity implements
             @Override
             public void onAuthSuccess() {
 
-               //  Toast.makeText(getApplicationContext(), "success" + LISessionManager.getInstance(getApplicationContext()).getSession().getAccessToken().toString(), Toast.LENGTH_LONG).show();
-               // login_linkedin_btn.setVisibility(View.GONE);
+                //  Toast.makeText(getApplicationContext(), "success" + LISessionManager.getInstance(getApplicationContext()).getSession().getAccessToken().toString(), Toast.LENGTH_LONG).show();
+                // login_linkedin_btn.setVisibility(View.GONE);
 
             }
 
@@ -1339,7 +1043,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         {
             Utility.freeMemory();
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 
             try
             {
@@ -1351,7 +1055,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                     String message = jsonObject.getString("message");
                     if (success.equalsIgnoreCase("1")){
                         profileSession.createProfileSession("0");
-                       finish();
+                        finish();
                         Toast.makeText(getApplicationContext(), "Profile Deleted Successfully..", Toast.LENGTH_LONG).show();
                     }else {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
@@ -1421,7 +1125,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                         Log.e("TAG", "Name: " + personName + ", email: " + email
                         );
                         strGoogle = "https://plus.google.com/" + acct.getId()+"/";
-                        imgGoogle.setImageResource(R.drawable.icon_google);
+                        fragmentEditProfileBinding.imgGoogle.setImageResource(R.drawable.icon_google);
                         signOut();
                     }
                 }
@@ -1453,7 +1157,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         {
 
 //            progressDialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 
             // App code
             GraphRequest request = GraphRequest.newMeRequest(
@@ -1465,11 +1169,11 @@ public class EditProfileActivity extends AppCompatActivity implements
                                 GraphResponse response) {
 
                             Log.e("response: ", response + "");
-                          //  Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
+                            //  Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
                             try {
                                 strFB = "http://www.facebook.com/" + object.getString("id").toString();
-                               // Toast.makeText(getApplicationContext(), strFB, Toast.LENGTH_LONG).show();
-                                imgFb.setImageResource(R.drawable.icon_fb);
+                                // Toast.makeText(getApplicationContext(), strFB, Toast.LENGTH_LONG).show();
+                                fragmentEditProfileBinding.imgFb.setImageResource(R.drawable.icon_fb);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -1488,14 +1192,14 @@ public class EditProfileActivity extends AppCompatActivity implements
         public void onCancel()
         {
 //            progressDialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
         }
 
         @Override
         public void onError(FacebookException e)
         {
 //            progressDialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
         }
     };
 
@@ -1504,41 +1208,15 @@ public class EditProfileActivity extends AppCompatActivity implements
     protected void onResume() {
         super.onResume();
 
-       // initUI();
+        // initUI();
         //
         // populate();
         callbackManager = CallbackManager.Factory.create();
 
-        loginButton = (LoginButton) findViewById(R.id.login_button);
 
-        loginButton.setReadPermissions("public_profile", "email");
+        fragmentEditProfileBinding.loginButton.setReadPermissions("public_profile", "email");
 
-        imgFb = (ImageView) findViewById(R.id.imgFb);
-        imgFb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-               /* progressDialog = new ProgressDialog(EditProfileActivity.this);
-                progressDialog.setMessage("Loading...");
-                progressDialog.show();*/
-
-                String loading = "Loading" ;
-                CustomProgressDialog(loading);
-
-                loginButton.performClick();
-
-                loginButton.setPressed(true);
-
-                loginButton.invalidate();
-
-                loginButton.registerCallback(callbackManager, mCallBack);
-
-                loginButton.setPressed(false);
-
-                loginButton.invalidate();
-
-            }
-        });
+        fragmentEditProfileBinding.imgFb.setOnClickListener(this);
     }
 
 
@@ -1635,7 +1313,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             JSONArray jsonArray = new JSONArray();
             jsonArray.put(1011);
 
-            String name = edtFirstName.getText().toString()+" "+edtLastName.getText().toString();
+            String name = fragmentEditProfileBinding.edtFirstName.getText().toString()+" "+fragmentEditProfileBinding.edtLastName.getText().toString();
             String kept = name.substring(0, name.indexOf(" "));
             String remainder = name.substring(name.indexOf(" ") + 1, name.length());
             JSONArray jsonArray1 = new JSONArray();
@@ -1658,50 +1336,50 @@ public class EditProfileActivity extends AppCompatActivity implements
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("Address1", edtAddress1.getText().toString());
-            jsonObject.accumulate("Address2", edtAddress2.getText().toString());
-            jsonObject.accumulate("Address3", edtAddress3.getText().toString() + " " + edtAddress4.getText().toString());
-            jsonObject.accumulate("Address4", ccpCountry.getSelectedCountryName().toString() + " " + edtAddress6.getText().toString());
+            jsonObject.accumulate("Address1", fragmentEditProfileBinding.edtAddress1.getText().toString());
+            jsonObject.accumulate("Address2", fragmentEditProfileBinding.edtAddress2.getText().toString());
+            jsonObject.accumulate("Address3", fragmentEditProfileBinding.edtAddress3.getText().toString() + " " + fragmentEditProfileBinding.edtAddress4.getText().toString());
+            jsonObject.accumulate("Address4", fragmentEditProfileBinding.ccpAddress5.getSelectedCountryName().toString() + " " + fragmentEditProfileBinding.edtAddress6.getText().toString());
             jsonObject.accumulate("Address_ID", "1");
             jsonObject.accumulate("Address_Type", "work");
             jsonObject.accumulate("AssociationIDs", arrayAssociation);
-            jsonObject.accumulate("Attachment_FileName", etAttachFile.getText().toString());
-            jsonObject.accumulate("Card_Back", txtCardBack.getText().toString());
-            jsonObject.accumulate("Card_Front", txtCardFront.getText().toString());
-            jsonObject.accumulate("City", edtAddress3.getText().toString());
-            jsonObject.accumulate("CompanyDesc", edtCompanyDesc.getText().toString());
+            jsonObject.accumulate("Attachment_FileName",fragmentEditProfileBinding.etAttachFile.getText().toString());
+            jsonObject.accumulate("Card_Back", fragmentEditProfileBinding.txtCardBack.getText().toString());
+            jsonObject.accumulate("Card_Front", fragmentEditProfileBinding.txtCardFront.getText().toString());
+            jsonObject.accumulate("City", fragmentEditProfileBinding.edtAddress3.getText().toString());
+            jsonObject.accumulate("CompanyDesc", fragmentEditProfileBinding.edtCompanyDesc.getText().toString());
             jsonObject.accumulate("CompanyID", companyID);
-            jsonObject.accumulate("CompanyName", autoCompleteCompany.getText().toString());
-            jsonObject.accumulate("Country", ccpCountry.getSelectedCountryName().toString());
-            jsonObject.accumulate("Designation", autoCompleteDesignation.getText().toString());
+            jsonObject.accumulate("CompanyName", fragmentEditProfileBinding.autoCompleteCompany.getText().toString());
+            jsonObject.accumulate("Country", fragmentEditProfileBinding.ccpAddress5.getSelectedCountryName().toString());
+            jsonObject.accumulate("Designation", fragmentEditProfileBinding.autoCompleteDesignation.getText().toString());
             jsonObject.accumulate("DesignationID", designationID);
-            jsonObject.accumulate("Email1", edtEmail.getText().toString());
-            jsonObject.accumulate("Email2", edtEmail2.getText().toString());
+            jsonObject.accumulate("Email1", fragmentEditProfileBinding.edtEmail.getText().toString());
+            jsonObject.accumulate("Email2", fragmentEditProfileBinding.edtEmail2.getText().toString());
             jsonObject.accumulate("Facebook", strFB);
             jsonObject.accumulate("Fax1", Fax1);
             jsonObject.accumulate("Fax2", Fax2);
             jsonObject.accumulate("Google", strGoogle);
             jsonObject.accumulate("IndustryID", industryID);
-            jsonObject.accumulate("IndustryName", autoCompleteIndustry.getText().toString());
+            jsonObject.accumulate("IndustryName", fragmentEditProfileBinding.autoCompleteIndustry.getText().toString());
             jsonObject.accumulate("Linkedin", strLinkedin);
             jsonObject.accumulate("Mobile1", Mobile1);
             jsonObject.accumulate("Mobile2", Mobile2);
             jsonObject.accumulate("Phone1", Phone1);
             jsonObject.accumulate("Phone2", Phone2);
-            jsonObject.accumulate("Postalcode", edtAddress6.getText().toString());
+            jsonObject.accumulate("Postalcode", fragmentEditProfileBinding.edtAddress6.getText().toString());
             jsonObject.accumulate("ProfileID", profileId);
-            jsonObject.accumulate("Profile_Desc", edtProfileDesc.getText().toString());
+            jsonObject.accumulate("Profile_Desc", fragmentEditProfileBinding.edtProfileDesc.getText().toString());
             jsonObject.accumulate("Profile_Type", "");
-            jsonObject.accumulate("State", edtAddress4.getText().toString());
+            jsonObject.accumulate("State", fragmentEditProfileBinding.edtAddress4.getText().toString());
             jsonObject.accumulate("Twitter", strTwitter);
             jsonObject.accumulate("UserID", UserID);
-            jsonObject.accumulate("Website", edtWebsite.getText().toString());
+            jsonObject.accumulate("Website", fragmentEditProfileBinding.edtWebsite.getText().toString());
             jsonObject.accumulate("Youtube", strYoutube);
             jsonObject.accumulate("Event_Cat_IDs", arrayEvents);
-            jsonObject.accumulate("ProfileName", edtProfileName.getText().toString());
+            jsonObject.accumulate("ProfileName", fragmentEditProfileBinding.edtProfileName.getText().toString());
             jsonObject.accumulate("UserPhoto", UserPhoto);
-            jsonObject.accumulate("FirstName", edtFirstName.getText().toString());
-            jsonObject.accumulate("LastName", edtLastName.getText().toString());
+            jsonObject.accumulate("FirstName", fragmentEditProfileBinding.edtFirstName.getText().toString());
+            jsonObject.accumulate("LastName", fragmentEditProfileBinding.edtLastName.getText().toString());
 
 
          /*   jsonObject.accumulate("Facebook", strFB);
@@ -1974,7 +1652,7 @@ public class EditProfileActivity extends AppCompatActivity implements
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("FileName", etAttachFile.getText().toString());
+            jsonObject.accumulate("FileName", fragmentEditProfileBinding.etAttachFile.getText().toString());
             jsonObject.accumulate("ImgBase64", Attach_String);
             jsonObject.accumulate("classification", "others");
 
@@ -2193,8 +1871,8 @@ public class EditProfileActivity extends AppCompatActivity implements
                     mAdapter1 = new CardViewDataAdapter(eventList);
 
                     GridLayoutManager gridLayoutManager = new GridLayoutManager(EditProfileActivity.this, 5, GridLayoutManager.HORIZONTAL, false);
-                    recyclerEvents.setAdapter(mAdapter1);
-                    recyclerEvents.setLayoutManager(gridLayoutManager);
+                    fragmentEditProfileBinding.recyclerEvents.setAdapter(mAdapter1);
+                    fragmentEditProfileBinding.recyclerEvents.setLayoutManager(gridLayoutManager);
                 }
             }
         });
@@ -2242,57 +1920,57 @@ public class EditProfileActivity extends AppCompatActivity implements
             arrayEvents = new JSONArray(al);
 
 //            String name = edtUserName.getText().toString();
-            String name = edtFirstName.getText().toString()+" "+edtLastName.getText().toString();
+            String name = fragmentEditProfileBinding.edtFirstName.getText().toString()+" "+fragmentEditProfileBinding.edtLastName.getText().toString();
             String kept = name.substring(0, name.indexOf(" "));
             String remainder = name.substring(name.indexOf(" ") + 1, name.length());
             JSONArray jsonArray1 = new JSONArray();
             jsonArray1.put(1);
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("Address1", edtAddress1.getText().toString());
-            jsonObject.accumulate("Address2", edtAddress2.getText().toString());
-            jsonObject.accumulate("Address3", edtAddress3.getText().toString() + " " + edtAddress4.getText().toString());
-            jsonObject.accumulate("Address4", ccpCountry.getSelectedCountryName().toString() + " " + edtAddress6.getText().toString());
+            jsonObject.accumulate("Address1", fragmentEditProfileBinding.edtAddress1.getText().toString());
+            jsonObject.accumulate("Address2", fragmentEditProfileBinding.edtAddress2.getText().toString());
+            jsonObject.accumulate("Address3", fragmentEditProfileBinding.edtAddress3.getText().toString() + " " + fragmentEditProfileBinding.edtAddress4.getText().toString());
+            jsonObject.accumulate("Address4", fragmentEditProfileBinding.ccpAddress5.getSelectedCountryName().toString() + " " + fragmentEditProfileBinding.edtAddress6.getText().toString());
             jsonObject.accumulate("Address_ID", "");
             jsonObject.accumulate("Address_Type", "");
             jsonObject.accumulate("AssociationIDs", arrayAssociation);
-            jsonObject.accumulate("Attachment_FileName", etAttachFile.getText().toString());
-            jsonObject.accumulate("Card_Back", txtCardBack.getText().toString());
-            jsonObject.accumulate("Card_Front", txtCardFront.getText().toString());
-            jsonObject.accumulate("City", edtAddress3.getText().toString());
-            jsonObject.accumulate("CompanyDesc", edtCompanyDesc.getText().toString());
+            jsonObject.accumulate("Attachment_FileName", fragmentEditProfileBinding.etAttachFile.getText().toString());
+            jsonObject.accumulate("Card_Back", fragmentEditProfileBinding.txtCardBack.getText().toString());
+            jsonObject.accumulate("Card_Front", fragmentEditProfileBinding.txtCardFront.getText().toString());
+            jsonObject.accumulate("City", fragmentEditProfileBinding.edtAddress3.getText().toString());
+            jsonObject.accumulate("CompanyDesc", fragmentEditProfileBinding.edtCompanyDesc.getText().toString());
             jsonObject.accumulate("CompanyID", companyID);
-            jsonObject.accumulate("CompanyName", autoCompleteCompany.getText().toString());
-            jsonObject.accumulate("Country", ccpCountry.getSelectedCountryName().toString());
-            jsonObject.accumulate("Designation", autoCompleteDesignation.getText().toString());
+            jsonObject.accumulate("CompanyName", fragmentEditProfileBinding.autoCompleteCompany.getText().toString());
+            jsonObject.accumulate("Country", fragmentEditProfileBinding.ccpAddress5.getSelectedCountryName().toString());
+            jsonObject.accumulate("Designation", fragmentEditProfileBinding.autoCompleteDesignation.getText().toString());
             jsonObject.accumulate("DesignationID", designationID);
-            jsonObject.accumulate("Email1", edtEmail.getText().toString());
-            jsonObject.accumulate("Email2", edtEmail2.getText().toString());
+            jsonObject.accumulate("Email1", fragmentEditProfileBinding.edtEmail.getText().toString());
+            jsonObject.accumulate("Email2", fragmentEditProfileBinding.edtEmail2.getText().toString());
             jsonObject.accumulate("Facebook", strFB);
             jsonObject.accumulate("Fax1", Fax1);
             jsonObject.accumulate("Fax2", Fax2);
             jsonObject.accumulate("Google", strGoogle);
             jsonObject.accumulate("IndustryID", industryID);
-            jsonObject.accumulate("IndustryName", autoCompleteIndustry.getText().toString());
+            jsonObject.accumulate("IndustryName", fragmentEditProfileBinding.autoCompleteIndustry.getText().toString());
             jsonObject.accumulate("Linkedin", strLinkedin);
             jsonObject.accumulate("Mobile1", Mobile1);
             jsonObject.accumulate("Mobile2", Mobile2);
             jsonObject.accumulate("Phone1", Phone1);
             jsonObject.accumulate("Phone2", Phone2);
-            jsonObject.accumulate("Postalcode", edtAddress6.getText().toString());
+            jsonObject.accumulate("Postalcode", fragmentEditProfileBinding.edtAddress6.getText().toString());
             jsonObject.accumulate("ProfileID", profileId);
-            jsonObject.accumulate("Profile_Desc", edtProfileDesc.getText().toString());
+            jsonObject.accumulate("Profile_Desc", fragmentEditProfileBinding.edtProfileDesc.getText().toString());
             jsonObject.accumulate("Profile_Type", "");
-            jsonObject.accumulate("State", edtAddress4.getText().toString());
+            jsonObject.accumulate("State", fragmentEditProfileBinding.edtAddress4.getText().toString());
             jsonObject.accumulate("Twitter", strTwitter);
             jsonObject.accumulate("UserID", UserID);
-            jsonObject.accumulate("Website", edtWebsite.getText().toString());
+            jsonObject.accumulate("Website", fragmentEditProfileBinding.edtWebsite.getText().toString());
             jsonObject.accumulate("Youtube", strYoutube);
             jsonObject.accumulate("Event_Cat_IDs", arrayEvents);
-            jsonObject.accumulate("ProfileName", edtProfileName.getText().toString());
+            jsonObject.accumulate("ProfileName", fragmentEditProfileBinding.edtProfileName.getText().toString());
             jsonObject.accumulate("UserPhoto", UserPhoto);
-            jsonObject.accumulate("FirstName", edtFirstName.getText().toString());
-            jsonObject.accumulate("LastName", edtLastName.getText().toString());
+            jsonObject.accumulate("FirstName", fragmentEditProfileBinding.edtFirstName.getText().toString());
+            jsonObject.accumulate("LastName", fragmentEditProfileBinding.edtLastName.getText().toString());
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -2444,11 +2122,11 @@ public class EditProfileActivity extends AppCompatActivity implements
 
         try {
             Log.d("response link ", response.toString());
-           // Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
+            // Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
 
             strLinkedin = response.get("publicProfileUrl").toString().replaceAll("/", "");
 
-            imgLinkedin.setImageResource(R.drawable.icon_linkedin);
+            fragmentEditProfileBinding.imgLinkedin.setImageResource(R.drawable.icon_linkedin);
             LISessionManager.getInstance(getApplicationContext()).clearSession();
         } catch (Exception e) {
             e.printStackTrace();
@@ -2510,11 +2188,11 @@ public class EditProfileActivity extends AppCompatActivity implements
                 File file = new File(FilePath);
                 String file_name = file.getName();
 
-                etAttachFile.setText(file_name);
+                fragmentEditProfileBinding.etAttachFile.setText(file_name);
                 try {
                     byte[] data1 = file_name.getBytes("UTF-8");
                     String base64 = Base64.encodeToString(data1, Base64.DEFAULT);
-                  //  Toast.makeText(getApplicationContext(), base64, Toast.LENGTH_LONG).show();
+                    //  Toast.makeText(getApplicationContext(), base64, Toast.LENGTH_LONG).show();
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
@@ -2543,7 +2221,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                     if (bitmap.equals("") || bitmap == null) {
                         bitmap=BitmapFactory.decodeFile(getRealPathFromURI(result.getUri()));
                     }
-                   // originalBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
+                    // originalBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
                     long size = Utility.imageCalculateSize(bitmap);
 
                     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -2603,7 +2281,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                       //  size_calculate(picturePath);
                     }*/
                     else {
-                        imgProfile.setImageBitmap(bitmap);
+                        fragmentEditProfileBinding.imgProfile.setImageBitmap(bitmap);
                         new HttpAsyncTaskUserUpload().execute(Utility.BASE_URL+"ImgUpload");
                     }
                 } catch (FileNotFoundException e) {
@@ -2611,7 +2289,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                     e.printStackTrace();
                 }
 
-               // ((ImageView) findViewById(R.id.quick_start_cropped_image)).setImageURI(result.getUri());
+                // ((ImageView) findViewById(R.id.quick_start_cropped_image)).setImageURI(result.getUri());
                 //Toast.makeText(this, "Cropping successful, Sample: " + result.getSampleSize(), Toast.LENGTH_LONG).show();
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Toast.makeText(this, "Cropping failed: " + result.getError(), Toast.LENGTH_LONG).show();
@@ -2669,36 +2347,14 @@ public class EditProfileActivity extends AppCompatActivity implements
         /*if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.hide();
         }*/
-        rlProgressDialog.setVisibility(View.GONE);
+        fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
     }
 
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
 
-        switch (id) {
-            case R.id.btn_sign_in:
-                signIn();
-                break;
-            case R.id.imgGoogle:
-                signIn();
-                break;
-            case R.id.imgProfileShare:
-                Utility.freeMemory();
-                String shareBody = "I’m ready to connect with you and share our growing network on the CircleOne app. I’m currently a user with CircleOne and would like to invite you to join the Circle so we’ll both be able to take our professional newtorks a step further. Use the code '" + refer +
-                        "' for a quick and simple registration! https://circle8.asia/mobileApp.html";
-                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-                sharingIntent.setType("text/plain");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, tvPersonName.getText().toString());
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-                startActivity(Intent.createChooser(sharingIntent, "Share Profile Via"));
-                break;
-        }
-    }
 
     private void updateUI(boolean isSignedIn) {
         if (isSignedIn) {
-            btnSignIn.setVisibility(View.GONE);
+            fragmentEditProfileBinding.btnSignIn.setVisibility(View.GONE);
             //loginSession.createLoginSession(user.getDisplayName(), user.getEmail(), String.valueOf(user.getPhotoUrl()), "");
           /*  Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
             intent.putExtra("viewpager_position", 0);
@@ -2708,7 +2364,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             //  btnRevokeAccess.setVisibility(View.VISIBLE);
             // llProfileLayout.setVisibility(View.VISIBLE);
         } else {
-            btnSignIn.setVisibility(View.VISIBLE);
+            fragmentEditProfileBinding.btnSignIn.setVisibility(View.VISIBLE);
             //  btnSignOut.setVisibility(View.GONE);
             //  btnRevokeAccess.setVisibility(View.GONE);
             // llProfileLayout.setVisibility(View.GONE);
@@ -2808,7 +2464,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             new HttpAsyncTaskBackUpload().execute(Utility.BASE_URL+"ImgUpload");
     }
 
-  public String POSTImage(String url) {
+    public String POSTImage(String url) {
         InputStream inputStream = null;
         String result = "";
         try {
@@ -3065,7 +2721,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                     .setPositiveButton("Okay",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    etAttachFile.setText("Attachment Name");
+                                    fragmentEditProfileBinding.etAttachFile.setText("Attachment Name");
                                     dialog.dismiss();
                                     selectFile();
                                 }
@@ -3073,15 +2729,15 @@ public class EditProfileActivity extends AppCompatActivity implements
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         } else {
-           // ivAttachFile.setEnabled(false);
-            etAttachFile.setText(fileName);
+            // ivAttachFile.setEnabled(false);
+            fragmentEditProfileBinding.etAttachFile.setText(fileName);
             File imgFile = new File(fileName);
             new HttpAsyncTaskDocUpload().execute(Utility.BASE_URL+"ImgUpload");
             try {
                 byte[] data = fileName.getBytes("UTF-8");
                 String base64 = Base64.encodeToString(data, Base64.DEFAULT);
                 Attach_String = base64;
-               // Toast.makeText(getApplicationContext(), base64, Toast.LENGTH_LONG).show();
+                // Toast.makeText(getApplicationContext(), base64, Toast.LENGTH_LONG).show();
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
@@ -3158,13 +2814,13 @@ public class EditProfileActivity extends AppCompatActivity implements
                         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(EditProfileActivity.this,
                                 android.R.layout.simple_spinner_item, AssoNameList);
                         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        spnAssociation.setAdapter(dataAdapter);
+                        fragmentEditProfileBinding.spnAssociation.setAdapter(dataAdapter);
 
                         mAdapter = new CardViewDataAdapter(associationList);
 
                         GridLayoutManager gridLayoutManager = new GridLayoutManager(EditProfileActivity.this, 5, GridLayoutManager.HORIZONTAL, false);
-                        recyclerAssociation.setAdapter(mAdapter);
-                        recyclerAssociation.setLayoutManager(gridLayoutManager);
+                        fragmentEditProfileBinding.recyclerAssociation.setAdapter(mAdapter);
+                        fragmentEditProfileBinding.recyclerAssociation.setLayoutManager(gridLayoutManager);
 
 
                     }
@@ -3207,7 +2863,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
@@ -3277,13 +2933,13 @@ public class EditProfileActivity extends AppCompatActivity implements
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
 
                     if (jsonArray.length() == 0) {
-                        lstTestimonial.setVisibility(View.GONE);
-                        txtMore.setVisibility(View.GONE);
-                        txtTestimonial.setVisibility(View.VISIBLE);
+                        fragmentEditProfileBinding.lstTestimonial.setVisibility(View.GONE);
+                        fragmentEditProfileBinding.txtMore.setVisibility(View.GONE);
+                        fragmentEditProfileBinding.txtTestimonial.setVisibility(View.VISIBLE);
                     } else {
-                        lstTestimonial.setVisibility(View.VISIBLE);
-                        txtMore.setVisibility(View.VISIBLE);
-                        txtTestimonial.setVisibility(View.GONE);
+                        fragmentEditProfileBinding.lstTestimonial.setVisibility(View.VISIBLE);
+                        fragmentEditProfileBinding.txtMore.setVisibility(View.VISIBLE);
+                        fragmentEditProfileBinding.txtTestimonial.setVisibility(View.GONE);
                     }
                     allTaggs.clear();
                     for (int i = 0; i < jsonArray.length(); i++) {
@@ -3308,8 +2964,8 @@ public class EditProfileActivity extends AppCompatActivity implements
                         }
                     }
                     customAdapter = new CustomAdapter(EditProfileActivity.this, allTaggs);
-                    lstTestimonial.setAdapter(customAdapter);
-                    lstTestimonial.setExpanded(true);
+                    fragmentEditProfileBinding.lstTestimonial.setAdapter(customAdapter);
+                    fragmentEditProfileBinding.lstTestimonial.setExpanded(true);
 
                 } else {
                     Toast.makeText(getApplicationContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
@@ -3349,7 +3005,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
 
 
@@ -3378,7 +3034,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             ArrayAdapter adapter = new
                     ArrayAdapter(EditProfileActivity.this, android.R.layout.simple_list_item_1, designation);
 
-            autoCompleteDesignation.setAdapter(adapter);
+            fragmentEditProfileBinding.autoCompleteDesignation.setAdapter(adapter);
         }
     }
 
@@ -3410,7 +3066,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
 
             try
@@ -3440,7 +3096,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             ArrayAdapter adapter = new
                     ArrayAdapter(EditProfileActivity.this, android.R.layout.simple_list_item_1, company);
 
-            autoCompleteCompany.setAdapter(adapter);
+            fragmentEditProfileBinding.autoCompleteCompany.setAdapter(adapter);
         }
     }
 
@@ -3471,7 +3127,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 
 //            rlProgressDialog.setVisibility(View.GONE);
             // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
@@ -3552,8 +3208,8 @@ public class EditProfileActivity extends AppCompatActivity implements
                                         associationList.remove(i1);
                                         associationList.add(i1, st);
                                         GridLayoutManager gridLayoutManager = new GridLayoutManager(EditProfileActivity.this, 5, GridLayoutManager.HORIZONTAL, false);
-                                        recyclerAssociation.setAdapter(mAdapter);
-                                        recyclerAssociation.setLayoutManager(gridLayoutManager);
+                                        fragmentEditProfileBinding.recyclerAssociation.setAdapter(mAdapter);
+                                        fragmentEditProfileBinding.recyclerAssociation.setLayoutManager(gridLayoutManager);
                                     }
                                 }
                             }catch (Exception e){}
@@ -3585,8 +3241,8 @@ public class EditProfileActivity extends AppCompatActivity implements
                                         eventList.remove(i1);
                                         eventList.add(i1, st);
                                         GridLayoutManager gridLayoutManager = new GridLayoutManager(EditProfileActivity.this, 5, GridLayoutManager.HORIZONTAL, false);
-                                        recyclerEvents.setAdapter(mAdapter1);
-                                        recyclerEvents.setLayoutManager(gridLayoutManager);
+                                        fragmentEditProfileBinding.recyclerEvents.setAdapter(mAdapter1);
+                                        fragmentEditProfileBinding.recyclerEvents.setLayoutManager(gridLayoutManager);
                                     }
                                 }
                             }catch (Exception e){}
@@ -3599,11 +3255,11 @@ public class EditProfileActivity extends AppCompatActivity implements
                         String kept = name.substring(0, name.indexOf(" "));
                         String remainder = name.substring(name.indexOf(" ") + 1, name.length());
                         kept = kept.replaceAll("//+", "");
-                        ccp1.setCountryForPhoneCode(Integer.parseInt(kept));
-                        edtWork.setText(remainder);
+                        fragmentEditProfileBinding.ccp1.setCountryForPhoneCode(Integer.parseInt(kept));
+                        fragmentEditProfileBinding.edtWork.setText(remainder);
                     }
                     else {
-                        edtWork.setText(Phone1);
+                        fragmentEditProfileBinding.edtWork.setText(Phone1);
                     }
 
                     if (Phone2.contains(" ")){
@@ -3611,11 +3267,11 @@ public class EditProfileActivity extends AppCompatActivity implements
                         String kept = name.substring(0, name.indexOf(" "));
                         String remainder = name.substring(name.indexOf(" ") + 1, name.length());
                         kept = kept.replaceAll("//+", "");
-                        ccp2.setCountryForPhoneCode(Integer.parseInt(kept));
-                        edtWork2.setText(remainder);
+                        fragmentEditProfileBinding.ccp2.setCountryForPhoneCode(Integer.parseInt(kept));
+                        fragmentEditProfileBinding.edtWork2.setText(remainder);
                     }
                     else {
-                        edtWork2.setText(Phone2);
+                        fragmentEditProfileBinding.edtWork2.setText(Phone2);
                     }
 
                     if (Mobile1.contains(" ")){
@@ -3624,14 +3280,14 @@ public class EditProfileActivity extends AppCompatActivity implements
                         String remainder = name.substring(name.indexOf(" ") + 1, name.length());
                         kept = kept.replaceAll("//+", "");
                         try {
-                            ccp3.setCountryForPhoneCode(Integer.parseInt(kept));
+                            fragmentEditProfileBinding.ccp3.setCountryForPhoneCode(Integer.parseInt(kept));
                         }catch (Exception e){
 
                         }
-                        edtPrimary.setText(remainder);
+                        fragmentEditProfileBinding.edtPrimary.setText(remainder);
                     }
                     else {
-                        edtPrimary.setText(Mobile1);
+                        fragmentEditProfileBinding.edtPrimary.setText(Mobile1);
                     }
 
                     if (Mobile2.contains(" ")){
@@ -3639,11 +3295,11 @@ public class EditProfileActivity extends AppCompatActivity implements
                         String kept = name.substring(0, name.indexOf(" "));
                         String remainder = name.substring(name.indexOf(" ") + 1, name.length());
                         kept = kept.replaceAll("//+", "");
-                        ccp4.setCountryForPhoneCode(Integer.parseInt(kept));
-                        edtPrimary2.setText(remainder);
+                        fragmentEditProfileBinding.ccp4.setCountryForPhoneCode(Integer.parseInt(kept));
+                        fragmentEditProfileBinding.edtPrimary2.setText(remainder);
                     }
                     else {
-                        edtPrimary2.setText(Mobile2);
+                        fragmentEditProfileBinding.edtPrimary2.setText(Mobile2);
                     }
 
                     if (Fax1.contains(" ")){
@@ -3651,11 +3307,11 @@ public class EditProfileActivity extends AppCompatActivity implements
                         String kept = name.substring(0, name.indexOf(" "));
                         String remainder = name.substring(name.indexOf(" ") + 1, name.length());
                         kept = kept.replaceAll("//+", "");
-                        ccp5.setCountryForPhoneCode(Integer.parseInt(kept));
-                        edtFax1.setText(remainder);
+                        fragmentEditProfileBinding.ccp5.setCountryForPhoneCode(Integer.parseInt(kept));
+                        fragmentEditProfileBinding.edtFax1.setText(remainder);
                     }
                     else {
-                        edtFax1.setText(Fax1);
+                        fragmentEditProfileBinding.edtFax1.setText(Fax1);
                     }
 
                     if (Fax2.contains(" ")){
@@ -3663,14 +3319,14 @@ public class EditProfileActivity extends AppCompatActivity implements
                         String kept = name.substring(0, name.indexOf(" "));
                         String remainder = name.substring(name.indexOf(" ") + 1, name.length());
                         kept = kept.replaceAll("//+", "");
-                        ccp6.setCountryForPhoneCode(Integer.parseInt(kept));
-                        edtFax2.setText(remainder);
+                        fragmentEditProfileBinding.ccp6.setCountryForPhoneCode(Integer.parseInt(kept));
+                        fragmentEditProfileBinding.edtFax2.setText(remainder);
                     }
                     else {
-                        edtFax2.setText(Fax2);
+                        fragmentEditProfileBinding.edtFax2.setText(Fax2);
                     }
 
-                    edtProfileName.setText(ProfileName);
+                    fragmentEditProfileBinding.edtProfileName.setText(ProfileName);
                     try {
 
                         int selectedPos = company.indexOf((String) CompanyName);
@@ -3697,79 +3353,79 @@ public class EditProfileActivity extends AppCompatActivity implements
 
                     if (strFB.equals("") || strFB.equals(null))
                     {
-                        imgFb.setImageResource(R.drawable.ic_fb_gray);
+                        fragmentEditProfileBinding.imgFb.setImageResource(R.drawable.ic_fb_gray);
                     }
                     else {
-                        imgFb.setImageResource(R.drawable.icon_fb);
+                        fragmentEditProfileBinding.imgFb.setImageResource(R.drawable.icon_fb);
                     }
 
                     if (strYoutube.equals("") || strYoutube.equals(null))
                     {
-                        imgYoutube.setImageResource(R.drawable.icon_utube_gray);
+                        fragmentEditProfileBinding.imgYoutube.setImageResource(R.drawable.icon_utube_gray);
                     }
                     else {
-                        imgYoutube.setImageResource(R.drawable.icon_utube_red);
+                        fragmentEditProfileBinding.imgYoutube.setImageResource(R.drawable.icon_utube_red);
                     }
 
                     if (strGoogle.equals("") || strGoogle.equals(null))
                     {
-                        imgGoogle.setImageResource(R.drawable.ic_google_gray);
+                        fragmentEditProfileBinding.imgGoogle.setImageResource(R.drawable.ic_google_gray);
                     }
                     else {
-                        imgGoogle.setImageResource(R.drawable.icon_google);
+                        fragmentEditProfileBinding.imgGoogle.setImageResource(R.drawable.icon_google);
                     }
 
                     if (strTwitter.equals("") || strTwitter.equals(null))
                     {
-                        imgTwitter.setImageResource(R.drawable.icon_twitter_gray);
+                        fragmentEditProfileBinding.imgTwitter.setImageResource(R.drawable.icon_twitter_gray);
                     }
                     else {
-                        imgTwitter.setImageResource(R.drawable.icon_twitter);
+                        fragmentEditProfileBinding.imgTwitter.setImageResource(R.drawable.icon_twitter);
                     }
 
                     if (strLinkedin.equals("") || strLinkedin.equals(null))
                     {
-                        imgLinkedin.setImageResource(R.drawable.icon_linkedin_gray);
+                        fragmentEditProfileBinding.imgLinkedin.setImageResource(R.drawable.icon_linkedin_gray);
                     }
                     else {
-                        imgLinkedin.setImageResource(R.drawable.icon_linkedin);
+                        fragmentEditProfileBinding.imgLinkedin.setImageResource(R.drawable.icon_linkedin);
                     }
 
 
-                    tvCompany.setText(CompanyName);
-                    tvDesignation.setText(Designation);
-                    tvPersonName.setText(FirstName + " " + LastName);
-                    autoCompleteCompany.setText(CompanyName);
-                    autoCompleteIndustry.setText(IndustryName);
-                    autoCompleteDesignation.setText(Designation);
-                    edtFirstName.setText(FirstName);
-                    edtLastName.setText(LastName);
+                    fragmentEditProfileBinding.tvCompany.setText(CompanyName);
+                    fragmentEditProfileBinding.tvDesignation.setText(Designation);
+                    fragmentEditProfileBinding.tvPersonName.setText(FirstName + " " + LastName);
+                    fragmentEditProfileBinding.autoCompleteCompany.setText(CompanyName);
+                    fragmentEditProfileBinding.autoCompleteIndustry.setText(IndustryName);
+                    fragmentEditProfileBinding.autoCompleteDesignation.setText(Designation);
+                    fragmentEditProfileBinding.edtFirstName.setText(FirstName);
+                    fragmentEditProfileBinding.edtLastName.setText(LastName);
 //                    edtUserName.setText(FirstName + " " + LastName);
-                    edtCompanyDesc.setText(CompanyProfile);
-                    edtProfileDesc.setText(ProfileDesc);
-                    edtEmail.setText(Email1);
-                    edtEmail2.setText(Email2);
-                  //  edtPrimary.setText(Mobile1);
-                  //  edtWork.setText(Phone1);
-                   // edtWork2.setText(Phone2);
-                   // edtPrimary2.setText(Mobile2);
-                 //   edtFax1.setText(Fax1);
-                  //  edtFax2.setText(Fax2);
-                    edtWebsite.setText(Website);
+                    fragmentEditProfileBinding.edtCompanyDesc.setText(CompanyProfile);
+                    fragmentEditProfileBinding.edtProfileDesc.setText(ProfileDesc);
+                    fragmentEditProfileBinding.edtEmail.setText(Email1);
+                    fragmentEditProfileBinding.edtEmail2.setText(Email2);
+                    //  edtPrimary.setText(Mobile1);
+                    //  edtWork.setText(Phone1);
+                    // edtWork2.setText(Phone2);
+                    // edtPrimary2.setText(Mobile2);
+                    //   edtFax1.setText(Fax1);
+                    //  edtFax2.setText(Fax2);
+                    fragmentEditProfileBinding.edtWebsite.setText(Website);
                    /* edtAddress1.setText(Address1 + " " + Address2);
                     edtAddress2.setText(Address3 + " " + Address4);*/
-                    edtAddress1.setText(Address1);
-                    edtAddress2.setText(Address2);
-                    edtAddress3.setText(City);
-                    edtAddress4.setText(State);
-                    edtAddress6.setText(Postalcode);
+                    fragmentEditProfileBinding.edtAddress1.setText(Address1);
+                    fragmentEditProfileBinding.edtAddress2.setText(Address2);
+                    fragmentEditProfileBinding.edtAddress3.setText(City);
+                    fragmentEditProfileBinding.edtAddress4.setText(State);
+                    fragmentEditProfileBinding.edtAddress6.setText(Postalcode);
                     try {
                         String code = CountryCode.findByName(Country).get(0).name();
-                        ccpCountry.setCountryForNameCode(code);
+                        fragmentEditProfileBinding.ccpAddress5.setCountryForNameCode(code);
                     }catch (Exception e){}
-                 //   edtAddress5.setText(Country);
+                    //   edtAddress5.setText(Country);
 
-                    etAttachFile.setText(Attachment_FileName);
+                    fragmentEditProfileBinding.etAttachFile.setText(Attachment_FileName);
 
                    /* if (Card_Front.equalsIgnoreCase("") || Card_Back.equalsIgnoreCase("")) {
                         appbar.setVisibility(View.GONE);
@@ -3777,12 +3433,12 @@ public class EditProfileActivity extends AppCompatActivity implements
                         appbar.setVisibility(View.VISIBLE);
                     }*/
 
-                    txtCardFront.setText(Card_Front);
-                    txtCardBack.setText(Card_Back);
+                    fragmentEditProfileBinding.txtCardFront.setText(Card_Front);
+                    fragmentEditProfileBinding.txtCardBack.setText(Card_Back);
                     if (UserPhoto.equals("")) {
-                        imgProfile.setImageResource(R.drawable.usr_white1);
+                        fragmentEditProfileBinding.imgProfile.setImageResource(R.drawable.usr_white1);
                     } else {
-                        Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/" + UserPhoto).resize(300,300).onlyScaleDown().skipMemoryCache().into(imgProfile);
+                        Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/" + UserPhoto).resize(300,300).onlyScaleDown().skipMemoryCache().into(fragmentEditProfileBinding.imgProfile);
                     }
 
                    /* image = new ArrayList<>();
@@ -3840,7 +3496,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result != null) {
@@ -3865,7 +3521,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             }
 
             ArrayAdapter adapter = new ArrayAdapter(EditProfileActivity.this, android.R.layout.simple_list_item_1, industry);
-            autoCompleteIndustry.setAdapter(adapter);
+            fragmentEditProfileBinding.autoCompleteIndustry.setAdapter(adapter);
         }
     }
 
@@ -3897,7 +3553,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result != null) {
@@ -3919,7 +3575,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                         {
 
 
-                          //ProfileFragment.callMyProfile();
+                            //ProfileFragment.callMyProfile();
                             Toast.makeText(getApplicationContext(), "Successfully Updated", Toast.LENGTH_SHORT).show();
                             finish();
 
@@ -4001,7 +3657,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -4016,7 +3672,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                         startActivity(intent);
                         finish();*/
                         // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
-                        txtCardFront.setText(ImgName);
+                        fragmentEditProfileBinding.txtCardFront.setText(ImgName);
                     } else {
                         Toast.makeText(activity, "Error While Uploading Image..", Toast.LENGTH_LONG).show();
                     }
@@ -4057,7 +3713,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result != null) {
@@ -4071,7 +3727,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                         startActivity(intent);
                         finish();*/
                         // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
-                        etAttachFile.setText(ImgName);
+                        fragmentEditProfileBinding.etAttachFile.setText(ImgName);
                     } else {
                         Toast.makeText(getBaseContext(), "Error While Uploading Image..", Toast.LENGTH_LONG).show();
                     }
@@ -4111,7 +3767,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -4127,7 +3783,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                         finish();*/
                         // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                         UserPhoto = ImgName;
-                       // txtCardBack.setText(ImgName);
+                        // fragmentEditProfileBinding.txtCardBack.setText(ImgName);
                     } else {
                         Toast.makeText(activity, "Error While Uploading Image..", Toast.LENGTH_LONG).show();
                     }
@@ -4168,7 +3824,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -4183,7 +3839,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                         startActivity(intent);
                         finish();*/
                         // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
-                        txtCardBack.setText(ImgName);
+                        fragmentEditProfileBinding.txtCardBack.setText(ImgName);
                     } else {
                         Toast.makeText(activity, "Error While Uploading Image..", Toast.LENGTH_LONG).show();
                     }
@@ -4224,7 +3880,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
 
             try
@@ -4358,13 +4014,13 @@ public class EditProfileActivity extends AppCompatActivity implements
 
     public static void CustomProgressDialog(final String loading)
     {
-        rlProgressDialog.setVisibility(View.VISIBLE);
-        tvProgressing.setText(loading);
+        fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.VISIBLE);
+        fragmentEditProfileBinding.txtProgressing.setText(loading);
 
         Animation anim = AnimationUtils.loadAnimation(activity,R.anim.anticlockwise);
-        ivConnecting1.startAnimation(anim);
+        fragmentEditProfileBinding.imgConnecting1.startAnimation(anim);
         Animation anim1 = AnimationUtils.loadAnimation(activity,R.anim.clockwise);
-        ivConnecting2.startAnimation(anim1);
+        fragmentEditProfileBinding.imgConnecting2.startAnimation(anim1);
 
         int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
         for (int i = 350; i <= SPLASHTIME; i = i + 350)
@@ -4376,15 +4032,15 @@ public class EditProfileActivity extends AppCompatActivity implements
                 {
                     if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
                     {
-                        tvProgressing.setText(loading+".");
+                        fragmentEditProfileBinding.txtProgressing.setText(loading+".");
                     }
                     else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
                     {
-                        tvProgressing.setText(loading+"..");
+                        fragmentEditProfileBinding.txtProgressing.setText(loading+"..");
                     }
                     else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
                     {
-                        tvProgressing.setText(loading+"...");
+                        fragmentEditProfileBinding.txtProgressing.setText(loading+"...");
                     }
 
                 }
