@@ -87,6 +87,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
     private String final_ImgBase64Front, final_ImgBase64Back;
 
     private String laserPrintCost, normalPrintCost ;
+    RelativeLayout rlMainLayout;
 
     String numberOnCard, nameOnCard, exYearOnCard, exMonthOnCard, cvvOnCard, mobileNoOnCard, strToken ;
     int amount;
@@ -132,7 +133,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
         etPhone = (EditText) findViewById(R.id.etPhone);
         etAddress1 = (EditText) findViewById(R.id.etAddress1);
         etAddress2 = (EditText) findViewById(R.id.etAddress2);
-
+        rlMainLayout = (RelativeLayout) findViewById(R.id.rlMainLayout);
         ivLaserCard = (ImageView)findViewById(R.id.ivLaserCard);
         ivNormalCard = (ImageView)findViewById(R.id.ivNormalCard);
 
@@ -277,12 +278,6 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                             e.printStackTrace();
                         }
 
-                        for ( int i = 0; i < main_contains.getChildCount();  i++ )
-                        {
-                            View view = main_contains.getChildAt(i);
-                            view.setEnabled(false); // Or whatever you want to do with the view.
-                        }
-
                         ivTransImg.setVisibility(View.VISIBLE);
                         rlStripeScreen.setVisibility(View.VISIBLE);
 
@@ -294,6 +289,9 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                         ivLaserCard.setEnabled(false);
                         ivNormalCard.setEnabled(false);
                         ivSubmit.setEnabled(false);
+                        rlMainLayout.setEnabled(false);
+                        rlMainLayout.setClickable(false);
+                        scrollView.setEnabled(false);
 /*
                         if (lay_Enable)
                         {
@@ -471,6 +469,8 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                     ivLaserCard.setEnabled(true);
                     ivNormalCard.setEnabled(true);
                     ivSubmit.setEnabled(true);
+                    rlMainLayout.setEnabled(true);
+
                 }
             }
         });
@@ -492,6 +492,8 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                 ivLaserCard.setEnabled(true);
                 ivNormalCard.setEnabled(true);
                 ivSubmit.setEnabled(true);
+                rlMainLayout.setEnabled(true);
+
             }
         });
 

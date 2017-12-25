@@ -1109,8 +1109,9 @@ public class LoginActivity extends AppCompatActivity implements
                                         @Override
                                         public void onSuccess(final QBUser user, Bundle args) {
                                             Q_ID = String.valueOf(user.getId());
+                                            user.setPassword("circle@123");
                                             new HttpAsyncTaskUpdateQ_ID().execute(Utility.BASE_URL+"User/Update_QID");
-
+                                            SharedPrefsHelper.getInstance().saveQbUser(user);
                                         }
 
                                         @Override
