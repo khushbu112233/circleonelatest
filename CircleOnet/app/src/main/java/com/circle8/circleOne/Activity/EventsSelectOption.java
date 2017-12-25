@@ -1,9 +1,10 @@
 package com.circle8.circleOne.Activity;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AutoCompleteTextView;
@@ -12,9 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.circle8.circleOne.Fragments.EventsFragment;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
+import com.circle8.circleOne.databinding.ActivityEventsSelectOptionBinding;
 
 public class EventsSelectOption extends AppCompatActivity
 {
@@ -30,12 +31,13 @@ public class EventsSelectOption extends AppCompatActivity
     public static String searchBy = "";
     public static String searchOpt = "AllEvents";
     public static String eventOpt = "AllEvents";
+    ActivityEventsSelectOptionBinding activityEventsSelectOptionBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_events_select_option);
+        activityEventsSelectOptionBinding = DataBindingUtil.setContentView(this,R.layout.activity_events_select_option);
         Utility.freeMemory();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         final ActionBar actionBar = getSupportActionBar();
@@ -61,7 +63,6 @@ public class EventsSelectOption extends AppCompatActivity
                 searchBy = "Date" ;
 
                 Intent go = new Intent(getApplicationContext(),CustomDate.class);
-
                 // you pass the position you want the viewpager to show in the extra,
                 // please don't forget to define and initialize the position variable
                 // properly
