@@ -598,6 +598,8 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
 
     public static void callFirst()
     {
+        pageno = 1;
+        allTaggs.clear();
         Utility.freeMemory();
         new HttpAsyncTask().execute(Utility.BASE_URL+SortAndFilterOption.CardListApi);
     }
@@ -703,7 +705,9 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                     JSONObject jsonObject = new JSONObject(result);
                     totalArray = jsonObject.getString("count");
 
-                    count1 = jsonObject.getString("count");
+                    if (pageno == 2) {
+                        count1 = jsonObject.getString("count");
+                    }
                     if(count1.equals("") || count1.equals("null"))
                     {
                         numberCount = 0 ;

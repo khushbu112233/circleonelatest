@@ -353,6 +353,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             case R.id.imgProfile:
                 cropType = "profile";
                 CropImage.activity(null)
+                        .setCropShape(CropImageView.CropShape.OVAL)
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .start(EditProfileActivity.this);
                 break;

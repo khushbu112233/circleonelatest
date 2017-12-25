@@ -142,7 +142,8 @@ public class List2Fragment extends Fragment
         ivConnecting3 = (ImageView)view.findViewById(R.id.imgConnecting3) ;
 
         nfcModel = new ArrayList<>();
-
+        allTags = new ArrayList<>();
+        allTaggs = new ArrayList<>();
         session = new LoginSession(getContext());
         HashMap<String, String> user = session.getUserDetails();
         UserId = user.get(LoginSession.KEY_USERID);
@@ -161,8 +162,7 @@ public class List2Fragment extends Fragment
         /*lnrSearch.setVisibility(View.GONE);
         line.setVisibility(View.GONE);
         CardsFragment.tabLayout.setVisibility(View.GONE);*/
-        allTags = new ArrayList<>();
-        allTaggs = new ArrayList<>();
+
 //        new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
        /* gridView.setOnTouchListener(new View.OnTouchListener() {
@@ -446,6 +446,8 @@ public class List2Fragment extends Fragment
 
     public static void callFirst()
     {
+        pageno = 1;
+        allTaggs.clear();
         Utility.freeMemory();
         new HttpAsyncTask().execute(Utility.BASE_URL+SortAndFilterOption.CardListApi);
     }
@@ -595,8 +597,9 @@ public class List2Fragment extends Fragment
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
 
-                    count = jsonObject.getString("count");
-
+                    if (pageno == 2) {
+                        count = jsonObject.getString("count");
+                    }
                     if (count.equals("") || count.equals("null")) {
                         numberCount = 0;
                     } else {

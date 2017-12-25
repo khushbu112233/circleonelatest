@@ -127,6 +127,7 @@ public class UpdateGroupActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 CropImage.activity(null)
+                        .setCropShape(CropImageView.CropShape.OVAL)
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .start(UpdateGroupActivity.this);
             }
@@ -137,6 +138,7 @@ public class UpdateGroupActivity extends AppCompatActivity
             public void onClick(View v) {
                // selectImage();
                 CropImage.activity(null)
+                        .setCropShape(CropImageView.CropShape.OVAL)
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .start(UpdateGroupActivity.this);
             }

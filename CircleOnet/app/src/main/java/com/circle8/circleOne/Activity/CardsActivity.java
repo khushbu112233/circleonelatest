@@ -54,6 +54,9 @@ import com.circle8.circleOne.Fragments.CardsFragment;
 import com.circle8.circleOne.Fragments.ConnectFragment;
 import com.circle8.circleOne.Fragments.EventsFragment;
 import com.circle8.circleOne.Fragments.List1Fragment;
+import com.circle8.circleOne.Fragments.List2Fragment;
+import com.circle8.circleOne.Fragments.List3Fragment;
+import com.circle8.circleOne.Fragments.List4Fragment;
 import com.circle8.circleOne.Fragments.ProfileFragment;
 import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
@@ -277,8 +280,12 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         Connection_Left = user.get(LoginSession.KEY_CONNECTION_LEFT);
 //        Toast.makeText(getApplicationContext(), name + " " + email + " " + image + " " + gender, Toast.LENGTH_LONG).show();
 
-        if (Connection_Limit.equalsIgnoreCase("100000")){
-            Connection_Limit = DecimalFormatSymbols.getInstance().getInfinity();
+        try {
+            if (Connection_Limit.equalsIgnoreCase("100000")) {
+                Connection_Limit = DecimalFormatSymbols.getInstance().getInfinity();
+            }
+        }catch (Exception e){
+
         }
 
         if (checkPlayServices()) {
@@ -2040,16 +2047,17 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
 
                     if (success.equals("1")) {
                         Toast.makeText(getApplicationContext(), getResources().getString(R.string.successful_request_sent), Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
+                       /* Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
                         intent.putExtra("viewpager_position", CardsActivity.mViewPager.getCurrentItem());
                         intent.putExtra("nested_viewpager_position", CardsFragment.mViewPager.getCurrentItem());
                         startActivity(intent);
-                        finish();
-                        /*CardsFragment.mViewPager.getCurrentItem();
+                        finish();*/
+
+                       // onStart();
                         List1Fragment.webCall();
                         List2Fragment.webCall();
                         List3Fragment.webCall();
-                        List4Fragment.webCall();*/
+                        List4Fragment.webCall();
                     } else {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     }

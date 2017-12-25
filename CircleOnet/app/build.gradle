@@ -25,9 +25,9 @@ android {
     defaultConfig {
         applicationId "com.circle8.circleOne"
         minSdkVersion 18
-        targetSdkVersion 25
-        versionCode 6
-        versionName "1.0.5"
+        targetSdkVersion 26
+        versionCode 7
+        versionName "1.0.6"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [onesignal_app_id               : "8cc4b927-da5f-4152-805d-bf3b40e53773",

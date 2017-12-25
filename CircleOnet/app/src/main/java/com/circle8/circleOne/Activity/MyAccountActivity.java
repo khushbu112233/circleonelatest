@@ -529,7 +529,10 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
 
             if (profilePicPress)
             {
-                CropImage.activity(null).setGuidelines(CropImageView.Guidelines.ON).start(MyAccountActivity.this);
+                CropImage.activity(null)
+                        .setCropShape(CropImageView.CropShape.OVAL)
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .start(MyAccountActivity.this);
                 return;
             }
 
