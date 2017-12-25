@@ -112,9 +112,6 @@ import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
 
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
-;
-;
-
 public class CardDetail extends NfcActivity implements DialogsManager.ManagingDialogsCallbacks, View.OnClickListener, OnMapReadyCallback {
 
     private ArrayList<String> image = new ArrayList<>();

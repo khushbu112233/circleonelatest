@@ -564,6 +564,8 @@ public class List4Fragment extends Fragment
 
     public static void callFirst()
     {
+        pageno = 1;
+        allTaggs.clear();
         Utility.freeMemory();
         new HttpAsyncTask().execute(Utility.BASE_URL+SortAndFilterOption.CardListApi);
     }
@@ -664,7 +666,9 @@ public class List4Fragment extends Fragment
                     JSONObject jsonObject = new JSONObject(result);
 //                    numberCount = Integer.parseInt(jsonObject.getString("count")) ;
 
-                    count = jsonObject.getString("count");
+                    if (pageno == 2) {
+                        count = jsonObject.getString("count");
+                    }
                     if (count.equals("") || count.equals("null")) {
                         numberCount = 0;
                     } else {
