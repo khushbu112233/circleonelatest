@@ -36,6 +36,7 @@ import android.text.style.ClickableSpan;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -222,7 +223,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         fragmentEditProfileBinding  = DataBindingUtil.setContentView(this,R.layout.fragment_edit_profile);
         Utility.freeMemory();
         activity = EditProfileActivity.this;
-      //  getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
        /* AsyncTaskRunner runner = new AsyncTaskRunner();
         String sleepTime = "200";
@@ -3819,7 +3820,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             dialog.show();
             dialog.setCancelable(false);*/
             String loading = "Uploading" ;
-           CustomProgressDialog(loading,activity);
+            CustomProgressDialog(loading,activity);
         }
 
         @Override
@@ -3875,7 +3876,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             dialog.show();*/
 
             String loading = "Finding events" ;
-           CustomProgressDialog(loading,activity);
+            CustomProgressDialog(loading,activity);
         }
 
         @Override

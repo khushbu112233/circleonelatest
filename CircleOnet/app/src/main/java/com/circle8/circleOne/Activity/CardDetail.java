@@ -33,8 +33,6 @@ import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -107,7 +105,9 @@ import be.appfoundry.nfclibrary.activities.NfcActivity;
 import be.appfoundry.nfclibrary.utilities.interfaces.NfcReadUtility;
 import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
 
+import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 public class CardDetail extends NfcActivity implements DialogsManager.ManagingDialogsCallbacks, View.OnClickListener, OnMapReadyCallback {
 
@@ -154,6 +154,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
     GoogleMap googleMaps;
     ActivityCardDetailBinding mBinding;
     EditGroupsPopupBinding binding;
+    public static CardDetail activity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -179,6 +180,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         String lat = intent.getStringExtra("lat");
         String lon = intent.getStringExtra("long");
 
+        activity = CardDetail.this;
         dialogsManager = new DialogsManager();
         SpannableString ss = new SpannableString("Ask your friends to write a Testimonial for you(100 words or less),Please choose from your CircleOne contacts and send a request.");
         ClickableSpan clickableSpan = new ClickableSpan() {
@@ -1567,41 +1569,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         return result;
     }
 
-    public void CustomProgressDialog(final String loading)
-    {
-        mBinding.rlProgressDialog.setVisibility(View.VISIBLE);
-        mBinding.txtProgressing.setText(loading);
 
-        Animation anim = AnimationUtils.loadAnimation(CardDetail.this,R.anim.anticlockwise);
-        mBinding.imgConnecting1.startAnimation(anim);
-        Animation anim1 = AnimationUtils.loadAnimation(CardDetail.this,R.anim.clockwise);
-        mBinding.imgConnecting2.startAnimation(anim1);
-
-        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
-        for (int i = 350; i <= SPLASHTIME; i = i + 350)
-        {
-            final int j = i;
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run()
-                {
-                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
-                    {
-                        mBinding.txtProgressing.setText(loading+".");
-                    }
-                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
-                    {
-                        mBinding.txtProgressing.setText(loading+"..");
-                    }
-                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
-                    {
-                        mBinding.txtProgressing.setText(loading+"...");
-                    }
-
-                }
-            }, i);
-        }
-    }
 
     private class HttpAsyncTaskGroup extends AsyncTask<String, Void, String>
     {
@@ -1688,7 +1656,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
             String loading = "Adding friend" ;
-            CustomProgressDialog(loading);
+            CustomProgressDialog(loading,activity);
         }
 
         @Override
@@ -1700,7 +1668,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         @Override
         protected void onPostExecute(String result) {
             // dialog.dismiss();
-            mBinding.rlProgressDialog.setVisibility(View.GONE);
+            dismissProgress();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
@@ -1737,7 +1705,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
             //   allTags = new ArrayList<>();
 
             String loading = "Fetching User" ;
-            CustomProgressDialog(loading);
+            CustomProgressDialog(loading,activity);
         }
 
         @Override
@@ -1750,7 +1718,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            mBinding.rlProgressDialog.setVisibility(View.GONE);
+            dismissProgress();
 
             try
             {
