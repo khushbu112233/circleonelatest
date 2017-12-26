@@ -1,7 +1,5 @@
 package com.circle8.circleOne.Utils;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -15,6 +13,8 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 
 import com.circle8.circleOne.R;
+
+import java.util.ArrayList;
 
 /**
  * 
@@ -53,6 +53,7 @@ public class StickyScrollView extends NestedScrollView {
 
 	private int mShadowHeight;
 	private Drawable mShadowDrawable;
+	private boolean mScrollable = true;
 
 	private final Runnable invalidateRunnable = new Runnable() {
 
@@ -68,6 +69,15 @@ public class StickyScrollView extends NestedScrollView {
 			postDelayed(this, 16);
 		}
 	};
+
+	public void setScrollingEnabled(boolean enabled) {
+		mScrollable = enabled;
+	}
+
+	public boolean isScrollable() {
+		return mScrollable;
+	}
+
 
 	public StickyScrollView(Context context) {
 		this(context, null);

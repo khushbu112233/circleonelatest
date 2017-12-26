@@ -778,26 +778,39 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
             @Override
             public void onClick(View view) {
                 registerQbChatListeners();
-                QBUser currentUser = getUserFromSession();
-                //loginToChat(currentUser);
-                Boolean aBoolean = SharedPrefsHelper.getInstance().hasQbUser();
-                // Toast.makeText(getApplicationContext(), aBoolean.toString(), Toast.LENGTH_LONG).show();
-                ChatHelper.getInstance().loginToChat(currentUser, new QBEntityCallback<Void>() {
-                    @Override
-                    public void onSuccess(Void result, Bundle bundle) {
-                        Log.v(TAG, "Chat login onSuccess()");
 
-                        // ProgressDialogFragment.hide(getSupportFragmentManager());
-                        //    DialogsActivity.start(SplashActivity.this);
-                        // finish();
+                QBChatService.setDebugEnabled(true); // enable chat logging
+
+                QBChatService.setDefaultPacketReplyTimeout(10000);
+                QBChatService.ConfigurationBuilder chatServiceConfigurationBuilder = new QBChatService.ConfigurationBuilder();
+                chatServiceConfigurationBuilder.setSocketTimeout(60); //Sets chat socket's read timeout in seconds
+                chatServiceConfigurationBuilder.setKeepAlive(true); //Sets connection socket's keepAlive option.
+                chatServiceConfigurationBuilder.setUseTls(true); //Sets the TLS security mode used when making the connection. By default TLS is disabled.
+                chatServiceConfigurationBuilder.setAutojoinEnabled(true);
+                QBChatService.setConfigurationBuilder(chatServiceConfigurationBuilder);
+
+                try {
+
+                    QBUser currentUser = getUserFromSession();
+                    //loginToChat(currentUser);
+                    Boolean aBoolean = SharedPrefsHelper.getInstance().hasQbUser();
+                    // Toast.makeText(getApplicationContext(), aBoolean.toString(), Toast.LENGTH_LONG).show();
+                    ChatHelper.getInstance().loginToChat(currentUser, new QBEntityCallback<Void>() {
+                        @Override
+                        public void onSuccess(Void result, Bundle bundle) {
+                            Log.v(TAG, "Chat login onSuccess()");
+
+                            // ProgressDialogFragment.hide(getSupportFragmentManager());
+                            //    DialogsActivity.start(SplashActivity.this);
+                            // finish();
 
 
-                        //  Toast.makeText(getApplicationContext(), selectedUsers.toString(), Toast.LENGTH_LONG).show();
+                            //  Toast.makeText(getApplicationContext(), selectedUsers.toString(), Toast.LENGTH_LONG).show();
 
 
-                        ArrayList<Integer> occupantIdsList = new ArrayList<Integer>();
-                        occupantIdsList.add(Integer.parseInt(CurrentQ_ID));
-                        occupantIdsList.add(occupant_id);
+                            ArrayList<Integer> occupantIdsList = new ArrayList<Integer>();
+                            occupantIdsList.add(Integer.parseInt(CurrentQ_ID));
+                            occupantIdsList.add(occupant_id);
 /*
                         QBChatDialog dialog = new QBChatDialog();
                         dialog.setName("Chat with Garry and John");
@@ -812,23 +825,23 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 //for creating GROUP dialog
 
 
-                        QBChatDialog dialog = DialogUtils.buildDialog("Chat with Garry and John", QBDialogType.PRIVATE, occupantIdsList);
+                            QBChatDialog dialog = DialogUtils.buildDialog("Chat with Garry and John", QBDialogType.PRIVATE, occupantIdsList);
 
-                        QBRestChatService.createChatDialog(dialog).performAsync(new QBEntityCallback<QBChatDialog>() {
-                            @Override
-                            public void onSuccess(QBChatDialog result, Bundle params) {
-                                //ChatActivity.startForResult(CardDetail.this, 165, result);
-                                ChatHelper.getInstance();
-                                Intent intent = new Intent(CardDetail.this, ChatActivity.class);
-                                intent.putExtra(ChatActivity.EXTRA_DIALOG_ID, result);
-                                startActivity(intent);
-                            }
+                            QBRestChatService.createChatDialog(dialog).performAsync(new QBEntityCallback<QBChatDialog>() {
+                                @Override
+                                public void onSuccess(QBChatDialog result, Bundle params) {
+                                    //ChatActivity.startForResult(CardDetail.this, 165, result);
+                                    ChatHelper.getInstance();
+                                    Intent intent = new Intent(CardDetail.this, ChatActivity.class);
+                                    intent.putExtra(ChatActivity.EXTRA_DIALOG_ID, result);
+                                    startActivity(intent);
+                                }
 
-                            @Override
-                            public void onError(QBResponseException responseException) {
+                                @Override
+                                public void onError(QBResponseException responseException) {
 
-                            }
-                        });
+                                }
+                            });
 
 
                         /*if (isPrivateDialogExist(selectedUsers)) {
@@ -849,20 +862,23 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                             ChatActivity.startForResult(CardDetail.this, 165, existingPrivateDialog);
                             finish();
                         } else {*/
-                        //  ProgressDialogFragment.show(getSupportFragmentManager(), R.string.create_chat);
-                        //  createDialog(selectedUsers);
-                        //   }
+                            //  ProgressDialogFragment.show(getSupportFragmentManager(), R.string.create_chat);
+                            //  createDialog(selectedUsers);
+                            //   }
 
-                    }
+                        }
 
-                    @Override
-                    public void onError(QBResponseException e) {
-                        //  ProgressDialogFragment.hide(getSupportFragmentManager());
-                        Log.w(TAG, "Chat login onError(): " + e);
+                        @Override
+                        public void onError(QBResponseException e) {
+                            //  ProgressDialogFragment.hide(getSupportFragmentManager());
+                            Log.w(TAG, "Chat login onError(): " + e);
 
-                    }
-                });
+                        }
+                    });
 
+                }catch (Exception e){
+
+                }
 
                 //  ChatActivity.chatMessageListener = new ChatActivity.ChatMessageListener();
                /* Toast.makeText(getApplicationContext(), selectedUsers.toString(), Toast.LENGTH_LONG).show();
@@ -1048,7 +1064,11 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
     {
         QBUser user = SharedPrefsHelper.getInstance().getQbUser();
         Log.e("user",""+user);
-        user.setId(QBSessionManager.getInstance().getSessionParameters().getUserId());
+        try {
+            user.setId(QBSessionManager.getInstance().getSessionParameters().getUserId());
+        }catch (Exception e){
+
+        }
         return user;
     }
 
@@ -1912,7 +1932,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                     {
                         mBinding.llIndustryBox.setVisibility(View.GONE);
                     } else {
-                        mBinding.txtIndustry.setText(IndustryName);
+                        mBinding.txtIndustry.setText(IndustryName.trim().toString());
                     }
 
                     if (CompanyName.equalsIgnoreCase("")

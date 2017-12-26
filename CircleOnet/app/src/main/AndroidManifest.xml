@@ -337,29 +337,24 @@
             android:theme="@style/NoActionbar" >
         </activity>
         <activity
-            android:noHistory="true"
             android:name=".chat.DialogsActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:noHistory="true"
             android:name=".chat.ChatActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
         <activity
-            android:noHistory="true"
             android:name=".chat.ChatInfoActivity"
             android:label="@string/chat_info"
             android:screenOrientation="portrait" />
 
         <activity android:name=".chat.AttachmentImageActivity"
-            android:noHistory="true"
             android:theme="@style/AppTheme.Dark"
             android:screenOrientation="portrait" />
 
         <activity
-            android:noHistory="true"
             android:name=".chat.SelectUsersActivity"
             android:screenOrientation="portrait" />
 

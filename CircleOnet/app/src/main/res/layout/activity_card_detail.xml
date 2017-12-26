@@ -724,9 +724,7 @@
                                     android:id="@+id/txtWebsite"
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
-                                    android:gravity="center"
                                     android:hint="Website"
-                                    android:textAlignment="center"
                                     android:textColor="#6b6c6e"
                                     android:textSize="13sp"
                                     android:onClick="openWebPage"/>
@@ -752,11 +750,9 @@
                                 <com.circle8.circleOne.Utils.cgTextView
                                     android:textIsSelectable="true"
                                     android:id="@+id/txtIndustry"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:gravity="center"
                                     android:hint="Industry"
-                                    android:textAlignment="center"
                                     android:textColor="#6b6c6e"
                                     android:textSize="13sp"
                                     android:onClick="openWebPage"/>
@@ -782,10 +778,8 @@
                                     android:id="@+id/txtEmail"
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
-                                    android:gravity="center"
                                     android:textIsSelectable="true"
                                     android:hint="Email Address"
-                                    android:textAlignment="center"
                                     android:textColor="#6b6c6e"
                                     android:textSize="13sp"
                                     android:onClick="openGMail"/>
@@ -813,7 +807,6 @@
                                     android:layout_height="match_parent"
                                     android:hint="Telephone No."
                                     android:textIsSelectable="true"
-                                    android:textAlignment="center"
                                     android:textColor="#6b6c6e"
                                     android:textSize="13sp"
                                     android:onClick="openTele"/>
@@ -839,7 +832,6 @@
                                     android:layout_height="match_parent"
                                     android:gravity="center"
                                     android:hint="Fax No."
-                                    android:textAlignment="center"
                                     android:textColor="#6b6c6e"
                                     android:textSize="13sp" />
                             </LinearLayout>
