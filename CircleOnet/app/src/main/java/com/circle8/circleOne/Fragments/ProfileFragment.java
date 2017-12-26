@@ -13,7 +13,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -34,15 +33,11 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.circle8.circleOne.Activity.AttachmentDisplay;
 import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.Activity.EditProfileActivity;
@@ -60,7 +55,7 @@ import com.circle8.circleOne.Model.TestimonialModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.ExpandableHeightListView;
 import com.circle8.circleOne.Utils.Utility;
-import com.circle8.circleOne.databinding.FragmentEditProfileBinding;
+import com.circle8.circleOne.databinding.FragmentProfileBinding;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -103,7 +98,9 @@ import javax.crypto.spec.SecretKeySpec;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 import static com.google.android.gms.internal.zzahg.runOnUiThread;
 
 /**
@@ -113,74 +110,52 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 {
     // private ProgressBar firstBar = null;
 
-    static ImageView   imgQR, ivEditProfile;
-    static TextView tvPersonName, tvProfileName ;
     public final static int QRcodeWidth = 500 ;
     static Bitmap bitmap ;
     static ProgressDialog progressDialog ;
     static ArrayList<String> profile_array, NameArray, DesignationArray, profileImage_array;
-    private LoginButton loginButton;
     private static LoginSession session;
     public static String UserID = "";
-    static ImageView imgBack, imgAdd;
     static String associationString = "", eventString = "";
     public static ArrayList<ProfileModel> allTags ;
     static JSONArray array, arrayEvents;
     static List<String> listAssociation, listEvents;
     static String profileId = "";
-    static TextView txtNoAssociation, txtNoEvent;
     private int i = 0;
-    static TextView   tvName, tvCompanyName, tvDesi,
-            tvAssociation, tvAddress, tvWebsite, tvMail, tvMail1, tvMob, tvWork, textIndustry;
     static ProfileModel nfcModelTag;
-    static CircleImageView imgProfile;
-    static LinearLayout lnrMob, lnrWork, lnrWebsite, lnrMap, llNameBox, llCompanyBox,
-            llIndustryBox, llDesignationBox, llAssociationBox , llMailBox, llMailBox1;
-    static ViewPager mViewPager, viewPager1;
     static String recycle_image1, recycle_image2 ;
     private static ArrayList<String> image = new ArrayList<>();
     private static CardSwipe myPager ;
     public static ArrayList<TestimonialModel> allTaggs ;
     static String TestimonialProfileId = "";
-    static ExpandableHeightListView lstTestimonial;
-    static TextView txtTestimonial, txtMore;
     static CustomAdapter customAdapter;
-    static ImageView fbUrl, linkedInUrl, twitterUrl, googleUrl, youtubeUrl;
     static String strfbUrl, strlinkedInUrl, strtwitterUrl, strgoogleUrl, stryoutubeUrl;
     static ArrayList<String> title_array = new ArrayList<String>();
     static ArrayList<String> notice_array = new ArrayList<String>();
-    String Address1 = "", Address2 = "", Address3 = "", Address4 = "", City = "", State = "", Country = "", Postalcode = "", Website = "", Attachment_FileName = "";
     static String personName , personAddress ;
     private CallbackManager callbackManager;
     static View view;
     static AppBarLayout appbar;
     private static String displayProfile ;
     private static String secretKey = "1234567890234561";
-    private static RelativeLayout rlProgressDialog ;
-    private static TextView tvProgressing ;
-    private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
-    static RecyclerView recyclerAssociation, recyclerEvents;
     static String barName;
     static JSONArray jsonArray;
     public static int profileIndex;
-    static TextView txtAttachment, lblAttachment;
     public static ProfileSession profileSession;
     static ReferralCodeSession referralCodeSession;
     private static String refer;
-    static TextView txtAssociationList, txtEventsListFinal;
     static String Q_ID = "";
-
     AlertDialog QR_AlertDialog ;
     private long lastClickTime = 0;
     public static Activity mContext ;
     public static Handler mHandler;
-    public static FragmentEditProfileBinding fragmentEditProfileBinding;
+    public static FragmentProfileBinding fragmentProfileBinding;
     public ProfileFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState)
+    public void onCreate(Bundle savedInstanceState)
     {
         Utility.freeMemory();
         super.onCreate(savedInstanceState);
@@ -194,9 +169,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
-        fragmentEditProfileBinding = DataBindingUtil.inflate(
+        fragmentProfileBinding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_profile, container, false);
-        view = fragmentEditProfileBinding.getRoot();
+        view = fragmentProfileBinding.getRoot();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
 
         mContext = ProfileFragment.this.getActivity();
@@ -206,80 +181,48 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
         allTaggs = new ArrayList<>();
         callbackManager = CallbackManager.Factory.create();
         profileSession = new ProfileSession(getContext());
-        llNameBox = (LinearLayout)view.findViewById(R.id.llNameBox);
-        llCompanyBox = (LinearLayout)view.findViewById(R.id.llCompanyBox);
-        llIndustryBox = (LinearLayout)view.findViewById(R.id.llIndustryBox);
-        llDesignationBox = (LinearLayout)view.findViewById(R.id.llDesignationBox);
-        llAssociationBox = (LinearLayout)view.findViewById(R.id.llAssociationBox);
-        llMailBox = (LinearLayout)view.findViewById(R.id.llMailBox);
-        llMailBox1 = (LinearLayout)view.findViewById(R.id.llMailBox1);
-        fbUrl = (ImageView) view.findViewById(R.id.fbUrl);
-        googleUrl = (ImageView) view.findViewById(R.id.googleUrl);
-        youtubeUrl = (ImageView) view.findViewById(R.id.youtubeUrl);
-        twitterUrl = (ImageView) view.findViewById(R.id.twitterUrl);
-        linkedInUrl = (ImageView) view.findViewById(R.id.linkedInUrl);
-        tvName = (TextView)view.findViewById(R.id.tvName);
-        tvCompanyName = (TextView)view.findViewById(R.id.tvCompanyName);
-        tvDesi = (TextView)view.findViewById(R.id.tvDesi);
-        tvAssociation = (TextView)view.findViewById(R.id.tvAssociation);
-        textIndustry = (TextView)view.findViewById(R.id.textIndustry);
-        tvAddress = (TextView)view.findViewById(R.id.tvAddress);
-        tvWebsite = (TextView)view.findViewById(R.id.tvWebsite);
-        tvMail = (TextView)view.findViewById(R.id.tvMail);
-        tvMail1 = (TextView)view.findViewById(R.id.tvMail1);
-        tvMob = (TextView)view.findViewById(R.id.tvMob);
-        tvWork = (TextView)view.findViewById(R.id.tvWork);
-        imgProfile = (CircleImageView) view.findViewById(R.id.imgProfile);
-        lnrMob = (LinearLayout) view.findViewById(R.id.lnrMob);
-        lnrWork = (LinearLayout) view.findViewById(R.id.lnrWork);
-        lnrWebsite = (LinearLayout) view.findViewById(R.id.lnrWebsite);
-        lnrMap = (LinearLayout) view.findViewById(R.id.lnrMap);
-        txtNoEvent = (TextView) view.findViewById(R.id.txtNoEvent);
-        txtNoAssociation = (TextView) view.findViewById(R.id.txtNoAssociation);
-        mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
-        viewPager1 = (ViewPager) view.findViewById(R.id.viewPager1);
-        lstTestimonial = (ExpandableHeightListView) view.findViewById(R.id.lstTestimonial);
-        txtTestimonial = (TextView) view.findViewById(R.id.txtTestimonial);
-        txtMore = (TextView) view.findViewById(R.id.txtMore);
-        imgBack = (ImageView) view.findViewById(R.id.imgBack);
-        txtAttachment = (TextView) view.findViewById(R.id.txtAttachment);
-        lblAttachment = (TextView) view.findViewById(R.id.lblAttachment);
-        recyclerAssociation = (RecyclerView) view.findViewById(R.id.recyclerAssociation);
-        recyclerEvents = (RecyclerView) view.findViewById(R.id.recyclerEvents);
-        txtAssociationList = (TextView) view.findViewById(R.id.txtAssociationList);
-        txtEventsListFinal = (TextView) view.findViewById(R.id.txtEventsListfinal);
-        imgQR = (ImageView) view.findViewById(R.id.imgQR);
-        imgAdd = (ImageView) view.findViewById(R.id.imgAdd);
-        //  firstBar = (ProgressBar)view.findViewById(R.id.firstBar);
-        tvPersonName = (TextView)view.findViewById(R.id.tvPersonName);
-        tvProfileName = (TextView) view.findViewById(R.id.tvProfileName);
-        ivEditProfile = (ImageView)view.findViewById(R.id.ivEditProfile);
-        loginButton = (LoginButton) view.findViewById(R.id.login_button);
         session = new LoginSession(getContext());
         appbar = (AppBarLayout) view.findViewById(R.id.appbar);
-        rlProgressDialog = (RelativeLayout)view.findViewById(R.id.rlProgressDialog);
-        tvProgressing = (TextView)view.findViewById(R.id.txtProgressing);
-        ivConnecting1 = (ImageView)view.findViewById(R.id.imgConnecting1) ;
-        ivConnecting2 = (ImageView)view.findViewById(R.id.imgConnecting2) ;
-        ivConnecting3 = (ImageView)view.findViewById(R.id.imgConnecting3) ;
-
         progressDialog = new ProgressDialog(getActivity());
-
         referralCodeSession = new ReferralCodeSession(getContext());
 
 //        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetUserProfile");
 //        new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
 
         /* Call api for my profile */
-        runOnUiThread(new Runnable() {
+
+        callMyProfile();
+       /* runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 callMyProfile();
             }
-        });
+        });*/
 
+        SpannableString ss = new SpannableString("Ask your friends to write a Testimonial for you(100 words or less),Please choose from your CircleOne contacts and send a request.");
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View textView) {
+                Intent intent1 = new Intent(getContext(), SearchGroupMembers.class);
+                intent1.putExtra("from", "profile");
+                intent1.putExtra("ProfileId", TestimonialProfileId);
+                startActivity(intent1);
 
-        runOnUiThread(new Runnable() {
+            }
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false);
+            }
+        };
+        ss.setSpan(clickableSpan, 91, 100, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        // TextView textView = (TextView) findViewById(R.id.hello);
+        fragmentProfileBinding.txtTestimonial.setText(ss);
+        fragmentProfileBinding.txtTestimonial.setMovementMethod(LinkMovementMethod.getInstance());
+        fragmentProfileBinding.txtTestimonial.setHighlightColor(getResources().getColor(R.color.colorPrimary));
+
+        /*runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 SpannableString ss = new SpannableString("Ask your friends to write a Testimonial for you(100 words or less),Please choose from your CircleOne contacts and send a request.");
@@ -301,23 +244,23 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                 ss.setSpan(clickableSpan, 91, 100, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
                 // TextView textView = (TextView) findViewById(R.id.hello);
-                txtTestimonial.setText(ss);
-                txtTestimonial.setMovementMethod(LinkMovementMethod.getInstance());
-                txtTestimonial.setHighlightColor(getResources().getColor(R.color.colorPrimary));
+                fragmentProfileBinding.txtTestimonial.setText(ss);
+                fragmentProfileBinding.txtTestimonial.setMovementMethod(LinkMovementMethod.getInstance());
+                fragmentProfileBinding.txtTestimonial.setHighlightColor(getResources().getColor(R.color.colorPrimary));
 
             }
-        });
-        imgProfile.setOnClickListener(this);
-        txtAttachment.setOnClickListener(this);
-        fbUrl.setOnClickListener(this);
-        googleUrl.setOnClickListener(this);
-        youtubeUrl.setOnClickListener(this);
-        twitterUrl.setOnClickListener(this);
-        linkedInUrl.setOnClickListener(this);
-        txtMore.setOnClickListener(this);
-        imgAdd.setOnClickListener(this);
-        imgBack.setOnClickListener(this);
-        viewPager1.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        });*/
+        fragmentProfileBinding.imgProfile.setOnClickListener(this);
+        fragmentProfileBinding.txtAttachment.setOnClickListener(this);
+        fragmentProfileBinding.fbUrl.setOnClickListener(this);
+        fragmentProfileBinding.googleUrl.setOnClickListener(this);
+        fragmentProfileBinding.youtubeUrl.setOnClickListener(this);
+        fragmentProfileBinding.twitterUrl.setOnClickListener(this);
+        fragmentProfileBinding.linkedInUrl.setOnClickListener(this);
+        fragmentProfileBinding.txtMore.setOnClickListener(this);
+        fragmentProfileBinding.imgAdd.setOnClickListener(this);
+        fragmentProfileBinding.imgBack.setOnClickListener(this);
+        fragmentProfileBinding.viewPager1.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             private int mScrollState = ViewPager.SCROLL_STATE_IDLE;
 
@@ -329,7 +272,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                 if (mScrollState == ViewPager.SCROLL_STATE_IDLE) {
                     return;
                 }
-                mViewPager.scrollTo(viewPager1.getScrollX(), viewPager1.getScrollY());
+                fragmentProfileBinding.viewPager.scrollTo(fragmentProfileBinding.viewPager1.getScrollX(), fragmentProfileBinding.viewPager1.getScrollY());
             }
 
             @Override
@@ -344,15 +287,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
                 mScrollState = state;
                 if (state == ViewPager.SCROLL_STATE_IDLE) {
-                    mViewPager.setCurrentItem(viewPager1.getCurrentItem(), false);
+                    fragmentProfileBinding.viewPager.setCurrentItem(fragmentProfileBinding.viewPager1.getCurrentItem(), false);
                 }
             }
         });
 
-        fragmentEditProfileBinding.imgProfileShare.setOnClickListener(this);
-        fragmentEditProfileBinding.imgProfileMenu.setOnClickListener(this);
-        imgQR.setOnClickListener(this);
-        ivEditProfile.setOnClickListener(this);
+        fragmentProfileBinding.imgProfileShare.setOnClickListener(this);
+        fragmentProfileBinding.imgProfileMenu.setOnClickListener(this);
+        fragmentProfileBinding.imgQR.setOnClickListener(this);
+        fragmentProfileBinding.ivEditProfile.setOnClickListener(this);
 
         return view;
     }
@@ -417,7 +360,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                 Utility.freeMemory();
                 Utility.deleteCache(getContext());
                 Intent intent = new Intent(getContext(), AttachmentDisplay.class);
-                intent.putExtra("url", Utility.BASE_IMAGE_URL+"Other_doc/"+txtAttachment.getText().toString());
+                intent.putExtra("url", Utility.BASE_IMAGE_URL+"Other_doc/"+fragmentProfileBinding.txtAttachment.getText().toString());
                 startActivity(intent);
                 break ;
             case R.id.txtMore:
@@ -495,7 +438,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                         "' for a quick and simple registration! https://circle8.asia/mobileApp.html";
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, tvPersonName.getText().toString());
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, fragmentProfileBinding.tvPersonName.getText().toString());
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Share Profile Via"));
                 break ;
@@ -519,7 +462,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                 dialogColor.setAlpha(70);
                 QR_AlertDialog.getWindow().setBackgroundDrawable(dialogColor);
                 // alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
-                tvBarName.setText(tvPersonName.getText().toString());
+                tvBarName.setText(fragmentProfileBinding.tvPersonName.getText().toString());
 //                    bitmap = TextToImageEncode(barName);
                 ivBarImage.setImageBitmap(bitmap);
 
@@ -547,7 +490,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                 lastClickTime = SystemClock.elapsedRealtime();
 
                 ContextThemeWrapper ctw = new ContextThemeWrapper(getContext(), R.style.CustomPopupTheme);
-                PopupMenu popup = new PopupMenu(ctw, fragmentEditProfileBinding.imgProfileMenu);
+                PopupMenu popup = new PopupMenu(ctw, fragmentProfileBinding.imgProfileMenu);
                 //Inflating the Popup using xml file
                 popup.getMenuInflater().inflate(R.menu.profile_popup_menu, popup.getMenu());
                 for (String s : profile_array) {
@@ -585,39 +528,39 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                                     profileIndex = i;
 //                                    Toast.makeText(getContext(), profile_array.get(i).toString(), Toast.LENGTH_LONG).show();
 
-                                    tvPersonName.setText(allTags.get(i).getFirstName() + " "+ allTags.get(i).getLastName());
-                                    fragmentEditProfileBinding.tvDesignation.setText(allTags.get(i).getDesignation());
-                                    fragmentEditProfileBinding.tvCompany.setText(allTags.get(i).getCompanyName());
-                                    tvName.setText(allTags.get(i).getFirstName() + " "+ allTags.get(i).getLastName());
-                                    tvCompanyName.setText(allTags.get(i).getCompanyName());
-                                    tvDesi.setText(allTags.get(i).getDesignation());
-                                    tvMob.setText(allTags.get(i).getMobile1());
-                                    tvWork.setText(allTags.get(i).getPhone1());
-                                    tvProfileName.setText(allTags.get(i).getProfile());
+                                    fragmentProfileBinding.tvPersonName.setText(allTags.get(i).getFirstName() + " "+ allTags.get(i).getLastName());
+                                    fragmentProfileBinding.tvDesignation.setText(allTags.get(i).getDesignation());
+                                    fragmentProfileBinding.tvCompany.setText(allTags.get(i).getCompanyName());
+                                    fragmentProfileBinding.tvName.setText(allTags.get(i).getFirstName() + " "+ allTags.get(i).getLastName());
+                                    fragmentProfileBinding.tvCompanyName.setText(allTags.get(i).getCompanyName());
+                                    fragmentProfileBinding.tvDesi.setText(allTags.get(i).getDesignation());
+                                    fragmentProfileBinding.tvMob.setText(allTags.get(i).getMobile1());
+                                    fragmentProfileBinding.tvWork.setText(allTags.get(i).getPhone1());
+                                    fragmentProfileBinding.tvProfileName.setText(allTags.get(i).getProfile());
 
                                     if(allTags.get(i).getIndustry().equalsIgnoreCase("")
                                             || allTags.get(i).getIndustry().equalsIgnoreCase("null"))
                                     {
-                                        llIndustryBox.setVisibility(View.GONE);
+                                        fragmentProfileBinding.llIndustryBox.setVisibility(View.GONE);
                                     }
                                     else
                                     {
-                                        textIndustry.setText(allTags.get(i).getIndustry());
+                                        fragmentProfileBinding.textIndustry.setText(allTags.get(i).getIndustry());
                                     }
 
                                     if (allTags.get(i).getAttachment_FileName().toString().equals("") || allTags.get(i).getAttachment_FileName().toString() == null ||
                                             allTags.get(i).getAttachment_FileName().toString().equals("null")) {
 
-                                        txtAttachment.setVisibility(View.GONE);
-                                        lblAttachment.setVisibility(View.GONE);
+                                        fragmentProfileBinding.txtAttachment.setVisibility(View.GONE);
+                                        fragmentProfileBinding.lblAttachment.setVisibility(View.GONE);
                                     }
                                     else {
-                                        txtAttachment.setVisibility(View.VISIBLE);
-                                        lblAttachment.setVisibility(View.VISIBLE);
+                                        fragmentProfileBinding.txtAttachment.setVisibility(View.VISIBLE);
+                                        fragmentProfileBinding.lblAttachment.setVisibility(View.VISIBLE);
 
-                                        txtAttachment.setText(allTags.get(i).getAttachment_FileName());
+                                        fragmentProfileBinding. txtAttachment.setText(allTags.get(i).getAttachment_FileName());
                                     }
-                                    tvAddress.setText(
+                                    fragmentProfileBinding.tvAddress.setText(
                                             allTags.get(i).getAddress1()+ " "
                                                     + allTags.get(i).getAddress2() + "\n"
                                                     + allTags.get(i).getAddress3()  + " "
@@ -626,7 +569,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                                                     + allTags.get(i).getState() + "\n"
                                                     + allTags.get(i).getCountry() + " "
                                                     + allTags.get(i).getPostalcode());
-                                    tvWebsite.setText(allTags.get(i).getWebsite());
+                                    fragmentProfileBinding.tvWebsite.setText(allTags.get(i).getWebsite());
                                     displayProfile = allTags.get(i).getUserPhoto();
                                     TestimonialProfileId = allTags.get(i).getProfileID();
 
@@ -674,7 +617,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
                                                 // associationString += remainder + " / ";
                                             }
-                                            txtAssociationList.setText(associationString);
+                                            fragmentProfileBinding.txtAssociationList.setText(associationString);
                                             int countAssociation;
                                             if (array.length()>=5){
                                                 countAssociation = 5;
@@ -682,18 +625,18 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                                                 countAssociation = array.length();
                                             }
                                             GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), countAssociation, GridLayoutManager.HORIZONTAL, false);
-                                            recyclerAssociation.setAdapter(new TextRecyclerAdapter(listAssociation));
-                                            recyclerAssociation.setLayoutManager(gridLayoutManager);
+                                            fragmentProfileBinding.recyclerAssociation.setAdapter(new TextRecyclerAdapter(listAssociation));
+                                            fragmentProfileBinding.recyclerAssociation.setLayoutManager(gridLayoutManager);
 
                                             if (listAssociation.size() == 0){
-                                                txtAssociationList.setVisibility(View.GONE);
+                                                fragmentProfileBinding.txtAssociationList.setVisibility(View.GONE);
                                                 //  recyclerAssociation.setVisibility(View.GONE);
-                                                txtNoAssociation.setVisibility(View.VISIBLE);
+                                                fragmentProfileBinding.txtNoAssociation.setVisibility(View.VISIBLE);
                                             }
                                             else {
-                                                txtAssociationList.setVisibility(View.VISIBLE);
+                                                fragmentProfileBinding.txtAssociationList.setVisibility(View.VISIBLE);
                                                 // recyclerAssociation.setVisibility(View.VISIBLE);
-                                                txtNoAssociation.setVisibility(View.GONE);
+                                                fragmentProfileBinding.txtNoAssociation.setVisibility(View.GONE);
                                             }
                                         }catch (Exception e){}
 
@@ -722,7 +665,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
 
                                             }
-                                            txtEventsListFinal.setText(eventString);
+                                            fragmentProfileBinding.txtEventsListfinal.setText(eventString);
                                             int countEvents;
                                             if (arrayEvents.length() >= 5) {
                                                 countEvents = 5;
@@ -731,18 +674,18 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                                             }
 
                                             GridLayoutManager gridLayoutManager1 = new GridLayoutManager(getContext(), countEvents, GridLayoutManager.HORIZONTAL, false);
-                                            recyclerEvents.setAdapter(new TextRecyclerAdapter(listEvents));
-                                            recyclerEvents.setLayoutManager(gridLayoutManager1);
+                                            fragmentProfileBinding.recyclerEvents.setAdapter(new TextRecyclerAdapter(listEvents));
+                                            fragmentProfileBinding.recyclerEvents.setLayoutManager(gridLayoutManager1);
 
 
                                             if (listEvents.size() == 0) {
-                                                txtEventsListFinal.setVisibility(View.GONE);
+                                                fragmentProfileBinding.txtEventsListfinal.setVisibility(View.GONE);
                                                 // recyclerEvents.setVisibility(View.GONE);
-                                                txtNoEvent.setVisibility(View.VISIBLE);
+                                                fragmentProfileBinding.txtNoEvent.setVisibility(View.VISIBLE);
                                             } else {
-                                                txtEventsListFinal.setVisibility(View.VISIBLE);
+                                                fragmentProfileBinding.txtEventsListfinal.setVisibility(View.VISIBLE);
                                                 // recyclerEvents.setVisibility(View.VISIBLE);
-                                                txtNoEvent.setVisibility(View.GONE);
+                                                fragmentProfileBinding.txtNoEvent.setVisibility(View.GONE);
                                             }
 
                                         }catch (Exception e){}
@@ -753,11 +696,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
                                     if (allTags.get(i).getUserPhoto().equals(""))
                                     {
-                                        imgProfile.setImageResource(R.drawable.usr_white1);
+                                        fragmentProfileBinding.imgProfile.setImageResource(R.drawable.usr_white1);
                                     }
                                     else {
                                         Picasso.with(getContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+allTags.get(i).getUserPhoto())
-                                                .resize(300,300).onlyScaleDown().skipMemoryCache().into(imgProfile);
+                                                .resize(300,300).onlyScaleDown().skipMemoryCache().into(fragmentProfileBinding.imgProfile);
                                     }
 
                                     if (allTags.get(i).getCard_Front().equalsIgnoreCase("") && allTags.get(i).getCard_Back().equalsIgnoreCase("")) {
@@ -768,45 +711,45 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
                                     if (allTags.get(i).getFacebook().equals("") || allTags.get(i).getFacebook().equals(null))
                                     {
-                                        fbUrl.setImageResource(R.drawable.ic_fb_gray);
-                                        fbUrl.setEnabled(false);
+                                        fragmentProfileBinding.fbUrl.setImageResource(R.drawable.ic_fb_gray);
+                                        fragmentProfileBinding.fbUrl.setEnabled(false);
                                     }
                                     else {
-                                        fbUrl.setImageResource(R.drawable.icon_fb);
-                                        fbUrl.setEnabled(true);
+                                        fragmentProfileBinding.fbUrl.setImageResource(R.drawable.icon_fb);
+                                        fragmentProfileBinding.fbUrl.setEnabled(true);
                                         strfbUrl = allTags.get(i).getFacebook().toString();
                                     }
 
                                     if (allTags.get(i).getGoogle().equals("") || allTags.get(i).getGoogle().equals(null))
                                     {
-                                        googleUrl.setImageResource(R.drawable.ic_google_gray);
-                                        googleUrl.setEnabled(false);
+                                        fragmentProfileBinding.googleUrl.setImageResource(R.drawable.ic_google_gray);
+                                        fragmentProfileBinding.googleUrl.setEnabled(false);
                                     }
                                     else {
-                                        googleUrl.setImageResource(R.drawable.icon_google);
-                                        googleUrl.setEnabled(true);
+                                        fragmentProfileBinding.googleUrl.setImageResource(R.drawable.icon_google);
+                                        fragmentProfileBinding.googleUrl.setEnabled(true);
                                         strgoogleUrl = allTags.get(i).getGoogle().toString();
                                     }
 
                                     if (allTags.get(i).getTwitter().equals("") || allTags.get(i).getTwitter().equals(null))
                                     {
-                                        twitterUrl.setImageResource(R.drawable.icon_twitter_gray);
-                                        twitterUrl.setEnabled(false);
+                                        fragmentProfileBinding.twitterUrl.setImageResource(R.drawable.icon_twitter_gray);
+                                        fragmentProfileBinding.twitterUrl.setEnabled(false);
                                     }
                                     else {
-                                        twitterUrl.setImageResource(R.drawable.icon_twitter);
-                                        twitterUrl.setEnabled(true);
+                                        fragmentProfileBinding.twitterUrl.setImageResource(R.drawable.icon_twitter);
+                                        fragmentProfileBinding.twitterUrl.setEnabled(true);
                                         strtwitterUrl = allTags.get(i).getTwitter().toString();
                                     }
 
                                     if (allTags.get(i).getLinkedin().equals("") || allTags.get(i).getLinkedin().equals(null))
                                     {
-                                        linkedInUrl.setImageResource(R.drawable.icon_linkedin_gray);
-                                        linkedInUrl.setEnabled(false);
+                                        fragmentProfileBinding.linkedInUrl.setImageResource(R.drawable.icon_linkedin_gray);
+                                        fragmentProfileBinding.linkedInUrl.setEnabled(false);
                                     }
                                     else {
-                                        linkedInUrl.setImageResource(R.drawable.icon_linkedin);
-                                        linkedInUrl.setEnabled(true);
+                                        fragmentProfileBinding.linkedInUrl.setImageResource(R.drawable.icon_linkedin);
+                                        fragmentProfileBinding.linkedInUrl.setEnabled(true);
                                         strlinkedInUrl = allTags.get(i).getLinkedin().toString();
                                     }
 
@@ -849,17 +792,17 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                                     image.add(recycle_image2);
                                     myPager = new CardSwipe(getContext(), image);
 
-                                    mViewPager.setClipChildren(false);
-                                    mViewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
-                                    mViewPager.setOffscreenPageLimit(2);
+                                    fragmentProfileBinding.viewPager.setClipChildren(false);
+                                    fragmentProfileBinding.viewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+                                    fragmentProfileBinding.viewPager.setOffscreenPageLimit(2);
                                     //  mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
-                                    mViewPager.setAdapter(myPager);
+                                    fragmentProfileBinding.viewPager.setAdapter(myPager);
 
-                                    viewPager1.setClipChildren(false);
-                                    viewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
-                                    viewPager1.setOffscreenPageLimit(2);
+                                    fragmentProfileBinding.viewPager1.setClipChildren(false);
+                                    fragmentProfileBinding.viewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+                                    fragmentProfileBinding.viewPager1.setOffscreenPageLimit(2);
                                     // viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
-                                    viewPager1.setAdapter(myPager);
+                                    fragmentProfileBinding.viewPager1.setAdapter(myPager);
                                     try
                                     {
                                         barName = encrypt(TestimonialProfileId, secretKey);
@@ -892,7 +835,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
             case R.id.ivEditProfile:
                 //Toast.makeText(getContext(),"Edit Profile",Toast.LENGTH_SHORT).show();
 
-                ivEditProfile.setBackground(getResources().getDrawable(R.drawable.ic_edit_gray));
+                fragmentProfileBinding.ivEditProfile.setBackground(getResources().getDrawable(R.drawable.ic_edit_gray));
                 Intent intent_edit = new Intent(mContext, EditProfileActivity.class);
                 intent_edit.putExtra("type", "edit");
                 intent_edit.putExtra("profile_id", TestimonialProfileId);
@@ -1022,12 +965,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
         Utility.deleteCache(getContext());
 
     }
-
+/*
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
-    }
+    }*/
 
     private FacebookCallback<LoginResult> mCallBack = new FacebookCallback<LoginResult>() {
         @Override
@@ -1149,7 +1092,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
             //   allTags = new ArrayList<>();
 
             String loading = "Fetching profile" ;
-            CustomProgressDialog(loading);
+            CustomProgressDialog(loading,mContext);
         }
 
         @Override
@@ -1180,7 +1123,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            dismissProgress();
             try
             {
 
@@ -1272,28 +1215,28 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                     personName = allTags.get(profileIndex).getFirstName() + " "+ allTags.get(profileIndex).getLastName() ;
                     if(personName.equalsIgnoreCase("") || personName.equalsIgnoreCase("null"))
                     {
-                        tvPersonName.setVisibility(View.GONE);
-                        llNameBox.setVisibility(View.GONE);
+                        fragmentProfileBinding.tvPersonName.setVisibility(View.GONE);
+                        fragmentProfileBinding.llNameBox.setVisibility(View.GONE);
                     }
                     else
                     {
-                        tvName.setText(personName);
-                        tvPersonName.setText(personName);
+                        fragmentProfileBinding.tvName.setText(personName);
+                        fragmentProfileBinding.tvPersonName.setText(personName);
                     }
 
-                    tvProfileName.setText(allTags.get(profileIndex).getProfile());
+                    fragmentProfileBinding.tvProfileName.setText(allTags.get(profileIndex).getProfile());
 
                     if (allTags.get(profileIndex).getAttachment_FileName().toString().equals("") || allTags.get(profileIndex).getAttachment_FileName().toString() == null ||
                             allTags.get(profileIndex).getAttachment_FileName().toString().equals("null")) {
 
-                        txtAttachment.setVisibility(View.GONE);
-                        lblAttachment.setVisibility(View.GONE);
+                        fragmentProfileBinding.txtAttachment.setVisibility(View.GONE);
+                        fragmentProfileBinding.lblAttachment.setVisibility(View.GONE);
                     }
                     else {
-                        txtAttachment.setVisibility(View.VISIBLE);
-                        lblAttachment.setVisibility(View.VISIBLE);
+                        fragmentProfileBinding.txtAttachment.setVisibility(View.VISIBLE);
+                        fragmentProfileBinding.lblAttachment.setVisibility(View.VISIBLE);
 
-                        txtAttachment.setText(allTags.get(profileIndex).getAttachment_FileName());
+                        fragmentProfileBinding.txtAttachment.setText(allTags.get(profileIndex).getAttachment_FileName());
                     }
 
                     try
@@ -1322,7 +1265,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                                 eventString += remainder + " / ";
                             }
                         }
-                        txtEventsListFinal.setText(eventString);
+                        fragmentProfileBinding.txtEventsListfinal.setText(eventString);
                         associationString = "";
                         for (int i1 = 0; i1 < array.length(); i1++) {
 
@@ -1344,7 +1287,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                                 associationString += remainder + " / ";
                             }
                         }
-                        txtAssociationList.setText(associationString);
+                        fragmentProfileBinding.txtAssociationList.setText(associationString);
                         int countAssociation;
                         if (array.length()>=5){
                             countAssociation = 5;
@@ -1360,32 +1303,32 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                         }
 
                         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, countAssociation, GridLayoutManager.HORIZONTAL, false);
-                        recyclerAssociation.setAdapter(new TextRecyclerAdapter(listAssociation));
-                        recyclerAssociation.setLayoutManager(gridLayoutManager);
+                        fragmentProfileBinding.recyclerAssociation.setAdapter(new TextRecyclerAdapter(listAssociation));
+                        fragmentProfileBinding.recyclerAssociation.setLayoutManager(gridLayoutManager);
 
                         GridLayoutManager gridLayoutManager1 = new GridLayoutManager(mContext, countEvents, GridLayoutManager.HORIZONTAL, false);
-                        recyclerEvents.setAdapter(new TextRecyclerAdapter(listEvents));
-                        recyclerEvents.setLayoutManager(gridLayoutManager1);
+                        fragmentProfileBinding.recyclerEvents.setAdapter(new TextRecyclerAdapter(listEvents));
+                        fragmentProfileBinding.recyclerEvents.setLayoutManager(gridLayoutManager1);
                         if (listAssociation.size() == 0){
-                            txtAssociationList.setVisibility(View.GONE);
+                            fragmentProfileBinding.txtAssociationList.setVisibility(View.GONE);
                             // recyclerAssociation.setVisibility(View.GONE);
-                            txtNoAssociation.setVisibility(View.VISIBLE);
+                            fragmentProfileBinding.txtNoAssociation.setVisibility(View.VISIBLE);
                         }
                         else {
-                            txtAssociationList.setVisibility(View.VISIBLE);
+                            fragmentProfileBinding.txtAssociationList.setVisibility(View.VISIBLE);
                             // recyclerAssociation.setVisibility(View.VISIBLE);
-                            txtNoAssociation.setVisibility(View.GONE);
+                            fragmentProfileBinding.txtNoAssociation.setVisibility(View.GONE);
                         }
 
                         if (listEvents.size() == 0){
-                            txtEventsListFinal.setVisibility(View.GONE);
+                            fragmentProfileBinding.txtEventsListfinal.setVisibility(View.GONE);
                             // recyclerEvents.setVisibility(View.GONE);
-                            txtNoEvent.setVisibility(View.VISIBLE);
+                            fragmentProfileBinding.txtNoEvent.setVisibility(View.VISIBLE);
                         }
                         else {
-                            txtEventsListFinal.setVisibility(View.VISIBLE);
+                            fragmentProfileBinding.txtEventsListfinal.setVisibility(View.VISIBLE);
                             // recyclerEvents.setVisibility(View.VISIBLE);
-                            txtNoEvent.setVisibility(View.GONE);
+                            fragmentProfileBinding.txtNoEvent.setVisibility(View.GONE);
                         }
 
 
@@ -1401,45 +1344,45 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
                     if (allTags.get(profileIndex).getFacebook().equals("") || allTags.get(profileIndex).getFacebook().equals(null))
                     {
-                        fbUrl.setImageResource(R.drawable.ic_fb_gray);
-                        fbUrl.setEnabled(false);
+                        fragmentProfileBinding.fbUrl.setImageResource(R.drawable.ic_fb_gray);
+                        fragmentProfileBinding.fbUrl.setEnabled(false);
                     }
                     else {
-                        fbUrl.setImageResource(R.drawable.icon_fb);
-                        fbUrl.setEnabled(true);
+                        fragmentProfileBinding.fbUrl.setImageResource(R.drawable.icon_fb);
+                        fragmentProfileBinding.fbUrl.setEnabled(true);
                         strfbUrl = allTags.get(profileIndex).getFacebook().toString();
                     }
 
                     if (allTags.get(profileIndex).getGoogle().equals("") || allTags.get(profileIndex).getGoogle().equals(null))
                     {
-                        googleUrl.setImageResource(R.drawable.ic_google_gray);
-                        googleUrl.setEnabled(false);
+                        fragmentProfileBinding.googleUrl.setImageResource(R.drawable.ic_google_gray);
+                        fragmentProfileBinding.googleUrl.setEnabled(false);
                     }
                     else {
-                        googleUrl.setImageResource(R.drawable.icon_google);
-                        googleUrl.setEnabled(true);
+                        fragmentProfileBinding.googleUrl.setImageResource(R.drawable.icon_google);
+                        fragmentProfileBinding.googleUrl.setEnabled(true);
                         strgoogleUrl = allTags.get(profileIndex).getGoogle().toString();
                     }
 
                     if (allTags.get(profileIndex).getTwitter().equals("") || allTags.get(profileIndex).getTwitter().equals(null))
                     {
-                        twitterUrl.setImageResource(R.drawable.icon_twitter_gray);
-                        twitterUrl.setEnabled(false);
+                        fragmentProfileBinding.twitterUrl.setImageResource(R.drawable.icon_twitter_gray);
+                        fragmentProfileBinding.twitterUrl.setEnabled(false);
                     }
                     else {
-                        twitterUrl.setImageResource(R.drawable.icon_twitter);
-                        twitterUrl.setEnabled(true);
+                        fragmentProfileBinding.twitterUrl.setImageResource(R.drawable.icon_twitter);
+                        fragmentProfileBinding.twitterUrl.setEnabled(true);
                         strtwitterUrl = allTags.get(profileIndex).getTwitter().toString();
                     }
 
                     if (allTags.get(profileIndex).getLinkedin().equals("") || allTags.get(profileIndex).getLinkedin().equals(null))
                     {
-                        linkedInUrl.setImageResource(R.drawable.icon_linkedin_gray);
-                        linkedInUrl.setEnabled(false);
+                        fragmentProfileBinding.linkedInUrl.setImageResource(R.drawable.icon_linkedin_gray);
+                        fragmentProfileBinding.linkedInUrl.setEnabled(false);
                     }
                     else {
-                        linkedInUrl.setImageResource(R.drawable.icon_linkedin);
-                        linkedInUrl.setEnabled(true);
+                        fragmentProfileBinding.linkedInUrl.setImageResource(R.drawable.icon_linkedin);
+                        fragmentProfileBinding.linkedInUrl.setEnabled(true);
                         strlinkedInUrl = allTags.get(profileIndex).getLinkedin().toString();
                     }
 
@@ -1448,94 +1391,94 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                     if(allTags.get(profileIndex).getDesignation().equalsIgnoreCase("")
                             || allTags.get(profileIndex).getDesignation().equalsIgnoreCase("null"))
                     {
-                        fragmentEditProfileBinding.tvDesignation.setVisibility(View.GONE);
-                        llDesignationBox.setVisibility(View.GONE);
+                        fragmentProfileBinding.tvDesignation.setVisibility(View.GONE);
+                        fragmentProfileBinding.llDesignationBox.setVisibility(View.GONE);
                     }
                     else
                     {
-                        fragmentEditProfileBinding.tvDesignation.setText(allTags.get(profileIndex).getDesignation());
-                        tvDesi.setText(allTags.get(profileIndex).getDesignation());
+                        fragmentProfileBinding.tvDesignation.setText(allTags.get(profileIndex).getDesignation());
+                        fragmentProfileBinding.tvDesi.setText(allTags.get(profileIndex).getDesignation());
                     }
-//                    fragmentEditProfileBinding.tvCompany.setText(allTags.get(0).getCompanyName());
+//                    fragmentProfileBinding.tvCompany.setText(allTags.get(0).getCompanyName());
 //                    tvCompanyName.setText(allTags.get(0).getCompanyName());
                     if(allTags.get(profileIndex).getCompanyName().equalsIgnoreCase("")
                             || allTags.get(profileIndex).getCompanyName().equalsIgnoreCase("null"))
                     {
-                        fragmentEditProfileBinding.tvCompany.setVisibility(View.GONE);
-                        llCompanyBox.setVisibility(View.GONE);
+                        fragmentProfileBinding.tvCompany.setVisibility(View.GONE);
+                        fragmentProfileBinding.llCompanyBox.setVisibility(View.GONE);
                     }
                     else
                     {
-                        fragmentEditProfileBinding.tvCompany.setText(allTags.get(profileIndex).getCompanyName());
-                        tvCompanyName.setText(allTags.get(profileIndex).getCompanyName());
+                        fragmentProfileBinding.tvCompany.setText(allTags.get(profileIndex).getCompanyName());
+                        fragmentProfileBinding.tvCompanyName.setText(allTags.get(profileIndex).getCompanyName());
                     }
 //                    tvMob.setText(allTags.get(0).getPhone());
                     if(allTags.get(profileIndex).getMobile1().equalsIgnoreCase("")
                             || allTags.get(profileIndex).getMobile1().equalsIgnoreCase("null"))
                     {
-                        lnrMob.setVisibility(View.GONE);
+                        fragmentProfileBinding.lnrMob.setVisibility(View.GONE);
                     }
                     else
                     {
-                        tvMob.setText(allTags.get(profileIndex).getMobile1()+"   "+allTags.get(profileIndex).getMobile2());
+                        fragmentProfileBinding.tvMob.setText(allTags.get(profileIndex).getMobile1()+"   "+allTags.get(profileIndex).getMobile2());
                     }
 //                    tvWebsite.setText(allTags.get(0).getWebsite());
                     if(allTags.get(profileIndex).getWebsite().equalsIgnoreCase("")
                             || allTags.get(profileIndex).getWebsite().equalsIgnoreCase("null"))
                     {
-                        lnrWebsite.setVisibility(View.GONE);
+                        fragmentProfileBinding.lnrWebsite.setVisibility(View.GONE);
                     }
                     else
                     {
-                        tvWebsite.setText(allTags.get(profileIndex).getWebsite());
+                        fragmentProfileBinding.tvWebsite.setText(allTags.get(profileIndex).getWebsite());
                     }
 
                     if(allTags.get(profileIndex).getUserName().equalsIgnoreCase("")
                             || allTags.get(profileIndex).getUserName().equalsIgnoreCase("null"))
                     {
-                        llMailBox.setVisibility(View.GONE);
+                        fragmentProfileBinding.llMailBox.setVisibility(View.GONE);
                     }
                     else
                     {
-                        tvMail.setText(allTags.get(profileIndex).getUserName());
+                        fragmentProfileBinding.tvMail.setText(allTags.get(profileIndex).getUserName());
                     }
 
                     if (allTags.get(profileIndex).getEmail2().equalsIgnoreCase("")
                             || allTags.get(profileIndex).getEmail2().equalsIgnoreCase("null"))
                     {
-                        llMailBox1.setVisibility(View.GONE);
+                        fragmentProfileBinding.llMailBox1.setVisibility(View.GONE);
                     }
                     else
                     {
-                        tvMail1.setText(allTags.get(profileIndex).getEmail2());
+                        fragmentProfileBinding.tvMail1.setText(allTags.get(profileIndex).getEmail2());
                     }
 
                     if(allTags.get(profileIndex).getAssociation().equalsIgnoreCase("")
                             || allTags.get(profileIndex).getAssociation().equalsIgnoreCase("null"))
                     {
-                        llAssociationBox.setVisibility(View.GONE);
+                        fragmentProfileBinding. llAssociationBox.setVisibility(View.GONE);
                     }
                     else
                     {
-                        tvAssociation.setText(allTags.get(profileIndex).getAssociation());
+                        fragmentProfileBinding.tvAssociation.setText(allTags.get(profileIndex).getAssociation());
                     }
                     if(allTags.get(profileIndex).getPhone1().equalsIgnoreCase("")
                             || allTags.get(profileIndex).getPhone1().equalsIgnoreCase("null"))
                     {
-                        lnrWork.setVisibility(View.GONE);
+                        fragmentProfileBinding.lnrWork.setVisibility(View.GONE);
                     }
                     else
                     {
-                        tvWork.setText(allTags.get(profileIndex).getPhone1()+"   "+allTags.get(profileIndex).getPhone2());
+                        fragmentProfileBinding.tvWork.setText(allTags.get(profileIndex).getPhone1()+"   "+allTags.get(profileIndex).getPhone2());
                     }
                     if(allTags.get(profileIndex).getIndustry().equalsIgnoreCase("")
                             || allTags.get(profileIndex).getIndustry().equalsIgnoreCase("null"))
                     {
-                        llIndustryBox.setVisibility(View.GONE);
+                        fragmentProfileBinding.llIndustryBox.setVisibility(View.GONE);
                     }
                     else
                     {
-                        textIndustry.setText(allTags.get(profileIndex).getIndustry());
+                        fragmentProfileBinding.textIndustry.setText(allTags.get(profileIndex).getIndustry());
                     }
                     /*tvAddress.setText(allTags.get(0).getAddress1()+ " "+allTags.get(0).getAddress2() + " "
                             + allTags.get(0).getAddress3()  + " "
@@ -1557,22 +1500,22 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                             || personAddress.equalsIgnoreCase("null")
                             || personAddress.startsWith(" "))
                     {
-                        lnrMap.setVisibility(View.GONE);
+                        fragmentProfileBinding.lnrMap.setVisibility(View.GONE);
                     }
                     else
                     {
-                        tvAddress.setText(personAddress);
+                        fragmentProfileBinding.tvAddress.setText(personAddress);
                     }
 
                     image = new ArrayList<>();
                     if (allTags.get(profileIndex).getUserPhoto().equals(""))
                     {
-                        imgProfile.setImageResource(R.drawable.usr_white1);
+                        fragmentProfileBinding.imgProfile.setImageResource(R.drawable.usr_white1);
                     }
                     else {
                         try {
                             Picasso.with(mContext).load(Utility.BASE_IMAGE_URL + "UserProfile/" + allTags.get(profileIndex).getUserPhoto())
-                                    .resize(300,300).onlyScaleDown().skipMemoryCache().into(imgProfile);
+                                    .resize(300,300).onlyScaleDown().skipMemoryCache().into(fragmentProfileBinding.imgProfile);
                         }
                         catch (Exception e){}
                     }
@@ -1615,17 +1558,17 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                     image.add(recycle_image2);
                     myPager = new CardSwipe(mContext, image);
 
-                    mViewPager.setClipChildren(false);
-                    mViewPager.setPageMargin(mContext.getResources().getDimensionPixelOffset(R.dimen.pager_margin));
-                    mViewPager.setOffscreenPageLimit(1);
+                    fragmentProfileBinding.viewPager.setClipChildren(false);
+                    fragmentProfileBinding.viewPager.setPageMargin(mContext.getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+                    fragmentProfileBinding.viewPager.setOffscreenPageLimit(1);
                     //   mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
-                    mViewPager.setAdapter(myPager);
+                    fragmentProfileBinding.viewPager.setAdapter(myPager);
 
-                    viewPager1.setClipChildren(false);
-                    viewPager1.setPageMargin(mContext.getResources().getDimensionPixelOffset(R.dimen.pager_margin));
-                    viewPager1.setOffscreenPageLimit(1);
+                    fragmentProfileBinding.viewPager1.setClipChildren(false);
+                    fragmentProfileBinding.viewPager1.setPageMargin(mContext.getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+                    fragmentProfileBinding.viewPager1.setOffscreenPageLimit(1);
                     //   viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
-                    viewPager1.setAdapter(myPager);
+                    fragmentProfileBinding.viewPager1.setAdapter(myPager);
 
                     // for bar code generating
                     try
@@ -1764,15 +1707,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
                     if (jsonArray.length() == 0)
                     {
-                        lstTestimonial.setVisibility(View.GONE);
-                        txtMore.setVisibility(View.GONE);
-                        txtTestimonial.setVisibility(View.VISIBLE);
+                        fragmentProfileBinding.lstTestimonial.setVisibility(View.GONE);
+                        fragmentProfileBinding.txtMore.setVisibility(View.GONE);
+                        fragmentProfileBinding.txtTestimonial.setVisibility(View.VISIBLE);
                     }
                     else
                     {
-                        lstTestimonial.setVisibility(View.VISIBLE);
-                        txtMore.setVisibility(View.VISIBLE);
-                        txtTestimonial.setVisibility(View.GONE);
+                        fragmentProfileBinding.lstTestimonial.setVisibility(View.VISIBLE);
+                        fragmentProfileBinding.txtMore.setVisibility(View.VISIBLE);
+                        fragmentProfileBinding.txtTestimonial.setVisibility(View.GONE);
                     }
                     allTaggs.clear();
                     for (int i = 0; i < jsonArray.length(); i++)
@@ -1801,8 +1744,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                         }
                     }
                     customAdapter = new CustomAdapter(mContext, allTaggs);
-                    lstTestimonial.setAdapter(customAdapter);
-                    lstTestimonial.setExpanded(true);
+                    fragmentProfileBinding.lstTestimonial.setAdapter(customAdapter);
+                    fragmentProfileBinding.lstTestimonial.setExpanded(true);
                 }
                 else
                 {
@@ -2024,42 +1967,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
         super.onStop();
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
     }*/
-
-    public static void CustomProgressDialog(final String loading)
-    {
-        rlProgressDialog.setVisibility(View.VISIBLE);
-        tvProgressing.setText(loading);
-
-        Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.anticlockwise);
-        ivConnecting1.startAnimation(anim);
-        Animation anim1 = AnimationUtils.loadAnimation(mContext, R.anim.clockwise);
-        ivConnecting2.startAnimation(anim1);
-
-        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
-        for (int i = 350; i <= SPLASHTIME; i = i + 350)
-        {
-            final int j = i;
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run()
-                {
-                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
-                    {
-                        tvProgressing.setText(loading+".");
-                    }
-                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
-                    {
-                        tvProgressing.setText(loading+"..");
-                    }
-                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
-                    {
-                        tvProgressing.setText(loading+"...");
-                    }
-
-                }
-            }, i);
-        }
-    }
 
 
 }

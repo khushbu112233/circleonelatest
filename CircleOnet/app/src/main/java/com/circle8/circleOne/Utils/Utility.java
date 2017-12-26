@@ -3,20 +3,28 @@ package com.circle8.circleOne.Utils;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
-import java.io.ByteArrayOutputStream;
+import com.circle8.circleOne.R;
+
 import java.io.BufferedReader;
-
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,21 +39,23 @@ public class Utility
     public static final int MY_PERMISSIONS_REQUEST_CAMERA = 121;
     public static final int MY_PERMISSIONS_REQUEST_READ_CONTACT = 122;
     public static final int MY_PERMISSIONS_REQUEST_SMS = 124;
+
+    static ProgressDialog mProgressDialog;
 //    public static final String BASE_URL = "http://circle8.asia:8999/Onet.svc/";
-   // public static final String MERCHANT_BASE_URL = "http://circle8.asia:8082/Onet.svc/Merchant/";
-  //  public static final String REWARDS_BASE_URL = "http://circle8.asia:8082/Onet.svc/Rewards/";
+    // public static final String MERCHANT_BASE_URL = "http://circle8.asia:8082/Onet.svc/Merchant/";
+    //  public static final String REWARDS_BASE_URL = "http://circle8.asia:8082/Onet.svc/Rewards/";
 
     /**
      * Uat for 8082
      */
 //    public static final String BASE_IMAGE_URL = "http://circle8.asia:8083/";
     //khushbu last commented
-  public static final String BASE_URL = "http://circle8.asia:8999/Onet.svc/";
+    public static final String BASE_URL = "http://circle8.asia:8999/Onet.svc/";
 
     /**
      * Development for 8081
      */
-  //  public static final String BASE_IMAGE_URL = "http://circle8.asia:8083/";
+    //  public static final String BASE_IMAGE_URL = "http://circle8.asia:8083/";
 //    public static final String BASE_URL = "http://circle8.asia:8999/Onet.svc/";
 
 
@@ -53,9 +63,9 @@ public class Utility
      *Production  for 8999
      */
     public static final String BASE_IMAGE_URL = "http://circle8.asia/App_imgLib/";
-   // public static final String BASE_URL = "http://circle8.asia:8999/Onet.svc/";
+    // public static final String BASE_URL = "http://circle8.asia:8999/Onet.svc/";
 
-   // public static final String BASE_URL = "http://circle8.asia:8082/Onet.svc/";
+    // public static final String BASE_URL = "http://circle8.asia:8082/Onet.svc/";
 
     public static void freeMemory(){
         System.runFinalization();
@@ -150,6 +160,69 @@ public class Utility
         }
     }
 
+
+    public static void CustomProgressDialog(final String loading,Context context)
+    {
+        if (mProgressDialog != null && mProgressDialog.isShowing())
+            dismissProgress();
+        RelativeLayout rlProgressDialog;
+        ImageView imgConnecting1,imgConnecting2,imgConnecting3;
+        final TextView txtProgressing;
+        mProgressDialog = new ProgressDialog(context);
+        mProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        mProgressDialog.show();
+        //  mProgressDialog.setIndeterminate(true);
+        mProgressDialog.setCancelable(false);
+
+        mProgressDialog.setContentView(R.layout.progressdialog_layout);
+        rlProgressDialog = (RelativeLayout)mProgressDialog.findViewById(R.id.rlProgressDialog);
+        txtProgressing = (TextView)mProgressDialog.findViewById(R.id.txtProgressing);
+        imgConnecting1= (ImageView) mProgressDialog.findViewById(R.id.imgConnecting1);
+        imgConnecting2= (ImageView) mProgressDialog.findViewById(R.id.imgConnecting2);
+        imgConnecting3= (ImageView) mProgressDialog.findViewById(R.id.imgConnecting3);
+        txtProgressing.setText(loading);
+
+        Animation anim = AnimationUtils.loadAnimation(context, R.anim.anticlockwise);
+        imgConnecting1.startAnimation(anim);
+        Animation anim1 = AnimationUtils.loadAnimation(context,R.anim.clockwise);
+        imgConnecting2.startAnimation(anim1);
+        txtProgressing.setText(loading+"...");
+     /*   int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
+        for (int i = 350; i <= SPLASHTIME; i = i + 350)
+        {
+            final int j = i;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run()
+                {
+                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
+                    {
+                        txtProgressing.setText(loading+".");
+                    }
+                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
+                    {
+                        txtProgressing.setText(loading+"..");
+                    }
+                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
+                    {
+                        txtProgressing.setText(loading+"...");
+                    }
+
+                }
+            }, i);
+        }*/
+    }
+    public static void dismissProgress() {
+
+        if (mProgressDialog != null) {
+            try {
+                mProgressDialog.dismiss();
+                mProgressDialog = null;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
     public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
