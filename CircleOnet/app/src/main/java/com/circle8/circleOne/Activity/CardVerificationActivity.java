@@ -12,14 +12,11 @@ import android.nfc.Tag;
 import android.nfc.tech.NfcF;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.circle8.circleOne.R;
@@ -51,7 +48,9 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 public class CardVerificationActivity extends AppCompatActivity implements View.OnClickListener
 {
@@ -240,7 +239,7 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
             dialog.setCancelable(false);*/
 
             String loading = "Activating NFC card" ;
-            CustomProgressDialog(loading);
+            CustomProgressDialog(loading, CardVerificationActivity.this);
         }
 
         @Override
@@ -253,7 +252,7 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
         {
             Utility.freeMemory();
 //            dialog.dismiss();
-            mActivityCardVerificationBinding.rlProgressDialog.setVisibility(View.GONE);
+            dismissProgress();
           //  Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -329,43 +328,6 @@ public class CardVerificationActivity extends AppCompatActivity implements View.
 
         // 11. return result
         return result;
-    }
-
-
-    public  void CustomProgressDialog(final String loading)
-    {
-        Utility.freeMemory();
-        mActivityCardVerificationBinding.rlProgressDialog.setVisibility(View.VISIBLE);
-        mActivityCardVerificationBinding.txtProgressing.setText(loading);
-
-        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
-        mActivityCardVerificationBinding.imgConnecting1.startAnimation(anim);
-        Animation anim1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.clockwise);
-        mActivityCardVerificationBinding.imgConnecting2.startAnimation(anim1);
-
-        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
-        for (int i = 350; i <= SPLASHTIME; i = i + 350)
-        {
-            final int j = i;
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run()
-                {
-                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
-                    {
-                        mActivityCardVerificationBinding.txtProgressing.setText(loading+".");
-                    }
-                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
-                    {
-                        mActivityCardVerificationBinding.txtProgressing.setText(loading+"..");
-                    }
-                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
-                    {
-                        mActivityCardVerificationBinding.txtProgressing.setText(loading+"...");
-                    }
-                }
-            }, i);
-        }
     }
 
 }

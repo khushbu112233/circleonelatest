@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -15,8 +14,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -52,7 +49,9 @@ import java.util.HashMap;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.circle8.circleOne.Activity.EditProfileActivity.BitMapToString;
+import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 public class NewCardRequestActivity1 extends AppCompatActivity
 {
@@ -81,9 +80,6 @@ public class NewCardRequestActivity1 extends AppCompatActivity
     LoginSession session;
     private String profileId, userID;
     public static Bitmap cardFrontBmp, cardBackBmp;
-    private static RelativeLayout rlProgressDialog ;
-    private static TextView tvProgressing ;
-    private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
     private String final_ImgBase64Front, final_ImgBase64Back;
 
     private String laserPrintCost, normalPrintCost ;
@@ -139,12 +135,6 @@ public class NewCardRequestActivity1 extends AppCompatActivity
 
         mViewPager1 = (ViewPager) findViewById(R.id.viewPager);
         mViewPager2 = (ViewPager) findViewById(R.id.viewPager1);
-
-        rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
-        tvProgressing = (TextView)findViewById(R.id.txtProgressing);
-        ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
-        ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
-        ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
 
         /*for stripe payment screen*/
         main_contains = (CoordinatorLayout)findViewById(R.id.main_content);
@@ -939,7 +929,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
             //   allTags = new ArrayList<>();
 
             String loading = "Loading" ;
-            CustomProgressDialog(loading);
+            CustomProgressDialog(loading, NewCardRequestActivity1.this);
         }
 
         @Override
@@ -952,7 +942,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            dismissProgress();
 
             try
             {
@@ -1029,7 +1019,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
             //   allTags = new ArrayList<>();
 
             String loading = "Requesting" ;
-            CustomProgressDialog(loading);
+            CustomProgressDialog(loading, NewCardRequestActivity1.this);
         }
 
         @Override
@@ -1042,7 +1032,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            dismissProgress();
 
             try
             {
@@ -1178,7 +1168,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
             //   allTags = new ArrayList<>();
 
             String loading = "Loading" ;
-            CustomProgressDialog(loading);
+            CustomProgressDialog(loading, NewCardRequestActivity1.this);
         }
 
         @Override
@@ -1191,7 +1181,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            dismissProgress();
 
             Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
 
@@ -1265,42 +1255,5 @@ public class NewCardRequestActivity1 extends AppCompatActivity
             }
         });
     }
-
-    public void CustomProgressDialog(final String loading)
-    {
-        rlProgressDialog.setVisibility(View.VISIBLE);
-        tvProgressing.setText(loading);
-
-        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
-        ivConnecting1.startAnimation(anim);
-        Animation anim1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.clockwise);
-        ivConnecting2.startAnimation(anim1);
-
-        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
-        for (int i = 350; i <= SPLASHTIME; i = i + 350)
-        {
-            final int j = i;
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run()
-                {
-                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
-                    {
-                        tvProgressing.setText(loading+".");
-                    }
-                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
-                    {
-                        tvProgressing.setText(loading+"..");
-                    }
-                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
-                    {
-                        tvProgressing.setText(loading+"...");
-                    }
-
-                }
-            }, i);
-        }
-    }
-
 
 }

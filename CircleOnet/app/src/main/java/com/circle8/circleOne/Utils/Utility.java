@@ -16,6 +16,7 @@ import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -41,7 +42,7 @@ public class Utility
     public static final int MY_PERMISSIONS_REQUEST_READ_CONTACT = 122;
     public static final int MY_PERMISSIONS_REQUEST_SMS = 124;
 
-    static ProgressDialog mProgressDialog;
+    public static ProgressDialog mProgressDialog;
 //    public static final String BASE_URL = "http://circle8.asia:8999/Onet.svc/";
     // public static final String MERCHANT_BASE_URL = "http://circle8.asia:8082/Onet.svc/Merchant/";
     //  public static final String REWARDS_BASE_URL = "http://circle8.asia:8082/Onet.svc/Rewards/";
@@ -182,7 +183,7 @@ public class Utility
         imgConnecting2= (ImageView) mProgressDialog.findViewById(R.id.imgConnecting2);
         imgConnecting3= (ImageView) mProgressDialog.findViewById(R.id.imgConnecting3);
         txtProgressing.setText(loading);
-
+        rlProgressDialog.setVisibility(View.VISIBLE);
         Animation anim = AnimationUtils.loadAnimation(context, R.anim.anticlockwise);
         imgConnecting1.startAnimation(anim);
         Animation anim1 = AnimationUtils.loadAnimation(context,R.anim.clockwise);
@@ -215,14 +216,13 @@ public class Utility
     }
     public static void dismissProgress() {
 
-        if (mProgressDialog != null) {
+
             try {
                 mProgressDialog.dismiss();
-                mProgressDialog = null;
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+
     }
     public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager

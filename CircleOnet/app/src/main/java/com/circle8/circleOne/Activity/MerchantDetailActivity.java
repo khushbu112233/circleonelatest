@@ -12,10 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,7 +49,9 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 public class MerchantDetailActivity extends FragmentActivity implements OnMapReadyCallback
 {
@@ -80,10 +79,6 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
     LoginSession loginSession ;
     String userId = "", merchantId = "";
 
-    private RelativeLayout rlProgressDialog ;
-    private TextView tvProgressing ;
-    private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
-
     private TextView tvProductListInfo, tvLocationListInfo ;
     private String websiteURL = "";
 
@@ -110,12 +105,6 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
         tvMerchantDesc = (TextView)findViewById(R.id.tvMerchantDesc);
         tvMerchantImg = (CircleImageView)findViewById(R.id.tvMerchantImg);
         imgBack = (ImageView)findViewById(R.id.imgBack);
-
-        rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
-        tvProgressing = (TextView)findViewById(R.id.txtProgressing);
-        ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
-        ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
-        ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
 
         tvProductListInfo = (TextView)findViewById(R.id.tvProductListInfo);
         tvLocationListInfo = (TextView)findViewById(R.id.tvLocationListInfo);
@@ -347,7 +336,7 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
             dialog.setCancelable(false);*/
 
             String loading = "Get merchant detail" ;
-            CustomProgressDialog(loading);
+            CustomProgressDialog(loading, MerchantDetailActivity.this);
         }
 
         @Override
@@ -359,7 +348,7 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            dismissProgress();
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -643,42 +632,5 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
         // 11. return result
         return result;
     }
-
-
-    public  void CustomProgressDialog(final String loading)
-    {
-        rlProgressDialog.setVisibility(View.VISIBLE);
-        tvProgressing.setText(loading);
-
-        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
-        ivConnecting1.startAnimation(anim);
-        Animation anim1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.clockwise);
-        ivConnecting2.startAnimation(anim1);
-
-        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
-        for (int i = 350; i <= SPLASHTIME; i = i + 350)
-        {
-            final int j = i;
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run()
-                {
-                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
-                    {
-                        tvProgressing.setText(loading+".");
-                    }
-                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
-                    {
-                        tvProgressing.setText(loading+"..");
-                    }
-                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
-                    {
-                        tvProgressing.setText(loading+"...");
-                    }
-                }
-            }, i);
-        }
-    }
-
 
 }

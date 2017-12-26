@@ -124,6 +124,12 @@ public class List1Fragment extends Fragment
     static String customProgressBarStatus = "";
     public static String count = "";
 
+    private static RelativeLayout rlProgressDialog ;
+    private static TextView tvProgressing ;
+    private static ImageView ivConnecting1;
+    private static ImageView ivConnecting2;
+    private ImageView ivConnecting3 ;
+
     public List1Fragment() {
         // Required empty public constructor
     }
@@ -161,6 +167,12 @@ public class List1Fragment extends Fragment
         rlLoadMore1 = (RelativeLayout) view.findViewById(R.id.rlLoadMore1);
         progressBar2 = (ProgressBar) view.findViewById(R.id.more_progress2);
         rlLoadMore2 = (RelativeLayout) view.findViewById(R.id.rlLoadMore2);
+
+        rlProgressDialog = (RelativeLayout)view.findViewById(R.id.rlProgressDialog);
+        tvProgressing = (TextView)view.findViewById(R.id.txtProgressing);
+        ivConnecting1 = (ImageView)view.findViewById(R.id.imgConnecting1) ;
+        ivConnecting2 = (ImageView)view.findViewById(R.id.imgConnecting2) ;
+        ivConnecting3 = (ImageView)view.findViewById(R.id.imgConnecting3) ;
 
         session = new LoginSession(getContext());
         HashMap<String, String> user = session.getUserDetails();
@@ -692,24 +704,24 @@ public class List1Fragment extends Fragment
             if (progressStatus.equalsIgnoreCase("FIRST"))
             {
                 String loading = "Fetching cards" ;
-                CustomProgressDialog(loading,mContext);
+                CustomProgressDialog(loading);
 
                 progressStatus = "SECOND";
             }
             else if (progressStatus.equalsIgnoreCase("SECOND"))
             {
                 String loading = "Fetching cards" ;
-                CustomProgressDialog(loading,mContext);
+                CustomProgressDialog(loading);
             }
             else if (progressStatus.equalsIgnoreCase("DELETE"))
             {
                 String loading = "Refreshing cards" ;
-                CustomProgressDialog(loading,mContext);
+                CustomProgressDialog(loading);
             }
             else if (progressStatus.equalsIgnoreCase("FILTER"))
             {
                 String loading = "Fetching cards" ;
-                CustomProgressDialog(loading,mContext);
+                CustomProgressDialog(loading);
             }
             else
             {
@@ -731,7 +743,7 @@ public class List1Fragment extends Fragment
             String loading = "Fetching Cards..." ;
             CustomProgressBar(loading, status);*/
 //            dialog.dismiss();
-            dismissProgress();
+            rlProgressDialog.setVisibility(View.GONE);
             Utility.freeMemory();
             try
             {
@@ -1115,6 +1127,42 @@ public class List1Fragment extends Fragment
 //        GetData(getContext());
     }
 
+    public static void CustomProgressDialog(final String loading)
+    {
+        rlProgressDialog.setVisibility(View.VISIBLE);
+        tvProgressing.setText(loading);
+
+        Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.anticlockwise);
+        ivConnecting1.startAnimation(anim);
+        Animation anim1 = AnimationUtils.loadAnimation(mContext,R.anim.clockwise);
+        ivConnecting2.startAnimation(anim1);
+
+        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
+        for (int i = 350; i <= SPLASHTIME; i = i + 350)
+        {
+            final int j = i;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run()
+                {
+                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+
+                }
+            }, i);
+        }
+    }
+
     private class HttpAsyncTaskSearch extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
@@ -1130,7 +1178,7 @@ public class List1Fragment extends Fragment
             //   allTags = new ArrayList<>();
 
             String loading = "Searching" ;
-            CustomProgressDialog(loading,mContext);
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -1143,7 +1191,7 @@ public class List1Fragment extends Fragment
         protected void onPostExecute(String result)
         {
             // dialog.dismiss();
-         dismissProgress();
+         rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
 
             try

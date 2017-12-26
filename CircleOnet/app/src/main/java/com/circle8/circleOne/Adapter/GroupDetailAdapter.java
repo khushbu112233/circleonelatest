@@ -44,7 +44,9 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 /**
  * Created by ample-arch on 9/9/2017.
@@ -349,7 +351,7 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
             dialog.setCancelable(false);*/
 
             String loading = "Deleting circle member" ;
-            GroupDetailActivity.CustomProgressDialog(loading);
+            CustomProgressDialog(loading, context);
         }
 
         @Override
@@ -362,8 +364,8 @@ public class GroupDetailAdapter extends BaseSwipeAdapter
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            ((GroupDetailActivity)context).activityGroupDetailBinding.rlProgressDialog.setVisibility(View.GONE);
 
+            dismissProgress();
             try
             {
                 if (result != null)

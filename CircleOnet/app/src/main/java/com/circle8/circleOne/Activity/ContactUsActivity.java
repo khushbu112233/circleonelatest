@@ -7,13 +7,10 @@ import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
@@ -36,7 +33,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 public class ContactUsActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener
 {
@@ -385,7 +384,7 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
             dialog.setCancelable(false);*/
 
             String loading = "Sending" ;
-            CustomProgressDialog(loading);
+            CustomProgressDialog(loading, ContactUsActivity.this);
         }
 
         @Override
@@ -398,8 +397,7 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            activityContactUsBinding.rlProgressDialog.setVisibility(View.GONE);
-
+            dismissProgress();
             try
             {
                 if (result != null)
@@ -487,42 +485,5 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
         // 11. return result
         return result;
     }
-
-    public void CustomProgressDialog(final String loading)
-    {
-        activityContactUsBinding.rlProgressDialog.setVisibility(View.VISIBLE);
-        activityContactUsBinding.txtProgressing.setText(loading);
-
-        Animation anim = AnimationUtils.loadAnimation(ContactUsActivity.this,R.anim.anticlockwise);
-        activityContactUsBinding.imgConnecting1.startAnimation(anim);
-        Animation anim1 = AnimationUtils.loadAnimation(ContactUsActivity.this,R.anim.clockwise);
-        activityContactUsBinding.imgConnecting2.startAnimation(anim1);
-
-        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
-        for (int i = 350; i <= SPLASHTIME; i = i + 350)
-        {
-            final int j = i;
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run()
-                {
-                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
-                    {
-                        activityContactUsBinding.txtProgressing.setText(loading+".");
-                    }
-                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
-                    {
-                        activityContactUsBinding.txtProgressing.setText(loading+"..");
-                    }
-                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
-                    {
-                        activityContactUsBinding.txtProgressing.setText(loading+"...");
-                    }
-
-                }
-            }, i);
-        }
-    }
-
 
 }

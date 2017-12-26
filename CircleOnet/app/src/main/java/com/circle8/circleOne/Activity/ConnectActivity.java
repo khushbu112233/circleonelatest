@@ -24,8 +24,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -58,7 +56,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 public class ConnectActivity extends AppCompatActivity
 {
@@ -682,7 +682,7 @@ public class ConnectActivity extends AppCompatActivity
             //   allTags = new ArrayList<>();
 
             String loading = "Requesting friend" ;
-            CustomProgressDialog(loading);
+            CustomProgressDialog(loading, ConnectActivity.this);
         }
 
         @Override
@@ -696,8 +696,7 @@ public class ConnectActivity extends AppCompatActivity
         {
             Utility.freeMemory();
 //            dialog.dismiss();
-            activityConnect2Binding.rlProgressDialog.setVisibility(View.GONE);
-
+            dismissProgress();
             // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result == "") {
@@ -777,7 +776,7 @@ public class ConnectActivity extends AppCompatActivity
             //   allTags = new ArrayList<>();
 
             String loading = "Displaying records" ;
-            CustomProgressDialog(loading);
+            CustomProgressDialog(loading, ConnectActivity.this);
         }
 
         @Override
@@ -790,7 +789,7 @@ public class ConnectActivity extends AppCompatActivity
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            activityConnect2Binding.rlProgressDialog.setVisibility(View.GONE);
+            dismissProgress();
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
             Utility.freeMemory();
             try
@@ -1077,7 +1076,7 @@ public class ConnectActivity extends AppCompatActivity
             //   allTags = new ArrayList<>();
 
             String loading = "Adding friend" ;
-            CustomProgressDialog(loading);
+            CustomProgressDialog(loading, ConnectActivity.this);
         }
 
         @Override
@@ -1091,7 +1090,7 @@ public class ConnectActivity extends AppCompatActivity
         {
             Utility.freeMemory();
 //            dialog.dismiss();
-            activityConnect2Binding.rlProgressDialog.setVisibility(View.GONE);
+            dismissProgress();
 
             try
             {
@@ -1184,7 +1183,7 @@ public class ConnectActivity extends AppCompatActivity
             dialog.setCancelable(false);*/
 
             String loading = "Fetching data" ;
-            CustomProgressDialog(loading);
+            CustomProgressDialog(loading, ConnectActivity.this);
         }
 
         @Override
@@ -1198,8 +1197,8 @@ public class ConnectActivity extends AppCompatActivity
         {
             Utility.freeMemory();
 //            dialog.dismiss();
-            activityConnect2Binding.rlProgressDialog.setVisibility(View.GONE);
 
+            dismissProgress();
             try
             {
                 if (result != null)
@@ -1451,43 +1450,6 @@ public class ConnectActivity extends AppCompatActivity
 
         // 11. return result
         return result;
-    }
-
-    public  void CustomProgressDialog(final String loading)
-    {
-        Utility.freeMemory();
-        activityConnect2Binding.rlProgressDialog.setVisibility(View.VISIBLE);
-        activityConnect2Binding.txtProgressing.setText(loading);
-
-        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
-        activityConnect2Binding.imgConnecting1.startAnimation(anim);
-        Animation anim1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.clockwise);
-        activityConnect2Binding.imgConnecting2.startAnimation(anim1);
-
-        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
-        for (int i = 350; i <= SPLASHTIME; i = i + 350)
-        {
-            final int j = i;
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run()
-                {
-                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
-                    {
-                        activityConnect2Binding.txtProgressing.setText(loading+".");
-                    }
-                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
-                    {
-                        activityConnect2Binding.txtProgressing.setText(loading+"..");
-                    }
-                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
-                    {
-                        activityConnect2Binding.txtProgressing.setText(loading+"...");
-                    }
-
-                }
-            }, i);
-        }
     }
 
 }

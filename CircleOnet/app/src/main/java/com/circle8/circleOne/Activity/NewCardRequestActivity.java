@@ -4,12 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -37,7 +34,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 public class NewCardRequestActivity extends AppCompatActivity
 {
@@ -48,10 +47,6 @@ public class NewCardRequestActivity extends AppCompatActivity
     private String UserID = "";
     private LoginSession session;
     ImageView imgBack;
-
-    private RelativeLayout rlProgressDialog ;
-    private TextView tvProgressing ;
-    private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
 
     public static RelativeLayout rlLayOne, rlLayTwo ;
     public static TextView tvNext, tvCancel ;
@@ -65,11 +60,6 @@ public class NewCardRequestActivity extends AppCompatActivity
         session = new LoginSession(getApplicationContext());
         listView = (ListView)findViewById(R.id.listView);
         imgBack = (ImageView) findViewById(R.id.imgBack);
-        rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
-        tvProgressing = (TextView)findViewById(R.id.txtProgressing);
-        ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
-        ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
-        ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
 
         rlLayOne = (RelativeLayout) findViewById(R.id.rlLayOne);
         rlLayTwo = (RelativeLayout) findViewById(R.id.rlLayTwo);
@@ -245,7 +235,7 @@ public class NewCardRequestActivity extends AppCompatActivity
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
             String loading = "Fetching profiles" ;
-            CustomProgressDialog(loading);
+            CustomProgressDialog(loading, NewCardRequestActivity.this);
         }
 
         @Override
@@ -258,7 +248,7 @@ public class NewCardRequestActivity extends AppCompatActivity
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            dismissProgress();
             try
             {
 
@@ -324,42 +314,6 @@ public class NewCardRequestActivity extends AppCompatActivity
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    public void CustomProgressDialog(final String loading)
-    {
-        rlProgressDialog.setVisibility(View.VISIBLE);
-        tvProgressing.setText(loading);
-
-        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
-        ivConnecting1.startAnimation(anim);
-        Animation anim1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.clockwise);
-        ivConnecting2.startAnimation(anim1);
-
-        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
-        for (int i = 350; i <= SPLASHTIME; i = i + 350)
-        {
-            final int j = i;
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run()
-                {
-                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
-                    {
-                        tvProgressing.setText(loading+".");
-                    }
-                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
-                    {
-                        tvProgressing.setText(loading+"..");
-                    }
-                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
-                    {
-                        tvProgressing.setText(loading+"...");
-                    }
-
-                }
-            }, i);
         }
     }
 

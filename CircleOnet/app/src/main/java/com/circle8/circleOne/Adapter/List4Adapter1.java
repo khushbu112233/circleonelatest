@@ -49,7 +49,9 @@ import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 /**
  * Created by admin on 06/08/2017.
@@ -274,7 +276,7 @@ public class List4Adapter1 extends  RecyclerView.Adapter<List4Adapter1.MyViewHol
             //   allTags = new ArrayList<>();
 
             String loading = "Deleting records";
-            List4Fragment1.CustomProgressDialog(loading);
+            CustomProgressDialog(loading, context);
 
         }
 
@@ -288,7 +290,7 @@ public class List4Adapter1 extends  RecyclerView.Adapter<List4Adapter1.MyViewHol
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            List4Fragment1.rlProgressDialog.setVisibility(View.GONE);
+            dismissProgress();
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
             try
             {

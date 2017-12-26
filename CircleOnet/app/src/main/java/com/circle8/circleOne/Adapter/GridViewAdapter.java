@@ -59,7 +59,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
+import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 /**
  * Created by admin on 06/08/2017.
@@ -429,7 +431,7 @@ public class GridViewAdapter extends BaseSwipeAdapter
             dialog.setCancelable(false);*/
 
             String loading = "Deleting records";
-            List2Fragment.CustomProgressDialog(loading);
+            CustomProgressDialog(loading, context);
         }
 
         @Override
@@ -442,7 +444,7 @@ public class GridViewAdapter extends BaseSwipeAdapter
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            List2Fragment.rlProgressDialog.setVisibility(View.GONE);
+            dismissProgress();
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
             try
             {

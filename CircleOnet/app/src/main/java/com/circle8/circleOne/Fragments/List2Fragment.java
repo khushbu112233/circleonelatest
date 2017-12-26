@@ -57,9 +57,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
-import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -101,6 +99,10 @@ public class List2Fragment extends Fragment
 
     static int numberCount, gridSize;
     public static String count;
+    private static RelativeLayout rlProgressDialog ;
+    private static TextView tvProgressing ;
+    private static ImageView ivConnecting1;
+    private static ImageView ivConnecting2;
 
     public List2Fragment() {
         // Required empty public constructor
@@ -133,7 +135,10 @@ public class List2Fragment extends Fragment
         tvFriendInfo = (TextView)view.findViewById(R.id.tvFriendInfo);
         txtNoCard1 = (TextView) view.findViewById(R.id.txtNoCard1);
         rlLoadMore = (RelativeLayout) view.findViewById(R.id.rlLoadMore);
-
+        rlProgressDialog = (RelativeLayout)view.findViewById(R.id.rlProgressDialog);
+        tvProgressing = (TextView)view.findViewById(R.id.txtProgressing);
+        ivConnecting1 = (ImageView)view.findViewById(R.id.imgConnecting1) ;
+        ivConnecting2 = (ImageView)view.findViewById(R.id.imgConnecting2) ;
         nfcModel = new ArrayList<>();
         allTags = new ArrayList<>();
         allTaggs = new ArrayList<>();
@@ -320,6 +325,42 @@ public class List2Fragment extends Fragment
         return view;
     }
 
+    public static void CustomProgressDialog(final String loading)
+    {
+        rlProgressDialog.setVisibility(View.VISIBLE);
+        tvProgressing.setText(loading);
+
+        Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.anticlockwise);
+        ivConnecting1.startAnimation(anim);
+        Animation anim1 = AnimationUtils.loadAnimation(mContext,R.anim.clockwise);
+        ivConnecting2.startAnimation(anim1);
+
+        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
+        for (int i = 350; i <= SPLASHTIME; i = i + 350)
+        {
+            final int j = i;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run()
+                {
+                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+
+                }
+            }, i);
+        }
+    }
+
     @Override
     public void onPause() {
         Utility.freeMemory();
@@ -342,7 +383,7 @@ public class List2Fragment extends Fragment
             //   allTags = new ArrayList<>();
 
             String loading = "Searching" ;
-            CustomProgressDialog(loading,getActivity());
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -356,7 +397,7 @@ public class List2Fragment extends Fragment
         {
             Utility.freeMemory();
             //  dialog.dismiss();
-            dismissProgress();
+            rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -543,7 +584,7 @@ public class List2Fragment extends Fragment
             if (progressStatus.equalsIgnoreCase("FIRST"))
             {
                 String loading = "Fetching cards" ;
-                CustomProgressDialog(loading,mContext);
+                CustomProgressDialog(loading);
 
                 progressStatus = "SECOND";
             }
@@ -558,7 +599,7 @@ public class List2Fragment extends Fragment
             else if (progressStatus.equalsIgnoreCase("DELETE"))
             {
                 String loading = "Refreshing cards" ;
-                CustomProgressDialog(loading,mContext);
+                CustomProgressDialog(loading);
             }
             else
             {
@@ -580,7 +621,7 @@ public class List2Fragment extends Fragment
         {
 //            dialog.dismiss();
 
-            dismissProgress();
+            rlProgressDialog.setVisibility(View.GONE);
 
          /*   String status = "false" ;
             String loading = "Fetching Cards..." ;

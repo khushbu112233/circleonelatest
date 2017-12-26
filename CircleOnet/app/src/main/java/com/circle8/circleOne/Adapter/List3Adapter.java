@@ -49,7 +49,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
+import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 /**
  * Created by admin on 06/08/2017.
@@ -466,7 +468,7 @@ public class List3Adapter extends BaseSwipeAdapter
             //   allTags = new ArrayList<>();
 
             String loading = "Deleting records";
-            List3Fragment.CustomProgressDialog(loading);
+            CustomProgressDialog(loading, context);
         }
 
         @Override
@@ -479,7 +481,7 @@ public class List3Adapter extends BaseSwipeAdapter
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            List3Fragment.rlProgressDialog.setVisibility(View.GONE);
+            dismissProgress();
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
             try
             {

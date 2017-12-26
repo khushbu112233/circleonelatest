@@ -32,8 +32,11 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -93,7 +96,6 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
@@ -144,6 +146,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
     public static Activity mContext ;
     public static Handler mHandler;
     public static FragmentProfileBinding fragmentProfileBinding;
+
+    private static RelativeLayout rlProgressDialog ;
+    private static TextView tvProgressing ;
+    private static ImageView ivConnecting1;
+    private static ImageView ivConnecting2;
+
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -169,6 +177,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
 
         mContext = ProfileFragment.this.getActivity();
+
+        rlProgressDialog = (RelativeLayout)view.findViewById(R.id.rlProgressDialog);
+        tvProgressing = (TextView)view.findViewById(R.id.txtProgressing);
+        ivConnecting1 = (ImageView)view.findViewById(R.id.imgConnecting1) ;
+        ivConnecting2 = (ImageView)view.findViewById(R.id.imgConnecting2) ;
 
         Utility.freeMemory();
         Utility.deleteCache(getContext());
@@ -293,6 +306,43 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
         return view;
     }
+
+    public static void CustomProgressDialog(final String loading)
+    {
+        rlProgressDialog.setVisibility(View.VISIBLE);
+        tvProgressing.setText(loading);
+
+        Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.anticlockwise);
+        ivConnecting1.startAnimation(anim);
+        Animation anim1 = AnimationUtils.loadAnimation(mContext,R.anim.clockwise);
+        ivConnecting2.startAnimation(anim1);
+
+        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
+        for (int i = 350; i <= SPLASHTIME; i = i + 350)
+        {
+            final int j = i;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run()
+                {
+                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
+                    {
+                        tvProgressing.setText(loading+"...");
+                    }
+
+                }
+            }, i);
+        }
+    }
+
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -1086,7 +1136,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
             //   allTags = new ArrayList<>();
 
             String loading = "Fetching profile" ;
-            CustomProgressDialog(loading,mContext);
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -1117,7 +1167,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            dismissProgress();
+            rlProgressDialog.setVisibility(View.GONE);
             try
             {
 

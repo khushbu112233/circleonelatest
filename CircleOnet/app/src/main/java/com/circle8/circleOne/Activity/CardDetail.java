@@ -1535,7 +1535,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
 
-            String loading = "Fetching User" ;
+            String loading = "Fetching Connection Data" ;
             CustomProgressDialog(loading,activity);
         }
 

@@ -140,7 +140,9 @@ import javax.crypto.SecretKey;
 
 import io.fabric.sdk.android.Fabric;
 
+import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 import static com.circle8.circleOne.Utils.Validation.validateLogin;
 
 public class LoginActivity extends AppCompatActivity implements
@@ -217,9 +219,6 @@ public class LoginActivity extends AppCompatActivity implements
     private static final String KEY_USERNAME = "username";
     private static final String KEY_PASS = "password";
 
-    private static RelativeLayout rlProgressDialog;
-    private static TextView tvProgressing;
-    private static ImageView ivConnecting1, ivConnecting2, ivConnecting3;
     ReferralCodeSession referralCodeSession;
 
     private static final int CONTACT_PICKER_REQUEST = 991;
@@ -257,12 +256,6 @@ public class LoginActivity extends AppCompatActivity implements
         referralCodeSession = new ReferralCodeSession(getApplicationContext());
         tvUsernameInfo = (TextView) findViewById(R.id.tvUserInfo);
         tvPasswordInfo = (TextView) findViewById(R.id.tvPasswordInfo);
-
-        rlProgressDialog = (RelativeLayout) findViewById(R.id.rlProgressDialog);
-        tvProgressing = (TextView) findViewById(R.id.txtProgressing);
-        ivConnecting1 = (ImageView) findViewById(R.id.imgConnecting1);
-        ivConnecting2 = (ImageView) findViewById(R.id.imgConnecting2);
-        ivConnecting3 = (ImageView) findViewById(R.id.imgConnecting3);
 
         sharedPreferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -537,7 +530,7 @@ public class LoginActivity extends AppCompatActivity implements
                 else {
 
                     String loading = "Loading";
-                    CustomProgressDialog(loading);
+                    CustomProgressDialog(loading, LoginActivity.this);
 
                     loginButton.performClick();
 
@@ -1046,7 +1039,7 @@ public class LoginActivity extends AppCompatActivity implements
             dialog.setCancelable(false);*/
 
             String loading = "Logging in";
-            CustomProgressDialog(loading);
+            CustomProgressDialog(loading, LoginActivity.this);
         }
 
         @Override
@@ -1058,7 +1051,7 @@ public class LoginActivity extends AppCompatActivity implements
         @Override
         protected void onPostExecute(String result) {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            dismissProgress();
 
             try {
                 if (result != null) {
@@ -1710,7 +1703,7 @@ public class LoginActivity extends AppCompatActivity implements
                 progressDialog.show();*/
 
                 String loading = "Loading";
-                CustomProgressDialog(loading);
+                CustomProgressDialog(loading, LoginActivity.this);
 
                 loginButton.performClick();
 
@@ -1849,7 +1842,7 @@ public class LoginActivity extends AppCompatActivity implements
             progress.setCanceledOnTouchOutside(false);
             progress.show();*/
             String loading = "Logging in";
-            CustomProgressDialog(loading);
+            CustomProgressDialog(loading, LoginActivity.this);
             linkededinApiHelper();
         }
         callbackManager.onActivityResult(requestCode, resultCode, data);
@@ -1864,7 +1857,7 @@ public class LoginActivity extends AppCompatActivity implements
 
                     setprofile(result.getResponseDataAsJson());
 //                    progress.dismiss();
-                    rlProgressDialog.setVisibility(View.GONE);
+                    dismissProgress();
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -2007,14 +2000,14 @@ public class LoginActivity extends AppCompatActivity implements
         }
         mProgressDialog.show();*/
         String loading = "Google login";
-        CustomProgressDialog(loading);
+        CustomProgressDialog(loading, LoginActivity.this);
     }
 
     private void hideProgressDialog() {
         /*if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.hide();
         }*/
-        rlProgressDialog.setVisibility(View.GONE);
+        dismissProgress();
     }
 
     private void updateUI(boolean isSignedIn) {
@@ -2041,7 +2034,7 @@ public class LoginActivity extends AppCompatActivity implements
         public void onSuccess(LoginResult loginResult) {
 
 //            progressDialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            dismissProgress();
 
             // App code
             GraphRequest request = GraphRequest.newMeRequest(
@@ -2137,13 +2130,13 @@ public class LoginActivity extends AppCompatActivity implements
         @Override
         public void onCancel() {
 //            progressDialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+           dismissProgress();
         }
 
         @Override
         public void onError(FacebookException e) {
 //            progressDialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            dismissProgress();
         }
     };
 
@@ -2176,7 +2169,7 @@ public class LoginActivity extends AppCompatActivity implements
             dialog.show();
             dialog.setCancelable(false);*/
             String loading = "Logging in";
-            CustomProgressDialog(loading);
+            CustomProgressDialog(loading, LoginActivity.this);
         }
 
         @Override
@@ -2188,7 +2181,7 @@ public class LoginActivity extends AppCompatActivity implements
         @Override
         protected void onPostExecute(String result) {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            dismissProgress();
 
             try {
                 if (result != null) {
@@ -2635,34 +2628,6 @@ public class LoginActivity extends AppCompatActivity implements
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
-    }
-
-    public void CustomProgressDialog(final String loading) {
-        rlProgressDialog.setVisibility(View.VISIBLE);
-        tvProgressing.setText(loading);
-
-        Animation anim = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.anticlockwise);
-        ivConnecting1.startAnimation(anim);
-        Animation anim1 = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.clockwise);
-        ivConnecting2.startAnimation(anim1);
-
-        int SPLASHTIME = 1000 * 60;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
-        for (int i = 350; i <= SPLASHTIME; i = i + 350) {
-            final int j = i;
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10) {
-                        tvProgressing.setText(loading + ".");
-                    } else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8) {
-                        tvProgressing.setText(loading + "..");
-                    } else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9) {
-                        tvProgressing.setText(loading + "...");
-                    }
-
-                }
-            }, i);
-        }
     }
 
 }
