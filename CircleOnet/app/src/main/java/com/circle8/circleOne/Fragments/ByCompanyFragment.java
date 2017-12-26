@@ -51,63 +51,52 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
+import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 /**
  * Created by ample-arch on 8/28/2017.
  */
 
-public class ByCompanyFragment  extends Fragment
-{
-    public ByCompanyFragment() {    }
+public class ByCompanyFragment  extends Fragment {
+    public ByCompanyFragment() {
+    }
 
     private ListView listView;
-    private TextView tvDataInfo ;
-    private String find_by = "COMPANY" ;
-    private List5Adapter list5Adapter ;
-    private ConnectListAdapter connectListAdapter ;
-    private AutoCompleteTextView searchText ;
+    private TextView tvDataInfo;
+    private String find_by = "COMPANY";
+    private List5Adapter list5Adapter;
+    private ConnectListAdapter connectListAdapter;
+    private AutoCompleteTextView searchText;
 
     private ArrayList<ConnectList> connectTags = new ArrayList<>();
     private ArrayList<ConnectList> connectLists = new ArrayList<>();
 
     LoginSession session;
-    String profileID, userID ;
+    String profileID, userID;
     ImageView imgSearch;
-
-    private RelativeLayout rlProgressDialog ;
-    private TextView tvProgressing ;
-    private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
     Boolean netCheck = false;
-
-    static RelativeLayout rlLoadMore ;
+    static RelativeLayout rlLoadMore;
     static int numberCount, listSize;
-    public static int pageno = 1 ;
-    static String counts = "0" ;
+    public static int pageno = 1;
+    static String counts = "0";
     public static String progressStatus = "FIRST";
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_connect_list, container, false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
 
-        tvDataInfo = (TextView)view.findViewById(R.id.tvDataInfo);
-        searchText = (AutoCompleteTextView)view.findViewById(R.id.searchView);
+        tvDataInfo = (TextView) view.findViewById(R.id.tvDataInfo);
+        searchText = (AutoCompleteTextView) view.findViewById(R.id.searchView);
         listView = (ListView) view.findViewById(R.id.listViewType4);
         imgSearch = (ImageView) view.findViewById(R.id.imgSearch);
         searchText.setHint("Search by company name");
         netCheck = Utility.isNetworkAvailable(getContext());
-
-        rlProgressDialog = (RelativeLayout)view.findViewById(R.id.rlProgressDialog);
-        tvProgressing = (TextView)view.findViewById(R.id.txtProgressing);
-        ivConnecting1 = (ImageView)view.findViewById(R.id.imgConnecting1) ;
-        ivConnecting2 = (ImageView)view.findViewById(R.id.imgConnecting2) ;
-        ivConnecting3 = (ImageView)view.findViewById(R.id.imgConnecting3) ;
-
         listView.setVisibility(View.GONE);
 
-        rlLoadMore = (RelativeLayout)view.findViewById(R.id.rlLoadMore);
+        rlLoadMore = (RelativeLayout) view.findViewById(R.id.rlLoadMore);
         pageno = 1;
 
         session = new LoginSession(getContext());
@@ -122,11 +111,10 @@ public class ByCompanyFragment  extends Fragment
 
                 listView.setVisibility(View.VISIBLE);
                 connectTags.clear();
-                if (netCheck == false){
+                if (netCheck == false) {
                     Utility.freeMemory();
                     Toast.makeText(getContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
-                }
-                else {
+                } else {
                     new HttpAsyncTask().execute(Utility.BASE_URL + "SearchConnect");
                 }
             }
@@ -134,14 +122,12 @@ public class ByCompanyFragment  extends Fragment
 
         searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
-            {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 listView.setVisibility(View.VISIBLE);
-                if (netCheck == false){
+                if (netCheck == false) {
                     Utility.freeMemory();
                     Toast.makeText(getContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
-                }
-                else {
+                } else {
                     connectTags.clear();
                     new HttpAsyncTask().execute(Utility.BASE_URL + "SearchConnect");
                 }
@@ -150,19 +136,15 @@ public class ByCompanyFragment  extends Fragment
         });
 
 
-        searchText.addTextChangedListener(new TextWatcher()
-        {
+        searchText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after)
-            {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
-                if(s.length() == 0)
-                {
-                    pageno = 1 ;
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() == 0) {
+                    pageno = 1;
                     connectTags.clear();
                     connectLists.clear();
                     listView.setStackFromBottom(false);
@@ -179,8 +161,7 @@ public class ByCompanyFragment  extends Fragment
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getContext(), ConnectActivity.class);
                 intent.putExtra("friendProfileID", connectLists.get(position).getProfile_id());
                 intent.putExtra("friendUserID", connectLists.get(position).getUserID());
@@ -207,8 +188,7 @@ public class ByCompanyFragment  extends Fragment
         super.onPause();
     }
 
-    private class HttpAsyncTask extends AsyncTask<String, Void, String>
-    {
+    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
@@ -222,38 +202,30 @@ public class ByCompanyFragment  extends Fragment
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
 
-            if (progressStatus.equalsIgnoreCase("LOAD MORE"))
-            {
+            if (progressStatus.equalsIgnoreCase("LOAD MORE")) {
 
-            }
-            else
-            {
-                String loading = "Searching records" ;
-                CustomProgressDialog(loading);
+            } else {
+                String loading = "Searching records";
+                CustomProgressDialog(loading,getActivity());
             }
         }
 
         @Override
-        protected String doInBackground(String... urls)
-        {
+        protected String doInBackground(String... urls) {
             return POST(urls[0]);
         }
+
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result)
-        {
-         //   dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+        protected void onPostExecute(String result) {
+            //   dialog.dismiss();
+            dismissProgress();
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
 
-            try
-            {
-                if(result == "")
-                {
+            try {
+                if (result == "") {
                     Toast.makeText(getContext(), "Slow Internet Connection", Toast.LENGTH_LONG).show();
-                }
-                else
-                {
+                } else {
                     JSONObject response = new JSONObject(result);
                     String message = response.getString("message");
                     String success = response.getString("success");
@@ -266,29 +238,25 @@ public class ByCompanyFragment  extends Fragment
                     JSONArray connect = response.getJSONArray("connect");
 
 //                    connectTags.clear();
-                    if (counts.equals("0") || counts == null)
-                    {
-                        numberCount = 0 ;
-                    }
-                    else
-                    {
+                    if (counts.equals("0") || counts == null) {
+                        numberCount = 0;
+                    } else {
                         numberCount = Integer.parseInt(counts);
                     }
                     rlLoadMore.setVisibility(View.GONE);
 
-                    if(connect.length() == 0)
-                    {
+                    if (connect.length() == 0) {
 //                        tvDataInfo.setVisibility(View.VISIBLE);
                         connectTags.clear();
-                        try {connectListAdapter.notifyDataSetChanged();}
-                        catch (Exception e) { e.printStackTrace();}
-                    }
-                    else
-                    {
+                        try {
+                            connectListAdapter.notifyDataSetChanged();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
                         tvDataInfo.setVisibility(View.GONE);
 
-                        for(int i = 0 ; i < connect.length() ; i++ )
-                        {
+                        for (int i = 0; i < connect.length(); i++) {
                             JSONObject iCon = connect.getJSONObject(i);
                             ConnectList connectModel = new ConnectList();
                             connectModel.setUserID(iCon.getString("UserID"));
@@ -317,37 +285,32 @@ public class ByCompanyFragment  extends Fragment
                         GetData(getContext());
                         listSize = connectTags.size();
 
-                        listView.setOnScrollListener(new AbsListView.OnScrollListener()
-                        {
+                        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
                             @Override
-                            public void onScrollStateChanged(AbsListView view, int scrollState)
-                            {
+                            public void onScrollStateChanged(AbsListView view, int scrollState) {
                                 // TODO Auto-generated method stub
 
                                 progressStatus = "LOAD MORE";
 
-                                if (listSize > 7)
-                                {
+                                if (listSize > 7) {
                                     listView.setStackFromBottom(true);
                                 }
 
                                 int threshold = 1;
                                 int count = listView.getCount();
 
-                                if (scrollState == SCROLL_STATE_IDLE)
-                                {
-                                    if (listSize <= numberCount)
-                                    {
-                                        if (listView.getLastVisiblePosition() >= count - threshold)
-                                        {
-                                          //  rlLoadMore.setVisibility(View.VISIBLE);
+                                if (scrollState == SCROLL_STATE_IDLE) {
+                                    if (listSize <= numberCount) {
+                                        if (listView.getLastVisiblePosition() >= count - threshold) {
+                                            //  rlLoadMore.setVisibility(View.VISIBLE);
                                             // Execute LoadMoreDataTask AsyncTask
-                                            new HttpAsyncTask().execute(Utility.BASE_URL+"SearchConnect");
+                                            new HttpAsyncTask().execute(Utility.BASE_URL + "SearchConnect");
                                         }
+                                    } else {
                                     }
-                                    else {  }
                                 }
                             }
+
                             @Override
                             public void onScroll(AbsListView view, int firstVisibleItem,
                                                  int visibleItemCount, int totalItemCount) {
@@ -357,20 +320,16 @@ public class ByCompanyFragment  extends Fragment
 
                     }
                 }
-            }
-            catch (JSONException e)
-            {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void GetData(Context context)
-    {
+    private void GetData(Context context) {
         connectLists.clear();
 
-        for(ConnectList reTag : connectTags)
-        {
+        for (ConnectList reTag : connectTags) {
             ConnectList connectModelTag = new ConnectList();
             connectModelTag.setUserID(reTag.getUserID());
             connectModelTag.setProfile_id(reTag.getProfile_id());
@@ -387,12 +346,9 @@ public class ByCompanyFragment  extends Fragment
             connectLists.add(connectModelTag);
         }
 
-        if (connectLists.size() == 0)
-        {
+        if (connectLists.size() == 0) {
             tvDataInfo.setVisibility(View.VISIBLE);
-        }
-        else
-        {
+        } else {
             tvDataInfo.setVisibility(View.GONE);
 
             connectListAdapter = new ConnectListAdapter(getContext(), R.layout.grid_list5_layout, connectLists);
@@ -409,12 +365,10 @@ public class ByCompanyFragment  extends Fragment
         list5Adapter.notifyDataSetChanged();*/
     }
 
-    public  String POST(String url)
-    {
+    public String POST(String url) {
         InputStream inputStream = null;
         String result = "";
-        try
-        {
+        try {
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
 
@@ -424,12 +378,12 @@ public class ByCompanyFragment  extends Fragment
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("FindBy", find_by );
-            jsonObject.accumulate("Search", searchText.getText().toString() );
-            jsonObject.accumulate("SearchType", "Global" );
-            jsonObject.accumulate("UserID", userID );
-            jsonObject.accumulate("numofrecords", "10" );
-            jsonObject.accumulate("pageno", pageno );
+            jsonObject.accumulate("FindBy", find_by);
+            jsonObject.accumulate("Search", searchText.getText().toString());
+            jsonObject.accumulate("SearchType", "Global");
+            jsonObject.accumulate("UserID", userID);
+            jsonObject.accumulate("numofrecords", "10");
+            jsonObject.accumulate("pageno", pageno);
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
@@ -456,7 +410,7 @@ public class ByCompanyFragment  extends Fragment
 
 
             // 10. convert inputstream to string
-            if(inputStream != null)
+            if (inputStream != null)
                 result = convertInputStreamToString(inputStream);
             else
                 result = "Did not work!";
@@ -465,48 +419,8 @@ public class ByCompanyFragment  extends Fragment
             Log.d("InputStream", e.getLocalizedMessage());
         }
 
-        pageno ++;
+        pageno++;
         // 11. return result
         return result;
     }
-
-
-
-    public void CustomProgressDialog(final String loading)
-    {
-        rlProgressDialog.setVisibility(View.VISIBLE);
-        tvProgressing.setText(loading);
-
-        Animation anim = AnimationUtils.loadAnimation(getActivity(),R.anim.anticlockwise);
-        ivConnecting1.startAnimation(anim);
-        Animation anim1 = AnimationUtils.loadAnimation(getActivity(),R.anim.clockwise);
-        ivConnecting2.startAnimation(anim1);
-
-        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
-        for (int i = 350; i <= SPLASHTIME; i = i + 350)
-        {
-            final int j = i;
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run()
-                {
-                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
-                    {
-                        tvProgressing.setText(loading+".");
-                    }
-                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
-                    {
-                        tvProgressing.setText(loading+"..");
-                    }
-                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
-                    {
-                        tvProgressing.setText(loading+"...");
-                    }
-
-                }
-            }, i);
-        }
-    }
-
-
 }

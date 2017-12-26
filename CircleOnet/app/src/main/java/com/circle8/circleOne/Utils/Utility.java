@@ -12,6 +12,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -161,10 +162,10 @@ public class Utility
     }
 
 
+
     public static void CustomProgressDialog(final String loading,Context context)
     {
-        if (mProgressDialog != null && mProgressDialog.isShowing())
-            dismissProgress();
+
         RelativeLayout rlProgressDialog;
         ImageView imgConnecting1,imgConnecting2,imgConnecting3;
         final TextView txtProgressing;
@@ -186,8 +187,8 @@ public class Utility
         imgConnecting1.startAnimation(anim);
         Animation anim1 = AnimationUtils.loadAnimation(context,R.anim.clockwise);
         imgConnecting2.startAnimation(anim1);
-        txtProgressing.setText(loading+"...");
-     /*   int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
+        txtProgressing.setText(loading+".");
+        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
         for (int i = 350; i <= SPLASHTIME; i = i + 350)
         {
             final int j = i;
@@ -210,7 +211,7 @@ public class Utility
 
                 }
             }, i);
-        }*/
+        }
     }
     public static void dismissProgress() {
 

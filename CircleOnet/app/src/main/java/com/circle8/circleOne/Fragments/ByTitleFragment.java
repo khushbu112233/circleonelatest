@@ -51,7 +51,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
+import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 /**
  * Created by ample-arch on 8/28/2017.
@@ -67,18 +69,11 @@ public class ByTitleFragment extends Fragment
     private List5Adapter list5Adapter ;
     private ConnectListAdapter connectListAdapter ;
     private AutoCompleteTextView searchText ;
-
     private ArrayList<ConnectList> connectTags = new ArrayList<>();
     private ArrayList<ConnectList> connectLists = new ArrayList<>();
-
     LoginSession session;
     String profileID, userID ;
     ImageView imgSearch;
-
-    private RelativeLayout rlProgressDialog ;
-    private TextView tvProgressing ;
-    private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
-
     static RelativeLayout rlLoadMore ;
     static int numberCount, listSize;
     public static int pageno = 1 ;
@@ -96,13 +91,6 @@ public class ByTitleFragment extends Fragment
         listView = (ListView) view.findViewById(R.id.listViewType4);
         imgSearch = (ImageView) view.findViewById(R.id.imgSearch);
         searchText.setHint("Search by title");
-
-        rlProgressDialog = (RelativeLayout)view.findViewById(R.id.rlProgressDialog);
-        tvProgressing = (TextView)view.findViewById(R.id.txtProgressing);
-        ivConnecting1 = (ImageView)view.findViewById(R.id.imgConnecting1) ;
-        ivConnecting2 = (ImageView)view.findViewById(R.id.imgConnecting2) ;
-        ivConnecting3 = (ImageView)view.findViewById(R.id.imgConnecting3) ;
-
         rlLoadMore = (RelativeLayout)view.findViewById(R.id.rlLoadMore);
         pageno = 1;
 
@@ -216,7 +204,7 @@ public class ByTitleFragment extends Fragment
             else
             {
                 String loading = "Searching records" ;
-                CustomProgressDialog(loading);
+                CustomProgressDialog(loading,getActivity());
             }
         }
 
@@ -230,7 +218,7 @@ public class ByTitleFragment extends Fragment
         protected void onPostExecute(String result)
         {
           //  dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            dismissProgress();
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
 
             try
@@ -455,40 +443,4 @@ public class ByTitleFragment extends Fragment
         // 11. return result
         return result;
     }
-
-    public void CustomProgressDialog(final String loading)
-    {
-        rlProgressDialog.setVisibility(View.VISIBLE);
-        tvProgressing.setText(loading);
-
-        Animation anim = AnimationUtils.loadAnimation(getActivity(),R.anim.anticlockwise);
-        ivConnecting1.startAnimation(anim);
-        Animation anim1 = AnimationUtils.loadAnimation(getActivity(),R.anim.clockwise);
-        ivConnecting2.startAnimation(anim1);
-
-        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
-        for (int i = 350; i <= SPLASHTIME; i = i + 350)
-        {
-            final int j = i;
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run()
-                {
-                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
-                    {
-                        tvProgressing.setText(loading+".");
-                    }
-                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
-                    {
-                        tvProgressing.setText(loading+"..");
-                    }
-                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
-                    {
-                        tvProgressing.setText(loading+"...");
-                    }
-                }
-            }, i);
-        }
-    }
-
 }

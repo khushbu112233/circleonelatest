@@ -2258,4 +2258,6 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         }, 2000);
 
     }
+
+
 }

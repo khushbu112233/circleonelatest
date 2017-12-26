@@ -53,7 +53,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -77,11 +79,6 @@ public class EventsFragment extends Fragment
     static TextView tvEventInfo ;
 
     public static ArrayList<EventModel> eventModelArrayList = new ArrayList<>();
-
-    private static RelativeLayout rlProgressDialog ;
-    private static TextView tvProgressing ;
-    private static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
-
     public static String eventSearchBy = "", eventSearchKey = "";
     public static Bitmap bitmapImg ;
     public static String imageUrl = "";
@@ -94,11 +91,11 @@ public class EventsFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
-      //  ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+        //  ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         View view = inflater.inflate(R.layout.fragment_events, container, false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
 
-      //  CardsActivity.setActionBarTitle("Events");
+        //  CardsActivity.setActionBarTitle("Events");
 
         mContext = EventsFragment.this.getContext() ;
 
@@ -109,12 +106,6 @@ public class EventsFragment extends Fragment
         searchText = (AutoCompleteTextView)view.findViewById(R.id.searchView);
         imgSearch = (ImageView)view.findViewById(R.id.imgSearch);
         tvEventInfo = (TextView)view.findViewById(R.id.tvEventInfo);
-        rlProgressDialog = (RelativeLayout)view.findViewById(R.id.rlProgressDialog);
-        tvProgressing = (TextView)view.findViewById(R.id.txtProgressing);
-        ivConnecting1 = (ImageView)view.findViewById(R.id.imgConnecting1) ;
-        ivConnecting2 = (ImageView)view.findViewById(R.id.imgConnecting2) ;
-        ivConnecting3 = (ImageView)view.findViewById(R.id.imgConnecting3) ;
-
         lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
         line = view.findViewById(R.id.view);
         listView = (RecyclerView) view.findViewById(R.id.listEvents);
@@ -321,7 +312,7 @@ public class EventsFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
-       // CardsActivity.setActionBarTitle("Events");
+        // CardsActivity.setActionBarTitle("Events");
     }
 
     public static void callFirst()
@@ -428,7 +419,7 @@ public class EventsFragment extends Fragment
             rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
 
-           // CardsActivity.setActionBarTitle("Events");
+            // CardsActivity.setActionBarTitle("Events");
 
             try
             {
@@ -602,7 +593,7 @@ public class EventsFragment extends Fragment
             dialog.show();*/
 
             String loading = "Searching events" ;
-            CustomProgressDialog(loading);
+            CustomProgressDialog(loading,mContext);
         }
 
         @Override
@@ -615,10 +606,10 @@ public class EventsFragment extends Fragment
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            dismissProgress();
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
 
-           // CardsActivity.setActionBarTitle("Events");
+            // CardsActivity.setActionBarTitle("Events");
 
             eventModelArrayList.clear();
             try
@@ -785,43 +776,4 @@ public class EventsFragment extends Fragment
         // 11. return result
         return result;
     }
-
-    public static void CustomProgressDialog(final String loading)
-    {
-        rlProgressDialog.setVisibility(View.VISIBLE);
-        tvProgressing.setText(loading);
-
-        Animation anim = AnimationUtils.loadAnimation(mContext,R.anim.anticlockwise);
-        ivConnecting1.startAnimation(anim);
-        Animation anim1 = AnimationUtils.loadAnimation(mContext,R.anim.clockwise);
-        ivConnecting2.startAnimation(anim1);
-
-        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
-        for (int i = 350; i <= SPLASHTIME; i = i + 350)
-        {
-            final int j = i;
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run()
-                {
-                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
-                    {
-                        tvProgressing.setText(loading+".");
-                    }
-                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
-                    {
-                        tvProgressing.setText(loading+"..");
-                    }
-                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
-                    {
-                        tvProgressing.setText(loading+"...");
-                    }
-
-                }
-            }, i);
-        }
-    }
-
-
-
 }

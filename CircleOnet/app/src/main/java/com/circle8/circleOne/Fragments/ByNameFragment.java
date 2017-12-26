@@ -51,7 +51,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
+import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 /**
  * Created by ample-arch on 8/28/2017.
@@ -74,10 +76,6 @@ public class ByNameFragment extends Fragment
     LoginSession session;
     String profileID, userID ;
     ImageView imgSearch;
-
-    private RelativeLayout rlProgressDialog ;
-    private TextView tvProgressing ;
-    private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
     Boolean netCheck = false;
 
     static RelativeLayout rlLoadMore ;
@@ -99,12 +97,6 @@ public class ByNameFragment extends Fragment
         imgSearch = (ImageView) view.findViewById(R.id.imgSearch);
         searchText.setHint("Search by name");
         netCheck = Utility.isNetworkAvailable(getContext());
-        rlProgressDialog = (RelativeLayout)view.findViewById(R.id.rlProgressDialog);
-        tvProgressing = (TextView)view.findViewById(R.id.txtProgressing);
-        ivConnecting1 = (ImageView)view.findViewById(R.id.imgConnecting1) ;
-        ivConnecting2 = (ImageView)view.findViewById(R.id.imgConnecting2) ;
-        ivConnecting3 = (ImageView)view.findViewById(R.id.imgConnecting3) ;
-
         rlLoadMore = (RelativeLayout)view.findViewById(R.id.rlLoadMore);
         pageno = 1;
 
@@ -181,17 +173,17 @@ public class ByNameFragment extends Fragment
             }
         });
 
-       listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-           @Override
-           public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-           {
-               Intent intent = new Intent(getContext(), ConnectActivity.class);
-               intent.putExtra("friendProfileID", connectLists.get(position).getProfile_id());
-               intent.putExtra("friendUserID", connectLists.get(position).getUserID());
-               intent.putExtra("ProfileID", profileID);
-               getContext().startActivity(intent);
-           }
-       });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                Intent intent = new Intent(getContext(), ConnectActivity.class);
+                intent.putExtra("friendProfileID", connectLists.get(position).getProfile_id());
+                intent.putExtra("friendUserID", connectLists.get(position).getUserID());
+                intent.putExtra("ProfileID", profileID);
+                getContext().startActivity(intent);
+            }
+        });
 
         return view;
     }
@@ -231,7 +223,7 @@ public class ByNameFragment extends Fragment
             else
             {
                 String loading = "Searching records" ;
-                CustomProgressDialog(loading);
+                CustomProgressDialog(loading,getActivity());
             }
         }
 
@@ -244,8 +236,8 @@ public class ByNameFragment extends Fragment
         @Override
         protected void onPostExecute(String result)
         {
-           // dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            // dialog.dismiss();
+            dismissProgress();
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
 
             try
@@ -352,7 +344,7 @@ public class ByNameFragment extends Fragment
                                     {
                                         if (listView.getLastVisiblePosition() >= count - threshold)
                                         {
-                                          //  rlLoadMore.setVisibility(View.VISIBLE);
+                                            //  rlLoadMore.setVisibility(View.VISIBLE);
                                             // Execute LoadMoreDataTask AsyncTask
                                             new HttpAsyncTask().execute(Utility.BASE_URL+"SearchConnect");
                                         }
@@ -480,43 +472,4 @@ public class ByNameFragment extends Fragment
         // 11. return result
         return result;
     }
-
-
-
-    public void CustomProgressDialog(final String loading)
-    {
-        rlProgressDialog.setVisibility(View.VISIBLE);
-        tvProgressing.setText(loading);
-
-        Animation anim = AnimationUtils.loadAnimation(getActivity(),R.anim.anticlockwise);
-        ivConnecting1.startAnimation(anim);
-        Animation anim1 = AnimationUtils.loadAnimation(getActivity(),R.anim.clockwise);
-        ivConnecting2.startAnimation(anim1);
-
-        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
-        for (int i = 350; i <= SPLASHTIME; i = i + 350)
-        {
-            final int j = i;
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run()
-                {
-                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
-                    {
-                        tvProgressing.setText(loading+".");
-                    }
-                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
-                    {
-                        tvProgressing.setText(loading+"..");
-                    }
-                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
-                    {
-                        tvProgressing.setText(loading+"...");
-                    }
-
-                }
-            }, i);
-        }
-    }
-
 }

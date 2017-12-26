@@ -52,7 +52,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 
 public class List4Fragment extends Fragment
@@ -90,10 +92,6 @@ public class List4Fragment extends Fragment
     public static String progressStatus = "FIRST";
 
     static int numberCount, listSize;
-
-    public static RelativeLayout rlProgressDialog ;
-    public static TextView tvProgressing ;
-    public static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
     public static String count;
 
     public List4Fragment() {
@@ -141,11 +139,6 @@ public class List4Fragment extends Fragment
 
         listView = (ListView) view.findViewById(R.id.listViewType4);
         rlLoadMore = (RelativeLayout) view.findViewById(R.id.rlLoadMore);
-        rlProgressDialog = (RelativeLayout)view.findViewById(R.id.rlProgressDialog);
-        tvProgressing = (TextView)view.findViewById(R.id.txtProgressing);
-        ivConnecting1 = (ImageView)view.findViewById(R.id.imgConnecting1) ;
-        ivConnecting2 = (ImageView)view.findViewById(R.id.imgConnecting2) ;
-        ivConnecting3 = (ImageView)view.findViewById(R.id.imgConnecting3) ;
 
         //considering from Database
 //        allTags = db.getActiveNFC();
@@ -263,21 +256,21 @@ public class List4Fragment extends Fragment
                 Utility.deleteCache(getContext());
 
                 try
-               {
-                   if (s.length() <= 0)
-                   {
-                       pageno = 1;
-                       nfcModel1.clear();
-                       allTaggs.clear();
-                       try
-                       {
-                           gridAdapter.notifyDataSetChanged();
-                       } catch (Exception e) {
-                       }
-                       callFirst();
-                       tvFriendInfo.setVisibility(View.GONE);
+                {
+                    if (s.length() <= 0)
+                    {
+                        pageno = 1;
+                        nfcModel1.clear();
+                        allTaggs.clear();
+                        try
+                        {
+                            gridAdapter.notifyDataSetChanged();
+                        } catch (Exception e) {
+                        }
+                        callFirst();
+                        tvFriendInfo.setVisibility(View.GONE);
 //                    GetData(getContext());
-                   }
+                    }
                   /* else if (s.length() > 0)
                    {
                        String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
@@ -294,11 +287,11 @@ public class List4Fragment extends Fragment
                        }
                        new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
                    }*/
-               }
-               catch (Exception e)
-               {
-                   e.printStackTrace();
-               }
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -470,7 +463,7 @@ public class List4Fragment extends Fragment
             //   allTags = new ArrayList<>();
 
             String loading = "Searching" ;
-            CustomProgressDialog(loading);
+            CustomProgressDialog(loading,mContext);
         }
 
         @Override
@@ -483,7 +476,7 @@ public class List4Fragment extends Fragment
         protected void onPostExecute(String result)
         {
             //   dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            dismissProgress();
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
             Utility.freeMemory();
             try
@@ -523,7 +516,7 @@ public class List4Fragment extends Fragment
                     }
                     else
                     {
-                          tvFriendInfo.setVisibility(View.GONE);
+                        tvFriendInfo.setVisibility(View.GONE);
 
                         for (int i = 0; i <= connect.length(); i++)
                         {
@@ -637,7 +630,7 @@ public class List4Fragment extends Fragment
             else if (progressStatus.equalsIgnoreCase("DELETE"))
             {
                 String loading = "Refreshing cards" ;
-                CustomProgressDialog(loading);
+                CustomProgressDialog(loading,mContext);
             }
             else
             {
@@ -658,7 +651,7 @@ public class List4Fragment extends Fragment
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            dismissProgress();
             Utility.freeMemory();
             try
             {
@@ -731,7 +724,7 @@ public class List4Fragment extends Fragment
                                 {
                                     if (listView.getLastVisiblePosition() >= count - threshold)
                                     {
-                                      //  rlLoadMore.setVisibility(View.VISIBLE);
+                                        //  rlLoadMore.setVisibility(View.VISIBLE);
                                         // Execute LoadMoreDataTask AsyncTask
                                         new HttpAsyncTask().execute(Utility.BASE_URL+SortAndFilterOption.CardListApi);
                                     }
@@ -1082,43 +1075,6 @@ public class List4Fragment extends Fragment
             }
         }
 
-       // CardsActivity.setActionBarTitle("Cards - " + nfcModel1.size() + "/"+ CardsActivity.Connection_Limit);
+        // CardsActivity.setActionBarTitle("Cards - " + nfcModel1.size() + "/"+ CardsActivity.Connection_Limit);
     }
-
-    public static void CustomProgressDialog(final String loading)
-    {
-        rlProgressDialog.setVisibility(View.VISIBLE);
-        tvProgressing.setText(loading);
-
-        Animation anim = AnimationUtils.loadAnimation(mContext,R.anim.anticlockwise);
-        ivConnecting1.startAnimation(anim);
-        Animation anim1 = AnimationUtils.loadAnimation(mContext,R.anim.clockwise);
-        ivConnecting2.startAnimation(anim1);
-
-        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
-        for (int i = 350; i <= SPLASHTIME; i = i + 350)
-        {
-            final int j = i;
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run()
-                {
-                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
-                    {
-                        tvProgressing.setText(loading+".");
-                    }
-                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
-                    {
-                        tvProgressing.setText(loading+"..");
-                    }
-                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
-                    {
-                        tvProgressing.setText(loading+"...");
-                    }
-
-                }
-            }, i);
-        }
-    }
-
 }

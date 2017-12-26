@@ -230,16 +230,11 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         } else {
 
             googlePlayServicesHelper = new GooglePlayServicesHelper();
-
             pushBroadcastReceiver = new PushBroadcastReceiver();
-
             allDialogsMessagesListener = new AllDialogsMessageListener();
             systemMessagesListener = new SystemMessagesListener();
-
             dialogsManager = new DialogsManager();
-
             currentUser = ChatHelper.getCurrentUser();
-
             incomingMessagesManager = QBChatService.getInstance().getIncomingMessagesManager();
             systemMessagesManager = QBChatService.getInstance().getSystemMessagesManager();
 
@@ -272,38 +267,73 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        mBinding.imgProfileShare.setOnClickListener(new View.OnClickListener() {
+        registerQbChatListeners();
+        mBinding.viewPager1.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            private int mScrollState = ViewPager.SCROLL_STATE_IDLE;
+
             @Override
-            public void onClick(View v) {
-                Intent intent1 = new Intent(getApplicationContext(), SearchGroupMembers.class);
-                intent1.putExtra("from", "cardDetail");
-                intent1.putExtra("ProfileId", profile_id);
-                startActivity(intent1);
+            public void onPageScrolled(final int position, final float positionOffset, final int positionOffsetPixels) {
+                if (mScrollState == ViewPager.SCROLL_STATE_IDLE) {
+                    return;
+                }
+                mBinding.viewPager.scrollTo(mBinding.viewPager1.getScrollX(), mBinding.viewPager1.getScrollY());
+            }
+
+            @Override
+            public void onPageSelected(final int position) {
+                // mViewPager.setCurrentItem(position, true);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(final int state) {
+                mScrollState = state;
+                if (state == ViewPager.SCROLL_STATE_IDLE) {
+                    mBinding.viewPager.setCurrentItem(mBinding.viewPager1.getCurrentItem(), false);
+                }
             }
         });
+        mBinding.imgBack.setOnClickListener(this);
+        mBinding.imgCards.setOnClickListener(this);
+        mBinding.imgConnect.setOnClickListener(this);
+        mBinding.imgEvents.setOnClickListener(this);
+        mBinding.imgProfile.setOnClickListener(this);
+        mBinding.tvSendMessage.setOnClickListener(this);
+        mBinding.ivMap.setOnClickListener(this);
+        mBinding.imgProfileShare.setOnClickListener(this);
+        mBinding.txtMore.setOnClickListener(this);
+        mBinding.txtAttachment.setOnClickListener(this);
+        mBinding.imgProfileCard.setOnClickListener(this);
+        mBinding.imgAddGroupFriend.setOnClickListener(this);
+        mBinding.fbUrl.setOnClickListener(this);
+        mBinding.googleUrl.setOnClickListener(this);
+        mBinding.youtubeUrl.setOnClickListener(this);
+        mBinding.twitterUrl.setOnClickListener(this);
+        mBinding.linkedInUrl.setOnClickListener(this);
+        mBinding.imgMail.setOnClickListener(this);
+        mBinding.imgSMS.setOnClickListener(this);
+        mBinding.imgCall.setOnClickListener(this);
 
-        mBinding.txtMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        int id = v.getId();
+
+        switch (id) {
+            case R.id.txtMore:
                 Intent intent = new Intent(getApplicationContext(), TestimonialCardDetail.class);
                 intent.putExtra("ProfileId", profile_id);
                 startActivity(intent);
-            }
-        });
-
-        mBinding.txtAttachment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
-                intent.putExtra("url", Utility.BASE_IMAGE_URL + "Other_doc/" + mBinding.txtAttachment.getText().toString());
-                startActivity(intent);
-            }
-        });
-
-        mBinding.imgProfileCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.txtAttachment:
+                Intent intent1 = new Intent(getApplicationContext(), AttachmentDisplay.class);
+                intent1.putExtra("url", Utility.BASE_IMAGE_URL + "Other_doc/" + mBinding.txtAttachment.getText().toString());
+                startActivity(intent1);
+                break;
+            case R.id.imgProfileCard:
                 final Dialog dialog = new Dialog(CardDetail.this);
                 dialog.setContentView(R.layout.imageview_popup);
 
@@ -332,12 +362,8 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                 wmlp.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
                 wmlp.y = 300;*/   //y position
                 dialog.show();
-            }
-        });
-
-        mBinding.imgAddGroupFriend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.imgAddGroupFriend:
                 final CharSequence[] dialogList = list.toArray(new CharSequence[list.size()]);
                 final AlertDialog.Builder builderDialog = new AlertDialog.Builder(CardDetail.this);
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -384,80 +410,54 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                 });
                 alertDialog.setView(dialogView);
                 alertDialog.show();
-            }
-        });
-
-        mBinding.fbUrl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.fbUrl:
                 if (strfbUrl != null) {
                     if (!strfbUrl.startsWith("http://") && !strfbUrl.startsWith("https://"))
                         strfbUrl = "http://" + strfbUrl;
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(strfbUrl));
                     startActivity(browserIntent);
                 }
-            }
-        });
-
-        mBinding.googleUrl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.imgProfileShare:
+                Intent intent_share = new Intent(getApplicationContext(), SearchGroupMembers.class);
+                intent_share.putExtra("from", "cardDetail");
+                intent_share.putExtra("ProfileId", profile_id);
+                startActivity(intent_share);
+                break;
+            case R.id.googleUrl:
                 if (strgoogleUrl != null) {
                     if (!strgoogleUrl.startsWith("http://") && !strgoogleUrl.startsWith("https://"))
                         strgoogleUrl = "http://" + strgoogleUrl;
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(strgoogleUrl));
                     startActivity(browserIntent);
                 }
-            }
-        });
-
-        mBinding.youtubeUrl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.youtubeUrl:
                 if (stryoutubeUrl != null) {
                     if (!stryoutubeUrl.startsWith("http://") && !stryoutubeUrl.startsWith("https://"))
                         stryoutubeUrl = "http://" + stryoutubeUrl;
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(stryoutubeUrl));
                     startActivity(browserIntent);
                 }
-            }
-        });
-
-        mBinding.twitterUrl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.twitterUrl:
                 if (strtwitterUrl != null) {
                     if (!strtwitterUrl.startsWith("http://") && !strtwitterUrl.startsWith("https://"))
                         strtwitterUrl = "http://" + strtwitterUrl;
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(strtwitterUrl));
                     startActivity(browserIntent);
                 }
-            }
-        });
-
-        mBinding.linkedInUrl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.linkedInUrl:
                 if (strlinkedInUrl != null) {
                     if (!strlinkedInUrl.startsWith("http://") && !strlinkedInUrl.startsWith("https://"))
                         strlinkedInUrl = "http://" + strlinkedInUrl;
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(strlinkedInUrl));
                     startActivity(browserIntent);
                 }
-            }
-        });
-
-
-        mBinding.llWebsiteBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        mBinding.imgMail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.imgMail:
                 if (mBinding.txtEmail.getText().toString().equals("")) {
 
                 } else {
@@ -488,13 +488,8 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                             .setIcon(android.R.drawable.ic_dialog_email)
                             .show();
                 }
-            }
-        });
-
-        mBinding.imgSMS.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
+                break;
+            case R.id.imgSMS:
                 boolean result = Utility.checkSMSPermission(CardDetail.this);
                 if (result) {
                     if (mBinding.txtMob.getText().toString().equals("")) {
@@ -511,13 +506,8 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                         startActivity(smsIntent);*/
                     }
                 }
-            }
-        });
-
-        mBinding.imgCall.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
+                break;
+            case R.id.imgCall:
                 if (!mBinding.txtMob.getText().toString().equals("")) {
                     AlertDialog.Builder builder;
                     builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
@@ -585,141 +575,11 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                             .setIcon(android.R.drawable.ic_menu_call)
                             .show();
                 }
-            }
-        });
-
-        mBinding.llEmailBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        mBinding.llMobileBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        mBinding.llTeleBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        mBinding.llFaxBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        registerQbChatListeners();
-//        Toast.makeText(getApplicationContext(),"Profile_id: "+profile_id,Toast.LENGTH_SHORT).show();
-//        final List<NFCModel> modelList = db.getNFCbyTag(tag_id);
-
-       /* try
-        {
-            if (modelList != null)
-            {
-                for (NFCModel tag1 : modelList)
-                {
-                    // Toast.makeText(getApplicationContext(), tag1.getName(), Toast.LENGTH_LONG).show();
-
-                    //Bitmap bmp = BitmapFactory.decodeByteArray(tag1.getCard_front(), 0, tag1.getCard_front().length);
-                    imgCard.setImageResource(tag1.getCard_front());
-
-                  //  Bitmap bmp1 = BitmapFactory.decodeByteArray(tag1.getUser_image(), 0, tag1.getUser_image().length);
-                    imgProfileCard.setImageResource(tag1.getUser_image());
-                    txtName.setText(tag1.getName());
-                    txtCompany.setText(tag1.getCompany());
-                    txtWebsite.setText(tag1.getWebsite());
-                    txtEmail.setText(tag1.getEmail());
-                    txtPH.setText(tag1.getPh_no());
-                    txtWork.setText(tag1.getWork_no());
-                    txtMob.setText(tag1.getMob_no());
-                    txtAddress.setText(tag1.getAddress());
-                    txtRemark.setText(tag1.getAddress());
-                    txtDesi.setText(tag1.getDesignation());
-                    image.add(tag1.getCard_front());
-                    image.add(tag1.getCard_back());
-
-                    myPager = new CardSwipe(getApplicationContext(), image);
-
-                    mViewPager.setClipChildren(false);
-                    mViewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
-                    mViewPager.setOffscreenPageLimit(3);
-                    //mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
-
-                    mViewPager.setAdapter(myPager);
-
-                    viewPager1.setClipChildren(false);
-                    viewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
-                    viewPager1.setOffscreenPageLimit(3);
-                   // viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
-
-
-                    viewPager1.setAdapter(myPager);
-
-                }
-            }
-
-        }catch (Exception e){
-
-        }*/
-
-
-      /*  new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                scroll.scrollTo(0, mViewPager.getBottom());
-            }
-        });*/
-
-        mBinding.imgBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               /* Intent go = new Intent(getApplicationContext(), CardsActivity.class);
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 0);
-                startActivity(go);*/
+                break;
+            case R.id.imgBack:
                 finish();
-            }
-        });
-
-        mBinding.viewPager1.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-            private int mScrollState = ViewPager.SCROLL_STATE_IDLE;
-
-            @Override
-            public void onPageScrolled(final int position, final float positionOffset, final int positionOffsetPixels) {
-                if (mScrollState == ViewPager.SCROLL_STATE_IDLE) {
-                    return;
-                }
-                mBinding.viewPager.scrollTo(mBinding.viewPager1.getScrollX(), mBinding.viewPager1.getScrollY());
-            }
-
-            @Override
-            public void onPageSelected(final int position) {
-                // mViewPager.setCurrentItem(position, true);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(final int state) {
-                mScrollState = state;
-                if (state == ViewPager.SCROLL_STATE_IDLE) {
-                    mBinding.viewPager.setCurrentItem(mBinding.viewPager1.getCurrentItem(), false);
-                }
-            }
-        });
-
-        mBinding.imgCards.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.imgCards:
                 Intent go = new Intent(getApplicationContext(), CardsActivity.class);
 
                 // you pass the position you want the viewpager to show in the extra,
@@ -729,56 +589,40 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 
                 startActivity(go);
                 finish();
-            }
-        });
-
-        mBinding.imgConnect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent go = new Intent(getApplicationContext(), CardsActivity.class);
+                break;
+            case R.id.imgConnect:
+                Intent go1 = new Intent(getApplicationContext(), CardsActivity.class);
                 // you pass the position you want the viewpager to show in the extra,
                 // please don't forget to define and initialize the position variable
                 // properly
-                go.putExtra("viewpager_position", 1);
+                go1.putExtra("viewpager_position", 1);
 
-                startActivity(go);
+                startActivity(go1);
                 finish();
-            }
-        });
-
-        mBinding.imgEvents.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent go = new Intent(getApplicationContext(), CardsActivity.class);
+                break;
+            case  R.id.imgEvents:
+                Intent go2 = new Intent(getApplicationContext(), CardsActivity.class);
 
                 // you pass the position you want the viewpager to show in the extra,
                 // please don't forget to define and initialize the position variable
                 // properly
-                go.putExtra("viewpager_position", 2);
+                go2.putExtra("viewpager_position", 2);
 
-                startActivity(go);
+                startActivity(go2);
                 finish();
-            }
-        });
-
-        mBinding.imgProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent go = new Intent(getApplicationContext(), CardsActivity.class);
+                break;
+            case R.id.imgProfile:
+                Intent go3 = new Intent(getApplicationContext(), CardsActivity.class);
 
                 // you pass the position you want the viewpager to show in the extra,
                 // please don't forget to define and initialize the position variable
                 // properly
-                go.putExtra("viewpager_position", 3);
+                go3.putExtra("viewpager_position", 3);
 
-                startActivity(go);
+                startActivity(go3);
                 finish();
-            }
-        });
-
-        mBinding.tvSendMessage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                break;
+            case R.id.tvSendMessage:
                 registerQbChatListeners();
 
                 QBChatService.setDebugEnabled(true); // enable chat logging
@@ -899,12 +743,8 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                             }
                         }
                 );*/
-            }
-        });
-
-        mBinding.ivMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.ivMap:
 
                 AlertDialog.Builder builder;
                 builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
@@ -927,10 +767,9 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                         })
                         .setIcon(android.R.drawable.ic_dialog_map)
                         .show();
-            }
-        });
+                break;
+        }
     }
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         googleMaps = googleMap;
@@ -1091,14 +930,6 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 
     }
 
-    @Override
-    public void onClick(View v)
-    {
-        if ( v == mBinding.llWebsiteBox)
-        {
-
-        }
-    }
 
     public void openWebPage(View v)
     {

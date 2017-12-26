@@ -254,6 +254,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
         fragmentProfileBinding.txtMore.setOnClickListener(this);
         fragmentProfileBinding.imgAdd.setOnClickListener(this);
         fragmentProfileBinding.imgBack.setOnClickListener(this);
+        fragmentProfileBinding.imgProfileShare.setOnClickListener(this);
+        fragmentProfileBinding.imgProfileMenu.setOnClickListener(this);
+        fragmentProfileBinding.imgQR.setOnClickListener(this);
+        fragmentProfileBinding.ivEditProfile.setOnClickListener(this);
         fragmentProfileBinding.viewPager1.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             private int mScrollState = ViewPager.SCROLL_STATE_IDLE;
@@ -286,10 +290,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
             }
         });
 
-        fragmentProfileBinding.imgProfileShare.setOnClickListener(this);
-        fragmentProfileBinding.imgProfileMenu.setOnClickListener(this);
-        fragmentProfileBinding.imgQR.setOnClickListener(this);
-        fragmentProfileBinding.ivEditProfile.setOnClickListener(this);
 
         return view;
     }
