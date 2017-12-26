@@ -20,8 +20,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.Activity.ImageZoom;
-import com.circle8.circleOne.Interfaces.ItemClickProfile;
-import com.circle8.circleOne.Interfaces.ItemLongClickProfile;
+import com.circle8.circleOne.Interface.ItemClickProfile;
+import com.circle8.circleOne.Interface.ItemLongClickProfile;
 import com.circle8.circleOne.Model.ProfileModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
@@ -30,6 +30,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
 
 /**
  * Created by ample-arch on 9/8/2017.
