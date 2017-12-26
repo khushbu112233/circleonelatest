@@ -79,16 +79,16 @@
             android:text="@string/no_friend_connection"/>
 
         <GridView
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:padding="8dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:padding="4dp"
             tools:listitem="@layout/grid_list2_layout"
             android:id="@+id/gridView"
-            android:horizontalSpacing="8dp"
+            android:horizontalSpacing="5dp"
             android:verticalSpacing="8dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:columnWidth="200dp"
+            android:columnWidth="190dp"
             android:gravity="center"
             android:numColumns="2"
             android:layout_below="@+id/view"
