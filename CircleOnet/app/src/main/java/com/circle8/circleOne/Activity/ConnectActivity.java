@@ -211,9 +211,9 @@ public class ConnectActivity extends AppCompatActivity
             new HttpAsyncTask().execute(Utility.BASE_URL+"ConnectProfile");
         }
 
-        new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/Fetch");
+       /* new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/Fetch");
         new HttpAsyncTaskGroupsFetch().execute(Utility.BASE_URL+"Group/MyGroupsTaggedWithFriendProfile");
-
+*/
 
 //        Toast.makeText(getApplicationContext(),"ProfileID & FriendID "+profile_id+" "+friendProfile_id,Toast.LENGTH_LONG).show();
 

@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -39,11 +40,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.circle8.circleOne.Activity.AttachmentDisplay;
 import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.Activity.EditProfileActivity;
@@ -53,7 +49,6 @@ import com.circle8.circleOne.Activity.TestimonialActivity;
 import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.Adapter.CustomAdapter;
 import com.circle8.circleOne.Adapter.TextRecyclerAdapter;
-import com.circle8.circleOne.ApplicationUtils.MyApplication;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Helper.ProfileSession;
 import com.circle8.circleOne.Helper.ReferralCodeSession;
@@ -93,7 +88,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -119,7 +113,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
     private static LoginSession session;
     public static String UserID = "";
     static String associationString = "", eventString = "";
-    public static ArrayList<ProfileModel> allTags =new ArrayList<>() ;
+    public static ArrayList<ProfileModel> allTags ;
     static JSONArray array, arrayEvents;
     static List<String> listAssociation, listEvents;
     static String profileId = "";
@@ -182,7 +176,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
         view = fragmentProfileBinding.getRoot();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
 
-        mContext =getActivity();
+        mContext = ProfileFragment.this.getActivity();
 
         rlProgressDialog = (RelativeLayout)view.findViewById(R.id.rlProgressDialog);
         tvProgressing = (TextView)view.findViewById(R.id.txtProgressing);
@@ -199,11 +193,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
         progressDialog = new ProgressDialog(getActivity());
         referralCodeSession = new ReferralCodeSession(getContext());
 
+//        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetUserProfile");
 //        new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
 
         /* Call api for my profile */
 
-        //callMyProfile();
+        callMyProfile();
        /* runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -310,621 +305,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
 
         return view;
-    }
-    public static void makeJsonObjectRequestForTest() {
-        String loading = "Fetching profile" ;
-        CustomProgressDialog(loading);
-        JSONObject jsonObject = new JSONObject();
-        try {
-
-            jsonObject.accumulate("ProfileId", TestimonialProfileId );
-            jsonObject.accumulate("numofrecords", "10" );
-            jsonObject.accumulate("pageno", "1" );
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                Utility.BASE_URL+"Testimonial/Fetch", jsonObject, new Response.Listener<JSONObject>() {
-
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.e("test1", response.toString());
-                JSONArray jsonArray = null;
-                try {
-                    jsonArray = response.getJSONArray("Testimonials");
-                    //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
-
-                    if (jsonArray.length() == 0)
-                    {
-                        fragmentProfileBinding.lstTestimonial.setVisibility(View.GONE);
-                        fragmentProfileBinding.txtMore.setVisibility(View.GONE);
-                        fragmentProfileBinding.txtTestimonial.setVisibility(View.VISIBLE);
-                    }
-                    else
-                    {
-                        fragmentProfileBinding.lstTestimonial.setVisibility(View.VISIBLE);
-                        fragmentProfileBinding.txtMore.setVisibility(View.VISIBLE);
-                        fragmentProfileBinding.txtTestimonial.setVisibility(View.GONE);
-                    }
-                    allTaggs.clear();
-                    for (int i = 0; i < jsonArray.length(); i++)
-                    {
-
-                        if (i < 3)
-                        {
-                            JSONObject object = null;
-                            try {
-                                object = jsonArray.getJSONObject(i);
-                                //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
-
-                                TestimonialModel nfcModelTag = new TestimonialModel();
-                                nfcModelTag.setCompanyName(object.getString("CompanyName"));
-                                nfcModelTag.setDesignation(object.getString("Designation"));
-                                nfcModelTag.setFirstName(object.getString("FirstName"));
-                                nfcModelTag.setFriendProfileID(object.getString("FriendProfileID"));
-                                nfcModelTag.setLastName(object.getString("LastName"));
-                                nfcModelTag.setPurpose(object.getString("Purpose"));
-                                nfcModelTag.setStatus(object.getString("Status"));
-                                nfcModelTag.setTestimonial_Text(object.getString("Testimonial_Text"));
-                                nfcModelTag.setUserPhoto(object.getString("UserPhoto"));
-                                nfcModelTag.setTestimonial_ID(object.getString("Testimonial_ID"));
-                                title_array.add(object.getString("Testimonial_Text").toString());
-                                notice_array.add(String.valueOf(i));
-//                        Toast.makeText(getContext(), object.getString("Testimonial_Text"), Toast.LENGTH_LONG).show();
-                                allTaggs.add(nfcModelTag);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-                    }
-                    customAdapter = new CustomAdapter(mContext, allTaggs);
-                    fragmentProfileBinding.lstTestimonial.setAdapter(customAdapter);
-                    fragmentProfileBinding.lstTestimonial.setExpanded(true);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                rlProgressDialog.setVisibility(View.GONE);
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("te", "Error: " + error.getMessage());
-                Toast.makeText(mContext,
-                        error.getMessage(), Toast.LENGTH_SHORT).show();
-                // hide the progress dialog
-                dismissProgress();
-            }
-        }){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String>  params = new HashMap<String, String>();
-                params.put("Accept", "application/json; charset=utf-8");
-                params.put("Content-Type", "application/json; charset=utf-8");
-                return params;
-            }
-        };
-
-        // Adding request to request queue
-        MyApplication.getInstance().addToRequestQueue(jsonObjReq);
-    }
-
-    public static void makeJsonObjectRequestForProfile() {
-        Log.e("test", "test");
-        String loading = "Fetching profile" ;
-        CustomProgressDialog(loading);
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.accumulate("numofrecords", "10" );
-            jsonObject.accumulate("pageno", "1" );
-            jsonObject.accumulate("userid", UserID);
-
-
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                Utility.BASE_URL+"MyProfiles", jsonObject, new Response.Listener<JSONObject>()
-        {
-
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.e("test_resProfile", response.toString());
-                rlProgressDialog.setVisibility(View.GONE);
-                try
-                {
-                    jsonArray = response.getJSONArray("Profiles");
-                    //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
-                    profile_array = new ArrayList<String>();
-                    profileImage_array = new ArrayList<>();
-                    NameArray = new ArrayList<>();
-                    DesignationArray = new ArrayList<>();
-                    listAssociation = new ArrayList<>();
-                    for (int i = 0; i < jsonArray.length(); i++)
-                    {
-                        JSONObject object = jsonArray.getJSONObject(i);
-                        //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
-                        if (object.getString("ProfileName").toString().equals("")){
-                            profile_array.add(object.getString("FirstName") + " " + object.getString("LastName"));
-                        }
-                        else {
-                            profile_array.add(object.getString("ProfileName"));
-                        }
-
-                        NameArray.add(object.getString("FirstName") + " " + object.getString("LastName"));
-                        DesignationArray.add(object.getString("Designation"));
-
-                        nfcModelTag = new ProfileModel();
-                        nfcModelTag.setUserID(object.getString("UserID"));
-                        nfcModelTag.setFirstName(object.getString("FirstName"));
-                        nfcModelTag.setLastName(object.getString("LastName"));
-                        nfcModelTag.setUserName(object.getString("UserName"));
-                        nfcModelTag.setProfileID(object.getString("ProfileID"));
-                        nfcModelTag.setCard_Front(object.getString("Card_Front"));
-                        nfcModelTag.setCard_Back(object.getString("Card_Back"));
-                        nfcModelTag.setUserPhoto(object.getString("UserPhoto"));
-                        nfcModelTag.setDesignation(object.getString("Designation"));
-                        nfcModelTag.setCompanyName(object.getString("CompanyName"));
-                        nfcModelTag.setCompany_Profile(object.getString("Company_Profile"));
-                        nfcModelTag.setPhone1(object.getString("Phone1"));
-                        nfcModelTag.setPhone2(object.getString("Phone2"));
-                        nfcModelTag.setMobile1(object.getString("Mobile1"));
-                        nfcModelTag.setMobile2(object.getString("Mobile2"));
-                        nfcModelTag.setFax1(object.getString("Fax1"));
-                        nfcModelTag.setFax2(object.getString("Fax2"));
-                        nfcModelTag.setEmail1(object.getString("Email1"));
-                        nfcModelTag.setEmail2(object.getString("Email2"));
-                        nfcModelTag.setAddress1(object.getString("Address1"));
-                        nfcModelTag.setAddress2(object.getString("Address2"));
-                        nfcModelTag.setAddress3(object.getString("Address3"));
-                        nfcModelTag.setAddress4(object.getString("Address4"));
-                        nfcModelTag.setCity(object.getString("City"));
-                        nfcModelTag.setState(object.getString("State"));
-                        nfcModelTag.setCountry(object.getString("Country"));
-                        nfcModelTag.setPostalcode(object.getString("Postalcode"));
-                        nfcModelTag.setWebsite(object.getString("Website"));
-                        nfcModelTag.setFacebook(object.getString("Facebook"));
-                        nfcModelTag.setTwitter(object.getString("Twitter"));
-                        nfcModelTag.setGoogle(object.getString("Google"));
-                        nfcModelTag.setLinkedin(object.getString("Linkedin"));
-                        nfcModelTag.setYoutube(object.getString("Youtube"));
-                        nfcModelTag.setAttachment_FileName(object.getString("Attachment_FileName"));
-                        nfcModelTag.setProfile(object.getString("ProfileName"));
-                        nfcModelTag.setIndustry(object.getString("IndustryName"));
-                       /* array = object.getJSONArray("Association_Name");
-                        for (int i1 = 0; i1 < array.length(); i1++){
-
-                            listAssociation.add(array.getString(i1));
-
-                        }
-                        Toast.makeText(getContext(), i + listAssociation.toString(), Toast.LENGTH_LONG).show();*/
-                        allTags.add(nfcModelTag);
-                        //  GetData(getContext());
-
-                    }
-
-                    try {
-                        displayProfile = allTags.get(profileIndex).getUserPhoto();
-                    }catch (Exception e){
-                        profileSession.createProfileSession("0");
-                        profileIndex = 0;
-                        displayProfile = allTags.get(profileIndex).getUserPhoto();
-                    }
-
-                    TestimonialProfileId = allTags.get(profileIndex).getProfileID();
-
-//                    tvName.setText(allTags.get(0).getFirstName() + " "+ allTags.get(0).getLastName());
-//                    tvPersonName.setText(allTags.get(0).getFirstName() + " "+ allTags.get(0).getLastName());
-                    personName = allTags.get(profileIndex).getFirstName() + " "+ allTags.get(profileIndex).getLastName() ;
-                    if(personName.equalsIgnoreCase("") || personName.equalsIgnoreCase("null"))
-                    {
-                        fragmentProfileBinding.tvPersonName.setVisibility(View.GONE);
-                        fragmentProfileBinding.llNameBox.setVisibility(View.GONE);
-                    }
-                    else
-                    {
-                        fragmentProfileBinding.tvName.setText(personName);
-                        fragmentProfileBinding.tvPersonName.setText(personName);
-                    }
-
-                    fragmentProfileBinding.tvProfileName.setText(allTags.get(profileIndex).getProfile());
-
-                    if (allTags.get(profileIndex).getAttachment_FileName().toString().equals("") || allTags.get(profileIndex).getAttachment_FileName().toString() == null ||
-                            allTags.get(profileIndex).getAttachment_FileName().toString().equals("null")) {
-
-                        fragmentProfileBinding.txtAttachment.setVisibility(View.GONE);
-                        fragmentProfileBinding.lblAttachment.setVisibility(View.GONE);
-                    }
-                    else {
-                        fragmentProfileBinding.txtAttachment.setVisibility(View.VISIBLE);
-                        fragmentProfileBinding.lblAttachment.setVisibility(View.VISIBLE);
-
-                        fragmentProfileBinding.txtAttachment.setText(allTags.get(profileIndex).getAttachment_FileName());
-                    }
-
-                    try
-                    {
-                        JSONObject object = jsonArray.getJSONObject(profileIndex);
-                        array = object.getJSONArray("Association_Name");
-                        arrayEvents = object.getJSONArray("Event_Cat_Name");
-                        listAssociation = new ArrayList<String>();
-                        listEvents = new ArrayList<String>();
-                        eventString = "";
-                        for (int i1 = 0; i1 < arrayEvents.length(); i1++) {
-
-                            listEvents.add(arrayEvents.getString(i1));
-                            String remainder = "";
-                            String name = arrayEvents.getString(i1);
-                            if (name.contains(":")) {
-                                //String kept = name.substring(0, name.indexOf(":"));
-                                remainder = name.substring(name.indexOf(":") + 1, name.length());
-                            }
-                            else {
-                                remainder = name;
-                            }
-                            if (i1 == arrayEvents.length()-1){
-                                eventString += remainder ;
-                            }else {
-                                eventString += remainder + " / ";
-                            }
-                        }
-                        fragmentProfileBinding.txtEventsListfinal.setText(eventString);
-                        associationString = "";
-                        for (int i1 = 0; i1 < array.length(); i1++) {
-
-                            listAssociation.add(array.getString(i1));
-
-
-                            String name = array.getString(i1);
-                            String remainder;
-                            if (name.contains(":")) {
-                                String kept = name.substring(0, name.indexOf(":"));
-                                remainder = name.substring(name.indexOf(":") + 1, name.length());
-                            }
-                            else {
-                                remainder = name;
-                            }
-                            if (i1 == array.length()-1){
-                                associationString += remainder ;
-                            }else {
-                                associationString += remainder + " / ";
-                            }
-                        }
-                        fragmentProfileBinding.txtAssociationList.setText(associationString);
-                        int countAssociation;
-                        if (array.length()>=5){
-                            countAssociation = 5;
-                        }else {
-                            countAssociation = array.length();
-                        }
-
-                        int countEvents;
-                        if (arrayEvents.length()>=5){
-                            countEvents = 5;
-                        }else {
-                            countEvents = arrayEvents.length();
-                        }
-
-                        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, countAssociation, GridLayoutManager.HORIZONTAL, false);
-                        fragmentProfileBinding.recyclerAssociation.setAdapter(new TextRecyclerAdapter(listAssociation));
-                        fragmentProfileBinding.recyclerAssociation.setLayoutManager(gridLayoutManager);
-
-                        GridLayoutManager gridLayoutManager1 = new GridLayoutManager(mContext, countEvents, GridLayoutManager.HORIZONTAL, false);
-                        fragmentProfileBinding.recyclerEvents.setAdapter(new TextRecyclerAdapter(listEvents));
-                        fragmentProfileBinding.recyclerEvents.setLayoutManager(gridLayoutManager1);
-                        if (listAssociation.size() == 0){
-                            fragmentProfileBinding.txtAssociationList.setVisibility(View.GONE);
-                            // recyclerAssociation.setVisibility(View.GONE);
-                            fragmentProfileBinding.txtNoAssociation.setVisibility(View.VISIBLE);
-                        }
-                        else {
-                            fragmentProfileBinding.txtAssociationList.setVisibility(View.VISIBLE);
-                            // recyclerAssociation.setVisibility(View.VISIBLE);
-                            fragmentProfileBinding.txtNoAssociation.setVisibility(View.GONE);
-                        }
-
-                        if (listEvents.size() == 0){
-                            fragmentProfileBinding.txtEventsListfinal.setVisibility(View.GONE);
-                            // recyclerEvents.setVisibility(View.GONE);
-                            fragmentProfileBinding.txtNoEvent.setVisibility(View.VISIBLE);
-                        }
-                        else {
-                            fragmentProfileBinding.txtEventsListfinal.setVisibility(View.VISIBLE);
-                            // recyclerEvents.setVisibility(View.VISIBLE);
-                            fragmentProfileBinding.txtNoEvent.setVisibility(View.GONE);
-                        }
-
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    if (allTags.get(profileIndex).getCard_Front().equalsIgnoreCase("") || allTags.get(profileIndex).getCard_Back().equalsIgnoreCase("")) {
-                        appbar.setVisibility(View.GONE);
-                    } else {
-                        appbar.setVisibility(View.VISIBLE);
-                    }
-
-                    if (allTags.get(profileIndex).getFacebook().equals("") || allTags.get(profileIndex).getFacebook().equals(null))
-                    {
-                        fragmentProfileBinding.fbUrl.setImageResource(R.drawable.ic_fb_gray);
-                        fragmentProfileBinding.fbUrl.setEnabled(false);
-                    }
-                    else {
-                        fragmentProfileBinding.fbUrl.setImageResource(R.drawable.icon_fb);
-                        fragmentProfileBinding.fbUrl.setEnabled(true);
-                        strfbUrl = allTags.get(profileIndex).getFacebook().toString();
-                    }
-
-                    if (allTags.get(profileIndex).getGoogle().equals("") || allTags.get(profileIndex).getGoogle().equals(null))
-                    {
-                        fragmentProfileBinding.googleUrl.setImageResource(R.drawable.ic_google_gray);
-                        fragmentProfileBinding.googleUrl.setEnabled(false);
-                    }
-                    else {
-                        fragmentProfileBinding.googleUrl.setImageResource(R.drawable.icon_google);
-                        fragmentProfileBinding.googleUrl.setEnabled(true);
-                        strgoogleUrl = allTags.get(profileIndex).getGoogle().toString();
-                    }
-
-                    if (allTags.get(profileIndex).getTwitter().equals("") || allTags.get(profileIndex).getTwitter().equals(null))
-                    {
-                        fragmentProfileBinding.twitterUrl.setImageResource(R.drawable.icon_twitter_gray);
-                        fragmentProfileBinding.twitterUrl.setEnabled(false);
-                    }
-                    else {
-                        fragmentProfileBinding.twitterUrl.setImageResource(R.drawable.icon_twitter);
-                        fragmentProfileBinding.twitterUrl.setEnabled(true);
-                        strtwitterUrl = allTags.get(profileIndex).getTwitter().toString();
-                    }
-
-                    if (allTags.get(profileIndex).getLinkedin().equals("") || allTags.get(profileIndex).getLinkedin().equals(null))
-                    {
-                        fragmentProfileBinding.linkedInUrl.setImageResource(R.drawable.icon_linkedin_gray);
-                        fragmentProfileBinding.linkedInUrl.setEnabled(false);
-                    }
-                    else {
-                        fragmentProfileBinding.linkedInUrl.setImageResource(R.drawable.icon_linkedin);
-                        fragmentProfileBinding.linkedInUrl.setEnabled(true);
-                        strlinkedInUrl = allTags.get(profileIndex).getLinkedin().toString();
-                    }
-
-//                    tvDesignation.setText(allTags.get(0).getDesignation());
-//                    tvDesi.setText(allTags.get(0).getDesignation());
-                    if(allTags.get(profileIndex).getDesignation().equalsIgnoreCase("")
-                            || allTags.get(profileIndex).getDesignation().equalsIgnoreCase("null"))
-                    {
-                        fragmentProfileBinding.tvDesignation.setVisibility(View.GONE);
-                        fragmentProfileBinding.llDesignationBox.setVisibility(View.GONE);
-                    }
-                    else
-                    {
-                        fragmentProfileBinding.tvDesignation.setText(allTags.get(profileIndex).getDesignation());
-                        fragmentProfileBinding.tvDesi.setText(allTags.get(profileIndex).getDesignation());
-                    }
-//                    fragmentProfileBinding.tvCompany.setText(allTags.get(0).getCompanyName());
-//                    tvCompanyName.setText(allTags.get(0).getCompanyName());
-                    if(allTags.get(profileIndex).getCompanyName().equalsIgnoreCase("")
-                            || allTags.get(profileIndex).getCompanyName().equalsIgnoreCase("null"))
-                    {
-                        fragmentProfileBinding.tvCompany.setVisibility(View.GONE);
-                        fragmentProfileBinding.llCompanyBox.setVisibility(View.GONE);
-                    }
-                    else
-                    {
-                        fragmentProfileBinding.tvCompany.setText(allTags.get(profileIndex).getCompanyName());
-                        fragmentProfileBinding.tvCompanyName.setText(allTags.get(profileIndex).getCompanyName());
-                    }
-//                    tvMob.setText(allTags.get(0).getPhone());
-                    if(allTags.get(profileIndex).getMobile1().equalsIgnoreCase("")
-                            || allTags.get(profileIndex).getMobile1().equalsIgnoreCase("null"))
-                    {
-                        fragmentProfileBinding.lnrMob.setVisibility(View.GONE);
-                    }
-                    else
-                    {
-                        fragmentProfileBinding.tvMob.setText(allTags.get(profileIndex).getMobile1()+"   "+allTags.get(profileIndex).getMobile2());
-                    }
-//                    tvWebsite.setText(allTags.get(0).getWebsite());
-                    if(allTags.get(profileIndex).getWebsite().equalsIgnoreCase("")
-                            || allTags.get(profileIndex).getWebsite().equalsIgnoreCase("null"))
-                    {
-                        fragmentProfileBinding.lnrWebsite.setVisibility(View.GONE);
-                    }
-                    else
-                    {
-                        fragmentProfileBinding.tvWebsite.setText(allTags.get(profileIndex).getWebsite());
-                    }
-
-                    if(allTags.get(profileIndex).getUserName().equalsIgnoreCase("")
-                            || allTags.get(profileIndex).getUserName().equalsIgnoreCase("null"))
-                    {
-                        fragmentProfileBinding.llMailBox.setVisibility(View.GONE);
-                    }
-                    else
-                    {
-                        fragmentProfileBinding.tvMail.setText(allTags.get(profileIndex).getUserName());
-                    }
-
-                    if (allTags.get(profileIndex).getEmail2().equalsIgnoreCase("")
-                            || allTags.get(profileIndex).getEmail2().equalsIgnoreCase("null"))
-                    {
-                        fragmentProfileBinding.llMailBox1.setVisibility(View.GONE);
-                    }
-                    else
-                    {
-                        fragmentProfileBinding.tvMail1.setText(allTags.get(profileIndex).getEmail2());
-                    }
-
-                    if(allTags.get(profileIndex).getAssociation().equalsIgnoreCase("")
-                            || allTags.get(profileIndex).getAssociation().equalsIgnoreCase("null"))
-                    {
-                        fragmentProfileBinding. llAssociationBox.setVisibility(View.GONE);
-                    }
-                    else
-                    {
-                        fragmentProfileBinding.tvAssociation.setText(allTags.get(profileIndex).getAssociation());
-                    }
-                    if(allTags.get(profileIndex).getPhone1().equalsIgnoreCase("")
-                            || allTags.get(profileIndex).getPhone1().equalsIgnoreCase("null"))
-                    {
-                        fragmentProfileBinding.lnrWork.setVisibility(View.GONE);
-                    }
-                    else
-                    {
-                        fragmentProfileBinding.tvWork.setText(allTags.get(profileIndex).getPhone1()+"   "+allTags.get(profileIndex).getPhone2());
-                    }
-                    if(allTags.get(profileIndex).getIndustry().equalsIgnoreCase("")
-                            || allTags.get(profileIndex).getIndustry().equalsIgnoreCase("null"))
-                    {
-                        fragmentProfileBinding.llIndustryBox.setVisibility(View.GONE);
-                    }
-                    else
-                    {
-                        fragmentProfileBinding.textIndustry.setText(allTags.get(profileIndex).getIndustry());
-                    }
-                    /*tvAddress.setText(allTags.get(0).getAddress1()+ " "+allTags.get(0).getAddress2() + " "
-                            + allTags.get(0).getAddress3()  + " "
-                            + allTags.get(0).getAddress4() + " "
-                            + allTags.get(0).getCity() + " "
-                            + allTags.get(0).getState() + " "
-                            + allTags.get(0).getCountry() + " "
-                            + allTags.get(0).getPostalcode());*/
-                    personAddress =
-                            allTags.get(profileIndex).getAddress1()+ " "
-                                    +allTags.get(profileIndex).getAddress2() + " "
-                            /*+ allTags.get(profileIndex).getAddress3()  + " "
-                            + allTags.get(profileIndex).getAddress4() + " "*/
-                                    + allTags.get(profileIndex).getCity() + " "
-                                    + allTags.get(profileIndex).getState() + " "
-                                    + allTags.get(profileIndex).getCountry() + " "
-                                    + allTags.get(profileIndex).getPostalcode() ;
-                    if(personAddress.equalsIgnoreCase("")
-                            || personAddress.equalsIgnoreCase("null")
-                            || personAddress.startsWith(" "))
-                    {
-                        fragmentProfileBinding.lnrMap.setVisibility(View.GONE);
-                    }
-                    else
-                    {
-                        fragmentProfileBinding.tvAddress.setText(personAddress);
-                    }
-
-                    image = new ArrayList<>();
-                    if (allTags.get(profileIndex).getUserPhoto().equals(""))
-                    {
-                        fragmentProfileBinding.imgProfile.setImageResource(R.drawable.usr_white1);
-                    }
-                    else {
-                        try {
-                            Picasso.with(mContext).load(Utility.BASE_IMAGE_URL + "UserProfile/" + allTags.get(profileIndex).getUserPhoto())
-                                    .resize(300,300).onlyScaleDown().skipMemoryCache().into(fragmentProfileBinding.imgProfile);
-                        }
-                        catch (Exception e){}
-                    }
-
-                    //new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");
-                    makeJsonObjectRequestForTest();
-                    try
-                    {
-                        if(allTags.get(profileIndex).getCard_Front().equals(""))
-                        {
-                            recycle_image1 =Utility.BASE_IMAGE_URL+"Cards/Back_for_all.jpg";
-                        }
-                        else
-                        {
-                            recycle_image1 = Utility.BASE_IMAGE_URL+"Cards/"+allTags.get(profileIndex).getCard_Front();
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        recycle_image1 =Utility.BASE_IMAGE_URL+"Cards/Back_for_all.jpg";
-                    }
-
-                    try
-                    {
-                        if(allTags.get(profileIndex).getCard_Back().equals(""))
-                        {
-                            recycle_image2 =Utility.BASE_IMAGE_URL+"Cards/Back_for_all.jpg";
-                        }
-                        else
-                        {
-                            recycle_image2 = Utility.BASE_IMAGE_URL+"Cards/"+allTags.get(profileIndex).getCard_Back();
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        recycle_image2 =Utility.BASE_IMAGE_URL+"Cards/Back_for_all.jpg";
-                    }
-
-                    image.add(recycle_image1);
-                    image.add(recycle_image2);
-                    myPager = new CardSwipe(mContext, image);
-
-                    fragmentProfileBinding.viewPager.setClipChildren(false);
-                    fragmentProfileBinding.viewPager.setPageMargin(mContext.getResources().getDimensionPixelOffset(R.dimen.pager_margin));
-                    fragmentProfileBinding.viewPager.setOffscreenPageLimit(1);
-                    //   mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
-                    fragmentProfileBinding.viewPager.setAdapter(myPager);
-
-                    fragmentProfileBinding.viewPager1.setClipChildren(false);
-                    fragmentProfileBinding.viewPager1.setPageMargin(mContext.getResources().getDimensionPixelOffset(R.dimen.pager_margin));
-                    fragmentProfileBinding.viewPager1.setOffscreenPageLimit(1);
-                    //   viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
-                    fragmentProfileBinding.viewPager1.setAdapter(myPager);
-
-                    // for bar code generating
-                    try
-                    {
-                        barName = encrypt(TestimonialProfileId, secretKey);
-                        bitmap = TextToImageEncode(barName);
-                    }
-                    catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    } catch (InvalidKeyException e) {
-                        e.printStackTrace();
-                    } catch (NoSuchAlgorithmException e) {
-                        e.printStackTrace();
-                    } catch (NoSuchPaddingException e) {
-                        e.printStackTrace();
-                    } catch (InvalidAlgorithmParameterException e) {
-                        e.printStackTrace();
-                    } catch (IllegalBlockSizeException e) {
-                        e.printStackTrace();
-                    } catch (BadPaddingException e) {
-                        e.printStackTrace();
-                    }
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("test_er", "Error: " + error.getMessage());
-                Toast.makeText(mContext,
-                        error.getMessage(), Toast.LENGTH_SHORT).show();
-                // hide the progress dialog
-                rlProgressDialog.setVisibility(View.GONE);
-            }
-        }){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String>  params = new HashMap<String, String>();
-                params.put("Accept", "application/json; charset=utf-8");
-                params.put("Content-Type", "application/json; charset=utf-8");
-                return params;
-            }
-        };
-
-        // Adding request to request queue
-        MyApplication.getInstance().addToRequestQueue(jsonObjReq);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Log.e("json_error",""+e.getMessage());
-        }
     }
 
     public static void CustomProgressDialog(final String loading)
@@ -1417,8 +797,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                                         strlinkedInUrl = allTags.get(i).getLinkedin().toString();
                                     }
 
-                                    //   new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");
-                                    makeJsonObjectRequestForTest();
+                                    new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");
+
                                     try
                                     {
                                         if(allTags.get(i).getCard_Front().equals(""))
@@ -1517,10 +897,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
         }
 
     }
-    public void callMyProfile()
+    public static void callMyProfile()
     {
-        makeJsonObjectRequestForProfile();
-        // new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
+        new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
     }
 
     @Override
@@ -1537,8 +916,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
         HashMap<String, String> profile = profileSession.getProfileDetails();
         profileIndex = Integer.parseInt(profile.get(ProfileSession.KEY_PROFILE_INDEX));
-        makeJsonObjectRequestForProfile();
-        //new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
+
+        new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
 //        new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
     }
 
@@ -1682,6 +1061,803 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
         }
     };
 
+    public static String POST5(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("numofrecords", "10" );
+            jsonObject.accumulate("pageno", "1" );
+            jsonObject.accumulate("userid", UserID);
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+
+
+    public static class HttpAsyncTaskProfiles extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            /*dialog = new ProgressDialog(getActivity());
+            dialog.setMessage("Fetching Profiles...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+
+            String loading = "Fetching profile" ;
+            CustomProgressDialog(loading);
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            allTags = new ArrayList<>();
+            HashMap<String, String> referral = referralCodeSession.getReferralDetails();
+            try {
+                refer = referral.get(ReferralCodeSession.KEY_REFERRAL);
+            }catch (Exception e){}
+            HashMap<String, String> profile = profileSession.getProfileDetails();
+            profileIndex = Integer.parseInt(profile.get(ProfileSession.KEY_PROFILE_INDEX));
+
+            listAssociation = new ArrayList<>();
+            Utility.freeMemory();
+            //Utility.deleteCache(getContext());
+            HashMap<String, String> user = session.getUserDetails();
+            UserID = user.get(LoginSession.KEY_USERID);
+            profileId = user.get(LoginSession.KEY_PROFILEID);
+            Q_ID = user.get(LoginSession.KEY_QID);
+
+
+
+            return POST5(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+//            dialog.dismiss();
+            rlProgressDialog.setVisibility(View.GONE);
+            try
+            {
+
+                if (result != null)
+                {
+                    JSONObject jsonObject = new JSONObject(result);
+                    jsonArray = jsonObject.getJSONArray("Profiles");
+                    //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
+                    profile_array = new ArrayList<String>();
+                    profileImage_array = new ArrayList<>();
+                    NameArray = new ArrayList<>();
+                    DesignationArray = new ArrayList<>();
+                    listAssociation = new ArrayList<>();
+                    for (int i = 0; i < jsonArray.length(); i++)
+                    {
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
+                        if (object.getString("ProfileName").toString().equals("")){
+                            profile_array.add(object.getString("FirstName") + " " + object.getString("LastName"));
+                        }
+                        else {
+                            profile_array.add(object.getString("ProfileName"));
+                        }
+
+                        NameArray.add(object.getString("FirstName") + " " + object.getString("LastName"));
+                        DesignationArray.add(object.getString("Designation"));
+
+                        nfcModelTag = new ProfileModel();
+                        nfcModelTag.setUserID(object.getString("UserID"));
+                        nfcModelTag.setFirstName(object.getString("FirstName"));
+                        nfcModelTag.setLastName(object.getString("LastName"));
+                        nfcModelTag.setUserName(object.getString("UserName"));
+                        nfcModelTag.setProfileID(object.getString("ProfileID"));
+                        nfcModelTag.setCard_Front(object.getString("Card_Front"));
+                        nfcModelTag.setCard_Back(object.getString("Card_Back"));
+                        nfcModelTag.setUserPhoto(object.getString("UserPhoto"));
+                        nfcModelTag.setDesignation(object.getString("Designation"));
+                        nfcModelTag.setCompanyName(object.getString("CompanyName"));
+                        nfcModelTag.setCompany_Profile(object.getString("Company_Profile"));
+                        nfcModelTag.setPhone1(object.getString("Phone1"));
+                        nfcModelTag.setPhone2(object.getString("Phone2"));
+                        nfcModelTag.setMobile1(object.getString("Mobile1"));
+                        nfcModelTag.setMobile2(object.getString("Mobile2"));
+                        nfcModelTag.setFax1(object.getString("Fax1"));
+                        nfcModelTag.setFax2(object.getString("Fax2"));
+                        nfcModelTag.setEmail1(object.getString("Email1"));
+                        nfcModelTag.setEmail2(object.getString("Email2"));
+                        nfcModelTag.setAddress1(object.getString("Address1"));
+                        nfcModelTag.setAddress2(object.getString("Address2"));
+                        nfcModelTag.setAddress3(object.getString("Address3"));
+                        nfcModelTag.setAddress4(object.getString("Address4"));
+                        nfcModelTag.setCity(object.getString("City"));
+                        nfcModelTag.setState(object.getString("State"));
+                        nfcModelTag.setCountry(object.getString("Country"));
+                        nfcModelTag.setPostalcode(object.getString("Postalcode"));
+                        nfcModelTag.setWebsite(object.getString("Website"));
+                        nfcModelTag.setFacebook(object.getString("Facebook"));
+                        nfcModelTag.setTwitter(object.getString("Twitter"));
+                        nfcModelTag.setGoogle(object.getString("Google"));
+                        nfcModelTag.setLinkedin(object.getString("Linkedin"));
+                        nfcModelTag.setYoutube(object.getString("Youtube"));
+                        nfcModelTag.setAttachment_FileName(object.getString("Attachment_FileName"));
+                        nfcModelTag.setProfile(object.getString("ProfileName"));
+                        nfcModelTag.setIndustry(object.getString("IndustryName"));
+                       /* array = object.getJSONArray("Association_Name");
+                        for (int i1 = 0; i1 < array.length(); i1++){
+
+                            listAssociation.add(array.getString(i1));
+
+                        }
+                        Toast.makeText(getContext(), i + listAssociation.toString(), Toast.LENGTH_LONG).show();*/
+                        allTags.add(nfcModelTag);
+                        //  GetData(getContext());
+
+                    }
+
+                    try {
+                        displayProfile = allTags.get(profileIndex).getUserPhoto();
+                    }catch (Exception e){
+                        profileSession.createProfileSession("0");
+                        profileIndex = 0;
+                        displayProfile = allTags.get(profileIndex).getUserPhoto();
+                    }
+
+                    TestimonialProfileId = allTags.get(profileIndex).getProfileID();
+
+//                    tvName.setText(allTags.get(0).getFirstName() + " "+ allTags.get(0).getLastName());
+//                    tvPersonName.setText(allTags.get(0).getFirstName() + " "+ allTags.get(0).getLastName());
+                    personName = allTags.get(profileIndex).getFirstName() + " "+ allTags.get(profileIndex).getLastName() ;
+                    if(personName.equalsIgnoreCase("") || personName.equalsIgnoreCase("null"))
+                    {
+                        fragmentProfileBinding.tvPersonName.setVisibility(View.GONE);
+                        fragmentProfileBinding.llNameBox.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        fragmentProfileBinding.tvName.setText(personName);
+                        fragmentProfileBinding.tvPersonName.setText(personName);
+                    }
+
+                    fragmentProfileBinding.tvProfileName.setText(allTags.get(profileIndex).getProfile());
+
+                    if (allTags.get(profileIndex).getAttachment_FileName().toString().equals("") || allTags.get(profileIndex).getAttachment_FileName().toString() == null ||
+                            allTags.get(profileIndex).getAttachment_FileName().toString().equals("null")) {
+
+                        fragmentProfileBinding.txtAttachment.setVisibility(View.GONE);
+                        fragmentProfileBinding.lblAttachment.setVisibility(View.GONE);
+                    }
+                    else {
+                        fragmentProfileBinding.txtAttachment.setVisibility(View.VISIBLE);
+                        fragmentProfileBinding.lblAttachment.setVisibility(View.VISIBLE);
+
+                        fragmentProfileBinding.txtAttachment.setText(allTags.get(profileIndex).getAttachment_FileName());
+                    }
+
+                    try
+                    {
+                        JSONObject object = jsonArray.getJSONObject(profileIndex);
+                        array = object.getJSONArray("Association_Name");
+                        arrayEvents = object.getJSONArray("Event_Cat_Name");
+                        listAssociation = new ArrayList<String>();
+                        listEvents = new ArrayList<String>();
+                        eventString = "";
+                        for (int i1 = 0; i1 < arrayEvents.length(); i1++) {
+
+                            listEvents.add(arrayEvents.getString(i1));
+                            String remainder = "";
+                            String name = arrayEvents.getString(i1);
+                            if (name.contains(":")) {
+                                //String kept = name.substring(0, name.indexOf(":"));
+                                remainder = name.substring(name.indexOf(":") + 1, name.length());
+                            }
+                            else {
+                                remainder = name;
+                            }
+                            if (i1 == arrayEvents.length()-1){
+                                eventString += remainder ;
+                            }else {
+                                eventString += remainder + " / ";
+                            }
+                        }
+                        fragmentProfileBinding.txtEventsListfinal.setText(eventString);
+                        associationString = "";
+                        for (int i1 = 0; i1 < array.length(); i1++) {
+
+                            listAssociation.add(array.getString(i1));
+
+
+                            String name = array.getString(i1);
+                            String remainder;
+                            if (name.contains(":")) {
+                                String kept = name.substring(0, name.indexOf(":"));
+                                remainder = name.substring(name.indexOf(":") + 1, name.length());
+                            }
+                            else {
+                                remainder = name;
+                            }
+                            if (i1 == array.length()-1){
+                                associationString += remainder ;
+                            }else {
+                                associationString += remainder + " / ";
+                            }
+                        }
+                        fragmentProfileBinding.txtAssociationList.setText(associationString);
+                        int countAssociation;
+                        if (array.length()>=5){
+                            countAssociation = 5;
+                        }else {
+                            countAssociation = array.length();
+                        }
+
+                        int countEvents;
+                        if (arrayEvents.length()>=5){
+                            countEvents = 5;
+                        }else {
+                            countEvents = arrayEvents.length();
+                        }
+
+                        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, countAssociation, GridLayoutManager.HORIZONTAL, false);
+                        fragmentProfileBinding.recyclerAssociation.setAdapter(new TextRecyclerAdapter(listAssociation));
+                        fragmentProfileBinding.recyclerAssociation.setLayoutManager(gridLayoutManager);
+
+                        GridLayoutManager gridLayoutManager1 = new GridLayoutManager(mContext, countEvents, GridLayoutManager.HORIZONTAL, false);
+                        fragmentProfileBinding.recyclerEvents.setAdapter(new TextRecyclerAdapter(listEvents));
+                        fragmentProfileBinding.recyclerEvents.setLayoutManager(gridLayoutManager1);
+                        if (listAssociation.size() == 0){
+                            fragmentProfileBinding.txtAssociationList.setVisibility(View.GONE);
+                            // recyclerAssociation.setVisibility(View.GONE);
+                            fragmentProfileBinding.txtNoAssociation.setVisibility(View.VISIBLE);
+                        }
+                        else {
+                            fragmentProfileBinding.txtAssociationList.setVisibility(View.VISIBLE);
+                            // recyclerAssociation.setVisibility(View.VISIBLE);
+                            fragmentProfileBinding.txtNoAssociation.setVisibility(View.GONE);
+                        }
+
+                        if (listEvents.size() == 0){
+                            fragmentProfileBinding.txtEventsListfinal.setVisibility(View.GONE);
+                            // recyclerEvents.setVisibility(View.GONE);
+                            fragmentProfileBinding.txtNoEvent.setVisibility(View.VISIBLE);
+                        }
+                        else {
+                            fragmentProfileBinding.txtEventsListfinal.setVisibility(View.VISIBLE);
+                            // recyclerEvents.setVisibility(View.VISIBLE);
+                            fragmentProfileBinding.txtNoEvent.setVisibility(View.GONE);
+                        }
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (allTags.get(profileIndex).getCard_Front().equalsIgnoreCase("") || allTags.get(profileIndex).getCard_Back().equalsIgnoreCase("")) {
+                        appbar.setVisibility(View.GONE);
+                    } else {
+                        appbar.setVisibility(View.VISIBLE);
+                    }
+
+                    if (allTags.get(profileIndex).getFacebook().equals("") || allTags.get(profileIndex).getFacebook().equals(null))
+                    {
+                        fragmentProfileBinding.fbUrl.setImageResource(R.drawable.ic_fb_gray);
+                        fragmentProfileBinding.fbUrl.setEnabled(false);
+                    }
+                    else {
+                        fragmentProfileBinding.fbUrl.setImageResource(R.drawable.icon_fb);
+                        fragmentProfileBinding.fbUrl.setEnabled(true);
+                        strfbUrl = allTags.get(profileIndex).getFacebook().toString();
+                    }
+
+                    if (allTags.get(profileIndex).getGoogle().equals("") || allTags.get(profileIndex).getGoogle().equals(null))
+                    {
+                        fragmentProfileBinding.googleUrl.setImageResource(R.drawable.ic_google_gray);
+                        fragmentProfileBinding.googleUrl.setEnabled(false);
+                    }
+                    else {
+                        fragmentProfileBinding.googleUrl.setImageResource(R.drawable.icon_google);
+                        fragmentProfileBinding.googleUrl.setEnabled(true);
+                        strgoogleUrl = allTags.get(profileIndex).getGoogle().toString();
+                    }
+
+                    if (allTags.get(profileIndex).getTwitter().equals("") || allTags.get(profileIndex).getTwitter().equals(null))
+                    {
+                        fragmentProfileBinding.twitterUrl.setImageResource(R.drawable.icon_twitter_gray);
+                        fragmentProfileBinding.twitterUrl.setEnabled(false);
+                    }
+                    else {
+                        fragmentProfileBinding.twitterUrl.setImageResource(R.drawable.icon_twitter);
+                        fragmentProfileBinding.twitterUrl.setEnabled(true);
+                        strtwitterUrl = allTags.get(profileIndex).getTwitter().toString();
+                    }
+
+                    if (allTags.get(profileIndex).getLinkedin().equals("") || allTags.get(profileIndex).getLinkedin().equals(null))
+                    {
+                        fragmentProfileBinding.linkedInUrl.setImageResource(R.drawable.icon_linkedin_gray);
+                        fragmentProfileBinding.linkedInUrl.setEnabled(false);
+                    }
+                    else {
+                        fragmentProfileBinding.linkedInUrl.setImageResource(R.drawable.icon_linkedin);
+                        fragmentProfileBinding.linkedInUrl.setEnabled(true);
+                        strlinkedInUrl = allTags.get(profileIndex).getLinkedin().toString();
+                    }
+
+//                    tvDesignation.setText(allTags.get(0).getDesignation());
+//                    tvDesi.setText(allTags.get(0).getDesignation());
+                    if(allTags.get(profileIndex).getDesignation().equalsIgnoreCase("")
+                            || allTags.get(profileIndex).getDesignation().equalsIgnoreCase("null"))
+                    {
+                        fragmentProfileBinding.tvDesignation.setVisibility(View.GONE);
+                        fragmentProfileBinding.llDesignationBox.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        fragmentProfileBinding.tvDesignation.setText(allTags.get(profileIndex).getDesignation());
+                        fragmentProfileBinding.tvDesi.setText(allTags.get(profileIndex).getDesignation());
+                    }
+//                    fragmentProfileBinding.tvCompany.setText(allTags.get(0).getCompanyName());
+//                    tvCompanyName.setText(allTags.get(0).getCompanyName());
+                    if(allTags.get(profileIndex).getCompanyName().equalsIgnoreCase("")
+                            || allTags.get(profileIndex).getCompanyName().equalsIgnoreCase("null"))
+                    {
+                        fragmentProfileBinding.tvCompany.setVisibility(View.GONE);
+                        fragmentProfileBinding.llCompanyBox.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        fragmentProfileBinding.tvCompany.setText(allTags.get(profileIndex).getCompanyName());
+                        fragmentProfileBinding.tvCompanyName.setText(allTags.get(profileIndex).getCompanyName());
+                    }
+//                    tvMob.setText(allTags.get(0).getPhone());
+                    if(allTags.get(profileIndex).getMobile1().equalsIgnoreCase("")
+                            || allTags.get(profileIndex).getMobile1().equalsIgnoreCase("null"))
+                    {
+                        fragmentProfileBinding.lnrMob.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        fragmentProfileBinding.tvMob.setText(allTags.get(profileIndex).getMobile1()+"   "+allTags.get(profileIndex).getMobile2());
+                    }
+//                    tvWebsite.setText(allTags.get(0).getWebsite());
+                    if(allTags.get(profileIndex).getWebsite().equalsIgnoreCase("")
+                            || allTags.get(profileIndex).getWebsite().equalsIgnoreCase("null"))
+                    {
+                        fragmentProfileBinding.lnrWebsite.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        fragmentProfileBinding.tvWebsite.setText(allTags.get(profileIndex).getWebsite());
+                    }
+
+                    if(allTags.get(profileIndex).getUserName().equalsIgnoreCase("")
+                            || allTags.get(profileIndex).getUserName().equalsIgnoreCase("null"))
+                    {
+                        fragmentProfileBinding.llMailBox.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        fragmentProfileBinding.tvMail.setText(allTags.get(profileIndex).getUserName());
+                    }
+
+                    if (allTags.get(profileIndex).getEmail2().equalsIgnoreCase("")
+                            || allTags.get(profileIndex).getEmail2().equalsIgnoreCase("null"))
+                    {
+                        fragmentProfileBinding.llMailBox1.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        fragmentProfileBinding.tvMail1.setText(allTags.get(profileIndex).getEmail2());
+                    }
+
+                    if(allTags.get(profileIndex).getAssociation().equalsIgnoreCase("")
+                            || allTags.get(profileIndex).getAssociation().equalsIgnoreCase("null"))
+                    {
+                        fragmentProfileBinding. llAssociationBox.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        fragmentProfileBinding.tvAssociation.setText(allTags.get(profileIndex).getAssociation());
+                    }
+                    if(allTags.get(profileIndex).getPhone1().equalsIgnoreCase("")
+                            || allTags.get(profileIndex).getPhone1().equalsIgnoreCase("null"))
+                    {
+                        fragmentProfileBinding.lnrWork.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        fragmentProfileBinding.tvWork.setText(allTags.get(profileIndex).getPhone1()+"   "+allTags.get(profileIndex).getPhone2());
+                    }
+                    if(allTags.get(profileIndex).getIndustry().equalsIgnoreCase("")
+                            || allTags.get(profileIndex).getIndustry().equalsIgnoreCase("null"))
+                    {
+                        fragmentProfileBinding.llIndustryBox.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        fragmentProfileBinding.textIndustry.setText(allTags.get(profileIndex).getIndustry());
+                    }
+                    /*tvAddress.setText(allTags.get(0).getAddress1()+ " "+allTags.get(0).getAddress2() + " "
+                            + allTags.get(0).getAddress3()  + " "
+                            + allTags.get(0).getAddress4() + " "
+                            + allTags.get(0).getCity() + " "
+                            + allTags.get(0).getState() + " "
+                            + allTags.get(0).getCountry() + " "
+                            + allTags.get(0).getPostalcode());*/
+                    personAddress =
+                            allTags.get(profileIndex).getAddress1()+ " "
+                                    +allTags.get(profileIndex).getAddress2() + " "
+                            /*+ allTags.get(profileIndex).getAddress3()  + " "
+                            + allTags.get(profileIndex).getAddress4() + " "*/
+                                    + allTags.get(profileIndex).getCity() + " "
+                                    + allTags.get(profileIndex).getState() + " "
+                                    + allTags.get(profileIndex).getCountry() + " "
+                                    + allTags.get(profileIndex).getPostalcode() ;
+                    if(personAddress.equalsIgnoreCase("")
+                            || personAddress.equalsIgnoreCase("null")
+                            || personAddress.startsWith(" "))
+                    {
+                        fragmentProfileBinding.lnrMap.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        fragmentProfileBinding.tvAddress.setText(personAddress);
+                    }
+
+                    image = new ArrayList<>();
+                    if (allTags.get(profileIndex).getUserPhoto().equals(""))
+                    {
+                        fragmentProfileBinding.imgProfile.setImageResource(R.drawable.usr_white1);
+                    }
+                    else {
+                        try {
+                            Picasso.with(mContext).load(Utility.BASE_IMAGE_URL + "UserProfile/" + allTags.get(profileIndex).getUserPhoto())
+                                    .resize(300,300).onlyScaleDown().skipMemoryCache().into(fragmentProfileBinding.imgProfile);
+                        }
+                        catch (Exception e){}
+                    }
+
+                    new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");
+
+                    try
+                    {
+                        if(allTags.get(profileIndex).getCard_Front().equals(""))
+                        {
+                            recycle_image1 =Utility.BASE_IMAGE_URL+"Cards/Back_for_all.jpg";
+                        }
+                        else
+                        {
+                            recycle_image1 = Utility.BASE_IMAGE_URL+"Cards/"+allTags.get(profileIndex).getCard_Front();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        recycle_image1 =Utility.BASE_IMAGE_URL+"Cards/Back_for_all.jpg";
+                    }
+
+                    try
+                    {
+                        if(allTags.get(profileIndex).getCard_Back().equals(""))
+                        {
+                            recycle_image2 =Utility.BASE_IMAGE_URL+"Cards/Back_for_all.jpg";
+                        }
+                        else
+                        {
+                            recycle_image2 = Utility.BASE_IMAGE_URL+"Cards/"+allTags.get(profileIndex).getCard_Back();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        recycle_image2 =Utility.BASE_IMAGE_URL+"Cards/Back_for_all.jpg";
+                    }
+
+                    image.add(recycle_image1);
+                    image.add(recycle_image2);
+                    myPager = new CardSwipe(mContext, image);
+
+                    fragmentProfileBinding.viewPager.setClipChildren(false);
+                    fragmentProfileBinding.viewPager.setPageMargin(mContext.getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+                    fragmentProfileBinding.viewPager.setOffscreenPageLimit(1);
+                    //   mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
+                    fragmentProfileBinding.viewPager.setAdapter(myPager);
+
+                    fragmentProfileBinding.viewPager1.setClipChildren(false);
+                    fragmentProfileBinding.viewPager1.setPageMargin(mContext.getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+                    fragmentProfileBinding.viewPager1.setOffscreenPageLimit(1);
+                    //   viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
+                    fragmentProfileBinding.viewPager1.setAdapter(myPager);
+
+                    // for bar code generating
+                    try
+                    {
+                        barName = encrypt(TestimonialProfileId, secretKey);
+                        bitmap = TextToImageEncode(barName);
+                    }
+                    catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    } catch (InvalidKeyException e) {
+                        e.printStackTrace();
+                    } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    } catch (NoSuchPaddingException e) {
+                        e.printStackTrace();
+                    } catch (InvalidAlgorithmParameterException e) {
+                        e.printStackTrace();
+                    } catch (IllegalBlockSizeException e) {
+                        e.printStackTrace();
+                    } catch (BadPaddingException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else
+                {
+                    Toast.makeText(mContext, "Not able to load Profiles..", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public  String POST4(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("AssociationID", "1" );
+            jsonObject.accumulate("Card_Back", "000000002.jpg" );
+            jsonObject.accumulate("Card_Front", "000000002.jpg" );
+            jsonObject.accumulate("CompanyID", "1" );
+            jsonObject.accumulate("CompanyName", "Circle One" );
+            jsonObject.accumulate("Designation", "Director" );
+            jsonObject.accumulate("DesignationID", "1" );
+            jsonObject.accumulate("Email", "kajal.patadia@ample-arch.com" );
+            jsonObject.accumulate("Email_Type", "gmail" );
+            jsonObject.accumulate("IndustryID", "2" );
+            jsonObject.accumulate("IndustryName", "IT" );
+            jsonObject.accumulate("Phone", "+6588559632" );
+            jsonObject.accumulate("Phone_type", "mobile" );
+            jsonObject.accumulate("Profile_Desc", "fbvfbvvvf" );
+            jsonObject.accumulate("UserID", "25" );
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+    private static class HttpAsyncTaskTestimonial extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            //  dialog = new ProgressDialog(getActivity());
+            //  dialog.setMessage("Fetching Testimonials...");
+            //dialog.setTitle("Saving Reminder");
+            // dialog.show();
+            // dialog.setCancelable(false);
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            return POST2(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+            // dialog.dismiss();
+            try {
+                if (result != null) {
+                    JSONObject jsonObject = new JSONObject(result);
+                    JSONArray jsonArray = jsonObject.getJSONArray("Testimonials");
+                    //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
+
+                    if (jsonArray.length() == 0)
+                    {
+                        fragmentProfileBinding.lstTestimonial.setVisibility(View.GONE);
+                        fragmentProfileBinding.txtMore.setVisibility(View.GONE);
+                        fragmentProfileBinding.txtTestimonial.setVisibility(View.VISIBLE);
+                    }
+                    else
+                    {
+                        fragmentProfileBinding.lstTestimonial.setVisibility(View.VISIBLE);
+                        fragmentProfileBinding.txtMore.setVisibility(View.VISIBLE);
+                        fragmentProfileBinding.txtTestimonial.setVisibility(View.GONE);
+                    }
+                    allTaggs.clear();
+                    for (int i = 0; i < jsonArray.length(); i++)
+                    {
+
+                        if (i < 3)
+                        {
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
+
+                            TestimonialModel nfcModelTag = new TestimonialModel();
+                            nfcModelTag.setCompanyName(object.getString("CompanyName"));
+                            nfcModelTag.setDesignation(object.getString("Designation"));
+                            nfcModelTag.setFirstName(object.getString("FirstName"));
+                            nfcModelTag.setFriendProfileID(object.getString("FriendProfileID"));
+                            nfcModelTag.setLastName(object.getString("LastName"));
+                            nfcModelTag.setPurpose(object.getString("Purpose"));
+                            nfcModelTag.setStatus(object.getString("Status"));
+                            nfcModelTag.setTestimonial_Text(object.getString("Testimonial_Text"));
+                            nfcModelTag.setUserPhoto(object.getString("UserPhoto"));
+                            nfcModelTag.setTestimonial_ID(object.getString("Testimonial_ID"));
+                            title_array.add(object.getString("Testimonial_Text").toString());
+                            notice_array.add(String.valueOf(i));
+//                        Toast.makeText(getContext(), object.getString("Testimonial_Text"), Toast.LENGTH_LONG).show();
+                            allTaggs.add(nfcModelTag);
+                        }
+                    }
+                    customAdapter = new CustomAdapter(mContext, allTaggs);
+                    fragmentProfileBinding.lstTestimonial.setAdapter(customAdapter);
+                    fragmentProfileBinding.lstTestimonial.setExpanded(true);
+                }
+                else
+                {
+                    Toast.makeText(mContext, "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                }
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static String POST2(String url)
+    {
+        InputStream inputStream = null;
+        String result = "";
+        try
+        {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("ProfileId", TestimonialProfileId );
+            jsonObject.accumulate("numofrecords", "10" );
+            jsonObject.accumulate("pageno", "1" );
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
 
     public  String POST(String url)
     {
@@ -1738,6 +1914,76 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
     }
 
 
+    private class HttpAsyncTask extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(getActivity());
+            dialog.setMessage("Loading..");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+            return POST(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result)
+        {
+            dialog.dismiss();
+//            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+
+
+          /*  try {
+                if (result != null) {
+                    JSONObject jsonObject = new JSONObject(result);
+                    JSONArray jsonArray = jsonObject.getJSONArray("connection");
+                    //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
+
+                    for (int i = 0; i < jsonArray.length(); i++){
+
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
+
+
+
+                        FriendConnection nfcModelTag = new FriendConnection();
+                        nfcModelTag.setName(object.getString("FirstName") + " " + object.getString("LastName"));
+                        nfcModelTag.setCompany(object.getString("CompanyName"));
+                        nfcModelTag.setEmail(object.getString("UserName"));
+                        nfcModelTag.setWebsite("");
+                        nfcModelTag.setMob_no(object.getString("Phone"));
+                        nfcModelTag.setDesignation(object.getString("Designation"));
+                        *//*nfcModelTag.setCard_front(object.getString("Card_Front"));
+                        nfcModelTag.setCard_back(object.getString("Card_Back"));*//*
+                        nfcModelTag.setCard_front("000000002.jpg");
+                        nfcModelTag.setCard_back("000000006.jpg");
+
+
+                        nfcModelTag.setNfc_tag("en000000001");
+                        allTags.add(nfcModelTag);
+                        GetData(getContext());
+                    }
+                }else {
+                    Toast.makeText(getContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }*/
+        }
+    }
+
     static Bitmap TextToImageEncode(String Value)
     {
         String text=Value; // Whatever you need to encode in the QR code
@@ -1753,4 +1999,18 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
         }
         return null;
     }
+
+   /* @Override
+    public void onStart() {
+        super.onStart();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+    }*/
+
+
 }

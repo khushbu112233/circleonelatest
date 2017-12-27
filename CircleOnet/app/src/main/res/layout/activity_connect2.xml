@@ -24,37 +24,33 @@
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:weightSum="4"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
                 android:id="@+id/llCommunicate"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="45dp"
                 android:orientation="horizontal"
                 android:gravity="center"
                 android:layout_marginTop="0dp">
                 <ImageView
-                    android:layout_marginLeft="20dp"
-                    android:padding="3dp"
-                    android:layout_width="35dp"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
                     android:layout_height="35dp"
-                    android:src="@drawable/ic_call_gray"
-                    android:layout_marginRight="70dp"/>
+                    android:src="@drawable/ic_call_gray" />
                 <ImageView
-                    android:padding="3dp"
-                    android:layout_width="35dp"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
                     android:layout_height="35dp"
-                    android:src="@drawable/ic_sms_gray"
-                    android:layout_marginRight="60dp"/>
+                    android:src="@drawable/ic_sms_gray" />
                 <ImageView
-                    android:padding="3dp"
-                    android:layout_width="35dp"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
                     android:layout_height="35dp"
-                    android:src="@drawable/ic_mail_gray1"
-                    android:layout_marginRight="60dp"/>
+                    android:src="@drawable/ic_mail_gray1" />
                 <ImageView
-                    android:layout_marginRight="20dp"
-                    android:padding="3dp"
-                    android:layout_width="35dp"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
                     android:layout_height="35dp"
                     android:src="@drawable/ic_profile_gray"/>
             </LinearLayout>
@@ -64,8 +60,7 @@
                 android:layout_below="@+id/llCommunicate"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#38c0c7"
-                android:layout_marginTop="5dp" />
+                android:background="#38c0c7" />
 
             <!--
                         <LinearLayout

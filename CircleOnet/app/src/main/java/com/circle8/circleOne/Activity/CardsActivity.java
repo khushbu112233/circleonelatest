@@ -1528,7 +1528,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             HashMap<String, String> profile = ProfileFragment.profileSession.getProfileDetails();
             ProfileFragment.profileIndex = Integer.parseInt(profile.get(ProfileSession.KEY_PROFILE_INDEX));
 
-            ProfileFragment.makeJsonObjectRequestForProfile();
+            ProfileFragment.callMyProfile();
         }
 
         getSupportActionBar().setShowHideAnimationEnabled(false);
