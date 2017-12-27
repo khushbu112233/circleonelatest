@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,10 +16,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,8 +32,8 @@ import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.GroupModel;
 import com.circle8.circleOne.Model.ProfileModel;
 import com.circle8.circleOne.R;
-import com.circle8.circleOne.Utils.ExpandableHeightListView;
 import com.circle8.circleOne.Utils.Utility;
+import com.circle8.circleOne.databinding.ActivitySortAndFilterOptionBinding;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -54,37 +53,30 @@ import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 public class SortAndFilterOption extends AppCompatActivity
 {
-    private TextView actionText;
-    private ImageView imgCards, imgConnect, imgEvents, imgProfile;
-    ImageView imgDrawer, imgLogo;
+
     private int actionBarHeight;
-    LinearLayout lnrSortRecent, lnrSortName, lnrSortCompany;
     DatabaseHelper db;
     public static String SortType = "desc";
     public static String CardListApi = "GetFriendConnection";
     public static String ProfileArrayId = "", FindBY = "", Search = "";
     public static String groupId = "";
-    LinearLayout lnrAllCards;
-    ExpandableHeightListView listView, listView1, listView2 ;
     private LoginSession session;
     private String user_id, profile_id ;
-    private ImageView ivArrowImg, ivArrowImg1, ivArrowImg2;
     private String arrowStatus = "RIGHT";
     private String arrowStatus1 = "RIGHT";
     private String arrowStatus2 = "RIGHT";
-    AutoCompleteTextView searchView;
     public static ArrayList<GroupModel> groupModelArrayList;
     public static ArrayList<ProfileModel> profileModelArrayList ;
     SortAndFilterAdapter sortAndFilterAdapter ;
     SortAndFilterProfileAdapter sortAndFilterProfileAdapter ;
-    LinearLayout lnrCompany, lnrTitle, lnrIndustry, lnrAssociation;
-    RelativeLayout rltCircle, rltProfile;
-
+    ActivitySortAndFilterOptionBinding activitySortAndFilterOptionBinding;
+    ImageView imgDrawer,imgLogo;
+    TextView actionText;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sort_and_filter_option);
+        activitySortAndFilterOptionBinding= DataBindingUtil.setContentView(this,R.layout.activity_sort_and_filter_option);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         final ActionBar actionBar = getSupportActionBar();
@@ -92,29 +84,9 @@ public class SortAndFilterOption extends AppCompatActivity
         getSupportActionBar().setCustomView(R.layout.custom_actionbar);
         db = new DatabaseHelper(getApplicationContext());
         actionText = (TextView) findViewById(R.id.mytext);
-        imgCards = (ImageView) findViewById(R.id.imgCards);
-        rltCircle = (RelativeLayout) findViewById(R.id.rltCircle);
-        rltProfile = (RelativeLayout) findViewById(R.id.rltProfile);
-        lnrTitle = (LinearLayout) findViewById(R.id.lnrTitle);
-        lnrIndustry = (LinearLayout) findViewById(R.id.lnrIndustry);
-        lnrAssociation = (LinearLayout) findViewById(R.id.lnrAssociation);
-
-        imgConnect = (ImageView) findViewById(R.id.imgConnect);
-        imgEvents = (ImageView) findViewById(R.id.imgEvents);
-        imgProfile = (ImageView) findViewById(R.id.imgProfile);
         imgLogo = (ImageView) findViewById(R.id.imgLogo);
         imgDrawer = (ImageView) findViewById(R.id.drawer);
-        lnrSortRecent = (LinearLayout) findViewById(R.id.lnrSortRecent);
-        lnrSortName = (LinearLayout) findViewById(R.id.lnrSortName);
-        lnrSortCompany = (LinearLayout) findViewById(R.id.lnrSortCompany);
-        lnrAllCards = (LinearLayout) findViewById(R.id.lnrAllCards);
-        listView1 = (ExpandableHeightListView)findViewById(R.id.listViewEx1);
-        listView2 = (ExpandableHeightListView)findViewById(R.id.listViewEx2);
-        ivArrowImg1 = (ImageView) findViewById(R.id.ivArrowImg1);
-        ivArrowImg2 = (ImageView) findViewById(R.id.ivArrowImg2);
         imgLogo.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
-        lnrCompany = (LinearLayout) findViewById(R.id.lnrCompany);
-        searchView = (AutoCompleteTextView) findViewById(R.id.searchView);
         session = new LoginSession(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
         user_id = user.get(LoginSession.KEY_USERID);
@@ -126,7 +98,7 @@ public class SortAndFilterOption extends AppCompatActivity
         new HttpAsyncTaskfetchGroup().execute(Utility.BASE_URL+"Group/Fetch");
         new HttpAsyncTaskFetchProfile().execute(Utility.BASE_URL+"MyProfiles");
 
-        lnrAllCards.setOnClickListener(new View.OnClickListener() {
+        activitySortAndFilterOptionBinding.lnrAllCards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SortType = "desc";
@@ -184,7 +156,7 @@ public class SortAndFilterOption extends AppCompatActivity
                 userIntent.putExtra("viewpager_position", 0);
                 startActivity(userIntent);*/
                 finish();
-               // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                /* Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
                 startActivity(intent);
                 finish();
@@ -192,45 +164,45 @@ public class SortAndFilterOption extends AppCompatActivity
             }
         });
 
-        rltCircle.setOnClickListener(new View.OnClickListener() {
+        activitySortAndFilterOptionBinding.rltCircle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
                 if (arrowStatus1.equalsIgnoreCase("RIGHT"))
                 {
-                    ivArrowImg1.setImageResource(R.drawable.ic_down_arrow_blue);
-                    listView1.setVisibility(View.VISIBLE);
+                    activitySortAndFilterOptionBinding.ivArrowImg1.setImageResource(R.drawable.ic_down_arrow_blue);
+                    activitySortAndFilterOptionBinding.listViewEx1.setVisibility(View.VISIBLE);
                     arrowStatus1 = "DOWN";
                 }
                 else if (arrowStatus1.equalsIgnoreCase("DOWN"))
                 {
-                    ivArrowImg1.setImageResource(R.drawable.ic_right_arrow_blue);
-                    listView1.setVisibility(View.GONE);
+                    activitySortAndFilterOptionBinding.ivArrowImg1.setImageResource(R.drawable.ic_right_arrow_blue);
+                    activitySortAndFilterOptionBinding.listViewEx1.setVisibility(View.GONE);
                     arrowStatus1 = "RIGHT";
                 }
             }
         });
 
-        rltProfile.setOnClickListener(new View.OnClickListener() {
+        activitySortAndFilterOptionBinding.rltProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
                 if (arrowStatus2.equalsIgnoreCase("RIGHT"))
                 {
-                    ivArrowImg2.setImageResource(R.drawable.ic_down_arrow_blue);
-                    listView2.setVisibility(View.VISIBLE);
+                    activitySortAndFilterOptionBinding.ivArrowImg2.setImageResource(R.drawable.ic_down_arrow_blue);
+                    activitySortAndFilterOptionBinding.listViewEx2.setVisibility(View.VISIBLE);
                     arrowStatus2 = "DOWN";
                 }
                 else if (arrowStatus2.equalsIgnoreCase("DOWN"))
                 {
-                    ivArrowImg2.setImageResource(R.drawable.ic_right_arrow_blue);
-                    listView2.setVisibility(View.GONE);
+                    activitySortAndFilterOptionBinding.ivArrowImg2.setImageResource(R.drawable.ic_right_arrow_blue);
+                    activitySortAndFilterOptionBinding.listViewEx2.setVisibility(View.GONE);
                     arrowStatus2 = "RIGHT";
                 }
             }
         });
 
-        lnrSortRecent.setOnClickListener(new View.OnClickListener() {
+        activitySortAndFilterOptionBinding.lnrSortRecent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -297,7 +269,7 @@ public class SortAndFilterOption extends AppCompatActivity
                 userIntent.putExtra("viewpager_position", 0);
                 startActivity(userIntent);*/
                 finish();
-               // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                /* Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
                 startActivity(intent);
                 finish();
@@ -305,7 +277,7 @@ public class SortAndFilterOption extends AppCompatActivity
             }
         });
 
-        lnrSortName.setOnClickListener(new View.OnClickListener() {
+        activitySortAndFilterOptionBinding.lnrSortName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SortType = "Name";
@@ -361,7 +333,7 @@ public class SortAndFilterOption extends AppCompatActivity
                 userIntent.putExtra("viewpager_position", 0);
                 startActivity(userIntent);*/
                 finish();
-               // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                 /*Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
                 startActivity(intent);
                 finish();
@@ -369,7 +341,7 @@ public class SortAndFilterOption extends AppCompatActivity
             }
         });
 
-        lnrSortCompany.setOnClickListener(new View.OnClickListener() {
+        activitySortAndFilterOptionBinding.lnrSortCompany.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SortType = "CompanyName";
@@ -425,7 +397,7 @@ public class SortAndFilterOption extends AppCompatActivity
                 userIntent.putExtra("viewpager_position", 0);
                 startActivity(userIntent);*/
                 finish();
-              //  overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                //  overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                 /*Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
                 startActivity(intent);
                 finish();
@@ -442,7 +414,7 @@ public class SortAndFilterOption extends AppCompatActivity
             }
         });
 
-        imgCards.setOnClickListener(new View.OnClickListener() {
+        activitySortAndFilterOptionBinding.includeLayoutBottom.imgCards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent go = new Intent(SortAndFilterOption.this,CardsActivity.class);
@@ -457,7 +429,7 @@ public class SortAndFilterOption extends AppCompatActivity
             }
         });
 
-        imgConnect.setOnClickListener(new View.OnClickListener() {
+        activitySortAndFilterOptionBinding.includeLayoutBottom.imgConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent go = new Intent(SortAndFilterOption.this,CardsActivity.class);
@@ -472,7 +444,7 @@ public class SortAndFilterOption extends AppCompatActivity
             }
         });
 
-        imgEvents.setOnClickListener(new View.OnClickListener() {
+        activitySortAndFilterOptionBinding.includeLayoutBottom.imgEvents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent go = new Intent(SortAndFilterOption.this,CardsActivity.class);
@@ -487,7 +459,7 @@ public class SortAndFilterOption extends AppCompatActivity
             }
         });
 
-        imgProfile.setOnClickListener(new View.OnClickListener() {
+        activitySortAndFilterOptionBinding.includeLayoutBottom.imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent go = new Intent(SortAndFilterOption.this,CardsActivity.class);
@@ -502,7 +474,7 @@ public class SortAndFilterOption extends AppCompatActivity
             }
         });
 
-        listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        activitySortAndFilterOptionBinding.listViewEx2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -565,16 +537,16 @@ public class SortAndFilterOption extends AppCompatActivity
             }
         });
 
-        lnrCompany.setOnClickListener(new View.OnClickListener() {
+        activitySortAndFilterOptionBinding.lnrCompany.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (searchView.getText().toString().equalsIgnoreCase("")){
+                if (activitySortAndFilterOptionBinding.searchView.getText().toString().equalsIgnoreCase("")){
                     Toast.makeText(getApplicationContext(), "Please type some keyword", Toast.LENGTH_LONG).show();
                 }else {
                     CardListApi = "SearchConnect";
                     FindBY = "COMPANY";
-                    Search = searchView.getText().toString();
+                    Search = activitySortAndFilterOptionBinding.searchView.getText().toString();
                     List1Fragment.progressStatus = "FILTER";
                     List1Fragment.allTags.clear();
 
@@ -631,16 +603,16 @@ public class SortAndFilterOption extends AppCompatActivity
             }
         });
 
-        lnrTitle.setOnClickListener(new View.OnClickListener() {
+        activitySortAndFilterOptionBinding.lnrTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (searchView.getText().toString().equalsIgnoreCase("")){
+                if (activitySortAndFilterOptionBinding.searchView.getText().toString().equalsIgnoreCase("")){
                     Toast.makeText(getApplicationContext(), "Please type some keyword", Toast.LENGTH_LONG).show();
                 }else {
                     CardListApi = "SearchConnect";
                     FindBY = "JOB_ROLE";
-                    Search = searchView.getText().toString();
+                    Search = activitySortAndFilterOptionBinding.searchView.getText().toString();
                     List1Fragment.progressStatus = "FILTER";
                     List1Fragment.allTags.clear();
 
@@ -697,16 +669,16 @@ public class SortAndFilterOption extends AppCompatActivity
             }
         });
 
-        lnrAssociation.setOnClickListener(new View.OnClickListener() {
+        activitySortAndFilterOptionBinding.lnrAssociation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (searchView.getText().toString().equalsIgnoreCase("")){
+                if (activitySortAndFilterOptionBinding.searchView.getText().toString().equalsIgnoreCase("")){
                     Toast.makeText(getApplicationContext(), "Please type some keyword", Toast.LENGTH_LONG).show();
                 }else {
                     CardListApi = "SearchConnect";
                     FindBY = "ASSOCIATION";
-                    Search = searchView.getText().toString();
+                    Search = activitySortAndFilterOptionBinding.searchView.getText().toString();
                     List1Fragment.progressStatus = "FILTER";
                     List1Fragment.allTags.clear();
 
@@ -764,16 +736,16 @@ public class SortAndFilterOption extends AppCompatActivity
         });
 
 
-        lnrIndustry.setOnClickListener(new View.OnClickListener() {
+        activitySortAndFilterOptionBinding.lnrIndustry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (searchView.getText().toString().equalsIgnoreCase("")){
+                if (activitySortAndFilterOptionBinding.searchView.getText().toString().equalsIgnoreCase("")){
                     Toast.makeText(getApplicationContext(), "Please type some keyword", Toast.LENGTH_LONG).show();
                 }else {
                     CardListApi = "SearchConnect";
                     FindBY = "INDUSTRY";
-                    Search = searchView.getText().toString();
+                    Search = activitySortAndFilterOptionBinding.searchView.getText().toString();
                     List1Fragment.progressStatus = "FILTER";
                     List1Fragment.allTags.clear();
 
@@ -831,12 +803,12 @@ public class SortAndFilterOption extends AppCompatActivity
         });
 
 
-        listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        activitySortAndFilterOptionBinding.listViewEx1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
 
-               // SortType = "desc";
+                // SortType = "desc";
                 CardListApi = "Group/FetchConnection";
                 ProfileArrayId = profile_id;
                 groupId = groupModelArrayList.get(position).getGroup_ID();
@@ -996,12 +968,12 @@ public class SortAndFilterOption extends AppCompatActivity
 
                     if (jsonArray.length() == 0)
                     {
-                        listView1.setVisibility(View.GONE);
+                        activitySortAndFilterOptionBinding.listViewEx1.setVisibility(View.GONE);
                         //txtGroup.setVisibility(View.VISIBLE);
                     }
                     else
                     {
-                       // listView.setVisibility(View.VISIBLE);
+                        // listView.setVisibility(View.VISIBLE);
                         // txtGroup.setVisibility(View.GONE);
                     }
                     groupModelArrayList.clear();
@@ -1011,7 +983,7 @@ public class SortAndFilterOption extends AppCompatActivity
 
                         GroupModel nfcModelTag = new GroupModel();
                         nfcModelTag.setGroup_ID(object.getString("group_ID"));
-                      //  nfcModelTag.setProfileId1(object.getString("ProfileId"));
+                        //  nfcModelTag.setProfileId1(object.getString("ProfileId"));
                         nfcModelTag.setGroup_Name(object.getString("group_Name"));
                         nfcModelTag.setGroup_Desc(object.getString("group_desc"));
                         nfcModelTag.setGroup_Photo(object.getString("group_photo"));
@@ -1097,8 +1069,8 @@ public class SortAndFilterOption extends AppCompatActivity
                     }
 
                     sortAndFilterAdapter = new SortAndFilterAdapter(SortAndFilterOption.this, groupModelArrayList);
-                    listView1.setAdapter(sortAndFilterAdapter);
-                    listView1.setExpanded(true);
+                    activitySortAndFilterOptionBinding.listViewEx1.setAdapter(sortAndFilterAdapter);
+                    activitySortAndFilterOptionBinding.listViewEx1.setExpanded(true);
                     sortAndFilterAdapter.notifyDataSetChanged();
 
                     // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
@@ -1145,14 +1117,14 @@ public class SortAndFilterOption extends AppCompatActivity
                 {
                     JSONObject jsonObject = new JSONObject(result);
 
-                   // String profileID = jsonObject.getString("profileid");
+                    // String profileID = jsonObject.getString("profileid");
 
                     JSONArray jsonArray = jsonObject.getJSONArray("Profiles");
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
 
                     if (jsonArray.length() == 0)
                     {
-                        listView2.setVisibility(View.GONE);
+                        activitySortAndFilterOptionBinding.listViewEx2.setVisibility(View.GONE);
                         //txtGroup.setVisibility(View.VISIBLE);
                     }
                     else
@@ -1174,8 +1146,8 @@ public class SortAndFilterOption extends AppCompatActivity
                     }
 
                     sortAndFilterProfileAdapter = new SortAndFilterProfileAdapter(SortAndFilterOption.this, profileModelArrayList);
-                    listView2.setAdapter(sortAndFilterProfileAdapter);
-                    listView2.setExpanded(true);
+                    activitySortAndFilterOptionBinding.listViewEx2.setAdapter(sortAndFilterProfileAdapter);
+                    activitySortAndFilterOptionBinding.listViewEx2.setExpanded(true);
                     sortAndFilterProfileAdapter.notifyDataSetChanged();
                     // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
                 }
