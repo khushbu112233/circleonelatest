@@ -1,0 +1,125 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.design.widget.AppBarLayout
+        app:elevation="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="always"
+        android:tag="sticky"
+        android:theme="@style/NoActionbar">
+
+        <LinearLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="40dip"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:tag="sticky">
+
+            <ImageView
+                android:id="@+id/imgCall"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_marginLeft="25dp"
+                android:layout_weight="1"
+                android:padding="7dp"
+                android:src="@drawable/ic_call" />
+
+            <ImageView
+                android:id="@+id/imgSMS"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_weight="1"
+                android:padding="7dp"
+                android:src="@drawable/ic_sms" />
+
+            <ImageView
+                android:id="@+id/imgMail"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_weight="1"
+                android:padding="8.5dp"
+                android:src="@drawable/ic_mail" />
+
+            <ImageView
+                android:id="@+id/imgProfileShare"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_marginRight="25dp"
+                android:layout_weight="1"
+                android:padding="7dp"
+                android:src="@drawable/ic_profile_send" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimary"
+            android:tag="sticky"></View>
+
+        <LinearLayout
+            android:id="@+id/tabs1"
+            android:layout_width="match_parent"
+            android:layout_height="40dip"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:tag="sticky">
+
+
+            <ImageView
+                android:id="@+id/fbUrl"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_marginLeft="25dp"
+                android:layout_weight="1"
+                android:padding="6dp"
+                android:src="@drawable/icon_fb" />
+
+            <ImageView
+                android:id="@+id/linkedInUrl"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:src="@drawable/icon_linkedin_gray" />
+
+            <ImageView
+                android:id="@+id/twitterUrl"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:src="@drawable/icon_twitter" />
+
+            <ImageView
+                android:id="@+id/googleUrl"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:src="@drawable/icon_google" />
+
+            <ImageView
+                android:id="@+id/youtubeUrl"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_marginRight="25dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:src="@drawable/icon_utube_gray" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimary"
+            android:tag="sticky"></View>
+    </android.support.design.widget.AppBarLayout>
+
+
+</layout>

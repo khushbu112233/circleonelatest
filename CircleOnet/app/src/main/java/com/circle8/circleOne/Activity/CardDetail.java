@@ -198,15 +198,15 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         ss.setSpan(clickableSpan, 91, 100, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         // TextView textView = (TextView) findViewById(R.id.hello);
-        mBinding.txtTestimonial.setText(ss);
-        mBinding.txtTestimonial.setMovementMethod(LinkMovementMethod.getInstance());
-        mBinding.txtTestimonial.setHighlightColor(getResources().getColor(R.color.colorPrimary));
+        mBinding.includeLayoutDetails.txtTestimonial.setText(ss);
+        mBinding.includeLayoutDetails.txtTestimonial.setMovementMethod(LinkMovementMethod.getInstance());
+        mBinding.includeLayoutDetails.txtTestimonial.setHighlightColor(getResources().getColor(R.color.colorPrimary));
 
         try {
             if ((lat.equals("") || lat.equals("null") || lat == null || lat.isEmpty()) && (lon.equals("") || lon.equals("null") || lon == null || lon.isEmpty())) {
-                mBinding.lnrNfcLocation.setVisibility(View.GONE);
+                mBinding.includeLayoutDetails.lnrNfcLocation.setVisibility(View.GONE);
             } else {
-                mBinding.lnrNfcLocation.setVisibility(View.VISIBLE);
+                mBinding.includeLayoutDetails.lnrNfcLocation.setVisibility(View.VISIBLE);
                 Latitude = Double.parseDouble(lat);
                 Longitude = Double.parseDouble(lon);
 
@@ -219,7 +219,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 //        Toast.makeText(getApplicationContext(), DateInitiated.toString(),Toast.LENGTH_SHORT).show();
 
 
-        mBinding.tvDateInitiated.setText(DateInitiated);
+        mBinding.includeLayoutDetails.tvDateInitiated.setText(DateInitiated);
 
         allTaggs = new ArrayList<>();
 
@@ -293,26 +293,26 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                 }
             }
         });
-        mBinding.imgBack.setOnClickListener(this);
+        mBinding.includeLayoutViepager.imgBack.setOnClickListener(this);
         mBinding.includeLayoutBottom.imgCards.setOnClickListener(this);
         mBinding.includeLayoutBottom.imgConnect.setOnClickListener(this);
         mBinding.includeLayoutBottom.imgEvents.setOnClickListener(this);
         mBinding.includeLayoutBottom.imgProfile.setOnClickListener(this);
         mBinding.tvSendMessage.setOnClickListener(this);
-        mBinding.ivMap.setOnClickListener(this);
-        mBinding.imgProfileShare.setOnClickListener(this);
-        mBinding.txtMore.setOnClickListener(this);
-        mBinding.txtAttachment.setOnClickListener(this);
-        mBinding.imgProfileCard.setOnClickListener(this);
-        mBinding.imgAddGroupFriend.setOnClickListener(this);
-        mBinding.fbUrl.setOnClickListener(this);
-        mBinding.googleUrl.setOnClickListener(this);
-        mBinding.youtubeUrl.setOnClickListener(this);
-        mBinding.twitterUrl.setOnClickListener(this);
-        mBinding.linkedInUrl.setOnClickListener(this);
-        mBinding.imgMail.setOnClickListener(this);
-        mBinding.imgSMS.setOnClickListener(this);
-        mBinding.imgCall.setOnClickListener(this);
+        mBinding.includeLayoutDetails.ivMap.setOnClickListener(this);
+        mBinding.includeLayoutSocial.imgProfileShare.setOnClickListener(this);
+        mBinding.includeLayoutDetails.txtMore.setOnClickListener(this);
+        mBinding.includeLayoutDetails.txtAttachment.setOnClickListener(this);
+        mBinding.includeLayoutViepager.imgProfileCard.setOnClickListener(this);
+        mBinding.includeLayoutDetails.imgAddGroupFriend.setOnClickListener(this);
+        mBinding.includeLayoutSocial.fbUrl.setOnClickListener(this);
+        mBinding.includeLayoutSocial.googleUrl.setOnClickListener(this);
+        mBinding.includeLayoutSocial.youtubeUrl.setOnClickListener(this);
+        mBinding.includeLayoutSocial.twitterUrl.setOnClickListener(this);
+        mBinding.includeLayoutSocial.linkedInUrl.setOnClickListener(this);
+        mBinding.includeLayoutSocial.imgMail.setOnClickListener(this);
+        mBinding.includeLayoutSocial.imgSMS.setOnClickListener(this);
+        mBinding.includeLayoutSocial.imgCall.setOnClickListener(this);
 
 
     }
@@ -330,7 +330,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                 break;
             case R.id.txtAttachment:
                 Intent intent1 = new Intent(getApplicationContext(), AttachmentDisplay.class);
-                intent1.putExtra("url", Utility.BASE_IMAGE_URL + "Other_doc/" + mBinding.txtAttachment.getText().toString());
+                intent1.putExtra("url", Utility.BASE_IMAGE_URL + "Other_doc/" + mBinding.includeLayoutDetails.txtAttachment.getText().toString());
                 startActivity(intent1);
                 break;
             case R.id.imgProfileCard:
@@ -458,18 +458,18 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                 }
                 break;
             case R.id.imgMail:
-                if (mBinding.txtEmail.getText().toString().equals("")) {
+                if (mBinding.includeLayoutDetails.txtEmail.getText().toString().equals("")) {
 
                 } else {
                     AlertDialog.Builder builder;
                     builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
-                    builder.setTitle("Mail to " + mBinding.txtName.getText().toString())
+                    builder.setTitle("Mail to " + mBinding.includeLayoutViepager.txtName.getText().toString())
                             .setMessage("Are you sure you want to drop Mail ?")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     // continue with delete
                                     try {
-                                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("mailto:" + mBinding.txtEmail.getText().toString()));
+                                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("mailto:" + mBinding.includeLayoutDetails.txtEmail.getText().toString()));
                                         intent.putExtra(Intent.EXTRA_SUBJECT, "");
                                         intent.putExtra(Intent.EXTRA_TEXT, "");
                                         startActivity(intent);
@@ -492,10 +492,10 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
             case R.id.imgSMS:
                 boolean result = Utility.checkSMSPermission(CardDetail.this);
                 if (result) {
-                    if (mBinding.txtMob.getText().toString().equals("")) {
+                    if (mBinding.includeLayoutDetails.txtMob.getText().toString().equals("")) {
                         Toast.makeText(getApplicationContext(), "You are not having contact to SMS..", Toast.LENGTH_LONG).show();
                     } else {
-                        Uri uri = Uri.parse("smsto:" + mBinding.txtMob.getText().toString());
+                        Uri uri = Uri.parse("smsto:" + mBinding.includeLayoutDetails.txtMob.getText().toString());
                         Intent it = new Intent(Intent.ACTION_SENDTO, uri);
                         it.putExtra("sms_body", "");
                         startActivity(it);
@@ -508,17 +508,17 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                 }
                 break;
             case R.id.imgCall:
-                if (!mBinding.txtMob.getText().toString().equals("")) {
+                if (!mBinding.includeLayoutDetails.txtMob.getText().toString().equals("")) {
                     AlertDialog.Builder builder;
                     builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
 
-                    builder.setTitle("Call to " + mBinding.txtName.getText().toString())
+                    builder.setTitle("Call to " + mBinding.includeLayoutViepager.txtName.getText().toString())
                             .setMessage("Are you sure you want to make a Call ?")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     // continue with delete
                                     Intent intent = new Intent(Intent.ACTION_DIAL);
-                                    intent.setData(Uri.parse("tel:" + mBinding.txtMob.getText().toString()));
+                                    intent.setData(Uri.parse("tel:" + mBinding.includeLayoutDetails.txtMob.getText().toString()));
                                     startActivity(intent);
                                 }
                             })
@@ -530,17 +530,17 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                             })
                             .setIcon(android.R.drawable.ic_menu_call)
                             .show();
-                } else if (!mBinding.txtWork.getText().toString().equals("")) {
+                } else if (!mBinding.includeLayoutDetails.txtWork.getText().toString().equals("")) {
                     AlertDialog.Builder builder;
                     builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
 
-                    builder.setTitle("Call to " + mBinding.txtName.getText().toString())
+                    builder.setTitle("Call to " + mBinding.includeLayoutViepager.txtName.getText().toString())
                             .setMessage("Are you sure you want to make a Call ?")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     // continue with delete
                                     Intent intent = new Intent(Intent.ACTION_DIAL);
-                                    intent.setData(Uri.parse("tel:" + mBinding.txtWork.getText().toString()));
+                                    intent.setData(Uri.parse("tel:" + mBinding.includeLayoutDetails.txtWork.getText().toString()));
                                     startActivity(intent);
                                 }
                             })
@@ -552,17 +552,17 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                             })
                             .setIcon(android.R.drawable.ic_menu_call)
                             .show();
-                } else if (!mBinding.txtPH.getText().toString().equals("")) {
+                } else if (!mBinding.includeLayoutDetails.txtPH.getText().toString().equals("")) {
                     AlertDialog.Builder builder;
                     builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
 
-                    builder.setTitle("Call to " + mBinding.txtName.getText().toString())
+                    builder.setTitle("Call to " + mBinding.includeLayoutViepager.txtName.getText().toString())
                             .setMessage("Are you sure you want to make a Call ?")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     // continue with delete
                                     Intent intent = new Intent(Intent.ACTION_DIAL);
-                                    intent.setData(Uri.parse("tel:" + mBinding.txtPH.getText().toString()));
+                                    intent.setData(Uri.parse("tel:" + mBinding.includeLayoutDetails.txtPH.getText().toString()));
                                     startActivity(intent);
                                 }
                             })
@@ -690,7 +690,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // continue with delete
-                                String map = "http://maps.google.co.in/maps?q=" + mBinding.txtAddress.getText().toString();
+                                String map = "http://maps.google.co.in/maps?q=" + mBinding.includeLayoutDetails.txtAddress.getText().toString();
                                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(map));
                                 startActivity(intent);
                             }
@@ -877,7 +877,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // continue with delete
-                        String url = mBinding.txtWebsite.getText().toString();
+                        String url = mBinding.includeLayoutDetails.txtWebsite.getText().toString();
                         if (url != null) {
                             if (!url.startsWith("http://") && !url.startsWith("https://"))
                                 url = "http://" + url;
@@ -898,18 +898,18 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 
     public void openGMail(View v)
     {
-        if (mBinding.txtEmail.getText().toString().equals("")) {
+        if (mBinding.includeLayoutDetails.txtEmail.getText().toString().equals("")) {
 
         } else {
             AlertDialog.Builder builder;
             builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
-            builder.setTitle("Mail to " + mBinding.txtName.getText().toString())
+            builder.setTitle("Mail to " + mBinding.includeLayoutViepager.txtName.getText().toString())
                     .setMessage("Are you sure you want to drop Mail ?")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // continue with delete
                             try {
-                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("mailto:" + mBinding.txtEmail.getText().toString()));
+                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("mailto:" + mBinding.includeLayoutDetails.txtEmail.getText().toString()));
                                 intent.putExtra(Intent.EXTRA_SUBJECT, "");
                                 intent.putExtra(Intent.EXTRA_TEXT, "");
                                 startActivity(intent);
@@ -935,13 +935,13 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
 
-        builder.setTitle("Call to " + mBinding.txtName.getText().toString())
+        builder.setTitle("Call to " + mBinding.includeLayoutViepager.txtName.getText().toString())
                 .setMessage("Are you sure you want to make a Call ?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // continue with delete
                         Intent intent = new Intent(Intent.ACTION_DIAL);
-                        intent.setData(Uri.parse("tel:" + mBinding.txtPH.getText().toString()));
+                        intent.setData(Uri.parse("tel:" + mBinding.includeLayoutDetails.txtPH.getText().toString()));
                         startActivity(intent);
                     }
                 })
@@ -960,13 +960,13 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
 
-        builder.setTitle("Call to " + mBinding.txtName.getText().toString())
+        builder.setTitle("Call to " + mBinding.includeLayoutViepager.txtName.getText().toString())
                 .setMessage("Are you sure you want to make a Call ?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // continue with delete
                         Intent intent = new Intent(Intent.ACTION_DIAL);
-                        intent.setData(Uri.parse("tel:" + mBinding.txtMob.getText().toString()));
+                        intent.setData(Uri.parse("tel:" + mBinding.includeLayoutDetails.txtMob.getText().toString()));
                         startActivity(intent);
                     }
                 })
@@ -993,11 +993,11 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                     return addresses.get(0);
                 }
                 catch (Exception e){
-                    mBinding.lnrNfcLocation.setVisibility(View.GONE);
+                    mBinding.includeLayoutDetails.lnrNfcLocation.setVisibility(View.GONE);
                 }
             }
             else {
-                mBinding.lnrNfcLocation.setVisibility(View.GONE);
+                mBinding.includeLayoutDetails.lnrNfcLocation.setVisibility(View.GONE);
             }
 
         } catch (IOException e) {
@@ -1050,7 +1050,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                 if (!TextUtils.isEmpty(country))
                     currentLocation+=" "+country;
 
-                mBinding.txtRemark.setText(currentLocation);
+                mBinding.includeLayoutDetails.txtRemark.setText(currentLocation);
             }
         }
     }
@@ -1162,19 +1162,19 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 
                     if (jsonArray.length() == 0)
                     {
-                        mBinding.rltTestimonialList.setVisibility(View.GONE);
-                        mBinding.rltTestimonial.setVisibility(View.GONE);
-                        mBinding.lstTestimonial.setVisibility(View.GONE);
-                        mBinding.txtMore.setVisibility(View.GONE);
-                        mBinding.txtTestimonial.setVisibility(View.GONE);
+                        mBinding.includeLayoutDetails.rltTestimonialList.setVisibility(View.GONE);
+                        mBinding.includeLayoutDetails.rltTestimonial.setVisibility(View.GONE);
+                        mBinding.includeLayoutDetails.lstTestimonial.setVisibility(View.GONE);
+                        mBinding.includeLayoutDetails.txtMore.setVisibility(View.GONE);
+                        mBinding.includeLayoutDetails.txtTestimonial.setVisibility(View.GONE);
                     }
                     else
                     {
-                        mBinding.rltTestimonialList.setVisibility(View.VISIBLE);
-                        mBinding.rltTestimonial.setVisibility(View.VISIBLE);
-                        mBinding.lstTestimonial.setVisibility(View.VISIBLE);
-                        mBinding.txtMore.setVisibility(View.VISIBLE);
-                        mBinding.txtTestimonial.setVisibility(View.GONE);
+                        mBinding.includeLayoutDetails.rltTestimonialList.setVisibility(View.VISIBLE);
+                        mBinding.includeLayoutDetails.rltTestimonial.setVisibility(View.VISIBLE);
+                        mBinding.includeLayoutDetails.lstTestimonial.setVisibility(View.VISIBLE);
+                        mBinding.includeLayoutDetails.txtMore.setVisibility(View.VISIBLE);
+                        mBinding.includeLayoutDetails.txtTestimonial.setVisibility(View.GONE);
                     }
                     allTaggs.clear();
                     for (int i = 0; i < jsonArray.length(); i++)
@@ -1201,8 +1201,8 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                         }
                     }
                     customAdapter = new CustomAdapter(CardDetail.this, allTaggs);
-                    mBinding.lstTestimonial.setAdapter(customAdapter);
-                    mBinding.lstTestimonial.setExpanded(true);
+                    mBinding.includeLayoutDetails.lstTestimonial.setAdapter(customAdapter);
+                    mBinding.includeLayoutDetails.lstTestimonial.setExpanded(true);
                 }
                 else
                 {
@@ -1563,75 +1563,75 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                     if (jsonObject.getString("Attachment_FileName").toString().equals("") || jsonObject.getString("Attachment_FileName").toString() == null ||
                             jsonObject.getString("Attachment_FileName").toString().equals("null")) {
 
-                        mBinding.txtAttachment.setVisibility(View.GONE);
-                        mBinding.lblAttachment.setVisibility(View.GONE);
+                        mBinding.includeLayoutDetails.txtAttachment.setVisibility(View.GONE);
+                        mBinding.includeLayoutDetails.lblAttachment.setVisibility(View.GONE);
                     }
                     else {
-                        mBinding.txtAttachment.setVisibility(View.VISIBLE);
-                        mBinding.lblAttachment.setVisibility(View.VISIBLE);
+                        mBinding.includeLayoutDetails.txtAttachment.setVisibility(View.VISIBLE);
+                        mBinding.includeLayoutDetails.lblAttachment.setVisibility(View.VISIBLE);
 
-                        mBinding.txtAttachment.setText(jsonObject.getString("Attachment_FileName").toString());
+                        mBinding.includeLayoutDetails.txtAttachment.setText(jsonObject.getString("Attachment_FileName").toString());
                     }
 
                     if (strfbUrl.equals("") || strfbUrl.equals(null))
                     {
-                        mBinding.fbUrl.setImageResource(R.drawable.ic_fb_gray);
-                        mBinding.fbUrl.setEnabled(false);
+                        mBinding.includeLayoutSocial.fbUrl.setImageResource(R.drawable.ic_fb_gray);
+                        mBinding.includeLayoutSocial.fbUrl.setEnabled(false);
                     }
                     else {
-                        mBinding.fbUrl.setImageResource(R.drawable.icon_fb);
-                        mBinding.fbUrl.setEnabled(true);
+                        mBinding.includeLayoutSocial.fbUrl.setImageResource(R.drawable.icon_fb);
+                        mBinding.includeLayoutSocial.fbUrl.setEnabled(true);
                     }
 
                     if (stryoutubeUrl.equals("") || stryoutubeUrl.equals(null))
                     {
-                        mBinding.youtubeUrl.setImageResource(R.drawable.icon_utube_gray);
-                        mBinding.youtubeUrl.setEnabled(false);
+                        mBinding.includeLayoutSocial.youtubeUrl.setImageResource(R.drawable.icon_utube_gray);
+                        mBinding.includeLayoutSocial.youtubeUrl.setEnabled(false);
                     }
                     else {
-                        mBinding.youtubeUrl.setImageResource(R.drawable.icon_utube_red);
-                        mBinding.youtubeUrl.setEnabled(true);
+                        mBinding.includeLayoutSocial.youtubeUrl.setImageResource(R.drawable.icon_utube_red);
+                        mBinding.includeLayoutSocial.youtubeUrl.setEnabled(true);
                     }
 
                     if (strgoogleUrl.equals("") || strgoogleUrl.equals(null))
                     {
-                        mBinding.googleUrl.setImageResource(R.drawable.ic_google_gray);
-                        mBinding.googleUrl.setEnabled(false);
+                        mBinding.includeLayoutSocial.googleUrl.setImageResource(R.drawable.ic_google_gray);
+                        mBinding.includeLayoutSocial.googleUrl.setEnabled(false);
                     }
                     else {
-                        mBinding.googleUrl.setImageResource(R.drawable.icon_google);
-                        mBinding.googleUrl.setEnabled(true);
+                        mBinding.includeLayoutSocial.googleUrl.setImageResource(R.drawable.icon_google);
+                        mBinding.includeLayoutSocial.googleUrl.setEnabled(true);
                     }
 
                     if (strtwitterUrl.equals("") || strtwitterUrl.equals(null))
                     {
-                        mBinding.twitterUrl.setImageResource(R.drawable.icon_twitter_gray);
-                        mBinding.twitterUrl.setEnabled(false);
+                        mBinding.includeLayoutSocial.twitterUrl.setImageResource(R.drawable.icon_twitter_gray);
+                        mBinding.includeLayoutSocial.twitterUrl.setEnabled(false);
                     }
                     else {
-                        mBinding.twitterUrl.setImageResource(R.drawable.icon_twitter);
-                        mBinding.twitterUrl.setEnabled(true);
+                        mBinding.includeLayoutSocial.twitterUrl.setImageResource(R.drawable.icon_twitter);
+                        mBinding.includeLayoutSocial.twitterUrl.setEnabled(true);
                     }
 
                     if (stryoutubeUrl.equals("") || stryoutubeUrl.equals(null))
                     {
-                        mBinding.youtubeUrl.setImageResource(R.drawable.icon_utube_gray);
-                        mBinding.youtubeUrl.setEnabled(false);
+                        mBinding.includeLayoutSocial.youtubeUrl.setImageResource(R.drawable.icon_utube_gray);
+                        mBinding.includeLayoutSocial.youtubeUrl.setEnabled(false);
                     }
                     else {
-                        mBinding.youtubeUrl.setImageResource(R.drawable.icon_utube_red);
-                        mBinding.youtubeUrl.setEnabled(true);
+                        mBinding.includeLayoutSocial.youtubeUrl.setImageResource(R.drawable.icon_utube_red);
+                        mBinding.includeLayoutSocial.youtubeUrl.setEnabled(true);
                     }
 
 
                     if (strlinkedInUrl.equals("") || strlinkedInUrl.equals(null))
                     {
-                        mBinding.linkedInUrl.setImageResource(R.drawable.icon_linkedin_gray);
-                        mBinding.linkedInUrl.setEnabled(false);
+                        mBinding.includeLayoutSocial.linkedInUrl.setImageResource(R.drawable.icon_linkedin_gray);
+                        mBinding.includeLayoutSocial.linkedInUrl.setEnabled(false);
                     }
                     else {
-                        mBinding.linkedInUrl.setImageResource(R.drawable.icon_linkedin);
-                        mBinding.linkedInUrl.setEnabled(true);
+                        mBinding.includeLayoutSocial.linkedInUrl.setImageResource(R.drawable.icon_linkedin);
+                        mBinding.includeLayoutSocial.linkedInUrl.setEnabled(true);
                     }
 
 
@@ -1650,54 +1650,54 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                     personName = jsonObject.getString("FirstName") + " " + jsonObject.getString("LastName");
 
                     if (personName.equalsIgnoreCase("") || personName.equalsIgnoreCase(null)) {
-                        mBinding.txtName.setText("Person");
+                        mBinding.includeLayoutViepager.txtName.setText("Person");
                     } else {
-                        mBinding.txtName.setText(personName);
+                        mBinding.includeLayoutViepager.txtName.setText(personName);
                     }
 
                     if (Designation.equalsIgnoreCase("")
                             || Designation.equalsIgnoreCase(null)) {
-                        mBinding.txtDesi.setText("Designation");
-                        mBinding.txtDesi.setVisibility(View.GONE);
+                        mBinding.includeLayoutViepager.txtDesi.setText("Designation");
+                        mBinding.includeLayoutViepager.txtDesi.setVisibility(View.GONE);
                     } else {
-                        mBinding.txtDesi.setText(Designation);
+                        mBinding.includeLayoutViepager.txtDesi.setText(Designation);
                     }
 
                     if (IndustryName.equalsIgnoreCase("") || IndustryName == null)
                     {
-                        mBinding.llIndustryBox.setVisibility(View.GONE);
+                        mBinding.includeLayoutDetails.llIndustryBox.setVisibility(View.GONE);
                     } else {
-                        mBinding.txtIndustry.setText(IndustryName.trim().toString());
+                        mBinding.includeLayoutDetails.txtIndustry.setText(IndustryName.trim().toString());
                     }
 
                     if (CompanyName.equalsIgnoreCase("")
                             || CompanyName.equalsIgnoreCase(null)) {
-                        mBinding.txtCompany.setText("Company");
-                        mBinding.txtCompany.setVisibility(View.GONE);
+                        mBinding.includeLayoutViepager.txtCompany.setText("Company");
+                        mBinding.includeLayoutViepager.txtCompany.setVisibility(View.GONE);
                     } else {
-                        mBinding.txtCompany.setText(CompanyName);
+                        mBinding.includeLayoutViepager.txtCompany.setText(CompanyName);
                     }
 
                     if (jsonObject.getString("Website").equalsIgnoreCase("")
                             || jsonObject.getString("Website").equalsIgnoreCase(null)) {
-                        mBinding.txtWebsite.setText("Website");
-                        mBinding.llWebsiteBox.setVisibility(View.GONE);
+                        mBinding.includeLayoutDetails.txtWebsite.setText("Website");
+                        mBinding.includeLayoutDetails.llWebsiteBox.setVisibility(View.GONE);
                     } else {
-                        mBinding.txtWebsite.setText(jsonObject.getString("Website"));
+                        mBinding.includeLayoutDetails.txtWebsite.setText(jsonObject.getString("Website"));
                     }
 
                     if (Email1.equalsIgnoreCase("")
                             || Email1.equalsIgnoreCase(null)) {
-                        mBinding.txtEmail.setText("Email Address");
-                        mBinding.llEmailBox.setVisibility(View.GONE);
+                        mBinding.includeLayoutDetails.txtEmail.setText("Email Address");
+                        mBinding.includeLayoutDetails.llEmailBox.setVisibility(View.GONE);
                     } else {
-                        mBinding.txtEmail.setText(Email1);
+                        mBinding.includeLayoutDetails.txtEmail.setText(Email1);
                     }
 
                     if (Phone1.equalsIgnoreCase("")
                             || Phone1.equalsIgnoreCase(null)) {
-                        mBinding.txtPH.setText("Phone No.");
-                        mBinding.llTeleBox.setVisibility(View.GONE);
+                        mBinding.includeLayoutDetails.txtPH.setText("Phone No.");
+                        mBinding.includeLayoutDetails.llTeleBox.setVisibility(View.GONE);
                     } else {
                         //                   Phone1.trim();
 //                        Phone1 = Phone1.trim();
@@ -1706,35 +1706,35 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 //                        Phone1 = Phone1.replaceAll("\\s++$", "");
                         String number1 = String.valueOf(number);
                         txtPH.setText(String.valueOf(number));*/
-                        mBinding.txtPH.setText(Phone1);
+                        mBinding.includeLayoutDetails.txtPH.setText(Phone1);
                     }
 
                     if (Mobile1.equalsIgnoreCase("")
                             || Mobile1.equalsIgnoreCase(null)) {
-                        mBinding.txtMob.setText("Mobile No.");
-                        mBinding.llMobileBox.setVisibility(View.GONE);
+                        mBinding.includeLayoutDetails.txtMob.setText("Mobile No.");
+                        mBinding.includeLayoutDetails.llMobileBox.setVisibility(View.GONE);
                     } else {
                         Mobile1.trim();
-                        mBinding.txtMob.setText(Mobile1);
+                        mBinding.includeLayoutDetails.txtMob.setText(Mobile1);
                     }
 
                     if (Fax1.equalsIgnoreCase("")
                             || Fax1.equalsIgnoreCase(null)) {
-                        mBinding.txtWork.setText("Fax");
-                        mBinding.llFaxBox.setVisibility(View.GONE);
+                        mBinding.includeLayoutDetails.txtWork.setText("Fax");
+                        mBinding.includeLayoutDetails.llFaxBox.setVisibility(View.GONE);
                     } else {
                         Fax1.trim();
-                        mBinding.txtWork.setText(Fax1);
+                        mBinding.includeLayoutDetails.txtWork.setText(Fax1);
                     }
 
                     if (userImg.equalsIgnoreCase("")) {
-                        mBinding.imgProfileCard.setImageResource(R.drawable.usr_white1);
+                        mBinding.includeLayoutViepager.imgProfileCard.setImageResource(R.drawable.usr_white1);
                         displayProfile = "";
                     } else {
                         Picasso.with(CardDetail.this).load(Utility.BASE_IMAGE_URL+"UserProfile/" + userImg)
                                 .resize(300, 300)
                                 .onlyScaleDown()
-                                .skipMemoryCache().into(mBinding.imgProfileCard);
+                                .skipMemoryCache().into(mBinding.includeLayoutViepager.imgProfileCard);
                         displayProfile = userImg;
                     }
 
@@ -1800,12 +1800,12 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 
                     if (personAddress.isEmpty() || personAddress.toString().length() == 0)
                     {
-                        mBinding.llAddressBox.setVisibility(View.GONE);
-                        mBinding.llMapView.setVisibility(View.GONE);
+                        mBinding.includeLayoutDetails.llAddressBox.setVisibility(View.GONE);
+                        mBinding.includeLayoutDetails.llMapView.setVisibility(View.GONE);
                     }
                     else
                     {
-                        mBinding.txtAddress.setText(personAddress);
+                        mBinding.includeLayoutDetails.txtAddress.setText(personAddress);
                         GeocodingLocation locationAddress = new GeocodingLocation();
                         locationAddress.getAddressFromLocation(fullAddress, getApplicationContext(), new GeocoderHandler());
 
@@ -1861,12 +1861,12 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                         Double Longitude = bundle.getDouble("longitude");
 
                         createMarker(Latitude,Longitude);
-                        mBinding.llMapView.setVisibility(View.VISIBLE);
+                        mBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
                     }
                     else
                     {
 //                        Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
-                        mBinding.llMapView.setVisibility(View.GONE);
+                        mBinding.includeLayoutDetails.llMapView.setVisibility(View.GONE);
                     }
 
                     break;
@@ -2018,20 +2018,20 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                             // Toast.makeText(getApplicationContext(), tag1.getName(), Toast.LENGTH_LONG).show();
 
                             // Bitmap bmp = BitmapFactory.decodeByteArray(tag1.getCard_front(), 0, tag1.getCard_front().length);
-                            mBinding.imgCard.setImageResource(tag1.getCard_front());
+                            mBinding.includeLayoutViepager.imgCard.setImageResource(tag1.getCard_front());
 
                             // Bitmap bmp1 = BitmapFactory.decodeByteArray(tag1.getUser_image(), 0, tag1.getUser_image().length);
-                            mBinding.imgProfileCard.setImageResource(tag1.getUser_image());
-                            mBinding.txtName.setText(tag1.getName());
-                            mBinding.txtCompany.setText(tag1.getCompany());
-                            mBinding.txtWebsite.setText(tag1.getWebsite());
-                            mBinding.txtEmail.setText(tag1.getEmail());
-                            mBinding.txtPH.setText(tag1.getPh_no());
-                            mBinding.txtWork.setText(tag1.getWork_no());
-                            mBinding.txtMob.setText(tag1.getMob_no());
-                            mBinding.txtAddress.setText(tag1.getAddress());
+                            mBinding.includeLayoutViepager.imgProfileCard.setImageResource(tag1.getUser_image());
+                            mBinding.includeLayoutViepager.txtName.setText(tag1.getName());
+                            mBinding.includeLayoutViepager.txtCompany.setText(tag1.getCompany());
+                            mBinding.includeLayoutDetails.txtWebsite.setText(tag1.getWebsite());
+                            mBinding.includeLayoutDetails.txtEmail.setText(tag1.getEmail());
+                            mBinding.includeLayoutDetails.txtPH.setText(tag1.getPh_no());
+                            mBinding.includeLayoutDetails.txtWork.setText(tag1.getWork_no());
+                            mBinding.includeLayoutDetails.txtMob.setText(tag1.getMob_no());
+                            mBinding.includeLayoutDetails.txtAddress.setText(tag1.getAddress());
                             //  txtRemark.setText(tag1.getRemark());
-                            mBinding.txtDesi.setText(tag1.getDesignation());
+                            mBinding.includeLayoutViepager.txtDesi.setText(tag1.getDesignation());
                             image.add(String.valueOf(tag1.getCard_front()));   // its change from integer to string
                             image.add(String.valueOf(tag1.getCard_back()));    // its change from integer to string
                             myPager = new CardSwipe(getApplicationContext(), image);
@@ -2102,8 +2102,8 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 
                     if (groupsArray.length() == 0)
                     {
-                        mBinding.tvAddedGroupInfo.setVisibility(View.VISIBLE);
-                        mBinding.recyclerView.setVisibility(View.GONE);
+                        mBinding.includeLayoutDetails.tvAddedGroupInfo.setVisibility(View.VISIBLE);
+                        mBinding.includeLayoutDetails.recyclerView.setVisibility(View.GONE);
                     }
                     else
                     {
@@ -2127,11 +2127,11 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 
                         if (name.size() == 0)
                         {
-                            mBinding.tvAddedGroupInfo.setVisibility(View.VISIBLE);
+                            mBinding.includeLayoutDetails.tvAddedGroupInfo.setVisibility(View.VISIBLE);
                         }
                         else
                         {
-                            mBinding.tvAddedGroupInfo.setVisibility(View.GONE);
+                            mBinding.includeLayoutDetails.tvAddedGroupInfo.setVisibility(View.GONE);
                         }
                             /*GroupsInCardDetailAdapter groupsInCardDetailAdapter = new GroupsInCardDetailAdapter(CardDetail.this, img,name,desc);
                             groupListView.setAdapter(groupsInCardDetailAdapter);
@@ -2139,10 +2139,10 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 
                         GroupsRecyclerAdapter groupsRecyclerAdapter = new GroupsRecyclerAdapter(CardDetail.this, img, name, desc);
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-                        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(CardDetail.this, LinearLayoutManager.HORIZONTAL, true));
+                        mBinding.includeLayoutDetails.recyclerView.setLayoutManager(new LinearLayoutManager(CardDetail.this, LinearLayoutManager.HORIZONTAL, true));
 //                             recycler_view.setLayoutManager(mLayoutManager);
-                        mBinding.recyclerView.setItemAnimator(new DefaultItemAnimator());
-                        mBinding.recyclerView.setAdapter(groupsRecyclerAdapter);
+                        mBinding.includeLayoutDetails.recyclerView.setItemAnimator(new DefaultItemAnimator());
+                        mBinding.includeLayoutDetails.recyclerView.setAdapter(groupsRecyclerAdapter);
                     }
                 }
                 else
