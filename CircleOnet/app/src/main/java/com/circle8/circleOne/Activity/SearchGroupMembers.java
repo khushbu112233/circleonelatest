@@ -2,6 +2,7 @@ package com.circle8.circleOne.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
@@ -36,6 +37,7 @@ import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.CustomViewPager;
 import com.circle8.circleOne.Utils.Utility;
+import com.circle8.circleOne.databinding.ActivitySearchGroupMembersBinding;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -67,19 +69,14 @@ public class SearchGroupMembers extends AppCompatActivity
     private String user_id = "";
     private LoginSession loginSession;
     private String GroupId = "", from, ProfileId;
-
-    private RelativeLayout rlProgressDialog ;
-    private TextView tvProgressing ;
-    private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
-
     private String profileId = "";
     private String currentProfile = "";
-
+    ActivitySearchGroupMembersBinding activitySearchGroupMembersBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_group_members);
+        activitySearchGroupMembersBinding = DataBindingUtil. setContentView(this,R.layout.activity_search_group_members);
 
         final ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -88,11 +85,6 @@ public class SearchGroupMembers extends AppCompatActivity
         txtAdd = (TextView) findViewById(R.id.mytext1);
         mytext = (TextView) findViewById(R.id.mytext);
         imgBack = (ImageView)findViewById(R.id.imgBack);
-        rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
-        tvProgressing = (TextView)findViewById(R.id.txtProgressing);
-        ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
-        ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
-        ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
 
         Intent intent = getIntent();
         from = intent.getStringExtra("from");
@@ -332,7 +324,7 @@ public class SearchGroupMembers extends AppCompatActivity
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            activitySearchGroupMembersBinding.rlProgressDialog.setVisibility(View.GONE);
             try
             {
                 if (result != null)
@@ -393,7 +385,7 @@ public class SearchGroupMembers extends AppCompatActivity
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            activitySearchGroupMembersBinding.rlProgressDialog.setVisibility(View.GONE);
             try
             {
                 if (result != null)
@@ -609,7 +601,7 @@ public class SearchGroupMembers extends AppCompatActivity
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            activitySearchGroupMembersBinding.rlProgressDialog.setVisibility(View.GONE);
           //  Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -637,13 +629,13 @@ public class SearchGroupMembers extends AppCompatActivity
 
     public void CustomProgressDialog(final String loading)
     {
-        rlProgressDialog.setVisibility(View.VISIBLE);
-        tvProgressing.setText(loading);
+        activitySearchGroupMembersBinding.rlProgressDialog.setVisibility(View.VISIBLE);
+        activitySearchGroupMembersBinding.txtProgressing.setText(loading);
 
         Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
-        ivConnecting1.startAnimation(anim);
+        activitySearchGroupMembersBinding.imgConnecting1.startAnimation(anim);
         Animation anim1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.clockwise);
-        ivConnecting2.startAnimation(anim1);
+        activitySearchGroupMembersBinding.imgConnecting2.startAnimation(anim1);
 
         int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
         for (int i = 350; i <= SPLASHTIME; i = i + 350)
@@ -655,15 +647,15 @@ public class SearchGroupMembers extends AppCompatActivity
                 {
                     if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
                     {
-                        tvProgressing.setText(loading+".");
+                        activitySearchGroupMembersBinding.txtProgressing.setText(loading+".");
                     }
                     else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
                     {
-                        tvProgressing.setText(loading+"..");
+                        activitySearchGroupMembersBinding.txtProgressing.setText(loading+"..");
                     }
                     else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
                     {
-                        tvProgressing.setText(loading+"...");
+                        activitySearchGroupMembersBinding.txtProgressing.setText(loading+"...");
                     }
 
                 }

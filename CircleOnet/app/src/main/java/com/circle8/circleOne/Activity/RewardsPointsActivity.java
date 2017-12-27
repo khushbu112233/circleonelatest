@@ -2,21 +2,16 @@ package com.circle8.circleOne.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +25,7 @@ import com.circle8.circleOne.Model.ListCell;
 import com.circle8.circleOne.Model.MerchantGetAllModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
+import com.circle8.circleOne.databinding.ActivityRewardsPointsBinding;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -49,87 +45,48 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 public class RewardsPointsActivity extends AppCompatActivity implements View.OnClickListener
 {
-    private TextView tvRewardBalance, tvRewardPoints ;
-    private LinearLayout llEarnPointBox, llMerchantBox ;
-    private TextView tvRewardName, tvRewardType, tvRewardPoint, tvHistory;
-    private View MerchantView, RewardView, HistoryView , HistoryListView ;
-    private ImageView ivCirclePlus, ivHouse ;
-    private TextView tvPoints, tvMerchant ;
-
-    private ListView redeemListView ;
-    private ListView earnListView ;
-
-    private ExpandableListView expListView;
     ExpandableListAdapter1 expListAdapter ;
     private List<String> groupList = new ArrayList<String>();
     private List<String> childList = new ArrayList<String>();
     private Map<String, List<String>> laptopCollection = new LinkedHashMap<String, List<String>>();
-
     static TextView textView;
-    static ImageView imgDrawer, imgBack, ivAdImg;
-
+    static ImageView imgDrawer, imgBack;
     LoginSession loginSession ;
     String userId = "";
-
     MerchantGetAllModel merchantGetAllModel ;
     ArrayList<MerchantGetAllModel> merchantGetAllModelArrayList = new ArrayList<>();
-
-    private RelativeLayout rlProgressDialog ;
-    private TextView tvProgressing ;
-    private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
-
-    private TextView tvProductListInfo, tvEarnListInfo, tvHistoryListInfo ;
-
     //for new expandable listview
     MerchantExpandableAdapter merchantExpandableAdapter ;
     List<String> categoryList = new ArrayList<>() ;
     List<String> subCategoryList = new ArrayList<>() ;
     HashMap<String, List<String>> categorysData = new HashMap<String, List<String>>();
-
     //for Earn points
     EarnPointsAdapter earnPointsAdapter ;
     ArrayList<EarnPointsModel> earnPointsModelsList = new ArrayList<>();
-
+    ActivityRewardsPointsBinding activityRewardsPointsBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rewards_points);
+        activityRewardsPointsBinding = DataBindingUtil.setContentView(this,R.layout.activity_rewards_points);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
         loginSession = new LoginSession(getApplicationContext());
         HashMap<String, String> user = loginSession.getUserDetails();
         userId = user.get(LoginSession.KEY_USERID);
-
-        tvRewardPoints = (TextView)findViewById(R.id.tvRewardPoints);
-        tvRewardBalance = (TextView)findViewById(R.id.tvRewardBalance);
-
-        tvHistory = (TextView)findViewById(R.id.tvHistory);
-        llEarnPointBox = (LinearLayout)findViewById(R.id.llEarnPointBox);
-        llMerchantBox = (LinearLayout)findViewById(R.id.llMerchantBox);
-        ivCirclePlus = (ImageView)findViewById(R.id.ivCirclePlus);
-        ivHouse = (ImageView)findViewById(R.id.ivHouse);
-        tvPoints = (TextView)findViewById(R.id.tvPoints);
-        tvMerchant = (TextView)findViewById(R.id.tvMerchant);
         imgBack = (ImageView)findViewById(R.id.imgBack);
-
-        rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
-        tvProgressing = (TextView)findViewById(R.id.txtProgressing);
-        ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
-        ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
-        ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
-
         init();
         init1();
 
-        llEarnPointBox.setOnClickListener(this);
-        llMerchantBox.setOnClickListener(this);
-        tvHistory.setOnClickListener(this);
+        activityRewardsPointsBinding.llEarnPointBox.setOnClickListener(this);
+        activityRewardsPointsBinding.llMerchantBox.setOnClickListener(this);
+        activityRewardsPointsBinding.tvHistory.setOnClickListener(this);
         imgBack.setOnClickListener(this);
 
         new HttpAsyncGetAll().execute(Utility.BASE_URL+"Merchant/GetAll");                          //get
@@ -150,25 +107,15 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
 
     private void init()
     {
-        HistoryListView = findViewById(R.id.icdHistoryListviewLayout);
-        HistoryView = findViewById(R.id.icdRewardHistoryLayout);
-        MerchantView = findViewById(R.id.icdMerchantLayout);
-        RewardView = findViewById(R.id.icdEarnPointLayout);
-
-        tvHistoryListInfo = (TextView)HistoryListView.findViewById(R.id.tvHistoryListInfo);
-        tvProductListInfo = (TextView)MerchantView.findViewById(R.id.tvProductListInfo);
-        tvEarnListInfo = (TextView)RewardView.findViewById(R.id.tvEarnListInfo);
 
 //        getHistory();
 //        createGroupList();
 //        createCollection();
 
-        expListView = (ExpandableListView)MerchantView.findViewById(R.id.laptop_list);
-        ivAdImg = (ImageView)MerchantView.findViewById(R.id.ivAdImg);
 
         setGroupIndicatorToRight();
 
-        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener()
+        activityRewardsPointsBinding.icdMerchantLayout.laptopList.setOnChildClickListener(new ExpandableListView.OnChildClickListener()
         {
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id)
@@ -187,7 +134,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
             }
         });
 
-        ivAdImg.setOnClickListener(new View.OnClickListener() {
+        activityRewardsPointsBinding.icdMerchantLayout.ivAdImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -198,7 +145,6 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
             }
         });
 
-        earnListView = (ListView) RewardView.findViewById(R.id.listView_Earn);
     }
 
     private void init1()
@@ -210,39 +156,30 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
 
         if(status.equalsIgnoreCase("CardImage"))
         {
-            HistoryListView.setVisibility(View.VISIBLE);
-
-            tvHistory.setAlpha((float) 1.0);
-
-            ivCirclePlus.setImageResource(R.drawable.ic_circle_plus_blue);
-            tvPoints.setTextColor(getResources().getColor(R.color.colorPrimary));
-
-            ivHouse.setImageResource(R.drawable.ic_house_blue);
-            tvMerchant.setTextColor(getResources().getColor(R.color.colorPrimary));
+            activityRewardsPointsBinding.icdHistoryListviewLayout.relHistory.setVisibility(View.VISIBLE);
+            activityRewardsPointsBinding.tvHistory.setAlpha((float) 1.0);
+            activityRewardsPointsBinding.ivCirclePlus.setImageResource(R.drawable.ic_circle_plus_blue);
+            activityRewardsPointsBinding.tvPoints.setTextColor(getResources().getColor(R.color.colorPrimary));
+            activityRewardsPointsBinding.ivHouse.setImageResource(R.drawable.ic_house_blue);
+            activityRewardsPointsBinding.tvMerchant.setTextColor(getResources().getColor(R.color.colorPrimary));
         }
         else if(status.equalsIgnoreCase("RewardPoint"))
         {
-            RewardView.setVisibility(View.VISIBLE);
-
-            ivCirclePlus.setImageResource(R.drawable.ic_circle_plus);
-            tvPoints.setTextColor(getResources().getColor(R.color.white));
-
-            ivHouse.setImageResource(R.drawable.ic_house_blue);
-            tvMerchant.setTextColor(getResources().getColor(R.color.colorPrimary));
-
-            tvHistory.setAlpha((float) 0.5);
+            activityRewardsPointsBinding.icdEarnPointLayout.relEarn.setVisibility(View.VISIBLE);
+            activityRewardsPointsBinding.ivCirclePlus.setImageResource(R.drawable.ic_circle_plus);
+            activityRewardsPointsBinding.tvPoints.setTextColor(getResources().getColor(R.color.white));
+            activityRewardsPointsBinding.ivHouse.setImageResource(R.drawable.ic_house_blue);
+            activityRewardsPointsBinding.tvMerchant.setTextColor(getResources().getColor(R.color.colorPrimary));
+            activityRewardsPointsBinding.tvHistory.setAlpha((float) 0.5);
         }
         else if(status.equalsIgnoreCase("Merchant"))
         {
-            MerchantView.setVisibility(View.VISIBLE);
-
-            ivHouse.setImageResource(R.drawable.ic_house);
-            tvMerchant.setTextColor(getResources().getColor(R.color.white));
-
-            ivCirclePlus.setImageResource(R.drawable.ic_circle_plus_blue);
-            tvPoints.setTextColor(getResources().getColor(R.color.colorPrimary));
-
-            tvHistory.setAlpha((float) 0.5);
+            activityRewardsPointsBinding.icdMerchantLayout.llMerchant.setVisibility(View.VISIBLE);
+            activityRewardsPointsBinding.ivHouse.setImageResource(R.drawable.ic_house);
+            activityRewardsPointsBinding.tvMerchant.setTextColor(getResources().getColor(R.color.white));
+            activityRewardsPointsBinding.ivCirclePlus.setImageResource(R.drawable.ic_circle_plus_blue);
+            activityRewardsPointsBinding.tvPoints.setTextColor(getResources().getColor(R.color.colorPrimary));
+            activityRewardsPointsBinding.tvHistory.setAlpha((float) 0.5);
         }
 
     }
@@ -262,11 +199,10 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         items.add(new ListCell("JUL 2017", "18th", "Berjaya Times Square", "+10"));
         items.add(new ListCell("JUL 2017", "15th", "Sungai Wang Plaza", "+20"));
 
-        redeemListView = (ListView)HistoryListView.findViewById(R.id.awesome_list);
         items = sortAndAddSections(items);
 
         ListAdapter1 adapter = new ListAdapter1(this, items);
-        redeemListView.setAdapter(adapter);
+        activityRewardsPointsBinding.icdHistoryListviewLayout.awesomeList.setAdapter(adapter);
     }
 
     private ArrayList<ListCell> sortAndAddSections(ArrayList<ListCell> itemList)
@@ -364,8 +300,8 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int width = dm.widthPixels;
 
-        expListView.setIndicatorBounds(width - getDipsFromPixel(30), width - getDipsFromPixel(5));
-//        expListView.setGroupIndicator(getResources().getDrawable(R.drawable.ic_down_arrow));
+        activityRewardsPointsBinding.icdMerchantLayout.laptopList.setIndicatorBounds(width - getDipsFromPixel(30), width - getDipsFromPixel(5));
+//        activityRewardsPointsBinding.icdMerchantLayout.laptopList.setGroupIndicator(getResources().getDrawable(R.drawable.ic_down_arrow));
     }
 
     // Convert pixel to dip
@@ -380,50 +316,50 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View v)
     {
-        if( v == llEarnPointBox)
+        if( v == activityRewardsPointsBinding.llEarnPointBox)
         {
-            HistoryView.setVisibility(View.GONE);
-            HistoryListView.setVisibility(View.GONE);
-            MerchantView.setVisibility(View.GONE);
-            RewardView.setVisibility(View.VISIBLE);
+            activityRewardsPointsBinding.icdRewardHistoryLayout.relRewards.setVisibility(View.GONE);
+            activityRewardsPointsBinding.icdHistoryListviewLayout.relHistory.setVisibility(View.GONE);
+            activityRewardsPointsBinding.icdMerchantLayout.llMerchant.setVisibility(View.GONE);
+            activityRewardsPointsBinding.icdEarnPointLayout.relEarn.setVisibility(View.VISIBLE);
 
-            ivCirclePlus.setImageResource(R.drawable.ic_circle_plus);
-            ivHouse.setImageResource(R.drawable.ic_house_blue);
+            activityRewardsPointsBinding.ivCirclePlus.setImageResource(R.drawable.ic_circle_plus);
+            activityRewardsPointsBinding.ivHouse.setImageResource(R.drawable.ic_house_blue);
 
-            tvPoints.setTextColor(getResources().getColor(R.color.white));
-            tvMerchant.setTextColor(getResources().getColor(R.color.colorPrimary));
+            activityRewardsPointsBinding.tvPoints.setTextColor(getResources().getColor(R.color.white));
+            activityRewardsPointsBinding.tvMerchant.setTextColor(getResources().getColor(R.color.colorPrimary));
 
-            tvHistory.setAlpha((float) 0.5);
+            activityRewardsPointsBinding.tvHistory.setAlpha((float) 0.5);
         }
-        if( v == llMerchantBox)
+        if( v == activityRewardsPointsBinding.llMerchantBox)
         {
-            HistoryView.setVisibility(View.GONE);
-            HistoryListView.setVisibility(View.GONE);
-            MerchantView.setVisibility(View.VISIBLE);
-            RewardView.setVisibility(View.GONE);
+            activityRewardsPointsBinding.icdRewardHistoryLayout.relRewards.setVisibility(View.GONE);
+            activityRewardsPointsBinding.icdHistoryListviewLayout.relHistory.setVisibility(View.GONE);
+            activityRewardsPointsBinding.icdMerchantLayout.llMerchant.setVisibility(View.VISIBLE);
+            activityRewardsPointsBinding.icdEarnPointLayout.relEarn.setVisibility(View.GONE);
 
-            ivCirclePlus.setImageResource(R.drawable.ic_circle_plus_blue);
-            ivHouse.setImageResource(R.drawable.ic_house);
+            activityRewardsPointsBinding.ivCirclePlus.setImageResource(R.drawable.ic_circle_plus_blue);
+            activityRewardsPointsBinding.ivHouse.setImageResource(R.drawable.ic_house);
 
-            tvPoints.setTextColor(getResources().getColor(R.color.colorPrimary));
-            tvMerchant.setTextColor(getResources().getColor(R.color.white));
+            activityRewardsPointsBinding.tvPoints.setTextColor(getResources().getColor(R.color.colorPrimary));
+            activityRewardsPointsBinding.tvMerchant.setTextColor(getResources().getColor(R.color.white));
 
-            tvHistory.setAlpha((float) 0.5);
+            activityRewardsPointsBinding.tvHistory.setAlpha((float) 0.5);
         }
-        if( v == tvHistory)
+        if( v == activityRewardsPointsBinding.tvHistory)
         {
-            tvHistory.setAlpha((float) 1.0);
+            activityRewardsPointsBinding.tvHistory.setAlpha((float) 1.0);
 
-            HistoryView.setVisibility(View.GONE);
-            HistoryListView.setVisibility(View.VISIBLE);
-            MerchantView.setVisibility(View.GONE);
-            RewardView.setVisibility(View.GONE);
+            activityRewardsPointsBinding.icdRewardHistoryLayout.relRewards.setVisibility(View.GONE);
+            activityRewardsPointsBinding.icdHistoryListviewLayout.relHistory.setVisibility(View.VISIBLE);
+            activityRewardsPointsBinding.icdMerchantLayout.llMerchant.setVisibility(View.GONE);
+            activityRewardsPointsBinding.icdEarnPointLayout.relEarn.setVisibility(View.GONE);
 
-            tvPoints.setTextColor(getResources().getColor(R.color.colorPrimary));
-            tvMerchant.setTextColor(getResources().getColor(R.color.colorPrimary));
+            activityRewardsPointsBinding.tvPoints.setTextColor(getResources().getColor(R.color.colorPrimary));
+            activityRewardsPointsBinding.tvMerchant.setTextColor(getResources().getColor(R.color.colorPrimary));
 
-            ivCirclePlus.setImageResource(R.drawable.ic_circle_plus_blue);
-            ivHouse.setImageResource(R.drawable.ic_house_blue);
+            activityRewardsPointsBinding.ivCirclePlus.setImageResource(R.drawable.ic_circle_plus_blue);
+            activityRewardsPointsBinding.ivHouse.setImageResource(R.drawable.ic_house_blue);
         }
         if ( v == imgBack)
         {
@@ -450,7 +386,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
             dialog.setCancelable(false);*/
 
             String loading = "Get all" ;
-            CustomProgressDialog(loading);
+            CustomProgressDialog(loading,getApplicationContext());
         }
 
         @Override
@@ -462,7 +398,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            dismissProgress();
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -527,8 +463,8 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                                     merchantGetAllModel.setProductCost(ProductCost);
                                     merchantGetAllModelArrayList.add(merchantGetAllModel);*/
 
-                                   arrayList.add(Merchant_Name);
-                                   arrayList1.add(Merchant_ID);
+                                    arrayList.add(Merchant_Name);
+                                    arrayList1.add(Merchant_ID);
 
                                    /* child_Data[j] = Merchant_Name ;
                                     String parents = groupList.get(i).toString();
@@ -545,7 +481,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                                         laptopCollection.put(parent, childList);
                                     }
                                     expListAdapter = new ExpandableListAdapter1(RewardsPointsActivity.this, groupList, laptopCollection);
-                                    expListView.setAdapter(expListAdapter);*/
+                                    activityRewardsPointsBinding.icdMerchantLayout.laptopList.setAdapter(expListAdapter);*/
 
                                    /*For second try*/
                                   /* for (String parent: categoryList)
@@ -557,7 +493,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                                        categorysData.put(parent, subCategoryList);
                                    }
                                     merchantExpandableAdapter = new MerchantExpandableAdapter(RewardsPointsActivity.this, categoryList, categorysData);
-                                    expListView.setAdapter(merchantExpandableAdapter);*/
+                                    activityRewardsPointsBinding.icdMerchantLayout.laptopList.setAdapter(merchantExpandableAdapter);*/
                                 }
 
                                 merchantGetAllModel.setMerchantNameList(arrayList);
@@ -573,7 +509,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                             categorysData.put(merchantGetAllModelArrayList.get(i).getProductCategoryName(), merchantGetAllModelArrayList.get(i).getMerchantNameList());
 
                             merchantExpandableAdapter = new MerchantExpandableAdapter(RewardsPointsActivity.this, categoryList, categorysData);
-                            expListView.setAdapter(merchantExpandableAdapter);
+                            activityRewardsPointsBinding.icdMerchantLayout.laptopList.setAdapter(merchantExpandableAdapter);
                         }
 
                     }
@@ -653,7 +589,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
             dialog.setCancelable(false);*/
 
             String loading = "Get product category" ;
-            CustomProgressDialog(loading);
+            CustomProgressDialog(loading,getApplicationContext());
         }
 
         @Override
@@ -665,7 +601,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            dismissProgress();
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -754,7 +690,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
             dialog.setCancelable(false);*/
 
             String loading = "Get products" ;
-            CustomProgressDialog(loading);
+            CustomProgressDialog(loading,getApplicationContext());
         }
 
         @Override
@@ -766,7 +702,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            dismissProgress();
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -862,7 +798,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
             dialog.setCancelable(false);*/
 
             String loading = "Get product by category" ;
-            CustomProgressDialog(loading);
+            CustomProgressDialog(loading,getApplicationContext());
         }
 
         @Override
@@ -874,7 +810,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            dismissProgress();
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -991,7 +927,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
             dialog.setCancelable(false);*/
 
             String loading = "Get balance" ;
-            CustomProgressDialog(loading);
+            CustomProgressDialog(loading,getApplicationContext());
         }
 
         @Override
@@ -1003,7 +939,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            dismissProgress();
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -1016,8 +952,8 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                     String userid = jsonObject.getString("userid");
                     String points_earned = jsonObject.getString("points_earned");
 
-                    tvRewardPoints.setText(points_earned);
-                    tvRewardBalance.setText(points_earned);
+                    activityRewardsPointsBinding.tvRewardPoints.setText(points_earned);
+                    activityRewardsPointsBinding.tvRewardBalance.setText(points_earned);
                 }
                 else
                 {
@@ -1098,7 +1034,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
             dialog.setCancelable(false);*/
 
             String loading = "Fetching products" ;
-            CustomProgressDialog(loading);
+            CustomProgressDialog(loading,getApplicationContext());
         }
 
         @Override
@@ -1110,7 +1046,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            dismissProgress();
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -1124,49 +1060,49 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
 
                     try
                     {
-                    JSONArray jsonArray = jsonObject.getJSONArray("EarnedPoints_Trans");
-                    if (jsonArray.length() != 0)
-                    {
-                        for (int i = 0 ; i < jsonArray.length(); i++)
+                        JSONArray jsonArray = jsonObject.getJSONArray("EarnedPoints_Trans");
+                        if (jsonArray.length() != 0)
                         {
-                            tvEarnListInfo.setVisibility(View.GONE);
+                            for (int i = 0 ; i < jsonArray.length(); i++)
+                            {
+                                activityRewardsPointsBinding.icdEarnPointLayout.tvEarnListInfo.setVisibility(View.GONE);
 
-                            JSONObject productListObj = jsonArray.getJSONObject(i);
+                                JSONObject productListObj = jsonArray.getJSONObject(i);
 
-                            String Earned_ID = productListObj.getString("Earned_ID");
-                            String Points_Earned = productListObj.getString("Points_Earned");
-                            String Benefit_Name = productListObj.getString("Benefit_Name");
-                            String Benefit_Desc = productListObj.getString("Benefit_Desc");
-                            String Benefit_Date = productListObj.getString("Benefit_Date");
+                                String Earned_ID = productListObj.getString("Earned_ID");
+                                String Points_Earned = productListObj.getString("Points_Earned");
+                                String Benefit_Name = productListObj.getString("Benefit_Name");
+                                String Benefit_Desc = productListObj.getString("Benefit_Desc");
+                                String Benefit_Date = productListObj.getString("Benefit_Date");
 
-                            EarnPointsModel earnPointsModel = new EarnPointsModel();
-                            earnPointsModel.setEarnId(productListObj.getString("Earned_ID"));
-                            earnPointsModel.setPointEarned(productListObj.getString("Points_Earned"));
-                            earnPointsModel.setBenefitName(productListObj.getString("Benefit_Name"));
-                            earnPointsModel.setBenefitDesc(productListObj.getString("Benefit_Desc"));
-                            earnPointsModel.setBenefitDate(productListObj.getString("Benefit_Date"));
-                            earnPointsModelsList.add(earnPointsModel);
+                                EarnPointsModel earnPointsModel = new EarnPointsModel();
+                                earnPointsModel.setEarnId(productListObj.getString("Earned_ID"));
+                                earnPointsModel.setPointEarned(productListObj.getString("Points_Earned"));
+                                earnPointsModel.setBenefitName(productListObj.getString("Benefit_Name"));
+                                earnPointsModel.setBenefitDesc(productListObj.getString("Benefit_Desc"));
+                                earnPointsModel.setBenefitDate(productListObj.getString("Benefit_Date"));
+                                earnPointsModelsList.add(earnPointsModel);
+                            }
+
+                            earnPointsAdapter = new EarnPointsAdapter(RewardsPointsActivity.this, earnPointsModelsList);
+                            activityRewardsPointsBinding.icdEarnPointLayout.listViewEarn.setAdapter(earnPointsAdapter);
+                            earnPointsAdapter.notifyDataSetChanged();
                         }
-
-                        earnPointsAdapter = new EarnPointsAdapter(RewardsPointsActivity.this, earnPointsModelsList);
-                        earnListView.setAdapter(earnPointsAdapter);
-                        earnPointsAdapter.notifyDataSetChanged();
-                    }
-                    else
-                    {
-                        tvEarnListInfo.setVisibility(View.VISIBLE);
+                        else
+                        {
+                            activityRewardsPointsBinding.icdEarnPointLayout.tvEarnListInfo.setVisibility(View.VISIBLE);
 //                        Toast.makeText(getApplicationContext(), "No EarnPoints Avail", Toast.LENGTH_LONG).show();
-                    }
+                        }
                     }
                     catch (JSONException e)
                     {
                         e.printStackTrace();
-                        tvEarnListInfo.setVisibility(View.VISIBLE);
+                        activityRewardsPointsBinding.icdEarnPointLayout.tvEarnListInfo.setVisibility(View.VISIBLE);
                     }
                 }
                 else
                 {
-//                    tvEarnListInfo.setVisibility(View.VISIBLE);
+//                    activityRewardsPointsBinding.icdEarnPointLayout.tvEarnListInfo.setVisibility(View.VISIBLE);
 //                     Toast.makeText(getApplicationContext(), "Not able to load ..", Toast.LENGTH_LONG).show();
                 }
             }
@@ -1244,7 +1180,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
             dialog.setCancelable(false);*/
 
             String loading = "Get history redeem points" ;
-            CustomProgressDialog(loading);
+            CustomProgressDialog(loading,getApplicationContext());
         }
 
         @Override
@@ -1256,8 +1192,8 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
-           // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            dismissProgress();
+            // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
                 if (result != null)
@@ -1275,7 +1211,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                             JSONArray jsonArray = jsonObject.getJSONArray("ReedemedPoints_Trans");
                             if (jsonArray.length() != 0)
                             {
-                                tvHistoryListInfo.setVisibility(View.GONE);
+                                activityRewardsPointsBinding.icdHistoryListviewLayout.tvHistoryListInfo.setVisibility(View.GONE);
 
                                 for (int i = 0; i < jsonArray.length(); i++)
                                 {
@@ -1298,27 +1234,26 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
 
                                     items.add(new ListCell("", "", ProductName, "+" + Points_Used));
 
-                                    redeemListView = (ListView) HistoryListView.findViewById(R.id.awesome_list);
                                     items = sortAndAddSections(items);
 
                                     ListAdapter1 adapter = new ListAdapter1(RewardsPointsActivity.this, items);
-                                    redeemListView.setAdapter(adapter);
+                                    activityRewardsPointsBinding.icdHistoryListviewLayout.awesomeList.setAdapter(adapter);
                                 }
                             }
                             else
                             {
-                                tvHistoryListInfo.setVisibility(View.VISIBLE);
+                                activityRewardsPointsBinding.icdHistoryListviewLayout.tvHistoryListInfo.setVisibility(View.VISIBLE);
                             }
                         }
                         catch (JSONException e)
                         {
                             e.printStackTrace();
-                            tvHistoryListInfo.setVisibility(View.VISIBLE);
+                            activityRewardsPointsBinding.icdHistoryListviewLayout.tvHistoryListInfo.setVisibility(View.VISIBLE);
                         }
                     }
                     else
                     {
-                        tvHistoryListInfo.setVisibility(View.VISIBLE);
+                        activityRewardsPointsBinding.icdHistoryListviewLayout.tvHistoryListInfo.setVisibility(View.VISIBLE);
 //                        Toast.makeText(getApplicationContext(), "No Redeem Points Avail", Toast.LENGTH_LONG).show();
                     }
                 }
@@ -1388,40 +1323,5 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         return result;
     }
 
-    public  void CustomProgressDialog(final String loading)
-    {
-        rlProgressDialog.setVisibility(View.VISIBLE);
-        tvProgressing.setText(loading);
-
-        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
-        ivConnecting1.startAnimation(anim);
-        Animation anim1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.clockwise);
-        ivConnecting2.startAnimation(anim1);
-
-        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
-        for (int i = 350; i <= SPLASHTIME; i = i + 350)
-        {
-            final int j = i;
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run()
-                {
-                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
-                    {
-                        tvProgressing.setText(loading+".");
-                    }
-                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
-                    {
-                        tvProgressing.setText(loading+"..");
-                    }
-                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
-                    {
-                        tvProgressing.setText(loading+"...");
-                    }
-
-                }
-            }, i);
-        }
-    }
 
 }
