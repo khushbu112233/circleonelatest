@@ -294,10 +294,10 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
             }
         });
         mBinding.imgBack.setOnClickListener(this);
-        mBinding.imgCards.setOnClickListener(this);
-        mBinding.imgConnect.setOnClickListener(this);
-        mBinding.imgEvents.setOnClickListener(this);
-        mBinding.imgProfile.setOnClickListener(this);
+        mBinding.includeLayoutBottom.imgCards.setOnClickListener(this);
+        mBinding.includeLayoutBottom.imgConnect.setOnClickListener(this);
+        mBinding.includeLayoutBottom.imgEvents.setOnClickListener(this);
+        mBinding.includeLayoutBottom.imgProfile.setOnClickListener(this);
         mBinding.tvSendMessage.setOnClickListener(this);
         mBinding.ivMap.setOnClickListener(this);
         mBinding.imgProfileShare.setOnClickListener(this);
@@ -474,7 +474,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                                         intent.putExtra(Intent.EXTRA_TEXT, "");
                                         startActivity(intent);
                                     } catch (Exception e) {
-                                        Toast.makeText(getApplicationContext(), "Sorry...You don't have any mail app", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(), "Sorry...you don't have any mail app", Toast.LENGTH_SHORT).show();
                                         e.printStackTrace();
                                     }
                                 }
@@ -646,31 +646,9 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                         public void onSuccess(Void result, Bundle bundle) {
                             Log.v(TAG, "Chat login onSuccess()");
 
-                            // ProgressDialogFragment.hide(getSupportFragmentManager());
-                            //    DialogsActivity.start(SplashActivity.this);
-                            // finish();
-
-
-                            //  Toast.makeText(getApplicationContext(), selectedUsers.toString(), Toast.LENGTH_LONG).show();
-
-
                             ArrayList<Integer> occupantIdsList = new ArrayList<Integer>();
                             occupantIdsList.add(Integer.parseInt(CurrentQ_ID));
                             occupantIdsList.add(occupant_id);
-/*
-                        QBChatDialog dialog = new QBChatDialog();
-                        dialog.setName("Chat with Garry and John");
-                        dialog.setPhoto("1786");
-                        dialog.setType(QBDialogType.PRIVATE);
-                        dialog.setOccupantsIds(occupantIdsList);*/
-
-//or just use DialogUtils
-//for creating PRIVATE dialog
-//QBChatDialog dialog = DialogUtils.buildPrivateDialog(recipientId);
-
-//for creating GROUP dialog
-
-
                             QBChatDialog dialog = DialogUtils.buildDialog("Chat with Garry and John", QBDialogType.PRIVATE, occupantIdsList);
 
                             QBRestChatService.createChatDialog(dialog).performAsync(new QBEntityCallback<QBChatDialog>() {
@@ -688,30 +666,6 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 
                                 }
                             });
-
-
-                        /*if (isPrivateDialogExist(selectedUsers)) {
-                            selectedUsers.remove(ChatHelper.getCurrentUser());
-                            QBChatDialog existingPrivateDialog = QbDialogHolder.getInstance().getPrivateDialogWithUser(selectedUsers.get(0));
-                          //  isProcessingResultInProgress = false;
-                            ChatActivity.startForResult(CardDetail.this, 165, existingPrivateDialog);
-                        } else {
-                           // ProgressDialogFragment.show(getSupportFragmentManager(), R.string.create_chat);
-                            createDialog(selectedUsers);
-                        }*/
-
-
-                       /* if (isPrivateDialogExist(selectedUsers)) {
-                            selectedUsers.remove(ChatHelper.getCurrentUser());
-                            QBChatDialog existingPrivateDialog = QbDialogHolder.getInstance().getPrivateDialogWithUser(selectedUsers.get(0));
-                            // isProcessingResultInProgress = false;
-                            ChatActivity.startForResult(CardDetail.this, 165, existingPrivateDialog);
-                            finish();
-                        } else {*/
-                            //  ProgressDialogFragment.show(getSupportFragmentManager(), R.string.create_chat);
-                            //  createDialog(selectedUsers);
-                            //   }
-
                         }
 
                         @Override
@@ -725,24 +679,6 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                 }catch (Exception e){
 
                 }
-
-                //  ChatActivity.chatMessageListener = new ChatActivity.ChatMessageListener();
-               /* Toast.makeText(getApplicationContext(), selectedUsers.toString(), Toast.LENGTH_LONG).show();
-                ChatHelper.getInstance().createDialogWithSelectedUsers(selectedUsers,
-                        new QBEntityCallback<QBChatDialog>() {
-                            @Override
-                            public void onSuccess(QBChatDialog dialog, Bundle args) {
-                                // dialogsManager.sendSystemMessageAboutCreatingDialog(systemMessagesManager, dialog);
-                                ChatActivity.startForResult(CardDetail.this, 165, dialog);
-                                //ProgressDialogFragment.hide(getSupportFragmentManager());
-                            }
-
-                            @Override
-                            public void onError(QBResponseException e) {
-                                // ProgressDialogFragment.hide(getSupportFragmentManager());
-                            }
-                        }
-                );*/
                 break;
             case R.id.ivMap:
 
@@ -978,7 +914,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                                 intent.putExtra(Intent.EXTRA_TEXT, "");
                                 startActivity(intent);
                             } catch (Exception e) {
-                                Toast.makeText(getApplicationContext(), "Sorry...You don't have any mail app", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Sorry...you don't have any mail app", Toast.LENGTH_SHORT).show();
                                 e.printStackTrace();
                             }
                         }
@@ -1506,13 +1442,13 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                     String Success = jsonObject.getString("Success");
                     String Message = jsonObject.getString("Message");
                     if (Success.equals("1")) {
-                        Toast.makeText(getApplicationContext(), "Member Added into circle Successfully", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Member added into circle successfully", Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(getApplicationContext(), "Member not added", Toast.LENGTH_LONG).show();
                     }
                     // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
                 } else {
-                    Toast.makeText(getApplicationContext(), "Not able to Add Friend in circle", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to add friend in circle", Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -1826,13 +1762,13 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 
                     mBinding.viewPager.setClipChildren(false);
                     mBinding.viewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
-                    mBinding.viewPager.setOffscreenPageLimit(3);
+                    mBinding.viewPager.setOffscreenPageLimit(1);
                     //  mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
                     mBinding.viewPager.setAdapter(myPager);
 
                     mBinding.viewPager1.setClipChildren(false);
                     mBinding.viewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
-                    mBinding.viewPager1.setOffscreenPageLimit(3);
+                    mBinding.viewPager1.setOffscreenPageLimit(1);
                     //   viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
                     mBinding.viewPager1.setAdapter(myPager);
 
@@ -2102,14 +2038,14 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 
                             mBinding.viewPager.setClipChildren(false);
                             mBinding.viewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
-                            mBinding.viewPager.setOffscreenPageLimit(3);
+                            mBinding.viewPager.setOffscreenPageLimit(1);
                             //   mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
 
                             mBinding.viewPager1.setAdapter(myPager);
 
                             mBinding.viewPager1.setClipChildren(false);
                             mBinding.viewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
-                            mBinding.viewPager1.setOffscreenPageLimit(3);
+                            mBinding.viewPager1.setOffscreenPageLimit(1);
                             //    viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getApplicationContext())); // Set transformer
                             mBinding.viewPager1.setAdapter(myPager);
 
@@ -2211,7 +2147,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                 }
                 else
                 {
-                    Toast.makeText(getBaseContext(), "Not able to Update Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Not able to fetch circles", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {

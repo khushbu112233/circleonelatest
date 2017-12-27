@@ -259,7 +259,7 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
                             }
                             catch(Exception e)
                             {
-                                Toast.makeText(getApplicationContext(), "Sorry...You don't have any mail app", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Sorry...you don't have any mail app", Toast.LENGTH_SHORT).show();
                                 e.printStackTrace();
                             }
                         }
@@ -334,15 +334,15 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
 
             if (contactType.equalsIgnoreCase("Contact Type"))
             {
-                Toast.makeText(getApplicationContext(),"Select Contact Type",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Select contact Type",Toast.LENGTH_SHORT).show();
             }
             else if (subject.isEmpty())
             {
-                Toast.makeText(getApplicationContext(),"Enter Subject",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Enter subject",Toast.LENGTH_SHORT).show();
             }
             else if (description.isEmpty())
             {
-                Toast.makeText(getApplicationContext(),"Enter Description",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Enter description",Toast.LENGTH_SHORT).show();
             }
             else
             {
@@ -411,7 +411,7 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
                         activityContactUsBinding.etSubject.setText(null);
                         activityContactUsBinding.etDescription.setText(null);
 
-                        Toast.makeText(getApplicationContext(),"Send Successfully",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Send successfully",Toast.LENGTH_SHORT).show();
                     }
                     else
                     {
@@ -420,7 +420,7 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to load cards..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {

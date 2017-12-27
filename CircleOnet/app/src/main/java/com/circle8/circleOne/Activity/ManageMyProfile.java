@@ -409,7 +409,7 @@ public class ManageMyProfile extends AppCompatActivity
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "Not able to load Profiles..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to load profiles..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -464,14 +464,14 @@ public class ManageMyProfile extends AppCompatActivity
                     String message = jsonObject.getString("message");
                     if (success.equalsIgnoreCase("1")){
                         new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
-                        Toast.makeText(getApplicationContext(), "Profile Deleted Successfully..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Profile deleted successfully..", Toast.LENGTH_LONG).show();
                     }else {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     }
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "Not able to delete Profile..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to delete profile..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {

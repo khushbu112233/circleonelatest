@@ -677,7 +677,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             }*/
             else if (gender.equals(""))
             {
-                Toast.makeText(getApplicationContext(), "Select Gender", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Select gender", Toast.LENGTH_SHORT).show();
             }
             else
             {
@@ -1243,11 +1243,11 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                     }
                     else
                     {
-                        Toast.makeText(getBaseContext(), "Error While Uploading Image..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), "Error while uploading image..", Toast.LENGTH_LONG).show();
                     }
                 }
                 else {
-                    Toast.makeText(getBaseContext(), "Not able to Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Not able to upload..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -1384,7 +1384,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                     }
                 }
                 else {
-                    Toast.makeText(getBaseContext(), "Not able to Update Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Not able to update..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -1516,7 +1516,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                 }
                 else
                 {
-                    Toast.makeText(getBaseContext(), "Not able to Update Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Not able to update..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {

@@ -431,17 +431,17 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                 mobileNoOnCard = etMobileNumber.getText().toString();
 
                 if (numberOnCard.isEmpty()) {
-                    Toast.makeText(NewCardRequestActivity1.this, "Enter Card No.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewCardRequestActivity1.this, "Enter card no.", Toast.LENGTH_SHORT).show();
                 } else if (nameOnCard.isEmpty()) {
-                    Toast.makeText(NewCardRequestActivity1.this, "Enter Holder Name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewCardRequestActivity1.this, "Enter holder name", Toast.LENGTH_SHORT).show();
                 } else if (exMonthOnCard.isEmpty()) {
-                    Toast.makeText(NewCardRequestActivity1.this, "Enter Expiry Month", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewCardRequestActivity1.this, "Enter expiry month", Toast.LENGTH_SHORT).show();
                 } else if (exYearOnCard.isEmpty()) {
-                    Toast.makeText(NewCardRequestActivity1.this, "Enter Expiry Year", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewCardRequestActivity1.this, "Enter expiry year", Toast.LENGTH_SHORT).show();
                 } else if (cvvOnCard.isEmpty()) {
-                    Toast.makeText(NewCardRequestActivity1.this, "Enter CVV No.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewCardRequestActivity1.this, "Enter cvv no.", Toast.LENGTH_SHORT).show();
                 } else if (mobileNoOnCard.isEmpty()) {
-                    Toast.makeText(NewCardRequestActivity1.this, "Enter Mobile No.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewCardRequestActivity1.this, "Enter mobile no.", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
@@ -614,10 +614,10 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                     }
                     else
                     {
-                        Toast.makeText(getApplicationContext(), "Error While Uploading Image..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Error while uploading image..", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "Not able to Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to upload..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -783,10 +783,10 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                         //Toast.makeText(getApplicationContext(), "Back Card Uploaded Successfully.", Toast.LENGTH_LONG).show();
                          card_back = ImgName;
                     } else {
-                        Toast.makeText(getApplicationContext(), "Error While Uploading Image..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Error while uploading image..", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "Not able to Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to upload..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -995,7 +995,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                     PhysicalCardNormalId = "2";
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to send new card request..", Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -1053,7 +1053,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "Not able to Send New Card Request..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to send new card request..", Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -1189,7 +1189,7 @@ public class NewCardRequestActivity1 extends AppCompatActivity
             {
                 if(result == "")
                 {
-                    Toast.makeText(getApplicationContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Check data connection", Toast.LENGTH_LONG).show();
                 }
                 else
                 {

@@ -261,11 +261,11 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                 {
                     if ( final_attachment.equalsIgnoreCase(""))
                     {
-                        Toast.makeText(getApplicationContext(), "Please Upload Front Card or Attachment File.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Please upload front card or attachment file.", Toast.LENGTH_LONG).show();
                     }
                     else if (!final_attachment.equalsIgnoreCase(""))
                     {
-                        Toast.makeText(getApplicationContext(), "Card Uploaded Sucessfully..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Card uploaded sucessfully..", Toast.LENGTH_LONG).show();
                         Intent i = new Intent(getApplicationContext(), NewCardRequestActivity1.class);
                         i.putExtra("person", name);
                         i.putExtra("designation", designation);
@@ -295,7 +295,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
 
                     NewCardRequestActivity1.cardFrontBmp = CardFront;
                     NewCardRequestActivity1.cardBackBmp = CardBack;
-                    Toast.makeText(getApplicationContext(), "Card Uploaded Sucessfully..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Card uploaded sucessfully..", Toast.LENGTH_LONG).show();
                     Intent i = new Intent(getApplicationContext(), NewCardRequestActivity1.class);
                     i.putExtra("person", name);
                     i.putExtra("designation", designation);
@@ -430,7 +430,7 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
             {
                 if (CardFront == null)
                 {
-                    Toast.makeText(getApplicationContext(), "Please Upload Front Card.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Please upload front card.", Toast.LENGTH_LONG).show();
                 }
                 else
                 {
@@ -568,15 +568,15 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                 {
                     if (CardFront==null)
                     {
-                        Toast.makeText(getApplicationContext(), "Please Upload Front Card Image.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Please upload front card image.", Toast.LENGTH_LONG).show();
                     }
                     else if (CardBack == null)
                     {
-                        Toast.makeText(getApplicationContext(), "Please Upload Back Card Image.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Please upload back card image.", Toast.LENGTH_LONG).show();
                     }
                     else
                     {
-                        Toast.makeText(getApplicationContext(), "Successfully Uploaded Card..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Successfully uploaded card..", Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                         Intent i = new Intent(getApplicationContext(), NewCardRequestActivity1.class);
                         i.putExtra("person", name);
@@ -815,10 +815,10 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                         final_attachment = ImgName;
                         //etAttachFile.setText(ImgName);
                     } else {
-                        Toast.makeText(getBaseContext(), "Error While Uploading Image..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), "Error while uploading image..", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(getBaseContext(), "Not able to Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Not able to upload..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -1116,13 +1116,13 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                         startActivity(intent);
                         finish();*/
                         // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
-                        Toast.makeText(activity, "Back Card Uploaded Successfully.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(activity, "Back card uploaded successfully.", Toast.LENGTH_LONG).show();
                         // CardBack = ImgName;
                     } else {
-                        Toast.makeText(activity, "Error While Uploading Image..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(activity, "Error while uploading image..", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(activity, "Not able to Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, "Not able to upload..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -1233,17 +1233,17 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(intent);
                         finish();*/
-                        Toast.makeText(activity, "Front Card Uploaded Successfully. Add Back Card..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(activity, "Front card uploaded successfully. Add back card..", Toast.LENGTH_LONG).show();
                         // CardFront = ImgName;
 
 
                     }
                     else
                     {
-                        Toast.makeText(activity, "Error While Uploading Image..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(activity, "Error while uploading image..", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(activity, "Not able to Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, "Not able to upload..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {

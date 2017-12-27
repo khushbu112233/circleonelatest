@@ -133,7 +133,7 @@ public class HistoryActivity extends AppCompatActivity
             {
                 if(result == "")
                 {
-                    Toast.makeText(getApplicationContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Check data connection", Toast.LENGTH_LONG).show();
                 }
                 else
                 {

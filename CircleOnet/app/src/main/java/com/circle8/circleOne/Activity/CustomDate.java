@@ -219,7 +219,7 @@ public class CustomDate extends AppCompatActivity
             {
                 if (startDate.equals("") && endDate.equals(""))
                 {
-                    Toast.makeText(getApplicationContext(),"Please, Select start and end date.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Please select start and end date.",Toast.LENGTH_SHORT).show();
                 }
                 else
                 {

@@ -579,7 +579,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                     }
                     else
                     {
-                        Toast.makeText(getApplicationContext(), "No ProductCategory_List Avail", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "No product found", Toast.LENGTH_LONG).show();
                     }
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
                 }
@@ -687,7 +687,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                     }
                     else
                     {
-                        Toast.makeText(getApplicationContext(), "No ProductCategory_List Avail", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "No product found", Toast.LENGTH_LONG).show();
                     }
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
                 }
@@ -796,7 +796,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                     }
                     else
                     {
-                        Toast.makeText(getApplicationContext(), "No Product_List Avail", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "No product found", Toast.LENGTH_LONG).show();
                     }
                 }
                 else
@@ -907,7 +907,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                     }
                     else
                     {
-                        Toast.makeText(getApplicationContext(), "No Product_List Avail", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "No product found", Toast.LENGTH_LONG).show();
                     }
                 }
                 else
