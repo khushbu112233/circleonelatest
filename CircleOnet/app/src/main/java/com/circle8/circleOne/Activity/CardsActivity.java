@@ -47,6 +47,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -221,7 +222,6 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
     String CardCode = "";
     Boolean netCheck= false;
     public static final byte[] MIME_TEXT = "application/com.circle8.circleOne".getBytes();
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -232,6 +232,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         Fabric.with(this, new Twitter(authConfig));
 
         setContentView(R.layout.activity_cards);
+
         /*SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy  hh:mm:ss a");
         String date1 = format.format(Date.parse(stringDate));
 
@@ -1527,7 +1528,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             HashMap<String, String> profile = ProfileFragment.profileSession.getProfileDetails();
             ProfileFragment.profileIndex = Integer.parseInt(profile.get(ProfileSession.KEY_PROFILE_INDEX));
 
-            new ProfileFragment.HttpAsyncTaskProfiles().execute(Utility.BASE_URL + "MyProfiles");
+            ProfileFragment.makeJsonObjectRequestForProfile();
         }
 
         getSupportActionBar().setShowHideAnimationEnabled(false);
@@ -2053,7 +2054,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                         startActivity(intent);
                         finish();*/
 
-                       // onStart();
+                        // onStart();
                         List1Fragment.webCall();
                         List2Fragment.webCall();
                         List3Fragment.webCall();

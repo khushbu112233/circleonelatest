@@ -3,9 +3,9 @@ package com.circle8.circleOne.Fragments;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -15,24 +15,24 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.AutoCompleteTextView;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.circle8.circleOne.Activity.ConnectActivity;
 import com.circle8.circleOne.Adapter.ConnectListAdapter;
-import com.circle8.circleOne.Adapter.List5Adapter;
+import com.circle8.circleOne.ApplicationUtils.MyApplication;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.ConnectList;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
+import com.circle8.circleOne.databinding.FragmentConnectListBinding;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -43,13 +43,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
@@ -59,77 +57,42 @@ import static com.circle8.circleOne.Utils.Utility.dismissProgress;
  * Created by ample-arch on 8/28/2017.
  */
 
-public class ByAssociationFragment  extends Fragment
+public class ByAssociationFragment  extends Fragment implements View.OnClickListener,AdapterView.OnItemClickListener
 {
     private boolean netCheck = false;
-
-    public ByAssociationFragment() {    }
-
-    private ListView listView;
-    private TextView tvDataInfo ;
     private String find_by = "ASSOCIATION" ;
-    private List5Adapter list5Adapter ;
     private ConnectListAdapter connectListAdapter ;
-    private AutoCompleteTextView searchText ;
-
     private ArrayList<ConnectList> connectTags = new ArrayList<>();
     private ArrayList<ConnectList> connectLists = new ArrayList<>();
     LoginSession session;
     String profileID, userID ;
-    ImageView imgSearch;
-    static RelativeLayout rlLoadMore ;
     static int numberCount, listSize;
     public static int pageno = 1 ;
     static String counts = "0" ;
     public static String progressStatus = "FIRST";
     Context context;
+    View view;
 
+    public ByAssociationFragment() {    }
+    public static FragmentConnectListBinding fragmentConnectListBinding;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.fragment_connect_list, container, false);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
-        Utility.freeMemory();
-        context = getActivity();
-        tvDataInfo = (TextView)view.findViewById(R.id.tvDataInfo);
-        searchText = (AutoCompleteTextView)view.findViewById(R.id.searchView);
-        listView = (ListView) view.findViewById(R.id.listViewType4);
-        imgSearch = (ImageView) view.findViewById(R.id.imgSearch);
-        searchText.setHint("Search by association");
-        netCheck = Utility.isNetworkAvailable(getActivity());
-        listView.setVisibility(View.GONE);
+        fragmentConnectListBinding = DataBindingUtil.inflate(
+                inflater, R.layout.fragment_connect_list, container, false);
+        view = fragmentConnectListBinding.getRoot();
 
-        rlLoadMore = (RelativeLayout)view.findViewById(R.id.rlLoadMore);
-        pageno = 1;
+        initUi();
+        initClick();
 
-        session = new LoginSession(getContext());
-        HashMap<String, String> user = session.getUserDetails();
-        profileID = user.get(LoginSession.KEY_PROFILEID);
-        userID = user.get(LoginSession.KEY_USERID);
+        return view;
+    }
 
-        imgSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
-                Utility.freeMemory();
-                String Findby = "name";
-                String Search = "Circle One" ;
-                String rc_no = "10";
-                String page_no = "1";
+    public void initClick() {
+        fragmentConnectListBinding.imgSearch.setOnClickListener(this);
+        fragmentConnectListBinding.listViewType4.setOnItemClickListener(this);
 
-                listView.setVisibility(View.VISIBLE);
-                connectTags.clear();
-                if (netCheck == false){
-                    Utility.freeMemory();
-                    Toast.makeText(getActivity(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
-                }
-                else {
-                    new HttpAsyncTask().execute(Utility.BASE_URL + "SearchConnect");
-                }
-            }
-        });
-
-        searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        fragmentConnectListBinding.searchView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
@@ -140,18 +103,17 @@ public class ByAssociationFragment  extends Fragment
                 }
                 else {
                     connectTags.clear();
-                    new HttpAsyncTask().execute(Utility.BASE_URL + "SearchConnect");
+                    //new HttpAsyncTask().execute(Utility.BASE_URL + "SearchConnect");
+                    makeJsonObjectRequest();
                 }
                 return true;
             }
         });
 
-        searchText.addTextChangedListener(new TextWatcher() {
+        fragmentConnectListBinding.searchView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after)
-            {
-            }
-
+            {            }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
@@ -161,44 +123,30 @@ public class ByAssociationFragment  extends Fragment
                     pageno = 1 ;
                     connectTags.clear();
                     connectLists.clear();
-                    listView.setStackFromBottom(false);
-                    tvDataInfo.setVisibility(View.VISIBLE);
+                    fragmentConnectListBinding.listViewType4.setStackFromBottom(false);
+                    fragmentConnectListBinding.tvDataInfo.setVisibility(View.VISIBLE);
                 }
-               /* else if(s.length() >= 1)
-                {
-                    String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
-
-                    String Findby = "name";
-                    String Search = "Circle One" ;
-                    String rc_no = "10";
-                    String page_no = "1";
-
-                    listView.setVisibility(View.VISIBLE);
-                    connectTags.clear();
-                    new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
-                }*/
             }
-
             @Override
             public void afterTextChanged(Editable s) {
 
             }
         });
+    }
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                Intent intent = new Intent(getContext(), ConnectActivity.class);
-                intent.putExtra("friendProfileID", connectLists.get(position).getProfile_id());
-                intent.putExtra("friendUserID", connectLists.get(position).getUserID());
-                intent.putExtra("ProfileID", profileID);
-                getContext().startActivity(intent);
-                Utility.freeMemory();
-            }
-        });
+    public void initUi() {
 
-        return view;
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
+        Utility.freeMemory();
+        context = getActivity();
+        fragmentConnectListBinding.searchView.setHint("Search by association");
+        netCheck = Utility.isNetworkAvailable(getActivity());
+        fragmentConnectListBinding.listViewType4.setVisibility(View.GONE);
+        pageno = 1;
+        session = new LoginSession(getContext());
+        HashMap<String, String> user = session.getUserDetails();
+        profileID = user.get(LoginSession.KEY_PROFILEID);
+        userID = user.get(LoginSession.KEY_USERID);
     }
 
     @Override
@@ -207,14 +155,194 @@ public class ByAssociationFragment  extends Fragment
         super.onPause();
     }
 
-    /* @Override
-    public void onResume()
-    {
-        super.onResume();
-//        connectLists.clear();
-        connectTags.clear();
-        GetData(getContext());
-    }*/
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+
+        switch (id) {
+            case R.id.imgSearch:
+                String text = fragmentConnectListBinding.searchView.getText().toString().toLowerCase(Locale.getDefault());
+                Utility.freeMemory();
+                String Findby = "name";
+                String Search = "Circle One" ;
+                String rc_no = "10";
+                String page_no = "1";
+                fragmentConnectListBinding.listViewType4.setVisibility(View.VISIBLE);
+                connectTags.clear();
+                if (netCheck == false){
+                    Utility.freeMemory();
+                    Toast.makeText(getActivity(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
+                }
+                else {
+                    makeJsonObjectRequest();
+                   // new HttpAsyncTask().execute(Utility.BASE_URL + "SearchConnect");
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View v, int position, long l) {
+
+        int id = v.getId();
+
+        switch (id) {
+            case R.id.listViewType4:
+                Intent intent = new Intent(getContext(), ConnectActivity.class);
+                intent.putExtra("friendProfileID", connectLists.get(position).getProfile_id());
+                intent.putExtra("friendUserID", connectLists.get(position).getUserID());
+                intent.putExtra("ProfileID", profileID);
+                getContext().startActivity(intent);
+                Utility.freeMemory();
+                break;
+        }
+    }
+
+    private void makeJsonObjectRequest() {
+        String loading = "Searching records" ;
+        CustomProgressDialog(loading,context);
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.accumulate("FindBy", find_by );
+            jsonObject.accumulate("Search", fragmentConnectListBinding.searchView.getText().toString() );
+            jsonObject.accumulate("SearchType", "Global" );
+            jsonObject.accumulate("UserID", userID );
+            jsonObject.accumulate("numofrecords", "10" );
+            jsonObject.accumulate("pageno", pageno );
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                Utility.BASE_URL + "SearchConnect", jsonObject, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e("", response.toString());
+
+                try {
+                    counts = response.getString("count");
+                    JSONArray connect = response.getJSONArray("connect");
+
+                    if (counts.equals("0") || counts == null)
+                    {
+                        numberCount = 0 ;
+                    }
+                    else
+                    {
+                        numberCount = Integer.parseInt(counts);
+                    }
+                    fragmentConnectListBinding.rlLoadMore.setVisibility(View.GONE);
+
+                    if(connect.length() == 0)
+                    {
+//                        tvDataInfo.setVisibility(View.VISIBLE);
+                        connectTags.clear();
+                        try {connectListAdapter.notifyDataSetChanged();}
+                        catch (Exception e) { e.printStackTrace();}
+                    }
+                    else
+                    {
+                        fragmentConnectListBinding.tvDataInfo.setVisibility(View.GONE);
+
+                        for(int i = 0 ; i < connect.length() ; i++ )
+                        {
+                            JSONObject iCon = connect.getJSONObject(i);
+                            ConnectList connectModel = new ConnectList();
+                            connectModel.setUserID(iCon.getString("UserID"));
+                            connectModel.setFirstname(iCon.getString("FirstName"));
+                            connectModel.setLastname(iCon.getString("LastName"));
+                            connectModel.setUsername(iCon.getString("UserName"));
+                            connectModel.setUserphoto(iCon.getString("UserPhoto"));
+                            connectModel.setCard_front(iCon.getString("Card_Front"));
+                            connectModel.setCard_back(iCon.getString("Card_Back"));
+                            connectModel.setProfile_id(iCon.getString("ProfileId"));
+                            connectModel.setPhone(iCon.getString("Phone"));
+                            connectModel.setCompanyname(iCon.getString("CompanyName"));
+                            connectModel.setDesignation(iCon.getString("Designation"));
+                            connectModel.setFacebook(iCon.getString("Facebook"));
+                            connectModel.setTwitter(iCon.getString("Twitter"));
+                            connectModel.setGoogle(iCon.getString("Google"));
+                            connectModel.setLinkedin(iCon.getString("LinkedIn"));
+                            connectModel.setWebsite(iCon.getString("Website"));
+                            connectTags.add(connectModel);
+
+                            /*connectListAdapter = new ConnectListAdapter(getContext(),R.layout.grid_list5_layout, connectTags);
+                            listView.setAdapter(connectListAdapter);
+                            connectListAdapter.notifyDataSetChanged();*/
+                        }
+
+                        GetData(getContext());
+                        listSize = connectTags.size();
+
+                        fragmentConnectListBinding.listViewType4.setOnScrollListener(new AbsListView.OnScrollListener()
+                        {
+                            @Override
+                            public void onScrollStateChanged(AbsListView view, int scrollState)
+                            {
+                                // TODO Auto-generated method stub
+
+                                progressStatus = "LOAD MORE";
+
+                                if (listSize > 7)
+                                {
+                                    fragmentConnectListBinding.listViewType4.setStackFromBottom(true);
+                                }
+
+                                int threshold = 1;
+                                int count = fragmentConnectListBinding.listViewType4.getCount();
+
+                                if (scrollState == SCROLL_STATE_IDLE)
+                                {
+                                    if (listSize <= numberCount)
+                                    {
+                                        if (fragmentConnectListBinding.listViewType4.getLastVisiblePosition() >= count - threshold)
+                                        {
+                                            // rlLoadMore.setVisibility(View.VISIBLE);
+                                            // Execute LoadMoreDataTask AsyncTask
+                                           // new HttpAsyncTask().execute(Utility.BASE_URL+"SearchConnect");
+                                            makeJsonObjectRequest();
+                                        }
+                                    }
+                                    else {  }
+                                }
+                            }
+                            @Override
+                            public void onScroll(AbsListView view, int firstVisibleItem,
+                                                 int visibleItemCount, int totalItemCount) {
+                                // TODO Auto-generated method stub
+                            }
+                        });
+                    }
+                    dismissProgress();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("te", "Error: " + error.getMessage());
+                Toast.makeText(context,
+                        error.getMessage(), Toast.LENGTH_SHORT).show();
+                // hide the progress dialog
+                dismissProgress();
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("Accept", "application/json; charset=utf-8");
+                params.put("Content-Type", "application/json; charset=utf-8");
+                return params;
+            }
+        };
+
+        // Adding request to request queue
+        MyApplication.getInstance().addToRequestQueue(jsonObjReq);
+    }
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String>
     {
@@ -223,13 +351,6 @@ public class ByAssociationFragment  extends Fragment
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            /*dialog = new ProgressDialog(getActivity());
-            dialog.setMessage("Searching Records...");
-            //dialog.setTitle("Saving Reminder");
-         //   dialog.show();
-            dialog.setCancelable(false);*/
-            //  nfcModel = new ArrayList<>();
-            //   allTags = new ArrayList<>();
 
             if (progressStatus.equalsIgnoreCase("LOAD MORE"))
             {
@@ -265,17 +386,9 @@ public class ByAssociationFragment  extends Fragment
                 else
                 {
                     JSONObject response = new JSONObject(result);
-                    String message = response.getString("message");
-                    String success = response.getString("success");
-                    String findBy = response.getString("FindBy");
-                    String search = response.getString("Search");
                     counts = response.getString("count");
-                    String pageno = response.getString("pageno");
-                    String recordno = response.getString("numofrecords");
 
                     JSONArray connect = response.getJSONArray("connect");
-
-//                    connectTags.clear();
 
                     if (counts.equals("0") || counts == null)
                     {
@@ -285,7 +398,7 @@ public class ByAssociationFragment  extends Fragment
                     {
                         numberCount = Integer.parseInt(counts);
                     }
-                    rlLoadMore.setVisibility(View.GONE);
+                    fragmentConnectListBinding.rlLoadMore.setVisibility(View.GONE);
 
                     if(connect.length() == 0)
                     {
@@ -296,7 +409,7 @@ public class ByAssociationFragment  extends Fragment
                     }
                     else
                     {
-                        tvDataInfo.setVisibility(View.GONE);
+                        fragmentConnectListBinding.tvDataInfo.setVisibility(View.GONE);
 
                         for(int i = 0 ; i < connect.length() ; i++ )
                         {
@@ -328,7 +441,7 @@ public class ByAssociationFragment  extends Fragment
                         GetData(getContext());
                         listSize = connectTags.size();
 
-                        listView.setOnScrollListener(new AbsListView.OnScrollListener()
+                        fragmentConnectListBinding.listViewType4.setOnScrollListener(new AbsListView.OnScrollListener()
                         {
                             @Override
                             public void onScrollStateChanged(AbsListView view, int scrollState)
@@ -339,21 +452,22 @@ public class ByAssociationFragment  extends Fragment
 
                                 if (listSize > 7)
                                 {
-                                    listView.setStackFromBottom(true);
+                                    fragmentConnectListBinding.listViewType4.setStackFromBottom(true);
                                 }
 
                                 int threshold = 1;
-                                int count = listView.getCount();
+                                int count = fragmentConnectListBinding.listViewType4.getCount();
 
                                 if (scrollState == SCROLL_STATE_IDLE)
                                 {
                                     if (listSize <= numberCount)
                                     {
-                                        if (listView.getLastVisiblePosition() >= count - threshold)
+                                        if (fragmentConnectListBinding.listViewType4.getLastVisiblePosition() >= count - threshold)
                                         {
                                             // rlLoadMore.setVisibility(View.VISIBLE);
                                             // Execute LoadMoreDataTask AsyncTask
-                                            new HttpAsyncTask().execute(Utility.BASE_URL+"SearchConnect");
+                                           // new HttpAsyncTask().execute(Utility.BASE_URL+"SearchConnect");
+                                        makeJsonObjectRequest();
                                         }
                                     }
                                     else {  }
@@ -399,14 +513,14 @@ public class ByAssociationFragment  extends Fragment
 
         if (connectLists.size() == 0)
         {
-            tvDataInfo.setVisibility(View.VISIBLE);
+            fragmentConnectListBinding.tvDataInfo.setVisibility(View.VISIBLE);
         }
         else
         {
-            tvDataInfo.setVisibility(View.GONE);
+            fragmentConnectListBinding.tvDataInfo.setVisibility(View.GONE);
 
             connectListAdapter = new ConnectListAdapter(getContext(), R.layout.grid_list5_layout, connectLists);
-            listView.setAdapter(connectListAdapter);
+            fragmentConnectListBinding.listViewType4.setAdapter(connectListAdapter);
             connectListAdapter.notifyDataSetChanged();
         }
 
@@ -435,7 +549,7 @@ public class ByAssociationFragment  extends Fragment
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("FindBy", find_by );
-            jsonObject.accumulate("Search", searchText.getText().toString() );
+            jsonObject.accumulate("Search", fragmentConnectListBinding.searchView.getText().toString() );
             jsonObject.accumulate("SearchType", "Global" );
             jsonObject.accumulate("UserID", userID );
             jsonObject.accumulate("numofrecords", "10" );

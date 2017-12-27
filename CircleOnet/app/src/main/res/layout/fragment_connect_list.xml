@@ -1,102 +1,105 @@
-<RelativeLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#ffffff">
-
+    >
     <RelativeLayout
-        android:layout_marginTop="5dp"
-        android:id="@+id/lnrSearch"
-        android:layout_below="@+id/appbar2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <com.circle8.circleOne.Utils.MyRiadProAutoComplete
-            android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/txt_back"
-            android:paddingRight="10dp"
-            android:layout_toLeftOf="@+id/imgSearch"
-            android:paddingLeft="10dp"
-            android:hint="Search in your contacts"
-            android:id="@+id/searchView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:textSize="12dp"
-            android:focusableInTouchMode="true"
-            android:imeOptions="actionSearch"
-            android:inputType="textAutoComplete|textAutoCorrect"
-            android:textColor="@color/black"
-            android:textColorHint="#626567"/>
-
-        <ImageView
-            android:layout_marginRight="10dp"
-            android:layout_centerVertical="true"
-            android:src="@drawable/search"
-            android:id="@+id/imgSearch"
-            android:layout_alignParentRight="true"
-            android:layout_width="22dp"
-            android:layout_height="22dp" />
-    </RelativeLayout>
-
-    <View
-        android:layout_marginTop="3dp"
-        android:id="@+id/view"
-        android:layout_below="@+id/lnrSearch"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorPrimary"/>
-
-    <ListView
-        android:layout_below="@+id/view"
-        android:layout_marginTop="5dp"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        tools:listitem="@layout/grid_list4_layout"
-        android:id="@+id/listViewType4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="fill"
-        android:layout_above="@+id/rlLoadMore" />
+        android:background="#ffffff">
 
-    <TextView
-        android:id="@+id/tvDataInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/no_connection1"
-        android:textSize="12sp"
-        android:visibility="visible"
-        android:textAlignment="center"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"/>
+        <RelativeLayout
+            android:layout_marginTop="5dp"
+            android:id="@+id/lnrSearch"
+            android:layout_below="@+id/appbar2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <com.circle8.circleOne.Utils.MyRiadProAutoComplete
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/txt_back"
+                android:paddingRight="10dp"
+                android:layout_toLeftOf="@+id/imgSearch"
+                android:paddingLeft="10dp"
+                android:hint="Search in your contacts"
+                android:id="@+id/searchView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:textSize="12dp"
+                android:focusableInTouchMode="true"
+                android:imeOptions="actionSearch"
+                android:inputType="textAutoComplete|textAutoCorrect"
+                android:textColor="@color/black"
+                android:textColorHint="#626567"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center_horizontal"
-        android:id="@+id/rlLoadMore"
-        android:padding="3dp"
-        android:visibility="gone">
-        <ProgressBar
-            android:id="@+id/more_progress"
-            android:layout_width="35dp"
-            android:layout_height="35dp" />
+            <ImageView
+                android:layout_marginRight="10dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/search"
+                android:id="@+id/imgSearch"
+                android:layout_alignParentRight="true"
+                android:layout_width="22dp"
+                android:layout_height="22dp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_marginTop="3dp"
+            android:id="@+id/view"
+            android:layout_below="@+id/lnrSearch"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimary"/>
+
+        <ListView
+            android:layout_below="@+id/view"
+            android:layout_marginTop="5dp"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            tools:listitem="@layout/grid_list4_layout"
+            android:id="@+id/listViewType4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="fill"
+            android:layout_above="@+id/rlLoadMore" />
+
         <TextView
+            android:id="@+id/tvDataInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/more_progress"
-            android:padding="5dp"
-            android:text="Loading more..."
-            android:textColor="@color/colorPrimary"
-            android:textSize="15sp"
-            android:layout_marginLeft="10dp"/>
-    </RelativeLayout>
+            android:text="@string/no_connection1"
+            android:textSize="12sp"
+            android:visibility="visible"
+            android:textAlignment="center"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"/>
 
-</RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_horizontal"
+            android:id="@+id/rlLoadMore"
+            android:padding="3dp"
+            android:visibility="gone">
+            <ProgressBar
+                android:id="@+id/more_progress"
+                android:layout_width="35dp"
+                android:layout_height="35dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/more_progress"
+                android:padding="5dp"
+                android:text="Loading more..."
+                android:textColor="@color/colorPrimary"
+                android:textSize="15sp"
+                android:layout_marginLeft="10dp"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+</layout>

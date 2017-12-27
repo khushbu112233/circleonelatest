@@ -23,9 +23,7 @@ public class EventsSelectOption extends AppCompatActivity
     private TextView actionText;
     private ImageView imgDrawer, imgCards, imgConnect, imgEvents, imgProfile;
     LinearLayout lnrDate;
-
     AutoCompleteTextView searchText ;
-
     public static String searchKeyWord = "";
     public static String searchKeyWord1 = "";
     public static String searchBy = "";
