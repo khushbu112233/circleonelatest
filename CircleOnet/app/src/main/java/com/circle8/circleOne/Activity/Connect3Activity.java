@@ -605,7 +605,7 @@ public class Connect3Activity extends AppCompatActivity
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "Not able to load Friends..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to load friends..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {

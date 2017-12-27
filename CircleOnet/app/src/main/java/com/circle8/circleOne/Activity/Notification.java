@@ -342,7 +342,7 @@ public class Notification extends AppCompatActivity
                 }
                 else
                 {
-                    Toast.makeText(mContext, "Not able to load Friends..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "Not able to load notifications..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {

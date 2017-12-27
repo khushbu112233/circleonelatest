@@ -441,7 +441,7 @@ public class ContactsImportActivity extends AppCompatActivity
                     }
                 }
                 else {
-                    Toast.makeText(getBaseContext(), "Not able to Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Not able to send sync request..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {

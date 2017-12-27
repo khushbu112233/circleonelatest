@@ -378,9 +378,9 @@ public class GroupsActivity extends AppCompatActivity {
                     GroupDesc = etCircleDesc.getText().toString();
 
                     if (GroupName.equals("")) {
-                        Toast.makeText(getApplicationContext(), "Enter Circle Name", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Enter circle name", Toast.LENGTH_LONG).show();
                     } else if (GroupDesc.equals("")) {
-                        Toast.makeText(getApplicationContext(), "Enter Circle Description", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Enter circle description", Toast.LENGTH_LONG).show();
                     } else {
                         if (final_ImgBase64.equals("")) {
                             new HttpAsyncTaskGroupCreate().execute(Utility.BASE_URL + "Group/Create");
@@ -400,9 +400,9 @@ public class GroupsActivity extends AppCompatActivity {
 //                    Toast.makeText(getApplicationContext(), grpImage+" "+grpIDD,Toast.LENGTH_SHORT).show();
 
                     if (GroupName.equals("")) {
-                        Toast.makeText(getApplicationContext(), "Enter Circle Name", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Enter circle name", Toast.LENGTH_LONG).show();
                     } else if (GroupDesc.equals("")) {
-                        Toast.makeText(getApplicationContext(), "Enter Circle Description", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Enter circle description", Toast.LENGTH_LONG).show();
                     } else {
                         if (final_ImgBase64.equals("")) {
                             GroupImage = grpImage;
@@ -567,10 +567,10 @@ public class GroupsActivity extends AppCompatActivity {
 
                         }
                     } else {
-                        Toast.makeText(getBaseContext(), "Error While Uploading Image..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), "Error while uploading image..", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(getBaseContext(), "Not able to Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Not able to upload..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -955,7 +955,7 @@ public class GroupsActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), Message, Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "Not able to create Circle..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to create circle..", Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -998,7 +998,7 @@ public class GroupsActivity extends AppCompatActivity {
                     String Success = jsonObject.getString("Success").toString();
                     String Message = jsonObject.getString("Message").toString();
                     if (Success.equals("1")) {
-                        Toast.makeText(getApplicationContext(), "Circle Updated..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Circle updated..", Toast.LENGTH_LONG).show();
 
                         groupModelArrayList.clear();
                         new HttpAsyncTaskGroup().execute(Utility.BASE_URL + "Group/Fetch");
@@ -1037,7 +1037,7 @@ public class GroupsActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), Message, Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "Not able to create Circle..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to create circle..", Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -1262,7 +1262,7 @@ public class GroupsActivity extends AppCompatActivity {
 
                     // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
                 } else {
-                    Toast.makeText(getApplicationContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to load circles..", Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -1055,14 +1055,14 @@ public class EditProfileActivity extends AppCompatActivity implements
                     if (success.equalsIgnoreCase("1")){
                         profileSession.createProfileSession("0");
                         finish();
-                        Toast.makeText(getApplicationContext(), "Profile Deleted Successfully..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Profile deleted successfully..", Toast.LENGTH_LONG).show();
                     }else {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     }
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "Not able to delete Profile..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to delete profile..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -2879,10 +2879,10 @@ public class EditProfileActivity extends AppCompatActivity implements
                     if (success.equalsIgnoreCase("1")) {
 
                         if (fromActivity.equalsIgnoreCase("manage")){
-                            Toast.makeText(getApplicationContext(), "Successfully Added", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Successfully added", Toast.LENGTH_SHORT).show();
                             finish();
                         }else {
-                            Toast.makeText(getApplicationContext(), "Successfully Added", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Successfully added", Toast.LENGTH_SHORT).show();
                            /* Intent go = new Intent(getApplicationContext(), CardsActivity.class);
 
                             // you pass the position you want the viewpager to show in the extra,
@@ -2970,7 +2970,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                     fragmentEditProfileBinding.lstTestimonial.setExpanded(true);
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to load cards..", Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -3464,7 +3464,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                     viewPager1.setAdapter(myPager);*/
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Not able to load Profile..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to load profile..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -3575,7 +3575,7 @@ public class EditProfileActivity extends AppCompatActivity implements
 
                         if (fromActivity.equalsIgnoreCase("manage"))
                         {
-                            Toast.makeText(getApplicationContext(), "Successfully Updated", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Successfully updated", Toast.LENGTH_SHORT).show();
                             finish();
                         }
                         else
@@ -3583,7 +3583,7 @@ public class EditProfileActivity extends AppCompatActivity implements
 
 
                             //ProfileFragment.callMyProfile();
-                            Toast.makeText(getApplicationContext(), "Successfully Updated", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Successfully updated", Toast.LENGTH_SHORT).show();
                             finish();
 
                            /* Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
@@ -3682,10 +3682,10 @@ public class EditProfileActivity extends AppCompatActivity implements
                         // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                         fragmentEditProfileBinding.txtCardFront.setText(ImgName);
                     } else {
-                        Toast.makeText(activity, "Error While Uploading Image..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(activity, "Error while uploading image..", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(activity, "Not able to Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, "Not able to update..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -3738,10 +3738,10 @@ public class EditProfileActivity extends AppCompatActivity implements
                         // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                         fragmentEditProfileBinding.etAttachFile.setText(ImgName);
                     } else {
-                        Toast.makeText(getBaseContext(), "Error While Uploading Image..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), "Error while uploading image..", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(getBaseContext(), "Not able to Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Not able to upload..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -3794,10 +3794,10 @@ public class EditProfileActivity extends AppCompatActivity implements
                         UserPhoto = ImgName;
                         // fragmentEditProfileBinding.txtCardBack.setText(ImgName);
                     } else {
-                        Toast.makeText(activity, "Error While Uploading Image..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(activity, "Error while uploading image..", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(activity, "Not able to Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, "Not able to upload..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -3850,10 +3850,10 @@ public class EditProfileActivity extends AppCompatActivity implements
                         // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                         fragmentEditProfileBinding.txtCardBack.setText(ImgName);
                     } else {
-                        Toast.makeText(activity, "Error While Uploading Image..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(activity, "Error while uploading image..", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(activity, "Not able to Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, "Not able to upload..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -3896,7 +3896,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             {
                 if(result == "")
                 {
-                    Toast.makeText(getApplicationContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Check data connection", Toast.LENGTH_LONG).show();
                 }
                 else
                 {

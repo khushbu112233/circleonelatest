@@ -120,7 +120,7 @@ public class ForgotActivity extends AppCompatActivity
                 }
                 else
                 {
-                    Toast.makeText(getBaseContext(), "Not able to forgot..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Not able to send forgot password request..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {

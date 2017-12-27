@@ -700,7 +700,7 @@ public class ConnectActivity extends AppCompatActivity
             // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result == "") {
-                    Toast.makeText(getApplicationContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Check data connection", Toast.LENGTH_LONG).show();
                 } else {
                     JSONObject response = new JSONObject(result);
                     String message = response.getString("message");
@@ -796,7 +796,7 @@ public class ConnectActivity extends AppCompatActivity
             {
                 if(result == "")
                 {
-                    Toast.makeText(getApplicationContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Check data connection", Toast.LENGTH_LONG).show();
                 }
                 else
                 {
@@ -1105,7 +1105,7 @@ public class ConnectActivity extends AppCompatActivity
                     }
                     // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
                 } else {
-                    Toast.makeText(getApplicationContext(), "Not able to Add Friend in circle", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to add friend in circle", Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -1383,7 +1383,7 @@ public class ConnectActivity extends AppCompatActivity
                 }
                 else
                 {
-                    Toast.makeText(getBaseContext(), "Not able to Update Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Not able to fetch circles..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {

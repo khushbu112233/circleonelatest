@@ -308,7 +308,7 @@ public class NewCardRequestActivity extends AppCompatActivity
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "Not able to load Profiles..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to load profiles..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {

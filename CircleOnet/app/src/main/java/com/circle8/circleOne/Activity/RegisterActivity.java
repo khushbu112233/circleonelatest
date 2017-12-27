@@ -529,7 +529,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 Toast.makeText(getApplicationContext(), "Enter DOB", Toast.LENGTH_SHORT).show();
             }*/
             else if (gender.equals("")) {
-                Toast.makeText(getApplicationContext(), "Select Gender", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Select gender", Toast.LENGTH_SHORT).show();
             }
             else {
                 if (final_ImgBase64.equals("")) {
@@ -1360,7 +1360,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(getBaseContext(), "Not able to Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Not able to register..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -1495,10 +1495,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         new HttpAsyncTask().execute(Utility.BASE_URL+"Registration");
 
                     } else {
-                        Toast.makeText(getBaseContext(), "Error While Uploading Image..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), "Error while uploading image..", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(getBaseContext(), "Not able to Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Not able to upload..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -1548,7 +1548,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         Toast.makeText(getBaseContext(), Message, Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(getBaseContext(), "Not able to Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Not able to register..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -1707,7 +1707,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 //                Toast.makeText(getApplicationContext(), result , Toast.LENGTH_LONG).show();
 
                 if (result.equals("")) {
-                    Toast.makeText(getApplicationContext(), "Check For Data Connection..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Check data connection..", Toast.LENGTH_LONG).show();
                 } else {
                     //   Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
                     try {
@@ -1751,7 +1751,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         Log.i("SignIn response: ", response);
 
         if (response.equals("")) {
-            Toast.makeText(getApplicationContext(), "Attempt Failed..", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Attempt failed..", Toast.LENGTH_LONG).show();
         }
 
     }

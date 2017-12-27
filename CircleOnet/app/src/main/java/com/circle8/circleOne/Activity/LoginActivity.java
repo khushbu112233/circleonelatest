@@ -311,9 +311,9 @@ public class LoginActivity extends AppCompatActivity implements
                         userPassword = etLoginPass.getText().toString();
 
                         if (userName.equals("")) {
-                            Toast.makeText(getApplicationContext(), "Enter Username", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Enter username", Toast.LENGTH_SHORT).show();
                         } else if (userPassword.equals("")) {
-                            Toast.makeText(getApplicationContext(), "Enter Password", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Enter password", Toast.LENGTH_SHORT).show();
                         } else {
                             if (getCurrentFocus() != null) {
                                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -1015,7 +1015,7 @@ public class LoginActivity extends AppCompatActivity implements
                         Toast.makeText(getBaseContext(), Message, Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(getBaseContext(), "Not able to Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Not able to update Q_ID..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -1057,6 +1057,7 @@ public class LoginActivity extends AppCompatActivity implements
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
                     String success = jsonObject.getString("success").toString();
+                    String message = jsonObject.getString("message").toString();
                     String profileid = "", FirstName = "", LastName = "", UserPhoto = "";
 
                     if (success.equals("1")) {
@@ -1423,7 +1424,7 @@ public class LoginActivity extends AppCompatActivity implements
                         }
 
                     } else {
-                        Toast.makeText(getBaseContext(), "Incorrect username or password..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
                     }
                 } else {
                     Toast.makeText(getBaseContext(), "Incorrect username or password..", Toast.LENGTH_LONG).show();
@@ -2596,7 +2597,7 @@ public class LoginActivity extends AppCompatActivity implements
                         startActivity(intent);
                     }
                 } else {
-                    Toast.makeText(getBaseContext(), "Not able to Login..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Not able to login..", Toast.LENGTH_LONG).show();
                 }
 
 

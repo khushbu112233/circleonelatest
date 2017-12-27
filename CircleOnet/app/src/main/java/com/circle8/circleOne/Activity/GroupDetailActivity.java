@@ -676,7 +676,7 @@ public class GroupDetailActivity extends AppCompatActivity
                     {
                         GroupsActivity.backStatus = "GroupDeleteBack";
                         finish();
-                        Toast.makeText(getApplicationContext(), "Circle Successfully deleted..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Circle successfully deleted..", Toast.LENGTH_LONG).show();
                     }
                     else {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
@@ -684,7 +684,7 @@ public class GroupDetailActivity extends AppCompatActivity
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "Not able to delete Profile..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to delete circle..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -742,11 +742,11 @@ public class GroupDetailActivity extends AppCompatActivity
                     }
                     else
                     {
-                        Toast.makeText(getBaseContext(), "Error While Uploading Image..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), "Error while uploading image..", Toast.LENGTH_LONG).show();
                     }
                 }
                 else {
-                    Toast.makeText(getBaseContext(), "Not able to Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Not able to upload..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -854,7 +854,7 @@ public class GroupDetailActivity extends AppCompatActivity
                     String Message = jsonObject.getString("Message").toString();
                     if (Success.equals("1"))
                     {
-                        Toast.makeText(getApplicationContext(), "Circle Updated..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Circle updated..", Toast.LENGTH_LONG).show();
 
                         activityGroupDetailBinding.tvGroupName.setText(GroupName);
                         activityGroupDetailBinding.tvGroupPartner.setText(GroupDesc);
@@ -875,7 +875,7 @@ public class GroupDetailActivity extends AppCompatActivity
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "Not able to create Circle..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to create circle..", Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -1081,7 +1081,7 @@ public class GroupDetailActivity extends AppCompatActivity
                 }
                 else
                 {
-                    Toast.makeText(mContext, "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "Not able to load circles..", Toast.LENGTH_LONG).show();
                 }
             }
             catch (JSONException e)

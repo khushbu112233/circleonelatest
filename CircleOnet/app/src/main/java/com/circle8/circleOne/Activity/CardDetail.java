@@ -474,7 +474,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                                         intent.putExtra(Intent.EXTRA_TEXT, "");
                                         startActivity(intent);
                                     } catch (Exception e) {
-                                        Toast.makeText(getApplicationContext(), "Sorry...You don't have any mail app", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(), "Sorry...you don't have any mail app", Toast.LENGTH_SHORT).show();
                                         e.printStackTrace();
                                     }
                                 }
@@ -978,7 +978,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                                 intent.putExtra(Intent.EXTRA_TEXT, "");
                                 startActivity(intent);
                             } catch (Exception e) {
-                                Toast.makeText(getApplicationContext(), "Sorry...You don't have any mail app", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Sorry...you don't have any mail app", Toast.LENGTH_SHORT).show();
                                 e.printStackTrace();
                             }
                         }
@@ -1506,13 +1506,13 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                     String Success = jsonObject.getString("Success");
                     String Message = jsonObject.getString("Message");
                     if (Success.equals("1")) {
-                        Toast.makeText(getApplicationContext(), "Member Added into circle Successfully", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Member added into circle successfully", Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(getApplicationContext(), "Member not added", Toast.LENGTH_LONG).show();
                     }
                     // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
                 } else {
-                    Toast.makeText(getApplicationContext(), "Not able to Add Friend in circle", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to add friend in circle", Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -2211,7 +2211,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                 }
                 else
                 {
-                    Toast.makeText(getBaseContext(), "Not able to Update Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Not able to fetch circles", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {

@@ -117,10 +117,10 @@ public class GroupTag extends AppCompatActivity
                                 GroupDesc = descriptionBox.getText().toString();
 
                                 if (GroupName.equals("")){
-                                    Toast.makeText(getApplicationContext(), "Enter Group Name", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Enter circle name", Toast.LENGTH_LONG).show();
                                 }
                                 else if (GroupDesc.equals("")){
-                                    Toast.makeText(getApplicationContext(), "Enter Group Description", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Enter circle description", Toast.LENGTH_LONG).show();
                                 }
                                 else {
                                     new HttpAsyncTaskGroupCreate().execute(Utility.BASE_URL+"Group/Create");
@@ -302,15 +302,15 @@ public class GroupTag extends AppCompatActivity
                     JSONObject jsonObject = new JSONObject(result);
                     String Success = jsonObject.getString("Success").toString();
                     if (Success.equals("1")) {
-                        Toast.makeText(getApplicationContext(), "Group Created..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Circle created..", Toast.LENGTH_LONG).show();
                         allTaggs.clear();
                         new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/Fetch");
                     }
                     else {
-                        Toast.makeText(getApplicationContext(), "Group not Created..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Circle not created..", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "Not able to create Group..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to create circle..", Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -372,7 +372,7 @@ public class GroupTag extends AppCompatActivity
                     lstGroupTag.setAdapter(customAdapter);
                     // new ArrayAdapter<>(getApplicationContext(),R.layout.mytextview, array)
                 } else {
-                    Toast.makeText(getApplicationContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to load circles..", Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
