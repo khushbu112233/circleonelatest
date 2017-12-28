@@ -2,6 +2,7 @@ package com.circle8.circleOne.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -99,6 +100,11 @@ public class CardsFragment extends Fragment
         }
 
         @Override
+        public void restoreState(Parcelable arg0, ClassLoader arg1) {
+            //do nothing here! no call to super.restoreState(arg0, arg1);
+        }
+
+        @Override
         public Fragment getItem(int position)
         {
             if (position == 0)
@@ -106,34 +112,44 @@ public class CardsFragment extends Fragment
                 getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                 InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(getActivity().getWindow().getDecorView().getWindowToken(), 0);
-                return new List1Fragment();
+                List1Fragment tab1 = new List1Fragment();
+                return tab1;
+               // return new List1Fragment();
             }
             else if (position == 1)
             {
                 getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                 InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(getActivity().getWindow().getDecorView().getWindowToken(), 0);
-                return new List2Fragment();
+                List2Fragment tab2 = new List2Fragment();
+                return tab2;
+               // return new List2Fragment();
             }
             else if (position == 2)
             {
                 getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                 InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(getActivity().getWindow().getDecorView().getWindowToken(), 0);
-                return new List3Fragment();
+                List3Fragment tab1 = new List3Fragment();
+                return tab1;
+                //return new List3Fragment();
             }
             else if (position == 3)
             {
                 getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                 InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(getActivity().getWindow().getDecorView().getWindowToken(), 0);
-                return new List4Fragment();
+                List4Fragment tab1 = new List4Fragment();
+                return tab1;
+               // return new List4Fragment();
             }
             else
             {
                 InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(getActivity().getWindow().getDecorView().getWindowToken(), 0);
-                return new List1Fragment();
+                List1Fragment tab1 = new List1Fragment();
+                return tab1;
+               // return new List1Fragment();
             }
         }
 

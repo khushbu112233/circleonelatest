@@ -193,19 +193,15 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
     public double longitude;
     String lat = "", lng = "";
     // list of permissions
-
     ArrayList<String> permissions=new ArrayList<>();
     PermissionUtils permissionUtils;
-
     public static boolean isPermissionGranted;
     public static String Connection_Limit, Connection_Left;
     ReferralCodeSession referralCodeSession;
     private String refer;
     String User_name;
-
     private QBSystemMessagesManager systemMessagesManager;
     ArrayList<QBUser> selectedUsers = new ArrayList<QBUser>();
-
     private BroadcastReceiver pushBroadcastReceiver;
     private GooglePlayServicesHelper googlePlayServicesHelper;
     private DialogsAdapter dialogsAdapter;

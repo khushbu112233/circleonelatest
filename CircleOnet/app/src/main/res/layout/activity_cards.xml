@@ -32,11 +32,11 @@
         </android.support.design.widget.AppBarLayout>
 
         <com.circle8.circleOne.Utils.CustomViewPager
-            android:layout_above="@+id/view1"
-            android:layout_below="@+id/view"
-            android:id="@+id/container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        android:layout_above="@+id/view1"
+        android:layout_below="@+id/view"
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
         <View
             android:layout_above="@+id/appbar"
