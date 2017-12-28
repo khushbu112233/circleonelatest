@@ -810,7 +810,7 @@ public class NotificationAdapter extends BaseAdapter
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            Notification.rlProgressDialog.setVisibility(View.GONE);
+            Notification.activityNotificationBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result.equals("")) {
@@ -873,7 +873,7 @@ public class NotificationAdapter extends BaseAdapter
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            Notification.rlProgressDialog.setVisibility(View.GONE);
+            Notification.activityNotificationBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result.equals("")) {
@@ -930,7 +930,7 @@ public class NotificationAdapter extends BaseAdapter
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            Notification.rlProgressDialog.setVisibility(View.GONE);
+            Notification.activityNotificationBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -989,7 +989,7 @@ public class NotificationAdapter extends BaseAdapter
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            Notification.rlProgressDialog.setVisibility(View.GONE);
+            Notification.activityNotificationBinding.rlProgressDialog.setVisibility(View.GONE);
 
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
             try {
@@ -1045,7 +1045,7 @@ public class NotificationAdapter extends BaseAdapter
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            Notification.rlProgressDialog.setVisibility(View.GONE);
+            Notification.activityNotificationBinding.rlProgressDialog.setVisibility(View.GONE);
 
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
             try {
@@ -1102,7 +1102,7 @@ public class NotificationAdapter extends BaseAdapter
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            Notification.rlProgressDialog.setVisibility(View.GONE);
+            Notification.activityNotificationBinding.rlProgressDialog.setVisibility(View.GONE);
 
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
             try {

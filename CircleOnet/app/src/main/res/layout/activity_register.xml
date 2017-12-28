@@ -1,586 +1,588 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout   xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true"
-    android:background="@android:color/white"
-    tools:context="com.circle8.circleOne.Activity.RegisterActivity">
-
+    >
     <RelativeLayout
-        android:id="@+id/rlProgressDialog"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@color/colorPrimary"
-        android:layout_centerInParent="true"
-        android:visibility="gone"
-        android:layout_marginRight="50dp"
-        android:layout_marginLeft="50dp"
-        android:elevation="20dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_centerVertical="true"
-            android:weightSum="1">
-
-            <RelativeLayout
-                android:layout_centerInParent="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="0.7"
-                android:gravity="right"
-                android:layout_marginRight="15dp">
-
-                <ImageView
-                    android:layout_centerInParent="true"
-                    android:id="@+id/imgConnecting1"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/round1" />
-                <ImageView
-                    android:layout_centerInParent="true"
-                    android:id="@+id/imgConnecting2"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/round2" />
-                <ImageView
-                    android:layout_centerInParent="true"
-                    android:id="@+id/imgConnecting3"
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:src="@drawable/round3" />
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/txtProgressing"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="0dp"
-                android:textSize="15dp"
-                android:layout_below="@+id/imgConnecting"
-                android:textColor="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Connecting."
-                android:layout_gravity="center_vertical"
-                android:layout_weight="0.3"/>
-        </LinearLayout>
-    </RelativeLayout>
-
-
-    <LinearLayout
-        android:id="@+id/lnrRegister"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/colorPrimary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:fitsSystemWindows="true"
+        android:background="@android:color/white"
+        tools:context="com.circle8.circleOne.Activity.RegisterActivity">
+
         <RelativeLayout
+            android:id="@+id/rlProgressDialog"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/imgBack"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:src="@drawable/ic_keyboard_arrow_left_black_24dp" />
-
-            <TextView
-                android:id="@+id/txtprofile"
-                android:textSize="19dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="8dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Registration"
-                android:textColor="@color/white"/>
+            android:layout_height="70dp"
+            android:background="@color/colorPrimary"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:elevation="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtprofile"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:layout_centerVertical="true"
+                android:weightSum="1">
 
                 <RelativeLayout
-                    android:layout_width="90dp"
-                    android:layout_height="90dp">
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imgProfileCard"
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
-                    android:src="@drawable/usr_white1"
-                    app:civ_border_color="@color/white"
-                    app:civ_border_width="0dp" />
+                    android:layout_centerInParent="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.7"
+                    android:gravity="right"
+                    android:layout_marginRight="15dp">
 
                     <ImageView
                         android:layout_centerInParent="true"
-                        android:layout_width="90dp"
-                        android:layout_height="90dp"
-                        android:src="@drawable/round_white_profile"
-                        />
-
+                        android:id="@+id/imgConnecting1"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/round1" />
                     <ImageView
-                        android:layout_marginRight="3dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:id="@+id/imgConnecting2"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/ic_white_camera"/>
-
+                        android:src="@drawable/round2" />
+                    <ImageView
+                        android:layout_centerInParent="true"
+                        android:id="@+id/imgConnecting3"
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:src="@drawable/round3" />
                 </RelativeLayout>
 
-                <com.circle8.circleOne.Utils.HelveticaLightTextView
-                    android:layout_marginBottom="8dp"
-                    android:id="@+id/txtCompany"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:text="Upload Photo"
-                    android:textAlignment="center"
+                <TextView
+                    android:id="@+id/txtProgressing"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="0dp"
+                    android:textSize="15dp"
+                    android:layout_below="@+id/imgConnecting"
                     android:textColor="@color/white"
-                    android:textSize="15dp" />
-
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Connecting."
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.3"/>
             </LinearLayout>
-
         </RelativeLayout>
 
 
-    </LinearLayout>
-
-    <ScrollView
-        android:layout_above="@+id/lnrBottomReg"
-        android:id="@+id/scroll"
-        android:layout_below="@+id/lnrRegister"
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_marginLeft="35dp"
-        android:layout_marginRight="25dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <com.circle8.circleOne.Utils.HelveticaLightEditText
-            android:id="@+id/etEmail"
-            android:layout_marginTop="3dp"
-            android:textSize="15dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:textColorHint="@android:color/black"
-            android:textColor="@android:color/black"
-            android:hint="* Email (User Name)"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"/>
-        <TextView
-            android:visibility="gone"
-            android:id="@+id/tvUsernameInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Please! Enter Email(Username)"
-            android:textSize="10sp"
-            android:textColor="@color/unselected"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp" />
-
         <LinearLayout
-            android:layout_marginTop="3dp"
+            android:id="@+id/lnrRegister"
+            android:orientation="vertical"
+            android:background="@color/colorPrimary"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <com.circle8.circleOne.Utils.HelveticaLightEditText
-                android:id="@+id/etFirstName"
-                android:layout_weight="1"
-                android:textSize="15dp"
-                android:backgroundTint="@color/colorPrimary"
-                android:textColorHint="@android:color/black"
-                android:textColor="@android:color/black"
-                android:hint="* First Name"
+            android:layout_height="wrap_content">
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName|text"/>
+                android:layout_height="match_parent">
 
-            <com.circle8.circleOne.Utils.HelveticaLightEditText
-                android:id="@+id/etLastName"
-                android:layout_weight="1"
-                android:textSize="15dp"
-                android:backgroundTint="@color/colorPrimary"
-                android:textColorHint="@android:color/black"
-                android:textColor="@android:color/black"
-                android:hint="* Last Name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName|text"/>
+                <ImageView
+                    android:id="@+id/imgBack"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/ic_keyboard_arrow_left_black_24dp" />
+
+                <TextView
+                    android:id="@+id/txtprofile"
+                    android:textSize="19dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Registration"
+                    android:textColor="@color/white"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtprofile"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="90dp"
+                        android:layout_height="90dp">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/imgProfileCard"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:src="@drawable/usr_white1"
+                            app:civ_border_color="@color/white"
+                            app:civ_border_width="0dp" />
+
+                        <ImageView
+                            android:layout_centerInParent="true"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:src="@drawable/round_white_profile"
+                            />
+
+                        <ImageView
+                            android:layout_marginRight="3dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_white_camera"/>
+
+                    </RelativeLayout>
+
+                    <com.circle8.circleOne.Utils.HelveticaLightTextView
+                        android:layout_marginBottom="8dp"
+                        android:id="@+id/txtCompany"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:text="Upload Photo"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_marginTop="0dp"
+        <ScrollView
+            android:layout_above="@+id/lnrBottomReg"
+            android:id="@+id/scroll"
+            android:layout_below="@+id/lnrRegister"
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:visibility="gone"
-                android:id="@+id/tvFirstNameInfo"
-                android:layout_weight="1"
-                android:textColor="@color/unselected"
-                android:textSize="10sp"
-                android:text="Enter First Name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"/>
-            <TextView
-                android:visibility="gone"
-                android:id="@+id/tvLastNameInfo"
-                android:layout_weight="1"
-                android:textColor="@color/unselected"
-                android:textSize="10sp"
-                android:text="Enter Last Name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"/>
-        </LinearLayout>
-
-        <com.circle8.circleOne.Utils.HelveticaLightEditText
-            android:id="@+id/etPassword"
-            android:layout_marginTop="3dp"
-            android:textSize="15dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:textColorHint="@android:color/black"
-            android:textColor="@android:color/black"
-            android:hint="* Password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"/>
-        <TextView
-            android:visibility="gone"
-            android:id="@+id/tvPasswordInfo"
-            android:textColor="@color/unselected"
-            android:textSize="10sp"
-            android:text="Enter Password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"/>
-
-        <com.circle8.circleOne.Utils.HelveticaLightEditText
-            android:id="@+id/etConfirmPass"
-            android:layout_marginTop="3dp"
-            android:textSize="15dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:textColorHint="@android:color/black"
-            android:textColor="@android:color/black"
-            android:hint="* Re-enter Password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"/>
-        <TextView
-            android:visibility="gone"
-            android:id="@+id/tvAgainPasswordInfo"
-            android:textColor="@color/unselected"
-            android:textSize="10sp"
-            android:text="Repeat Password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <com.circle8.circleOne.Utils.HelveticaLightTextView
-                android:layout_marginTop="3dp"
-                android:textColor="@color/textColor"
-                android:textSize="15dp"
-                android:backgroundTint="@color/colorPrimary"
-                android:textColorHint="@color/colorPrimary"
-                android:text="*"
-                android:visibility="gone"
-                android:layout_gravity="center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"/>
-            <com.hbb20.CountryCodePicker
-                app:ccp_defaultPhoneCode="65"
-                android:visibility="visible"
-                app:ccpDialog_searchEditTextTint="@color/colorPrimary"
-                app:ccp_textSize="15dp"
-                app:ccpDialog_textColor="@color/colorPrimary"
-                android:textColor="@color/colorPrimary"
-                android:textSize="15dp"
-                app:ccp_showNameCode="false"
-                app:ccp_showPhoneCode="true"
-                app:ccp_contentColor="@color/black"
-                app:ccp_showFlag="false"
-                android:layout_marginRight="2dp"
-                android:id="@+id/ccp"
-                android:layout_gravity="center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            android:layout_height="match_parent">
             <LinearLayout
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="25dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="center_vertical">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
                 <com.circle8.circleOne.Utils.HelveticaLightEditText
-                    android:id="@+id/etPhone"
+                    android:id="@+id/etEmail"
                     android:layout_marginTop="3dp"
                     android:textSize="15dp"
                     android:backgroundTint="@color/colorPrimary"
                     android:textColorHint="@android:color/black"
                     android:textColor="@android:color/black"
-                    android:hint=" Phone"
-                    android:layout_gravity="center_vertical"
+                    android:hint="* Email (User Name)"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"/>
+                    android:inputType="textEmailAddress"/>
                 <TextView
                     android:visibility="gone"
-                    android:id="@+id/tvPhoneInfo"
+                    android:id="@+id/tvUsernameInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Please! Enter Email(Username)"
+                    android:textSize="10sp"
+                    android:textColor="@color/unselected"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp" />
+
+                <LinearLayout
+                    android:layout_marginTop="3dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.circle8.circleOne.Utils.HelveticaLightEditText
+                        android:id="@+id/etFirstName"
+                        android:layout_weight="1"
+                        android:textSize="15dp"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:textColorHint="@android:color/black"
+                        android:textColor="@android:color/black"
+                        android:hint="* First Name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName|text"/>
+
+                    <com.circle8.circleOne.Utils.HelveticaLightEditText
+                        android:id="@+id/etLastName"
+                        android:layout_weight="1"
+                        android:textSize="15dp"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:textColorHint="@android:color/black"
+                        android:textColor="@android:color/black"
+                        android:hint="* Last Name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName|text"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="0dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:visibility="gone"
+                        android:id="@+id/tvFirstNameInfo"
+                        android:layout_weight="1"
+                        android:textColor="@color/unselected"
+                        android:textSize="10sp"
+                        android:text="Enter First Name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"/>
+                    <TextView
+                        android:visibility="gone"
+                        android:id="@+id/tvLastNameInfo"
+                        android:layout_weight="1"
+                        android:textColor="@color/unselected"
+                        android:textSize="10sp"
+                        android:text="Enter Last Name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"/>
+                </LinearLayout>
+
+                <com.circle8.circleOne.Utils.HelveticaLightEditText
+                    android:id="@+id/etPassword"
+                    android:layout_marginTop="3dp"
+                    android:textSize="15dp"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:textColorHint="@android:color/black"
+                    android:textColor="@android:color/black"
+                    android:hint="* Password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"/>
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/tvPasswordInfo"
                     android:textColor="@color/unselected"
                     android:textSize="10sp"
-                    android:text="Enter Phone"
+                    android:text="Enter Password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"/>
+
+                <com.circle8.circleOne.Utils.HelveticaLightEditText
+                    android:id="@+id/etConfirmPass"
+                    android:layout_marginTop="3dp"
+                    android:textSize="15dp"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:textColorHint="@android:color/black"
+                    android:textColor="@android:color/black"
+                    android:hint="* Re-enter Password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"/>
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/tvAgainPasswordInfo"
+                    android:textColor="@color/unselected"
+                    android:textSize="10sp"
+                    android:text="Repeat Password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <com.circle8.circleOne.Utils.HelveticaLightTextView
+                        android:layout_marginTop="3dp"
+                        android:textColor="@color/textColor"
+                        android:textSize="15dp"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:textColorHint="@color/colorPrimary"
+                        android:text="*"
+                        android:visibility="gone"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"/>
+                    <com.hbb20.CountryCodePicker
+                        app:ccp_defaultPhoneCode="65"
+                        android:visibility="visible"
+                        app:ccpDialog_searchEditTextTint="@color/colorPrimary"
+                        app:ccp_textSize="15dp"
+                        app:ccpDialog_textColor="@color/colorPrimary"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="15dp"
+                        app:ccp_showNameCode="false"
+                        app:ccp_showPhoneCode="true"
+                        app:ccp_contentColor="@color/black"
+                        app:ccp_showFlag="false"
+                        android:layout_marginRight="2dp"
+                        android:id="@+id/ccp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="center_vertical">
+                        <com.circle8.circleOne.Utils.HelveticaLightEditText
+                            android:id="@+id/etPhone"
+                            android:layout_marginTop="3dp"
+                            android:textSize="15dp"
+                            android:backgroundTint="@color/colorPrimary"
+                            android:textColorHint="@android:color/black"
+                            android:textColor="@android:color/black"
+                            android:hint=" Phone"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"/>
+                        <TextView
+                            android:visibility="gone"
+                            android:id="@+id/tvPhoneInfo"
+                            android:textColor="@color/unselected"
+                            android:textSize="10sp"
+                            android:text="Enter Phone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/tvEmailInfo"
+                    android:textColor="@color/unselected"
+                    android:textSize="10sp"
+                    android:text="Enter Email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.circle8.circleOne.Utils.HelveticaLightTextView
+                        android:layout_marginTop="3dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="15dp"
+                        android:backgroundTint="@color/textColor"
+                        android:textColorHint="@color/colorPrimary"
+                        android:text="DOB :"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <com.circle8.circleOne.Utils.HelveticaLightEditText
+                        android:layout_marginLeft="20dp"
+                        android:id="@+id/etDD"
+                        android:layout_marginTop="3dp"
+                        android:textSize="15dp"
+                        android:backgroundTint="@color/textColor"
+                        android:textColorHint="@android:color/black"
+                        android:textColor="@android:color/black"
+                        android:hint="DD"
+                        android:maxLength="2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="date"/>
+
+                    <com.circle8.circleOne.Utils.HelveticaLightTextView
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="3dp"
+                        android:textSize="15dp"
+                        android:backgroundTint="@color/textColor"
+                        android:textColorHint="@android:color/black"
+                        android:textColor="@android:color/black"
+                        android:text="/"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <com.circle8.circleOne.Utils.HelveticaLightEditText
+                        android:layout_marginLeft="10dp"
+                        android:id="@+id/etMM"
+                        android:layout_marginTop="3dp"
+                        android:textSize="15dp"
+                        android:backgroundTint="@color/textColor"
+                        android:textColorHint="@android:color/black"
+                        android:textColor="@android:color/black"
+                        android:hint="MM"
+                        android:maxLength="2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="date"/>
+
+                    <com.circle8.circleOne.Utils.HelveticaLightTextView
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="3dp"
+                        android:textSize="15dp"
+                        android:backgroundTint="@color/textColor"
+                        android:textColorHint="@android:color/black"
+                        android:textColor="@android:color/black"
+                        android:text="/"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <com.circle8.circleOne.Utils.HelveticaLightEditText
+                        android:layout_marginLeft="10dp"
+                        android:id="@+id/etYYYY"
+                        android:layout_marginTop="3dp"
+                        android:textSize="15dp"
+                        android:backgroundTint="@color/textColor"
+                        android:textColorHint="@android:color/black"
+                        android:textColor="@android:color/black"
+                        android:hint="YYYY"
+                        android:maxLength="4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="date"/>
+
+                </LinearLayout>
+                <com.circle8.circleOne.Utils.HelveticaLightEditText
+                    android:id="@+id/etReferrelCode"
+                    android:layout_marginTop="3dp"
+                    android:textSize="15dp"
+                    android:backgroundTint="@color/textColor"
+                    android:textColorHint="@android:color/black"
+                    android:textColor="@android:color/black"
+                    android:hint="Referral Code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"/>
+
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/tvReferrelInfo"
+                    android:textColor="@color/unselected"
+                    android:textSize="10sp"
+                    android:text="Enter Referral Code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"/>
+
+                <LinearLayout
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <com.circle8.circleOne.Utils.HelveticaLightTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gender: "
+                        android:textSize="15dp"
+                        android:textColor="@color/colorPrimary"/>
+                    <TextView
+                        android:id="@+id/txtGender"
+                        android:textSize="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Male / Female"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:layout_marginBottom="15dp">
+
+                    <View
+                        android:id="@+id/viewCenter"
+                        android:layout_width="40dp"
+                        android:layout_height="2dp"
+                        android:layout_centerInParent="true"
+                        android:background="@color/unselected"
+                        android:layerType="software"
+                        />
+
+                    <View
+                        android:id="@+id/vwDrag1"
+                        android:layout_width="15dp"
+                        android:layout_height="2dp"
+                        android:layout_centerVertical="true"
+                        android:background="@color/unselected"
+                        android:layerType="software"
+                        android:layout_toLeftOf="@+id/iv_ConnectImg"/>
+
+                    <ImageView
+                        android:id="@+id/iv_ConnectImg"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_connect"
+                        android:layout_centerInParent="true"/>
+
+                    <View
+                        android:id="@+id/vwDrag2"
+                        android:layout_width="15dp"
+                        android:layout_height="2dp"
+                        android:layout_centerVertical="true"
+                        android:background="@color/unselected"
+                        android:layerType="software"
+                        android:layout_toRightOf="@+id/iv_ConnectImg"/>
+
+                    <RelativeLayout
+                        android:id="@+id/ivFemale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/vwDrag2">
+                        <ImageView
+                            android:id="@+id/ivFemaleround"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/ic_girl_gray"
+                            android:layout_centerInParent="true" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/ivMale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/vwDrag1">
+                        <ImageView
+                            android:id="@+id/ivMaleRound"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/ic_man_gray"
+                            android:layout_centerInParent="true" />
+                    </RelativeLayout>
+                </RelativeLayout>
+
             </LinearLayout>
-
-        </LinearLayout>
-
-        <TextView
-            android:visibility="gone"
-            android:id="@+id/tvEmailInfo"
-            android:textColor="@color/unselected"
-            android:textSize="10sp"
-            android:text="Enter Email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"/>
+        </ScrollView>
 
         <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/lnrBottomReg"
+            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-        <com.circle8.circleOne.Utils.HelveticaLightTextView
-            android:layout_marginTop="3dp"
-            android:textColor="@color/colorPrimary"
-            android:textSize="15dp"
-            android:backgroundTint="@color/textColor"
-            android:textColorHint="@color/colorPrimary"
-            android:text="DOB :"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-            <com.circle8.circleOne.Utils.HelveticaLightEditText
-                android:layout_marginLeft="20dp"
-                android:id="@+id/etDD"
-                android:layout_marginTop="3dp"
-                android:textSize="15dp"
-                android:backgroundTint="@color/textColor"
-                android:textColorHint="@android:color/black"
-                android:textColor="@android:color/black"
-                android:hint="DD"
-                android:maxLength="2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="date"/>
-
-            <com.circle8.circleOne.Utils.HelveticaLightTextView
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="3dp"
-                android:textSize="15dp"
-                android:backgroundTint="@color/textColor"
-                android:textColorHint="@android:color/black"
-                android:textColor="@android:color/black"
-                android:text="/"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <com.circle8.circleOne.Utils.HelveticaLightEditText
-                android:layout_marginLeft="10dp"
-                android:id="@+id/etMM"
-                android:layout_marginTop="3dp"
-                android:textSize="15dp"
-                android:backgroundTint="@color/textColor"
-                android:textColorHint="@android:color/black"
-                android:textColor="@android:color/black"
-                android:hint="MM"
-                android:maxLength="2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="date"/>
-
-            <com.circle8.circleOne.Utils.HelveticaLightTextView
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="3dp"
-                android:textSize="15dp"
-                android:backgroundTint="@color/textColor"
-                android:textColorHint="@android:color/black"
-                android:textColor="@android:color/black"
-                android:text="/"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <com.circle8.circleOne.Utils.HelveticaLightEditText
-                android:layout_marginLeft="10dp"
-                android:id="@+id/etYYYY"
-                android:layout_marginTop="3dp"
-                android:textSize="15dp"
-                android:backgroundTint="@color/textColor"
-                android:textColorHint="@android:color/black"
-                android:textColor="@android:color/black"
-                android:hint="YYYY"
-                android:maxLength="4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="date"/>
+            android:layout_height="50dp">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimary"/>
+            <TextView
+                android:gravity="center"
+                android:textSize="17dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="REGISTER"
+                android:textColor="@color/colorPrimary"/>
 
         </LinearLayout>
-        <com.circle8.circleOne.Utils.HelveticaLightEditText
-            android:id="@+id/etReferrelCode"
-            android:layout_marginTop="3dp"
-            android:textSize="15dp"
-            android:backgroundTint="@color/textColor"
-            android:textColorHint="@android:color/black"
-            android:textColor="@android:color/black"
-            android:hint="Referral Code"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"/>
-
-        <TextView
-            android:visibility="gone"
-            android:id="@+id/tvReferrelInfo"
-            android:textColor="@color/unselected"
-            android:textSize="10sp"
-            android:text="Enter Referral Code"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"/>
-
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="3dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-        <com.circle8.circleOne.Utils.HelveticaLightTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Gender: "
-            android:textSize="15dp"
-            android:textColor="@color/colorPrimary"/>
-        <TextView
-            android:id="@+id/txtGender"
-            android:textSize="15dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Male / Female"
-            android:textColor="@color/black"/>
-        </LinearLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:gravity="center"
-            android:layout_marginBottom="15dp">
-
-            <View
-                android:id="@+id/viewCenter"
-                android:layout_width="40dp"
-                android:layout_height="2dp"
-              android:layout_centerInParent="true"
-                android:background="@color/unselected"
-                android:layerType="software"
-               />
-
-            <View
-                android:id="@+id/vwDrag1"
-                android:layout_width="15dp"
-                android:layout_height="2dp"
-                android:layout_centerVertical="true"
-                android:background="@color/unselected"
-                android:layerType="software"
-                android:layout_toLeftOf="@+id/iv_ConnectImg"/>
-
-            <ImageView
-                android:id="@+id/iv_ConnectImg"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_connect"
-                android:layout_centerInParent="true"/>
-
-            <View
-                android:id="@+id/vwDrag2"
-                android:layout_width="15dp"
-                android:layout_height="2dp"
-                android:layout_centerVertical="true"
-                android:background="@color/unselected"
-                android:layerType="software"
-                android:layout_toRightOf="@+id/iv_ConnectImg"/>
-
-            <RelativeLayout
-                android:id="@+id/ivFemale"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/vwDrag2">
-                <ImageView
-                    android:id="@+id/ivFemaleround"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/ic_girl_gray"
-                    android:layout_centerInParent="true" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/ivMale"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/vwDrag1">
-                <ImageView
-                    android:id="@+id/ivMaleRound"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/ic_man_gray"
-                    android:layout_centerInParent="true" />
-            </RelativeLayout>
-        </RelativeLayout>
-
-    </LinearLayout>
-    </ScrollView>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:id="@+id/lnrBottomReg"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorPrimary"/>
-        <TextView
-            android:gravity="center"
-            android:textSize="17dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="REGISTER"
-            android:textColor="@color/colorPrimary"/>
-
-    </LinearLayout>
-</RelativeLayout>
+    </RelativeLayout>
+</layout>

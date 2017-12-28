@@ -3,6 +3,7 @@ package com.circle8.circleOne.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
@@ -25,6 +26,7 @@ import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.NotificationModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
+import com.circle8.circleOne.databinding.ActivityNotificationBinding;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -51,27 +53,19 @@ public class Notification extends AppCompatActivity
     static NotificationAdapter notificationAdapter;
     private static TextView textView;
     ImageView imgLogo;
-
     public static Context mContext ;
-
-    public static RelativeLayout rlProgressDialog ;
-    public static TextView tvProgressing ;
-    public static ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
-
     static ArrayList<NotificationModel> allTagsList = new ArrayList<>();
-    static RelativeLayout rlLoadMore ;
     static int numberCount, listSize;
     public static int pageno = 1 ;
     static String counts = "0" ;
-
     public static String progressStatus = "FIRST";
     public static String comeFirst = "Yes" ;
-
+    public static ActivityNotificationBinding activityNotificationBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notification);
+        activityNotificationBinding = DataBindingUtil.setContentView(this,R.layout.activity_notification);
 
         mContext = Notification.this ;
         pageno = 1;
@@ -95,12 +89,6 @@ public class Notification extends AppCompatActivity
         UserId = user.get(LoginSession.KEY_USERID);
 //        Toast.makeText(getApplicationContext(),UserId,Toast.LENGTH_SHORT).show();
 
-        rlLoadMore = (RelativeLayout)findViewById(R.id.rlLoadMore);
-        rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
-        tvProgressing = (TextView)findViewById(R.id.txtProgressing);
-        ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
-        ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
-        ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
 
         callFirst();
 
@@ -245,7 +233,7 @@ public class Notification extends AppCompatActivity
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            activityNotificationBinding.rlProgressDialog.setVisibility(View.GONE);
             try
             {
                 if (result != null)
@@ -270,7 +258,7 @@ public class Notification extends AppCompatActivity
                         numberCount = Integer.parseInt(counts);
                     }
 
-                    rlLoadMore.setVisibility(View.GONE);
+                    activityNotificationBinding.rlLoadMore.setVisibility(View.GONE);
 
                     for (int i = 0; i < jsonArray.length(); i++)
                     {
@@ -325,7 +313,7 @@ public class Notification extends AppCompatActivity
                                 {
                                     if (listNotification.getLastVisiblePosition() >= count - threshold)
                                     {
-                                       // rlLoadMore.setVisibility(View.VISIBLE);
+                                        // rlLoadMore.setVisibility(View.VISIBLE);
                                         // Execute LoadMoreDataTask AsyncTask
                                         new HttpAsyncTask().execute(Utility.BASE_URL+"Notification");
                                     }
@@ -353,13 +341,13 @@ public class Notification extends AppCompatActivity
 
     public static void CustomProgressDialog(final String loading)
     {
-        rlProgressDialog.setVisibility(View.VISIBLE);
-        tvProgressing.setText(loading);
+        activityNotificationBinding.rlProgressDialog.setVisibility(View.VISIBLE);
+        activityNotificationBinding.txtProgressing.setText(loading);
 
         Animation anim = AnimationUtils.loadAnimation(mContext,R.anim.anticlockwise);
-        ivConnecting1.startAnimation(anim);
+        activityNotificationBinding.imgConnecting1.startAnimation(anim);
         Animation anim1 = AnimationUtils.loadAnimation(mContext,R.anim.clockwise);
-        ivConnecting2.startAnimation(anim1);
+        activityNotificationBinding.imgConnecting2.startAnimation(anim1);
 
         int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
         for (int i = 350; i <= SPLASHTIME; i = i + 350)
@@ -371,15 +359,15 @@ public class Notification extends AppCompatActivity
                 {
                     if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
                     {
-                        tvProgressing.setText(loading+".");
+                        activityNotificationBinding.txtProgressing.setText(loading+".");
                     }
                     else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
                     {
-                        tvProgressing.setText(loading+"..");
+                        activityNotificationBinding.txtProgressing.setText(loading+"..");
                     }
                     else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
                     {
-                        tvProgressing.setText(loading+"...");
+                        activityNotificationBinding.txtProgressing.setText(loading+"...");
                     }
 
                 }

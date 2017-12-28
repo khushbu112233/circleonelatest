@@ -65,7 +65,6 @@ public class NewCardRequestDetailActivity extends AppCompatActivity
     private CircleImageView imgProfile ;
     private TextView tvPerson, tvCompany, tvDesignation, tvProfile ;
     private LinearLayout llDefaultCard, llNewCard ;
-
     private String name, image, company, designation, phone, profile;
     private static String final_ImgBase64 = "";
     private CardSwipe myPager ;

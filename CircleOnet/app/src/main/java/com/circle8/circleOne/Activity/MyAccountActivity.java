@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -18,6 +19,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
@@ -25,13 +27,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,8 +39,7 @@ import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Helper.ReferralCodeSession;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
-import com.hbb20.CountryCodePicker;
-import com.squareup.picasso.Picasso;
+import com.circle8.circleOne.databinding.MyAccountBinding;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -72,8 +68,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 import static com.circle8.circleOne.Activity.RegisterActivity.BitMapToString;
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
@@ -82,19 +76,6 @@ import static com.circle8.circleOne.Utils.Validation.updateRegisterValidate;
 
 public class MyAccountActivity extends AppCompatActivity implements View.OnClickListener
 {
-    private EditText etUserName, etFirstName, etLastName, etPassword,
-            etPasswordAgain, etEmail, etAddress1 , etAddress2, etPhone ;
-    private TextView tvUserName, tvFirstName, tvLastName, tvPassword,
-            tvPasswordAgain, tvEmail, tvPhone, tvDD, tvMM, tvYYYY ;
-    private TextView tvReferenceCode ;
-    private CircleImageView imgProfile ;
-    private TextView tvSave, tvCancel, txtGender ;
-    private ImageView ivFemaleround, ivFemaleImg, ivConnect, ivMiniCamera,
-            ivMaleRound, ivMaleImg, ivEditImg;
-    private RelativeLayout rlMale, rlFemale ;
-    View viewCenter;
-    RelativeLayout ivMale, ivFemale;
-    private View line_view1, line_view2 ;
 
     private String gender = "", final_ImgBase64 = "", Image = "";
     private ImageView imgBack;
@@ -104,32 +85,27 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     private String image;
     private ProgressDialog pDialog;
     private String  first_name, last_name, phone_no, password, c_password ;
-    public static TextView tvFirstNameInfo, tvLastNameInfo, tvPasswordInfo, tvAgainPasswordInfo, tvPhoneInfo ;
-
-    private LoginSession session;
+      private LoginSession session;
     private String user_id, email_id, user_img, user_pass, user_Gender, user_Photo ;
     private String encodedImageData, register_img;
 
     int motionLength;
     int roundWidth = 0, lineWidth = 0;
-    CountryCodePicker ccp;
-    EditText etDD, etMM, etYYYY;
     String user_name, dob, profile_id;
     String Connection_Limit, Connection_Left;
     String Q_ID = "";
     String editStatus = "None";
-    RelativeLayout rltGender;
 
     boolean profilePicPress = false ;
     TextView tvReferral;
     ReferralCodeSession referralCodeSession;
-    ProgressBar progressBar1;
+    public static MyAccountBinding myAccountBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.my_account);
+        myAccountBinding = DataBindingUtil.setContentView(this,R.layout.my_account);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
@@ -142,84 +118,34 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         profile_id = user.get(LoginSession.KEY_PROFILEID);
         Connection_Limit = user.get(LoginSession.KEY_CONNECTION_LIMIT);
         Connection_Left = user.get(LoginSession.KEY_CONNECTION_LEFT);
-        rltGender = (RelativeLayout) findViewById(R.id.rltGender);
         Q_ID = user.get(LoginSession.KEY_QID);
-//        Toast.makeText(getApplicationContext(),email_id+" "+user_pass,Toast.LENGTH_LONG).show();
-        progressBar1 = (ProgressBar) findViewById(R.id.progressBar1);
-        imgProfile = (CircleImageView)findViewById(R.id.imgProfile);
-        etUserName = (EditText)findViewById(R.id.etUserName);
-        etFirstName = (EditText)findViewById(R.id.etFirstName);
-        etLastName = (EditText)findViewById(R.id.etLastName);
-        etPassword = (EditText)findViewById(R.id.etPassword);
-        etPasswordAgain = (EditText)findViewById(R.id.etPasswordAgain);
-        etEmail = (EditText)findViewById(R.id.etEmail);
-        etAddress1 = (EditText)findViewById(R.id.etAddress1);
-        etAddress2 = (EditText)findViewById(R.id.etAddress2);
-        etPhone = (EditText)findViewById(R.id.etPhone);
 
         tvReferral = (TextView)findViewById(R.id.tvReferral);
-
-        tvFirstName = (TextView) findViewById(R.id.tvFirstName);
-        tvLastName = (TextView)findViewById(R.id.tvLastName);
-        tvPassword = (TextView)findViewById(R.id.tvPassword);
-        tvPasswordAgain = (TextView)findViewById(R.id.tvRePassword);
-        tvPhone = (TextView)findViewById(R.id.tvPhone);
-        tvDD = (TextView)findViewById(R.id.tvDate);
-        tvMM = (TextView)findViewById(R.id.tvMonth);
-        tvYYYY = (TextView)findViewById(R.id.tvYear);
-
         imgBack = (ImageView) findViewById(R.id.imgBack);
-        tvSave = (TextView)findViewById(R.id.tvSave);
-        tvCancel = (TextView)findViewById(R.id.tvCancel);
-        txtGender = (TextView)findViewById(R.id.txtGender);
-        ccp = (CountryCodePicker) findViewById(R.id.ccp);
-        etDD = (EditText) findViewById(R.id.etDD);
-        etMM = (EditText) findViewById(R.id.etMM);
-        etYYYY = (EditText) findViewById(R.id.etYYYY);
-        rlMale = (RelativeLayout)findViewById(R.id.ivMale);
-        rlFemale = (RelativeLayout)findViewById(R.id.ivFemale);
-
-        line_view1 = (View)findViewById(R.id.vwDrag1);
-        line_view2 = (View)findViewById(R.id.vwDrag2);
-
-        ivFemaleround = (ImageView)findViewById(R.id.ivFemaleround);
-//        ivFemaleImg = (ImageView)findViewById(R.id.ivFemaleImg);
-        ivConnect = (ImageView)findViewById(R.id.iv_ConnectImg);
-        ivMaleRound = (ImageView)findViewById(R.id.ivMaleRound);
-//        ivMaleImg = (ImageView)findViewById(R.id.ivMaleImg);
-        ivMiniCamera = (ImageView)findViewById(R.id.ivMiniCamera);
-        ivEditImg = (ImageView)findViewById(R.id.ivEditImg);
-        viewCenter = findViewById(R.id.viewCenter);
-
-        tvFirstNameInfo = (TextView)findViewById(R.id.tvFirstNameInfo);
-        tvLastNameInfo = (TextView)findViewById(R.id.tvLastNameInfo);
-        tvPasswordInfo = (TextView)findViewById(R.id.tvPasswordInfo);
-        tvAgainPasswordInfo = (TextView)findViewById(R.id.tvAgainPasswordInfo);
-        tvPhoneInfo = (TextView)findViewById(R.id.tvPhoneInfo);
 
         pDialog = new ProgressDialog(this);
-        etUserName.setText(email_id);
+        myAccountBinding.etUserName.setText(email_id);
 
-        etFirstName.setVisibility(View.VISIBLE);
-        tvFirstName.setVisibility(View.GONE);
-        etLastName.setVisibility(View.VISIBLE);
-        tvLastName.setVisibility(View.GONE);
-        etPassword.setVisibility(View.VISIBLE);
-        tvPassword.setVisibility(View.GONE);
-        etPasswordAgain.setVisibility(View.VISIBLE);
-        tvPasswordAgain.setVisibility(View.GONE);
-        etPhone.setVisibility(View.VISIBLE);
-        tvPhone.setVisibility(View.GONE);
-        etDD.setVisibility(View.VISIBLE);
-        tvDD.setVisibility(View.GONE);
-        etMM.setVisibility(View.VISIBLE);
-        tvMM.setVisibility(View.GONE);
-        etYYYY.setVisibility(View.VISIBLE);
-        tvYYYY.setVisibility(View.GONE);
+        myAccountBinding.etFirstName.setVisibility(View.VISIBLE);
+        myAccountBinding.tvFirstName.setVisibility(View.GONE);
+        myAccountBinding.etLastName.setVisibility(View.VISIBLE);
+        myAccountBinding.tvLastName.setVisibility(View.GONE);
+        myAccountBinding.etPassword.setVisibility(View.VISIBLE);
+        myAccountBinding.tvPassword.setVisibility(View.GONE);
+        myAccountBinding.etPasswordAgain.setVisibility(View.VISIBLE);
+        myAccountBinding.tvRePassword.setVisibility(View.GONE);
+        myAccountBinding.etPhone.setVisibility(View.VISIBLE);
+        myAccountBinding.tvPhone.setVisibility(View.GONE);
+        myAccountBinding.etDD.setVisibility(View.VISIBLE);
+        myAccountBinding.tvDate.setVisibility(View.GONE);
+        myAccountBinding.etMM.setVisibility(View.VISIBLE);
+        myAccountBinding.tvMonth.setVisibility(View.GONE);
+        myAccountBinding.etYYYY.setVisibility(View.VISIBLE);
+        myAccountBinding.tvYear.setVisibility(View.GONE);
 
        // new HttpAsyncTaskFetchLoginData().execute("http://circle8.asia:8999/Onet.svc/UserLogin");
 
-        etUserName.setText(user.get(LoginSession.KEY_EMAIL));
+        myAccountBinding.etUserName.setText(user.get(LoginSession.KEY_EMAIL));
         referralCodeSession = new ReferralCodeSession(getApplicationContext());
         HashMap<String, String> referral = referralCodeSession.getReferralDetails();
         tvReferral.setText(referral.get(ReferralCodeSession.KEY_REFERRAL));
@@ -228,13 +154,13 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             String day = str[0];
             String month = str[1];
             String year = str[2];
-            etDD.setText(day);
-            etMM.setText(month);
-            etYYYY.setText(year);
+            myAccountBinding.etDD.setText(day);
+            myAccountBinding.etMM.setText(month);
+            myAccountBinding.etYYYY.setText(year);
 
-            tvDD.setText(day);
-            tvMM.setText(month);
-            tvYYYY.setText(year);
+            myAccountBinding.tvDate.setText(day);
+            myAccountBinding.tvMonth.setText(month);
+            myAccountBinding.tvYear.setText(year);
 
         }
         catch (Exception e){}
@@ -243,11 +169,11 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         String kept1 = name1.substring(0, name1.indexOf(" "));
         String remainder1 = name1.substring(name1.indexOf(" ") + 1, name1.length());
 
-        etFirstName.setText(kept1);
-        etLastName.setText(remainder1);
+        myAccountBinding.etFirstName.setText(kept1);
+        myAccountBinding.etLastName.setText(remainder1);
 
-        tvFirstName.setText(kept1);
-        tvLastName.setText(remainder1);
+        myAccountBinding.tvFirstName.setText(kept1);
+        myAccountBinding.tvLastName.setText(remainder1);
 
         try
         {
@@ -256,13 +182,13 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                 String kept = name.substring(0, name.indexOf(" "));
                 String remainder = name.substring(name.indexOf(" ") + 1, name.length());
                 kept = kept.replaceAll("//+", "");
-                ccp.setCountryForPhoneCode(Integer.parseInt(kept));
-                etPhone.setText(remainder);
-                tvPhone.setText(remainder);
+                myAccountBinding.ccp.setCountryForPhoneCode(Integer.parseInt(kept));
+                myAccountBinding.etPhone.setText(remainder);
+                myAccountBinding.tvPhone.setText(remainder);
             }
             else {
-                etPhone.setText(user.get(LoginSession.KEY_PHONE));
-                tvPhone.setText(user.get(LoginSession.KEY_PHONE));
+                myAccountBinding.etPhone.setText(user.get(LoginSession.KEY_PHONE));
+                myAccountBinding.tvPhone.setText(user.get(LoginSession.KEY_PHONE));
             }
         }
         catch (Exception e)
@@ -274,10 +200,10 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
 
         try
         {
-            etPassword.setText(user_pass);
-            etPasswordAgain.setText(user_pass);
-            tvPassword.setText(user_pass);
-            tvPasswordAgain.setText(user_pass);
+            myAccountBinding.etPassword.setText(user_pass);
+            myAccountBinding.etPasswordAgain.setText(user_pass);
+            myAccountBinding.tvPassword.setText(user_pass);
+            myAccountBinding.tvRePassword.setText(user_pass);
         }
         catch (Exception e)
         {
@@ -289,23 +215,23 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             user_Photo = user.get(LoginSession.KEY_IMAGE);
             if (user_Photo.equals(""))
             {
-                progressBar1.setVisibility(View.GONE);
-                imgProfile.setImageResource(R.drawable.usr_white1);
+                myAccountBinding.progressBar1.setVisibility(View.GONE);
+                myAccountBinding.imgProfile.setImageResource(R.drawable.usr_white1);
             }
             else
             {
-                progressBar1.setVisibility(View.VISIBLE);
+                myAccountBinding.progressBar1.setVisibility(View.VISIBLE);
                // Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+user_Photo).resize(300,300).onlyScaleDown().skipMemoryCache().placeholder(R.drawable.usr_1).into(imgProfile);
 
                 Glide.with(this).load(Utility.BASE_IMAGE_URL+"UserProfile/"+user_Photo)
                         .asBitmap()
                         .override(300,300)
-                        .into(new BitmapImageViewTarget(imgProfile) {
+                        .into(new BitmapImageViewTarget(myAccountBinding.imgProfile) {
                             @Override
                             public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
                                 super.onResourceReady(drawable, anim);
-                                progressBar1.setVisibility(View.GONE);
-                                imgProfile.setImageBitmap(drawable);
+                                myAccountBinding.progressBar1.setVisibility(View.GONE);
+                                myAccountBinding.imgProfile.setImageBitmap(drawable);
                             }
                         });
             }
@@ -322,54 +248,54 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             if (user_Gender.equals("M"))
             {
                             /*//first things
-                            line_view2.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
+                            myAccountBinding.vwDrag2.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
                             ivFemaleImg.setImageResource(R.drawable.ic_female_gray);
                             ivFemaleround.setImageResource(R.drawable.round_gray);
                             //second things
-                            line_view1.setBackground(getResources().getDrawable(R.drawable.dotted));
+                            myAccountBinding.vwDrag1.setBackground(getResources().getDrawable(R.drawable.dotted));
                             ivMaleImg.setImageResource(R.drawable.ic_male);
                             ivMaleRound.setImageResource(R.drawable.round_blue);
                             gender = "M";
                             txtGender.setText(R.string.male);*/
-                line_view1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                ivMaleRound.setImageResource(R.drawable.ic_man_blue);
-                ivFemaleround.setImageResource(R.drawable.ic_girl_gray);
-                ivConnect.setVisibility(View.INVISIBLE);
+                myAccountBinding.vwDrag1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                myAccountBinding.vwDrag2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                myAccountBinding.viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                myAccountBinding.ivMaleRound.setImageResource(R.drawable.ic_man_blue);
+                myAccountBinding.ivFemaleround.setImageResource(R.drawable.ic_girl_gray);
+                myAccountBinding.ivConnectImg.setVisibility(View.INVISIBLE);
                 //second things
-                line_view1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                myAccountBinding.vwDrag1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                myAccountBinding.vwDrag2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                myAccountBinding.viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
                 gender = "M";
-                txtGender.setText("Gender: Male");
+                myAccountBinding.txtGender.setText("Gender: Male");
             }
             else if (user_Gender.equals("F"))
             {
                             /*//first things
-                            line_view1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
+                            myAccountBinding.vwDrag1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
                             ivMaleImg.setImageResource(R.drawable.ic_male_gray);
                             ivMaleRound.setImageResource(R.drawable.round_gray);
                             //second things
-                            line_view2.setBackground(getResources().getDrawable(R.drawable.dotted));
+                            myAccountBinding.vwDrag2.setBackground(getResources().getDrawable(R.drawable.dotted));
                             ivFemaleImg.setImageResource(R.drawable.ic_female);
                             ivFemaleround.setImageResource(R.drawable.round_blue);
                             gender = "F";
                             txtGender.setText(R.string.female);*/
-                line_view1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                ivFemaleround.setImageResource(R.drawable.ic_girl_blue);
-                ivConnect.setVisibility(View.INVISIBLE);
-                ivMaleRound.setImageResource(R.drawable.ic_man_gray);
+                myAccountBinding.vwDrag1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                myAccountBinding.vwDrag2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                myAccountBinding.viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                myAccountBinding.ivFemaleround.setImageResource(R.drawable.ic_girl_blue);
+                myAccountBinding.ivConnectImg.setVisibility(View.INVISIBLE);
+                myAccountBinding.ivMaleRound.setImageResource(R.drawable.ic_man_gray);
 
-                line_view1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                myAccountBinding.vwDrag1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                myAccountBinding.vwDrag2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                myAccountBinding.viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
                 gender = "F";
-                txtGender.setText("Gender: Female");
+                myAccountBinding.txtGender.setText("Gender: Female");
             }
             else
             {
@@ -420,70 +346,70 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             imgProfile.setImageResource(R.drawable.usr);
         }*/
 
-        ivFemaleround.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        myAccountBinding.ivFemaleround.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             public void onGlobalLayout() {
-                int height = ivFemaleround.getHeight();
-                int width = ivFemaleround.getWidth();
-                int L = ivFemaleround.getLeft();
-                int T = ivFemaleround.getTop();
-                int R = ivFemaleround.getRight();
-                int B = ivFemaleround.getBottom();
+                int height = myAccountBinding.ivFemaleround.getHeight();
+                int width = myAccountBinding.ivFemaleround.getWidth();
+                int L = myAccountBinding.ivFemaleround.getLeft();
+                int T = myAccountBinding.ivFemaleround.getTop();
+                int R = myAccountBinding.ivFemaleround.getRight();
+                int B = myAccountBinding.ivFemaleround.getBottom();
 
                 roundWidth = width / 2;
                 motionLength = motionLength + roundWidth;
                 System.out.print("ivFemale" + height + " " + width + " " + L + " " + R + " " + T + " " + B);
                 //  Toast.makeText(RegisterActivity.this, height+" "+width+" "+L+" "+R+" "+T+" "+B,Toast.LENGTH_LONG).show();
                 //don't forget to remove the listener to prevent being called again by future layout events:
-                ivFemaleround.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                myAccountBinding.ivFemaleround.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
 
-        ivMaleRound.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        myAccountBinding.ivMaleRound.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             public void onGlobalLayout() {
-                int height = ivMaleRound.getHeight();
-                int width = ivMaleRound.getWidth();
-                int L = ivMaleRound.getLeft();
-                int T = ivMaleRound.getTop();
-                int R = ivMaleRound.getRight();
-                int B = ivMaleRound.getBottom();
+                int height = myAccountBinding.ivMaleRound.getHeight();
+                int width = myAccountBinding.ivMaleRound.getWidth();
+                int L = myAccountBinding.ivMaleRound.getLeft();
+                int T = myAccountBinding.ivMaleRound.getTop();
+                int R = myAccountBinding.ivMaleRound.getRight();
+                int B = myAccountBinding.ivMaleRound.getBottom();
 
                 System.out.print("ivMale" + height + " " + width + " " + L + " " + R + " " + T + " " + B);
 //                Toast.makeText(RegisterActivity.this, height+" "+width+" "+L+" "+R+" "+T+" "+B,Toast.LENGTH_LONG).show();
                 //don't forget to remove the listener to prevent being called again by future layout events:
-                ivMaleRound.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                myAccountBinding.ivMaleRound.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
 
-        ivConnect.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        myAccountBinding.ivConnectImg.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             public void onGlobalLayout() {
-                int height = ivConnect.getHeight();
-                int width = ivConnect.getWidth();
-                int L = ivConnect.getLeft();
-                int T = ivConnect.getTop();
-                int R = ivConnect.getRight();
-                int B = ivConnect.getBottom();
+                int height = myAccountBinding.ivConnectImg.getHeight();
+                int width = myAccountBinding.ivConnectImg.getWidth();
+                int L = myAccountBinding.ivConnectImg.getLeft();
+                int T = myAccountBinding.ivConnectImg.getTop();
+                int R = myAccountBinding.ivConnectImg.getRight();
+                int B = myAccountBinding.ivConnectImg.getBottom();
                 lineWidth = width;
                 motionLength = motionLength + lineWidth;
                 System.out.print("ivConnect" + height + " " + width + " " + L + " " + R + " " + T + " " + B);
 //                Toast.makeText(RegisterActivity.this, height+" "+width+" "+L+" "+R+" "+T+" "+B,Toast.LENGTH_LONG).show();
                 //don't forget to remove the listener to prevent being called again by future layout events:
-                ivConnect.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                myAccountBinding.ivConnectImg.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
 
-        tvSave.setOnClickListener(this);
-        tvCancel.setOnClickListener(this);
-        rlMale.setOnClickListener(this);
-        rlFemale.setOnClickListener(this);
+        myAccountBinding.tvSave.setOnClickListener(this);
+        myAccountBinding.tvCancel.setOnClickListener(this);
+        myAccountBinding.rlMale.setOnClickListener(this);
+        myAccountBinding.rlFemale.setOnClickListener(this);
 
         imgBack.setOnClickListener(this);
-        ivEditImg.setOnClickListener(this);
-        imgProfile.setOnClickListener(this);
+        myAccountBinding.ivEditImg.setOnClickListener(this);
+        myAccountBinding.imgProfile.setOnClickListener(this);
 
-        etFirstName.setOnClickListener(this);
+        myAccountBinding.etFirstName.setOnClickListener(this);
 
-        rlFemale.setEnabled(false);
-        rlMale.setEnabled(false);
+        myAccountBinding.rlFemale.setEnabled(false);
+        myAccountBinding.rlMale.setEnabled(false);
     }
 
     @Override
@@ -513,10 +439,11 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         editStatus = "None";
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onClick(View v)
     {
-        if ( v == imgProfile)
+        if ( v == myAccountBinding.imgProfile)
         {
 
             if (profilePicPress)
@@ -578,21 +505,21 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             dialog.show();
 */
         }
-        if ( v == ivEditImg)
+        if ( v == myAccountBinding.ivEditImg)
         {
            // Toast.makeText(getApplicationContext(), "Now you can edit your information", Toast.LENGTH_LONG).show();
-            etFirstName.setEnabled(true);
-            etFirstName.requestFocus();
-            etLastName.setEnabled(true);
-            etPassword.setEnabled(true);
-            etPasswordAgain.setEnabled(true);
-            etPhone.setEnabled(true);
-            etDD.setEnabled(true);
-            etMM.setEnabled(true);
-            etYYYY.setEnabled(true);
+            myAccountBinding.etFirstName.setEnabled(true);
+            myAccountBinding.etFirstName.requestFocus();
+            myAccountBinding.etLastName.setEnabled(true);
+            myAccountBinding.etPassword.setEnabled(true);
+            myAccountBinding.etPasswordAgain.setEnabled(true);
+            myAccountBinding.etPhone.setEnabled(true);
+            myAccountBinding.etDD.setEnabled(true);
+            myAccountBinding.etMM.setEnabled(true);
+            myAccountBinding.etYYYY.setEnabled(true);
 //            imgProfile.setEnabled(true);
-            rltGender.setEnabled(true);
-            ivMiniCamera.setVisibility(View.VISIBLE);
+            myAccountBinding.rltGender.setEnabled(true);
+            myAccountBinding.ivMiniCamera.setVisibility(View.VISIBLE);
 
             profilePicPress = true ;
 
@@ -616,45 +543,45 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
 */
 
             ColorStateList colorStateList = ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary));
-            etFirstName.setBackgroundTintList(colorStateList);
-            etLastName.setBackgroundTintList(colorStateList);
-            etPassword.setBackgroundTintList(colorStateList);
-            etPasswordAgain.setBackgroundTintList(colorStateList);
-            etPhone.setBackgroundTintList(colorStateList);
-            etDD.setBackgroundTintList(colorStateList);
-            etMM.setBackgroundTintList(colorStateList);
-            etYYYY.setBackgroundTintList(colorStateList);
+            myAccountBinding.etFirstName.setBackgroundTintList(colorStateList);
+            myAccountBinding.etLastName.setBackgroundTintList(colorStateList);
+            myAccountBinding.etPassword.setBackgroundTintList(colorStateList);
+            myAccountBinding.etPasswordAgain.setBackgroundTintList(colorStateList);
+            myAccountBinding.etPhone.setBackgroundTintList(colorStateList);
+            myAccountBinding.etDD.setBackgroundTintList(colorStateList);
+            myAccountBinding.etMM.setBackgroundTintList(colorStateList);
+            myAccountBinding.etYYYY.setBackgroundTintList(colorStateList);
 
-            etFirstName.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
-            etLastName.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
-            etPassword.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
-            etPasswordAgain.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
-            etPhone.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
-            etDD.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
-            etMM.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
-            etYYYY.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+            myAccountBinding.etFirstName.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+            myAccountBinding.etLastName.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+            myAccountBinding.etPassword.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+            myAccountBinding.etPasswordAgain.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+            myAccountBinding.etPhone.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+            myAccountBinding.etDD.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+            myAccountBinding.etMM.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+            myAccountBinding.etYYYY.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
 
-            rlFemale.setEnabled(true);
-            rlMale.setEnabled(true);
-            ivEditImg.setImageResource(R.drawable.ic_edit_white);
+            myAccountBinding.rlFemale.setEnabled(true);
+            myAccountBinding.rlMale.setEnabled(true);
+            myAccountBinding.ivEditImg.setImageResource(R.drawable.ic_edit_white);
         }
         if ( v == imgBack)
         {
             finish();
         }
-        if( v == tvSave)
+        if( v == myAccountBinding.tvSave)
         {
-            first_name = etFirstName.getText().toString();
-            last_name = etLastName.getText().toString();
-            password = etPassword.getText().toString();
-            c_password = etPasswordAgain.getText().toString();
-            phone_no = etPhone.getText().toString();
+            first_name = myAccountBinding.etFirstName.getText().toString();
+            last_name = myAccountBinding.etLastName.getText().toString();
+            password = myAccountBinding.etPassword.getText().toString();
+            c_password = myAccountBinding.etPasswordAgain.getText().toString();
+            phone_no = myAccountBinding.etPhone.getText().toString();
 
             String code;
             try {
-                code = ccp.getSelectedCountryCodeWithPlus().toString();
+                code = myAccountBinding.ccp.getSelectedCountryCodeWithPlus().toString();
             }catch (Exception e){
-                code = ccp.getDefaultCountryCodeWithPlus().toString();
+                code = myAccountBinding.ccp.getDefaultCountryCodeWithPlus().toString();
             }
 
             // String code = tvCountryCode.getText().toString();
@@ -663,7 +590,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                 phone_no = code + " " + contact;
             }
 
-            if (!updateRegisterValidate(first_name, last_name, password, c_password, phone_no))
+            if (!updateRegisterValidate(MyAccountActivity.this,first_name, last_name, password, c_password, phone_no))
             {
 //                Toast.makeText(getApplicationContext(), "Something Wrong!", Toast.LENGTH_SHORT).show();
             }
@@ -693,28 +620,28 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                 }
             }
         }
-        if( v == tvCancel)
+        if( v == myAccountBinding.tvCancel)
         {
             finish();
         }
-        if( v == rlMale)
+        if( v == myAccountBinding.rlMale)
         {
            /* TranslateAnimation slide1 = new TranslateAnimation(0, -190, 0, 0);
             slide1.setDuration(1000);
-            ivConnect.startAnimation(slide1);
+            myAccountBinding.ivConnectImg.startAnimation(slide1);
 
             //first things
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run()
                 {
-                    line_view2.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
+                    myAccountBinding.vwDrag2.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
                     ivFemaleImg.setImageResource(R.drawable.ic_female_gray);
                     ivFemaleround.setImageResource(R.drawable.round_gray);
                 }
             }, 1100);
             //second things
-            line_view1.setBackground(getResources().getDrawable(R.drawable.dotted));
+            myAccountBinding.vwDrag1.setBackground(getResources().getDrawable(R.drawable.dotted));
             ivMaleImg.setImageResource(R.drawable.ic_male);
             ivMaleRound.setImageResource(R.drawable.round_blue);
             gender = "M";
@@ -722,82 +649,82 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
 
             TranslateAnimation slide1 = new TranslateAnimation(0, -(motionLength-15), 0, 0);
             slide1.setDuration(1000);
-            ivConnect.startAnimation(slide1);
+            myAccountBinding.ivConnectImg.startAnimation(slide1);
 
             //first things
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    line_view1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                    line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                    viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                    // line_view2.setBackgroundColor(getResources().getColor(R.color.unselected));
+                    myAccountBinding.vwDrag1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    myAccountBinding.vwDrag2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    myAccountBinding.viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    // myAccountBinding.vwDrag2.setBackgroundColor(getResources().getColor(R.color.unselected));
                     // ivFemaleImg.setImageResource(R.drawable.ic_female_gray);
-                    ivMaleRound.setImageResource(R.drawable.ic_man_blue);
+                    myAccountBinding.ivMaleRound.setImageResource(R.drawable.ic_man_blue);
 
                 }
             }, 1300);
-            ivFemaleround.setImageResource(R.drawable.ic_girl_gray);
-            ivConnect.setVisibility(View.INVISIBLE);
+            myAccountBinding.ivFemaleround.setImageResource(R.drawable.ic_girl_gray);
+            myAccountBinding.ivConnectImg.setVisibility(View.INVISIBLE);
             //second things
-            line_view1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            myAccountBinding.vwDrag1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            myAccountBinding.vwDrag2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            myAccountBinding.viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             //   ivMaleImg.setImageResource(R.drawable.ic_male);
 
             gender = "M";
-            txtGender.setText("Gender: Male");
+            myAccountBinding.txtGender.setText("Gender: Male");
         }
-        if( v == rlFemale)
+        if( v == myAccountBinding.rlFemale)
         {
            /* TranslateAnimation slide = new TranslateAnimation(0, 190, 0, 0);
             slide.setDuration(1000);
-            ivConnect.startAnimation(slide);
+            myAccountBinding.ivConnectImg.startAnimation(slide);
 
             //first things
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    line_view1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
+                    myAccountBinding.vwDrag1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
                     ivMaleImg.setImageResource(R.drawable.ic_male_gray);
                     ivMaleRound.setImageResource(R.drawable.round_gray);
                 }
             }, 1100);
             //second things
-            line_view2.setBackground(getResources().getDrawable(R.drawable.dotted));
+            myAccountBinding.vwDrag2.setBackground(getResources().getDrawable(R.drawable.dotted));
             ivFemaleImg.setImageResource(R.drawable.ic_female);
             ivFemaleround.setImageResource(R.drawable.round_blue);
             gender = "F";
             txtGender.setText(R.string.female);*/
             TranslateAnimation slide = new TranslateAnimation(0, motionLength-15, 0, 0);
             slide.setDuration(1000);
-            ivConnect.startAnimation(slide);
+            myAccountBinding.ivConnectImg.startAnimation(slide);
 
             //first things
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    line_view1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                    line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                    viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                    //  line_view1.setBackgroundColor(getResources().getColor(R.color.unselected));
+                    myAccountBinding.vwDrag1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    myAccountBinding.vwDrag2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    myAccountBinding.viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    //  myAccountBinding.vwDrag1.setBackgroundColor(getResources().getColor(R.color.unselected));
                     //   ivMaleImg.setImageResource(R.drawable.ic_male_gray);
-                    ivFemaleround.setImageResource(R.drawable.ic_girl_blue);
+                    myAccountBinding.ivFemaleround.setImageResource(R.drawable.ic_girl_blue);
 
                 }
             }, 1300);
-            ivConnect.setVisibility(View.INVISIBLE);
-            ivMaleRound.setImageResource(R.drawable.ic_man_gray);
-            line_view1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            myAccountBinding.ivConnectImg.setVisibility(View.INVISIBLE);
+            myAccountBinding.ivMaleRound.setImageResource(R.drawable.ic_man_gray);
+            myAccountBinding.vwDrag1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            myAccountBinding.vwDrag2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            myAccountBinding.viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             //second things
-            // line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            //   line_view2.setBackground(getResources().getDrawable(R.drawable.dotted));
+            // myAccountBinding.vwDrag2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            //   myAccountBinding.vwDrag2.setBackground(getResources().getDrawable(R.drawable.dotted));
             //  ivFemaleImg.setImageResource(R.drawable.ic_female);
 
             gender = "F";
-            txtGender.setText("Gender: Female");
+            myAccountBinding.txtGender.setText("Gender: Female");
         }
     }
 
@@ -930,7 +857,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                     Log.d("base64string ", final_ImgBase64);
 //                  Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                     //    Upload();
-                    imgProfile.setImageBitmap(bitmap);
+                    myAccountBinding.imgProfile.setImageBitmap(bitmap);
                     bitmap.recycle();
                 } catch (FileNotFoundException e) {
                     // TODO Auto-generated catch block
@@ -954,7 +881,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
 
         final_ImgBase64 = BitMapToString(thumbnail);
         Upload();
-        imgProfile.setImageBitmap(thumbnail);
+        myAccountBinding.imgProfile.setImageBitmap(thumbnail);
     }
 
     private void Upload()
@@ -1005,7 +932,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                     Log.d("base64string ", final_ImgBase64);
 //                  Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                 //    Upload();
-                    imgProfile.setImageBitmap(resizedBitmap);
+                    myAccountBinding.imgProfile.setImageBitmap(resizedBitmap);
                 }
                 catch (FileNotFoundException e)
                 {
@@ -1026,35 +953,35 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                     {
                         case ExifInterface.ORIENTATION_ROTATE_90:
                             rotatedBitmap = rotateImage(bitmap, 90);
-                            imgProfile.setImageBitmap(rotatedBitmap);
+                            myAccountBinding.imgProfile.setImageBitmap(rotatedBitmap);
                             final_ImgBase64 = BitMapToString(rotatedBitmap);
                             Upload();
                             break;
 
                         case ExifInterface.ORIENTATION_ROTATE_180:
                             rotatedBitmap = rotateImage(bitmap, 180);
-                            imgProfile.setImageBitmap(rotatedBitmap);
+                            myAccountBinding.imgProfile.setImageBitmap(rotatedBitmap);
                             final_ImgBase64 = BitMapToString(rotatedBitmap);
                             Upload();
                             break;
 
                         case ExifInterface.ORIENTATION_ROTATE_270:
                             rotatedBitmap = rotateImage(bitmap, 270);
-                            imgProfile.setImageBitmap(rotatedBitmap);
+                            myAccountBinding.imgProfile.setImageBitmap(rotatedBitmap);
                             final_ImgBase64 = BitMapToString(rotatedBitmap);
                             Upload();
                             break;
 
                         case ExifInterface.ORIENTATION_NORMAL:
                             rotatedBitmap = bitmap ;
-                            imgProfile.setImageBitmap(rotatedBitmap);
+                            myAccountBinding.imgProfile.setImageBitmap(rotatedBitmap);
                             final_ImgBase64 = BitMapToString(rotatedBitmap);
                             Upload();
                             break;
 
                         default:
                             rotatedBitmap = bitmap;
-                            imgProfile.setImageBitmap(rotatedBitmap);
+                            myAccountBinding.imgProfile.setImageBitmap(rotatedBitmap);
                             final_ImgBase64 = BitMapToString(rotatedBitmap);
                             Upload();
                             break;
@@ -1353,11 +1280,11 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                     String userId = jsonObject.getString("userId").toString();
 
                     String date_DOB = "";
-                    if (etDD.getText().toString().equals("") || etMM.getText().toString().equals("") || etYYYY.getText().toString().equals("")){
+                    if (myAccountBinding.etDD.getText().toString().equals("") || myAccountBinding.etMM.getText().toString().equals("") || myAccountBinding.etYYYY.getText().toString().equals("")){
                         date_DOB = "";
                     }
                     else {
-                        date_DOB = etDD.getText().toString() + "/" + etMM.getText().toString() + "/" + etYYYY.getText().toString();
+                        date_DOB = myAccountBinding.etDD.getText().toString() + "/" + myAccountBinding.etMM.getText().toString() + "/" + myAccountBinding.etYYYY.getText().toString();
                     }
 
                     if (success.equals("1"))
@@ -1408,11 +1335,11 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             String json = "";
 
             String date_DOB = "";
-            if (etDD.getText().toString().equals("") || etMM.getText().toString().equals("") || etYYYY.getText().toString().equals("")){
+            if (myAccountBinding.etDD.getText().toString().equals("") || myAccountBinding.etMM.getText().toString().equals("") || myAccountBinding.etYYYY.getText().toString().equals("")){
                 date_DOB = "";
             }
             else {
-                date_DOB = etDD.getText().toString() + "/" + etMM.getText().toString() + "/" + etYYYY.getText().toString();
+                date_DOB = myAccountBinding.etDD.getText().toString() + "/" + myAccountBinding.etMM.getText().toString() + "/" + myAccountBinding.etYYYY.getText().toString();
             }
 
             // 3. build jsonObject

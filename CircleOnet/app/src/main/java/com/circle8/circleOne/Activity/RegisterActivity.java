@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -31,11 +32,6 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -43,6 +39,7 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.AsyncRequest;
 import com.circle8.circleOne.Utils.Utility;
+import com.circle8.circleOne.databinding.ActivityRegisterBinding;
 import com.hbb20.CountryCodePicker;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.QBResponseException;
@@ -97,27 +94,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 import static com.circle8.circleOne.Utils.Validation.validate;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, AsyncRequest.OnAsyncRequestComplete
 {
-    public static EditText etFirstName, etLastName, etPassword, etConfirmPass, etPhone, etEmail;
-    public static TextView tvUsernameInfo, tvFirstnameInfo, tvLastnameInfo, tvPasswordInfo, tvRePasswordInfo, tvEmailInfo, tvPhoneInfo;
-    private LinearLayout lnrRegister;
-    private ImageView ivConnect;
-    RelativeLayout ivMale, ivFemale;
-    private View line_view1, line_view2;
-    ImageView ivMaleRound, ivFemaleround, imgBack;
-    TextView txtGender;
     String final_ImgBase64 = "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";
-    CountryCodePicker ccp;
     private String UrlRegister = Utility.BASE_URL+"Registration";
     private ArrayList<NameValuePair> params;
-    TextView txtprofile;
-    private CircleImageView civProfilePic;
     private String userChoosenTask;
     CharSequence[] items;
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
@@ -125,7 +109,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private File file;
     String refferelCode = "";
     private String company_name, first_name, last_name, phone_no, password, c_password, user_name, gender = "", email;
-
     private int mYear, mMonth, mDay, mHour, mMinute;
     private Calendar calendar;
     private DatePickerDialog datePickerDialog;
@@ -134,66 +117,22 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     ProgressDialog pDialog;
     String encodedImageData, register_img = "";
     String UserID = "", Facebook = "", Google = "", Linkedin = "", Twitter = "", UserName = "", Email = "", Image = "";
-    EditText etReferrelCode;
-    TextView tvReferrelInfo;
     int motionLength;
     int roundWidth = 0, lineWidth = 0;
     View viewCenter;
     String Q_ID = "";
-    private RelativeLayout rlProgressDialog ;
-    private TextView tvProgressing ;
-    EditText etDD, etMM, etYYYY;
-    private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
-
+    public static ActivityRegisterBinding activityRegisterBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        activityRegisterBinding = DataBindingUtil.setContentView(this,R.layout.activity_register);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-        txtprofile = (TextView) findViewById(R.id.txtprofile);
-        etReferrelCode = (EditText) findViewById(R.id.etReferrelCode);
-        tvReferrelInfo = (TextView) findViewById(R.id.tvReferrelInfo);
-        txtGender = (TextView) findViewById(R.id.txtGender);
-        lnrRegister = (LinearLayout) findViewById(R.id.lnrBottomReg);
-        etFirstName = (EditText) findViewById(R.id.etFirstName);
-        etLastName = (EditText) findViewById(R.id.etLastName);
-        etPassword = (EditText) findViewById(R.id.etPassword);
-        etConfirmPass = (EditText) findViewById(R.id.etConfirmPass);
-        etPhone = (EditText) findViewById(R.id.etPhone);
-        etEmail = (EditText) findViewById(R.id.etEmail);
-        ccp = (CountryCodePicker) findViewById(R.id.ccp);
-        ivMaleRound = (ImageView) findViewById(R.id.ivMaleRound);
-        ivFemaleround = (ImageView) findViewById(R.id.ivFemaleround);
-        ivMale = (RelativeLayout) findViewById(R.id.ivMale);
-        ivFemale = (RelativeLayout) findViewById(R.id.ivFemale);
-        ivConnect = (ImageView) findViewById(R.id.iv_ConnectImg);
-        line_view1 = (View) findViewById(R.id.vwDrag1);
-        line_view2 = (View) findViewById(R.id.vwDrag2);
-        imgBack = (ImageView) findViewById(R.id.imgBack);
-        etDD = (EditText) findViewById(R.id.etDD);
-        etMM = (EditText) findViewById(R.id.etMM);
-        etYYYY = (EditText) findViewById(R.id.etYYYY);
-        imgBack.setOnClickListener(this);
+        activityRegisterBinding.imgBack.setOnClickListener(this);
         pDialog = new ProgressDialog(this);
-        civProfilePic = (CircleImageView) findViewById(R.id.imgProfileCard);
         viewCenter = findViewById(R.id.viewCenter);
-        tvUsernameInfo = (TextView) findViewById(R.id.tvUsernameInfo);
-        tvFirstnameInfo = (TextView) findViewById(R.id.tvFirstNameInfo);
-        tvLastnameInfo = (TextView) findViewById(R.id.tvLastNameInfo);
-        tvPasswordInfo = (TextView) findViewById(R.id.tvPasswordInfo);
-        tvRePasswordInfo = (TextView) findViewById(R.id.tvAgainPasswordInfo);
-        tvEmailInfo = (TextView) findViewById(R.id.tvEmailInfo);
-        tvPhoneInfo = (TextView) findViewById(R.id.tvPhoneInfo);
-
-        rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
-        tvProgressing = (TextView)findViewById(R.id.txtProgressing);
-        ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
-        ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
-        ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
-
         Intent intent = getIntent();
         Twitter = intent.getStringExtra("Twitter");
         Linkedin = intent.getStringExtra("Linkedin");
@@ -204,13 +143,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         Image = intent.getStringExtra("Image");
 
         Typeface font = Typeface.createFromAsset(getAssets(), "century-gothic-1361531616.ttf");
-        txtprofile.setTypeface(font);
-        etEmail.setText(Email);
+        activityRegisterBinding.txtprofile.setTypeface(font);
+        activityRegisterBinding.etEmail.setText(Email);
         try {
             String kept = UserName.substring(0, UserName.indexOf(" "));
             String remainder = UserName.substring(UserName.indexOf(" ") + 1, UserName.length());
-            etFirstName.setText(kept);
-            etLastName.setText(remainder);
+            activityRegisterBinding.etFirstName.setText(kept);
+            activityRegisterBinding.etLastName.setText(remainder);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -223,7 +162,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 Glide.with(getApplicationContext())
                         .load(targetUri)
                         .asBitmap()
-                        .into(new BitmapImageViewTarget(civProfilePic) {
+                        .into(new BitmapImageViewTarget(activityRegisterBinding.imgProfileCard) {
                             @Override
                             protected void setResource(Bitmap resource) {
                                 //Play with bitmap
@@ -233,13 +172,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             }
                         });
             } else {
-                civProfilePic.setImageResource(R.drawable.usr_white1);
+                activityRegisterBinding.imgProfileCard.setImageResource(R.drawable.usr_white1);
             }
         } catch (Exception e) {
-            civProfilePic.setImageResource(R.drawable.usr_white1);
+            activityRegisterBinding.imgProfileCard.setImageResource(R.drawable.usr_white1);
         }
 
-        ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
+        activityRegisterBinding.ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
             @Override
             public void onCountrySelected() {
                 // Toast.makeText(getApplicationContext(), "Updated " + ccp.getSelectedCountryCode(), Toast.LENGTH_SHORT).show();
@@ -249,7 +188,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void run() {
                 try {
-                    civProfilePic.setImageBitmap(getBitmapFromURL(Image));
+                    activityRegisterBinding.imgProfileCard.setImageBitmap(getBitmapFromURL(Image));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -262,53 +201,53 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
        /* URL imageURL = null;
         try {
             imageURL = new URL(Image);
-            civProfilePic.setImageBitmap(downloadImage(Image));
+            activityRegisterBinding.imgProfileCard.setImageBitmap(downloadImage(Image));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         */
 
-        ivMale.setOnClickListener(this);
-        ivFemale.setOnClickListener(this);
-        ivConnect.setOnClickListener(this);
-        lnrRegister.setOnClickListener(this);
-        civProfilePic.setOnClickListener(this);
+        activityRegisterBinding.ivMale.setOnClickListener(this);
+        activityRegisterBinding.ivFemale.setOnClickListener(this);
+        activityRegisterBinding.ivConnectImg.setOnClickListener(this);
+        activityRegisterBinding.lnrRegister.setOnClickListener(this);
+        activityRegisterBinding.imgProfileCard.setOnClickListener(this);
 
-        ivConnect.setOnClickListener(new View.OnClickListener() {
+        activityRegisterBinding.ivConnectImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
         });
 
-        ivFemaleround.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        activityRegisterBinding.ivFemaleround.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             public void onGlobalLayout() {
-                int height = ivFemaleround.getHeight();
-                int width = ivFemaleround.getWidth();
-                int L = ivFemaleround.getLeft();
-                int T = ivFemaleround.getTop();
-                int R = ivFemaleround.getRight();
-                int B = ivFemaleround.getBottom();
+                int height = activityRegisterBinding.ivFemaleround.getHeight();
+                int width = activityRegisterBinding.ivFemaleround.getWidth();
+                int L = activityRegisterBinding.ivFemaleround.getLeft();
+                int T = activityRegisterBinding.ivFemaleround.getTop();
+                int R = activityRegisterBinding.ivFemaleround.getRight();
+                int B = activityRegisterBinding.ivFemaleround.getBottom();
 
                 roundWidth = width / 2;
                 motionLength = motionLength + roundWidth;
                 System.out.print("ivFemale" + height + " " + width + " " + L + " " + R + " " + T + " " + B);
-              //  Toast.makeText(RegisterActivity.this, height+" "+width+" "+L+" "+R+" "+T+" "+B,Toast.LENGTH_LONG).show();
+                //  Toast.makeText(RegisterActivity.this, height+" "+width+" "+L+" "+R+" "+T+" "+B,Toast.LENGTH_LONG).show();
                 //don't forget to remove the listener to prevent being called again by future layout events:
-                ivFemaleround.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                activityRegisterBinding.ivFemaleround.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
 
-        etConfirmPass.addTextChangedListener(new TextWatcher() {
+        activityRegisterBinding.etConfirmPass.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
-                String strPass1 = etPassword.getText().toString();
-                String strPass2 = etConfirmPass.getText().toString();
+                String strPass1 = activityRegisterBinding.etPassword.getText().toString();
+                String strPass2 = activityRegisterBinding.etConfirmPass.getText().toString();
                 if (strPass1.startsWith(strPass2)) {
-                    tvRePasswordInfo.setVisibility(View.GONE);
+                    activityRegisterBinding.tvAgainPasswordInfo.setVisibility(View.GONE);
                 } else {
                     Toast.makeText(getApplicationContext(), "Password does not match", Toast.LENGTH_LONG).show();
-                    tvRePasswordInfo.setVisibility(View.VISIBLE);
-                    tvRePasswordInfo.setText("Password does not match");
+                    activityRegisterBinding.tvAgainPasswordInfo.setVisibility(View.VISIBLE);
+                    activityRegisterBinding.tvAgainPasswordInfo.setText("Password does not match");
                 }
             }
 
@@ -316,40 +255,40 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
 
-        ivMaleRound.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        activityRegisterBinding.ivMaleRound.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             public void onGlobalLayout() {
-                int height = ivMaleRound.getHeight();
-                int width = ivMaleRound.getWidth();
-                int L = ivMaleRound.getLeft();
-                int T = ivMaleRound.getTop();
-                int R = ivMaleRound.getRight();
-                int B = ivMaleRound.getBottom();
+                int height = activityRegisterBinding.ivMaleRound.getHeight();
+                int width = activityRegisterBinding.ivMaleRound.getWidth();
+                int L = activityRegisterBinding.ivMaleRound.getLeft();
+                int T = activityRegisterBinding.ivMaleRound.getTop();
+                int R = activityRegisterBinding.ivMaleRound.getRight();
+                int B = activityRegisterBinding.ivMaleRound.getBottom();
 
                 System.out.print("ivMale" + height + " " + width + " " + L + " " + R + " " + T + " " + B);
 //                Toast.makeText(RegisterActivity.this, height+" "+width+" "+L+" "+R+" "+T+" "+B,Toast.LENGTH_LONG).show();
                 //don't forget to remove the listener to prevent being called again by future layout events:
-                ivMaleRound.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                activityRegisterBinding.ivMaleRound.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
 
 
-        ivConnect.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        activityRegisterBinding.ivConnectImg.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             public void onGlobalLayout() {
-                int height = ivConnect.getHeight();
-                int width = ivConnect.getWidth();
-                int L = ivConnect.getLeft();
-                int T = ivConnect.getTop();
-                int R = ivConnect.getRight();
-                int B = ivConnect.getBottom();
+                int height = activityRegisterBinding.ivConnectImg.getHeight();
+                int width = activityRegisterBinding.ivConnectImg.getWidth();
+                int L = activityRegisterBinding.ivConnectImg.getLeft();
+                int T = activityRegisterBinding.ivConnectImg.getTop();
+                int R = activityRegisterBinding.ivConnectImg.getRight();
+                int B = activityRegisterBinding.ivConnectImg.getBottom();
                 lineWidth = width;
                 motionLength = motionLength + lineWidth;
                 System.out.print("ivConnect" + height + " " + width + " " + L + " " + R + " " + T + " " + B);
 //                Toast.makeText(RegisterActivity.this, height+" "+width+" "+L+" "+R+" "+T+" "+B,Toast.LENGTH_LONG).show();
                 //don't forget to remove the listener to prevent being called again by future layout events:
-                ivConnect.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                activityRegisterBinding.ivConnectImg.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
-       // motionLength = lineWidth+roundWidth;
+        // motionLength = lineWidth+roundWidth;
 
     }
 
@@ -398,7 +337,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        if (v == imgBack)
+        if (v == activityRegisterBinding.imgBack)
         {
             Utility.freeMemory();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -424,98 +363,98 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             });
             alert.show();
         }
-        if (v == ivMale) {
+        if (v == activityRegisterBinding.ivMale) {
             Utility.freeMemory();
-          //  Toast.makeText(getApplicationContext(), String.valueOf(motionLength), Toast.LENGTH_LONG).show();
+            //  Toast.makeText(getApplicationContext(), String.valueOf(motionLength), Toast.LENGTH_LONG).show();
             TranslateAnimation slide1 = new TranslateAnimation(0, -(motionLength-15), 0, 0);
             slide1.setDuration(1000);
-            ivConnect.startAnimation(slide1);
+            activityRegisterBinding.ivConnectImg.startAnimation(slide1);
 
             //first things
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    line_view1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                    line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    activityRegisterBinding.vwDrag1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    activityRegisterBinding.vwDrag2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                   // line_view2.setBackgroundColor(getResources().getColor(R.color.unselected));
-                   // ivFemaleImg.setImageResource(R.drawable.ic_female_gray);
-                    ivMaleRound.setImageResource(R.drawable.ic_man_blue);
+                    // activityRegisterBinding.vwDrag2.setBackgroundColor(getResources().getColor(R.color.unselected));
+                    // ivFemaleImg.setImageResource(R.drawable.ic_female_gray);
+                    activityRegisterBinding.ivMaleRound.setImageResource(R.drawable.ic_man_blue);
 
                 }
             }, 1300);
-            ivFemaleround.setImageResource(R.drawable.ic_girl_gray);
-            ivConnect.setVisibility(View.INVISIBLE);
+            activityRegisterBinding.ivFemaleround.setImageResource(R.drawable.ic_girl_gray);
+            activityRegisterBinding.ivConnectImg.setVisibility(View.INVISIBLE);
             //second things
-           line_view1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            activityRegisterBinding.vwDrag1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            activityRegisterBinding.vwDrag2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-         //   ivMaleImg.setImageResource(R.drawable.ic_male);
+            //   ivMaleImg.setImageResource(R.drawable.ic_male);
 
             gender = "M";
-            txtGender.setText("Male");
+            activityRegisterBinding.txtGender.setText("Male");
         }
-        if (v == ivFemale) {
+        if (v == activityRegisterBinding.ivFemale) {
             Utility.freeMemory();
-          //  Toast.makeText(getApplicationContext(), String.valueOf(motionLength), Toast.LENGTH_LONG).show();
+            //  Toast.makeText(getApplicationContext(), String.valueOf(motionLength), Toast.LENGTH_LONG).show();
             TranslateAnimation slide = new TranslateAnimation(0, motionLength-15, 0, 0);
             slide.setDuration(1000);
-            ivConnect.startAnimation(slide);
+            activityRegisterBinding.ivConnectImg.startAnimation(slide);
 
             //first things
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    line_view1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                    line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    activityRegisterBinding.vwDrag1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    activityRegisterBinding.vwDrag2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                  //  line_view1.setBackgroundColor(getResources().getColor(R.color.unselected));
-                 //   ivMaleImg.setImageResource(R.drawable.ic_male_gray);
-                    ivFemaleround.setImageResource(R.drawable.ic_girl_blue);
+                    //  activityRegisterBinding.vwDrag1.setBackgroundColor(getResources().getColor(R.color.unselected));
+                    //   ivMaleImg.setImageResource(R.drawable.ic_male_gray);
+                    activityRegisterBinding.ivFemaleround.setImageResource(R.drawable.ic_girl_blue);
 
                 }
             }, 1300);
-            ivConnect.setVisibility(View.INVISIBLE);
-            ivMaleRound.setImageResource(R.drawable.ic_man_gray);
-            line_view1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            activityRegisterBinding.ivConnectImg.setVisibility(View.INVISIBLE);
+            activityRegisterBinding.ivMaleRound.setImageResource(R.drawable.ic_man_gray);
+            activityRegisterBinding.vwDrag1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            activityRegisterBinding.vwDrag2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             viewCenter.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             //second things
-           // line_view2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-         //   line_view2.setBackground(getResources().getDrawable(R.drawable.dotted));
-          //  ivFemaleImg.setImageResource(R.drawable.ic_female);
+            // activityRegisterBinding.vwDrag2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            //   activityRegisterBinding.vwDrag2.setBackground(getResources().getDrawable(R.drawable.dotted));
+            //  ivFemaleImg.setImageResource(R.drawable.ic_female);
 
             gender = "F";
-            txtGender.setText("Female");
+            activityRegisterBinding.txtGender.setText("Female");
 
         }
-        if (v == lnrRegister) {
+        if (v == activityRegisterBinding.lnrRegister) {
             Utility.freeMemory();
             company_name = "Ample Arch";
-            refferelCode = etReferrelCode.getText().toString();
-            user_name = etFirstName.getText().toString() + " " + etLastName.getText().toString();
-            first_name = etFirstName.getText().toString();
-            last_name = etLastName.getText().toString();
-            phone_no = etPhone.getText().toString();
-            password = etPassword.getText().toString();
-            c_password = etConfirmPass.getText().toString();
-            email = etEmail.getText().toString();
+            refferelCode = activityRegisterBinding.etReferrelCode.getText().toString();
+            user_name = activityRegisterBinding.etFirstName.getText().toString() + " " + activityRegisterBinding.etLastName.getText().toString();
+            first_name = activityRegisterBinding.etFirstName.getText().toString();
+            last_name = activityRegisterBinding.etLastName.getText().toString();
+            phone_no = activityRegisterBinding.etPhone.getText().toString();
+            password = activityRegisterBinding.etPassword.getText().toString();
+            c_password = activityRegisterBinding.etConfirmPass.getText().toString();
+            email = activityRegisterBinding.etEmail.getText().toString();
             String code;
             try
             {
-                code = ccp.getSelectedCountryCodeWithPlus().toString();
+                code = activityRegisterBinding.ccp.getSelectedCountryCodeWithPlus().toString();
             }
             catch (Exception e){
-                code = ccp.getDefaultCountryCodeWithPlus().toString();
+                code = activityRegisterBinding.ccp.getDefaultCountryCodeWithPlus().toString();
             }
 
-           // String code = tvCountryCode.getText().toString();
+            // String code = tvCountryCode.getText().toString();
             String contact = phone_no;
             if (!contact.equals("")) {
                 phone_no = code + " " + contact;
             }
 
-            if (!validate(user_name, first_name, last_name, password, c_password, phone_no, email))
+            if (!validate(RegisterActivity.this,user_name, first_name, last_name, password, c_password, phone_no, email))
             {
                 Toast.makeText(getApplicationContext(), "Please fill all required fields", Toast.LENGTH_SHORT).show();
             }
@@ -540,8 +479,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 }
             }
         }
-        if (v == civProfilePic) {
-           // selectImage();
+        if (v == activityRegisterBinding.imgProfileCard) {
+            // selectImage();
             Utility.freeMemory();
             CropImage.activity(null)
                     .setCropShape(CropImageView.CropShape.OVAL)
@@ -706,7 +645,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         e.printStackTrace();
                     }
 
-                    civProfilePic.setImageBitmap(bitmap);
+                    activityRegisterBinding.imgProfileCard.setImageBitmap(bitmap);
 
 
 
@@ -716,7 +655,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     // final_ImgBase64 = resizeBase64Image(s);
                     Log.d("base64string ", final_ImgBase64);
 //                  Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
-                  //  civProfilePic.setImageBitmap(bitmap);
+                    //  activityRegisterBinding.imgProfileCard.setImageBitmap(bitmap);
 
                 } catch (FileNotFoundException e) {
                     // TODO Auto-generated catch block
@@ -826,7 +765,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     // final_ImgBase64 = resizeBase64Image(s);
                     Log.d("base64string ", final_ImgBase64);
 //                  Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
-                    civProfilePic.setImageBitmap(resizedBitmap);
+                    activityRegisterBinding.imgProfileCard.setImageBitmap(resizedBitmap);
                 } catch (FileNotFoundException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -844,31 +783,31 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     switch (orientation) {
                         case ExifInterface.ORIENTATION_ROTATE_90:
                             rotatedBitmap = rotateImage(bitmap, 90);
-                            civProfilePic.setImageBitmap(rotatedBitmap);
+                            activityRegisterBinding.imgProfileCard.setImageBitmap(rotatedBitmap);
                             final_ImgBase64 = BitMapToString(rotatedBitmap);
                             break;
 
                         case ExifInterface.ORIENTATION_ROTATE_180:
                             rotatedBitmap = rotateImage(bitmap, 180);
-                            civProfilePic.setImageBitmap(rotatedBitmap);
+                            activityRegisterBinding.imgProfileCard.setImageBitmap(rotatedBitmap);
                             final_ImgBase64 = BitMapToString(rotatedBitmap);
                             break;
 
                         case ExifInterface.ORIENTATION_ROTATE_270:
                             rotatedBitmap = rotateImage(bitmap, 270);
-                            civProfilePic.setImageBitmap(rotatedBitmap);
+                            activityRegisterBinding.imgProfileCard.setImageBitmap(rotatedBitmap);
                             final_ImgBase64 = BitMapToString(rotatedBitmap);
                             break;
 
                         case ExifInterface.ORIENTATION_NORMAL:
                             rotatedBitmap = bitmap;
-                            civProfilePic.setImageBitmap(rotatedBitmap);
+                            activityRegisterBinding.imgProfileCard.setImageBitmap(rotatedBitmap);
                             final_ImgBase64 = BitMapToString(rotatedBitmap);
                             break;
 
                         default:
                             rotatedBitmap = bitmap;
-                            civProfilePic.setImageBitmap(rotatedBitmap);
+                            activityRegisterBinding.imgProfileCard.setImageBitmap(rotatedBitmap);
                             final_ImgBase64 = BitMapToString(rotatedBitmap);
                             break;
                     }
@@ -902,7 +841,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 Log.d("base64string ", final_ImgBase64);
 //                Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
 //                Upload();
-//                civProfilePic.setImageBitmap(resizedBitmap);
+//                activityRegisterBinding.imgProfileCard.setImageBitmap(resizedBitmap);
             }
             catch (FileNotFoundException e)
             {
@@ -915,21 +854,21 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             {
                 case ExifInterface.ORIENTATION_ROTATE_90:
                     rotatedBitmap = rotateImage(bitmap, 90);
-                    civProfilePic.setImageBitmap(rotatedBitmap);
+                    activityRegisterBinding.imgProfileCard.setImageBitmap(rotatedBitmap);
                     final_ImgBase64 = BitMapToString(rotatedBitmap);
                     Upload();
                     break;
 
                 case ExifInterface.ORIENTATION_ROTATE_180:
                     rotatedBitmap = rotateImage(bitmap, 180);
-                    civProfilePic.setImageBitmap(rotatedBitmap);
+                    activityRegisterBinding.imgProfileCard.setImageBitmap(rotatedBitmap);
                     final_ImgBase64 = BitMapToString(rotatedBitmap);
                     Upload();
                     break;
 
                 case ExifInterface.ORIENTATION_ROTATE_270:
                     rotatedBitmap = rotateImage(bitmap, 270);
-                    civProfilePic.setImageBitmap(rotatedBitmap);
+                    activityRegisterBinding.imgProfileCard.setImageBitmap(rotatedBitmap);
                     final_ImgBase64 = BitMapToString(rotatedBitmap);
                     Upload();
                     break;
@@ -937,7 +876,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 case ExifInterface.ORIENTATION_NORMAL:
                 default:
                     rotatedBitmap = bitmap;
-                    civProfilePic.setImageBitmap(rotatedBitmap);
+                    activityRegisterBinding.imgProfileCard.setImageBitmap(rotatedBitmap);
                     final_ImgBase64 = BitMapToString(rotatedBitmap);
                     Upload();
             }
@@ -1023,8 +962,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 //        Bitmap rotatedBitmap = null;
 
         final_ImgBase64 = BitMapToString(thumbnail);
-      //  Upload();
-        civProfilePic.setImageBitmap(thumbnail);
+        //  Upload();
+        activityRegisterBinding.imgProfileCard.setImageBitmap(thumbnail);
 
 /*
         try
@@ -1036,35 +975,35 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             {
                 case ExifInterface.ORIENTATION_ROTATE_90:
                     rotatedBitmap = rotateImage(thumbnail, 90);
-                    civProfilePic.setImageBitmap(rotatedBitmap);
+                    activityRegisterBinding.imgProfileCard.setImageBitmap(rotatedBitmap);
                     final_ImgBase64 = BitMapToString(rotatedBitmap);
                     Upload();
                     break;
 
                 case ExifInterface.ORIENTATION_ROTATE_180:
                     rotatedBitmap = rotateImage(thumbnail, 180);
-                    civProfilePic.setImageBitmap(rotatedBitmap);
+                    activityRegisterBinding.imgProfileCard.setImageBitmap(rotatedBitmap);
                     final_ImgBase64 = BitMapToString(rotatedBitmap);
                     Upload();
                     break;
 
                 case ExifInterface.ORIENTATION_ROTATE_270:
                     rotatedBitmap = rotateImage(thumbnail, 270);
-                    civProfilePic.setImageBitmap(rotatedBitmap);
+                    activityRegisterBinding.imgProfileCard.setImageBitmap(rotatedBitmap);
                     final_ImgBase64 = BitMapToString(rotatedBitmap);
                     Upload();
                     break;
 
                 case ExifInterface.ORIENTATION_NORMAL:
                     rotatedBitmap = thumbnail;
-                    civProfilePic.setImageBitmap(rotatedBitmap);
+                    activityRegisterBinding.imgProfileCard.setImageBitmap(rotatedBitmap);
                     final_ImgBase64 = BitMapToString(rotatedBitmap);
                     Upload();
                     break;
 
                 default:
                     rotatedBitmap = thumbnail;
-                    civProfilePic.setImageBitmap(rotatedBitmap);
+                    activityRegisterBinding.imgProfileCard.setImageBitmap(rotatedBitmap);
                     final_ImgBase64 = BitMapToString(rotatedBitmap);
                     Upload();
                     break;
@@ -1087,11 +1026,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             HttpPost httpPost = new HttpPost(url);
             String json = "";
             String date_DOB = "";
-            if (etDD.getText().toString().equals("") || etMM.getText().toString().equals("") || etYYYY.getText().toString().equals("")){
+            if (activityRegisterBinding.etDD.getText().toString().equals("") || activityRegisterBinding.etMM.getText().toString().equals("") || activityRegisterBinding.etYYYY.getText().toString().equals("")){
                 date_DOB = "";
             }
             else {
-                date_DOB = etDD.getText().toString() + "/" + etMM.getText().toString() + "/" + etYYYY.getText().toString();
+                date_DOB = activityRegisterBinding.etDD.getText().toString() + "/" + activityRegisterBinding.etMM.getText().toString() + "/" + activityRegisterBinding.etYYYY.getText().toString();
             }
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
@@ -1284,7 +1223,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            activityRegisterBinding.rlProgressDialog.setVisibility(View.GONE);
 
             // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
@@ -1295,12 +1234,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     final String Status = jsonObject.getString("Status").toString();
                     UserID = jsonObject.getString("userId").toString();
                     if (success.equals("1") && message.equalsIgnoreCase("Successfully Registered.")) {
-                       // Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+                        // Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
 
                         final QBUser user = new QBUser(email, "circle@123");
                         user.setExternalId("");
                         user.setEmail(email);
-                        user.setFullName(etFirstName.getText().toString() + " " + etLastName.getText().toString());
+                        user.setFullName(activityRegisterBinding.etFirstName.getText().toString() + " " + activityRegisterBinding.etLastName.getText().toString());
                         StringifyArrayList<String> tags = new StringifyArrayList<String>();
                         tags.add("dev");
                         user.setTags(tags);
@@ -1379,7 +1318,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             dialog = new ProgressDialog(RegisterActivity.this);
             dialog.setMessage("Verifying..please Check your mail..");
             //dialog.setTitle("Saving Reminder");
-           // dialog.show();
+            // dialog.show();
             dialog.setCancelable(false);
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
@@ -1393,7 +1332,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
-          //  dialog.dismiss();
+            //  dialog.dismiss();
             /*Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
             finish();*/
@@ -1477,7 +1416,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            activityRegisterBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result != null) {
@@ -1521,7 +1460,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             dialog.setCancelable(false);*/
 
             String loading = "Uploading" ;
-           // CustomProgressDialog(loading);
+            // CustomProgressDialog(loading);
         }
 
         @Override
@@ -1534,7 +1473,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-          //  rlProgressDialog.setVisibility(View.GONE);
+            //  rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result != null) {
@@ -1543,7 +1482,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     String Message = jsonObject.getString("Message").toString();
 
                     if (Success.equals("1")) {
-                       // Toast.makeText(getBaseContext(), "Registered Successfully", Toast.LENGTH_LONG).show();
+                        // Toast.makeText(getBaseContext(), "Registered Successfully", Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(getBaseContext(), Message, Toast.LENGTH_LONG).show();
                     }
@@ -1763,7 +1702,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         protected void onPreExecute() {
             super.onPreExecute();
             dialog = new ProgressDialog(RegisterActivity.this);
-           // dialog.setMessage("Registering...");
+            // dialog.setMessage("Registering...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
             dialog.setContentView(R.layout.custom_progress);
@@ -1885,13 +1824,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     public void CustomProgressDialog(final String loading)
     {
-        rlProgressDialog.setVisibility(View.VISIBLE);
-        tvProgressing.setText(loading);
+        activityRegisterBinding.rlProgressDialog.setVisibility(View.VISIBLE);
+        activityRegisterBinding.txtProgressing.setText(loading);
 
         Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
-        ivConnecting1.startAnimation(anim);
+        activityRegisterBinding.imgConnecting1.startAnimation(anim);
         Animation anim1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.clockwise);
-        ivConnecting2.startAnimation(anim1);
+        activityRegisterBinding.imgConnecting2.startAnimation(anim1);
 
         int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
         for (int i = 350; i <= SPLASHTIME; i = i + 350)
@@ -1903,15 +1842,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 {
                     if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
                     {
-                        tvProgressing.setText(loading+".");
+                        activityRegisterBinding.txtProgressing.setText(loading+".");
                     }
                     else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
                     {
-                        tvProgressing.setText(loading+"..");
+                        activityRegisterBinding.txtProgressing.setText(loading+"..");
                     }
                     else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
                     {
-                        tvProgressing.setText(loading+"...");
+                        activityRegisterBinding.txtProgressing.setText(loading+"...");
                     }
 
                 }

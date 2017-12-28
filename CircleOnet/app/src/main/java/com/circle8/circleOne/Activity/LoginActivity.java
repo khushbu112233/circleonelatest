@@ -12,6 +12,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.content.res.Configuration;
+import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.AsyncTask;
@@ -61,6 +62,7 @@ import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.PrefUtils;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.chat.ChatHelper;
+import com.circle8.circleOne.databinding.ActivityLoginBinding;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -151,66 +153,44 @@ public class LoginActivity extends AppCompatActivity implements
         TextWatcher,
         CompoundButton.OnCheckedChangeListener {
 
-    Button btnSimpleLogin, btnRegister;
+
     //Boolean isConnected = false;
     private CallbackManager callbackManager;
     private LoginButton loginButton;
-    private ImageView btnLogin;
     private ProgressDialog progressDialog;
     User user;
     private static final int RC_SIGN_IN = 007;
     private GoogleApiClient mGoogleApiClient;
     private ProgressDialog mProgressDialog;
-
-    public static TextView tvUsernameInfo, tvPasswordInfo;
-    ImageView imgForgotPass;
-    private SignInButton btnSignIn;
-    private Button btnSignOut, btnRevokeAccess;
-
     ProgressDialog pDialog;
     SharedPreferences prefs = null;
-
     private FirebaseAuth mAuth;
     // [END declare_auth]
-
     private TwitterLoginButton mLoginButton;
-
     LoginSession loginSession;
     ProfileSession profileSession;
     FingerPrintSession fingerPrintSession;
-
     private static final String TAG = LoginActivity.class.getSimpleName();
     public static final String PACKAGE = "com.circle8.circleOne";
-
-    ImageView login_linkedin_btn, imgFinger;
-
     private static final String host = "api.linkedin.com";
     private static final String topCardUrl = "https://" + host + "/v1/people/~:" +
             "(id,email-address,formatted-name,phone-numbers,public-profile-url,picture-url,picture-urls::(original))";
-
     private ProgressDialog progress;
-    public static EditText etLoginUser, etLoginPass;
     String userName, userPassword;
     String SocialMedia_Id = "", SocialMedia_Type = "", UserName = "";
     String Facebook = "", Twitter = "", Google = "", Linkedin = "", final_name = "", final_email = "", final_image = "";
     private boolean LinkedInFlag = false;
-
     private FingerprintManager fingerprintManager;
     private KeyguardManager keyguardManager;
     private KeyStore keyStore;
     private KeyGenerator keyGenerator;
     private Cipher cipher;
     private FingerprintManager.CryptoObject cryptoObject;
-
     private FingerprintHandler fingerprintHandler;
-
     private static final String FINGERPRINT_KEY = "key_name";
-
     private static final int REQUEST_USE_FINGERPRINT = 300;
-    ImageView btnLoginTwitter;
     private TwitterAuthClient client;
     public static String pushToken = "";
-
     private CheckBox rem_userpass;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -218,15 +198,13 @@ public class LoginActivity extends AppCompatActivity implements
     private static final String KEY_REMEMBER = "remember";
     private static final String KEY_USERNAME = "username";
     private static final String KEY_PASS = "password";
-
     ReferralCodeSession referralCodeSession;
-
     private static final int CONTACT_PICKER_REQUEST = 991;
     private static final int PERMISSION_REQUEST_CONTACT = 111;
     String Q_ID = "";
     String UserID = "";
     Boolean netCheck= false;
-
+   public static ActivityLoginBinding activityLoginBinding;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -240,23 +218,12 @@ public class LoginActivity extends AppCompatActivity implements
         loginSession = new LoginSession(getApplicationContext());
         profileSession = new ProfileSession(getApplicationContext());
         fingerPrintSession = new FingerPrintSession(getApplicationContext());
-        setContentView(R.layout.activity_login);
-        imgForgotPass = (ImageView) findViewById(R.id.imgForgotPass);
-        btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
-        btnSimpleLogin = (Button) findViewById(R.id.btnLogin);
-        btnLogin = (ImageView) findViewById(R.id.fbLogin);
+        activityLoginBinding = DataBindingUtil.setContentView(this,R.layout.activity_login);
         loginButton = (LoginButton) findViewById(R.id.login_button);
-        imgFinger = (ImageView) findViewById(R.id.imgFinger);
-//          btnLoginTwitter = (ImageView) findViewById(R.id.btnLoginTwitter);
-        btnRegister = (Button) findViewById(R.id.btnRegister);
-        etLoginPass = (EditText) findViewById(R.id.etLoginPass);
-        etLoginUser = (EditText) findViewById(R.id.etLoginUser);
-        btnLoginTwitter = (ImageView) findViewById(R.id.btnLoginTwitter);
-        login_linkedin_btn = (ImageView) findViewById(R.id.login_button_linkedin);
-        referralCodeSession = new ReferralCodeSession(getApplicationContext());
-        tvUsernameInfo = (TextView) findViewById(R.id.tvUserInfo);
-        tvPasswordInfo = (TextView) findViewById(R.id.tvPasswordInfo);
 
+//          btnLoginTwitter = (ImageView) findViewById(R.id.btnLoginTwitter);
+
+        referralCodeSession = new ReferralCodeSession(getApplicationContext());
         sharedPreferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         rem_userpass = (CheckBox) findViewById(R.id.switchRemember);
@@ -265,17 +232,17 @@ public class LoginActivity extends AppCompatActivity implements
         if (netCheck == false){
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
         }
-       // Toast.makeText(getApplicationContext(), netCheck.toString(), Toast.LENGTH_LONG).show();
+        // Toast.makeText(getApplicationContext(), netCheck.toString(), Toast.LENGTH_LONG).show();
         if (sharedPreferences.getBoolean(KEY_REMEMBER, false))
             rem_userpass.setChecked(true);
         else
             rem_userpass.setChecked(false);
 
-        etLoginUser.setText(sharedPreferences.getString(KEY_USERNAME, ""));
-        etLoginPass.setText(sharedPreferences.getString(KEY_PASS, ""));
+        activityLoginBinding.etLoginUser.setText(sharedPreferences.getString(KEY_USERNAME, ""));
+        activityLoginBinding.etLoginPass.setText(sharedPreferences.getString(KEY_PASS, ""));
 
         prefs = getSharedPreferences("com.circle8.circleOne", MODE_PRIVATE);
-        etLoginPass.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        activityLoginBinding.etLoginPass.setImeOptions(EditorInfo.IME_ACTION_DONE);
         Utility.freeMemory();
 
         OSPermissionSubscriptionState status = OneSignal.getPermissionSubscriptionState();
@@ -292,11 +259,11 @@ public class LoginActivity extends AppCompatActivity implements
         System.out.println("pushtoken " + pushToken);
         // Toast.makeText(getApplicationContext(), pushToken, Toast.LENGTH_LONG).show();
 
-        etLoginPass.addTextChangedListener(this);
-        etLoginUser.addTextChangedListener(this);
+        activityLoginBinding.etLoginPass.addTextChangedListener(this);
+        activityLoginBinding.etLoginUser.addTextChangedListener(this);
         rem_userpass.setOnCheckedChangeListener(this);
 
-        etLoginPass.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        activityLoginBinding.etLoginPass.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
@@ -307,8 +274,8 @@ public class LoginActivity extends AppCompatActivity implements
                 else {
                     Utility.freeMemory();
                     if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
-                        userName = etLoginUser.getText().toString();
-                        userPassword = etLoginPass.getText().toString();
+                        userName = activityLoginBinding.etLoginUser.getText().toString();
+                        userPassword = activityLoginBinding.etLoginPass.getText().toString();
 
                         if (userName.equals("")) {
                             Toast.makeText(getApplicationContext(), "Enter username", Toast.LENGTH_SHORT).show();
@@ -328,7 +295,7 @@ public class LoginActivity extends AppCompatActivity implements
             }
         });
 
-        imgForgotPass.setOnClickListener(new View.OnClickListener() {
+        activityLoginBinding.imgForgotPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
@@ -341,10 +308,10 @@ public class LoginActivity extends AppCompatActivity implements
             fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
             if (!fingerprintManager.hasEnrolledFingerprints()) {
                 //textView.setText("No fingerprint configured. Please register at least one fingerprint in your device's Settings");
-                imgFinger.setVisibility(View.GONE);
+                activityLoginBinding.imgFinger.setVisibility(View.GONE);
             } else {
 
-                imgFinger.setVisibility(View.VISIBLE);
+                activityLoginBinding.imgFinger.setVisibility(View.VISIBLE);
                 keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
                 prefs = getSharedPreferences("com.circle8.circleOne", MODE_PRIVATE);
                 // check support for android fingerprint on device
@@ -361,7 +328,7 @@ public class LoginActivity extends AppCompatActivity implements
                 fingerprintHandler.completeFingerAuthentication(fingerprintManager, cryptoObject);
             }
         } else {
-            imgFinger.setVisibility(View.GONE);
+            activityLoginBinding.imgFinger.setVisibility(View.GONE);
         }
 
         /*etLoginPass.setOnTouchListener(new View.OnTouchListener() {
@@ -393,7 +360,7 @@ public class LoginActivity extends AppCompatActivity implements
         });*/
 
 
-        btnRegister.setOnClickListener(new View.OnClickListener() {
+        activityLoginBinding.btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
@@ -409,7 +376,7 @@ public class LoginActivity extends AppCompatActivity implements
             }
         });
 
-        imgFinger.setOnClickListener(new View.OnClickListener() {
+        activityLoginBinding.imgFinger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
@@ -419,7 +386,7 @@ public class LoginActivity extends AppCompatActivity implements
         });
 
         generateHashkey();
-        login_linkedin_btn.setOnClickListener(new View.OnClickListener() {
+        activityLoginBinding.loginButtonLinkedin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 LinkedInFlag = true;
@@ -440,7 +407,7 @@ public class LoginActivity extends AppCompatActivity implements
         // [START initialize_twitter_login]
         mLoginButton = (TwitterLoginButton) findViewById(R.id.button_twitter_login);
         client = new TwitterAuthClient();
-        btnLoginTwitter.setOnClickListener(new View.OnClickListener() {
+        activityLoginBinding.btnLoginTwitter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                /* mLoginButton.setCallback(new Callback<TwitterSession>() {
@@ -475,17 +442,17 @@ public class LoginActivity extends AppCompatActivity implements
         });
 
         //  isConnected = checkConnection();
-        btnSimpleLogin.setOnClickListener(new View.OnClickListener() {
+        activityLoginBinding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                userName = etLoginUser.getText().toString();
-                userPassword = etLoginPass.getText().toString();
+                userName = activityLoginBinding.etLoginUser.getText().toString();
+                userPassword = activityLoginBinding.etLoginPass.getText().toString();
 
                 if (netCheck == false){
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
                 }else {
-                    if (!validateLogin(userName, userPassword)) {
+                    if (!validateLogin(LoginActivity.this,userName, userPassword)) {
 //                    Toast.makeText(getApplicationContext(), "Form Fill Invalid!", Toast.LENGTH_SHORT).show();
                     } else {
                         if (getCurrentFocus() != null) {
@@ -499,7 +466,7 @@ public class LoginActivity extends AppCompatActivity implements
 
             }
         });
-        btnSignIn.setOnClickListener(this);
+        activityLoginBinding.btnSignIn.setOnClickListener(this);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -514,10 +481,10 @@ public class LoginActivity extends AppCompatActivity implements
 
 
         // Customizing G+ button
-        btnSignIn.setSize(SignInButton.SIZE_ICON_ONLY);
-        btnSignIn.setScopes(gso.getScopeArray());
+        activityLoginBinding.btnSignIn.setSize(SignInButton.SIZE_ICON_ONLY);
+        activityLoginBinding.btnSignIn.setScopes(gso.getScopeArray());
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        activityLoginBinding.fbLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                /* progressDialog = new ProgressDialog(LoginActivity.this);
@@ -612,8 +579,8 @@ public class LoginActivity extends AppCompatActivity implements
 
     private void managePrefs() {
         if (rem_userpass.isChecked()) {
-            editor.putString(KEY_USERNAME, etLoginUser.getText().toString().trim());
-            editor.putString(KEY_PASS, etLoginPass.getText().toString().trim());
+            editor.putString(KEY_USERNAME, activityLoginBinding.etLoginUser.getText().toString().trim());
+            editor.putString(KEY_PASS, activityLoginBinding.etLoginPass.getText().toString().trim());
             editor.putBoolean(KEY_REMEMBER, true);
             editor.apply();
         } else {
@@ -635,12 +602,12 @@ public class LoginActivity extends AppCompatActivity implements
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (!fingerprintManager.hasEnrolledFingerprints()) {
-                    imgFinger.setVisibility(View.GONE);
+                    activityLoginBinding.imgFinger.setVisibility(View.GONE);
                     //  Toast.makeText(FingerPrintLogin.this, "Fingerprint not yet configured", Toast.LENGTH_LONG).show();
                 }
             }
             if (!keyguardManager.isKeyguardSecure()) {
-                imgFinger.setVisibility(View.GONE);
+                activityLoginBinding.imgFinger.setVisibility(View.GONE);
                 // Toast.makeText(FingerPrintLogin.this, "Screen lock is not secure and enable", Toast.LENGTH_LONG).show();
             }
             return;
@@ -663,7 +630,7 @@ public class LoginActivity extends AppCompatActivity implements
                     }
                 }
             } else {
-                imgFinger.setVisibility(View.GONE);
+                activityLoginBinding.imgFinger.setVisibility(View.GONE);
                 // Toast.makeText(this, R.string.permission_refused, Toast.LENGTH_LONG).show();
             }
         }
@@ -691,7 +658,7 @@ public class LoginActivity extends AppCompatActivity implements
             return;
         }
         else {
-            imgFinger.setVisibility(View.GONE);
+            activityLoginBinding.imgFinger.setVisibility(View.GONE);
             //  Toast.makeText(this, getString(R.string.Unknown_permission_request), Toast.LENGTH_LONG).show();
         }
     }
@@ -788,7 +755,7 @@ public class LoginActivity extends AppCompatActivity implements
             return cipher;
         } catch (Exception e) {
             // throw new RuntimeException("Failed to instantiate Cipher class");
-            imgFinger.setVisibility(View.GONE);
+            activityLoginBinding.imgFinger.setVisibility(View.GONE);
             return null;
         }
     }
@@ -1110,25 +1077,25 @@ public class LoginActivity extends AppCompatActivity implements
 
                                         @Override
                                         public void onError(QBResponseException errors) {
-                                           // Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
+                                            // Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
                                             QBUser qbUser = new QBUser(UserName, "circle@123");
                                             QBUsers.signIn(qbUser).performAsync(new QBEntityCallback<QBUser>() {
                                                 @Override
                                                 public void onSuccess(final QBUser qbUser, Bundle bundle) {
                                                     // progressDialog.dismiss();
-                                                   // Toaster.longToast("success");
+                                                    // Toaster.longToast("success");
                                                     Q_ID = String.valueOf(qbUser.getId());
                                                     new HttpAsyncTaskUpdateQ_ID().execute(Utility.BASE_URL+"User/Update_QID");
 
                                                     // setResult(RESULT_OK);
                                                     // SharedPrefsHelper.getInstance().saveQbUser(qbUser);
-                                                  //  Toast.makeText(getApplicationContext(), "fgbgfb", Toast.LENGTH_LONG).show();
+                                                    //  Toast.makeText(getApplicationContext(), "fgbgfb", Toast.LENGTH_LONG).show();
                                                     qbUser.setPassword("circle@123");
                                                     ChatHelper.getInstance().login(qbUser, new QBEntityCallback<Void>() {
                                                         @Override
                                                         public void onSuccess(Void result, Bundle bundle) {
                                                             SharedPrefsHelper.getInstance().saveQbUser(qbUser);
-                                                          //  Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
+                                                            //  Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
                                                             // DialogsActivity.start(LoginActivity.this);
                                                             // finish();
 
@@ -1138,7 +1105,7 @@ public class LoginActivity extends AppCompatActivity implements
                                                         @Override
                                                         public void onError(QBResponseException e) {
                                                             ProgressDialogFragment.hide(getSupportFragmentManager());
-                                                           // Toast.makeText(getApplicationContext(), "not done", Toast.LENGTH_LONG).show();
+                                                            // Toast.makeText(getApplicationContext(), "not done", Toast.LENGTH_LONG).show();
 
                                     /*ErrorUtils.showSnackbar(userListView, R.string.login_chat_login_error, e,
                                             R.string.dlg_retry, new View.OnClickListener() {
@@ -1159,7 +1126,7 @@ public class LoginActivity extends AppCompatActivity implements
                                                 @Override
                                                 public void onError(QBResponseException errors) {
 //                                    progressDialog.dismiss();
-                                                   // Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
+                                                    // Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
                                     /*showSnackbarError(rootLayout, R.string.errors, errors, new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
@@ -1184,16 +1151,16 @@ public class LoginActivity extends AppCompatActivity implements
                                     @Override
                                     public void onSuccess(final QBUser qbUser, Bundle bundle) {
                                         // progressDialog.dismiss();
-                                      //  Toaster.longToast("success");
+                                        //  Toaster.longToast("success");
                                         // setResult(RESULT_OK);
                                         // SharedPrefsHelper.getInstance().saveQbUser(qbUser);
-                                      //  Toast.makeText(getApplicationContext(), "fgbgfb", Toast.LENGTH_LONG).show();
+                                        //  Toast.makeText(getApplicationContext(), "fgbgfb", Toast.LENGTH_LONG).show();
                                         qbUser.setPassword("circle@123");
                                         ChatHelper.getInstance().login(qbUser, new QBEntityCallback<Void>() {
                                             @Override
                                             public void onSuccess(Void result, Bundle bundle) {
                                                 SharedPrefsHelper.getInstance().saveQbUser(qbUser);
-                                               // Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
+                                                // Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
                                                 // DialogsActivity.start(LoginActivity.this);
                                                 // finish();
 
@@ -1203,7 +1170,7 @@ public class LoginActivity extends AppCompatActivity implements
                                             @Override
                                             public void onError(QBResponseException e) {
                                                 ProgressDialogFragment.hide(getSupportFragmentManager());
-                                               // Toast.makeText(getApplicationContext(), "not done", Toast.LENGTH_LONG).show();
+                                                // Toast.makeText(getApplicationContext(), "not done", Toast.LENGTH_LONG).show();
 
                                     /*ErrorUtils.showSnackbar(userListView, R.string.login_chat_login_error, e,
                                             R.string.dlg_retry, new View.OnClickListener() {
@@ -1224,7 +1191,7 @@ public class LoginActivity extends AppCompatActivity implements
                                     @Override
                                     public void onError(QBResponseException errors) {
 //                                    progressDialog.dismiss();
-                                     //   Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
+                                        //   Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
                                     /*showSnackbarError(rootLayout, R.string.errors, errors, new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
@@ -1526,7 +1493,7 @@ public class LoginActivity extends AppCompatActivity implements
             @Override
             public void onAuthError(LIAuthError error) {
 
-               // Toast.makeText(getApplicationContext(), "failed " + error.toString(), Toast.LENGTH_LONG).show();
+                // Toast.makeText(getApplicationContext(), "failed " + error.toString(), Toast.LENGTH_LONG).show();
             }
         }, true);
     }
@@ -1693,9 +1660,7 @@ public class LoginActivity extends AppCompatActivity implements
         loginButton = (LoginButton) findViewById(R.id.login_button);
 
         loginButton.setReadPermissions("public_profile", "email");
-
-        btnLogin = (ImageView) findViewById(R.id.fbLogin);
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        activityLoginBinding.fbLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -2013,7 +1978,7 @@ public class LoginActivity extends AppCompatActivity implements
 
     private void updateUI(boolean isSignedIn) {
         if (isSignedIn) {
-            btnSignIn.setVisibility(View.GONE);
+            activityLoginBinding.btnSignIn.setVisibility(View.GONE);
             //loginSession.createLoginSession(user.getDisplayName(), user.getEmail(), String.valueOf(user.getPhotoUrl()), "");
           /*  Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
             intent.putExtra("viewpager_position", 0);
@@ -2023,7 +1988,7 @@ public class LoginActivity extends AppCompatActivity implements
             //  btnRevokeAccess.setVisibility(View.VISIBLE);
             // llProfileLayout.setVisibility(View.VISIBLE);
         } else {
-            btnSignIn.setVisibility(View.VISIBLE);
+            activityLoginBinding.btnSignIn.setVisibility(View.VISIBLE);
             //  btnSignOut.setVisibility(View.GONE);
             //  btnRevokeAccess.setVisibility(View.GONE);
             // llProfileLayout.setVisibility(View.GONE);
@@ -2131,7 +2096,7 @@ public class LoginActivity extends AppCompatActivity implements
         @Override
         public void onCancel() {
 //            progressDialog.dismiss();
-           dismissProgress();
+            dismissProgress();
         }
 
         @Override
@@ -2240,19 +2205,19 @@ public class LoginActivity extends AppCompatActivity implements
                                                 @Override
                                                 public void onSuccess(final QBUser qbUser, Bundle bundle) {
                                                     // progressDialog.dismiss();
-                                                   // Toaster.longToast("success");
+                                                    // Toaster.longToast("success");
                                                     Q_ID = String.valueOf(qbUser.getId());
                                                     new HttpAsyncTaskUpdateQ_ID().execute(Utility.BASE_URL+"User/Update_QID");
 
                                                     // setResult(RESULT_OK);
                                                     // SharedPrefsHelper.getInstance().saveQbUser(qbUser);
-                                                  // Toast.makeText(getApplicationContext(), "fgbgfb", Toast.LENGTH_LONG).show();
+                                                    // Toast.makeText(getApplicationContext(), "fgbgfb", Toast.LENGTH_LONG).show();
                                                     qbUser.setPassword("circle@123");
                                                     ChatHelper.getInstance().login(qbUser, new QBEntityCallback<Void>() {
                                                         @Override
                                                         public void onSuccess(Void result, Bundle bundle) {
                                                             SharedPrefsHelper.getInstance().saveQbUser(qbUser);
-                                                           // Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
+                                                            // Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
                                                             // DialogsActivity.start(LoginActivity.this);
                                                             // finish();
 
@@ -2262,7 +2227,7 @@ public class LoginActivity extends AppCompatActivity implements
                                                         @Override
                                                         public void onError(QBResponseException e) {
                                                             ProgressDialogFragment.hide(getSupportFragmentManager());
-                                                          //  Toast.makeText(getApplicationContext(), "not done", Toast.LENGTH_LONG).show();
+                                                            //  Toast.makeText(getApplicationContext(), "not done", Toast.LENGTH_LONG).show();
 
                                     /*ErrorUtils.showSnackbar(userListView, R.string.login_chat_login_error, e,
                                             R.string.dlg_retry, new View.OnClickListener() {
@@ -2283,7 +2248,7 @@ public class LoginActivity extends AppCompatActivity implements
                                                 @Override
                                                 public void onError(QBResponseException errors) {
 //                                    progressDialog.dismiss();
-                                                  //  Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
+                                                    //  Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
                                     /*showSnackbarError(rootLayout, R.string.errors, errors, new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
@@ -2311,13 +2276,13 @@ public class LoginActivity extends AppCompatActivity implements
                                         //Toaster.longToast("success");
                                         // setResult(RESULT_OK);
                                         // SharedPrefsHelper.getInstance().saveQbUser(qbUser);
-                                      //  Toast.makeText(getApplicationContext(), "fgbgfb", Toast.LENGTH_LONG).show();
+                                        //  Toast.makeText(getApplicationContext(), "fgbgfb", Toast.LENGTH_LONG).show();
                                         qbUser.setPassword("circle@123");
                                         ChatHelper.getInstance().login(qbUser, new QBEntityCallback<Void>() {
                                             @Override
                                             public void onSuccess(Void result, Bundle bundle) {
                                                 SharedPrefsHelper.getInstance().saveQbUser(qbUser);
-                                               // Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
+                                                // Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
                                                 // DialogsActivity.start(LoginActivity.this);
                                                 // finish();
 
@@ -2327,7 +2292,7 @@ public class LoginActivity extends AppCompatActivity implements
                                             @Override
                                             public void onError(QBResponseException e) {
                                                 ProgressDialogFragment.hide(getSupportFragmentManager());
-                                               // Toast.makeText(getApplicationContext(), "not done", Toast.LENGTH_LONG).show();
+                                                // Toast.makeText(getApplicationContext(), "not done", Toast.LENGTH_LONG).show();
 
                                     /*ErrorUtils.showSnackbar(userListView, R.string.login_chat_login_error, e,
                                             R.string.dlg_retry, new View.OnClickListener() {
@@ -2348,7 +2313,7 @@ public class LoginActivity extends AppCompatActivity implements
                                     @Override
                                     public void onError(QBResponseException errors) {
 //                                    progressDialog.dismiss();
-                                       // Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
+                                        // Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
                                     /*showSnackbarError(rootLayout, R.string.errors, errors, new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {

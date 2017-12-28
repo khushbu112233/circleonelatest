@@ -449,7 +449,6 @@
             <com.circle8.circleOne.Utils.ExpandableHeightListView
                 android:nestedScrollingEnabled="true"
                 android:layout_marginTop="5dp"
-                tools:listitem="@layout/testimonial_row"
                 android:id="@+id/lstTestimonial"
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"

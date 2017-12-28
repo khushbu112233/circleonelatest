@@ -1,15 +1,12 @@
 package com.circle8.circleOne.Activity;
 
 import android.app.ProgressDialog;
+import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Adapter.HistoryAdapter;
@@ -17,6 +14,7 @@ import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.HistoryModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
+import com.circle8.circleOne.databinding.ActivityHistoryBinding;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -37,43 +35,25 @@ import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 public class HistoryActivity extends AppCompatActivity
 {
-    private ListView listView;
-    private TextView tvHistoryInfo ;
-    private ImageView imgBack ;
-
-    private RelativeLayout rlProgressDialog ;
-    private TextView tvProgressing ;
-    private ImageView ivConnecting1, ivConnecting2, ivConnecting3 ;
-
     LoginSession session;
     String user_id ;
 
     ArrayList<HistoryModel> historyModelArrayList = new ArrayList<>();
     HistoryAdapter historyAdapter ;
+    ActivityHistoryBinding activityHistoryBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history);
+        activityHistoryBinding = DataBindingUtil.setContentView(this,R.layout.activity_history);
         Utility.freeMemory();
         session = new LoginSession(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
         user_id = user.get(LoginSession.KEY_USERID);
-
-        listView = (ListView)findViewById(R.id.listView);
-        tvHistoryInfo = (TextView)findViewById(R.id.tvHistoryInfo);
-        imgBack = (ImageView)findViewById(R.id.imgBack);
-
-        rlProgressDialog = (RelativeLayout)findViewById(R.id.rlProgressDialog);
-        tvProgressing = (TextView)findViewById(R.id.txtProgressing);
-        ivConnecting1 = (ImageView)findViewById(R.id.imgConnecting1) ;
-        ivConnecting2 = (ImageView)findViewById(R.id.imgConnecting2) ;
-        ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
-
         new HttpAsyncTaskHistoryList().execute(Utility.BASE_URL+"History");
 
-        imgBack.setOnClickListener(new View.OnClickListener() {
+        activityHistoryBinding.imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -148,12 +128,12 @@ public class HistoryActivity extends AppCompatActivity
 
                     if(historyList.length() == 0)
                     {
-                        tvHistoryInfo.setVisibility(View.VISIBLE);
+                        activityHistoryBinding.tvHistoryInfo.setVisibility(View.VISIBLE);
                     }
                     else
                     {
                         Utility.freeMemory();
-                        tvHistoryInfo.setVisibility(View.GONE);
+                        activityHistoryBinding.tvHistoryInfo.setVisibility(View.GONE);
 
                         for(int i = 0 ; i <= historyList.length() ; i++ )
                         {
@@ -174,7 +154,7 @@ public class HistoryActivity extends AppCompatActivity
                             historyModelArrayList.add(historyModel);
 
                             historyAdapter = new HistoryAdapter(HistoryActivity.this, historyModelArrayList);
-                            listView.setAdapter(historyAdapter);
+                            activityHistoryBinding.listView.setAdapter(historyAdapter);
                             historyAdapter.notifyDataSetChanged();
                         }
                     }
