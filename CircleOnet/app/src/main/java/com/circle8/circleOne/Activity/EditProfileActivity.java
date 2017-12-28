@@ -24,6 +24,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.WindowCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -214,12 +215,11 @@ public class EditProfileActivity extends AppCompatActivity implements
     private String refer;
     private ProgressDialog progress;
     public static FragmentEditProfileBinding fragmentEditProfileBinding;
-    SpannableString ss;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        // supportRequestWindowFeature(WindowCompat.FEATURE_ACTION_BAR_OVERLAY);
+        supportRequestWindowFeature(WindowCompat.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
         fragmentEditProfileBinding  = DataBindingUtil.setContentView(this,R.layout.fragment_edit_profile);
         Utility.freeMemory();
@@ -234,10 +234,27 @@ public class EditProfileActivity extends AppCompatActivity implements
         //  new LongOperation().execute();
         fragmentEditProfileBinding.includeTop.imgProfileShare.setOnClickListener(this);
 
+        SpannableString ss = new SpannableString("Ask your friends to write a Testimonial for you(100 words or less),Please choose from your CircleOne contacts and send a request.");
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View textView) {
+                Intent intent1 = new Intent(getApplicationContext(), SearchGroupMembers.class);
+                intent1.putExtra("from", "profile");
+                intent1.putExtra("ProfileId", profileId);
+                startActivity(intent1);
+            }
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false);
+            }
+        };
+        ss.setSpan(clickableSpan, 91, 100, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
         // TextView textView = (TextView) findViewById(R.id.hello);
         fragmentEditProfileBinding.txtTestimonial.setText(ss);
         fragmentEditProfileBinding.txtTestimonial.setMovementMethod(LinkMovementMethod.getInstance());
-        fragmentEditProfileBinding.txtTestimonial.setHighlightColor(getResources().getColor(R.color.colorPrimary));
+        fragmentEditProfileBinding. txtTestimonial.setHighlightColor(getResources().getColor(R.color.colorPrimary));
         fragmentEditProfileBinding.btnSignIn.setOnClickListener(this);
         fragmentEditProfileBinding.imgGoogle.setOnClickListener(this);
         fragmentEditProfileBinding.txtAttachDelete.setOnClickListener(this);
@@ -745,11 +762,12 @@ public class EditProfileActivity extends AppCompatActivity implements
     }
 
     private void populate(){
-       // new HttpAsyncTaskAssociation().execute(Utility.BASE_URL+"GetAssociationList");
+        new HttpAsyncTaskAssociation().execute(Utility.BASE_URL+"GetAssociationList");
         if (type.equals("edit"))
         {
             Utility.freeMemory();
             new HttpAsyncTaskUserProfile().execute(Utility.BASE_URL+"GetUserProfile");
+            new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");
         }
     }
 
@@ -1721,7 +1739,6 @@ public class EditProfileActivity extends AppCompatActivity implements
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
 
-            Log.e("test", "1");
             // 2. make POST request to the given URL
             HttpPost httpPost = new HttpPost(url);
             String json = "";
@@ -1729,7 +1746,6 @@ public class EditProfileActivity extends AppCompatActivity implements
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("profileid", profileId);
-            Log.e("test", "2");
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
 
@@ -1739,7 +1755,7 @@ public class EditProfileActivity extends AppCompatActivity implements
 
             // 5. set json to StringEntity
             StringEntity se = new StringEntity(json);
-            Log.e("test", "3");
+
             // 6. set httpPost Entity
             httpPost.setEntity(se);
 
@@ -1749,18 +1765,17 @@ public class EditProfileActivity extends AppCompatActivity implements
 
             // 8. Execute POST request to the given URL
             HttpResponse httpResponse = httpclient.execute(httpPost);
-            Log.e("test", "4");
+
             // 9. receive response as inputStream
             inputStream = httpResponse.getEntity().getContent();
 
-            Log.e("test", "55");
+
             // 10. convert inputstream to string
             if (inputStream != null)
                 result = convertInputStreamToString(inputStream);
             else
                 result = "Did not work!";
 
-            Log.e("test", "56");
         } catch (Exception e) {
             Log.d("InputStream", e.getLocalizedMessage());
         }
@@ -1831,6 +1846,15 @@ public class EditProfileActivity extends AppCompatActivity implements
             inputStream = httpResponse.getEntity().getContent();
 
 
+            List<String> stringList = new ArrayList<String>(Arrays.asList(array));
+            eventList = new ArrayList<AssociationModel>();
+            for (int i = 0; i < array.length; i++) {
+                Utility.freeMemory();
+                AssociationModel st = new AssociationModel(String.valueOf(i), stringList.get(i), false );
+
+                eventList.add(st);
+
+            }
             // 10. convert inputstream to string
             if (inputStream != null)
                 result = convertInputStreamToString(inputStream);
@@ -1840,46 +1864,6 @@ public class EditProfileActivity extends AppCompatActivity implements
         } catch (Exception e) {
             Log.d("InputStream", e.getLocalizedMessage());
         }
-
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-
-                ss = new SpannableString("Ask your friends to write a Testimonial for you(100 words or less),Please choose from your CircleOne contacts and send a request.");
-                ClickableSpan clickableSpan = new ClickableSpan() {
-                    @Override
-                    public void onClick(View textView) {
-                        Intent intent1 = new Intent(getApplicationContext(), SearchGroupMembers.class);
-                        intent1.putExtra("from", "profile");
-                        intent1.putExtra("ProfileId", profileId);
-                        startActivity(intent1);
-                    }
-                    @Override
-                    public void updateDrawState(TextPaint ds) {
-                        super.updateDrawState(ds);
-                        ds.setUnderlineText(false);
-                    }
-                };
-                ss.setSpan(clickableSpan, 91, 100, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-
-                List<String> stringList = new ArrayList<String>(Arrays.asList(array));
-                eventList = new ArrayList<AssociationModel>();
-                for (int i = 0; i < array.length; i++) {
-                    Utility.freeMemory();
-                    AssociationModel st = new AssociationModel(String.valueOf(i), stringList.get(i), false );
-
-                    eventList.add(st);
-
-                    mAdapter1 = new CardViewDataAdapter(eventList);
-
-                    GridLayoutManager gridLayoutManager = new GridLayoutManager(EditProfileActivity.this, 5, GridLayoutManager.HORIZONTAL, false);
-                    fragmentEditProfileBinding.recyclerEvents.setAdapter(mAdapter1);
-                    fragmentEditProfileBinding.recyclerEvents.setLayoutManager(gridLayoutManager);
-                }
-            }
-        });
 
         // 11. return result
         return result;
@@ -2799,6 +2783,10 @@ public class EditProfileActivity extends AppCompatActivity implements
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
 
+                mAdapter1 = new CardViewDataAdapter(eventList);
+                GridLayoutManager gridLayoutManager1 = new GridLayoutManager(EditProfileActivity.this, 5, GridLayoutManager.HORIZONTAL, false);
+                fragmentEditProfileBinding.recyclerEvents.setAdapter(mAdapter1);
+                fragmentEditProfileBinding.recyclerEvents.setLayoutManager(gridLayoutManager1);
                 if (result != null) {
                     associationList = new ArrayList<AssociationModel>();
                     JSONObject jsonObject = new JSONObject(result);
@@ -2973,9 +2961,9 @@ public class EditProfileActivity extends AppCompatActivity implements
                     customAdapter = new CustomAdapter(EditProfileActivity.this, allTaggs);
                     fragmentEditProfileBinding.lstTestimonial.setAdapter(customAdapter);
                     fragmentEditProfileBinding.lstTestimonial.setExpanded(true);
-                    new HttpAsyncTaskAssociation().execute(Utility.BASE_URL+"GetAssociationList");
+
                 } else {
-                    Toast.makeText(getApplicationContext(), "Not able to load cards..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to load testimonial..", Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -3124,7 +3112,6 @@ public class EditProfileActivity extends AppCompatActivity implements
             //   allTags = new ArrayList<>();
             String loading = "Profile loading" ;
             CustomProgressDialog(loading,activity);
-            Log.e("test", "progress start");
 
         }
 
@@ -3137,17 +3124,14 @@ public class EditProfileActivity extends AppCompatActivity implements
         @Override
         protected void onPostExecute(String result)
         {
-            Log.e("test", "5");
 //            dialog.dismiss();
             dismissProgress();
 
-            Log.e("test", "6");
 //          dismissProgress();
             // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
 
             try
             {
-                Log.e("test", "7");
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
@@ -3156,7 +3140,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                     FirstName = jsonObject.getString("FirstName");
                     LastName = jsonObject.getString("LastName");
                     UserPhoto = jsonObject.getString("UserPhoto");
-                    Log.e("test", "8");
+
                     Phone1 = jsonObject.getString("Phone1");
                     Phone2 = jsonObject.getString("Phone2");
                     Mobile1 = jsonObject.getString("Mobile1");
@@ -3201,7 +3185,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                     try {
                         JSONArray jsonArrayAsso = jsonObject.getJSONArray("Association_Name");
                         if (jsonArrayAsso != null) {
-                            Log.e("test", "9");
+
                             for (int i = 0; i < jsonArrayAsso.length(); i++) {
                                 String name = jsonArrayAsso.getString(i).toString();
                                 String kept = name.substring(0, name.indexOf(":"));
@@ -3211,10 +3195,9 @@ public class EditProfileActivity extends AppCompatActivity implements
                                 final_associationNameArray.add(remainder);
 
                             }
-                            Log.e("test", "10");
 
                             try {
-                                Log.e("test", "11");
+
                                 for (int i = 0; i < final_associationNameArray.size(); i++) {
 
                                     if (AssoNameList.contains(final_associationNameArray.get(i).toString())) {
@@ -3227,7 +3210,6 @@ public class EditProfileActivity extends AppCompatActivity implements
                                         fragmentEditProfileBinding.recyclerAssociation.setLayoutManager(gridLayoutManager);
                                     }
                                 }
-                                Log.e("test", "12");
                             }catch (Exception e){}
 
                         }
@@ -3235,10 +3217,8 @@ public class EditProfileActivity extends AppCompatActivity implements
 
 
                     try{
-                        Log.e("test", "13");
                         JSONArray jsonArrayEvents = jsonObject.getJSONArray("Event_Cat_Name");
                         if (jsonArrayEvents != null) {
-                            Log.e("test", "14");
                             for (int i = 0; i < jsonArrayEvents.length(); i++) {
                                 String name = jsonArrayEvents.getString(i).toString();
                                 String kept = name.substring(0, name.indexOf(":"));
@@ -3248,10 +3228,9 @@ public class EditProfileActivity extends AppCompatActivity implements
                                 final_eventNameArray.add(remainder);
 
                             }
-                            Log.e("test", "15");
+
                             try{
                                 List<String> stringList = new ArrayList<String>(Arrays.asList(array));
-                                Log.e("test", "16");
                                 for (int i = 0; i < final_eventNameArray.size(); i++) {
 
                                     if (stringList.contains(final_eventNameArray.get(i).toString())){
@@ -3264,14 +3243,12 @@ public class EditProfileActivity extends AppCompatActivity implements
                                         fragmentEditProfileBinding.recyclerEvents.setLayoutManager(gridLayoutManager);
                                     }
                                 }
-                                Log.e("test", "17");
                             }catch (Exception e){}
                         }
                     }catch (Exception e){}
 
 
                     if (Phone1.contains(" ")){
-                        Log.e("test", "18");
                         String name = Phone1;
                         String kept = name.substring(0, name.indexOf(" "));
                         String remainder = name.substring(name.indexOf(" ") + 1, name.length());
@@ -3280,12 +3257,10 @@ public class EditProfileActivity extends AppCompatActivity implements
                         fragmentEditProfileBinding.edtWork.setText(remainder);
                     }
                     else {
-                        Log.e("test", "19");
                         fragmentEditProfileBinding.edtWork.setText(Phone1);
                     }
 
                     if (Phone2.contains(" ")){
-                        Log.e("test", "20");
                         String name = Phone2;
                         String kept = name.substring(0, name.indexOf(" "));
                         String remainder = name.substring(name.indexOf(" ") + 1, name.length());
@@ -3481,9 +3456,9 @@ public class EditProfileActivity extends AppCompatActivity implements
                     viewPager1.setOffscreenPageLimit(1);
                     // viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
                     viewPager1.setAdapter(myPager);*/
-                    new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");
+
                 } else {
-                    Toast.makeText(getApplicationContext(), "Not able to load Profile..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not able to load profile..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -3594,7 +3569,7 @@ public class EditProfileActivity extends AppCompatActivity implements
 
                         if (fromActivity.equalsIgnoreCase("manage"))
                         {
-                            Toast.makeText(getApplicationContext(), "Successfully Updated", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Successfully updated", Toast.LENGTH_SHORT).show();
                             finish();
                         }
                         else
@@ -3602,7 +3577,7 @@ public class EditProfileActivity extends AppCompatActivity implements
 
 
                             //ProfileFragment.callMyProfile();
-                            Toast.makeText(getApplicationContext(), "Successfully Updated", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Successfully updated", Toast.LENGTH_SHORT).show();
                             finish();
 
                            /* Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
@@ -3701,10 +3676,10 @@ public class EditProfileActivity extends AppCompatActivity implements
                         // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                         fragmentEditProfileBinding.txtCardFront.setText(ImgName);
                     } else {
-                        Toast.makeText(activity, "Error While Uploading Image..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(activity, "Error while uploading image..", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(activity, "Not able to Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, "Not able to upload..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -3757,10 +3732,10 @@ public class EditProfileActivity extends AppCompatActivity implements
                         // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                         fragmentEditProfileBinding.etAttachFile.setText(ImgName);
                     } else {
-                        Toast.makeText(getBaseContext(), "Error While Uploading Image..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), "Error while uploading image..", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(getBaseContext(), "Not able to Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Not able to upload..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -3813,10 +3788,10 @@ public class EditProfileActivity extends AppCompatActivity implements
                         UserPhoto = ImgName;
                         // fragmentEditProfileBinding.txtCardBack.setText(ImgName);
                     } else {
-                        Toast.makeText(activity, "Error While Uploading Image..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(activity, "Error while uploading image..", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(activity, "Not able to Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, "Not able to upload..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -3869,10 +3844,10 @@ public class EditProfileActivity extends AppCompatActivity implements
                         // Toast.makeText(getApplicationContext(), final_ImgBase64, Toast.LENGTH_LONG).show();
                         fragmentEditProfileBinding.txtCardBack.setText(ImgName);
                     } else {
-                        Toast.makeText(activity, "Error While Uploading Image..", Toast.LENGTH_LONG).show();
+                        Toast.makeText(activity, "Error while uploading image..", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(activity, "Not able to Register..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, "Not able to upload..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -3915,7 +3890,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             {
                 if(result == "")
                 {
-                    Toast.makeText(getApplicationContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Check data connection", Toast.LENGTH_LONG).show();
                 }
                 else
                 {
