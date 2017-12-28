@@ -211,9 +211,9 @@ public class ConnectActivity extends AppCompatActivity
             new HttpAsyncTask().execute(Utility.BASE_URL+"ConnectProfile");
         }
 
-        new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/Fetch");
+       /* new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/Fetch");
         new HttpAsyncTaskGroupsFetch().execute(Utility.BASE_URL+"Group/MyGroupsTaggedWithFriendProfile");
-
+*/
 
 //        Toast.makeText(getApplicationContext(),"ProfileID & FriendID "+profile_id+" "+friendProfile_id,Toast.LENGTH_LONG).show();
 
@@ -281,7 +281,7 @@ public class ConnectActivity extends AppCompatActivity
             }
         });
 
-        activityConnect2Binding.ivProfileImage.setOnClickListener(new View.OnClickListener() {
+        activityConnect2Binding.includeLayoutTop.ivProfileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -426,7 +426,7 @@ public class ConnectActivity extends AppCompatActivity
             }
         });
 
-        activityConnect2Binding.imgBack.setOnClickListener(new View.OnClickListener() {
+        activityConnect2Binding.includeLayoutTop.imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
@@ -844,24 +844,24 @@ public class ConnectActivity extends AppCompatActivity
                     connectingModel.setAttachment_FileName(profile.getString("Attachment_FileName"));
                     connectingTags.add(connectingModel);
 
-                    activityConnect2Binding.tvPersonName.setText(profile.getString("FirstName")+" "+profile.getString("LastName"));
+                    activityConnect2Binding.includeLayoutTop.tvPersonName.setText(profile.getString("FirstName")+" "+profile.getString("LastName"));
 
                     if (profile.getString("Designation").equalsIgnoreCase(""))
                     {
-                        activityConnect2Binding.tvPersonDesignation.setVisibility(View.GONE);
+                        activityConnect2Binding.includeLayoutTop.tvPersonDesignation.setVisibility(View.GONE);
                     }
                     else
                     {
-                        activityConnect2Binding.tvPersonDesignation.setText(profile.getString("Designation"));
+                        activityConnect2Binding.includeLayoutTop.tvPersonDesignation.setText(profile.getString("Designation"));
                     }
 
                     if (profile.getString("CompanyName").equalsIgnoreCase(""))
                     {
-                        activityConnect2Binding.tvCompanyName.setVisibility(View.GONE);
+                        activityConnect2Binding.includeLayoutTop.tvCompanyName.setVisibility(View.GONE);
                     }
                     else
                     {
-                        activityConnect2Binding.tvCompanyName.setText(profile.getString("CompanyName"));
+                        activityConnect2Binding.includeLayoutTop.tvCompanyName.setText(profile.getString("CompanyName"));
                     }
 
                     activityConnect2Binding.txtWeb.setText(profile.getString("Website"));
@@ -878,11 +878,12 @@ public class ConnectActivity extends AppCompatActivity
 
                     if(profile.getString("UserPhoto").equalsIgnoreCase(""))
                     {
-                        activityConnect2Binding.ivProfileImage.setImageResource(R.drawable.usr_white1);
+                        activityConnect2Binding.includeLayoutTop.ivProfileImage.setImageResource(R.drawable.usr_white1);
                     }
                     else
                     {
-                        Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+profile.getString("UserPhoto")).resize(300,300).onlyScaleDown().skipMemoryCache().into(activityConnect2Binding.ivProfileImage);
+                        Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+profile.getString("UserPhoto")).resize(300,300)
+                                .onlyScaleDown().skipMemoryCache().into(activityConnect2Binding.includeLayoutTop.ivProfileImage);
                     }
 
                     if (Matched.equals("1"))
