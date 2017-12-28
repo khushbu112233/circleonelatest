@@ -89,7 +89,7 @@ public class List1Fragment extends Fragment
     public static ArrayList<FriendConnection> nfcModel;
     ViewConfiguration vc;
     private int mTouchSlop;
-    FrameLayout frame, frame1;
+    FrameLayout frame1;
 
     public static int pageno = 1;
     ImageView imgSearch;
@@ -161,7 +161,6 @@ public class List1Fragment extends Fragment
         recyclerView2 = (RecyclerView) view.findViewById(R.id.list_horizontal2);
         txtNoCard1 = (TextView) view.findViewById(R.id.txtNoCard1);
         lnrList = (LinearLayout) view.findViewById(R.id.lnrList);
-        frame = (FrameLayout) view.findViewById(R.id.frame);
         frame1 = (FrameLayout) view.findViewById(R.id.frame1);
         progressBar1 = (ProgressBar) view.findViewById(R.id.more_progress1);
         rlLoadMore1 = (RelativeLayout) view.findViewById(R.id.rlLoadMore1);
@@ -181,7 +180,7 @@ public class List1Fragment extends Fragment
 
         db = new DatabaseHelper(getContext());
         //viewPager = (ViewPager)view.findViewById(R.id.viewPager);
-        lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
+       // lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
         line = view.findViewById(R.id.view);
 
         runOnUiThread(new Runnable() {
@@ -197,7 +196,6 @@ public class List1Fragment extends Fragment
         InputMethodManager keyboard = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         keyboard.hideSoftInputFromWindow(searchText.getWindowToken(), 0);
 
-        lnrSearch.setVisibility(View.VISIBLE);
         line.setVisibility(View.VISIBLE);
         CardsFragment.tabLayout.setVisibility(View.VISIBLE);
 

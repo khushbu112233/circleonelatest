@@ -257,7 +257,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
             }
         });*/
-        fragmentProfileBinding.imgProfile.setOnClickListener(this);
+        fragmentProfileBinding.includeFrame2.imgProfile.setOnClickListener(this);
         fragmentProfileBinding.txtAttachment.setOnClickListener(this);
         fragmentProfileBinding.fbUrl.setOnClickListener(this);
         fragmentProfileBinding.googleUrl.setOnClickListener(this);
@@ -266,11 +266,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
         fragmentProfileBinding.linkedInUrl.setOnClickListener(this);
         fragmentProfileBinding.txtMore.setOnClickListener(this);
         fragmentProfileBinding.imgAdd.setOnClickListener(this);
-        fragmentProfileBinding.imgBack.setOnClickListener(this);
-        fragmentProfileBinding.imgProfileShare.setOnClickListener(this);
-        fragmentProfileBinding.imgProfileMenu.setOnClickListener(this);
+        fragmentProfileBinding.includeFrame1.imgBack.setOnClickListener(this);
+        fragmentProfileBinding.includeFrame1.imgProfileShare.setOnClickListener(this);
+        fragmentProfileBinding.includeFrame1.imgProfileMenu.setOnClickListener(this);
         fragmentProfileBinding.imgQR.setOnClickListener(this);
-        fragmentProfileBinding.ivEditProfile.setOnClickListener(this);
+        fragmentProfileBinding.includeFrame1.ivEditProfile.setOnClickListener(this);
         fragmentProfileBinding.viewPager1.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             private int mScrollState = ViewPager.SCROLL_STATE_IDLE;
@@ -482,7 +482,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                         "' for a quick and simple registration! https://circle8.asia/mobileApp.html";
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, fragmentProfileBinding.tvPersonName.getText().toString());
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, fragmentProfileBinding.includeFrame2.tvPersonName.getText().toString());
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Share Profile Via"));
                 break ;
@@ -506,7 +506,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                 dialogColor.setAlpha(70);
                 QR_AlertDialog.getWindow().setBackgroundDrawable(dialogColor);
                 // alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
-                tvBarName.setText(fragmentProfileBinding.tvPersonName.getText().toString());
+                tvBarName.setText(fragmentProfileBinding.includeFrame2.tvPersonName.getText().toString());
 //                    bitmap = TextToImageEncode(barName);
                 ivBarImage.setImageBitmap(bitmap);
 
@@ -534,7 +534,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                 lastClickTime = SystemClock.elapsedRealtime();
 
                 ContextThemeWrapper ctw = new ContextThemeWrapper(getContext(), R.style.CustomPopupTheme);
-                PopupMenu popup = new PopupMenu(ctw, fragmentProfileBinding.imgProfileMenu);
+                PopupMenu popup = new PopupMenu(ctw, fragmentProfileBinding.includeFrame1.imgProfileMenu);
                 //Inflating the Popup using xml file
                 popup.getMenuInflater().inflate(R.menu.profile_popup_menu, popup.getMenu());
                 for (String s : profile_array) {
@@ -572,9 +572,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                                     profileIndex = i;
 //                                    Toast.makeText(getContext(), profile_array.get(i).toString(), Toast.LENGTH_LONG).show();
 
-                                    fragmentProfileBinding.tvPersonName.setText(allTags.get(i).getFirstName() + " "+ allTags.get(i).getLastName());
-                                    fragmentProfileBinding.tvDesignation.setText(allTags.get(i).getDesignation());
-                                    fragmentProfileBinding.tvCompany.setText(allTags.get(i).getCompanyName());
+                                    fragmentProfileBinding.includeFrame2.tvPersonName.setText(allTags.get(i).getFirstName() + " "+ allTags.get(i).getLastName());
+                                    fragmentProfileBinding.includeFrame2.tvDesignation.setText(allTags.get(i).getDesignation());
+                                    fragmentProfileBinding.includeFrame2.tvCompany.setText(allTags.get(i).getCompanyName());
                                     fragmentProfileBinding.tvName.setText(allTags.get(i).getFirstName() + " "+ allTags.get(i).getLastName());
                                     fragmentProfileBinding.tvCompanyName.setText(allTags.get(i).getCompanyName());
                                     fragmentProfileBinding.tvDesi.setText(allTags.get(i).getDesignation());
@@ -740,11 +740,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
                                     if (allTags.get(i).getUserPhoto().equals(""))
                                     {
-                                        fragmentProfileBinding.imgProfile.setImageResource(R.drawable.usr_white1);
+                                        fragmentProfileBinding.includeFrame2.imgProfile.setImageResource(R.drawable.usr_white1);
                                     }
                                     else {
                                         Picasso.with(getContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+allTags.get(i).getUserPhoto())
-                                                .resize(300,300).onlyScaleDown().skipMemoryCache().into(fragmentProfileBinding.imgProfile);
+                                                .resize(300,300).onlyScaleDown()
+                                                .skipMemoryCache().into(fragmentProfileBinding.includeFrame2.imgProfile);
                                     }
 
                                     if (allTags.get(i).getCard_Front().equalsIgnoreCase("") && allTags.get(i).getCard_Back().equalsIgnoreCase("")) {
@@ -879,7 +880,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
             case R.id.ivEditProfile:
                 //Toast.makeText(getContext(),"Edit Profile",Toast.LENGTH_SHORT).show();
 
-                fragmentProfileBinding.ivEditProfile.setBackground(getResources().getDrawable(R.drawable.ic_edit_gray));
+                fragmentProfileBinding.includeFrame1.ivEditProfile.setBackground(getResources().getDrawable(R.drawable.ic_edit_gray));
                 Intent intent_edit = new Intent(mContext, EditProfileActivity.class);
                 intent_edit.putExtra("type", "edit");
                 intent_edit.putExtra("profile_id", TestimonialProfileId);
@@ -1259,13 +1260,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                     personName = allTags.get(profileIndex).getFirstName() + " "+ allTags.get(profileIndex).getLastName() ;
                     if(personName.equalsIgnoreCase("") || personName.equalsIgnoreCase("null"))
                     {
-                        fragmentProfileBinding.tvPersonName.setVisibility(View.GONE);
+                        fragmentProfileBinding.includeFrame2.tvPersonName.setVisibility(View.GONE);
                         fragmentProfileBinding.llNameBox.setVisibility(View.GONE);
                     }
                     else
                     {
                         fragmentProfileBinding.tvName.setText(personName);
-                        fragmentProfileBinding.tvPersonName.setText(personName);
+                        fragmentProfileBinding.includeFrame2.tvPersonName.setText(personName);
                     }
 
                     fragmentProfileBinding.tvProfileName.setText(allTags.get(profileIndex).getProfile());
@@ -1435,12 +1436,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                     if(allTags.get(profileIndex).getDesignation().equalsIgnoreCase("")
                             || allTags.get(profileIndex).getDesignation().equalsIgnoreCase("null"))
                     {
-                        fragmentProfileBinding.tvDesignation.setVisibility(View.GONE);
+                        fragmentProfileBinding.includeFrame2.tvDesignation.setVisibility(View.GONE);
                         fragmentProfileBinding.llDesignationBox.setVisibility(View.GONE);
                     }
                     else
                     {
-                        fragmentProfileBinding.tvDesignation.setText(allTags.get(profileIndex).getDesignation());
+                        fragmentProfileBinding.includeFrame2.tvDesignation.setText(allTags.get(profileIndex).getDesignation());
                         fragmentProfileBinding.tvDesi.setText(allTags.get(profileIndex).getDesignation());
                     }
 //                    fragmentProfileBinding.tvCompany.setText(allTags.get(0).getCompanyName());
@@ -1448,12 +1449,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                     if(allTags.get(profileIndex).getCompanyName().equalsIgnoreCase("")
                             || allTags.get(profileIndex).getCompanyName().equalsIgnoreCase("null"))
                     {
-                        fragmentProfileBinding.tvCompany.setVisibility(View.GONE);
+                        fragmentProfileBinding.includeFrame2.tvCompany.setVisibility(View.GONE);
                         fragmentProfileBinding.llCompanyBox.setVisibility(View.GONE);
                     }
                     else
                     {
-                        fragmentProfileBinding.tvCompany.setText(allTags.get(profileIndex).getCompanyName());
+                        fragmentProfileBinding.includeFrame2.tvCompany.setText(allTags.get(profileIndex).getCompanyName());
                         fragmentProfileBinding.tvCompanyName.setText(allTags.get(profileIndex).getCompanyName());
                     }
 //                    tvMob.setText(allTags.get(0).getPhone());
@@ -1554,12 +1555,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                     image = new ArrayList<>();
                     if (allTags.get(profileIndex).getUserPhoto().equals(""))
                     {
-                        fragmentProfileBinding.imgProfile.setImageResource(R.drawable.usr_white1);
+                        fragmentProfileBinding.includeFrame2.imgProfile.setImageResource(R.drawable.usr_white1);
                     }
                     else {
                         try {
                             Picasso.with(mContext).load(Utility.BASE_IMAGE_URL + "UserProfile/" + allTags.get(profileIndex).getUserPhoto())
-                                    .resize(300,300).onlyScaleDown().skipMemoryCache().into(fragmentProfileBinding.imgProfile);
+                                    .resize(300,300).onlyScaleDown()
+                                    .skipMemoryCache().into(fragmentProfileBinding.includeFrame2.imgProfile);
                         }
                         catch (Exception e){}
                     }
