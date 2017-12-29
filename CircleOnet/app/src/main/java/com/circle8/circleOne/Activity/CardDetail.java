@@ -85,17 +85,11 @@ import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
 import com.squareup.picasso.Picasso;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -106,7 +100,7 @@ import be.appfoundry.nfclibrary.utilities.interfaces.NfcReadUtility;
 import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
 
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
-import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.POST2;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 public class CardDetail extends NfcActivity implements DialogsManager.ManagingDialogsCallbacks, View.OnClickListener, OnMapReadyCallback {
@@ -254,7 +248,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
             if (profile_id.equals("")) {
                 Toast.makeText(CardDetail.this, "Having no profile ID", Toast.LENGTH_LONG).show();
             } else {
-                new CardDetail.HttpAsyncTask().execute(Utility.BASE_URL + "GetUserProfile");
+                new HttpAsyncTask().execute(Utility.BASE_URL + "GetUserProfile");
             }
 
             new HttpAsyncTaskGroup().execute(Utility.BASE_URL + "Group/Fetch");
@@ -1055,7 +1049,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         }
     }
 
-    public String POST2(String url)
+    /*public String POST2(String url)
     {
         InputStream inputStream = null;
         String result = "";
@@ -1110,7 +1104,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 
         // 11. return result
         return result;
-    }
+    }*/
 
     @Override
     public void onDialogCreated(QBChatDialog chatDialog) {
@@ -1147,7 +1141,17 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         @Override
         protected String doInBackground(String... urls)
         {
-            return POST2(urls[0]);
+            JSONObject jsonObject = new JSONObject();
+            try {
+
+                jsonObject.accumulate("ProfileId", profile_id);
+                jsonObject.accumulate("numofrecords", "10" );
+                jsonObject.accumulate("pageno", "1" );
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
         }
         // onPostExecute displays the results of the AsyncTask.
         @Override
@@ -1227,7 +1231,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         return cnt;
     }
 
-    public String POST4(String url) {
+   /* public String POST4(String url) {
         InputStream inputStream = null;
         String result = "";
         try {
@@ -1280,8 +1284,8 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         // 11. return result
         return result;
     }
-
-    public String POST5(String url) {
+*/
+    /*public String POST5(String url) {
         InputStream inputStream = null;
         String result = "";
         try {
@@ -1335,7 +1339,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         // 11. return result
         return result;
     }
-
+*/
 
 
     private class HttpAsyncTaskGroup extends AsyncTask<String, Void, String>
@@ -1357,7 +1361,17 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 
         @Override
         protected String doInBackground(String... urls) {
-            return POST4(urls[0]);
+
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("UserId", user_id);
+                jsonObject.accumulate("numofrecords", "10");
+                jsonObject.accumulate("pageno", "1");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
         }
 
         // onPostExecute displays the results of the AsyncTask.
@@ -1428,7 +1442,18 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 
         @Override
         protected String doInBackground(String... urls) {
-            return POST5(urls[0]);
+
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("GroupIDs", selectedStrings);
+                jsonObject.accumulate("ProfileId", profile_id);
+                jsonObject.accumulate("UserId", user_id);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
         }
 
         // onPostExecute displays the results of the AsyncTask.
@@ -1476,8 +1501,16 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         }
 
         @Override
-        protected String doInBackground(String... urls) {
-            return POST(urls[0]);
+        protected String doInBackground(String... urls)
+        {
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("profileid", profile_id);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
         }
 
         // onPostExecute displays the results of the AsyncTask.
@@ -1878,7 +1911,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         }
     }
 
-    public String POST(String url) {
+   /* public String POST(String url) {
         InputStream inputStream = null;
         String result = "";
         try {
@@ -1930,7 +1963,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         // 11. return result
         return result;
     }
-
+*/
 
     @Override
     public void onResume() {
@@ -2076,7 +2109,19 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         @Override
         protected String doInBackground(String... urls)
         {
-            return FetchGroupDataPost(urls[0]);
+
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("ProfileId", profile_id);
+                jsonObject.accumulate("UserId", user_id );
+                jsonObject.accumulate("numofrecords", "10");
+                jsonObject.accumulate("pageno", "1" );
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(urls[0],jsonObject);
         }
         // onPostExecute displays the results of the AsyncTask.
         @Override
@@ -2157,7 +2202,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         }
     }
 
-    public  String FetchGroupDataPost(String url)
+ /*   public  String FetchGroupDataPost(String url)
     {
         InputStream inputStream = null;
         String result = "";
@@ -2213,5 +2258,5 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 
         // 11. return result
         return result;
-    }
+    }*/
 }

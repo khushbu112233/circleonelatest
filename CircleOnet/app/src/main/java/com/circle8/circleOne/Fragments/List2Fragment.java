@@ -2,6 +2,7 @@ package com.circle8.circleOne.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -39,6 +40,7 @@ import com.circle8.circleOne.Model.ImageItem;
 import com.circle8.circleOne.Model.NFCModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
+import com.circle8.circleOne.databinding.FragmentList2Binding;
 import com.daimajia.swipe.util.Attributes;
 
 import org.apache.http.HttpResponse;
@@ -93,17 +95,13 @@ public class List2Fragment extends Fragment
     public static int pageno = 1;
 
     static RelativeLayout rlLoadMore;
-
+    View view;
 
     public static String progressStatus = "FIRST";
 
     static int numberCount, gridSize;
     public static String count;
-    private static RelativeLayout rlProgressDialog ;
-    private static TextView tvProgressing ;
-    private static ImageView ivConnecting1;
-    private static ImageView ivConnecting2;
-
+    public static FragmentList2Binding fragmentList2Binding;
     public List2Fragment() {
         // Required empty public constructor
     }
@@ -111,8 +109,12 @@ public class List2Fragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
+
+        fragmentList2Binding = DataBindingUtil.inflate(
+                inflater, R.layout.fragment_list2, container, false);
+        view = fragmentList2Binding.getRoot();
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_list2, container, false);
+     //   View view = inflater.inflate(R.layout.fragment_list2, container, false);
 
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
@@ -135,10 +137,6 @@ public class List2Fragment extends Fragment
         tvFriendInfo = (TextView)view.findViewById(R.id.tvFriendInfo);
         txtNoCard1 = (TextView) view.findViewById(R.id.txtNoCard1);
         rlLoadMore = (RelativeLayout) view.findViewById(R.id.rlLoadMore);
-        rlProgressDialog = (RelativeLayout)view.findViewById(R.id.rlProgressDialog);
-        tvProgressing = (TextView)view.findViewById(R.id.txtProgressing);
-        ivConnecting1 = (ImageView)view.findViewById(R.id.imgConnecting1) ;
-        ivConnecting2 = (ImageView)view.findViewById(R.id.imgConnecting2) ;
         nfcModel = new ArrayList<>();
         allTags = new ArrayList<>();
         allTaggs = new ArrayList<>();
@@ -327,13 +325,13 @@ public class List2Fragment extends Fragment
 
     public static void CustomProgressDialog(final String loading)
     {
-        rlProgressDialog.setVisibility(View.VISIBLE);
-        tvProgressing.setText(loading);
+        fragmentList2Binding.includeProgress.rlProgressDialog.setVisibility(View.VISIBLE);
+        fragmentList2Binding.includeProgress.txtProgressing.setText(loading);
 
         Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.anticlockwise);
-        ivConnecting1.startAnimation(anim);
+        fragmentList2Binding.includeProgress.imgConnecting1.startAnimation(anim);
         Animation anim1 = AnimationUtils.loadAnimation(mContext,R.anim.clockwise);
-        ivConnecting2.startAnimation(anim1);
+        fragmentList2Binding.includeProgress.imgConnecting2.startAnimation(anim1);
 
         int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
         for (int i = 350; i <= SPLASHTIME; i = i + 350)
@@ -345,15 +343,15 @@ public class List2Fragment extends Fragment
                 {
                     if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
                     {
-                        tvProgressing.setText(loading+"...");
+                        fragmentList2Binding.includeProgress.txtProgressing.setText(loading+"...");
                     }
                     else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
                     {
-                        tvProgressing.setText(loading+"...");
+                        fragmentList2Binding.includeProgress.txtProgressing.setText(loading+"...");
                     }
                     else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
                     {
-                        tvProgressing.setText(loading+"...");
+                        fragmentList2Binding.includeProgress.txtProgressing.setText(loading+"...");
                     }
 
                 }
@@ -397,7 +395,7 @@ public class List2Fragment extends Fragment
         {
             Utility.freeMemory();
             //  dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            fragmentList2Binding.includeProgress.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -621,7 +619,7 @@ public class List2Fragment extends Fragment
         {
 //            dialog.dismiss();
 
-            rlProgressDialog.setVisibility(View.GONE);
+            fragmentList2Binding.includeProgress.rlProgressDialog.setVisibility(View.GONE);
 
          /*   String status = "false" ;
             String loading = "Fetching Cards..." ;

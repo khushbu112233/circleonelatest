@@ -1,59 +1,51 @@
-<RelativeLayout
+<android.support.constraint.ConstraintLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="#ffffff"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <com.circle8.circleOne.Utils.MyRiadProAutoComplete
+        android:layout_marginTop="8dp"
+        android:background="@drawable/txt_back"
+        android:paddingRight="10dp"
+        android:layout_toLeftOf="@+id/imgSearch"
+        android:paddingLeft="10dp"
+        android:hint="Search by name"
+        android:id="@+id/searchView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:textSize="12dp"
+        android:focusableInTouchMode="true"
+        android:imeOptions="actionSearch"
+        android:inputType="textAutoComplete|textAutoCorrect"
+        android:textColor="@color/black"
+        android:textColorHint="#9FA0A0"/>
 
-        <RelativeLayout
-            android:layout_marginTop="5dp"
-            android:id="@+id/lnrSearch"
-            android:layout_below="@+id/appbar1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <com.circle8.circleOne.Utils.MyRiadProAutoComplete
-                android:layout_centerVertical="true"
-                android:background="@drawable/txt_back"
-                android:paddingRight="10dp"
-                android:textSize="12dp"
-                android:layout_toLeftOf="@+id/imgSearch"
-                android:paddingLeft="10dp"
-                android:hint="Search by name"
-                android:id="@+id/searchView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:focusableInTouchMode="true"
-                android:imeOptions="actionSearch"
-                android:inputType="textAutoComplete|textAutoCorrect"
-                android:textColor="@color/black"
-                android:textColorHint="#9FA0A0"/>
-            <ImageView
-                android:layout_marginRight="10dp"
-                android:layout_centerVertical="true"
-                android:backgroundTint="@color/colorAccent"
-                android:background="@drawable/search"
-                android:id="@+id/imgSearch"
-                android:layout_alignParentRight="true"
-                android:layout_width="20dp"
-                android:layout_height="20dp" />
-        </RelativeLayout>
+    <ImageView
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:backgroundTint="@color/colorAccent"
+        android:background="@drawable/search"
+        android:id="@+id/imgSearch"
+        android:layout_alignParentRight="true"
+        android:layout_width="20dp"
+        android:layout_height="20dp" />
 
-        <View
-            android:layout_marginTop="3dp"
-            android:id="@+id/view"
-            android:layout_below="@+id/lnrSearch"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorPrimary"/>
+    <View
+        android:layout_marginTop="3dp"
+        android:id="@+id/view"
+        android:layout_below="@+id/imgSearch"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimary"/>
 
-        <TextView
+
+    <TextView
             android:id="@+id/tvFriendInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -179,7 +171,5 @@
             </LinearLayout>
         </RelativeLayout>
 
-
-    </RelativeLayout>
-
 </RelativeLayout>
+</android.support.constraint.ConstraintLayout>

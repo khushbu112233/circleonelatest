@@ -1,186 +1,122 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:background="#ffffff">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <RelativeLayout
-            android:layout_marginTop="5dp"
-            android:id="@+id/lnrSearch"
-            android:layout_below="@+id/appbar1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:background="#ffffff"
+            android:orientation="vertical">
+
             <com.circle8.circleOne.Utils.MyRiadProAutoComplete
-                android:layout_centerVertical="true"
-                android:background="@drawable/txt_back"
-                android:paddingRight="10dp"
-                android:layout_toLeftOf="@+id/imgSearch"
-                android:paddingLeft="10dp"
-                android:textSize="12dp"
-                android:hint="Search by name"
                 android:id="@+id/searchView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_toLeftOf="@+id/imgSearch"
+                android:background="@drawable/txt_back"
                 android:ems="10"
                 android:focusableInTouchMode="true"
+                android:hint="Search by name"
                 android:imeOptions="actionSearch"
                 android:inputType="textAutoComplete|textAutoCorrect"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:textColor="@color/black"
-                android:textColorHint="#9FA0A0"/>
+                android:textColorHint="#9FA0A0"
+                android:textSize="12dp" />
 
             <ImageView
-                android:layout_marginRight="10dp"
-                android:layout_centerVertical="true"
-                android:backgroundTint="@color/colorAccent"
-                android:background="@drawable/search"
                 android:id="@+id/imgSearch"
-                android:layout_alignParentRight="true"
                 android:layout_width="20dp"
-                android:layout_height="20dp" />
-        </RelativeLayout>
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/search"
+                android:backgroundTint="@color/colorAccent" />
 
-        <View
-            android:layout_marginTop="3dp"
-            android:id="@+id/view"
-            android:layout_below="@+id/lnrSearch"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorPrimary"/>
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/imgSearch"
+                android:layout_marginTop="3dp"
+                android:background="@color/colorPrimary" />
 
-        <TextView
-            android:id="@+id/tvFriendInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/view"
-            android:layout_marginTop="20dp"
-            android:text="@string/no_connection"
-            android:textSize="16sp"
-            android:textAlignment="center"
-            android:textColor="@color/unselected"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:visibility="gone"/>
-
-        <TextView
-            android:textAlignment="center"
-            android:visibility="visible"
-            android:id="@+id/txtNoCard1"
-            android:layout_centerInParent="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/no_friend_connection"/>
-
-        <GridView
-            android:layout_marginLeft="0dp"
-            android:layout_marginRight="0dp"
-            android:padding="4dp"
-            tools:listitem="@layout/grid_list2_layout"
-            android:id="@+id/gridView"
-            android:horizontalSpacing="5dp"
-            android:verticalSpacing="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:columnWidth="190dp"
-            android:gravity="center"
-            android:numColumns="2"
-            android:layout_below="@+id/view"
-            android:layout_above="@+id/rlLoadMore"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:gravity="center_horizontal"
-            android:id="@+id/rlLoadMore"
-            android:padding="3dp"
-            android:visibility="gone">
-            <ProgressBar
-                android:id="@+id/more_progress"
-                android:layout_width="35dp"
-                android:layout_height="35dp" />
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/more_progress"
-                android:padding="5dp"
-                android:text="Loading more..."
-                android:textColor="@color/colorPrimary"
-                android:textSize="15sp"
-                android:layout_marginLeft="10dp"/>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rlProgressDialog"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:background="@color/colorPrimary"
-            android:layout_centerInParent="true"
-            android:visibility="gone"
-            android:layout_marginRight="50dp"
-            android:layout_marginLeft="50dp"
-            android:elevation="20dp">
-
-            <LinearLayout
+                android:id="@+id/tvFriendInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_centerVertical="true"
-                android:weightSum="1">
+                android:layout_below="@+id/view"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/no_connection"
+                android:textAlignment="center"
+                android:textColor="@color/unselected"
+                android:textSize="16sp"
+                android:visibility="gone" />
 
-                <RelativeLayout
-                    android:layout_centerInParent="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="0.6"
-                    android:gravity="right"
-                    android:layout_marginRight="15dp">
+            <TextView
+                android:id="@+id/txtNoCard1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/no_friend_connection"
+                android:textAlignment="center"
+                android:visibility="visible" />
 
-                    <ImageView
-                        android:layout_centerInParent="true"
-                        android:id="@+id/imgConnecting1"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/round1" />
-                    <ImageView
-                        android:layout_centerInParent="true"
-                        android:id="@+id/imgConnecting2"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/round2" />
-                    <ImageView
-                        android:layout_centerInParent="true"
-                        android:id="@+id/imgConnecting3"
-                        android:layout_width="8dp"
-                        android:layout_height="8dp"
-                        android:src="@drawable/round3" />
-                </RelativeLayout>
+            <GridView
+                android:id="@+id/gridView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/rlLoadMore"
+                android:layout_below="@+id/view"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:columnWidth="190dp"
+                android:gravity="center"
+                android:horizontalSpacing="5dp"
+                android:numColumns="2"
+                android:padding="4dp"
+                android:verticalSpacing="8dp"
+                tools:listitem="@layout/grid_list2_layout" />
+
+            <RelativeLayout
+                android:id="@+id/rlLoadMore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_horizontal"
+                android:padding="3dp"
+                android:visibility="gone">
+
+                <ProgressBar
+                    android:id="@+id/more_progress"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp" />
 
                 <TextView
-                    android:id="@+id/txtProgressing"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="0dp"
-                    android:textSize="15dp"
-                    android:layout_below="@+id/imgConnecting"
-                    android:textColor="@color/white"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Connecting."
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="0.4"/>
-            </LinearLayout>
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/more_progress"
+                    android:padding="5dp"
+                    android:text="Loading more..."
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <include
+                android:id="@+id/include_progress"
+                layout="@layout/progressdialog_layout"></include>
+
         </RelativeLayout>
-
-
-    </RelativeLayout>
-
-</RelativeLayout>
+    </android.support.constraint.ConstraintLayout>
+</layout>
