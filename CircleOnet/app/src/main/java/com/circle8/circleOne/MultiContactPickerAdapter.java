@@ -49,8 +49,9 @@ class MultiContactPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             contactViewHolder.tvContactName.setText(contactItem.getDisplayName());
             contactViewHolder.vRoundLetterView.setTitleText(String.valueOf(contactItem.getDisplayName().charAt(0)));
             contactViewHolder.vRoundLetterView.setBackgroundColor(contactItem.getBackgroundColor());
-
-            if (contactItem.getPhoneNumbers().size() > 0) {
+            contactViewHolder.tvNumber.setVisibility(View.VISIBLE);
+            contactViewHolder.tvNumber.setText(contactItem.getmPhoneNumbers());
+            /*if (contactItem.getPhoneNumbers().size() > 0) {
                 String phoneNumber = contactItem.getPhoneNumbers().get(0).replaceAll("\\s+", "");
                 String displayName = contactItem.getDisplayName().replaceAll("\\s+", "");
                 if (!phoneNumber.equals(displayName)) {
@@ -73,7 +74,7 @@ class MultiContactPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     contactViewHolder.tvNumber.setVisibility(View.GONE);
                 }
             }
-
+*/
             if (contactItem.isSelected()) {
                 contactViewHolder.ivSelectedState.setVisibility(View.VISIBLE);
             } else {
@@ -83,7 +84,7 @@ class MultiContactPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             contactViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    setContactSelected(contactItem.getId());
+                    setContactSelected(contactItem.getContact_id());
                     notifyDataSetChanged();
                     if (listener != null) {
                         listener.onContactSelected(getItem(i), getSelectedContactsCount());
@@ -93,15 +94,15 @@ class MultiContactPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
     }
 
-    private void setContactSelected(long id){
+    private void setContactSelected(String id){
         int pos = getItemPosition(contactItemList, id);
         contactItemList.get(pos).setSelected(!contactItemList.get(pos).isSelected());
     }
 
-    private int getItemPosition(List<Contact> list, long mid){
+    private int getItemPosition(List<Contact> list, String mid){
         int i = 0;
         for(Contact contact : list){
-            if(contact.getId() == mid){
+            if(contact.getContact_id() == mid){
                 return i;
             }
             i++;
