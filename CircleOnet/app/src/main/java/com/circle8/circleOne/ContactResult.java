@@ -17,7 +17,7 @@ public class ContactResult implements Parcelable {
     private Uri mPhoto;
     private Uri mThumbnail;
     private List<String> mEmails = new ArrayList<>();
-    private List<String> mPhoneNumbers = new ArrayList<>();
+    private String mPhoneNumbers;
 
     public String getDisplayName() {
         return mDisplayName;
@@ -39,7 +39,7 @@ public class ContactResult implements Parcelable {
         return mEmails;
     }
 
-    public List<String> getPhoneNumbers() {
+    public String getPhoneNumbers() {
         return mPhoneNumbers;
     }
 
@@ -50,12 +50,14 @@ public class ContactResult implements Parcelable {
         this.mPhoto = contact.getPhoto();
         this.mThumbnail = contact.getThumbnail();
         this.mEmails.clear(); this.mEmails.addAll(contact.getEmails());
-        this.mPhoneNumbers.clear(); this.mPhoneNumbers.addAll(contact.getPhoneNumbers());
+        this.mPhoneNumbers=contact.getmPhoneNumbers();
     }
 
     protected ContactResult(Parcel in) {
         mDisplayName = in.readString();
         mStarred = in.readByte() != 0x00;
+        mPhoneNumbers =  in.readString();;
+
         mPhoto = (Uri) in.readValue(Uri.class.getClassLoader());
         mThumbnail = (Uri) in.readValue(Uri.class.getClassLoader());
         if (in.readByte() == 0x01) {
@@ -64,12 +66,8 @@ public class ContactResult implements Parcelable {
         } else {
             mEmails = null;
         }
-        if (in.readByte() == 0x01) {
-            mPhoneNumbers = new ArrayList<>();
-            in.readList(mPhoneNumbers, String.class.getClassLoader());
-        } else {
-            mPhoneNumbers = null;
-        }
+
+
     }
 
     @Override
@@ -80,6 +78,7 @@ public class ContactResult implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(mDisplayName);
+        dest.writeString(mPhoneNumbers);
         dest.writeByte((byte) (mStarred ? 0x01 : 0x00));
         dest.writeValue(mPhoto);
         dest.writeValue(mThumbnail);
@@ -89,12 +88,7 @@ public class ContactResult implements Parcelable {
             dest.writeByte((byte) (0x01));
             dest.writeList(mEmails);
         }
-        if (mPhoneNumbers == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeList(mPhoneNumbers);
-        }
+
     }
 
     @SuppressWarnings("unused")

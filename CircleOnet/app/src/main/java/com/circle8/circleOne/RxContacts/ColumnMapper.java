@@ -43,12 +43,12 @@ class ColumnMapper {
     }
 
     static void mapPhoneNumber (Cursor cursor, Contact contact, int columnIndex) {
+
         String phoneNumber = cursor.getString(columnIndex);
         if (phoneNumber != null && !phoneNumber.isEmpty()) {
-            // Remove all whitespaces
-            phoneNumber = phoneNumber.replaceAll("\\s+","");
-            contact.getPhoneNumbers().add(phoneNumber);
+            contact.setmPhoneNumbers(phoneNumber);
         }
+
     }
 
     static void mapPhoto (Cursor cursor, Contact contact, int columnIndex) {
