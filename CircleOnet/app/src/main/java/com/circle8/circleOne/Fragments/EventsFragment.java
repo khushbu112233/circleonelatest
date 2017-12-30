@@ -115,9 +115,9 @@ public class EventsFragment extends Fragment
         ivConnecting1 = (ImageView)view.findViewById(R.id.imgConnecting1) ;
         ivConnecting2 = (ImageView)view.findViewById(R.id.imgConnecting2) ;
         final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext.getApplicationContext());
-
         listView.setLayoutManager(mLayoutManager);
         listView.setItemAnimator(new DefaultItemAnimator());
+        listView.setHasFixedSize(true);
         if (EventsSelectOption.searchOpt.equals("AllEvents"))
         {
             callFirst();

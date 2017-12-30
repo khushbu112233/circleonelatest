@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.Activity.EventDetail;
 import com.circle8.circleOne.Model.EventModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.Utility;
 
 import org.apache.http.HttpResponse;
@@ -102,27 +104,13 @@ public class EventsAdapter  extends  RecyclerView.Adapter<EventsAdapter.MyViewHo
                             holder.image.setImageBitmap(drawable);
                         }
                     });
-            //Picasso.with(context).load(Utility.BASE_IMAGE_URL+"Events/"+eventModelArrayList.get(position).getEvent_Image()).resize(378,250).onlyScaleDown().skipMemoryCache().noFade().into(holder.image);
-
-//            holder.image.setImageBitmap(eventModelArrayList.get(position).getBitmapImg());
-           /* try {
-                url = new URI(Utility.BASE_IMAGE_URL+"Events/"+eventModelArrayList.get(position).getEvent_Image());
-               // new SendHttpRequestTask().execute();
-                new ImageLoader( url, holder.image, 300, 300 ).execute();
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
-            }*/
-
-
-/*            imageUrl = Utility.BASE_IMAGE_URL+"Events/"+eventModelArrayList.get(position).getEvent_Image();
-            obj.execute();*/
-
         }
         holder.ll_event.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.e("ada","click");
+                Pref.setValue(context,"Event_ID",eventModelArrayList.get(position).getEvent_ID());
                 Intent intent = new Intent(context, EventDetail.class);
-                intent.putExtra("Event_ID", eventModelArrayList.get(position).getEvent_ID());
                 context.startActivity(intent);
             }
         });
