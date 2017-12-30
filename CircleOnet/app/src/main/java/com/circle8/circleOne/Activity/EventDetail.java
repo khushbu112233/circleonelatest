@@ -133,12 +133,7 @@ public class EventDetail extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 0);
-                startActivity(go);
+                CardsActivity.mViewPager.setCurrentItem(0);
                 finish();
             }
         });
@@ -203,12 +198,7 @@ public class EventDetail extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 1);
-                startActivity(go);
+                CardsActivity.mViewPager.setCurrentItem(1);
                 finish();
             }
         });
@@ -217,12 +207,7 @@ public class EventDetail extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 2);
-                startActivity(go);
+                CardsActivity.mViewPager.setCurrentItem(2);
                 finish();
             }
         });
@@ -231,12 +216,7 @@ public class EventDetail extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 3);
-                startActivity(go);
+                CardsActivity.mViewPager.setCurrentItem(3);
                 finish();
             }
         });

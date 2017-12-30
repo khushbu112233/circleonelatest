@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -14,8 +14,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.circle8.circleOne.Activity.CardDetail;
-import com.circle8.circleOne.Fragments.CardsFragment;
-import com.circle8.circleOne.Fragments.List1Fragment;
 import com.circle8.circleOne.Model.FriendConnection;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
@@ -109,12 +107,12 @@ public class GalleryAdapter1 extends RecyclerView.Adapter<GalleryAdapter1.MyView
     {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.carousel_view, parent, false);
 
-        GestureDetector.OnGestureListener gestureListener = new MyOnGestureListener();
-        GestureDetector.OnDoubleTapListener doubleTapListener = new MyOnDoubleTapListener();
+        //GestureDetector.OnGestureListener gestureListener = new MyOnGestureListener();
+        //GestureDetector.OnDoubleTapListener doubleTapListener = new MyOnDoubleTapListener();
 
-        this.gestureDetector1= new GestureDetector(mContext, gestureListener);
+        //this.gestureDetector1= new GestureDetector(mContext, gestureListener);
 
-        this.gestureDetector1.setOnDoubleTapListener(doubleTapListener);
+        //this.gestureDetector1.setOnDoubleTapListener(doubleTapListener);
 
         /*itemView.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent me) {
@@ -185,17 +183,10 @@ public class GalleryAdapter1 extends RecyclerView.Adapter<GalleryAdapter1.MyView
             //Picasso.with(mContext).load(Utility.BASE_IMAGE_URL+"Cards/"+nfcModelList.get(position).getCard_back()).skipMemoryCache().into(imageView);
 
         }
-        defaultCard1.setOnTouchListener(new View.OnTouchListener() {
+        defaultCard1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                posi = position;
-                gestureDetector1.onTouchEvent(event);
-                return true;
-            }
-        });
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
+                Utility.CustomProgressDialog("Loading",mContext);
                 Intent intent = new Intent(mContext, CardDetail.class);
                 intent.putExtra("profile_id", nfcModelList.get(position).getProfile_id());
                 intent.putExtra("DateInitiated",nfcModelList.get(position).getDateInitiated());
@@ -205,12 +196,26 @@ public class GalleryAdapter1 extends RecyclerView.Adapter<GalleryAdapter1.MyView
             }
         });
 
-        imageView.setOnTouchListener(new View.OnTouchListener() {
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("adap","click");
+                Utility.CustomProgressDialog("Loading",mContext);
+                Intent intent = new Intent(mContext, CardDetail.class);
+                intent.putExtra("profile_id", nfcModelList.get(position).getProfile_id());
+                intent.putExtra("DateInitiated",nfcModelList.get(position).getDateInitiated());
+                intent.putExtra("lat", nfcModelList.get(position).getLatitude());
+                intent.putExtra("long", nfcModelList.get(position).getLongitude());
+                mContext.startActivity(intent);
+            }
+        });
+
+       /* imageView.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent me) {
                 posi = position;
                 return gestureDetector1.onTouchEvent(me);
             }
-        });
+        });*/
 
 //        Glide.with(mContext).load(images.get(position))
 //                .thumbnail(0.5f).crossFade()
@@ -224,128 +229,6 @@ public class GalleryAdapter1 extends RecyclerView.Adapter<GalleryAdapter1.MyView
     }
 
 
-    class MyOnGestureListener implements GestureDetector.OnGestureListener  {
-
-        private static final int SWIPE_THRESHOLD = 100;
-        private static final int SWIPE_VELOCITY_THRESHOLD = 100;
-
-        @Override
-        public boolean onDown(MotionEvent e) {
-            //  Toast.makeText(getContext(), "onDown", Toast.LENGTH_LONG).show();
-            //textEvt2.setText(e.getX()+":"+ e.getY());
-            // Log.e(TAG, "onDown");
-            return true;
-        }
-
-        @Override
-        public void onShowPress(MotionEvent e) {
-            // Toast.makeText(context, "onShowPress", Toast.LENGTH_LONG).show();
-            //textEvt2.setText(e.getX()+":"+ e.getY());
-            // Log.e(TAG, "onShowPress");
-        }
-
-        @Override
-        public boolean onSingleTapUp(MotionEvent e) {
-            // Toast.makeText(getContext(), "onSingleTap", Toast.LENGTH_LONG).show();
-            // textEvt2.setText(e.getX()+":"+ e.getY());
-            //   Log.e(TAG, "onSingleTapUp");
-
-            // final_position = List1Fragment.viewPager.getCurrentItem();
-            // Intent intent = new Intent(mContext, CardDetail.class);
-            //intent.putExtra("tag_id", nfcModelList.get(final_position).getNfc_tag());
-            // context.startActivity(intent);
-
-            Intent intent = new Intent(mContext, CardDetail.class);
-            intent.putExtra("profile_id", nfcModelList.get(posi).getProfile_id());
-            intent.putExtra("DateInitiated",nfcModelList.get(posi).getDateInitiated());
-            intent.putExtra("lat", nfcModelList.get(posi).getLatitude());
-            intent.putExtra("long", nfcModelList.get(posi).getLongitude());
-            mContext.startActivity(intent);
-
-            return true;
-        }
-
-        @Override
-        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            // Toast.makeText(getContext(), "onScroll", Toast.LENGTH_LONG).show();
-            // textEvt2.setText(e1.getX()+":"+ e1.getY() +"  "+ e2.getX()+":"+ e2.getY());
-            //Log.e(TAG, "onScroll");
-            return true;
-        }
-
-        @Override
-        public void onLongPress(MotionEvent e) {
-            // Toast.makeText(context, "onLongPress", Toast.LENGTH_LONG).show();
-            // textEvt2.setText(e.getX()+":"+ e.getY());
-            //  Log.e(TAG, "onLongPress");
-        }
-
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            // Toast.makeText(getContext(), "onFling", Toast.LENGTH_LONG).show();
-            //textEvt2.setText(e1.getX() + ":" + e1.getY() + "  " + e2.getX() + ":" + e2.getY());
-            boolean result = false;
-            try {
-                float diffY = e2.getY() - e1.getY();
-                float diffX = e2.getX() - e1.getX();
-                if (Math.abs(diffX) > Math.abs(diffY)) {
-                    if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                        if (diffX > 0) {
-                            // onSwipeRight();
-                        } else {
-                            // onSwipeLeft();
-                        }
-                    }
-                } else {
-                    if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
-                        if (diffY > 0) {
-                            //Toast.makeText(getContext(), "Down", Toast.LENGTH_LONG).show();
-                            List1Fragment.lnrSearch.setVisibility(View.VISIBLE);
-                            List1Fragment.line.setVisibility(View.VISIBLE);
-                            CardsFragment.tabLayout.setVisibility(View.VISIBLE);
-                        } else {
-                            //  Toast.makeText(getContext(), "Up", Toast.LENGTH_LONG).show();
-                            List1Fragment.lnrSearch.setVisibility(View.VISIBLE);
-                            List1Fragment.line.setVisibility(View.VISIBLE);
-                            CardsFragment.tabLayout.setVisibility(View.VISIBLE);
-                        }
-                    }
-                }
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
-            return result;
-        }
-
-
-    }
-
-    class MyOnDoubleTapListener implements GestureDetector.OnDoubleTapListener {
-
-        @Override
-        public boolean onSingleTapConfirmed(MotionEvent e) {
-            //  Toast.makeText(getContext(), "onSingleTapConfirmed", Toast.LENGTH_LONG).show();
-            //textEvt2.setText(e.getX()+":"+ e.getY());
-            //  Log.e(TAG, "onSingleTapConfirmed");
-            return true;
-        }
-
-        @Override
-        public boolean onDoubleTap(MotionEvent e) {
-            //  Toast.makeText(context, "onDoubleTap", Toast.LENGTH_LONG).show();
-            //textEvt2.setText(e.getX()+":"+ e.getY());
-            // Log.e(TAG, "onDoubleTap");
-            return true;
-        }
-
-        @Override
-        public boolean onDoubleTapEvent(MotionEvent e) {
-            //  Toast.makeText(context, "onDoubleTapEvent", Toast.LENGTH_LONG).show();
-            // textEvt2.setText(e.getX() + ":" + e.getY());
-            //  Log.e(TAG, "onDoubleTapEvent");
-            return true;
-        }
-    }
 
     public void Filter(String charText)
     {

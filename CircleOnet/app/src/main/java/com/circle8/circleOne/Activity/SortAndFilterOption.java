@@ -3,7 +3,6 @@ package com.circle8.circleOne.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -27,7 +26,6 @@ import com.circle8.circleOne.Fragments.List1Fragment;
 import com.circle8.circleOne.Fragments.List2Fragment;
 import com.circle8.circleOne.Fragments.List3Fragment;
 import com.circle8.circleOne.Fragments.List4Fragment;
-import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.GroupModel;
 import com.circle8.circleOne.Model.ProfileModel;
@@ -55,7 +53,6 @@ public class SortAndFilterOption extends AppCompatActivity
 {
 
     private int actionBarHeight;
-    DatabaseHelper db;
     public static String SortType = "desc";
     public static String CardListApi = "GetFriendConnection";
     public static String ProfileArrayId = "", FindBY = "", Search = "";
@@ -82,7 +79,6 @@ public class SortAndFilterOption extends AppCompatActivity
         final ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.custom_actionbar);
-        db = new DatabaseHelper(getApplicationContext());
         actionText = (TextView) findViewById(R.id.mytext);
         imgLogo = (ImageView) findViewById(R.id.imgLogo);
         imgDrawer = (ImageView) findViewById(R.id.drawer);
@@ -109,7 +105,6 @@ public class SortAndFilterOption extends AppCompatActivity
                 {
                     List1Fragment.callFirst();
                     List2Fragment.gridAdapter.notifyDataSetChanged();
-                    List2Fragment.allTags = db.getActiveNFC();
                     List2Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
                     List2Fragment.callFirst();
@@ -119,7 +114,6 @@ public class SortAndFilterOption extends AppCompatActivity
 
                 try {
                     List3Fragment.gridAdapter.notifyDataSetChanged();
-                    List3Fragment.allTags = db.getActiveNFC();
                     List3Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
                     List3Fragment.callFirst();
@@ -128,7 +122,6 @@ public class SortAndFilterOption extends AppCompatActivity
                 }
                 try {
                     List4Fragment.gridAdapter.notifyDataSetChanged();
-                    List4Fragment.allTags = db.getActiveNFC();
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
                     List4Fragment.callFirst();
@@ -214,7 +207,6 @@ public class SortAndFilterOption extends AppCompatActivity
                 {
                     List1Fragment.callFirst();
                     List2Fragment.gridAdapter.notifyDataSetChanged();
-                    List2Fragment.allTags = db.getActiveNFC();
                     List2Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
                     List2Fragment.callFirst();
@@ -233,7 +225,6 @@ public class SortAndFilterOption extends AppCompatActivity
                 }*/
                 try {
                     List3Fragment.gridAdapter.notifyDataSetChanged();
-                    List3Fragment.allTags = db.getActiveNFC();
                     List3Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
                     List3Fragment.callFirst();
@@ -247,7 +238,6 @@ public class SortAndFilterOption extends AppCompatActivity
                     //  nfcModelList.clear();
                     List4Fragment.GetData(getApplicationContext());*/
                     List4Fragment.gridAdapter.notifyDataSetChanged();
-                    List4Fragment.allTags = db.getActiveNFC();
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
                     List4Fragment.callFirst();
@@ -287,7 +277,6 @@ public class SortAndFilterOption extends AppCompatActivity
                 try {
                     List1Fragment.callFirst();
                     List2Fragment.gridAdapter.notifyDataSetChanged();
-                    List2Fragment.allTags = db.getActiveNFC();
                     List2Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
                     List2Fragment.callFirst();
@@ -297,7 +286,6 @@ public class SortAndFilterOption extends AppCompatActivity
 
                 try {
                     List3Fragment.gridAdapter.notifyDataSetChanged();
-                    List3Fragment.allTags = db.getActiveNFC();
                     List3Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
                     List3Fragment.callFirst();
@@ -311,7 +299,6 @@ public class SortAndFilterOption extends AppCompatActivity
                     //  nfcModelList.clear();
                     List4Fragment.GetData(getApplicationContext());*/
                     List4Fragment.gridAdapter.notifyDataSetChanged();
-                    List4Fragment.allTags = db.getActiveNFC();
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
                     List4Fragment.callFirst();
@@ -351,7 +338,6 @@ public class SortAndFilterOption extends AppCompatActivity
                 try {
                     List1Fragment.callFirst();
                     List2Fragment.gridAdapter.notifyDataSetChanged();
-                    List2Fragment.allTags = db.getActiveNFC();
                     List2Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
                     List2Fragment.callFirst();
@@ -361,7 +347,6 @@ public class SortAndFilterOption extends AppCompatActivity
 
                 try {
                     List3Fragment.gridAdapter.notifyDataSetChanged();
-                    List3Fragment.allTags = db.getActiveNFC();
                     List3Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
                     List3Fragment.callFirst();
@@ -375,7 +360,6 @@ public class SortAndFilterOption extends AppCompatActivity
                     //  nfcModelList.clear();
                     List4Fragment.GetData(getApplicationContext());*/
                     List4Fragment.gridAdapter.notifyDataSetChanged();
-                    List4Fragment.allTags = db.getActiveNFC();
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
                     List4Fragment.callFirst();
@@ -414,62 +398,34 @@ public class SortAndFilterOption extends AppCompatActivity
             }
         });
 
-        activitySortAndFilterOptionBinding.includeLayoutBottom.imgCards.setOnClickListener(new View.OnClickListener() {
+        activitySortAndFilterOptionBinding.imgCards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent go = new Intent(SortAndFilterOption.this,CardsActivity.class);
-
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 0);
-
-                startActivity(go);
+                CardsActivity.mViewPager.setCurrentItem(0);
                 finish();
             }
         });
 
-        activitySortAndFilterOptionBinding.includeLayoutBottom.imgConnect.setOnClickListener(new View.OnClickListener() {
+        activitySortAndFilterOptionBinding.imgConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent go = new Intent(SortAndFilterOption.this,CardsActivity.class);
-
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 1);
-
-                startActivity(go);
+                CardsActivity.mViewPager.setCurrentItem(1);
                 finish();
             }
         });
 
-        activitySortAndFilterOptionBinding.includeLayoutBottom.imgEvents.setOnClickListener(new View.OnClickListener() {
+        activitySortAndFilterOptionBinding.imgEvents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent go = new Intent(SortAndFilterOption.this,CardsActivity.class);
-
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 2);
-
-                startActivity(go);
+                CardsActivity.mViewPager.setCurrentItem(2);
                 finish();
             }
         });
 
-        activitySortAndFilterOptionBinding.includeLayoutBottom.imgProfile.setOnClickListener(new View.OnClickListener() {
+        activitySortAndFilterOptionBinding.imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent go = new Intent(SortAndFilterOption.this,CardsActivity.class);
-
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 3);
-
-                startActivity(go);
+                CardsActivity.mViewPager.setCurrentItem(3);
                 finish();
             }
         });
@@ -481,57 +437,48 @@ public class SortAndFilterOption extends AppCompatActivity
                 SortType = "desc";
                 CardListApi = "GetProfileConnection";
                 ProfileArrayId = profileModelArrayList.get(position).getProfileID();
-                List1Fragment.progressStatus = "FILTER";
+                //List1Fragment.progressStatus = "FILTER";
+
+
+
                 List1Fragment.allTags.clear();
-                try {
+                List1Fragment.progressStatus = "FILTER";
+                try
+                {
+                    List1Fragment.callFirst();
                     List2Fragment.gridAdapter.notifyDataSetChanged();
-                    List2Fragment.allTags = db.getActiveNFC();
                     List2Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List2Fragment.GetData(getApplicationContext());
+                    List2Fragment.callFirst();
                 } catch (Exception e) {
 
                 }
 
                 try {
                     List3Fragment.gridAdapter.notifyDataSetChanged();
-                    List3Fragment.allTags = db.getActiveNFC();
                     List3Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List3Fragment.GetData(getApplicationContext());
+                    List3Fragment.callFirst();
                 } catch (Exception e) {
 
                 }
                 try {
-                  /*  List4Fragment.gridAdapter.notifyDataSetChanged();
-                    List4Fragment.allTags = db.getActiveNFC();
+                    List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List4Fragment.GetData(getApplicationContext());*/
+                    List4Fragment.callFirst();
+/*
                     List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.allTags = db.getActiveNFC();
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List4Fragment.GetData(getApplicationContext());
+                    List4Fragment.GetData(getApplicationContext());*/
                 } catch (Exception e) {
 
                 }
 
-                try {
-                    //List1Fragment.myPager.notifyDataSetChanged();
-                    //   List1Fragment.allTags = db.getActiveNFC();
-
-                    List1Fragment.nfcModel.clear();
-                    //  nfcModelList.clear();
-                    List1Fragment.GetData(getApplicationContext());
-                } catch (Exception e) {
-
-                }
-                Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
-                userIntent.putExtra("viewpager_position", 0);
-                startActivity(userIntent);
                 finish();
-                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+               // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
 
 
             }
@@ -547,46 +494,46 @@ public class SortAndFilterOption extends AppCompatActivity
                     CardListApi = "SearchConnect";
                     FindBY = "COMPANY";
                     Search = activitySortAndFilterOptionBinding.searchView.getText().toString();
-                    List1Fragment.progressStatus = "FILTER";
-                    List1Fragment.allTags.clear();
 
-                    try {
+                    List1Fragment.allTags.clear();
+                    List1Fragment.progressStatus = "FILTER";
+                    try
+                    {
+                        List1Fragment.callFirst();
                         List2Fragment.gridAdapter.notifyDataSetChanged();
-                        List2Fragment.allTags = db.getActiveNFC();
                         List2Fragment.nfcModel.clear();
                         //  nfcModelList.clear();
-                        List2Fragment.GetData(getApplicationContext());
+                        List2Fragment.callFirst();
                     } catch (Exception e) {
 
                     }
 
                     try {
                         List3Fragment.gridAdapter.notifyDataSetChanged();
-                        List3Fragment.allTags = db.getActiveNFC();
                         List3Fragment.nfcModel.clear();
                         //  nfcModelList.clear();
-                        List3Fragment.GetData(getApplicationContext());
+                        List3Fragment.callFirst();
                     } catch (Exception e) {
 
                     }
                     try {
-                       /* List4Fragment.gridAdapter.notifyDataSetChanged();
-                        List4Fragment.allTags = db.getActiveNFC();
-                        List4Fragment.nfcModel.clear();
-                        //  nfcModelList.clear();
-                        List4Fragment.GetData(getApplicationContext());*/
                         List4Fragment.gridAdapter.notifyDataSetChanged();
-                        List4Fragment.allTags = db.getActiveNFC();
                         List4Fragment.nfcModel.clear();
                         //  nfcModelList.clear();
-                        List4Fragment.GetData(getApplicationContext());
+                        List4Fragment.callFirst();
+/*
+                    List4Fragment.gridAdapter.notifyDataSetChanged();
+                    List4Fragment.allTags = db.getActiveNFC();
+                    List4Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List4Fragment.GetData(getApplicationContext());*/
                     } catch (Exception e) {
 
                     }
 
                     try {
                         //List1Fragment.myPager.notifyDataSetChanged();
-                        //   List1Fragment.allTags = db.getActiveNFC();
+                        // List1Fragment.allTags = db.getActiveNFC();
 
                         List1Fragment.nfcModel.clear();
                         //  nfcModelList.clear();
@@ -594,11 +541,8 @@ public class SortAndFilterOption extends AppCompatActivity
                     } catch (Exception e) {
 
                     }
-                    Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
-                    userIntent.putExtra("viewpager_position", 0);
-                    startActivity(userIntent);
                     finish();
-                    overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                   // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                 }
             }
         });
@@ -613,46 +557,45 @@ public class SortAndFilterOption extends AppCompatActivity
                     CardListApi = "SearchConnect";
                     FindBY = "JOB_ROLE";
                     Search = activitySortAndFilterOptionBinding.searchView.getText().toString();
-                    List1Fragment.progressStatus = "FILTER";
                     List1Fragment.allTags.clear();
-
-                    try {
+                    List1Fragment.progressStatus = "FILTER";
+                    try
+                    {
+                        List1Fragment.callFirst();
                         List2Fragment.gridAdapter.notifyDataSetChanged();
-                        List2Fragment.allTags = db.getActiveNFC();
                         List2Fragment.nfcModel.clear();
                         //  nfcModelList.clear();
-                        List2Fragment.GetData(getApplicationContext());
+                        List2Fragment.callFirst();
                     } catch (Exception e) {
 
                     }
 
                     try {
                         List3Fragment.gridAdapter.notifyDataSetChanged();
-                        List3Fragment.allTags = db.getActiveNFC();
                         List3Fragment.nfcModel.clear();
                         //  nfcModelList.clear();
-                        List3Fragment.GetData(getApplicationContext());
+                        List3Fragment.callFirst();
                     } catch (Exception e) {
 
                     }
                     try {
-                     /*   List4Fragment.gridAdapter.notifyDataSetChanged();
-                        List4Fragment.allTags = db.getActiveNFC();
-                        List4Fragment.nfcModel.clear();
-                        //  nfcModelList.clear();
-                        List4Fragment.GetData(getApplicationContext());*/
                         List4Fragment.gridAdapter.notifyDataSetChanged();
-                        List4Fragment.allTags = db.getActiveNFC();
                         List4Fragment.nfcModel.clear();
                         //  nfcModelList.clear();
-                        List4Fragment.GetData(getApplicationContext());
+                        List4Fragment.callFirst();
+/*
+                    List4Fragment.gridAdapter.notifyDataSetChanged();
+                    List4Fragment.allTags = db.getActiveNFC();
+                    List4Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List4Fragment.GetData(getApplicationContext());*/
                     } catch (Exception e) {
 
                     }
 
                     try {
                         //List1Fragment.myPager.notifyDataSetChanged();
-                        //   List1Fragment.allTags = db.getActiveNFC();
+                        // List1Fragment.allTags = db.getActiveNFC();
 
                         List1Fragment.nfcModel.clear();
                         //  nfcModelList.clear();
@@ -660,11 +603,8 @@ public class SortAndFilterOption extends AppCompatActivity
                     } catch (Exception e) {
 
                     }
-                    Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
-                    userIntent.putExtra("viewpager_position", 0);
-                    startActivity(userIntent);
                     finish();
-                    overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                    //overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                 }
             }
         });
@@ -679,46 +619,45 @@ public class SortAndFilterOption extends AppCompatActivity
                     CardListApi = "SearchConnect";
                     FindBY = "ASSOCIATION";
                     Search = activitySortAndFilterOptionBinding.searchView.getText().toString();
-                    List1Fragment.progressStatus = "FILTER";
                     List1Fragment.allTags.clear();
-
-                    try {
+                    List1Fragment.progressStatus = "FILTER";
+                    try
+                    {
+                        List1Fragment.callFirst();
                         List2Fragment.gridAdapter.notifyDataSetChanged();
-                        List2Fragment.allTags = db.getActiveNFC();
                         List2Fragment.nfcModel.clear();
                         //  nfcModelList.clear();
-                        List2Fragment.GetData(getApplicationContext());
+                        List2Fragment.callFirst();
                     } catch (Exception e) {
 
                     }
 
                     try {
                         List3Fragment.gridAdapter.notifyDataSetChanged();
-                        List3Fragment.allTags = db.getActiveNFC();
                         List3Fragment.nfcModel.clear();
                         //  nfcModelList.clear();
-                        List3Fragment.GetData(getApplicationContext());
+                        List3Fragment.callFirst();
                     } catch (Exception e) {
 
                     }
                     try {
-                      /*  List4Fragment.gridAdapter.notifyDataSetChanged();
-                        List4Fragment.allTags = db.getActiveNFC();
-                        List4Fragment.nfcModel.clear();
-                        //  nfcModelList.clear();
-                        List4Fragment.GetData(getApplicationContext());*/
                         List4Fragment.gridAdapter.notifyDataSetChanged();
-                        List4Fragment.allTags = db.getActiveNFC();
                         List4Fragment.nfcModel.clear();
                         //  nfcModelList.clear();
-                        List4Fragment.GetData(getApplicationContext());
+                        List4Fragment.callFirst();
+/*
+                    List4Fragment.gridAdapter.notifyDataSetChanged();
+                    List4Fragment.allTags = db.getActiveNFC();
+                    List4Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List4Fragment.GetData(getApplicationContext());*/
                     } catch (Exception e) {
 
                     }
 
                     try {
                         //List1Fragment.myPager.notifyDataSetChanged();
-                        //   List1Fragment.allTags = db.getActiveNFC();
+                        // List1Fragment.allTags = db.getActiveNFC();
 
                         List1Fragment.nfcModel.clear();
                         //  nfcModelList.clear();
@@ -726,11 +665,8 @@ public class SortAndFilterOption extends AppCompatActivity
                     } catch (Exception e) {
 
                     }
-                    Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
-                    userIntent.putExtra("viewpager_position", 0);
-                    startActivity(userIntent);
                     finish();
-                    overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                    //overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                 }
             }
         });
@@ -746,46 +682,45 @@ public class SortAndFilterOption extends AppCompatActivity
                     CardListApi = "SearchConnect";
                     FindBY = "INDUSTRY";
                     Search = activitySortAndFilterOptionBinding.searchView.getText().toString();
-                    List1Fragment.progressStatus = "FILTER";
                     List1Fragment.allTags.clear();
-
-                    try {
+                    List1Fragment.progressStatus = "FILTER";
+                    try
+                    {
+                        List1Fragment.callFirst();
                         List2Fragment.gridAdapter.notifyDataSetChanged();
-                        List2Fragment.allTags = db.getActiveNFC();
                         List2Fragment.nfcModel.clear();
                         //  nfcModelList.clear();
-                        List2Fragment.GetData(getApplicationContext());
+                        List2Fragment.callFirst();
                     } catch (Exception e) {
 
                     }
 
                     try {
                         List3Fragment.gridAdapter.notifyDataSetChanged();
-                        List3Fragment.allTags = db.getActiveNFC();
                         List3Fragment.nfcModel.clear();
                         //  nfcModelList.clear();
-                        List3Fragment.GetData(getApplicationContext());
+                        List3Fragment.callFirst();
                     } catch (Exception e) {
 
                     }
                     try {
-                      /*  List4Fragment.gridAdapter.notifyDataSetChanged();
-                        List4Fragment.allTags = db.getActiveNFC();
-                        List4Fragment.nfcModel.clear();
-                        //  nfcModelList.clear();
-                        List4Fragment.GetData(getApplicationContext());*/
                         List4Fragment.gridAdapter.notifyDataSetChanged();
-                        List4Fragment.allTags = db.getActiveNFC();
                         List4Fragment.nfcModel.clear();
                         //  nfcModelList.clear();
-                        List4Fragment.GetData(getApplicationContext());
+                        List4Fragment.callFirst();
+/*
+                    List4Fragment.gridAdapter.notifyDataSetChanged();
+                    List4Fragment.allTags = db.getActiveNFC();
+                    List4Fragment.nfcModel.clear();
+                    //  nfcModelList.clear();
+                    List4Fragment.GetData(getApplicationContext());*/
                     } catch (Exception e) {
 
                     }
 
                     try {
                         //List1Fragment.myPager.notifyDataSetChanged();
-                        //   List1Fragment.allTags = db.getActiveNFC();
+                        // List1Fragment.allTags = db.getActiveNFC();
 
                         List1Fragment.nfcModel.clear();
                         //  nfcModelList.clear();
@@ -793,15 +728,11 @@ public class SortAndFilterOption extends AppCompatActivity
                     } catch (Exception e) {
 
                     }
-                    Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
-                    userIntent.putExtra("viewpager_position", 0);
-                    startActivity(userIntent);
                     finish();
-                    overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                  //  overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                 }
             }
         });
-
 
         activitySortAndFilterOptionBinding.listViewEx1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -812,51 +743,45 @@ public class SortAndFilterOption extends AppCompatActivity
                 CardListApi = "Group/FetchConnection";
                 ProfileArrayId = profile_id;
                 groupId = groupModelArrayList.get(position).getGroup_ID();
-                List1Fragment.progressStatus = "FILTER";
                 List1Fragment.allTags.clear();
-
+                List1Fragment.progressStatus = "FILTER";
                 try
                 {
+                    List1Fragment.callFirst();
                     List2Fragment.gridAdapter.notifyDataSetChanged();
-                    List2Fragment.allTags = db.getActiveNFC();
                     List2Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List2Fragment.GetData(getApplicationContext());
-                }
-                catch (Exception e)
-                {
+                    List2Fragment.callFirst();
+                } catch (Exception e) {
 
                 }
 
                 try {
                     List3Fragment.gridAdapter.notifyDataSetChanged();
-                    List3Fragment.allTags = db.getActiveNFC();
                     List3Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List3Fragment.GetData(getApplicationContext());
+                    List3Fragment.callFirst();
                 } catch (Exception e) {
 
                 }
-                try
-                {
-                  /*  List4Fragment.gridAdapter.notifyDataSetChanged();
-                    List4Fragment.allTags = db.getActiveNFC();
+                try {
+                    List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List4Fragment.GetData(getApplicationContext());*/
+                    List4Fragment.callFirst();
+/*
                     List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.allTags = db.getActiveNFC();
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List4Fragment.GetData(getApplicationContext());
+                    List4Fragment.GetData(getApplicationContext());*/
                 } catch (Exception e) {
 
                 }
 
-                try
-                {
+                try {
                     //List1Fragment.myPager.notifyDataSetChanged();
-                    //   List1Fragment.allTags = db.getActiveNFC();
+                    // List1Fragment.allTags = db.getActiveNFC();
 
                     List1Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
@@ -864,11 +789,8 @@ public class SortAndFilterOption extends AppCompatActivity
                 } catch (Exception e) {
 
                 }
-                Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
-                userIntent.putExtra("viewpager_position", 0);
-                startActivity(userIntent);
                 finish();
-                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+               // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
             }
         });
 

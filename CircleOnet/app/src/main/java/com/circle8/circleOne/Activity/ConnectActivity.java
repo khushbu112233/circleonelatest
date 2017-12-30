@@ -1,5 +1,6 @@
 package com.circle8.circleOne.Activity;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -83,6 +84,8 @@ public class ConnectActivity extends AppCompatActivity
     private String displayProfile;
     ActivityConnect2Binding activityConnect2Binding;
     ListView listView1;
+    static Activity activity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -91,7 +94,7 @@ public class ConnectActivity extends AppCompatActivity
         Utility.freeMemory();
         db = new DatabaseHelper(getApplicationContext());
 
-
+        activity = this;
         tvConnectLine1 = findViewById(R.id.tvConnectLine1);
         tvConnectLine2 = findViewById(R.id.tvConnectLine2);
 
@@ -458,14 +461,7 @@ public class ConnectActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 0);
-
-                startActivity(go);
+                CardsActivity.mViewPager.setCurrentItem(0);
                 finish();
             }
         });
@@ -474,14 +470,7 @@ public class ConnectActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 1);
-
-                startActivity(go);
+                CardsActivity.mViewPager.setCurrentItem(1);
                 finish();
             }
         });
@@ -490,14 +479,7 @@ public class ConnectActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 2);
-
-                startActivity(go);
+                CardsActivity.mViewPager.setCurrentItem(2);
                 finish();
             }
         });
@@ -506,14 +488,7 @@ public class ConnectActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 3);
-
-                startActivity(go);
+                CardsActivity.mViewPager.setCurrentItem(3);
                 finish();
             }
         });
@@ -580,6 +555,10 @@ public class ConnectActivity extends AppCompatActivity
     protected void onPause() {
         Utility.freeMemory();
         super.onPause();
+    }
+
+    public static void kill(){
+        activity.finish();
     }
 
     @Override

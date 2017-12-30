@@ -2,6 +2,7 @@ package com.circle8.circleOne.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -36,12 +37,13 @@ import android.widget.Toast;
 import com.azoft.carousellayoutmanager.CarouselLayoutManager;
 import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
 import com.azoft.carousellayoutmanager.CenterScrollListener;
+import com.circle8.circleOne.Activity.CardDetail;
 import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.Activity.SortAndFilterOption;
 import com.circle8.circleOne.Adapter.GalleryAdapter;
 import com.circle8.circleOne.Adapter.GalleryAdapter1;
-import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
+import com.circle8.circleOne.Interfaces.CustomItemClickListener;
 import com.circle8.circleOne.Model.FriendConnection;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
@@ -60,18 +62,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
-import static com.circle8.circleOne.Utils.Utility.dismissProgress;
-import static com.google.android.gms.internal.zzahg.runOnUiThread;
 
 public class List1Fragment extends Fragment
 {
     // private ArrayList<Integer> imageFront = new ArrayList<>();
     // private ArrayList<Integer> imageBack = new ArrayList<>();
     // public static MyPager myPager ;
-    DatabaseHelper db;
-    private GestureDetector gestureDetector1;
+      private GestureDetector gestureDetector1;
     FrameLayout frameList1;
     LinearLayout lnrList;
     /*ArrayList<byte[]> imgf;
@@ -90,10 +88,8 @@ public class List1Fragment extends Fragment
     ViewConfiguration vc;
     private int mTouchSlop;
     FrameLayout frame1;
-
     public static int pageno = 1;
     ImageView imgSearch;
-
     View view;
     private String TAG = CardsActivity.class.getSimpleName();
     public static ArrayList<Integer> images;
@@ -106,24 +102,16 @@ public class List1Fragment extends Fragment
     RelativeLayout rlt;
     public static TextView txtNoCard1;
     LoginSession session;
-
     private static ProgressBar progressBar1, progressBar2;
     private static RelativeLayout rlLoadMore1, rlLoadMore2;
-
     static String UserId = "";
-
     public static Context mContext;
-
     public static String progressStatus = "FIRST";
-
     static int number_cards = 0;
-
     static int numberCount, recycleSize;
-
     static AlertDialog customProgressBar ;
     static String customProgressBarStatus = "";
     public static String count = "";
-
     private static RelativeLayout rlProgressDialog ;
     private static TextView tvProgressing ;
     private static ImageView ivConnecting1;
@@ -134,10 +122,6 @@ public class List1Fragment extends Fragment
         // Required empty public constructor
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -145,15 +129,15 @@ public class List1Fragment extends Fragment
         // Inflate the layout for this fragment
 
         view = inflater.inflate(R.layout.fragment_list1, container, false);
-        vc = ViewConfiguration.get(view.getContext());
+        // vc = ViewConfiguration.get(view.getContext());
 
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
         // frameList1 = (FrameLayout) view.findViewById(R.id.frameList1);
-        mTouchSlop = vc.getScaledTouchSlop();
+        //mTouchSlop = vc.getScaledTouchSlop();
 
-        mContext = List1Fragment.this.getContext();
+        mContext = getContext();
         pageno = 1;
         imgSearch = (ImageView) view.findViewById(R.id.imgSearch);
         tvFriendInfo = (TextView)view.findViewById(R.id.tvFriendInfo);
@@ -177,20 +161,15 @@ public class List1Fragment extends Fragment
         HashMap<String, String> user = session.getUserDetails();
         // name
         UserId = user.get(LoginSession.KEY_USERID);
-
-        db = new DatabaseHelper(getContext());
-        //viewPager = (ViewPager)view.findViewById(R.id.viewPager);
-       // lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
+ //viewPager = (ViewPager)view.findViewById(R.id.viewPager);
+        // lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
         line = view.findViewById(R.id.view);
 
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                initRecyclerView1(recyclerView1, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter);
-                initRecyclerView2(recyclerView2, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter1);
 
-            }
-        });
+        initRecyclerView1(recyclerView1, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter);
+        initRecyclerView2(recyclerView2, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter1);
+
+
 
         searchText = (AutoCompleteTextView) view.findViewById(R.id.searchView);
         InputMethodManager keyboard = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -661,7 +640,7 @@ public class List1Fragment extends Fragment
             Log.d("InputStream", e.getLocalizedMessage());
         }
 
-       // pageno++;
+        // pageno++;
         // 11. return result
         return result;
     }
@@ -799,7 +778,7 @@ public class List1Fragment extends Fragment
                         nfcModelTag.setProfile_id(object.getString("ProfileId"));
                         nfcModelTag.setDateInitiated(object.getString("DateInitiated"));
                         nfcModelTag.setAddress(object.getString("Address1") + " " + object.getString("Address2")
-                         + " " + object.getString("Address3") + " " + object.getString("Address4"));
+                                + " " + object.getString("Address3") + " " + object.getString("Address4"));
 //                        Toast.makeText(getActivity(),"Profile_id"+object.getString("ProfileId"),Toast.LENGTH_SHORT).show();
                         nfcModelTag.setNfc_tag("en000000001");
                         nfcModelTag.setLatitude(object.getString("Latitude"));
@@ -886,7 +865,6 @@ public class List1Fragment extends Fragment
 
         @Override
         protected Void doInBackground(Void... params) {
-            db = new DatabaseHelper(getContext());
             // allTags = db.getActiveNFC();
 
             images = new ArrayList<>();
@@ -911,6 +889,8 @@ public class List1Fragment extends Fragment
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(mAdapter);
         recyclerView.addOnScrollListener(new CenterScrollListener());
+
+
     }
 
     public static void initRecyclerView2(final RecyclerView recyclerView, final CarouselLayoutManager layoutManager, GalleryAdapter1 mAdapter) {
@@ -922,6 +902,19 @@ public class List1Fragment extends Fragment
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(mAdapter);
         recyclerView.addOnScrollListener(new CenterScrollListener());
+        recyclerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final int position = recyclerView.getChildLayoutPosition(view);
+                Utility.CustomProgressDialog("Loading",mContext);
+                Intent intent = new Intent(mContext, CardDetail.class);
+                intent.putExtra("profile_id", nfcModel.get(position).getProfile_id());
+                intent.putExtra("DateInitiated",nfcModel.get(position).getDateInitiated());
+                intent.putExtra("lat", nfcModel.get(position).getLatitude());
+                intent.putExtra("long", nfcModel.get(position).getLongitude());
+                mContext.startActivity(intent);
+            }
+        });
     }
 
    /* class MyOnGestureListener implements GestureDetector.OnGestureListener  {
@@ -1189,7 +1182,7 @@ public class List1Fragment extends Fragment
         protected void onPostExecute(String result)
         {
             // dialog.dismiss();
-         rlProgressDialog.setVisibility(View.GONE);
+            rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
 
             try
@@ -1262,9 +1255,9 @@ public class List1Fragment extends Fragment
                                     + " " + iCon.getString("Address3") + " " + iCon.getString("Address4"));
                             allTags.add(connectModel);
 
-                            GetData(mContext);
-                        }
 
+                        }
+                        GetData(mContext);
                         if (allTags.size() == 0) {
                             txtNoCard1.setVisibility(View.VISIBLE);
                         } else {
@@ -1382,7 +1375,7 @@ public class List1Fragment extends Fragment
 
         if (nfcModel.size() == 0)
         {
-                txtNoCard1.setVisibility(View.VISIBLE);
+            txtNoCard1.setVisibility(View.VISIBLE);
         }
         else
         {

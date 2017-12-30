@@ -155,6 +155,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         mBinding = DataBindingUtil.setContentView(this,R.layout.activity_card_detail);
         Utility.freeMemory();
         Utility.deleteCache(getApplicationContext());
+        Log.e("act","click");
         referralCodeSession = new ReferralCodeSession(getApplicationContext());
         loginSession = new LoginSession(getApplicationContext());
         HashMap<String, String> user = loginSession.getUserDetails();
@@ -223,7 +224,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
         } else {
 
-            googlePlayServicesHelper = new GooglePlayServicesHelper();
+            //googlePlayServicesHelper = new GooglePlayServicesHelper();
             pushBroadcastReceiver = new PushBroadcastReceiver();
             allDialogsMessagesListener = new AllDialogsMessageListener();
             systemMessagesListener = new SystemMessagesListener();
@@ -243,7 +244,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
             }
 
             dialogsManager.addManagingDialogsCallbackListener(this);
-
+            dismissProgress();
             // new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/Fetch");
             if (profile_id.equals("")) {
                 Toast.makeText(CardDetail.this, "Having no profile ID", Toast.LENGTH_LONG).show();
@@ -260,8 +261,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        registerQbChatListeners();
+        // registerQbChatListeners();
         mBinding.viewPager1.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             private int mScrollState = ViewPager.SCROLL_STATE_IDLE;
@@ -574,46 +574,19 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                 finish();
                 break;
             case R.id.imgCards:
-                Intent go = new Intent(getApplicationContext(), CardsActivity.class);
-
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 0);
-
-                startActivity(go);
+                CardsActivity.mViewPager.setCurrentItem(0);
                 finish();
                 break;
             case R.id.imgConnect:
-                Intent go1 = new Intent(getApplicationContext(), CardsActivity.class);
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go1.putExtra("viewpager_position", 1);
-
-                startActivity(go1);
+                CardsActivity.mViewPager.setCurrentItem(1);
                 finish();
                 break;
             case  R.id.imgEvents:
-                Intent go2 = new Intent(getApplicationContext(), CardsActivity.class);
-
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go2.putExtra("viewpager_position", 2);
-
-                startActivity(go2);
+                CardsActivity.mViewPager.setCurrentItem(2);
                 finish();
                 break;
             case R.id.imgProfile:
-                Intent go3 = new Intent(getApplicationContext(), CardsActivity.class);
-
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go3.putExtra("viewpager_position", 3);
-
-                startActivity(go3);
+                CardsActivity.mViewPager.setCurrentItem(3);
                 finish();
                 break;
             case R.id.tvSendMessage:

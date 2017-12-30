@@ -767,7 +767,6 @@ public class EditProfileActivity extends AppCompatActivity implements
         {
             Utility.freeMemory();
             new HttpAsyncTaskUserProfile().execute(Utility.BASE_URL+"GetUserProfile");
-            new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");
         }
     }
 
@@ -3129,6 +3128,7 @@ public class EditProfileActivity extends AppCompatActivity implements
 
 //          dismissProgress();
             // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");
 
             try
             {

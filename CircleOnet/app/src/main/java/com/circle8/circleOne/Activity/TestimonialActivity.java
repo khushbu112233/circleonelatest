@@ -95,23 +95,16 @@ public class TestimonialActivity extends AppCompatActivity
             public void onClick(View v) {
 
                 if (from.equalsIgnoreCase("profile")) {
-                    Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-
-                    // you pass the position you want the viewpager to show in the extra,
-                    // please don't forget to define and initialize the position variable
-                    // properly
-                    go.putExtra("viewpager_position", 3);
-                    startActivity(go);
                     finish();
                 } else if (from.equalsIgnoreCase("editprofile")) {
-                    Intent go = new Intent(getApplicationContext(),EditProfileActivity.class);
+                    /*Intent go = new Intent(getApplicationContext(),EditProfileActivity.class);
 
                     // you pass the position you want the viewpager to show in the extra,
                     // please don't forget to define and initialize the position variable
                     // properly
                     go.putExtra("profile_id", TestimonialProfileId);
                     go.putExtra("type", type);
-                    startActivity(go);
+                    startActivity(go);*/
                     finish();
                 }
 

@@ -1,5 +1,6 @@
 package com.circle8.circleOne.Activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
@@ -51,6 +52,8 @@ public class Connect3Activity extends AppCompatActivity
     String backStatus = "None";
     String level = "";
     ActivityConnect3Binding activityConnect3Binding;
+    static Activity activity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -63,7 +66,7 @@ public class Connect3Activity extends AppCompatActivity
         HashMap<String, String> user = loginSession.getUserDetails();
 
         UserId = user.get(LoginSession.KEY_USERID);      // name
-
+        activity = this;
         Intent intent = getIntent();
         profileImg = intent.getStringExtra("profile");
         friendUserID = intent.getStringExtra("friendUserID");
@@ -153,9 +156,8 @@ public class Connect3Activity extends AppCompatActivity
         activityConnect3Binding.imgCards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-                go.putExtra("viewpager_position", 0);
-                startActivity(go);
+                CardsActivity.mViewPager.setCurrentItem(0);
+                ConnectActivity.kill();
                 finish();
                 Utility.freeMemory();
             }
@@ -164,9 +166,8 @@ public class Connect3Activity extends AppCompatActivity
         activityConnect3Binding.imgConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-                go.putExtra("viewpager_position", 1);
-                startActivity(go);
+                CardsActivity.mViewPager.setCurrentItem(1);
+                ConnectActivity.kill();
                 finish();
                 Utility.freeMemory();
             }
@@ -175,9 +176,8 @@ public class Connect3Activity extends AppCompatActivity
         activityConnect3Binding.imgEvents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-                go.putExtra("viewpager_position", 2);
-                startActivity(go);
+                CardsActivity.mViewPager.setCurrentItem(2);
+                ConnectActivity.kill();
                 finish();
                 Utility.freeMemory();
             }
@@ -186,15 +186,17 @@ public class Connect3Activity extends AppCompatActivity
         activityConnect3Binding.imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-                go.putExtra("viewpager_position", 3);
-                startActivity(go);
+                CardsActivity.mViewPager.setCurrentItem(3);
+                ConnectActivity.kill();
                 finish();
                 Utility.freeMemory();
             }
         });
     }
 
+    public static void kill(){
+        activity.finish();
+    }
 
     @Override
     protected void onPause() {

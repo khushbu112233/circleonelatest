@@ -134,7 +134,7 @@ public class GroupDetailActivity extends AppCompatActivity
         }*/
 
         groupDetailModelArrayList.clear();
-        callFirst();
+       // callFirst();
 
         activityGroupDetailBinding.imgProfileMenu.setOnClickListener(new View.OnClickListener() {
             @Override
