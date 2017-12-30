@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.circle8.circleOne.Fragments.EventsFragment;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.ActivityEventsSelectOptionBinding;
@@ -92,14 +93,6 @@ public class EventsSelectOption extends AppCompatActivity
         imgCards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 0);
-
-                startActivity(go);
                 finish();
                 Utility.freeMemory();
             }
@@ -108,14 +101,6 @@ public class EventsSelectOption extends AppCompatActivity
         imgConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 1);
-
-                startActivity(go);
                 finish();
                 Utility.freeMemory();
             }
@@ -124,14 +109,7 @@ public class EventsSelectOption extends AppCompatActivity
         imgEvents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
 
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 2);
-
-                startActivity(go);
                 finish();
                 Utility.freeMemory();
             }
@@ -140,14 +118,6 @@ public class EventsSelectOption extends AppCompatActivity
         imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 3);
-
-                startActivity(go);
                 finish();
                 Utility.freeMemory();
             }
@@ -172,10 +142,7 @@ public class EventsSelectOption extends AppCompatActivity
         searchOpt = "AllEvents";
         searchKeyWord = "";
 //        EventsFragment.callSecond();
-        Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
-        userIntent.putExtra("viewpager_position", 2);
-        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-        startActivity(userIntent);
+        EventsFragment.callFirst();
         finish();
 //        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
 
@@ -198,10 +165,8 @@ public class EventsSelectOption extends AppCompatActivity
 
 //            EventsFragment.searchEvent();
 
-            Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
-            userIntent.putExtra("viewpager_position", 2);
-            overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-            startActivity(userIntent);
+            new EventsFragment.HttpAsyncTaskSearchEvent().execute(Utility.BASE_URL+"Events/Search");
+
             finish();
 //            overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
         }
@@ -225,10 +190,8 @@ public class EventsSelectOption extends AppCompatActivity
 
 //            EventsFragment.searchEvent();
 
-            Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
-            userIntent.putExtra("viewpager_position", 2);
-            overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-            startActivity(userIntent);
+            new EventsFragment.HttpAsyncTaskSearchEvent().execute(Utility.BASE_URL+"Events/Search");
+
             finish();
 //            overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
 

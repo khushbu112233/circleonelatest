@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -28,19 +27,11 @@ import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
 import com.squareup.picasso.Picasso;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.InputStream;
 import java.util.ArrayList;
-
-import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 public class EventDetail extends AppCompatActivity
 {
@@ -80,9 +71,6 @@ public class EventDetail extends AppCompatActivity
         imgProfile = (ImageView) findViewById(R.id.imgProfile);
         imgBack = (ImageView) findViewById(R.id.imgLogo);
         actionText = (TextView) findViewById(R.id.mytext);
-        actionText.setText("Events");
-        imgBack.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
-        imgDrawer.setVisibility(View.GONE);
 
         txtBook = (TextView) findViewById(R.id.txtBook);
         txtRegister = (TextView) findViewById(R.id.txtRegister);
@@ -97,6 +85,10 @@ public class EventDetail extends AppCompatActivity
         listViewTimeShow = (ListView)findViewById(R.id.listViewTimeShow);
         llShowTime = (LinearLayout)findViewById(R.id.llShowTime);
         imgEvent = (ImageView) findViewById(R.id.imgEvent);
+        actionText.setText("Events");
+        imgBack.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
+        imgDrawer.setVisibility(View.GONE);
+
         Intent i = getIntent();
         event_ID = i.getStringExtra("Event_ID");
 
@@ -216,7 +208,7 @@ public class EventDetail extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
-                CardsActivity.mViewPager.setCurrentItem(3);
+                CardsActivity.mViewPager.setCurrentItem(0);
                 finish();
             }
         });
@@ -274,7 +266,13 @@ public class EventDetail extends AppCompatActivity
         @Override
         protected String doInBackground(String... urls)
         {
-            return POST(urls[0]);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("event_id", event_ID );
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return Utility.POST2(urls[0],jsonObject );
         }
         // onPostExecute displays the results of the AsyncTask.
         @Override
@@ -397,7 +395,7 @@ public class EventDetail extends AppCompatActivity
                     }
                     else
                     {
-                        Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"Events/"+eventDetail.getString("Event_Image")).resize(400,280).onlyScaleDown().skipMemoryCache().into(imgEvent);
+                        Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"Events/"+eventDetail.getString("Event_Image")).resize(400,280).onlyScaleDown().into(imgEvent);
                     }
 
                     tvEventDate.setText(eventDetail.getString("Event_StartDate")
@@ -509,61 +507,5 @@ public class EventDetail extends AppCompatActivity
         super.onPause();
     }
 
-    public  String POST(String url)
-    {
-        InputStream inputStream = null;
-        String result = "";
-        try
-        {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("event_id", event_ID );
-            Utility.freeMemory();
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if(inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
-
-}
+   }
 

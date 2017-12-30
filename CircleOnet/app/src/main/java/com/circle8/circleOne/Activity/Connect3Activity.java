@@ -197,7 +197,6 @@ public class Connect3Activity extends AppCompatActivity
     public static void kill(){
         activity.finish();
     }
-
     @Override
     protected void onPause() {
         Utility.freeMemory();

@@ -155,7 +155,7 @@ import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 public class CardsActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks,
         ActivityCompat.OnRequestPermissionsResultCallback,
-        PermissionUtils.PermissionResultCallback, DialogsManager.ManagingDialogsCallbacks
+        PermissionUtils.PermissionResultCallback
 {
     public static CustomViewPager mViewPager;
     TabLayout tabLayout;
@@ -373,8 +373,6 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                     ? systemMessagesListener : new SystemMessagesListener());
         }
 
-        dialogsManager.addManagingDialogsCallbackListener(this);
-
         if (netCheck == false){
             Utility.freeMemory();
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
@@ -554,20 +552,6 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         });
     }
 
-    @Override
-    public void onDialogCreated(QBChatDialog chatDialog) {
-
-    }
-
-    @Override
-    public void onDialogUpdated(String chatDialog) {
-
-    }
-
-    @Override
-    public void onNewDialogLoaded(QBChatDialog chatDialog) {
-
-    }
 
     private class PushBroadcastReceiver extends BroadcastReceiver {
         @Override

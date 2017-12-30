@@ -714,14 +714,11 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+                CardsActivity.mViewPager.setCurrentItem(0);
+                ConnectActivity.kill();
+                Connect3Activity.kill();
+                Connect4Activity.kill();
 
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 0);
-
-                startActivity(go);
                 finish();
             }
         });
@@ -730,14 +727,11 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+                CardsActivity.mViewPager.setCurrentItem(1);
+                ConnectActivity.kill();
+                Connect3Activity.kill();
+                Connect4Activity.kill();
 
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 1);
-
-                startActivity(go);
                 finish();
             }
         });
@@ -746,14 +740,11 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+                CardsActivity.mViewPager.setCurrentItem(2);
+                ConnectActivity.kill();
+                Connect3Activity.kill();
+                Connect4Activity.kill();
 
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 2);
-
-                startActivity(go);
                 finish();
             }
         });
@@ -762,14 +753,11 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+                CardsActivity.mViewPager.setCurrentItem(3);
+                ConnectActivity.kill();
+                Connect3Activity.kill();
+                Connect4Activity.kill();
 
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 3);
-
-                startActivity(go);
                 finish();
             }
         });

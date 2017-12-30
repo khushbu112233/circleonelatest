@@ -97,7 +97,6 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
-import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 /**
  * A simple {@link Fragment} subclass.

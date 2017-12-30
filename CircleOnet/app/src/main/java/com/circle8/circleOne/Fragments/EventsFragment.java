@@ -620,7 +620,7 @@ public class EventsFragment extends Fragment
 
 
 
-    private static class HttpAsyncTaskSearchEvent extends AsyncTask<String, Void, String>
+    public static class HttpAsyncTaskSearchEvent extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
 
