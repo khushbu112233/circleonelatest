@@ -5,11 +5,13 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.Walkthrough.HelpActivity;
 
@@ -46,8 +48,22 @@ public class SplashActivity extends AppCompatActivity
                     //  prefs.edit().putBoolean("firstrun", false).commit();
                     finish();
                 } else {
-                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                    finish();
+                    if( Pref.getValue(SplashActivity.this,"login_value","").equalsIgnoreCase("1"))
+                    {
+                        Utility.freeMemory();
+
+                        Intent userIntent = new Intent(SplashActivity.this, CardsActivity.class);
+                        userIntent.putExtra("viewpager_position", 0);
+                        startActivity(userIntent);
+                        finish();
+
+                    }
+                    else
+                    {
+                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                        finish();
+                    }
+
                 }
 
 

@@ -72,8 +72,9 @@
                         <include layout="@layout/include_layout_social"
                             android:id="@+id/include_layout_social"/>
 
-                        <include layout="@layout/include_layout_card_details"
-                            android:id="@+id/include_layout_details"/>
+                        <include
+                            android:id="@+id/include_layout_details"
+                            layout="@layout/include_layout_card_details" />
 
                     </LinearLayout>
 

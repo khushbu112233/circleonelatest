@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
@@ -115,6 +116,11 @@ public class ByNameFragment extends Fragment
                 String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
                 listView.setVisibility(View.VISIBLE);
                 tvDataInfo.setVisibility(View.GONE);
+                if (v != null) {
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+
                 if (netCheck == false){
                     Utility.freeMemory();
                     Toast.makeText(getContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
@@ -122,7 +128,7 @@ public class ByNameFragment extends Fragment
                 else {
 
                     connectTags.clear();
-                    new ByNameFragment.HttpAsyncTask().execute(Utility.BASE_URL + "SearchConnect");
+                    new HttpAsyncTask().execute(Utility.BASE_URL + "SearchConnect");
                 }
             }
         });
@@ -133,14 +139,17 @@ public class ByNameFragment extends Fragment
             {
                 listView.setVisibility(View.VISIBLE);
                 tvDataInfo.setVisibility(View.GONE);
-
+                if (v != null) {
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
                 if (netCheck == false){
                     Utility.freeMemory();
                     Toast.makeText(getContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
                 }
                 else {
                     connectTags.clear();
-                    new ByNameFragment.HttpAsyncTask().execute(Utility.BASE_URL + "SearchConnect");
+                    new HttpAsyncTask().execute(Utility.BASE_URL + "SearchConnect");
                 }
                 return true;
             }
@@ -156,8 +165,10 @@ public class ByNameFragment extends Fragment
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
+
                 if(s.length() == 0)
                 {
+
                     pageno = 1 ;
 //                    listView.setVisibility(View.GONE);
                     connectTags.clear();
@@ -222,7 +233,7 @@ public class ByNameFragment extends Fragment
             }
             else
             {
-                String loading = "Searching records" ;
+                String loading = "Searching" ;
                 CustomProgressDialog(loading,getActivity());
             }
         }
@@ -238,6 +249,7 @@ public class ByNameFragment extends Fragment
         {
             // dialog.dismiss();
             dismissProgress();
+
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
 
             try

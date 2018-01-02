@@ -265,7 +265,20 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
         fragmentProfileBinding.linkedInUrl.setOnClickListener(this);
         fragmentProfileBinding.txtMore.setOnClickListener(this);
         fragmentProfileBinding.imgAdd.setOnClickListener(this);
-        fragmentProfileBinding.includeFrame1.imgBack.setOnClickListener(this);
+        fragmentProfileBinding.includeFrame1.imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent go = new Intent(getContext(),CardsActivity.class);
+
+                // you pass the position you want the viewpager to show in the extra,
+                // please don't forget to define and initialize the position variable
+                // properly
+                go.putExtra("viewpager_position", 0);
+                startActivity(go);
+                getActivity().finish();
+                Utility.freeMemory();
+            }
+        });
         fragmentProfileBinding.includeFrame1.imgProfileShare.setOnClickListener(this);
         fragmentProfileBinding.includeFrame1.imgProfileMenu.setOnClickListener(this);
         fragmentProfileBinding.imgQR.setOnClickListener(this);
@@ -462,17 +475,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 //                intent.putExtra("ProfileId", TestimonialProfileId);
 //                startActivity(intent);
                 break;
-            case R.id.imgBack:
-                Intent go = new Intent(getContext(),CardsActivity.class);
 
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 0);
-                startActivity(go);
-                getActivity().finish();
-                Utility.freeMemory();
-                break;
             case R.id.imgProfileShare:
                 Utility.freeMemory();
                 Utility.deleteCache(getContext());
@@ -803,7 +806,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                                     {
                                         if(allTags.get(i).getCard_Front().equals(""))
                                         {
-                                            recycle_image1 =Utility.BASE_IMAGE_URL+"Cards/Back_for_all.jpg";
+                                            recycle_image1 ="";
                                         }
                                         else
                                         {
@@ -812,14 +815,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                                     }
                                     catch (Exception e)
                                     {
-                                        recycle_image1 =Utility.BASE_IMAGE_URL+"Cards/Back_for_all.jpg";
+                                        recycle_image1 ="";
                                     }
 
                                     try
                                     {
                                         if(allTags.get(i).getCard_Back().equals(""))
                                         {
-                                            recycle_image2 =Utility.BASE_IMAGE_URL+"Cards/Back_for_all.jpg";
+                                            recycle_image2 ="";
                                         }
                                         else
                                         {
@@ -828,7 +831,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                                     }
                                     catch (Exception e)
                                     {
-                                        recycle_image2 =Utility.BASE_IMAGE_URL+"Cards/Back_for_all.jpg";
+                                        recycle_image2 ="";
                                     }
 
                                     image = new ArrayList<>();
@@ -1571,7 +1574,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                     {
                         if(allTags.get(profileIndex).getCard_Front().equals(""))
                         {
-                            recycle_image1 =Utility.BASE_IMAGE_URL+"Cards/Back_for_all.jpg";
+                            recycle_image1 ="";
                         }
                         else
                         {
@@ -1580,14 +1583,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                     }
                     catch (Exception e)
                     {
-                        recycle_image1 =Utility.BASE_IMAGE_URL+"Cards/Back_for_all.jpg";
+                        recycle_image1 ="";
                     }
 
                     try
                     {
                         if(allTags.get(profileIndex).getCard_Back().equals(""))
                         {
-                            recycle_image2 =Utility.BASE_IMAGE_URL+"Cards/Back_for_all.jpg";
+                            recycle_image2 ="";
                         }
                         else
                         {
@@ -1596,7 +1599,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                     }
                     catch (Exception e)
                     {
-                        recycle_image2 =Utility.BASE_IMAGE_URL+"Cards/Back_for_all.jpg";
+                        recycle_image2 ="";
                     }
 
                     image.add(recycle_image1);

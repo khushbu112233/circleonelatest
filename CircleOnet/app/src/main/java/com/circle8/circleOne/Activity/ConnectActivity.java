@@ -204,7 +204,7 @@ public class ConnectActivity extends AppCompatActivity
         loginSession = new LoginSession(getApplicationContext());
         HashMap<String, String> user = loginSession.getUserDetails();
         user_id = user.get(LoginSession.KEY_USERID);
-
+        activityConnect2Binding.view2.setVisibility(View.INVISIBLE);
         if (friendProfile_id.equals(""))
         {
             Toast.makeText(ConnectActivity.this, "Do not have friend profile ID",Toast.LENGTH_LONG).show();
@@ -325,6 +325,8 @@ public class ConnectActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 Utility.freeMemory();
+
+                activityConnect2Binding.view2.setVisibility(View.VISIBLE);
                 boolean result = Utility.checkContactPermission(ConnectActivity.this);
                 if (result) {
                     //Boolean aBoolean = contactExists(getApplicationContext(), txtMob.getText().toString());
@@ -332,7 +334,7 @@ public class ConnectActivity extends AppCompatActivity
                     TranslateAnimation slide1 = new TranslateAnimation(0, -(motionLength+13), 0, 0);
                     slide1.setDuration(1000);
                     activityConnect2Binding.ivConnectImg.startAnimation(slide1);
-
+                    activityConnect2Binding.ivConnectImg.setVisibility(View.INVISIBLE);
                     //first things
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -364,6 +366,7 @@ public class ConnectActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                activityConnect2Binding.view2.setVisibility(View.VISIBLE);
                 Utility.freeMemory();
                 boolean result = Utility.checkContactPermission(ConnectActivity.this);
                 if (result) {
@@ -374,11 +377,12 @@ public class ConnectActivity extends AppCompatActivity
                         TranslateAnimation slide1 = new TranslateAnimation(0, (motionLength+13), 0, 0);
                         slide1.setDuration(1000);
                         activityConnect2Binding.ivConnectImg.startAnimation(slide1);
-
+                        activityConnect2Binding.ivConnectImg.setVisibility(View.INVISIBLE);
                         //first things
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
+
                                 activityConnect2Binding.ivAddRound.setImageResource(R.drawable.round_gray);
                                 activityConnect2Binding.tvAdd.setTextColor(getResources().getColor(R.color.unselected));
                                 tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
@@ -388,6 +392,7 @@ public class ConnectActivity extends AppCompatActivity
                                 go.putExtra("friendUserID", friendUserID);
                                 go.putExtra("profileName", profileName);
                                 startActivity(go);
+
                                 // finish();
                             }
                         }, 1700);
@@ -403,6 +408,7 @@ public class ConnectActivity extends AppCompatActivity
                         slide1.setDuration(1000);
                         activityConnect2Binding.ivConnectImg.startAnimation(slide1);
 
+                        activityConnect2Binding.ivConnectImg.setVisibility(View.INVISIBLE);
                         //first things
                         new Handler().postDelayed(new Runnable() {
                             @Override
@@ -692,6 +698,8 @@ public class ConnectActivity extends AppCompatActivity
                         tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
                         activityConnect2Binding.rlAdd.setEnabled(false);
                     } else {
+                        activityConnect2Binding.ivConnectImg.setVisibility(View.VISIBLE);
+                        activityConnect2Binding.view2.setVisibility(View.INVISIBLE);
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     }
                 }
@@ -736,6 +744,8 @@ public class ConnectActivity extends AppCompatActivity
     protected void onResume()
     {
         super.onResume();
+
+        activityConnect2Binding.ivConnectImg.setVisibility(View.VISIBLE);
         //new HttpAsyncTask().execute(Utility.BASE_URL+"ConnectProfile");
     }
 
@@ -851,7 +861,12 @@ public class ConnectActivity extends AppCompatActivity
                     Mobile1 = profile.getString("Mobile1");
                     Mobile2 = profile.getString("Mobile2");
 
-                    profileImg = Utility.BASE_IMAGE_URL+"UserProfile/"+profile.getString("UserPhoto");
+                    if(profile.getString("UserPhoto").equalsIgnoreCase(""))
+                    {
+                        profileImg = "";
+                    }else {
+                        profileImg = Utility.BASE_IMAGE_URL + "UserProfile/" + profile.getString("UserPhoto");
+                    }
                     displayProfile = profile.getString("UserPhoto");
                     profileName = profile.getString("FirstName")+" "+profile.getString("LastName");
 

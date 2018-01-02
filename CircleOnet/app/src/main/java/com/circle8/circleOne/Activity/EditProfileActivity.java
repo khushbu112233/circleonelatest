@@ -259,7 +259,12 @@ public class EditProfileActivity extends AppCompatActivity implements
         fragmentEditProfileBinding.imgGoogle.setOnClickListener(this);
         fragmentEditProfileBinding.txtAttachDelete.setOnClickListener(this);
         fragmentEditProfileBinding.imgFb.setOnClickListener(this);
-        fragmentEditProfileBinding.includeTop.imgBack.setOnClickListener(this);
+        fragmentEditProfileBinding.includeTop.imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         fragmentEditProfileBinding.imgLinkedin.setOnClickListener(this);
         fragmentEditProfileBinding.imgAdd.setOnClickListener(this);
         fragmentEditProfileBinding.ivAttachFrontImage.setOnClickListener(this);
@@ -602,9 +607,6 @@ public class EditProfileActivity extends AppCompatActivity implements
                 break;
             case R.id.imgGoogle:
                 signIn();
-                break;
-            case R.id.imgBack:
-                finish();
                 break;
             case R.id.txtAttachDelete:
                 fragmentEditProfileBinding.etAttachFile.setText("");

@@ -75,7 +75,7 @@ public class GeocodingLocation
                     {
                         message.what = 1;
                         Bundle bundle = new Bundle();
-                        result = "Address: " + locationAddress + "\n Unable to get Latitude and Longitude for this address location.";
+                        result =  locationAddress;
                         bundle.putString("address", result);
                         bundle.putString("message","Unable to get Latitude and Longitude for this address location.");
                         message.setData(bundle);

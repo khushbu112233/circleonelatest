@@ -38,9 +38,6 @@ import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 
-/**
- * Created by admin on 06/09/2017.
- */
 
 public class EventsAdapter  extends  RecyclerView.Adapter<EventsAdapter.MyViewHolder>
 {
@@ -105,7 +102,7 @@ public class EventsAdapter  extends  RecyclerView.Adapter<EventsAdapter.MyViewHo
                         }
                     });
         }
-        holder.ll_event.setOnClickListener(new View.OnClickListener() {
+      /*  holder.ll_event.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.e("ada","click");
@@ -113,7 +110,7 @@ public class EventsAdapter  extends  RecyclerView.Adapter<EventsAdapter.MyViewHo
                 Intent intent = new Intent(context, EventDetail.class);
                 context.startActivity(intent);
             }
-        });
+        });*/
     }
 
     @Override

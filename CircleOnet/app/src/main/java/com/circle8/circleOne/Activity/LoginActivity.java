@@ -59,6 +59,7 @@ import com.circle8.circleOne.Model.User;
 import com.circle8.circleOne.Model.UserObject;
 import com.circle8.circleOne.MultiContactPicker;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.PrefUtils;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.chat.ChatHelper;
@@ -210,7 +211,7 @@ public class LoginActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
-        Utility.freeMemory();
+
         TwitterAuthConfig authConfig = new TwitterAuthConfig(getString(R.string.twitter_consumer_key),
                 getString(R.string.twitter_consumer_secret));
         Fabric.with(this, new Twitter(authConfig));
@@ -1361,6 +1362,7 @@ public class LoginActivity extends AppCompatActivity implements
 
                                     prefs.edit().putBoolean("firstrun", false).commit();
                                 } else {
+                                    Pref.setValue(LoginActivity.this,"login_value","1");
                                     Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
                                     userIntent.putExtra("viewpager_position", 0);
                                     startActivity(userIntent);

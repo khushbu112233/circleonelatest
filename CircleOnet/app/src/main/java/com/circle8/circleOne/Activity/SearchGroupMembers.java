@@ -630,37 +630,14 @@ public class SearchGroupMembers extends AppCompatActivity
     public void CustomProgressDialog(final String loading)
     {
         activitySearchGroupMembersBinding.rlProgressDialog.setVisibility(View.VISIBLE);
-        activitySearchGroupMembersBinding.txtProgressing.setText(loading);
+        activitySearchGroupMembersBinding.txtProgressing.setText(loading+"...");
 
         Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anticlockwise);
         activitySearchGroupMembersBinding.imgConnecting1.startAnimation(anim);
         Animation anim1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.clockwise);
         activitySearchGroupMembersBinding.imgConnecting2.startAnimation(anim1);
 
-        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
-        for (int i = 350; i <= SPLASHTIME; i = i + 350)
-        {
-            final int j = i;
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run()
-                {
-                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
-                    {
-                        activitySearchGroupMembersBinding.txtProgressing.setText(loading+".");
-                    }
-                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
-                    {
-                        activitySearchGroupMembersBinding.txtProgressing.setText(loading+"..");
-                    }
-                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
-                    {
-                        activitySearchGroupMembersBinding.txtProgressing.setText(loading+"...");
-                    }
 
-                }
-            }, i);
-        }
     }
 
 }

@@ -217,7 +217,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:id="@+id/rlMyAccount"
             android:layout_below="@+id/llProfile">
             <com.circle8.circleOne.Utils.cgTextView
@@ -231,12 +230,26 @@
                 android:layout_marginLeft="10dp"/>
             <ImageView
                 android:id="@+id/ivEditImg"
-                android:layout_width="25dp"
-                android:layout_height="20dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:src="@drawable/pencil_edit_blue"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_marginBottom="5dp"
                 android:layout_marginRight="10dp"/>
+            <com.circle8.circleOne.Utils.HelveticaLightTextView
+                android:id="@+id/txtedit"
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:text="Edit"
+                android:layout_below="@id/ivEditImg"
+                android:textColor="@color/colorPrimary"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="10dp"
+                android:textSize="11sp"
+                android:gravity="center"
+                android:layout_marginRight="10dp"
+              />
         </RelativeLayout>
 
         <ScrollView
@@ -258,7 +271,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="15dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:weightSum="1">
@@ -563,7 +576,7 @@
                             app:ccp_defaultPhoneCode="65"
                             android:visibility="visible"
                             app:ccpDialog_searchEditTextTint="@color/colorPrimary"
-                            app:ccp_textSize="15dp"
+                            app:ccp_textSize="13sp"
                             app:ccpDialog_textColor="@color/colorPrimary"
                             app:ccp_contentColor="@color/black"
                             app:ccp_showNameCode="false"

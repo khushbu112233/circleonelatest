@@ -67,8 +67,25 @@ public class EventDetail extends AppCompatActivity implements View.OnClickListen
 
         new HttpAsyncTask().execute(Utility.BASE_URL+"Events/GetDetails");
 
-        imgBack.setOnClickListener(this);
-        imgDrawer.setOnClickListener(this);
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utility.freeMemory();
+                finish();
+            }
+        });
+        imgDrawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utility.freeMemory();
+                Intent go = new Intent(getApplicationContext(),EventsSelectOption.class);
+                // you pass the position you want the viewpager to show in the extra,
+                // please don't forget to define and initialize the position variable
+                // properly
+                startActivity(go);
+                finish();
+            }
+        });
         activityEventDetailBinding.imgCards.setOnClickListener(this);
         activityEventDetailBinding.txtRegister.setOnClickListener(this);
         activityEventDetailBinding.txtBook.setOnClickListener(this);
@@ -81,15 +98,6 @@ public class EventDetail extends AppCompatActivity implements View.OnClickListen
         int id = v.getId();
 
         switch (id) {
-            case R.id.drawer:
-                Utility.freeMemory();
-                Intent go = new Intent(getApplicationContext(),EventsSelectOption.class);
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                startActivity(go);
-                finish();
-                break;
             case R.id.imgCards:
                 Utility.freeMemory();
                 CardsActivity.mViewPager.setCurrentItem(0);
@@ -146,10 +154,7 @@ public class EventDetail extends AppCompatActivity implements View.OnClickListen
                 CardsActivity.mViewPager.setCurrentItem(1);
                 finish();
                 break;
-            case R.id.imgBack:
-                Utility.freeMemory();
-                finish();
-                break;
+
             case R.id.imgEvents:
                 Utility.freeMemory();
                 CardsActivity.mViewPager.setCurrentItem(2);

@@ -102,84 +102,89 @@
 
             <RelativeLayout
                 android:id="@+id/rlSocial"
-                android:layout_below="@+id/breakLine"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/breakLine"
+                android:layout_marginTop="15dp">
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_toLeftOf="@+id/rlConnectBox"
                     android:layout_height="1dp"
-                    android:textStyle="bold"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/rlConnectBox"
                     android:background="@color/colorAccent"
-                    android:layout_centerVertical="true"/>
+                    android:textStyle="bold" />
 
                 <RelativeLayout
+                    android:id="@+id/rlConnectBox"
                     android:layout_width="230dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:id="@+id/rlConnectBox">
+                    android:layout_centerInParent="true">
 
                     <RelativeLayout
                         android:id="@+id/rlAdd"
                         android:layout_width="40dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@+id/tvConnectLine1">
+
                         <ImageView
                             android:id="@+id/ivAddRound"
                             android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:src="@drawable/round_blue"
-                            android:layout_centerInParent="true" />
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/round_blue" />
+
                         <TextView
                             android:id="@+id/tvAdd"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
                             android:text="Add"
-                            android:textSize="10dp"
-                            android:textStyle="bold"
                             android:textColor="@color/colorPrimary"
-                            android:layout_centerInParent="true" />
+                            android:textSize="10dp"
+                            android:textStyle="bold" />
                     </RelativeLayout>
 
                     <View
                         android:id="@+id/tvConnectLine1"
-                        android:layout_width="50dp"
+                        android:layout_width="55dp"
                         android:layout_height="5dp"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/dotted"
-                        android:layerType="software"
-                        android:layout_toLeftOf="@+id/iv_ConnectImg"/>
-
-                    <ImageView
-                        android:id="@+id/iv_ConnectImg"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:padding="0dp"
-                        android:src="@drawable/ic_connect"
-                        android:background="@android:color/white"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginRight="0dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginTop="10dp" />
-
-                    <View
-                        android:layout_centerInParent="true"
-                        android:layout_width="50dp"
-                        android:layout_height="5dp"
-                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/iv_ConnectImg"
                         android:background="@drawable/dotted"
                         android:layerType="software" />
 
+                    <ImageView
+                        android:id="@+id/iv_ConnectImg"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignStart="@+id/view2"
+                        android:layout_centerVertical="true"
+                        android:background="@android:color/white"
+                        android:padding="0dp"
+                        android:src="@drawable/ic_connect" />
+
                     <View
-                        android:id="@+id/tvConnectLine2"
-                        android:layout_width="50dp"
+                        android:id="@+id/view2"
+                        android:layout_width="40dp"
                         android:layout_height="5dp"
+                        android:layout_centerInParent="true"
                         android:layout_centerVertical="true"
                         android:background="@drawable/dotted"
                         android:layerType="software"
-                        android:layout_toRightOf="@+id/iv_ConnectImg" />
+                        android:visibility="invisible" />
+
+                    <View
+                        android:id="@+id/tvConnectLine2"
+                        android:layout_width="55dp"
+                        android:layout_height="5dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/iv_ConnectImg"
+                        android:background="@drawable/dotted"
+                        android:layerType="software" />
 
                     <RelativeLayout
                         android:id="@+id/rlConnect"
@@ -187,32 +192,35 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_toRightOf="@+id/tvConnectLine2">
+
                         <ImageView
                             android:id="@+id/ivConnectRound"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:src="@drawable/round_blue"
-                            android:layout_centerInParent="true" />
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/round_blue" />
+
                         <TextView
                             android:id="@+id/tvConnect"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
                             android:text="Connect"
-                            android:textSize="9dp"
-                            android:textStyle="bold"
                             android:textColor="@color/colorPrimary"
-                            android:layout_centerInParent="true" />
+                            android:textSize="9dp"
+                            android:textStyle="bold" />
                     </RelativeLayout>
 
                 </RelativeLayout>
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_toRightOf="@+id/rlConnectBox"
                     android:layout_height="1dp"
-                    android:textStyle="bold"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/rlConnectBox"
                     android:background="@color/colorAccent"
-                    android:layout_centerVertical="true"/>
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 

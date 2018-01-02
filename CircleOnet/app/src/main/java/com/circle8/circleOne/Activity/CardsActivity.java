@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -75,6 +76,7 @@ import com.circle8.circleOne.chat.DialogsAdapter;
 import com.circle8.circleOne.chat.DialogsManager;
 import com.circle8.circleOne.chat.qb.QbChatDialogMessageListenerImp;
 import com.circle8.circleOne.chat.qb.QbDialogHolder;
+import com.circle8.circleOne.databinding.ActivityCardsBinding;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -152,6 +154,7 @@ import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
 import io.fabric.sdk.android.Fabric;
 
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 public class CardsActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks,
         ActivityCompat.OnRequestPermissionsResultCallback,
@@ -159,7 +162,8 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
 {
     public static CustomViewPager mViewPager;
     TabLayout tabLayout;
-    ImageView imgDrawer, imgLogo;
+    ImageView imgDrawer;
+    ImageView imgLogo;
     private int actionBarHeight;
     static TextView textView, txtNotificationCountAction;
     public static int position = 0, nested_position = 0;
@@ -180,12 +184,9 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
     boolean doubleBackToExitPressedOnce = false;
     private static final int CONTACT_PICKER_REQUEST = 991;
     private static final int PERMISSION_REQUEST_CONTACT = 111;
-
     private static final String TAG = CardsActivity.class.getSimpleName();
-
     private final static int PLAY_SERVICES_REQUEST = 1000;
     private final static int REQUEST_CHECK_SETTINGS = 2000;
-
     public static Location mLastLocation;
     GoogleSignInOptions gso;
     // Google client to interact with Google API
@@ -218,87 +219,35 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
     String CardCode = "";
     Boolean netCheck= false;
     public static final byte[] MIME_TEXT = "application/com.circle8.circleOne".getBytes();
+    ActivityCardsBinding activityCardsBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
+        Log.e("act","Card");
         TwitterAuthConfig authConfig = new TwitterAuthConfig(getString(R.string.twitter_consumer_key),
                 getString(R.string.twitter_consumer_secret));
         Fabric.with(this, new Twitter(authConfig));
 
-        setContentView(R.layout.activity_cards);
-
-        /*SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy  hh:mm:ss a");
-        String date1 = format.format(Date.parse(stringDate));
-
-        Toast.makeText(getApplicationContext(), "Time: " + date1, Toast.LENGTH_LONG).show();   */
-        Utility.freeMemory();
-        Utility.deleteCache(getApplicationContext());
-
+        activityCardsBinding = DataBindingUtil.setContentView(this,R.layout.activity_cards);
         netCheck = Utility.isNetworkAvailable(getApplicationContext());
-
         referralCodeSession = new ReferralCodeSession(getApplicationContext());
         HashMap<String, String> referral = referralCodeSession.getReferralDetails();
         refer = referral.get(ReferralCodeSession.KEY_REFERRAL);
         mAuth = FirebaseAuth.getInstance();
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
         Bundle extras = getIntent().getExtras();
         permissionUtils = new PermissionUtils(CardsActivity.this);
-        Utility.freeMemory();
-        permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
-        permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
-
         permissionUtils.check_permission(permissions,"Need GPS permission for getting your location",1);
 
         if (extras != null) {
             position = extras.getInt("viewpager_position");
             nested_position = extras.getInt("nested_viewpager_position");
         }
-
-        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-
-        session = new LoginSession(getApplicationContext());
-
         new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
-        HashMap<String, String> user = session.getUserDetails();
-
-
-        UserId = user.get(LoginSession.KEY_USERID);      // name
-        profileId = user.get(LoginSession.KEY_PROFILEID);
-        User_name = user.get(LoginSession.KEY_NAME);
-        String email = user.get(LoginSession.KEY_EMAIL);    // email
-        String image = user.get(LoginSession.KEY_IMAGE);
-        String gender = user.get(LoginSession.KEY_GENDER);
-        Connection_Limit = user.get(LoginSession.KEY_CONNECTION_LIMIT);
-        Connection_Left = user.get(LoginSession.KEY_CONNECTION_LEFT);
-//        Toast.makeText(getApplicationContext(), name + " " + email + " " + image + " " + gender, Toast.LENGTH_LONG).show();
-
-        try {
-            if (Connection_Limit.equalsIgnoreCase("100000")) {
-                Connection_Limit = DecimalFormatSymbols.getInstance().getInfinity();
-            }
-        }catch (Exception e){
-
-        }
-
-        if (checkPlayServices()) {
-            Utility.freeMemory();
-            Utility.deleteCache(getApplicationContext());
-
-            // Building the GoogleApi client
-            buildGoogleApiClient();
-        }
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
-        if (mNfcAdapter != null) {
-            //txtNoGroup.setText("Read an NFC tag");
-        } else {
-        }
 
         // create an intent with tag data and deliver to this activity
         mPendingIntent = PendingIntent.getActivity(this, 0,
@@ -792,6 +741,13 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             // db.getAllNFC();
             //SQLiteDatabase sqLiteDatabase = db.getReadableDatabase();
             //- db.onCreate(sqLiteDatabase);
+
+
+            gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestEmail()
+                    .build();
+
+            session = new LoginSession(getApplicationContext());
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
             final ActionBar actionBar = getSupportActionBar();
             getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -815,6 +771,34 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             tabLayout = (TabLayout) findViewById(R.id.tabs);
             tabLayout.setupWithViewPager(mViewPager);
             tabLayout.setSelectedTabIndicatorColor(getResources().getColor(android.R.color.white));
+            HashMap<String, String> user = session.getUserDetails();
+
+
+            UserId = user.get(LoginSession.KEY_USERID);      // name
+            profileId = user.get(LoginSession.KEY_PROFILEID);
+            User_name = user.get(LoginSession.KEY_NAME);
+            String email = user.get(LoginSession.KEY_EMAIL);    // email
+            String image = user.get(LoginSession.KEY_IMAGE);
+            String gender = user.get(LoginSession.KEY_GENDER);
+            Connection_Limit = user.get(LoginSession.KEY_CONNECTION_LIMIT);
+            Connection_Left = user.get(LoginSession.KEY_CONNECTION_LEFT);
+//        Toast.makeText(getApplicationContext(), name + " " + email + " " + image + " " + gender, Toast.LENGTH_LONG).show();
+
+            try {
+                if (Connection_Limit.equalsIgnoreCase("100000")) {
+                    Connection_Limit = DecimalFormatSymbols.getInstance().getInfinity();
+                }
+            }catch (Exception e){
+
+            }
+            if (checkPlayServices()) {
+                Utility.freeMemory();
+                Utility.deleteCache(getApplicationContext());
+
+                // Building the GoogleApi client
+                buildGoogleApiClient();
+            }
+
         }
 
         @Override
@@ -1305,10 +1289,14 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
+        @Override
+        public void restoreState(Parcelable arg0, ClassLoader arg1) {
+            //do nothing here! no call to super.restoreState(arg0, arg1);
+        }
 
         @Override
         public Fragment getItem(int position) {
-            Utility.freeMemory();
+
             if (position == 0) {
                 // getSupportActionBar().show();
                 // setActionBarTitle("Connect");
@@ -1491,10 +1479,10 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
 
-    @Override
+   /* @Override
     public void onResume() {
         super.onResume();
-        Utility.freeMemory();
+
         checkPlayServices();
 
         if (mViewPager.getCurrentItem() == 2){
@@ -1531,10 +1519,10 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                                     String textEncoding = ((payload[0] & 0200) == 0) ? "UTF-8" : "UTF-16";
                                     int langCodeLen = payload[0] & 0077;
 
-                                    /*s += ("\n" +
+                                    String s = ("\n" +
                                             new String(payload, langCodeLen + 1,
-                                                    payload.length - langCodeLen - 1, textEncoding) );
-*/
+                                                    payload.length - langCodeLen - 1, textEncoding));
+
                                     String s1 = new String(payload, langCodeLen + 1,
                                             payload.length - langCodeLen - 1, textEncoding);
                                     String decryptstr = decrypt(s1, secretKey);
@@ -1606,7 +1594,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 }
 
                 // Toast.makeText(getApplicationContext(), String.valueOf(latitude + " " + longitude), Toast.LENGTH_LONG).show();
-              /*  try {
+                try {
 
                     nfcProfileId = decrypt(ProfileId, secretKey);
                     if (!card_code.equals("")){
@@ -1635,7 +1623,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                     byte[] payload = msgs[0].getRecords()[0].getPayload();
 
                     String message = new String(payload);
-                 把tag的資訊放到textview裡面
+                 
                     // mEtMessage.setText(new String(payload));
                     done = true;
 //                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
@@ -1668,7 +1656,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                         }
 
 
-                }*/
+                }
             }
         }
 
@@ -1697,16 +1685,9 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             CardsActivity.setActionBarTitle("Connect");
         }
     }
+*/
 
 
-    /* @Override
-     public void onResume() {
-         super.onResume();
-
-         if (mNfcAdapter != null)
-             mNfcAdapter.enableForegroundDispatch(this, mPendingIntent, mIntentFilters, mNFCTechLists);
-     }
- */
     @Override
     public void onPause() {
         Utility.freeMemory();

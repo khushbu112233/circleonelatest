@@ -2,6 +2,7 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android">
     <RelativeLayout
+        android:id="@+id/rel_actionbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -17,8 +18,8 @@
                 android:id="@+id/imgLogo"
                 android:tint="@color/white"
                 android:src="@drawable/login_logo"
-                android:layout_width="30dp"
-                android:layout_height="25dp" />
+                android:layout_width="35dp"
+                android:layout_height="30dp" />
 
             <com.circle8.circleOne.Utils.CircularTextView
                 android:visibility="gone"
