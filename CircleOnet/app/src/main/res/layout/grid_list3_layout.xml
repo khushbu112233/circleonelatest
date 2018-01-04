@@ -5,7 +5,6 @@
     android:id="@+id/swipe"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    swipe:dragEdge="right"
     swipe:leftEdgeSwipeOffset="0dp"
     swipe:rightEdgeSwipeOffset="0dp">
     <FrameLayout
@@ -198,7 +197,7 @@
                 android:layout_marginLeft="5dp"
                 android:visibility="visible"
                 android:id="@+id/textList3"
-                android:layout_width="150dp"
+                android:layout_width="100dp"
                 android:layout_height="90dp"
                 android:textSize="12sp" />
 

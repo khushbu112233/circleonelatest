@@ -108,7 +108,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         myAccountBinding = DataBindingUtil.setContentView(this,R.layout.my_account);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
+        myAccountBinding.txtedit.setVisibility(View.VISIBLE);
         session = new LoginSession(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
         user_id = user.get(LoginSession.KEY_USERID);
@@ -429,7 +429,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
     protected void onResume()
     {
         super.onResume();
-
+        myAccountBinding.txtedit.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -564,6 +564,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
             myAccountBinding.rlFemale.setEnabled(true);
             myAccountBinding.rlMale.setEnabled(true);
             myAccountBinding.ivEditImg.setImageResource(R.drawable.ic_edit_white);
+            myAccountBinding.txtedit.setVisibility(View.INVISIBLE);
         }
         if ( v == imgBack)
         {

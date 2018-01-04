@@ -77,7 +77,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         activityRewardsPointsBinding = DataBindingUtil.setContentView(this,R.layout.activity_rewards_points);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        loginSession = new LoginSession(getApplicationContext());
+        loginSession = new LoginSession(RewardsPointsActivity.this);
         HashMap<String, String> user = loginSession.getUserDetails();
         userId = user.get(LoginSession.KEY_USERID);
         imgBack = (ImageView)findViewById(R.id.imgBack);
@@ -90,12 +90,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         imgBack.setOnClickListener(this);
 
         new HttpAsyncGetAll().execute(Utility.BASE_URL+"Merchant/GetAll");                          //get
-        new HttpAsyncGetHistoryReedemedPoints().execute(Utility.BASE_URL+"Rewards/History_ReedemedPoints");           // post
-//        new HttpAsyncGetProductCategory().execute(Utility.MERCHANT_BASE_URL+"GetProductCategory");                 //get
-//        new HttpAsyncGetProduct().execute(Utility.MERCHANT_BASE_URL+"GetProducts");                               //get
-//        new HttpAsyncGetProductByCategory().execute(Utility.MERCHANT_BASE_URL+"GetProductsByCategory");           // post
-        new HttpAsyncGetBalance().execute(Utility.BASE_URL+"Rewards/GetBalance");                                 // post
-        new HttpAsyncGetHistoryEarnedPoints().execute(Utility.BASE_URL+"Rewards/History_EarnedPoints");           // post
+                 // post
 
     }
 
@@ -381,12 +376,12 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         {
             super.onPreExecute();
             /*dialog = new ProgressDialog(RewardsPointsActivity.this);
-            dialog.setMessage("Get All..");
+            dialog.setMessage("Fetching prodcuts..");
             dialog.show();
             dialog.setCancelable(false);*/
 
-            String loading = "Get all" ;
-            CustomProgressDialog(loading,getApplicationContext());
+            String loading = "Fetching prodcuts" ;
+            CustomProgressDialog(loading,RewardsPointsActivity.this);
         }
 
         @Override
@@ -399,7 +394,8 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         {
 //            dialog.dismiss();
             dismissProgress();
-//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            new HttpAsyncGetHistoryReedemedPoints().execute(Utility.BASE_URL+"Rewards/History_ReedemedPoints");           // post
+
             try
             {
                 if (result != null)
@@ -515,7 +511,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                     }
                     else
                     {
-                        Toast.makeText(getApplicationContext(), "No product found", Toast.LENGTH_LONG).show();
+                        Toast.makeText(RewardsPointsActivity.this, "No product found", Toast.LENGTH_LONG).show();
                     }
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
                 }
@@ -589,7 +585,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
             dialog.setCancelable(false);*/
 
             String loading = "Get product category" ;
-            CustomProgressDialog(loading,getApplicationContext());
+            CustomProgressDialog(loading,RewardsPointsActivity.this);
         }
 
         @Override
@@ -602,7 +598,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         {
 //            dialog.dismiss();
             dismissProgress();
-//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+//            Toast.makeText(RewardsPointsActivity.this, result, Toast.LENGTH_LONG).show();
             try
             {
                 if (result != null)
@@ -623,7 +619,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                     }
                     else
                     {
-                        Toast.makeText(getApplicationContext(), "No product found", Toast.LENGTH_LONG).show();
+                        Toast.makeText(RewardsPointsActivity.this, "No product found", Toast.LENGTH_LONG).show();
                     }
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
                 }
@@ -690,7 +686,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
             dialog.setCancelable(false);*/
 
             String loading = "Get products" ;
-            CustomProgressDialog(loading,getApplicationContext());
+            CustomProgressDialog(loading,RewardsPointsActivity.this);
         }
 
         @Override
@@ -703,7 +699,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         {
 //            dialog.dismiss();
             dismissProgress();
-//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+//            Toast.makeText(RewardsPointsActivity.this, result, Toast.LENGTH_LONG).show();
             try
             {
                 if (result != null)
@@ -732,7 +728,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                     }
                     else
                     {
-                        Toast.makeText(getApplicationContext(), "No product found", Toast.LENGTH_LONG).show();
+                        Toast.makeText(RewardsPointsActivity.this, "No product found", Toast.LENGTH_LONG).show();
                     }
                 }
                 else
@@ -798,7 +794,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
             dialog.setCancelable(false);*/
 
             String loading = "Get product by category" ;
-            CustomProgressDialog(loading,getApplicationContext());
+            CustomProgressDialog(loading,RewardsPointsActivity.this);
         }
 
         @Override
@@ -811,7 +807,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         {
 //            dialog.dismiss();
             dismissProgress();
-//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+//            Toast.makeText(RewardsPointsActivity.this, result, Toast.LENGTH_LONG).show();
             try
             {
                 if (result != null)
@@ -843,7 +839,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                     }
                     else
                     {
-                        Toast.makeText(getApplicationContext(), "No product found", Toast.LENGTH_LONG).show();
+                        Toast.makeText(RewardsPointsActivity.this, "No product found", Toast.LENGTH_LONG).show();
                     }
                 }
                 else
@@ -927,7 +923,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
             dialog.setCancelable(false);*/
 
             String loading = "Get balance" ;
-            CustomProgressDialog(loading,getApplicationContext());
+            //CustomProgressDialog(loading,RewardsPointsActivity.this);
         }
 
         @Override
@@ -939,8 +935,9 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            dismissProgress();
-//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            //dismissProgress();
+            new HttpAsyncGetHistoryEarnedPoints().execute(Utility.BASE_URL+"Rewards/History_EarnedPoints");
+//            Toast.makeText(RewardsPointsActivity.this, result, Toast.LENGTH_LONG).show();
             try
             {
                 if (result != null)
@@ -1034,7 +1031,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
             dialog.setCancelable(false);*/
 
             String loading = "Fetching products" ;
-            CustomProgressDialog(loading,getApplicationContext());
+            //CustomProgressDialog(loading,RewardsPointsActivity.this);
         }
 
         @Override
@@ -1046,8 +1043,8 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            dismissProgress();
-//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+           // dismissProgress();
+//            Toast.makeText(RewardsPointsActivity.this, result, Toast.LENGTH_LONG).show();
             try
             {
                 if (result != null)
@@ -1091,7 +1088,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                         else
                         {
                             activityRewardsPointsBinding.icdEarnPointLayout.tvEarnListInfo.setVisibility(View.VISIBLE);
-//                        Toast.makeText(getApplicationContext(), "No EarnPoints Avail", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(RewardsPointsActivity.this, "No EarnPoints Avail", Toast.LENGTH_LONG).show();
                         }
                     }
                     catch (JSONException e)
@@ -1103,7 +1100,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                 else
                 {
 //                    activityRewardsPointsBinding.icdEarnPointLayout.tvEarnListInfo.setVisibility(View.VISIBLE);
-//                     Toast.makeText(getApplicationContext(), "Not able to load ..", Toast.LENGTH_LONG).show();
+//                     Toast.makeText(RewardsPointsActivity.this, "Not able to load ..", Toast.LENGTH_LONG).show();
                 }
             }
             catch (JSONException e) {
@@ -1180,7 +1177,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
             dialog.setCancelable(false);*/
 
             String loading = "Get history redeem points" ;
-            CustomProgressDialog(loading,getApplicationContext());
+            //CustomProgressDialog(loading,RewardsPointsActivity.this);
         }
 
         @Override
@@ -1192,8 +1189,10 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            dismissProgress();
-            // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            //dismissProgress();
+            // Toast.makeText(RewardsPointsActivity.this, result, Toast.LENGTH_LONG).show();
+            new HttpAsyncGetBalance().execute(Utility.BASE_URL+"Rewards/GetBalance");                                 // post
+
             try
             {
                 if (result != null)
@@ -1254,7 +1253,7 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
                     else
                     {
                         activityRewardsPointsBinding.icdHistoryListviewLayout.tvHistoryListInfo.setVisibility(View.VISIBLE);
-//                        Toast.makeText(getApplicationContext(), "No Redeem Points Avail", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(RewardsPointsActivity.this, "No Redeem Points Avail", Toast.LENGTH_LONG).show();
                     }
                 }
                 else

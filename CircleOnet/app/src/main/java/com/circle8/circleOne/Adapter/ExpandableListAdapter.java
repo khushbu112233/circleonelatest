@@ -24,18 +24,18 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ExpandableListAdapter extends BaseExpandableListAdapter
 {
     private Activity context;
-    private Map<String, List<String>> laptopCollections;
+    private Map<String,String> laptopCollections;
     private List<String> laptops;
 
     public ExpandableListAdapter(Activity context, List<String> laptops,
-                                 Map<String, List<String>> laptopCollections) {
+                                 Map<String,String> laptopCollections) {
         this.context = context;
         this.laptopCollections = laptopCollections;
         this.laptops = laptops;
     }
 
     public Object getChild(int groupPosition, int childPosition) {
-        return laptopCollections.get(laptops.get(groupPosition)).get(childPosition);
+        return laptopCollections.get(laptops.get(groupPosition));
     }
 
     public long getChildId(int groupPosition, int childPosition) {
@@ -104,18 +104,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 
     public int getChildrenCount(int groupPosition)
     {
-        try
-        {
-            if (laptopCollections.get(laptops.get(groupPosition)).size() != 0)
-            {
-                return laptopCollections.get(laptops.get(groupPosition)).size();
-            }
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        return 0 ;
+
+        return 1 ;
     }
 
     public Object getGroup(int groupPosition) {

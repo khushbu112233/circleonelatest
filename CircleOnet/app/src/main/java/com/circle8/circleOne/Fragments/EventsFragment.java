@@ -2,8 +2,10 @@ package com.circle8.circleOne.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Movie;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,12 +29,16 @@ import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.circle8.circleOne.Activity.EventDetail;
 import com.circle8.circleOne.Activity.EventsSelectOption;
 import com.circle8.circleOne.Adapter.EventsAdapter;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.EventModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Pref;
+import com.circle8.circleOne.Utils.RecyclerTouchListener;
 import com.circle8.circleOne.Utils.Utility;
 
 import org.apache.http.HttpResponse;
@@ -115,9 +121,24 @@ public class EventsFragment extends Fragment
         ivConnecting1 = (ImageView)view.findViewById(R.id.imgConnecting1) ;
         ivConnecting2 = (ImageView)view.findViewById(R.id.imgConnecting2) ;
         final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext.getApplicationContext());
-
         listView.setLayoutManager(mLayoutManager);
         listView.setItemAnimator(new DefaultItemAnimator());
+        listView.setHasFixedSize(true);
+
+        listView.addOnItemTouchListener(new RecyclerTouchListener(mContext, listView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Log.e("ada","click");
+                Pref.setValue(mContext,"Event_ID",eventModelArrayList.get(position).getEvent_ID());
+                Intent intent = new Intent(mContext, EventDetail.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
         if (EventsSelectOption.searchOpt.equals("AllEvents"))
         {
             callFirst();
@@ -620,7 +641,7 @@ public class EventsFragment extends Fragment
 
 
 
-    private static class HttpAsyncTaskSearchEvent extends AsyncTask<String, Void, String>
+    public static class HttpAsyncTaskSearchEvent extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
 

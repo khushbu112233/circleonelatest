@@ -341,7 +341,7 @@ public class NotificationAdapter extends BaseAdapter
                 holder.txtRequestedTestReq.setVisibility(View.VISIBLE);
             }*/
 
-            holder.txtTestPurpose.setText(purpose);
+            holder.txtTestPurpose.setText("I would like to receive a testimonial from you!");
             holder.txtTestName.setText(testimonialModels.get(position).getFirstName() + " " + testimonialModels.get(position).getLastName());
         }
 
@@ -505,6 +505,7 @@ public class NotificationAdapter extends BaseAdapter
                 holder.txtFriendPurpose.setText("I would like to receive a testimonial from you!");
             }
             else {
+
                 holder.txtFriendPurpose.setText(purpose);
             }
             holder.txtFriendName.setText(testimonialModels.get(position).getFirstName() + " " + testimonialModels.get(position).getLastName());

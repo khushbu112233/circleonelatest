@@ -2,9 +2,11 @@ package com.circle8.circleOne;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -42,6 +44,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -52,11 +55,15 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+
 public class MultiContactPickerActivity extends AppCompatActivity implements MaterialSearchView.OnQueryTextListener {
 
     public static final String EXTRA_RESULT_SELECTION = "extra_result_selection";
     private FastScrollRecyclerView recyclerView;
     private List<Contact> contactList = new ArrayList<>();
+    private List<Contact> contactList1 = new ArrayList<>();
     private TextView tvSelectBtn, tvCancel;
     private MultiContactPickerAdapter adapter;
     private Toolbar toolbar;
@@ -67,7 +74,10 @@ public class MultiContactPickerActivity extends AppCompatActivity implements Mat
     String user_id, profile_id;
     LoginSession loginSession;
     JSONArray selectedStrings;
+    Cursor cursor ;
+    String name, phonenumber,id ;
 
+    ArrayList<String> StoreContacts ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +110,7 @@ public class MultiContactPickerActivity extends AppCompatActivity implements Mat
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
-        adapter = new MultiContactPickerAdapter(contactList, new MultiContactPickerAdapter.ContactSelectListener() {
+        adapter = new MultiContactPickerAdapter(contactList1, new MultiContactPickerAdapter.ContactSelectListener() {
             @Override
             public void onContactSelected(Contact contact, int totalSelectedContacts) {
                 tvSelectBtn.setEnabled(totalSelectedContacts > 0);
@@ -112,8 +122,8 @@ public class MultiContactPickerActivity extends AppCompatActivity implements Mat
             }
         });
 
-        loadContacts();
-
+        //loadContacts();
+        loadContacts1();
         recyclerView.setAdapter(adapter);
 
         tvSelectBtn.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +135,7 @@ public class MultiContactPickerActivity extends AppCompatActivity implements Mat
                 ArrayList<String> arrayList = new ArrayList<String>();
                 for (int i = 0; i < results.size(); i++) {
 
-                    String num = results.get(i).getPhoneNumbers().toString();
+                    String num = results.get(i).getPhoneNumbers();
                     //arrayList.add(num);
                     if (num.contains("+")){
                         num = num.replaceAll("\\+", "");
@@ -135,13 +145,13 @@ public class MultiContactPickerActivity extends AppCompatActivity implements Mat
                         num = num.replaceAll(" ", "");
                     }
                     arrayList.add(num);
-                   // Toast.makeText(getApplicationContext(), num, Toast.LENGTH_LONG).show();
-                    Log.d("MyTag", results.get(i).getPhoneNumbers().toString());
+                    // Toast.makeText(getApplicationContext(), num, Toast.LENGTH_LONG).show();
+                    //Log.d("MyTag", results.get(i).getPhoneNumbers().toString());
                 }
                 selectedStrings = new JSONArray(arrayList);
                 new HttpAsyncTaskImportContacts().execute(Utility.BASE_URL+"ImportContacts");
-               // setResult(RESULT_OK, result);
-               // finish();
+                // setResult(RESULT_OK, result);
+                // finish();
             }
         });
 
@@ -163,13 +173,8 @@ public class MultiContactPickerActivity extends AppCompatActivity implements Mat
         protected void onPreExecute()
         {
             super.onPreExecute();
-          /*  dialog = new ProgressDialog(ContactsImportActivity.this);
-            dialog.setMessage("Sending Request...");
-            dialog.show();
-            dialog.setCancelable(false);*/
+                    String loading = "Sending Request" ;
 
-            String loading = "Sending Request" ;
-           // CustomProgressDialog(loading);
         }
 
         @Override
@@ -177,12 +182,12 @@ public class MultiContactPickerActivity extends AppCompatActivity implements Mat
         {
             return ContactUploadPost(urls[0]);
         }
-        // onPostExecute displays the results of the AsyncTask.
+
         @Override
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-           // rlProgressDialog.setVisibility(View.GONE);
+            // rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -271,17 +276,7 @@ public class MultiContactPickerActivity extends AppCompatActivity implements Mat
         return result;
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException
-    {
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while((line = bufferedReader.readLine()) != null)
-            result += line;
 
-        inputStream.close();
-        return result;
-    }
 
     private void initialiseUI(MultiContactPicker.Builder builder){
         setSupportActionBar(toolbar);
@@ -308,7 +303,62 @@ public class MultiContactPickerActivity extends AppCompatActivity implements Mat
         }
         return super.onOptionsItemSelected(item);
     }
+    private void loadContacts1(){
 
+        contactList.clear();
+        cursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,null, null, null);
+
+        while (cursor.moveToNext()) {
+            Contact contact =new Contact();
+
+            name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+            phonenumber = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+            id = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID));
+            contact.setDisplayName(name);
+            contact.setmPhoneNumbers(phonenumber);
+            contact.setContact_id(id);
+            contactList.add(contact);
+
+        }
+         contactList1.clear();
+
+        for(int i=0;i<contactList.size();i++)
+        {
+            if(i==0)
+            {
+                Contact contact = new Contact();
+                contact.setDisplayName(contactList.get(i).getDisplayName());
+                contact.setmPhoneNumbers(contactList.get(i).getmPhoneNumbers());
+                contact.setContact_id(contactList.get(i).getContact_id());
+                contactList1.add(contact);
+
+            }
+            else {
+
+                if(!contactList.get(i).getDisplayName().equalsIgnoreCase(contactList.get(i-1).getDisplayName())&&!contactList.get(i).getmPhoneNumbers().equalsIgnoreCase(contactList.get(i-1).getmPhoneNumbers()))
+                {
+                    Contact contact = new Contact();
+                    contact.setDisplayName(contactList.get(i).getDisplayName());
+                    contact.setmPhoneNumbers(contactList.get(i).getmPhoneNumbers());
+                    contact.setContact_id(contactList.get(i).getContact_id());
+                    contactList1.add(contact);
+                }
+            }
+        }
+
+        Collections.sort(contactList1, new Comparator<Contact>() {
+            public int compare(Contact o1, Contact o2) {
+                return o1.mDisplayName.compareTo(o2.mDisplayName);
+            }
+        });
+        if(adapter != null && contactList1.size() > 0){
+            adapter.notifyDataSetChanged();
+        }
+        progressBar.setVisibility(View.GONE);
+        cursor.close();
+
+
+    }
     private void loadContacts(){
         progressBar.setVisibility(View.VISIBLE);
         RxContacts.fetch(this)

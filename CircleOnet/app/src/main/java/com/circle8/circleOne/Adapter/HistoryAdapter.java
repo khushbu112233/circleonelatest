@@ -2,12 +2,18 @@ package com.circle8.circleOne.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.Model.HistoryModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
@@ -51,6 +57,8 @@ public class HistoryAdapter extends BaseAdapter
     {
         TextView tvUserName, tvHistoryStatus, tvHistoryDate ;
         CircleImageView imgProfile ;
+        ProgressBar progressBar1;
+        FrameLayout fm_img;
     }
 
     @Override
@@ -69,6 +77,8 @@ public class HistoryAdapter extends BaseAdapter
             holder.tvHistoryStatus = (TextView)row.findViewById(R.id.tvHistoryStatus);
             holder.tvHistoryDate = (TextView)row.findViewById(R.id.tvHistoryDate);
             holder.imgProfile = (CircleImageView)row.findViewById(R.id.imgProfile);
+            holder.progressBar1= (ProgressBar)row.findViewById(R.id.progressBar1);
+            holder.fm_img = (FrameLayout) row.findViewById(R.id.fm_img);
 
             row.setTag(holder);
         }
@@ -83,12 +93,23 @@ public class HistoryAdapter extends BaseAdapter
 
         if (historyModelArrayList.get(position).getUserPhoto().equals(""))
         {
+            holder.progressBar1.setVisibility(View.GONE);
             holder.imgProfile.setImageResource(R.drawable.usr);
         }
         else
         {
-            Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/"+historyModelArrayList.get(position).getUserPhoto())
-                    .resize(300,300).onlyScaleDown().skipMemoryCache().into(holder.imgProfile);
+            holder.progressBar1.setVisibility(View.VISIBLE);
+            final ViewHolder finalHolder = holder;
+            Glide.with(activity).load(Utility.BASE_IMAGE_URL+"UserProfile/"+historyModelArrayList.get(position).getUserPhoto())
+                    .asBitmap()
+                    .into(new BitmapImageViewTarget(finalHolder.imgProfile) {
+                        @Override
+                        public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                            super.onResourceReady(drawable, anim);
+                            finalHolder.progressBar1.setVisibility(View.GONE);
+                            finalHolder.imgProfile.setImageBitmap(drawable);
+                        }
+                    });
         }
 
         return row;

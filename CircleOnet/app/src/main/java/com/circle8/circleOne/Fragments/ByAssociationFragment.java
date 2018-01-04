@@ -15,6 +15,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.TextView;
@@ -96,6 +97,10 @@ public class ByAssociationFragment  extends Fragment implements View.OnClickList
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
+                if (v != null) {
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
                 Utility.freeMemory();
                 if (netCheck == false){
                     Utility.freeMemory();
@@ -161,6 +166,10 @@ public class ByAssociationFragment  extends Fragment implements View.OnClickList
 
         switch (id) {
             case R.id.imgSearch:
+                if (v != null) {
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
                 String text = fragmentConnectListBinding.searchView.getText().toString().toLowerCase(Locale.getDefault());
                 Utility.freeMemory();
                 String Findby = "name";
@@ -199,7 +208,7 @@ public class ByAssociationFragment  extends Fragment implements View.OnClickList
     }
 
     private void makeJsonObjectRequest() {
-        String loading = "Searching records" ;
+        String loading = "Searching" ;
         CustomProgressDialog(loading,context);
 
         JSONObject jsonObject = new JSONObject();
@@ -358,7 +367,7 @@ public class ByAssociationFragment  extends Fragment implements View.OnClickList
             }
             else
             {
-                String loading = "Searching records" ;
+                String loading = "Searching" ;
                 CustomProgressDialog(loading,context);
             }
         }

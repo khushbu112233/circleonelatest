@@ -2,10 +2,14 @@ package com.circle8.circleOne.Activity;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.ActivityConnect5Binding;
@@ -704,6 +708,16 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             }
             else
             {
+           /*     Glide.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto7)
+                        .asBitmap()
+                        .placeholder(R.drawable.usr2)
+                        .into(new BitmapImageViewTarget(activityConnect5Binding.ivProfile7) {
+                            @Override
+                            public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                                super.onResourceReady(drawable, anim);
+                                activityConnect5Binding.ivProfile7.setImageBitmap(drawable);
+                            }
+                        });*/
                 Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+userPhoto7)
                         .resize(300,300).onlyScaleDown().skipMemoryCache()
                         .into(activityConnect5Binding.ivProfile7);
@@ -714,14 +728,11 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+                CardsActivity.mViewPager.setCurrentItem(0);
+                ConnectActivity.kill();
+                Connect3Activity.kill();
+                Connect4Activity.kill();
 
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 0);
-
-                startActivity(go);
                 finish();
             }
         });
@@ -730,14 +741,11 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+                CardsActivity.mViewPager.setCurrentItem(1);
+                ConnectActivity.kill();
+                Connect3Activity.kill();
+                Connect4Activity.kill();
 
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 1);
-
-                startActivity(go);
                 finish();
             }
         });
@@ -746,14 +754,11 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+                CardsActivity.mViewPager.setCurrentItem(2);
+                ConnectActivity.kill();
+                Connect3Activity.kill();
+                Connect4Activity.kill();
 
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 2);
-
-                startActivity(go);
                 finish();
             }
         });
@@ -762,14 +767,11 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View v) {
                 Utility.freeMemory();
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
+                CardsActivity.mViewPager.setCurrentItem(3);
+                ConnectActivity.kill();
+                Connect3Activity.kill();
+                Connect4Activity.kill();
 
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 3);
-
-                startActivity(go);
                 finish();
             }
         });

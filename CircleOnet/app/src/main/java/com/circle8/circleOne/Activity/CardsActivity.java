@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -75,6 +76,7 @@ import com.circle8.circleOne.chat.DialogsAdapter;
 import com.circle8.circleOne.chat.DialogsManager;
 import com.circle8.circleOne.chat.qb.QbChatDialogMessageListenerImp;
 import com.circle8.circleOne.chat.qb.QbDialogHolder;
+import com.circle8.circleOne.databinding.ActivityCardsBinding;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -151,15 +153,18 @@ import be.appfoundry.nfclibrary.utilities.interfaces.NfcReadUtility;
 import be.appfoundry.nfclibrary.utilities.sync.NfcReadUtilityImpl;
 import io.fabric.sdk.android.Fabric;
 
+import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
 public class CardsActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks,
         ActivityCompat.OnRequestPermissionsResultCallback,
-        PermissionUtils.PermissionResultCallback, DialogsManager.ManagingDialogsCallbacks
+        PermissionUtils.PermissionResultCallback
 {
     public static CustomViewPager mViewPager;
     TabLayout tabLayout;
-    ImageView imgDrawer, imgLogo;
+    ImageView imgDrawer;
+    ImageView imgLogo;
     private int actionBarHeight;
     static TextView textView, txtNotificationCountAction;
     public static int position = 0, nested_position = 0;
@@ -180,12 +185,9 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
     boolean doubleBackToExitPressedOnce = false;
     private static final int CONTACT_PICKER_REQUEST = 991;
     private static final int PERMISSION_REQUEST_CONTACT = 111;
-
     private static final String TAG = CardsActivity.class.getSimpleName();
-
     private final static int PLAY_SERVICES_REQUEST = 1000;
     private final static int REQUEST_CHECK_SETTINGS = 2000;
-
     public static Location mLastLocation;
     GoogleSignInOptions gso;
     // Google client to interact with Google API
@@ -214,91 +216,39 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
     private PendingIntent mPendingIntent;
     private IntentFilter[] mIntentFilters;
     private String[][] mNFCTechLists;
-    ArrayList<String> arrayNFC ;
+    ArrayList<String> arrayNFC  = new ArrayList<>();
     String CardCode = "";
     Boolean netCheck= false;
     public static final byte[] MIME_TEXT = "application/com.circle8.circleOne".getBytes();
+    ActivityCardsBinding activityCardsBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
+        Log.e("act","Card");
         TwitterAuthConfig authConfig = new TwitterAuthConfig(getString(R.string.twitter_consumer_key),
                 getString(R.string.twitter_consumer_secret));
         Fabric.with(this, new Twitter(authConfig));
 
-        setContentView(R.layout.activity_cards);
-
-        /*SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy  hh:mm:ss a");
-        String date1 = format.format(Date.parse(stringDate));
-
-        Toast.makeText(getApplicationContext(), "Time: " + date1, Toast.LENGTH_LONG).show();   */
-        Utility.freeMemory();
-        Utility.deleteCache(getApplicationContext());
-
+        activityCardsBinding = DataBindingUtil.setContentView(this,R.layout.activity_cards);
         netCheck = Utility.isNetworkAvailable(getApplicationContext());
-
         referralCodeSession = new ReferralCodeSession(getApplicationContext());
         HashMap<String, String> referral = referralCodeSession.getReferralDetails();
         refer = referral.get(ReferralCodeSession.KEY_REFERRAL);
         mAuth = FirebaseAuth.getInstance();
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
         Bundle extras = getIntent().getExtras();
         permissionUtils = new PermissionUtils(CardsActivity.this);
-        Utility.freeMemory();
-        permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
-        permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
-
         permissionUtils.check_permission(permissions,"Need GPS permission for getting your location",1);
 
         if (extras != null) {
             position = extras.getInt("viewpager_position");
             nested_position = extras.getInt("nested_viewpager_position");
         }
-
-        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-
-        session = new LoginSession(getApplicationContext());
-
         new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
-        HashMap<String, String> user = session.getUserDetails();
-
-
-        UserId = user.get(LoginSession.KEY_USERID);      // name
-        profileId = user.get(LoginSession.KEY_PROFILEID);
-        User_name = user.get(LoginSession.KEY_NAME);
-        String email = user.get(LoginSession.KEY_EMAIL);    // email
-        String image = user.get(LoginSession.KEY_IMAGE);
-        String gender = user.get(LoginSession.KEY_GENDER);
-        Connection_Limit = user.get(LoginSession.KEY_CONNECTION_LIMIT);
-        Connection_Left = user.get(LoginSession.KEY_CONNECTION_LEFT);
-//        Toast.makeText(getApplicationContext(), name + " " + email + " " + image + " " + gender, Toast.LENGTH_LONG).show();
-
-        try {
-            if (Connection_Limit.equalsIgnoreCase("100000")) {
-                Connection_Limit = DecimalFormatSymbols.getInstance().getInfinity();
-            }
-        }catch (Exception e){
-
-        }
-
-        if (checkPlayServices()) {
-            Utility.freeMemory();
-            Utility.deleteCache(getApplicationContext());
-
-            // Building the GoogleApi client
-            buildGoogleApiClient();
-        }
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
-        if (mNfcAdapter != null) {
-            //txtNoGroup.setText("Read an NFC tag");
-        } else {
-        }
 
         // create an intent with tag data and deliver to this activity
         mPendingIntent = PendingIntent.getActivity(this, 0,
@@ -372,8 +322,6 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             systemMessagesManager.addSystemMessageListener(systemMessagesListener != null
                     ? systemMessagesListener : new SystemMessagesListener());
         }
-
-        dialogsManager.addManagingDialogsCallbackListener(this);
 
         if (netCheck == false){
             Utility.freeMemory();
@@ -554,20 +502,6 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         });
     }
 
-    @Override
-    public void onDialogCreated(QBChatDialog chatDialog) {
-
-    }
-
-    @Override
-    public void onDialogUpdated(String chatDialog) {
-
-    }
-
-    @Override
-    public void onNewDialogLoaded(QBChatDialog chatDialog) {
-
-    }
 
     private class PushBroadcastReceiver extends BroadcastReceiver {
         @Override
@@ -808,6 +742,13 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             // db.getAllNFC();
             //SQLiteDatabase sqLiteDatabase = db.getReadableDatabase();
             //- db.onCreate(sqLiteDatabase);
+
+
+            gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestEmail()
+                    .build();
+
+            session = new LoginSession(getApplicationContext());
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
             final ActionBar actionBar = getSupportActionBar();
             getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -831,6 +772,34 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             tabLayout = (TabLayout) findViewById(R.id.tabs);
             tabLayout.setupWithViewPager(mViewPager);
             tabLayout.setSelectedTabIndicatorColor(getResources().getColor(android.R.color.white));
+            HashMap<String, String> user = session.getUserDetails();
+
+
+            UserId = user.get(LoginSession.KEY_USERID);      // name
+            profileId = user.get(LoginSession.KEY_PROFILEID);
+            User_name = user.get(LoginSession.KEY_NAME);
+            String email = user.get(LoginSession.KEY_EMAIL);    // email
+            String image = user.get(LoginSession.KEY_IMAGE);
+            String gender = user.get(LoginSession.KEY_GENDER);
+            Connection_Limit = user.get(LoginSession.KEY_CONNECTION_LIMIT);
+            Connection_Left = user.get(LoginSession.KEY_CONNECTION_LEFT);
+//        Toast.makeText(getApplicationContext(), name + " " + email + " " + image + " " + gender, Toast.LENGTH_LONG).show();
+
+            try {
+                if (Connection_Limit.equalsIgnoreCase("100000")) {
+                    Connection_Limit = DecimalFormatSymbols.getInstance().getInfinity();
+                }
+            }catch (Exception e){
+
+            }
+            if (checkPlayServices()) {
+                Utility.freeMemory();
+                Utility.deleteCache(getApplicationContext());
+
+                // Building the GoogleApi client
+                buildGoogleApiClient();
+            }
+
         }
 
         @Override
@@ -1120,6 +1089,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onClick(View v)
             {
+                CustomProgressDialog("Logout",CardsActivity.this);
                 Utility.freeMemory();
                 try
                 {
@@ -1321,10 +1291,14 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
+        @Override
+        public void restoreState(Parcelable arg0, ClassLoader arg1) {
+            //do nothing here! no call to super.restoreState(arg0, arg1);
+        }
 
         @Override
         public Fragment getItem(int position) {
-            Utility.freeMemory();
+
             if (position == 0) {
                 // getSupportActionBar().show();
                 // setActionBarTitle("Connect");
@@ -1506,14 +1480,15 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         Log.i("PERMISSION","NEVER ASK AGAIN");
     }
 
+    public static final byte[] MIME_TEXT1 = "application/com.amplearch.circleone".getBytes();
 
     @Override
     public void onResume() {
         super.onResume();
-        Utility.freeMemory();
+
         checkPlayServices();
 
-        if (mViewPager.getCurrentItem() == 2){
+        if (mViewPager.getCurrentItem() == 2) {
             setActionBarTitle("Events");
         }
 
@@ -1538,7 +1513,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                     try {
                         arrayNFC = new ArrayList<>();
                         for (int i = 0; i < rawMsgs.length; i++) {
-                            NdefRecord[] recs = ((NdefMessage)rawMsgs[i]).getRecords();
+                            NdefRecord[] recs = ((NdefMessage) rawMsgs[i]).getRecords();
                             for (int j = 0; j < recs.length; j++) {
                                 if (recs[j].getTnf() == NdefRecord.TNF_MIME_MEDIA &&
                                         Arrays.equals(recs[j].getType(), MIME_TEXT)) {
@@ -1555,6 +1530,42 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                                             payload.length - langCodeLen - 1, textEncoding);
                                     String decryptstr = decrypt(s1, secretKey);
                                     arrayNFC.add(decryptstr);
+                                } else if (recs[j].getTnf() == NdefRecord.TNF_MIME_MEDIA && Arrays.equals(recs[j].getType(), MIME_TEXT1)) {
+
+                                    byte[] payload = recs[j].getPayload();
+                                    String textEncoding = ((payload[0] & 0200) == 0) ? "UTF-8" : "UTF-16";
+                                    int langCodeLen = payload[0] & 0077;
+
+                                   /* s += ("\n" +
+                                            new String(payload, langCodeLen + 1,
+                                                    payload.length - langCodeLen - 1, textEncoding) );*/
+                                    String s1 = new String(payload, langCodeLen + 1,
+                                            payload.length - langCodeLen - 1, textEncoding);
+                                    String decryptstr = decrypt(s1, secretKey);
+                                    arrayNFC.add(decryptstr);
+                                } else {
+                                    try {
+                                        msgs = new NdefMessage[rawMsgs.length];
+                                        for (int i1 = 0; i1 < rawMsgs.length; i1++) {
+                                            msgs[i1] = (NdefMessage) rawMsgs[i1];
+                                        }
+
+                                        byte[] payload = msgs[0].getRecords()[0].getPayload();
+
+                                        String message = new String(payload);
+                /* 把tag的資訊放到textview裡面 */
+                                        // mEtMessage.setText(new String(payload));
+
+                                        message = message.substring(1, message.length());
+
+                                        String decryptstr = decrypt(message, secretKey);
+                                        arrayNFC.add(decryptstr);
+
+                                    } catch (GeneralSecurityException e) {
+                                        e.printStackTrace();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
                             }
                         }
@@ -1565,11 +1576,10 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 }
                 String ProfileId = "", card_code = "";
 
-                if (netCheck == false){
+                if (netCheck == false) {
                     Utility.freeMemory();
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
-                }
-                else {
+                } else {
                     //Toast.makeText(getApplicationContext(), arrayNFC.toString(), Toast.LENGTH_LONG).show();
                     if (arrayNFC.size() == 1) {
                         nfcProfileId = arrayNFC.get(0).toString();
@@ -1686,43 +1696,30 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
 
                 }*/
             }
-        }
 
-        IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
-        IntentFilter ndefDetected = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
-        IntentFilter techDetected = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
-        IntentFilter[] nfcIntentFilter = new IntentFilter[]{techDetected, tagDetected, ndefDetected};
+            IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
+            IntentFilter ndefDetected = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
+            IntentFilter techDetected = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
+            IntentFilter[] nfcIntentFilter = new IntentFilter[]{techDetected, tagDetected, ndefDetected};
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(
-                this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-        if (mNfcAdapter != null)
-            mNfcAdapter.enableForegroundDispatch(this, pendingIntent, nfcIntentFilter, null);
+            PendingIntent pendingIntent = PendingIntent.getActivity(
+                    this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+            if (mNfcAdapter != null)
+                mNfcAdapter.enableForegroundDispatch(this, pendingIntent, nfcIntentFilter, null);
 
 
-        if (tabLayout.getSelectedTabPosition() == 3)
-        {
-            CardsActivity.setActionBarTitle("Profile");
-            //ProfileFragment.callMyProfile();
-        }
-        else if (tabLayout.getSelectedTabPosition() == 2)
-        {
-            CardsActivity.setActionBarTitle("Events");
-        }
-        else if (tabLayout.getSelectedTabPosition() == 1)
-        {
-            CardsActivity.setActionBarTitle("Connect");
+            if (tabLayout.getSelectedTabPosition() == 3) {
+                CardsActivity.setActionBarTitle("Profile");
+                //ProfileFragment.callMyProfile();
+            } else if (tabLayout.getSelectedTabPosition() == 2) {
+                CardsActivity.setActionBarTitle("Events");
+            } else if (tabLayout.getSelectedTabPosition() == 1) {
+                CardsActivity.setActionBarTitle("Connect");
+            }
         }
     }
 
 
-    /* @Override
-     public void onResume() {
-         super.onResume();
-
-         if (mNfcAdapter != null)
-             mNfcAdapter.enableForegroundDispatch(this, mPendingIntent, mIntentFilters, mNFCTechLists);
-     }
- */
     @Override
     public void onPause() {
         Utility.freeMemory();
@@ -1758,8 +1755,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 for (int i = 0; i < data.length; i++) {
                     NdefRecord[] recs = ((NdefMessage)data[i]).getRecords();
                     for (int j = 0; j < recs.length; j++) {
-                        if (recs[j].getTnf() == NdefRecord.TNF_MIME_MEDIA &&
-                                Arrays.equals(recs[j].getType(), MIME_TEXT)) {
+                        if (recs[j].getTnf() == NdefRecord.TNF_MIME_MEDIA && Arrays.equals(recs[j].getType(), MIME_TEXT)) {
 
                             byte[] payload = recs[j].getPayload();
                             String textEncoding = ((payload[0] & 0200) == 0) ? "UTF-8" : "UTF-16";
@@ -1772,6 +1768,47 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                                     payload.length - langCodeLen - 1, textEncoding);
                             String decryptstr = decrypt(s1, secretKey);
                             arrayNFC.add(decryptstr);
+                        }
+                        else if (recs[j].getTnf() == NdefRecord.TNF_MIME_MEDIA && Arrays.equals(recs[j].getType(), MIME_TEXT1)) {
+
+                            byte[] payload = recs[j].getPayload();
+                            String textEncoding = ((payload[0] & 0200) == 0) ? "UTF-8" : "UTF-16";
+                            int langCodeLen = payload[0] & 0077;
+
+                            s += ("\n" +
+                                    new String(payload, langCodeLen + 1,
+                                            payload.length - langCodeLen - 1, textEncoding) );
+                            String s1 = new String(payload, langCodeLen + 1,
+                                    payload.length - langCodeLen - 1, textEncoding);
+                            String decryptstr = decrypt(s1, secretKey);
+                            arrayNFC.add(decryptstr);
+                        }
+                        else {
+                            try {
+
+
+                                NdefMessage[] msgs = null;
+                                msgs = new NdefMessage[data.length];
+                                for (int i1 = 0; i1 < data.length; i1++) {
+                                    msgs[i1] = (NdefMessage) data[i1];
+                                }
+
+                                byte[] payload = msgs[0].getRecords()[0].getPayload();
+
+                                String message = new String(payload);
+
+                                // mEtMessage.setText(new String(payload));
+
+                                message = message.substring(1, message.length());
+
+                                String decryptstr = decrypt(message, secretKey);
+                                arrayNFC.add(decryptstr);
+
+                            } catch (GeneralSecurityException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }
@@ -1915,7 +1952,6 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             }
         }*/
     }
-
     public String decrypt(String value, String key)
             throws GeneralSecurityException, IOException {
         byte[] value_bytes = Base64.decode(value, 0);

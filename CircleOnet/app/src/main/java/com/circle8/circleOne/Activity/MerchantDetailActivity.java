@@ -57,14 +57,10 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
 {
     CircleImageView tvMerchantImg;
     TextView tvMerchantName, tvMerchantDesc, tvMoreInfo ;
-
     ImageView imgBack ;
-
     ExpandableHeightListView listView1, listView2 ;
-
     ImageAdAdapter imageAdAdapter ;
     ArrayList<Integer> adImages = new ArrayList<>();
-
     MerchantAddressAdapter merchantAddressAdapter ;
     MerchantProductAdapter merchantProductAdapter ;
     ArrayList<String> storeNameList = new ArrayList<>();
@@ -72,7 +68,6 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
     ArrayList<String> storeTimeList = new ArrayList<>();
     ArrayList<MerchantLocationModel> merchantLocationModelArrayList = new ArrayList<>();
     ArrayList<MerchantProductModel> merchantProductModelArrayList = new ArrayList<>();
-
     GoogleMap googleMaps ;
     String storeAddress = "" ;
 

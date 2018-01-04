@@ -64,17 +64,21 @@ public class CardSwipe extends PagerAdapter
             holder.imageView = (ImageView)view.findViewById(R.id.ivImages);
             //Log.e("str_share",""+image.get(position));
 //            imageView.setImageResource(image.get(position));
-        //   Bitmap bmp = BitmapFactory.decodeByteArray(image.get(position), 0, image.get(position).length);
+            //   Bitmap bmp = BitmapFactory.decodeByteArray(image.get(position), 0, image.get(position).length);
             // ImageView image = (ImageView) findViewById(R.id.imageView1);
-       //    Bitmap str_share =getBitmapFromURL(image.get(position));
+            //    Bitmap str_share =getBitmapFromURL(image.get(position));
 
 
-             // Picasso.with(context).load(image.get(position)).skipMemoryCache().into(imageView);
+            // Picasso.with(context).load(image.get(position)).skipMemoryCache().into(imageView);
 //            imageView.setImageResource(image.get(position));
-        //  Bitmap bitmap = Glide. with(context). load(image.get(position)). asBitmap(). into(500, 500).get();
+            //  Bitmap bitmap = Glide. with(context). load(image.get(position)). asBitmap(). into(500, 500).get();
+            if(image.get(position).equalsIgnoreCase(""))
+            {
+                holder.progressBar1.setVisibility(View.GONE);
 
-            Glide.with(context).load(image.get(position)).override(300,300).into(holder.imageView);
-
+            }else {
+                Glide.with(context).load(image.get(position)).override(300, 300).into(holder.imageView);
+            }
             container.addView(view);
 
         } catch (Exception e) {

@@ -155,6 +155,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         mBinding = DataBindingUtil.setContentView(this,R.layout.activity_card_detail);
         Utility.freeMemory();
         Utility.deleteCache(getApplicationContext());
+        Log.e("act","click");
         referralCodeSession = new ReferralCodeSession(getApplicationContext());
         loginSession = new LoginSession(getApplicationContext());
         HashMap<String, String> user = loginSession.getUserDetails();
@@ -223,7 +224,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
         } else {
 
-            googlePlayServicesHelper = new GooglePlayServicesHelper();
+            //googlePlayServicesHelper = new GooglePlayServicesHelper();
             pushBroadcastReceiver = new PushBroadcastReceiver();
             allDialogsMessagesListener = new AllDialogsMessageListener();
             systemMessagesListener = new SystemMessagesListener();
@@ -243,7 +244,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
             }
 
             dialogsManager.addManagingDialogsCallbackListener(this);
-
+            dismissProgress();
             // new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/Fetch");
             if (profile_id.equals("")) {
                 Toast.makeText(CardDetail.this, "Having no profile ID", Toast.LENGTH_LONG).show();
@@ -260,8 +261,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        registerQbChatListeners();
+        // registerQbChatListeners();
         mBinding.viewPager1.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             private int mScrollState = ViewPager.SCROLL_STATE_IDLE;
@@ -287,7 +287,12 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                 }
             }
         });
-        mBinding.includeLayoutViepager.imgBack.setOnClickListener(this);
+        mBinding.includeLayoutViepager.imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         mBinding.includeLayoutBottom.imgCards.setOnClickListener(this);
         mBinding.includeLayoutBottom.imgConnect.setOnClickListener(this);
         mBinding.includeLayoutBottom.imgEvents.setOnClickListener(this);
@@ -296,7 +301,14 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         mBinding.includeLayoutDetails.ivMap.setOnClickListener(this);
         mBinding.includeLayoutSocial.imgProfileShare.setOnClickListener(this);
         mBinding.includeLayoutDetails.txtMore.setOnClickListener(this);
-        mBinding.includeLayoutDetails.txtAttachment.setOnClickListener(this);
+        mBinding.includeLayoutDetails.txtAttachment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(getApplicationContext(), AttachmentDisplay.class);
+                intent1.putExtra("url", Utility.BASE_IMAGE_URL + "Other_doc/" + mBinding.includeLayoutDetails.txtAttachment.getText().toString());
+                startActivity(intent1);
+            }
+        });
         mBinding.includeLayoutViepager.imgProfileCard.setOnClickListener(this);
         mBinding.includeLayoutDetails.imgAddGroupFriend.setOnClickListener(this);
         mBinding.includeLayoutSocial.fbUrl.setOnClickListener(this);
@@ -322,11 +334,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                 intent.putExtra("ProfileId", profile_id);
                 startActivity(intent);
                 break;
-            case R.id.txtAttachment:
-                Intent intent1 = new Intent(getApplicationContext(), AttachmentDisplay.class);
-                intent1.putExtra("url", Utility.BASE_IMAGE_URL + "Other_doc/" + mBinding.includeLayoutDetails.txtAttachment.getText().toString());
-                startActivity(intent1);
-                break;
+
             case R.id.imgProfileCard:
                 final Dialog dialog = new Dialog(CardDetail.this);
                 dialog.setContentView(R.layout.imageview_popup);
@@ -414,10 +422,28 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                 }
                 break;
             case R.id.imgProfileShare:
-                Intent intent_share = new Intent(getApplicationContext(), SearchGroupMembers.class);
-                intent_share.putExtra("from", "cardDetail");
-                intent_share.putExtra("ProfileId", profile_id);
-                startActivity(intent_share);
+                AlertDialog.Builder builderps;
+                builderps = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
+                builderps.setTitle("Share to " + mBinding.includeLayoutViepager.txtName.getText().toString())
+                        .setMessage("Are you sure you want to share profile ?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                                Intent intent_share = new Intent(getApplicationContext(), SearchGroupMembers.class);
+                                intent_share.putExtra("from", "cardDetail");
+                                intent_share.putExtra("ProfileId", profile_id);
+                                startActivity(intent_share);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_menu_share)
+                        .show();
+
                 break;
             case R.id.googleUrl:
                 if (strgoogleUrl != null) {
@@ -455,9 +481,9 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                 if (mBinding.includeLayoutDetails.txtEmail.getText().toString().equals("")) {
 
                 } else {
-                    AlertDialog.Builder builder;
-                    builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
-                    builder.setTitle("Mail to " + mBinding.includeLayoutViepager.txtName.getText().toString())
+                    AlertDialog.Builder builder0;
+                    builder0 = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
+                    builder0.setTitle("Mail to " + mBinding.includeLayoutViepager.txtName.getText().toString())
                             .setMessage("Are you sure you want to drop Mail ?")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
@@ -484,29 +510,47 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                 }
                 break;
             case R.id.imgSMS:
-                boolean result = Utility.checkSMSPermission(CardDetail.this);
-                if (result) {
-                    if (mBinding.includeLayoutDetails.txtMob.getText().toString().equals("")) {
-                        Toast.makeText(getApplicationContext(), "You are not having contact to SMS..", Toast.LENGTH_LONG).show();
-                    } else {
-                        Uri uri = Uri.parse("smsto:" + mBinding.includeLayoutDetails.txtMob.getText().toString());
-                        Intent it = new Intent(Intent.ACTION_SENDTO, uri);
-                        it.putExtra("sms_body", "");
-                        startActivity(it);
+                AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
+                builder.setTitle("SMS to " + mBinding.includeLayoutViepager.txtName.getText().toString())
+                        .setMessage("Are you sure you want to Send SMS ?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                                boolean result = Utility.checkSMSPermission(CardDetail.this);
+                                if (result) {
+                                    if (mBinding.includeLayoutDetails.txtMob.getText().toString().equals("")) {
+                                        Toast.makeText(getApplicationContext(), "You are not having contact to SMS..", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        Uri uri = Uri.parse("smsto:" + mBinding.includeLayoutDetails.txtMob.getText().toString());
+                                        Intent it = new Intent(Intent.ACTION_SENDTO, uri);
+                                        it.putExtra("sms_body", "");
+                                        startActivity(it);
                        /* Intent smsIntent = new Intent(Intent.ACTION_VIEW);
                         smsIntent.setType("vnd.android-dir/mms-sms");
                         smsIntent.putExtra("address", txtMob.getText().toString());
                         smsIntent.putExtra("sms_body", "");
                         startActivity(smsIntent);*/
-                    }
-                }
+                                    }
+                                }
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_email)
+                        .show();
+
                 break;
             case R.id.imgCall:
                 if (!mBinding.includeLayoutDetails.txtMob.getText().toString().equals("")) {
-                    AlertDialog.Builder builder;
-                    builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
+                    AlertDialog.Builder builder1;
+                    builder1 = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
 
-                    builder.setTitle("Call to " + mBinding.includeLayoutViepager.txtName.getText().toString())
+                    builder1.setTitle("Call to " + mBinding.includeLayoutViepager.txtName.getText().toString())
                             .setMessage("Are you sure you want to make a Call ?")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
@@ -525,10 +569,10 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                             .setIcon(android.R.drawable.ic_menu_call)
                             .show();
                 } else if (!mBinding.includeLayoutDetails.txtWork.getText().toString().equals("")) {
-                    AlertDialog.Builder builder;
-                    builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
+                    AlertDialog.Builder builder2;
+                    builder2 = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
 
-                    builder.setTitle("Call to " + mBinding.includeLayoutViepager.txtName.getText().toString())
+                    builder2.setTitle("Call to " + mBinding.includeLayoutViepager.txtName.getText().toString())
                             .setMessage("Are you sure you want to make a Call ?")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
@@ -547,10 +591,10 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                             .setIcon(android.R.drawable.ic_menu_call)
                             .show();
                 } else if (!mBinding.includeLayoutDetails.txtPH.getText().toString().equals("")) {
-                    AlertDialog.Builder builder;
-                    builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
+                    AlertDialog.Builder builder3;
+                    builder3 = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
 
-                    builder.setTitle("Call to " + mBinding.includeLayoutViepager.txtName.getText().toString())
+                    builder3.setTitle("Call to " + mBinding.includeLayoutViepager.txtName.getText().toString())
                             .setMessage("Are you sure you want to make a Call ?")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
@@ -570,50 +614,21 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                             .show();
                 }
                 break;
-            case R.id.imgBack:
-                finish();
-                break;
+
             case R.id.imgCards:
-                Intent go = new Intent(getApplicationContext(), CardsActivity.class);
-
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 0);
-
-                startActivity(go);
+                CardsActivity.mViewPager.setCurrentItem(0);
                 finish();
                 break;
             case R.id.imgConnect:
-                Intent go1 = new Intent(getApplicationContext(), CardsActivity.class);
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go1.putExtra("viewpager_position", 1);
-
-                startActivity(go1);
+                CardsActivity.mViewPager.setCurrentItem(1);
                 finish();
                 break;
             case  R.id.imgEvents:
-                Intent go2 = new Intent(getApplicationContext(), CardsActivity.class);
-
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go2.putExtra("viewpager_position", 2);
-
-                startActivity(go2);
+                CardsActivity.mViewPager.setCurrentItem(2);
                 finish();
                 break;
             case R.id.imgProfile:
-                Intent go3 = new Intent(getApplicationContext(), CardsActivity.class);
-
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go3.putExtra("viewpager_position", 3);
-
-                startActivity(go3);
+                CardsActivity.mViewPager.setCurrentItem(3);
                 finish();
                 break;
             case R.id.tvSendMessage:
@@ -676,10 +691,10 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                 break;
             case R.id.ivMap:
 
-                AlertDialog.Builder builder;
-                builder = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
+                AlertDialog.Builder builderm;
+                builderm = new AlertDialog.Builder(CardDetail.this, R.style.Blue_AlertDialog);
 
-                builder.setTitle("Google Map")
+                builderm.setTitle("Google Map")
                         .setMessage("Are you sure you want to redirect to Google Map ?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -722,6 +737,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         try
         {
             address = coder.getFromLocationName(strAddress, 5);
+            Log.e("address",""+address+"    " +strAddress);
             if(address == null)
             {
                 return null;
@@ -750,13 +766,16 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         googleMaps.animateCamera(zoom);
     }
 
-    private void createMarker1(String fullAddress, String addressTitle)
+    private void createMarker1(String fullAddress)
     {
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(15);
 
         LatLng address = getLocationFromAddress(CardDetail.this, fullAddress);
-        googleMaps.addMarker(new MarkerOptions().position(address).title(addressTitle));
-        googleMaps.moveCamera(CameraUpdateFactory.newLatLng(address));
+
+        if(address!=null) {
+            googleMaps.addMarker(new MarkerOptions().position(address).title(""));
+            googleMaps.moveCamera(CameraUpdateFactory.newLatLng(address));
+        }
         googleMaps.animateCamera(zoom);
     }
 
@@ -1496,7 +1515,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
 
-            String loading = "Fetching Connection Data" ;
+            String loading = "Fetching profile" ;
             CustomProgressDialog(loading,activity);
         }
 
@@ -1748,7 +1767,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                         mBinding.includeLayoutDetails.llMobileBox.setVisibility(View.GONE);
                     } else {
                         Mobile1.trim();
-                        mBinding.includeLayoutDetails.txtMob.setText(Mobile1);
+                        mBinding.includeLayoutDetails.txtMob.setText(Mobile1 +","+Mobile2);
                     }
 
                     if (Fax1.equalsIgnoreCase("")
@@ -1778,13 +1797,13 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                     }
 
                     if (frontCardImg.equalsIgnoreCase("")) {
-                        recycle_image1 = Utility.BASE_IMAGE_URL+"Cards/Back_for_all.jpg";
+                        recycle_image1 = "";
                     } else {
                         recycle_image1 = Utility.BASE_IMAGE_URL+"Cards/" + frontCardImg;
                     }
 
                     if (backCardImg.equalsIgnoreCase("")) {
-                        recycle_image2 = Utility.BASE_IMAGE_URL+"Cards/Back_for_all.jpg";
+                        recycle_image2 = "";
                     } else {
                         recycle_image2 = Utility.BASE_IMAGE_URL+"Cards/" + backCardImg;
                     }
@@ -1896,12 +1915,16 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                         createMarker(Latitude,Longitude);
                         mBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
                     }
-                    else
-                    {
+                    else {
 //                        Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
-                        mBinding.includeLayoutDetails.llMapView.setVisibility(View.GONE);
+                        if (locationAddress.contains(",")) {
+                            createMarker1(locationAddress.split(",")[1]);
+                            mBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
+                        }else
+                        {
+                            mBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
+                        }
                     }
-
                     break;
                 default:
                     locationAddress = null;

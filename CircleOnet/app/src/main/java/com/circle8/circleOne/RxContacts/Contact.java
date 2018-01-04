@@ -10,20 +10,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Contact implements Comparable<Contact> {
-    private final long mId;
+    private  long mId;
     private int mInVisibleGroup;
-    private String mDisplayName;
+    public String mDisplayName;
     private boolean mStarred;
     private Uri mPhoto;
     private Uri mThumbnail;
     private List<String> mEmails = new ArrayList<>();
-    private List<String> mPhoneNumbers = new ArrayList<>();
+    public String mPhoneNumbers;
     private boolean isSelected;
     private int backgroundColor = Color.BLUE;
-
+    String contact_id;
+    public Contact() {
+    }
     Contact(long id) {
         this.mId = id;
         this.backgroundColor = ColorUtils.getRandomMaterialColor();
+    }
+
+    public String getContact_id() {
+        return contact_id;
+    }
+
+    public void setContact_id(String contact_id) {
+        this.contact_id = contact_id;
     }
 
     public long getId() {
@@ -78,12 +88,12 @@ public class Contact implements Comparable<Contact> {
         mEmails = emails;
     }
 
-    public List<String> getPhoneNumbers() {
+    public String getmPhoneNumbers() {
         return mPhoneNumbers;
     }
 
-    public void setPhoneNumbers(List<String> phoneNumbers) {
-        mPhoneNumbers = phoneNumbers;
+    public void setmPhoneNumbers(String mPhoneNumbers) {
+        this.mPhoneNumbers = mPhoneNumbers;
     }
 
     public boolean isSelected() {

@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
@@ -90,7 +91,7 @@ public class List4Fragment extends Fragment
     public static String progressStatus = "FIRST";
 
     static int numberCount, listSize;
-    public static String count;
+    public static String count, counts;
     private static RelativeLayout rlProgressDialog ;
     private static TextView tvProgressing ;
     private static ImageView ivConnecting1;
@@ -157,6 +158,8 @@ public class List4Fragment extends Fragment
         searchText = (AutoCompleteTextView) view.findViewById(R.id.searchView);
         nfcModel = new ArrayList<>();
         nfcModel1 = new ArrayList<>();
+        gridAdapter = new List4Adapter(getActivity(), R.layout.grid_list4_layout, nfcModel1);
+        listView.setAdapter(gridAdapter);
 
         callFirst();
 
@@ -309,6 +312,10 @@ public class List4Fragment extends Fragment
             @Override
             public void onClick(View v)
             {
+                if (v != null) {
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
                 Utility.freeMemory();
                 Utility.deleteCache(getContext());
 
@@ -347,6 +354,10 @@ public class List4Fragment extends Fragment
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
+                if (v != null) {
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
                 Utility.freeMemory();
                 Utility.deleteCache(getContext());
 
@@ -533,7 +544,7 @@ public class List4Fragment extends Fragment
                     String success = response.getString("success");
                     String findBy = response.getString("FindBy");
                     String search = response.getString("Search");
-                    count = response.getString("count");
+                    counts = response.getString("count");
                     String pageno = response.getString("pageno");
                     String recordno = response.getString("numofrecords");
 
@@ -583,10 +594,10 @@ public class List4Fragment extends Fragment
                             connectModel.setLongitude(iCon.getString("Longitude"));
                             allTaggs.add(connectModel);
 
-                            gridAdapter = new List4Adapter(getContext(), R.layout.grid_list4_layout, allTaggs);
+                          /*  gridAdapter = new List4Adapter(getContext(), R.layout.grid_list4_layout, allTaggs);
                             listView.setAdapter(gridAdapter);
-                            gridAdapter.notifyDataSetChanged();
-//                            GetData(getContext());
+                            gridAdapter.notifyDataSetChanged();*/
+                            GetData(getContext());
                         }
                     }
                 }
@@ -699,9 +710,10 @@ public class List4Fragment extends Fragment
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
 //                    numberCount = Integer.parseInt(jsonObject.getString("count")) ;
+                    count = jsonObject.getString("count");
 
                     if (pageno == 2) {
-                        count = jsonObject.getString("count");
+                        counts = jsonObject.getString("count");
                     }
                     if (count.equals("") || count.equals("null")) {
                         numberCount = 0;
@@ -716,7 +728,7 @@ public class List4Fragment extends Fragment
                         jsonArray = jsonObject.getJSONArray("connection");
                     }
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
-                    numberCount = jsonArray.length();
+//                    numberCount = jsonArray.length();
                     rlLoadMore.setVisibility(View.GONE);
 
                     for (int i = 0; i < jsonArray.length(); i++)
@@ -742,8 +754,11 @@ public class List4Fragment extends Fragment
                         nfcModelTag.setLatitude(object.getString("Latitude"));
                         nfcModelTag.setLongitude(object.getString("Longitude"));
                         allTaggs.add(nfcModelTag);
-                        GetData(mContext);
+
                     }
+                    Log.e("allTaggs",""+allTaggs.size());
+
+                    GetData(mContext);
 
                     listSize = allTaggs.size();
 
@@ -1091,28 +1106,26 @@ public class List4Fragment extends Fragment
 
 //        rlLoadMore.setVisibility(View.GONE);
 
-        gridAdapter = new List4Adapter(context, R.layout.grid_list4_layout, nfcModel1);
-        listView.setAdapter(gridAdapter);
         gridAdapter.notifyDataSetChanged();
 
         if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
             if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + count + "/" + CardsActivity.Connection_Limit);
+                CardsActivity.setActionBarTitle("Cards - " + counts + "/" + CardsActivity.Connection_Limit);
             }
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
             if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + count);
+                CardsActivity.setActionBarTitle("Cards - " + counts);
             }
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
             if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + count);
+                CardsActivity.setActionBarTitle("Cards - " + counts);
             }
         }
         else  {
             if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + count);
+                CardsActivity.setActionBarTitle("Cards - " + counts);
             }
         }
 

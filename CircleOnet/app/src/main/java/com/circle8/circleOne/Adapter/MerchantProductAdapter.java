@@ -2,13 +2,19 @@ package com.circle8.circleOne.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.Activity.MerchantDetailActivity;
 import com.circle8.circleOne.Model.MerchantProductModel;
 import com.circle8.circleOne.R;
@@ -51,6 +57,8 @@ public class MerchantProductAdapter extends BaseAdapter
     {
         ImageView ivProductImg ;
         TextView tvProductName, tvProductDesc, tvTermsAndCondition;
+        ProgressBar progressBar1;
+        FrameLayout fm_img;
     }
 
     @Override
@@ -70,6 +78,8 @@ public class MerchantProductAdapter extends BaseAdapter
             holder.tvProductDesc = (TextView)row.findViewById(R.id.tvProductDesc);
             holder.tvTermsAndCondition = (TextView)row.findViewById(R.id.tvTermsAndCondition);
 
+            holder.progressBar1= (ProgressBar)row.findViewById(R.id.progressBar1);
+            holder.fm_img = (FrameLayout) row.findViewById(R.id.fm_img);
             row.setTag(holder);
         }
         else
@@ -82,11 +92,25 @@ public class MerchantProductAdapter extends BaseAdapter
             holder.tvProductName.setText(merchantProductModelArrayList.get(position).getProductName());
             holder.tvProductDesc.setText(merchantProductModelArrayList.get(position).getProductDesc());
             holder.ivProductImg.setVisibility(View.GONE);
+            holder.progressBar1.setVisibility(View.GONE);
+            holder.fm_img.setVisibility(View.GONE);
         }
         else
         {
+            holder.progressBar1.setVisibility(View.VISIBLE);
+            holder.fm_img.setVisibility(View.VISIBLE);
             holder.ivProductImg.setVisibility(View.VISIBLE);
-            Picasso.with(activity).load(Utility.BASE_IMAGE_URL+"Product/"+merchantProductModelArrayList.get(position).getProductImage()).resize(400,200).onlyScaleDown().skipMemoryCache().into(holder.ivProductImg);
+            final ViewHolder finalHolder = holder;
+            Glide.with(activity).load(Utility.BASE_IMAGE_URL+"Product/"+merchantProductModelArrayList.get(position).getProductImage())
+                    .asBitmap()
+                    .into(new BitmapImageViewTarget(finalHolder.ivProductImg) {
+                        @Override
+                        public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                            super.onResourceReady(drawable, anim);
+                            finalHolder.progressBar1.setVisibility(View.GONE);
+                            finalHolder.ivProductImg.setImageBitmap(drawable);
+                        }
+                    });
         }
 
         return row;

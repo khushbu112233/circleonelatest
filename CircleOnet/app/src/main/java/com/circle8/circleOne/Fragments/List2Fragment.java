@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AutoCompleteTextView;
 import android.widget.GridView;
@@ -100,7 +101,7 @@ public class List2Fragment extends Fragment
     public static String progressStatus = "FIRST";
 
     static int numberCount, gridSize;
-    public static String count;
+    public static String count, counts;
     public static FragmentList2Binding fragmentList2Binding;
     public List2Fragment() {
         // Required empty public constructor
@@ -144,6 +145,9 @@ public class List2Fragment extends Fragment
         HashMap<String, String> user = session.getUserDetails();
         UserId = user.get(LoginSession.KEY_USERID);
         Utility.deleteCache(getContext());
+        gridAdapter = new GridViewAdapter(getActivity(), R.layout.grid_list2_layout, nfcModel);
+        gridView.setAdapter(gridAdapter);
+
         callFirst();
 
         /*GestureDetector.OnGestureListener gestureListener = new MyOnGestureListener();
@@ -247,6 +251,10 @@ public class List2Fragment extends Fragment
             @Override
             public void onClick(View v)
             {
+                if (v != null) {
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
                 Utility.deleteCache(getContext());
 
                 Utility.freeMemory();
@@ -284,6 +292,10 @@ public class List2Fragment extends Fragment
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
+                if (v != null) {
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
                 Utility.freeMemory();
                 Utility.deleteCache(getContext());
 
@@ -326,37 +338,12 @@ public class List2Fragment extends Fragment
     public static void CustomProgressDialog(final String loading)
     {
         fragmentList2Binding.includeProgress.rlProgressDialog.setVisibility(View.VISIBLE);
-        fragmentList2Binding.includeProgress.txtProgressing.setText(loading);
+        fragmentList2Binding.includeProgress.txtProgressing.setText(loading+"...");
 
         Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.anticlockwise);
         fragmentList2Binding.includeProgress.imgConnecting1.startAnimation(anim);
         Animation anim1 = AnimationUtils.loadAnimation(mContext,R.anim.clockwise);
         fragmentList2Binding.includeProgress.imgConnecting2.startAnimation(anim1);
-
-        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
-        for (int i = 350; i <= SPLASHTIME; i = i + 350)
-        {
-            final int j = i;
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run()
-                {
-                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
-                    {
-                        fragmentList2Binding.includeProgress.txtProgressing.setText(loading+"...");
-                    }
-                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
-                    {
-                        fragmentList2Binding.includeProgress.txtProgressing.setText(loading+"...");
-                    }
-                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
-                    {
-                        fragmentList2Binding.includeProgress.txtProgressing.setText(loading+"...");
-                    }
-
-                }
-            }, i);
-        }
     }
 
     @Override
@@ -410,7 +397,7 @@ public class List2Fragment extends Fragment
                     String success = response.getString("success");
                     String findBy = response.getString("FindBy");
                     String search = response.getString("Search");
-                    count = response.getString("count");
+                    counts = response.getString("count");
                     String pageno = response.getString("pageno");
                     String recordno = response.getString("numofrecords");
 
@@ -628,9 +615,10 @@ public class List2Fragment extends Fragment
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
+                    count = jsonObject.getString("count");
 
                     if (pageno == 2) {
-                        count = jsonObject.getString("count");
+                        counts = jsonObject.getString("count");
                     }
                     if (count.equals("") || count.equals("null")) {
                         numberCount = 0;
@@ -645,7 +633,7 @@ public class List2Fragment extends Fragment
                         jsonArray = jsonObject.getJSONArray("connection");
                     }
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
-                    numberCount = jsonArray.length();
+//                    numberCount = jsonArray.length();
 
                     rlLoadMore.setVisibility(View.GONE);
 
@@ -673,8 +661,10 @@ public class List2Fragment extends Fragment
                         nfcModelTag.setLatitude(object.getString("Latitude"));
                         nfcModelTag.setLongitude(object.getString("Longitude"));
                         allTaggs.add(nfcModelTag);
-                        GetData(mContext);
+
                     }
+
+                    GetData(mContext);
 
                     gridSize = allTaggs.size();
 
@@ -1124,29 +1114,27 @@ public class List2Fragment extends Fragment
         });
 
 //        rlLoadMore.setVisibility(View.GONE);
-        gridAdapter = new GridViewAdapter(context, R.layout.grid_list2_layout, nfcModel);
-        gridView.setAdapter(gridAdapter);
-        gridAdapter.notifyDataSetChanged();
+         gridAdapter.notifyDataSetChanged();
 
         if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
             if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + count + "/" + CardsActivity.Connection_Limit);
+                CardsActivity.setActionBarTitle("Cards - " + counts + "/" + CardsActivity.Connection_Limit);
             }
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
             if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + count);
+                CardsActivity.setActionBarTitle("Cards - " + counts);
             }
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
             if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + count);
+                CardsActivity.setActionBarTitle("Cards - " + counts);
             }
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("SearchConnect"))
         {
             if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + count);
+                CardsActivity.setActionBarTitle("Cards - " + counts);
             }
         }
 

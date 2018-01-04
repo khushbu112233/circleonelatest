@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
@@ -115,7 +116,10 @@ public class ByIndustryFragment extends Fragment
                 String Search = "Circle One" ;
                 String rc_no = "10";
                 String page_no = "1";
-
+                if (v != null) {
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
                 listView.setVisibility(View.VISIBLE);
                 if (netCheck == false){
                     Utility.freeMemory();
@@ -134,7 +138,10 @@ public class ByIndustryFragment extends Fragment
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
                 listView.setVisibility(View.VISIBLE);
-
+                if (v != null) {
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
                 if (netCheck == false){
                     Utility.freeMemory();
                     Toast.makeText(getContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
@@ -224,7 +231,7 @@ public class ByIndustryFragment extends Fragment
             }
             else
             {
-                String loading = "Searching records" ;
+                String loading = "Searching" ;
                 CustomProgressDialog(loading,getActivity());
             }
         }

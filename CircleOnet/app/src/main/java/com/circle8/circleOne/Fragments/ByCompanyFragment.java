@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
@@ -108,7 +109,10 @@ public class ByCompanyFragment  extends Fragment {
             @Override
             public void onClick(View v) {
                 String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
-
+                if (v != null) {
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
                 listView.setVisibility(View.VISIBLE);
                 connectTags.clear();
                 if (netCheck == false) {
@@ -124,6 +128,10 @@ public class ByCompanyFragment  extends Fragment {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 listView.setVisibility(View.VISIBLE);
+                if (v != null) {
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
                 if (netCheck == false) {
                     Utility.freeMemory();
                     Toast.makeText(getContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
@@ -205,7 +213,7 @@ public class ByCompanyFragment  extends Fragment {
             if (progressStatus.equalsIgnoreCase("LOAD MORE")) {
 
             } else {
-                String loading = "Searching records";
+                String loading = "Searching";
                 CustomProgressDialog(loading,getActivity());
             }
         }

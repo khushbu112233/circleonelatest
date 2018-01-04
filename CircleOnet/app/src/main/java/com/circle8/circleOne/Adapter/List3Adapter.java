@@ -137,13 +137,13 @@ public class List3Adapter extends BaseSwipeAdapter
         delete = (Button) v.findViewById(R.id.delete);
 
         final SwipeLayout swipeLayout = (SwipeLayout) v.findViewById(getSwipeLayoutResourceId(position));
-        swipeLayout.addSwipeListener(new SimpleSwipeListener() {
+      /*  swipeLayout.addSwipeListener(new SimpleSwipeListener() {
             @Override
             public void onOpen(SwipeLayout layout) {
                 YoYo.with(Techniques.Tada).duration(500).delay(100).playOn(layout.findViewById(R.id.trash));
             }
         });
-
+*/
         db = new DatabaseHelper(context);
 
 

@@ -2,10 +2,11 @@ package com.circle8.circleOne.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -24,11 +25,7 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AutoCompleteTextView;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,15 +33,16 @@ import android.widget.Toast;
 import com.azoft.carousellayoutmanager.CarouselLayoutManager;
 import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
 import com.azoft.carousellayoutmanager.CenterScrollListener;
+import com.circle8.circleOne.Activity.CardDetail;
 import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.Activity.SortAndFilterOption;
 import com.circle8.circleOne.Adapter.GalleryAdapter;
 import com.circle8.circleOne.Adapter.GalleryAdapter1;
-import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.FriendConnection;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
+import com.circle8.circleOne.databinding.FragmentList1Binding;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -60,20 +58,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
+import static com.circle8.circleOne.Utils.Utility.POST2;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
-import static com.circle8.circleOne.Utils.Utility.dismissProgress;
-import static com.google.android.gms.internal.zzahg.runOnUiThread;
 
 public class List1Fragment extends Fragment
 {
     // private ArrayList<Integer> imageFront = new ArrayList<>();
     // private ArrayList<Integer> imageBack = new ArrayList<>();
     // public static MyPager myPager ;
-    DatabaseHelper db;
     private GestureDetector gestureDetector1;
-    FrameLayout frameList1;
-    LinearLayout lnrList;
     /*ArrayList<byte[]> imgf;
     ArrayList<byte[]> imgb;
     ArrayList<String> tag_id;*/
@@ -84,117 +77,58 @@ public class List1Fragment extends Fragment
     //  private View.OnTouchListener gestureListener;
     public static List<FriendConnection> allTags;
     //new asign value
-    AutoCompleteTextView searchText;
-    TextView tvFriendInfo ;
     public static ArrayList<FriendConnection> nfcModel;
     ViewConfiguration vc;
     private int mTouchSlop;
-    FrameLayout frame1;
-
     public static int pageno = 1;
-    ImageView imgSearch;
-
     View view;
     private String TAG = CardsActivity.class.getSimpleName();
     public static ArrayList<Integer> images;
     public static ArrayList<Integer> images1;
     public static GalleryAdapter mAdapter;
     public static GalleryAdapter1 mAdapter1;
-    public static RecyclerView recyclerView1, recyclerView2;
     public static CarouselLayoutManager manager1, manager2;
     private int draggingView = -1;
     RelativeLayout rlt;
-    public static TextView txtNoCard1;
     LoginSession session;
-
-    private static ProgressBar progressBar1, progressBar2;
-    private static RelativeLayout rlLoadMore1, rlLoadMore2;
-
     static String UserId = "";
-
     public static Context mContext;
-
     public static String progressStatus = "FIRST";
-
     static int number_cards = 0;
-
     static int numberCount, recycleSize;
-
     static AlertDialog customProgressBar ;
     static String customProgressBarStatus = "";
     public static String count = "";
-
-    private static RelativeLayout rlProgressDialog ;
-    private static TextView tvProgressing ;
-    private static ImageView ivConnecting1;
-    private static ImageView ivConnecting2;
-    private ImageView ivConnecting3 ;
-
+    static FragmentList1Binding fragmentList1Binding;
     public List1Fragment() {
         // Required empty public constructor
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
-
-        view = inflater.inflate(R.layout.fragment_list1, container, false);
-        vc = ViewConfiguration.get(view.getContext());
+        fragmentList1Binding = DataBindingUtil.inflate(inflater, R.layout.fragment_list1, container, false);
+        view = fragmentList1Binding.getRoot();
 
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
-        // frameList1 = (FrameLayout) view.findViewById(R.id.frameList1);
-        mTouchSlop = vc.getScaledTouchSlop();
-
-        mContext = List1Fragment.this.getContext();
+        mContext = getContext();
         pageno = 1;
-        imgSearch = (ImageView) view.findViewById(R.id.imgSearch);
-        tvFriendInfo = (TextView)view.findViewById(R.id.tvFriendInfo);
-        recyclerView1 = (RecyclerView) view.findViewById(R.id.list_horizontal1);
-        recyclerView2 = (RecyclerView) view.findViewById(R.id.list_horizontal2);
-        txtNoCard1 = (TextView) view.findViewById(R.id.txtNoCard1);
-        lnrList = (LinearLayout) view.findViewById(R.id.lnrList);
-        frame1 = (FrameLayout) view.findViewById(R.id.frame1);
-        progressBar1 = (ProgressBar) view.findViewById(R.id.more_progress1);
-        rlLoadMore1 = (RelativeLayout) view.findViewById(R.id.rlLoadMore1);
-        progressBar2 = (ProgressBar) view.findViewById(R.id.more_progress2);
-        rlLoadMore2 = (RelativeLayout) view.findViewById(R.id.rlLoadMore2);
-
-        rlProgressDialog = (RelativeLayout)view.findViewById(R.id.rlProgressDialog);
-        tvProgressing = (TextView)view.findViewById(R.id.txtProgressing);
-        ivConnecting1 = (ImageView)view.findViewById(R.id.imgConnecting1) ;
-        ivConnecting2 = (ImageView)view.findViewById(R.id.imgConnecting2) ;
-        ivConnecting3 = (ImageView)view.findViewById(R.id.imgConnecting3) ;
-
         session = new LoginSession(getContext());
         HashMap<String, String> user = session.getUserDetails();
         // name
         UserId = user.get(LoginSession.KEY_USERID);
-
-        db = new DatabaseHelper(getContext());
         //viewPager = (ViewPager)view.findViewById(R.id.viewPager);
-       // lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
+        // lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
         line = view.findViewById(R.id.view);
 
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                initRecyclerView1(recyclerView1, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter);
-                initRecyclerView2(recyclerView2, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter1);
+        initRecyclerView1(fragmentList1Binding.includeCarousel1.listHorizontal1, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter);
+        initRecyclerView2(fragmentList1Binding.includeCarousel2.listHorizontal2, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter1);
 
-            }
-        });
-
-        searchText = (AutoCompleteTextView) view.findViewById(R.id.searchView);
         InputMethodManager keyboard = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        keyboard.hideSoftInputFromWindow(searchText.getWindowToken(), 0);
+        keyboard.hideSoftInputFromWindow(fragmentList1Binding.searchView.getWindowToken(), 0);
 
         line.setVisibility(View.VISIBLE);
         CardsFragment.tabLayout.setVisibility(View.VISIBLE);
@@ -215,20 +149,21 @@ public class List1Fragment extends Fragment
         nfcModel.clear();
         callFirst();
 
-        recyclerView1.addOnScrollListener(scrollListener);
-        recyclerView2.addOnScrollListener(scrollListener);
-        ViewTreeObserver vto = lnrList.getViewTreeObserver();
+//        fragmentList1Binding.includeCarousel1.listHorizontal1.addOnScrollListener(scrollListener);
+//        fragmentList1Binding.includeCarousel2.listHorizontal2.addOnScrollListener(scrollListener);
+
+        ViewTreeObserver vto = fragmentList1Binding.lnrList.getViewTreeObserver();
 
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                    lnrList.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    fragmentList1Binding.lnrList.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 } else {
-                    lnrList.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    fragmentList1Binding.lnrList.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 }
-                int width = lnrList.getMeasuredWidth();
-                int height = lnrList.getMeasuredHeight();
+                int width = fragmentList1Binding.lnrList.getMeasuredWidth();
+                int height = fragmentList1Binding.lnrList.getMeasuredHeight();
 
                 View view_instance = (View) view.findViewById(R.id.list_horizontal1);
                 ViewGroup.LayoutParams params = view_instance.getLayoutParams();
@@ -249,9 +184,9 @@ public class List1Fragment extends Fragment
                 recyclerView1.dispatchTouchEvent(me); // don't cause scrolling
                 //recyclerView1.dispatchTouchEvent(me); // don't cause scrolling? Alternative solutoin?
 
-                // recyclerView2.requestFocus();
-                // recyclerView2.dispatchTouchEvent(mBackupTouchDownEvent); // don't cause scrolling
-                //recyclerView2.dispatchTouchEvent(me);
+                // fragmentList1Binding.includeCarousel2.listHorizontal2.requestFocus();
+                // fragmentList1Binding.includeCarousel2.listHorizontal2.dispatchTouchEvent(mBackupTouchDownEvent); // don't cause scrolling
+                //fragmentList1Binding.includeCarousel2.listHorizontal2.dispatchTouchEvent(me);
                 return true;
             }
         });*/
@@ -259,12 +194,12 @@ public class List1Fragment extends Fragment
        /* frame1.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent me) {
                 gestureDetector1.onTouchEvent(me);
-                recyclerView2.requestFocus();
-                recyclerView2.dispatchTouchEvent(me); // don't cause scrolling
-                //recyclerView1.dispatchTouchEvent(me); // don't cause scrolling? Alternative solutoin?
-                //recyclerView2.requestFocus();
-                // recyclerView2.dispatchTouchEvent(mBackupTouchDownEvent); // don't cause scrolling
-                //recyclerView2.dispatchTouchEvent(me);
+                fragmentList1Binding.includeCarousel2.listHorizontal2.requestFocus();
+                fragmentList1Binding.includeCarousel2.listHorizontal2.dispatchTouchEvent(me); // don't cause scrolling
+                //fragmentList1Binding.includeCarousel1.listHorizontal1.dispatchTouchEvent(me); // don't cause scrolling? Alternative solutoin?
+                //fragmentList1Binding.includeCarousel2.listHorizontal2.requestFocus();
+                // fragmentList1Binding.includeCarousel2.listHorizontal2.dispatchTouchEvent(mBackupTouchDownEvent); // don't cause scrolling
+                //fragmentList1Binding.includeCarousel2.listHorizontal2.dispatchTouchEvent(me);
                 return true;
             }
         });*/
@@ -273,17 +208,17 @@ public class List1Fragment extends Fragment
         /*frame.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                recyclerView1.addOnScrollListener(scrollListener);
-                recyclerView2.addOnScrollListener(scrollListener);
+                fragmentList1Binding.includeCarousel1.listHorizontal1.addOnScrollListener(scrollListener);
+                fragmentList1Binding.includeCarousel2.listHorizontal2.addOnScrollListener(scrollListener);
             }
         });*/
-       /* recyclerView1.setOnTouchListener(new View.OnTouchListener() {
+       /* fragmentList1Binding.includeCarousel1.listHorizontal1.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return gestureDetector1.onTouchEvent(event);
             }
         });*/
-        /*recyclerView1.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+        /*fragmentList1Binding.includeCarousel1.listHorizontal1.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
             public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
                 return gestureDetector1.onTouchEvent(e);
@@ -302,7 +237,7 @@ public class List1Fragment extends Fragment
         });*/
 
 
-        /*recyclerView2.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+        /*fragmentList1Binding.includeCarousel2.listHorizontal2.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
             public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
                 return gestureDetector1.onTouchEvent(e);
@@ -355,7 +290,7 @@ public class List1Fragment extends Fragment
         //myPager = new MyPager(getContext(), imgf, imgb, tag_id);
         //viewPager.setAdapter(myPager);
 
-        searchText.addTextChangedListener(new TextWatcher() {
+        fragmentList1Binding.searchView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                /* if(s.length() == 0)
@@ -401,11 +336,11 @@ public class List1Fragment extends Fragment
                         } catch (Exception e) {
                         }
                         callFirst();
-                        tvFriendInfo.setVisibility(View.GONE);
+                        fragmentList1Binding.tvFriendInfo.setVisibility(View.GONE);
                     }
               /*  else if (s.length() > 0)
                 {
-                    String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
+                    String text = fragmentList1Binding.searchView.getText().toString().toLowerCase(Locale.getDefault());
 
                     nfcModel.clear();
                     allTags.clear();
@@ -449,11 +384,15 @@ public class List1Fragment extends Fragment
             }
         });
 
-        imgSearch.setOnClickListener(new View.OnClickListener() {
+        fragmentList1Binding.imgSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if (searchText.getText().toString().length() == 0)
+                if (v != null) {
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+                if (fragmentList1Binding.searchView.getText().toString().length() == 0)
                 {
                     nfcModel.clear();
                     pageno = 1;
@@ -468,10 +407,10 @@ public class List1Fragment extends Fragment
                     } catch (Exception e) {
                     }
                     callFirst();
-                    tvFriendInfo.setVisibility(View.GONE);
+                    fragmentList1Binding.tvFriendInfo.setVisibility(View.GONE);
                 }
 
-                if (searchText.getText().toString().length() > 0)
+                if (fragmentList1Binding.searchView.getText().toString().length() > 0)
                 {
                     nfcModel.clear();
                     allTags.clear();
@@ -489,11 +428,15 @@ public class List1Fragment extends Fragment
             }
         });
 
-        searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        fragmentList1Binding.searchView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
-                if (searchText.getText().toString().length() == 0)
+                if (v != null) {
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+                if (fragmentList1Binding.searchView.getText().toString().length() == 0)
                 {
                     nfcModel.clear();
                     pageno = 1;
@@ -508,10 +451,10 @@ public class List1Fragment extends Fragment
                     } catch (Exception e) {
                     }
                     callFirst();
-                    tvFriendInfo.setVisibility(View.GONE);
+                    fragmentList1Binding.tvFriendInfo.setVisibility(View.GONE);
                 }
 
-                if (searchText.getText().toString().length() > 0)
+                if (fragmentList1Binding.searchView.getText().toString().length() > 0)
                 {
                     nfcModel.clear();
                     allTags.clear();
@@ -530,6 +473,32 @@ public class List1Fragment extends Fragment
                 return true;
             }
         });
+
+        final RecyclerView.OnScrollListener[] scrollListeners = new RecyclerView.OnScrollListener[2];
+        scrollListeners[0] = new RecyclerView.OnScrollListener( )
+        {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            {
+                super.onScrolled(recyclerView, dx, dy);
+                fragmentList1Binding.includeCarousel2.listHorizontal2.removeOnScrollListener(scrollListeners[1]);
+                fragmentList1Binding.includeCarousel2.listHorizontal2.scrollBy(dx, dy);
+                fragmentList1Binding.includeCarousel2.listHorizontal2.addOnScrollListener(scrollListeners[1]);
+            }
+        };
+        scrollListeners[1] = new RecyclerView.OnScrollListener( )
+        {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            {
+                super.onScrolled(recyclerView, dx, dy);
+                fragmentList1Binding.includeCarousel1.listHorizontal1.removeOnScrollListener(scrollListeners[0]);
+                fragmentList1Binding.includeCarousel1.listHorizontal1.scrollBy(dx, dy);
+                fragmentList1Binding.includeCarousel1.listHorizontal1.addOnScrollListener(scrollListeners[0]);
+            }
+        };
+        fragmentList1Binding.includeCarousel1.listHorizontal1.addOnScrollListener(scrollListeners[0]);
+        fragmentList1Binding.includeCarousel2.listHorizontal2.addOnScrollListener(scrollListeners[1]);
 
         return view;
     }
@@ -574,99 +543,10 @@ public class List1Fragment extends Fragment
             allTags.clear();
             mAdapter.notifyDataSetChanged();
             mAdapter1.notifyDataSetChanged();
-        } catch (Exception e) {
+        }  catch (Exception e) {
         }
         callFirst();
     }
-
-    public static String POST(String url)
-    {
-        InputStream inputStream = null;
-        String result = "";
-        try
-        {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-
-            if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
-                jsonObject.accumulate("Type", SortAndFilterOption.SortType);
-                jsonObject.accumulate("numofrecords", "100");
-//            jsonObject.accumulate("pageno", pageno);
-                jsonObject.accumulate("pageno", "1");
-                jsonObject.accumulate("userid", UserId);
-            }
-            else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
-                jsonObject.accumulate("ProfileID", SortAndFilterOption.ProfileArrayId);
-                jsonObject.accumulate("Type", SortAndFilterOption.SortType);
-                jsonObject.accumulate("numofrecords", "100");
-//            jsonObject.accumulate("pageno", pageno);
-                jsonObject.accumulate("pageno", "1");
-            }
-            else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
-                jsonObject.accumulate("group_ID", SortAndFilterOption.groupId);
-                jsonObject.accumulate("profileId", SortAndFilterOption.ProfileArrayId);
-                jsonObject.accumulate("numofrecords", "100");
-//            jsonObject.accumulate("pageno", pageno);
-                jsonObject.accumulate("pageno", "1");
-            }
-            else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("SearchConnect")) {
-                jsonObject.accumulate("FindBy", SortAndFilterOption.FindBY );
-                jsonObject.accumulate("Search", SortAndFilterOption.Search );
-                jsonObject.accumulate("SearchType", "Local" );
-                jsonObject.accumulate("UserID", UserId );
-                jsonObject.accumulate("numofrecords", "100" );
-                jsonObject.accumulate("pageno", "1" );
-
-            }
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            //Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-       // pageno++;
-        // 11. return result
-        return result;
-    }
-
-
 
     public static class HttpAsyncTask extends AsyncTask<String, Void, String>
     {
@@ -729,7 +609,44 @@ public class List1Fragment extends Fragment
 
         @Override
         protected String doInBackground(String... urls) {
-            return POST(urls[0]);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
+
+                    jsonObject.accumulate("Type", SortAndFilterOption.SortType);
+
+                    jsonObject.accumulate("numofrecords", "100");
+//            jsonObject.accumulate("pageno", pageno);
+                    jsonObject.accumulate("pageno", "1");
+                    jsonObject.accumulate("userid", UserId);
+                }
+                else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
+                    jsonObject.accumulate("ProfileID", SortAndFilterOption.ProfileArrayId);
+                    jsonObject.accumulate("Type", SortAndFilterOption.SortType);
+                    jsonObject.accumulate("numofrecords", "100");
+//            jsonObject.accumulate("pageno", pageno);
+                    jsonObject.accumulate("pageno", "1");
+                }
+                else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
+                    jsonObject.accumulate("group_ID", SortAndFilterOption.groupId);
+                    jsonObject.accumulate("profileId", SortAndFilterOption.ProfileArrayId);
+                    jsonObject.accumulate("numofrecords", "100");
+//            jsonObject.accumulate("pageno", pageno);
+                    jsonObject.accumulate("pageno", "1");
+                }
+                else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("SearchConnect")) {
+                    jsonObject.accumulate("FindBy", SortAndFilterOption.FindBY );
+                    jsonObject.accumulate("Search", SortAndFilterOption.Search );
+                    jsonObject.accumulate("SearchType", "Local" );
+                    jsonObject.accumulate("UserID", UserId );
+                    jsonObject.accumulate("numofrecords", "100" );
+                    jsonObject.accumulate("pageno", "1" );
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return POST2(urls[0],jsonObject);
         }
 
         // onPostExecute displays the results of the AsyncTask.
@@ -741,7 +658,7 @@ public class List1Fragment extends Fragment
             String loading = "Fetching Cards..." ;
             CustomProgressBar(loading, status);*/
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            fragmentList1Binding.rlProgressDialog.setVisibility(View.GONE);
             Utility.freeMemory();
             try
             {
@@ -778,8 +695,8 @@ public class List1Fragment extends Fragment
                         jsonArray = jsonObject.getJSONArray("connection");
                     }
                     number_cards = jsonArray.length();
-                    rlLoadMore1.setVisibility(View.GONE);
-                    rlLoadMore2.setVisibility(View.GONE);
+                    fragmentList1Binding.includeCarousel1.rlLoadMore1.setVisibility(View.GONE);
+                    fragmentList1Binding.includeCarousel2.rlLoadMore2.setVisibility(View.GONE);
 
                     for (int i = 0; i < jsonArray.length(); i++)
                     {
@@ -799,39 +716,38 @@ public class List1Fragment extends Fragment
                         nfcModelTag.setProfile_id(object.getString("ProfileId"));
                         nfcModelTag.setDateInitiated(object.getString("DateInitiated"));
                         nfcModelTag.setAddress(object.getString("Address1") + " " + object.getString("Address2")
-                         + " " + object.getString("Address3") + " " + object.getString("Address4"));
+                                + " " + object.getString("Address3") + " " + object.getString("Address4"));
 //                        Toast.makeText(getActivity(),"Profile_id"+object.getString("ProfileId"),Toast.LENGTH_SHORT).show();
                         nfcModelTag.setNfc_tag("en000000001");
                         nfcModelTag.setLatitude(object.getString("Latitude"));
                         nfcModelTag.setLongitude(object.getString("Longitude"));
                         allTags.add(nfcModelTag);
 
-                        GetData(mContext);
                     }
-
+                    GetData(mContext);
                     if (allTags.size() == 0)
                     {
                         if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection"))
                         {
-                            txtNoCard1.setText("No members have been added to the circle");
-                            txtNoCard1.setVisibility(View.VISIBLE);
+                            fragmentList1Binding.txtNoCard1.setText("No members have been added to the circle");
+                            fragmentList1Binding.txtNoCard1.setVisibility(View.VISIBLE);
                         }
                         else
                         {
-                            txtNoCard1.setText("No such information found,\nplease try again");
-                            txtNoCard1.setVisibility(View.VISIBLE);
+                            fragmentList1Binding.txtNoCard1.setText("No such information found,\nplease try again");
+                            fragmentList1Binding.txtNoCard1.setVisibility(View.VISIBLE);
                         }
                     }
                     else
                     {
-                        txtNoCard1.setVisibility(View.GONE);
+                        fragmentList1Binding.txtNoCard1.setVisibility(View.GONE);
                     }
 
                     recycleSize = allTags.size();
 
                     // Load More in recycler view
-                    /*final CarouselLayoutManager linearLayoutManager1 = (CarouselLayoutManager) recyclerView1.getLayoutManager();
-                    recyclerView1.setOnScrollListener(new RecyclerView.OnScrollListener() {
+                    /*final CarouselLayoutManager linearLayoutManager1 = (CarouselLayoutManager) fragmentList1Binding.includeCarousel1.listHorizontal1.getLayoutManager();
+                    fragmentList1Binding.includeCarousel1.listHorizontal1.setOnScrollListener(new RecyclerView.OnScrollListener() {
                         @Override
                         public void onScrollStateChanged(RecyclerView recyclerView, int scrollState) {
                             super.onScrollStateChanged(recyclerView, scrollState);
@@ -886,7 +802,6 @@ public class List1Fragment extends Fragment
 
         @Override
         protected Void doInBackground(Void... params) {
-            db = new DatabaseHelper(getContext());
             // allTags = db.getActiveNFC();
 
             images = new ArrayList<>();
@@ -922,6 +837,7 @@ public class List1Fragment extends Fragment
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(mAdapter);
         recyclerView.addOnScrollListener(new CenterScrollListener());
+
     }
 
    /* class MyOnGestureListener implements GestureDetector.OnGestureListener  {
@@ -987,7 +903,7 @@ public class List1Fragment extends Fragment
                         } else {
                             // onSwipeLeft();
                         }
-                       *//* recyclerView1.addOnScrollListener(scrollListener);
+                       *//* fragmentList1Binding.includeCarousel1.listHorizontal1.addOnScrollListener(scrollListener);
                         recyclerView2.addOnScrollListener(scrollListener);*//*
                     }
                 } else {
@@ -1041,31 +957,40 @@ public class List1Fragment extends Fragment
         }
     }*/
 
-    private RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
+    private RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener()
+    {
         public int y = 0;
 
         @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState)
+        {
             super.onScrollStateChanged(recyclerView, newState);
-            if (recyclerView1 == recyclerView && newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+            if (fragmentList1Binding.includeCarousel1.listHorizontal1 == recyclerView && newState == RecyclerView.SCROLL_STATE_DRAGGING)
+            {
                 draggingView = 1;
-                recyclerView2.stopScroll();
+                fragmentList1Binding.includeCarousel2.listHorizontal2.stopScroll();
                 // GalleryAdapter.position = Integer.parseInt(GalleryAdapter.imageView.getTag().toString());
-            } else if (recyclerView2 == recyclerView && newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+            }
+            else if (fragmentList1Binding.includeCarousel2.listHorizontal2 == recyclerView && newState == RecyclerView.SCROLL_STATE_DRAGGING)
+            {
                 draggingView = 2;
-                recyclerView1.stopScroll();
+                fragmentList1Binding.includeCarousel1.listHorizontal1.stopScroll();
             }
 
         }
 
         @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+        {
             super.onScrolled(recyclerView, dx, dy);
             // y=dy;
-            if (draggingView == 1 && recyclerView == recyclerView1) {
-                recyclerView2.scrollBy(dx, dy);
-            } else if (draggingView == 2 && recyclerView == recyclerView2) {
-                recyclerView1.scrollBy(dx, dy);
+            if (draggingView == 1 && recyclerView == fragmentList1Binding.includeCarousel1.listHorizontal1)
+            {
+                fragmentList1Binding.includeCarousel2.listHorizontal2.scrollBy(dx, dy);
+            }
+            else if (draggingView == 2 && recyclerView == fragmentList1Binding.includeCarousel2.listHorizontal2)
+            {
+                fragmentList1Binding.includeCarousel1.listHorizontal1.scrollBy(dx, dy);
             }
         }
     };
@@ -1127,38 +1052,13 @@ public class List1Fragment extends Fragment
 
     public static void CustomProgressDialog(final String loading)
     {
-        rlProgressDialog.setVisibility(View.VISIBLE);
-        tvProgressing.setText(loading);
-
+        fragmentList1Binding.rlProgressDialog.setVisibility(View.VISIBLE);
         Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.anticlockwise);
-        ivConnecting1.startAnimation(anim);
+        fragmentList1Binding.imgConnecting1.startAnimation(anim);
         Animation anim1 = AnimationUtils.loadAnimation(mContext,R.anim.clockwise);
-        ivConnecting2.startAnimation(anim1);
+        fragmentList1Binding.imgConnecting2.startAnimation(anim1);
+        fragmentList1Binding.txtProgressing.setText(loading+"...");
 
-        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
-        for (int i = 350; i <= SPLASHTIME; i = i + 350)
-        {
-            final int j = i;
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run()
-                {
-                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
-                    {
-                        tvProgressing.setText(loading+"...");
-                    }
-                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
-                    {
-                        tvProgressing.setText(loading+"...");
-                    }
-                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
-                    {
-                        tvProgressing.setText(loading+"...");
-                    }
-
-                }
-            }, i);
-        }
     }
 
     private class HttpAsyncTaskSearch extends AsyncTask<String, Void, String> {
@@ -1189,7 +1089,7 @@ public class List1Fragment extends Fragment
         protected void onPostExecute(String result)
         {
             // dialog.dismiss();
-         rlProgressDialog.setVisibility(View.GONE);
+            fragmentList1Binding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
 
             try
@@ -1221,7 +1121,7 @@ public class List1Fragment extends Fragment
 
                     if (connect.length() == 0)
                     {
-                        tvFriendInfo.setVisibility(View.VISIBLE);
+                        fragmentList1Binding.tvFriendInfo.setVisibility(View.VISIBLE);
                         allTags.clear();
                         try {
                             mAdapter.notifyDataSetChanged();
@@ -1234,7 +1134,7 @@ public class List1Fragment extends Fragment
                     }
                     else
                     {
-                        tvFriendInfo.setVisibility(View.GONE);
+                        fragmentList1Binding.tvFriendInfo.setVisibility(View.GONE);
 
                         for (int i = 0; i <= connect.length(); i++)
                         {
@@ -1262,13 +1162,13 @@ public class List1Fragment extends Fragment
                                     + " " + iCon.getString("Address3") + " " + iCon.getString("Address4"));
                             allTags.add(connectModel);
 
-                            GetData(mContext);
-                        }
 
+                        }
+                        GetData(mContext);
                         if (allTags.size() == 0) {
-                            txtNoCard1.setVisibility(View.VISIBLE);
+                            fragmentList1Binding.txtNoCard1.setVisibility(View.VISIBLE);
                         } else {
-                            txtNoCard1.setVisibility(View.GONE);
+                            fragmentList1Binding.txtNoCard1.setVisibility(View.GONE);
                         }
                     }
                 }
@@ -1294,7 +1194,7 @@ public class List1Fragment extends Fragment
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("FindBy", "NAME");
-            jsonObject.accumulate("Search", searchText.getText().toString());
+            jsonObject.accumulate("Search", fragmentList1Binding.searchView.getText().toString());
             jsonObject.accumulate("SearchType", "Local" );
             jsonObject.accumulate("UserID", UserId);
             jsonObject.accumulate("numofrecords", "30");
@@ -1382,11 +1282,11 @@ public class List1Fragment extends Fragment
 
         if (nfcModel.size() == 0)
         {
-                txtNoCard1.setVisibility(View.VISIBLE);
+            fragmentList1Binding.txtNoCard1.setVisibility(View.VISIBLE);
         }
         else
         {
-            txtNoCard1.setVisibility(View.GONE);
+            fragmentList1Binding.txtNoCard1.setVisibility(View.GONE);
         }
 
         if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetFriendConnection"))
@@ -1415,8 +1315,8 @@ public class List1Fragment extends Fragment
         }
 
 //        CardsActivity.setActionBarTitle("Cards - "+number_cards);
-        initRecyclerView1(recyclerView1, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter);
-        initRecyclerView2(recyclerView2, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter1);
+        initRecyclerView1(fragmentList1Binding.includeCarousel1.listHorizontal1, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter);
+        initRecyclerView2(fragmentList1Binding.includeCarousel2.listHorizontal2, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter1);
 
         // myPager = new MyPager(context, R.layout.cardview_list, nfcModel);
         //viewPager.setAdapter(myPager);

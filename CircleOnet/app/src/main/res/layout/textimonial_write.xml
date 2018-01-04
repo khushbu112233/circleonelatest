@@ -55,7 +55,7 @@
             android:textColor="@color/white"
             android:background="@color/colorPrimary"
             android:layout_toRightOf="@+id/btnWrite"
-            android:layout_marginLeft="@dimen/_20sdp"/>
+            android:layout_marginLeft="20sp"/>
     </RelativeLayout>
 
     </LinearLayout>

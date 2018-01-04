@@ -121,7 +121,7 @@ public class ManageMyProfile extends AppCompatActivity
 
         listView.setLayoutManager(mLayoutManager);
         listView.setItemAnimator(new DefaultItemAnimator());
-        new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
+       // new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
