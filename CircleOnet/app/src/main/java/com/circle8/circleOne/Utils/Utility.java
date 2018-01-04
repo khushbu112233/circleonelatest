@@ -60,7 +60,7 @@ public class Utility
 //    public static final String BASE_URL = "http://circle8.asia:8999/Onet.svc/";
     // public static final String MERCHANT_BASE_URL = "http://circle8.asia:8082/Onet.svc/Merchant/";
     //  public static final String REWARDS_BASE_URL = "http://circle8.asia:8082/Onet.svc/Rewards/";
-
+public static RelativeLayout rlProgressDialog;
     /**
      * Uat for 8082
      */
@@ -181,7 +181,7 @@ public class Utility
     public static void CustomProgressDialog(final String loading,Context context)
     {
 
-        RelativeLayout rlProgressDialog;
+
         ImageView imgConnecting1,imgConnecting2,imgConnecting3;
         final TextView txtProgressing;
         mProgressDialog = new ProgressDialog(context);
@@ -204,6 +204,7 @@ public class Utility
         imgConnecting2.startAnimation(anim1);
 
     }
+
     public static void dismissProgress() {
 
 

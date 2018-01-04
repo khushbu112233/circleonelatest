@@ -38,6 +38,8 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -130,9 +132,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
-import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 import static junit.framework.Assert.assertEquals;
 
 public class EditProfileActivity extends AppCompatActivity implements
@@ -254,7 +254,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         // TextView textView = (TextView) findViewById(R.id.hello);
         fragmentEditProfileBinding.txtTestimonial.setText(ss);
         fragmentEditProfileBinding.txtTestimonial.setMovementMethod(LinkMovementMethod.getInstance());
-        fragmentEditProfileBinding. txtTestimonial.setHighlightColor(getResources().getColor(R.color.colorPrimary));
+        fragmentEditProfileBinding.txtTestimonial.setHighlightColor(getResources().getColor(R.color.colorPrimary));
         fragmentEditProfileBinding.btnSignIn.setOnClickListener(this);
         fragmentEditProfileBinding.imgGoogle.setOnClickListener(this);
         fragmentEditProfileBinding.txtAttachDelete.setOnClickListener(this);
@@ -280,7 +280,16 @@ public class EditProfileActivity extends AppCompatActivity implements
         fragmentEditProfileBinding.txtMore.setOnClickListener(this);
         fragmentEditProfileBinding.imgYoutube.setOnClickListener(this);
         fragmentEditProfileBinding.imgTwitter.setOnClickListener(this);
-        fragmentEditProfileBinding.includeTop.imgProfile.setOnClickListener(this);
+        fragmentEditProfileBinding.includeTop.imgProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cropType = "profile";
+                CropImage.activity(null)
+                        .setCropShape(CropImageView.CropShape.OVAL)
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .start(EditProfileActivity.this);
+            }
+        });
         fragmentEditProfileBinding.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -352,13 +361,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             case R.id.btn_sign_in:
                 signIn();
                 break;
-            case R.id.imgProfile:
-                cropType = "profile";
-                CropImage.activity(null)
-                        .setCropShape(CropImageView.CropShape.OVAL)
-                        .setGuidelines(CropImageView.Guidelines.ON)
-                        .start(EditProfileActivity.this);
-                break;
+
             case R.id.imgTwitter:
                 client.authorize(EditProfileActivity.this, new Callback<TwitterSession>() {
                     @Override
@@ -623,7 +626,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                 break;
             case R.id.imgFb:
                 String loading = "Loading" ;
-                CustomProgressDialog(loading,activity);
+                CustomProgressDialog(loading);
 
                 fragmentEditProfileBinding.loginButton.performClick();
 
@@ -916,8 +919,10 @@ public class EditProfileActivity extends AppCompatActivity implements
                         }
 
                         // [START_EXCLUDE]
-                        hideProgressDialog();
-//                        dismissProgress();
+                        fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
+                        //hideProgressDialog();
+//                    //    dismissProgress();
+                       // fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
                         // [END_EXCLUDE]
                     }
                 });
@@ -1030,7 +1035,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             //   allTags = new ArrayList<>();
             String loading = "Deleting profile" ;
 
-            CustomProgressDialog(loading,activity);
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -1044,8 +1049,8 @@ public class EditProfileActivity extends AppCompatActivity implements
         {
             Utility.freeMemory();
 //            dialog.dismiss();
-            dismissProgress();
-
+           // dismissProgress();
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
             try
             {
 
@@ -1158,8 +1163,8 @@ public class EditProfileActivity extends AppCompatActivity implements
         {
 
 //            progressDialog.dismiss();
-            dismissProgress();
-
+           // dismissProgress();
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
             // App code
             GraphRequest request = GraphRequest.newMeRequest(
                     loginResult.getAccessToken(),
@@ -1193,14 +1198,16 @@ public class EditProfileActivity extends AppCompatActivity implements
         public void onCancel()
         {
 //            progressDialog.dismiss();
-            dismissProgress();
+            //dismissProgress();
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
         }
 
         @Override
         public void onError(FacebookException e)
         {
 //            progressDialog.dismiss();
-            dismissProgress();
+          //  dismissProgress();
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
         }
     };
 
@@ -2162,7 +2169,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             progress.show();*/
 
             String loading = "Logging in" ;
-            CustomProgressDialog(loading,activity);
+            CustomProgressDialog(loading);
 
             linkededinApiHelper();
         }
@@ -2328,17 +2335,10 @@ public class EditProfileActivity extends AppCompatActivity implements
         mProgressDialog.show();*/
 
         String loading = "Google login" ;
-        CustomProgressDialog(loading,activity);
+        CustomProgressDialog(loading);
 
     }
 
-    private void hideProgressDialog()
-    {
-        /*if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.hide();
-        }*/
-        dismissProgress();
-    }
 
 
 
@@ -2781,6 +2781,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         {
 //            dialog.dismiss();
 //          dismissProgress();
+           // fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
 
@@ -2845,7 +2846,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
             String loading = "Creating profile" ;
-            CustomProgressDialog(loading,activity);
+            CustomProgressDialog(loading);
 
         }
 
@@ -2859,7 +2860,8 @@ public class EditProfileActivity extends AppCompatActivity implements
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            dismissProgress();
+           // dismissProgress();
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
@@ -2988,7 +2990,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             //   allTags = new ArrayList<>();
 
             String loading = "Loading" ;
-            CustomProgressDialog(loading,activity);
+            CustomProgressDialog(loading);
 
         }
 
@@ -3002,7 +3004,8 @@ public class EditProfileActivity extends AppCompatActivity implements
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            dismissProgress();
+           // dismissProgress();
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
 
 
@@ -3050,7 +3053,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             //   allTags = new ArrayList<>();
 
             String loading = "Loading" ;
-            CustomProgressDialog(loading,activity);
+            CustomProgressDialog(loading);
 
         }
 
@@ -3064,7 +3067,8 @@ public class EditProfileActivity extends AppCompatActivity implements
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            dismissProgress();
+           // dismissProgress();
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
 
             try
@@ -3112,7 +3116,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
             String loading = "Profile loading" ;
-            CustomProgressDialog(loading,activity);
+            CustomProgressDialog(loading);
 
         }
 
@@ -3126,7 +3130,8 @@ public class EditProfileActivity extends AppCompatActivity implements
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            dismissProgress();
+          //  dismissProgress();
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 
 //          dismissProgress();
             // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
@@ -3484,7 +3489,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             //   allTags = new ArrayList<>();
 
             String loading = "Loading" ;
-            CustomProgressDialog(loading,activity);
+            CustomProgressDialog(loading);
 
         }
 
@@ -3498,7 +3503,8 @@ public class EditProfileActivity extends AppCompatActivity implements
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            dismissProgress();
+           // dismissProgress();
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result != null) {
@@ -3542,7 +3548,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             //   allTags = new ArrayList<>();
 
             String loading = "Updating profile" ;
-            CustomProgressDialog(loading,activity);
+            CustomProgressDialog(loading);
 
         }
 
@@ -3556,7 +3562,8 @@ public class EditProfileActivity extends AppCompatActivity implements
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            dismissProgress();
+           // dismissProgress();
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result != null) {
@@ -3640,14 +3647,9 @@ public class EditProfileActivity extends AppCompatActivity implements
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-           /* dialog = new ProgressDialog(activity);
-            dialog.setMessage("Uploading...");
-            //dialog.setTitle("Saving Reminder");
-            dialog.show();
-            dialog.setCancelable(false);*/
 
             String loading = "Uploading" ;
-            CustomProgressDialog(loading,activity);
+            CustomProgressDialog(loading);
 
         }
 
@@ -3661,7 +3663,8 @@ public class EditProfileActivity extends AppCompatActivity implements
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            dismissProgress();
+          //  dismissProgress();
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -3697,14 +3700,9 @@ public class EditProfileActivity extends AppCompatActivity implements
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            /*dialog = new ProgressDialog(EditProfileActivity.this);
-            dialog.setMessage("Uploading...");
-            //dialog.setTitle("Saving Reminder");
-            dialog.show();
-            dialog.setCancelable(false);*/
 
             String loading = "Uploading" ;
-            CustomProgressDialog(loading,activity);
+            CustomProgressDialog(loading);
 
         }
 
@@ -3718,7 +3716,8 @@ public class EditProfileActivity extends AppCompatActivity implements
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            dismissProgress();
+            //dismissProgress();
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {
                 if (result != null) {
@@ -3753,13 +3752,8 @@ public class EditProfileActivity extends AppCompatActivity implements
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-           /* dialog = new ProgressDialog(activity);
-            dialog.setMessage("Uploading...");
-            //dialog.setTitle("Saving Reminder");
-            dialog.show();
-            dialog.setCancelable(false);*/
             String loading = "Uploading" ;
-            CustomProgressDialog(loading,activity);
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -3772,7 +3766,8 @@ public class EditProfileActivity extends AppCompatActivity implements
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            dismissProgress();
+          //  dismissProgress();
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -3810,13 +3805,8 @@ public class EditProfileActivity extends AppCompatActivity implements
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-           /* dialog = new ProgressDialog(activity);
-            dialog.setMessage("Uploading...");
-            //dialog.setTitle("Saving Reminder");
-            dialog.show();
-            dialog.setCancelable(false);*/
             String loading = "Uploading" ;
-            CustomProgressDialog(loading,activity);
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -3829,7 +3819,8 @@ public class EditProfileActivity extends AppCompatActivity implements
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            dismissProgress();
+            //dismissProgress();
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {
@@ -3872,7 +3863,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             dialog.show();*/
 
             String loading = "Finding events" ;
-            CustomProgressDialog(loading,activity);
+            CustomProgressDialog(loading);
         }
 
         @Override
@@ -3885,7 +3876,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            dismissProgress();
+            fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
 
             try
@@ -3940,7 +3931,16 @@ public class EditProfileActivity extends AppCompatActivity implements
             }
         }
     }
+    public static void CustomProgressDialog(final String loading)
+    {
+        fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.VISIBLE);
+        Animation anim = AnimationUtils.loadAnimation(activity, R.anim.anticlockwise);
+        fragmentEditProfileBinding.imgConnecting1.startAnimation(anim);
+        Animation anim1 = AnimationUtils.loadAnimation(activity,R.anim.clockwise);
+        fragmentEditProfileBinding.imgConnecting2.startAnimation(anim1);
+        fragmentEditProfileBinding.txtProgressing.setText(loading+"...");
 
+    }
     public  String EventListPost(String url)
     {
         InputStream inputStream = null;

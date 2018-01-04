@@ -376,11 +376,11 @@ public class RewardsPointsActivity extends AppCompatActivity implements View.OnC
         {
             super.onPreExecute();
             /*dialog = new ProgressDialog(RewardsPointsActivity.this);
-            dialog.setMessage("Get All..");
+            dialog.setMessage("Fetching prodcuts..");
             dialog.show();
             dialog.setCancelable(false);*/
 
-            String loading = "Get all" ;
+            String loading = "Fetching prodcuts" ;
             CustomProgressDialog(loading,RewardsPointsActivity.this);
         }
 

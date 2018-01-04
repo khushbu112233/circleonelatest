@@ -4,6 +4,10 @@
         "source": "D:\\Khushbu\\CircleOne\\Project\\CircleOneFinal\\CircleOnet\\library\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ic_arrow_up_blue_soft.png"
     },
     {
+        "merged": "D:\\Khushbu\\CircleOne\\Project\\CircleOneLive\\CircleOnet\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\ic_arrow_up_gray_soft.png",
+        "source": "D:\\Khushbu\\CircleOne\\Project\\CircleOneLive\\CircleOnet\\library\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ic_arrow_up_gray_soft.png"
+    },
+    {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\ic_arrow_up_gray_soft.png",
         "source": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\library\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ic_arrow_up_gray_soft.png"
     },
@@ -32,6 +36,10 @@
         "source": "D:\\Khushbu\\CircleOne\\Project\\CircleOneFinal\\CircleOnet\\library\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ic_arrow_up_blue.png"
     },
     {
+        "merged": "D:\\Khushbu\\CircleOne\\Project\\CircleOneLive\\CircleOnet\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\ic_arrow_up_blue.png",
+        "source": "D:\\Khushbu\\CircleOne\\Project\\CircleOneLive\\CircleOnet\\library\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ic_arrow_up_blue.png"
+    },
+    {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\ic_arrow_up_gray_soft.png",
         "source": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\library\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ic_arrow_up_gray_soft.png"
     },
@@ -44,7 +52,15 @@
         "source": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\library\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ic_arrow_up_gray.png"
     },
     {
+        "merged": "D:\\Khushbu\\CircleOne\\Project\\CircleOneLive\\CircleOnet\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\ic_arrow_up_gray.png",
+        "source": "D:\\Khushbu\\CircleOne\\Project\\CircleOneLive\\CircleOnet\\library\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ic_arrow_up_gray.png"
+    },
+    {
         "merged": "D:\\Khushbu\\CircleOne\\Project\\CircleOneFinal\\CircleOnet\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\ic_arrow_up_gray_soft.png",
         "source": "D:\\Khushbu\\CircleOne\\Project\\CircleOneFinal\\CircleOnet\\library\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ic_arrow_up_gray_soft.png"
+    },
+    {
+        "merged": "D:\\Khushbu\\CircleOne\\Project\\CircleOneLive\\CircleOnet\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\ic_arrow_up_blue_soft.png",
+        "source": "D:\\Khushbu\\CircleOne\\Project\\CircleOneLive\\CircleOnet\\library\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ic_arrow_up_blue_soft.png"
     }
 ]

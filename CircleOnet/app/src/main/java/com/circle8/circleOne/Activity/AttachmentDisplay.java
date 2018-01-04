@@ -4,8 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
@@ -19,8 +19,11 @@ public class AttachmentDisplay extends AppCompatActivity
     String url;
     Boolean net_check = false;
     ActivityAttachmentDisplayBinding mBinding;
+    private ProgressDialog dialog ;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_attachment_display);
@@ -30,10 +33,28 @@ public class AttachmentDisplay extends AppCompatActivity
         Intent i = getIntent();
         url = i.getStringExtra("url");
         net_check = Utility.isNetworkAvailable(getApplicationContext());
+
+        dialog = new ProgressDialog(AttachmentDisplay.this);
+        dialog.setMessage("Please Wait...");
+        dialog.setCancelable(false);
+
         if (net_check == false){
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
         }
-        startWebView(url);
+//        startWebView(url);
+
+        mBinding.webView1.getSettings().setJavaScriptEnabled(true);
+        mBinding.webView1.setWebViewClient(new myWebClient());
+
+        if (url.contains("pdf") || url.contains("docs"))
+        {
+            mBinding.webView1.loadUrl("http://drive.google.com/viewerng/viewer?embedded=true&url="+url);
+//            mBinding.webView1.loadUrl("https://docs.google.com/viewer?url="+url);
+        }
+        else
+        {
+            mBinding.webView1.loadUrl(url);
+        }
     }
 
     @Override
@@ -51,8 +72,8 @@ public class AttachmentDisplay extends AppCompatActivity
         Utility.freeMemory();
     }
 
-    private void startWebView(String url) {
-
+    private void startWebView(String url)
+    {
         //Create new webview Client to show progress dialog
         //When opening a url or click on link
         Utility.freeMemory();
@@ -110,8 +131,25 @@ public class AttachmentDisplay extends AppCompatActivity
 
         //Load url in webview
         mBinding.webView1.loadUrl(url);
+    }
 
+    private class myWebClient extends WebViewClient
+    {
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon)
+        {
+            super.onPageStarted(view, url, favicon);
 
+            dialog.show();
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url)
+        {
+            super.onPageFinished(view, url);
+
+            dialog.dismiss();
+        }
     }
 
 }

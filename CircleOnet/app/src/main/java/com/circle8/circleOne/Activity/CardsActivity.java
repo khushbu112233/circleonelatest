@@ -215,7 +215,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
     private PendingIntent mPendingIntent;
     private IntentFilter[] mIntentFilters;
     private String[][] mNFCTechLists;
-    ArrayList<String> arrayNFC ;
+    ArrayList<String> arrayNFC  = new ArrayList<>();
     String CardCode = "";
     Boolean netCheck= false;
     public static final byte[] MIME_TEXT = "application/com.circle8.circleOne".getBytes();
@@ -1478,14 +1478,15 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         Log.i("PERMISSION","NEVER ASK AGAIN");
     }
 
+    public static final byte[] MIME_TEXT1 = "application/com.amplearch.circleone".getBytes();
 
-   /* @Override
+    @Override
     public void onResume() {
         super.onResume();
 
         checkPlayServices();
 
-        if (mViewPager.getCurrentItem() == 2){
+        if (mViewPager.getCurrentItem() == 2) {
             setActionBarTitle("Events");
         }
 
@@ -1510,7 +1511,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                     try {
                         arrayNFC = new ArrayList<>();
                         for (int i = 0; i < rawMsgs.length; i++) {
-                            NdefRecord[] recs = ((NdefMessage)rawMsgs[i]).getRecords();
+                            NdefRecord[] recs = ((NdefMessage) rawMsgs[i]).getRecords();
                             for (int j = 0; j < recs.length; j++) {
                                 if (recs[j].getTnf() == NdefRecord.TNF_MIME_MEDIA &&
                                         Arrays.equals(recs[j].getType(), MIME_TEXT)) {
@@ -1519,14 +1520,50 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                                     String textEncoding = ((payload[0] & 0200) == 0) ? "UTF-8" : "UTF-16";
                                     int langCodeLen = payload[0] & 0077;
 
-                                    String s = ("\n" +
+                                    /*s += ("\n" +
                                             new String(payload, langCodeLen + 1,
-                                                    payload.length - langCodeLen - 1, textEncoding));
-
+                                                    payload.length - langCodeLen - 1, textEncoding) );
+*/
                                     String s1 = new String(payload, langCodeLen + 1,
                                             payload.length - langCodeLen - 1, textEncoding);
                                     String decryptstr = decrypt(s1, secretKey);
                                     arrayNFC.add(decryptstr);
+                                } else if (recs[j].getTnf() == NdefRecord.TNF_MIME_MEDIA && Arrays.equals(recs[j].getType(), MIME_TEXT1)) {
+
+                                    byte[] payload = recs[j].getPayload();
+                                    String textEncoding = ((payload[0] & 0200) == 0) ? "UTF-8" : "UTF-16";
+                                    int langCodeLen = payload[0] & 0077;
+
+                                   /* s += ("\n" +
+                                            new String(payload, langCodeLen + 1,
+                                                    payload.length - langCodeLen - 1, textEncoding) );*/
+                                    String s1 = new String(payload, langCodeLen + 1,
+                                            payload.length - langCodeLen - 1, textEncoding);
+                                    String decryptstr = decrypt(s1, secretKey);
+                                    arrayNFC.add(decryptstr);
+                                } else {
+                                    try {
+                                        msgs = new NdefMessage[rawMsgs.length];
+                                        for (int i1 = 0; i1 < rawMsgs.length; i1++) {
+                                            msgs[i1] = (NdefMessage) rawMsgs[i1];
+                                        }
+
+                                        byte[] payload = msgs[0].getRecords()[0].getPayload();
+
+                                        String message = new String(payload);
+                /* 把tag的資訊放到textview裡面 */
+                                        // mEtMessage.setText(new String(payload));
+
+                                        message = message.substring(1, message.length());
+
+                                        String decryptstr = decrypt(message, secretKey);
+                                        arrayNFC.add(decryptstr);
+
+                                    } catch (GeneralSecurityException e) {
+                                        e.printStackTrace();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
                             }
                         }
@@ -1537,11 +1574,10 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 }
                 String ProfileId = "", card_code = "";
 
-                if (netCheck == false){
+                if (netCheck == false) {
                     Utility.freeMemory();
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
-                }
-                else {
+                } else {
                     //Toast.makeText(getApplicationContext(), arrayNFC.toString(), Toast.LENGTH_LONG).show();
                     if (arrayNFC.size() == 1) {
                         nfcProfileId = arrayNFC.get(0).toString();
@@ -1594,7 +1630,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 }
 
                 // Toast.makeText(getApplicationContext(), String.valueOf(latitude + " " + longitude), Toast.LENGTH_LONG).show();
-                try {
+              /*  try {
 
                     nfcProfileId = decrypt(ProfileId, secretKey);
                     if (!card_code.equals("")){
@@ -1623,7 +1659,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                     byte[] payload = msgs[0].getRecords()[0].getPayload();
 
                     String message = new String(payload);
-                 
+                 把tag的資訊放到textview裡面
                     // mEtMessage.setText(new String(payload));
                     done = true;
 //                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
@@ -1656,36 +1692,30 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                         }
 
 
-                }
+                }*/
+            }
+
+            IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
+            IntentFilter ndefDetected = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
+            IntentFilter techDetected = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
+            IntentFilter[] nfcIntentFilter = new IntentFilter[]{techDetected, tagDetected, ndefDetected};
+
+            PendingIntent pendingIntent = PendingIntent.getActivity(
+                    this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+            if (mNfcAdapter != null)
+                mNfcAdapter.enableForegroundDispatch(this, pendingIntent, nfcIntentFilter, null);
+
+
+            if (tabLayout.getSelectedTabPosition() == 3) {
+                CardsActivity.setActionBarTitle("Profile");
+                //ProfileFragment.callMyProfile();
+            } else if (tabLayout.getSelectedTabPosition() == 2) {
+                CardsActivity.setActionBarTitle("Events");
+            } else if (tabLayout.getSelectedTabPosition() == 1) {
+                CardsActivity.setActionBarTitle("Connect");
             }
         }
-
-        IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
-        IntentFilter ndefDetected = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
-        IntentFilter techDetected = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
-        IntentFilter[] nfcIntentFilter = new IntentFilter[]{techDetected, tagDetected, ndefDetected};
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(
-                this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-        if (mNfcAdapter != null)
-            mNfcAdapter.enableForegroundDispatch(this, pendingIntent, nfcIntentFilter, null);
-
-
-        if (tabLayout.getSelectedTabPosition() == 3)
-        {
-            CardsActivity.setActionBarTitle("Profile");
-            //ProfileFragment.callMyProfile();
-        }
-        else if (tabLayout.getSelectedTabPosition() == 2)
-        {
-            CardsActivity.setActionBarTitle("Events");
-        }
-        else if (tabLayout.getSelectedTabPosition() == 1)
-        {
-            CardsActivity.setActionBarTitle("Connect");
-        }
     }
-*/
 
 
     @Override
@@ -1723,8 +1753,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 for (int i = 0; i < data.length; i++) {
                     NdefRecord[] recs = ((NdefMessage)data[i]).getRecords();
                     for (int j = 0; j < recs.length; j++) {
-                        if (recs[j].getTnf() == NdefRecord.TNF_MIME_MEDIA &&
-                                Arrays.equals(recs[j].getType(), MIME_TEXT)) {
+                        if (recs[j].getTnf() == NdefRecord.TNF_MIME_MEDIA && Arrays.equals(recs[j].getType(), MIME_TEXT)) {
 
                             byte[] payload = recs[j].getPayload();
                             String textEncoding = ((payload[0] & 0200) == 0) ? "UTF-8" : "UTF-16";
@@ -1737,6 +1766,47 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                                     payload.length - langCodeLen - 1, textEncoding);
                             String decryptstr = decrypt(s1, secretKey);
                             arrayNFC.add(decryptstr);
+                        }
+                        else if (recs[j].getTnf() == NdefRecord.TNF_MIME_MEDIA && Arrays.equals(recs[j].getType(), MIME_TEXT1)) {
+
+                            byte[] payload = recs[j].getPayload();
+                            String textEncoding = ((payload[0] & 0200) == 0) ? "UTF-8" : "UTF-16";
+                            int langCodeLen = payload[0] & 0077;
+
+                            s += ("\n" +
+                                    new String(payload, langCodeLen + 1,
+                                            payload.length - langCodeLen - 1, textEncoding) );
+                            String s1 = new String(payload, langCodeLen + 1,
+                                    payload.length - langCodeLen - 1, textEncoding);
+                            String decryptstr = decrypt(s1, secretKey);
+                            arrayNFC.add(decryptstr);
+                        }
+                        else {
+                            try {
+
+
+                                NdefMessage[] msgs = null;
+                                msgs = new NdefMessage[data.length];
+                                for (int i1 = 0; i1 < data.length; i1++) {
+                                    msgs[i1] = (NdefMessage) data[i1];
+                                }
+
+                                byte[] payload = msgs[0].getRecords()[0].getPayload();
+
+                                String message = new String(payload);
+
+                                // mEtMessage.setText(new String(payload));
+
+                                message = message.substring(1, message.length());
+
+                                String decryptstr = decrypt(message, secretKey);
+                                arrayNFC.add(decryptstr);
+
+                            } catch (GeneralSecurityException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }
@@ -1880,7 +1950,6 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             }
         }*/
     }
-
     public String decrypt(String value, String key)
             throws GeneralSecurityException, IOException {
         byte[] value_bytes = Base64.decode(value, 0);

@@ -301,7 +301,14 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
         mBinding.includeLayoutDetails.ivMap.setOnClickListener(this);
         mBinding.includeLayoutSocial.imgProfileShare.setOnClickListener(this);
         mBinding.includeLayoutDetails.txtMore.setOnClickListener(this);
-        mBinding.includeLayoutDetails.txtAttachment.setOnClickListener(this);
+        mBinding.includeLayoutDetails.txtAttachment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(getApplicationContext(), AttachmentDisplay.class);
+                intent1.putExtra("url", Utility.BASE_IMAGE_URL + "Other_doc/" + mBinding.includeLayoutDetails.txtAttachment.getText().toString());
+                startActivity(intent1);
+            }
+        });
         mBinding.includeLayoutViepager.imgProfileCard.setOnClickListener(this);
         mBinding.includeLayoutDetails.imgAddGroupFriend.setOnClickListener(this);
         mBinding.includeLayoutSocial.fbUrl.setOnClickListener(this);
@@ -327,11 +334,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                 intent.putExtra("ProfileId", profile_id);
                 startActivity(intent);
                 break;
-            case R.id.txtAttachment:
-                Intent intent1 = new Intent(getApplicationContext(), AttachmentDisplay.class);
-                intent1.putExtra("url", Utility.BASE_IMAGE_URL + "Other_doc/" + mBinding.includeLayoutDetails.txtAttachment.getText().toString());
-                startActivity(intent1);
-                break;
+
             case R.id.imgProfileCard:
                 final Dialog dialog = new Dialog(CardDetail.this);
                 dialog.setContentView(R.layout.imageview_popup);
@@ -1512,7 +1515,7 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
 
-            String loading = "Fetching Connection Data" ;
+            String loading = "Fetching profile" ;
             CustomProgressDialog(loading,activity);
         }
 
@@ -1912,13 +1915,16 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                         createMarker(Latitude,Longitude);
                         mBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
                     }
-                    else
-                    {
+                    else {
 //                        Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
-                        createMarker1(locationAddress.split(",")[1]);
-                        mBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
+                        if (locationAddress.contains(",")) {
+                            createMarker1(locationAddress.split(",")[1]);
+                            mBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
+                        }else
+                        {
+                            mBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
+                        }
                     }
-
                     break;
                 default:
                     locationAddress = null;

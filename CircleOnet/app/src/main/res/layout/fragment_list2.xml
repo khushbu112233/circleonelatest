@@ -79,7 +79,6 @@
                 android:layout_below="@+id/view"
                 android:layout_marginLeft="0dp"
                 android:layout_marginRight="0dp"
-                android:columnWidth="190dp"
                 android:gravity="center"
                 android:horizontalSpacing="5dp"
                 android:numColumns="2"

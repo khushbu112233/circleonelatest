@@ -100,7 +100,7 @@ public class List2Fragment extends Fragment
     public static String progressStatus = "FIRST";
 
     static int numberCount, gridSize;
-    public static String count;
+    public static String count, counts;
     public static FragmentList2Binding fragmentList2Binding;
     public List2Fragment() {
         // Required empty public constructor
@@ -385,7 +385,7 @@ public class List2Fragment extends Fragment
                     String success = response.getString("success");
                     String findBy = response.getString("FindBy");
                     String search = response.getString("Search");
-                    count = response.getString("count");
+                    counts = response.getString("count");
                     String pageno = response.getString("pageno");
                     String recordno = response.getString("numofrecords");
 
@@ -603,9 +603,10 @@ public class List2Fragment extends Fragment
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
+                    count = jsonObject.getString("count");
 
                     if (pageno == 2) {
-                        count = jsonObject.getString("count");
+                        counts = jsonObject.getString("count");
                     }
                     if (count.equals("") || count.equals("null")) {
                         numberCount = 0;
@@ -620,7 +621,7 @@ public class List2Fragment extends Fragment
                         jsonArray = jsonObject.getJSONArray("connection");
                     }
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
-                    numberCount = jsonArray.length();
+//                    numberCount = jsonArray.length();
 
                     rlLoadMore.setVisibility(View.GONE);
 
@@ -648,8 +649,10 @@ public class List2Fragment extends Fragment
                         nfcModelTag.setLatitude(object.getString("Latitude"));
                         nfcModelTag.setLongitude(object.getString("Longitude"));
                         allTaggs.add(nfcModelTag);
-                        GetData(mContext);
+
                     }
+
+                    GetData(mContext);
 
                     gridSize = allTaggs.size();
 
@@ -1105,23 +1108,23 @@ public class List2Fragment extends Fragment
 
         if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
             if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + count + "/" + CardsActivity.Connection_Limit);
+                CardsActivity.setActionBarTitle("Cards - " + counts + "/" + CardsActivity.Connection_Limit);
             }
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
             if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + count);
+                CardsActivity.setActionBarTitle("Cards - " + counts);
             }
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
             if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + count);
+                CardsActivity.setActionBarTitle("Cards - " + counts);
             }
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("SearchConnect"))
         {
             if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + count);
+                CardsActivity.setActionBarTitle("Cards - " + counts);
             }
         }
 

@@ -55,6 +55,7 @@ import com.circle8.circleOne.Helper.ReferralCodeSession;
 import com.circle8.circleOne.Model.ProfileModel;
 import com.circle8.circleOne.Model.TestimonialModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.FragmentProfileBinding;
 import com.facebook.CallbackManager;
@@ -477,16 +478,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                 break;
 
             case R.id.imgProfileShare:
-                Utility.freeMemory();
-                Utility.deleteCache(getContext());
-
+                Pref.setValue(mContext,"share","1");
                 String shareBody = "I’m ready to connect with you and share our growing network on the CircleOne app. I’m currently a user with CircleOne and would like to invite you to join the Circle so we’ll both be able to take our professional newtorks a step further. Use the code '" + refer +
                         "' for a quick and simple registration! https://circle8.asia/mobileApp.html";
-                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, fragmentProfileBinding.includeFrame2.tvPersonName.getText().toString());
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Share Profile Via"));
+
                 break ;
             case  R.id.imgQR:
                 //  Toast.makeText(getContext(), "Generating QR Code.. Please Wait..", Toast.LENGTH_LONG).show();
@@ -913,14 +913,18 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
         profileIndex = Integer.parseInt(profile.get(ProfileSession.KEY_PROFILE_INDEX));
         callMyProfile();*/
 
+        if(!Pref.getValue(mContext,"share","").equalsIgnoreCase("1")) {
+            HashMap<String, String> user = session.getUserDetails();
+            UserID = user.get(LoginSession.KEY_USERID);
 
-        HashMap<String, String> user = session.getUserDetails();
-        UserID = user.get(LoginSession.KEY_USERID);
+            HashMap<String, String> profile = profileSession.getProfileDetails();
+            profileIndex = Integer.parseInt(profile.get(ProfileSession.KEY_PROFILE_INDEX));
 
-        HashMap<String, String> profile = profileSession.getProfileDetails();
-        profileIndex = Integer.parseInt(profile.get(ProfileSession.KEY_PROFILE_INDEX));
-
-        new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
+            new HttpAsyncTaskProfiles().execute(Utility.BASE_URL + "MyProfiles");
+        }else
+        {
+            Pref.setValue(mContext,"share","");
+        }
 //        new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
     }
 

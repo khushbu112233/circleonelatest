@@ -818,7 +818,8 @@ public class List1Fragment extends Fragment
             @Override
             public void onClick(View view) {
                 final int position = recyclerView.getChildLayoutPosition(view);
-                Utility.CustomProgressDialog("Loading",mContext);
+
+               // Utility.CustomProgressDialog("Fetching profile",mContext);
                 Intent intent = new Intent(mContext, CardDetail.class);
                 intent.putExtra("profile_id", nfcModel.get(position).getProfile_id());
                 intent.putExtra("DateInitiated",nfcModel.get(position).getDateInitiated());
@@ -969,8 +970,10 @@ public class List1Fragment extends Fragment
             // y=dy;
             if (draggingView == 1 && recyclerView == fragmentList1Binding.includeCarousel1.listHorizontal1) {
                 fragmentList1Binding.includeCarousel2.listHorizontal2.scrollBy(dx, dy);
+              // fragmentList1Binding.includeCarousel2.listHorizontal2.scrollTo(dx,dy);
             } else if (draggingView == 2 && recyclerView == fragmentList1Binding.includeCarousel2.listHorizontal2) {
                 fragmentList1Binding.includeCarousel1.listHorizontal1.scrollBy(dx, dy);
+               // fragmentList1Binding.includeCarousel1.listHorizontal1.scrollTo(dx,dy);
             }
         }
     };
@@ -1142,9 +1145,9 @@ public class List1Fragment extends Fragment
                                     + " " + iCon.getString("Address3") + " " + iCon.getString("Address4"));
                             allTags.add(connectModel);
 
-
+                            GetData(mContext);
                         }
-                        GetData(mContext);
+
                         if (allTags.size() == 0) {
                             fragmentList1Binding.txtNoCard1.setVisibility(View.VISIBLE);
                         } else {
