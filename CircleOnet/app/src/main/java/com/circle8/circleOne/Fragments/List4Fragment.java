@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
@@ -309,6 +310,10 @@ public class List4Fragment extends Fragment
             @Override
             public void onClick(View v)
             {
+                if (v != null) {
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
                 Utility.freeMemory();
                 Utility.deleteCache(getContext());
 
@@ -347,6 +352,10 @@ public class List4Fragment extends Fragment
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
+                if (v != null) {
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
                 Utility.freeMemory();
                 Utility.deleteCache(getContext());
 

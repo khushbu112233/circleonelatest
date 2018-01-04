@@ -7,7 +7,6 @@ import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -26,11 +25,7 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AutoCompleteTextView;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,7 +39,6 @@ import com.circle8.circleOne.Activity.SortAndFilterOption;
 import com.circle8.circleOne.Adapter.GalleryAdapter;
 import com.circle8.circleOne.Adapter.GalleryAdapter1;
 import com.circle8.circleOne.Helper.LoginSession;
-import com.circle8.circleOne.Interfaces.CustomItemClickListener;
 import com.circle8.circleOne.Model.FriendConnection;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
@@ -115,8 +109,7 @@ public class List1Fragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
-        fragmentList1Binding = DataBindingUtil.inflate(
-                inflater, R.layout.fragment_list1, container, false);
+        fragmentList1Binding = DataBindingUtil.inflate(inflater, R.layout.fragment_list1, container, false);
         view = fragmentList1Binding.getRoot();
 
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -131,11 +124,8 @@ public class List1Fragment extends Fragment
         // lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
         line = view.findViewById(R.id.view);
 
-
         initRecyclerView1(fragmentList1Binding.includeCarousel1.listHorizontal1, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter);
         initRecyclerView2(fragmentList1Binding.includeCarousel2.listHorizontal2, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter1);
-
-
 
         InputMethodManager keyboard = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         keyboard.hideSoftInputFromWindow(fragmentList1Binding.searchView.getWindowToken(), 0);
@@ -159,8 +149,9 @@ public class List1Fragment extends Fragment
         nfcModel.clear();
         callFirst();
 
-        fragmentList1Binding.includeCarousel1.listHorizontal1.addOnScrollListener(scrollListener);
-        fragmentList1Binding.includeCarousel2.listHorizontal2.addOnScrollListener(scrollListener);
+//        fragmentList1Binding.includeCarousel1.listHorizontal1.addOnScrollListener(scrollListener);
+//        fragmentList1Binding.includeCarousel2.listHorizontal2.addOnScrollListener(scrollListener);
+
         ViewTreeObserver vto = fragmentList1Binding.lnrList.getViewTreeObserver();
 
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -397,6 +388,10 @@ public class List1Fragment extends Fragment
             @Override
             public void onClick(View v)
             {
+                if (v != null) {
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
                 if (fragmentList1Binding.searchView.getText().toString().length() == 0)
                 {
                     nfcModel.clear();
@@ -437,6 +432,10 @@ public class List1Fragment extends Fragment
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
+                if (v != null) {
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
                 if (fragmentList1Binding.searchView.getText().toString().length() == 0)
                 {
                     nfcModel.clear();
@@ -474,6 +473,32 @@ public class List1Fragment extends Fragment
                 return true;
             }
         });
+
+        final RecyclerView.OnScrollListener[] scrollListeners = new RecyclerView.OnScrollListener[2];
+        scrollListeners[0] = new RecyclerView.OnScrollListener( )
+        {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            {
+                super.onScrolled(recyclerView, dx, dy);
+                fragmentList1Binding.includeCarousel2.listHorizontal2.removeOnScrollListener(scrollListeners[1]);
+                fragmentList1Binding.includeCarousel2.listHorizontal2.scrollBy(dx, dy);
+                fragmentList1Binding.includeCarousel2.listHorizontal2.addOnScrollListener(scrollListeners[1]);
+            }
+        };
+        scrollListeners[1] = new RecyclerView.OnScrollListener( )
+        {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            {
+                super.onScrolled(recyclerView, dx, dy);
+                fragmentList1Binding.includeCarousel1.listHorizontal1.removeOnScrollListener(scrollListeners[0]);
+                fragmentList1Binding.includeCarousel1.listHorizontal1.scrollBy(dx, dy);
+                fragmentList1Binding.includeCarousel1.listHorizontal1.addOnScrollListener(scrollListeners[0]);
+            }
+        };
+        fragmentList1Binding.includeCarousel1.listHorizontal1.addOnScrollListener(scrollListeners[0]);
+        fragmentList1Binding.includeCarousel2.listHorizontal2.addOnScrollListener(scrollListeners[1]);
 
         return view;
     }
@@ -518,7 +543,7 @@ public class List1Fragment extends Fragment
             allTags.clear();
             mAdapter.notifyDataSetChanged();
             mAdapter1.notifyDataSetChanged();
-        } catch (Exception e) {
+        }  catch (Exception e) {
         }
         callFirst();
     }
@@ -801,8 +826,6 @@ public class List1Fragment extends Fragment
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(mAdapter);
         recyclerView.addOnScrollListener(new CenterScrollListener());
-
-
     }
 
     public static void initRecyclerView2(final RecyclerView recyclerView, final CarouselLayoutManager layoutManager, GalleryAdapter1 mAdapter) {
@@ -818,8 +841,7 @@ public class List1Fragment extends Fragment
             @Override
             public void onClick(View view) {
                 final int position = recyclerView.getChildLayoutPosition(view);
-
-               // Utility.CustomProgressDialog("Fetching profile",mContext);
+                Utility.CustomProgressDialog("Loading",mContext);
                 Intent intent = new Intent(mContext, CardDetail.class);
                 intent.putExtra("profile_id", nfcModel.get(position).getProfile_id());
                 intent.putExtra("DateInitiated",nfcModel.get(position).getDateInitiated());
@@ -947,17 +969,22 @@ public class List1Fragment extends Fragment
         }
     }*/
 
-    private RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
+    private RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener()
+    {
         public int y = 0;
 
         @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState)
+        {
             super.onScrollStateChanged(recyclerView, newState);
-            if (fragmentList1Binding.includeCarousel1.listHorizontal1 == recyclerView && newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+            if (fragmentList1Binding.includeCarousel1.listHorizontal1 == recyclerView && newState == RecyclerView.SCROLL_STATE_DRAGGING)
+            {
                 draggingView = 1;
                 fragmentList1Binding.includeCarousel2.listHorizontal2.stopScroll();
                 // GalleryAdapter.position = Integer.parseInt(GalleryAdapter.imageView.getTag().toString());
-            } else if (fragmentList1Binding.includeCarousel2.listHorizontal2 == recyclerView && newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+            }
+            else if (fragmentList1Binding.includeCarousel2.listHorizontal2 == recyclerView && newState == RecyclerView.SCROLL_STATE_DRAGGING)
+            {
                 draggingView = 2;
                 fragmentList1Binding.includeCarousel1.listHorizontal1.stopScroll();
             }
@@ -965,15 +992,17 @@ public class List1Fragment extends Fragment
         }
 
         @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+        {
             super.onScrolled(recyclerView, dx, dy);
             // y=dy;
-            if (draggingView == 1 && recyclerView == fragmentList1Binding.includeCarousel1.listHorizontal1) {
+            if (draggingView == 1 && recyclerView == fragmentList1Binding.includeCarousel1.listHorizontal1)
+            {
                 fragmentList1Binding.includeCarousel2.listHorizontal2.scrollBy(dx, dy);
-              // fragmentList1Binding.includeCarousel2.listHorizontal2.scrollTo(dx,dy);
-            } else if (draggingView == 2 && recyclerView == fragmentList1Binding.includeCarousel2.listHorizontal2) {
+            }
+            else if (draggingView == 2 && recyclerView == fragmentList1Binding.includeCarousel2.listHorizontal2)
+            {
                 fragmentList1Binding.includeCarousel1.listHorizontal1.scrollBy(dx, dy);
-               // fragmentList1Binding.includeCarousel1.listHorizontal1.scrollTo(dx,dy);
             }
         }
     };
@@ -1145,9 +1174,9 @@ public class List1Fragment extends Fragment
                                     + " " + iCon.getString("Address3") + " " + iCon.getString("Address4"));
                             allTags.add(connectModel);
 
-                            GetData(mContext);
-                        }
 
+                        }
+                        GetData(mContext);
                         if (allTags.size() == 0) {
                             fragmentList1Binding.txtNoCard1.setVisibility(View.VISIBLE);
                         } else {
