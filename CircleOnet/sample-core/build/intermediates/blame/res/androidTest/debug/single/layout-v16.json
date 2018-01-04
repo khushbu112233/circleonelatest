@@ -1,5 +1,9 @@
 [
     {
+        "merged": "D:\\Khushbu\\CircleOne\\Project\\CircleOneLive\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v16\\notification_template_custom_big.xml",
+        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\a1803e2261063708c4fc962e3d015378\\res\\layout-v16\\notification_template_custom_big.xml"
+    },
+    {
         "merged": "D:\\Khushbu\\CircleOne\\Project\\CircleOneFinal\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v16\\notification_template_custom_big.xml",
         "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\a1803e2261063708c4fc962e3d015378\\res\\layout-v16\\notification_template_custom_big.xml"
     },

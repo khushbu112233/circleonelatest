@@ -8,16 +8,28 @@
         "source": "C:\\Users\\admin\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\27b629932eccf17e5e2e58b30b7db234\\res\\drawable-v21\\avd_show_password.xml"
     },
     {
-        "merged": "D:\\Khushbu\\CircleOne\\Project\\CircleOneFinal\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\avd_show_password.xml",
-        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\4c75e924d1251ddc48e54b6cb7f99ebb\\res\\drawable-v21\\avd_show_password.xml"
-    },
-    {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\abc_action_bar_item_background_material.xml",
         "source": "C:\\Users\\admin\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\9cdf1dca172a69926094cf1be630b9d7\\res\\drawable-v21\\abc_action_bar_item_background_material.xml"
     },
     {
+        "merged": "D:\\Khushbu\\CircleOne\\Project\\CircleOneFinal\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\avd_show_password.xml",
+        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\4c75e924d1251ddc48e54b6cb7f99ebb\\res\\drawable-v21\\avd_show_password.xml"
+    },
+    {
+        "merged": "D:\\Khushbu\\CircleOne\\Project\\CircleOneLive\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\abc_btn_colored_material.xml",
+        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\6330a685c5b7620076405d1b1d9b08e2\\res\\drawable-v21\\abc_btn_colored_material.xml"
+    },
+    {
+        "merged": "D:\\Khushbu\\CircleOne\\Project\\CircleOneLive\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\notification_action_background.xml",
+        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\a1803e2261063708c4fc962e3d015378\\res\\drawable-v21\\notification_action_background.xml"
+    },
+    {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\design_bottom_navigation_item_background.xml",
         "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\3d9ae4eeac3844c461c97fd58e58610a\\res\\drawable-v21\\design_bottom_navigation_item_background.xml"
+    },
+    {
+        "merged": "D:\\Khushbu\\CircleOne\\Project\\CircleOneLive\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\avd_show_password.xml",
+        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\4c75e924d1251ddc48e54b6cb7f99ebb\\res\\drawable-v21\\avd_show_password.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\design_bottom_navigation_item_background.xml",
@@ -28,12 +40,20 @@
         "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable-v21\\abc_action_bar_item_background_material.xml"
     },
     {
+        "merged": "D:\\Khushbu\\CircleOne\\Project\\CircleOneLive\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\abc_edit_text_material.xml",
+        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\6330a685c5b7620076405d1b1d9b08e2\\res\\drawable-v21\\abc_edit_text_material.xml"
+    },
+    {
         "merged": "D:\\Khushbu\\CircleOne\\Project\\CircleOneFinal\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\abc_btn_colored_material.xml",
         "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\6330a685c5b7620076405d1b1d9b08e2\\res\\drawable-v21\\abc_btn_colored_material.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\notification_action_background.xml",
         "source": "C:\\Users\\admin\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\59c43324c1c464c0dd430dfef409cf03\\res\\drawable-v21\\notification_action_background.xml"
+    },
+    {
+        "merged": "D:\\Khushbu\\CircleOne\\Project\\CircleOneLive\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\avd_hide_password.xml",
+        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\4c75e924d1251ddc48e54b6cb7f99ebb\\res\\drawable-v21\\avd_hide_password.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\design_password_eye.xml",
@@ -52,12 +72,20 @@
         "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\6330a685c5b7620076405d1b1d9b08e2\\res\\drawable-v21\\abc_action_bar_item_background_material.xml"
     },
     {
+        "merged": "D:\\Khushbu\\CircleOne\\Project\\CircleOneLive\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\design_password_eye.xml",
+        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\4c75e924d1251ddc48e54b6cb7f99ebb\\res\\drawable-v21\\design_password_eye.xml"
+    },
+    {
         "merged": "D:\\Khushbu\\CircleOne\\Project\\CircleOneFinal\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\design_bottom_navigation_item_background.xml",
         "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\4c75e924d1251ddc48e54b6cb7f99ebb\\res\\drawable-v21\\design_bottom_navigation_item_background.xml"
     },
     {
         "merged": "E:\\Jay Nagar\\Circle Onet\\Live Project\\Circle Onet 8\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\abc_edit_text_material.xml",
         "source": "C:\\Users\\ample-arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\166588056834683492c766b6d48ae6ee\\res\\drawable-v21\\abc_edit_text_material.xml"
+    },
+    {
+        "merged": "D:\\Khushbu\\CircleOne\\Project\\CircleOneLive\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\design_bottom_navigation_item_background.xml",
+        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\4c75e924d1251ddc48e54b6cb7f99ebb\\res\\drawable-v21\\design_bottom_navigation_item_background.xml"
     },
     {
         "merged": "E:\\kajal\\Android\\Circles en\\Project\\Circle One 4\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\abc_btn_colored_material.xml",
@@ -94,5 +122,9 @@
     {
         "merged": "D:\\Khushbu\\CircleOne\\Project\\CircleOneFinal\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\avd_hide_password.xml",
         "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\4c75e924d1251ddc48e54b6cb7f99ebb\\res\\drawable-v21\\avd_hide_password.xml"
+    },
+    {
+        "merged": "D:\\Khushbu\\CircleOne\\Project\\CircleOneLive\\CircleOnet\\sample-core\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\abc_action_bar_item_background_material.xml",
+        "source": "C:\\Users\\Ample-Arch\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\6330a685c5b7620076405d1b1d9b08e2\\res\\drawable-v21\\abc_action_bar_item_background_material.xml"
     }
 ]

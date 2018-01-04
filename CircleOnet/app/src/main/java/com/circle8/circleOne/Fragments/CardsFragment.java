@@ -67,13 +67,13 @@ public class CardsFragment extends Fragment
                     setActionBarTitle("Cards - " + List1Fragment.count + "/" + Connection_Limit);
                 }
                 else if (tab.getPosition() == 1) {
-                    setActionBarTitle("Cards - " + List2Fragment.count + "/" + Connection_Limit);
+                    setActionBarTitle("Cards - " + List2Fragment.counts + "/" + Connection_Limit);
                 }
                 else if (tab.getPosition() == 2) {
-                    setActionBarTitle("Cards - " + List3Fragment.count1 + "/" + Connection_Limit);
+                    setActionBarTitle("Cards - " + List3Fragment.counts + "/" + Connection_Limit);
                 }
                 else if (tab.getPosition() == 3) {
-                    setActionBarTitle("Cards - " + List4Fragment.count + "/" + Connection_Limit);
+                    setActionBarTitle("Cards - " + List4Fragment.counts + "/" + Connection_Limit);
                 }
                 InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(tabLayout.getApplicationWindowToken(), 0);
