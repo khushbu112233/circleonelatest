@@ -49,7 +49,7 @@ public class ConnectFragment extends Fragment
         SectionsPagerAdapter mSectionsPagerAdapter = new ConnectFragment.SectionsPagerAdapter(getActivity().getSupportFragmentManager());
         mViewPager = (CustomViewPager) view.findViewById(R.id.container2);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-        mViewPager.setPagingEnabled(false);
+        mViewPager.setPagingEnabled(true);
 
         setupViewPager(mViewPager);
         tabLayout = (TabLayout) view.findViewById(R.id.tabs2);

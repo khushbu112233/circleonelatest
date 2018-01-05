@@ -2,7 +2,6 @@ package com.circle8.circleOne.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -33,7 +32,6 @@ import android.widget.Toast;
 import com.azoft.carousellayoutmanager.CarouselLayoutManager;
 import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
 import com.azoft.carousellayoutmanager.CenterScrollListener;
-import com.circle8.circleOne.Activity.CardDetail;
 import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.Activity.SortAndFilterOption;
 import com.circle8.circleOne.Adapter.GalleryAdapter;
@@ -147,7 +145,7 @@ public class List1Fragment extends Fragment
         pageno = 1;
         allTags.clear();
         nfcModel.clear();
-        callFirst();
+//        callFirst();
 
 //        fragmentList1Binding.includeCarousel1.listHorizontal1.addOnScrollListener(scrollListener);
 //        fragmentList1Binding.includeCarousel2.listHorizontal2.addOnScrollListener(scrollListener);
@@ -518,6 +516,12 @@ public class List1Fragment extends Fragment
         nfcModel.clear();
         pageno = 1;
         new HttpAsyncTask().execute(Utility.BASE_URL+SortAndFilterOption.CardListApi);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        callFirst();
     }
 
     public static void webCall()

@@ -151,7 +151,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
 //        allTags = db.getActiveNFC();
         gridAdapter = new List3Adapter(getActivity(), R.layout.grid_list3_layout, nfcModel1);
         listView.setAdapter(gridAdapter);
-        callFirst();
+      //  callFirst();
 
         lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
         line = view.findViewById(R.id.view);
@@ -412,6 +412,13 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
         });
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        callFirst();
+
     }
 
     @Override

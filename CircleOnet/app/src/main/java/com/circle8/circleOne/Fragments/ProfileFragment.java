@@ -202,7 +202,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
         /* Call api for my profile */
 
-        callMyProfile();
        /* runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -322,6 +321,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        callMyProfile();
+
     }
 
     public static void CustomProgressDialog(final String loading)
@@ -610,16 +616,44 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
                                         fragmentProfileBinding. txtAttachment.setText(allTags.get(i).getAttachment_FileName());
                                     }
+
+                                    String add = allTags.get(i).getAddress1()+ " ";
+
+                                    if (allTags.get(i).getAddress2().toString().equals("") ||
+                                            allTags.get(i).getAddress2().toString().equals("null") ||
+                                            allTags.get(i).getAddress2().toString().equals(null)){
+                                        add += allTags.get(i).getAddress2().toString() + "\n";
+                                    }
+                                    add += allTags.get(i).getAddress3()  + " ";
+
+                                    if (allTags.get(i).getAddress4().toString().equals("") ||
+                                            allTags.get(i).getAddress4().toString().equals("null") ||
+                                            allTags.get(i).getAddress4().toString().equals(null)){
+                                        add += allTags.get(i).getAddress4().toString() + "\n";
+                                    }
+                                    add += allTags.get(i).getCity()  + " ";
+
+                                    if (allTags.get(i).getState().toString().equals("") ||
+                                            allTags.get(i).getState().toString().equals("null") ||
+                                            allTags.get(i).getState().toString().equals(null)){
+                                        add += allTags.get(i).getState().toString() + "\n";
+                                    }
+                                    add += allTags.get(i).getCountry() + " "
+                                            + allTags.get(i).getPostalcode();
                                     fragmentProfileBinding.tvAddress.setText(
-                                            allTags.get(i).getAddress1()+ " "
-                                                    + allTags.get(i).getAddress2() + "\n"
-                                                    + allTags.get(i).getAddress3()  + " "
-                                                    + allTags.get(i).getAddress4() + "\n"
-                                                    + allTags.get(i).getCity() + " "
-                                                    + allTags.get(i).getState() + "\n"
-                                                    + allTags.get(i).getCountry() + " "
-                                                    + allTags.get(i).getPostalcode());
-                                    fragmentProfileBinding.tvWebsite.setText(allTags.get(i).getWebsite());
+                                            add);
+
+
+                                    if(allTags.get(i).getWebsite().equalsIgnoreCase("")
+                                            || allTags.get(i).getWebsite().equalsIgnoreCase("null")
+                                            || allTags.get(i).getWebsite().equalsIgnoreCase(null))
+                                    {
+                                        fragmentProfileBinding.lnrWebsite.setVisibility(View.GONE);
+                                    }
+                                    else
+                                    {
+                                        fragmentProfileBinding.tvWebsite.setText(allTags.get(i).getWebsite());
+                                    }
                                     displayProfile = allTags.get(i).getUserPhoto();
                                     TestimonialProfileId = allTags.get(i).getProfileID();
 

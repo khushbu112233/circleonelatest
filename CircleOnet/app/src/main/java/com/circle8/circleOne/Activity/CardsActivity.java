@@ -204,14 +204,11 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
     private GooglePlayServicesHelper googlePlayServicesHelper;
     private DialogsAdapter dialogsAdapter;
     private QBChatDialogMessageListener allDialogsMessagesListener;
-    private SystemMessagesListener systemMessagesListener;
     private QBIncomingMessagesManager incomingMessagesManager;
     private DialogsManager dialogsManager;
     private QBUser currentUser;
     private NfcAdapter mNfcAdapter;
-    private PendingIntent mPendingIntent;
     private IntentFilter[] mIntentFilters;
-    private String[][] mNFCTechLists;
     ArrayList<String> arrayNFC  = new ArrayList<>();
     String CardCode = "";
     Boolean netCheck= false;
@@ -221,12 +218,143 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        Log.e("act","Card");
-        TwitterAuthConfig authConfig = new TwitterAuthConfig(getString(R.string.twitter_consumer_key),
-                getString(R.string.twitter_consumer_secret));
-        Fabric.with(this, new Twitter(authConfig));
 
         activityCardsBinding = DataBindingUtil.setContentView(this,R.layout.activity_cards);
+
+        session = new LoginSession(getApplicationContext());
+        final ActionBar actionBar = getSupportActionBar();
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.custom_actionbar);
+        getSupportActionBar().setShowHideAnimationEnabled(false);
+        textView = (TextView) findViewById(R.id.mytext);
+        txtNotificationCountAction = (TextView) findViewById(R.id.txtNotificationCountAction);
+        txtNotificationCountAction.setVisibility(View.GONE);
+        mViewPager = (CustomViewPager) findViewById(R.id.container);
+        imgDrawer = (ImageView) findViewById(R.id.drawer);
+        imgLogo = (ImageView) findViewById(R.id.imgLogo);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        // textView.setText("Cards 256");
+        // Set up the ViewPager with the sections adapter.
+        mViewPager.setOffscreenPageLimit(2);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setPagingEnabled(false);
+
+        tabLayout.setupWithViewPager(mViewPager);
+        tabLayout.setSelectedTabIndicatorColor(getResources().getColor(android.R.color.white));
+
+        new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+    }
+
+
+    protected void onDestroy() {
+        super.onDestroy();
+        Utility.freeMemory();
+        Utility.deleteCache(getApplicationContext());
+
+    }
+
+
+    protected synchronized void buildGoogleApiClient() {
+        Utility.freeMemory();
+        Utility.deleteCache(getApplicationContext());
+
+       /* mGoogleApiClient = new GoogleApiClient.Builder(CardsActivity.this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .addApi(Plus.API, Plus.PlusOptions.builder().build())
+                .build();*/
+
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addConnectionCallbacks(this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .addApi(Plus.API, Plus.PlusOptions.builder().build())
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API).build();
+
+        mGoogleApiClient.connect();
+
+        LocationRequest mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(10000);
+        mLocationRequest.setFastestInterval(5000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                .addLocationRequest(mLocationRequest);
+
+        PendingResult<LocationSettingsResult> result =
+                LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build());
+
+        result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
+            @Override
+            public void onResult(LocationSettingsResult locationSettingsResult) {
+
+                final Status status = locationSettingsResult.getStatus();
+
+                switch (status.getStatusCode()) {
+                    case LocationSettingsStatusCodes.SUCCESS:
+                        // All location settings are satisfied. The client can initialize location requests here
+                        getLocation();
+                        break;
+                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                        try {
+                            // Show the dialog by calling startResolutionForResult(),
+                            // and check the result in onActivityResult().
+                            status.startResolutionForResult(CardsActivity.this, REQUEST_CHECK_SETTINGS);
+
+                        } catch (IntentSender.SendIntentException e) {
+                            // Ignore the error.
+                        }
+                        break;
+                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                        break;
+                }
+            }
+        });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Utility.freeMemory();
+        Utility.deleteCache(getApplicationContext());
+
+        try {
+
+            final LocationSettingsStates states = LocationSettingsStates.fromIntent(data);
+            switch (requestCode) {
+                case REQUEST_CHECK_SETTINGS:
+                    switch (resultCode) {
+                        case Activity.RESULT_OK:
+                            // All required changes were successfully made
+                            getLocation();
+                            break;
+                        case Activity.RESULT_CANCELED:
+                            // The user was asked to change settings, but chose not to
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+            }
+        }catch (Exception e){}
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Utility.freeMemory();
+
+
         netCheck = Utility.isNetworkAvailable(getApplicationContext());
         referralCodeSession = new ReferralCodeSession(getApplicationContext());
         HashMap<String, String> referral = referralCodeSession.getReferralDetails();
@@ -238,40 +366,12 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             position = extras.getInt("viewpager_position");
             nested_position = extras.getInt("nested_viewpager_position");
         }
-        new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        dismissProgress();
         permissionUtils = new PermissionUtils(CardsActivity.this);
         permissionUtils.check_permission(permissions,"Need GPS permission for getting your location",1);
 
-
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
-
-
-        mPendingIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-
-        // set an intent filter for all MIME data
-        IntentFilter ndefIntent = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
-        try {
-            ndefIntent.addDataType("*/*");
-            mIntentFilters = new IntentFilter[] { ndefIntent };
-        } catch (Exception e) {
-            Log.e("TagDispatch", e.toString());
-        }
-
-        mNFCTechLists = new String[][] { new String[] { NfcF.class.getName() } };
-        // mViewPager.setOverScrollMode(View.OVER_SCROLL_NEVER);
-       /* mViewPager.setPageTransformer(true, new ViewPager.PageTransformer() {
-            @Override
-            public void transformPage(View page, float position) {
-
-            }
-        });*/
-        getSupportActionBar().setShowHideAnimationEnabled(false);
-//        new HttpAsyncTaskNotification().execute(Utility.BASE_URL+"CountNewNotification");
-        // tags.add(App.getSampleConfigs().getUsersTag());
-
         if (netCheck == false){
+            netCheck = Utility.isNetworkAvailable(getApplicationContext());
             Utility.freeMemory();
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
         }
@@ -279,6 +379,10 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         {
             new HttpAsyncTaskNotification().execute(Utility.BASE_URL + "CountNewNotification");
         }
+        getSupportActionBar().setShowHideAnimationEnabled(false);
+//        new HttpAsyncTaskNotification().execute(Utility.BASE_URL+"CountNewNotification");
+        // tags.add(App.getSampleConfigs().getUsersTag());
+
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -448,146 +552,8 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 }
             }
         });
-    }
 
 
-    private class PushBroadcastReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // Get extra data included in the Intent
-            String message = intent.getStringExtra(GcmConsts.EXTRA_GCM_MESSAGE);
-            Log.v(TAG, "Received broadcast " + intent.getAction() + " with data: " + message);
-            //  requestBuilder.setSkip(skipRecords = 0);
-            //  loadDialogsFromQb(true, true);
-        }
-    }
-
-    private class SystemMessagesListener implements QBSystemMessageListener {
-        @Override
-        public void processMessage(final QBChatMessage qbChatMessage) {
-            dialogsManager.onSystemMessageReceived(qbChatMessage);
-        }
-
-        @Override
-        public void processError(QBChatException e, QBChatMessage qbChatMessage) {
-
-        }
-    }
-
-    private class AllDialogsMessageListener extends QbChatDialogMessageListenerImp {
-        @Override
-        public void processMessage(final String dialogId, final QBChatMessage qbChatMessage, Integer senderId) {
-            if (!senderId.equals(ChatHelper.getCurrentUser().getId())) {
-                dialogsManager.onGlobalMessageReceived(dialogId, qbChatMessage);
-            }
-        }
-    }
-
-    protected void onDestroy() {
-        super.onDestroy();
-        Utility.freeMemory();
-        Utility.deleteCache(getApplicationContext());
-
-    }
-
-
-    protected synchronized void buildGoogleApiClient() {
-        Utility.freeMemory();
-        Utility.deleteCache(getApplicationContext());
-
-       /* mGoogleApiClient = new GoogleApiClient.Builder(CardsActivity.this)
-                .enableAutoManage(this, this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .addApi(Plus.API, Plus.PlusOptions.builder().build())
-                .build();*/
-
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, this)
-                .addConnectionCallbacks(this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .addApi(Plus.API, Plus.PlusOptions.builder().build())
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API).build();
-
-        mGoogleApiClient.connect();
-
-        LocationRequest mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(10000);
-        mLocationRequest.setFastestInterval(5000);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
-        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
-                .addLocationRequest(mLocationRequest);
-
-        PendingResult<LocationSettingsResult> result =
-                LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build());
-
-        result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
-            @Override
-            public void onResult(LocationSettingsResult locationSettingsResult) {
-
-                final Status status = locationSettingsResult.getStatus();
-
-                switch (status.getStatusCode()) {
-                    case LocationSettingsStatusCodes.SUCCESS:
-                        // All location settings are satisfied. The client can initialize location requests here
-                        getLocation();
-                        break;
-                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-                        try {
-                            // Show the dialog by calling startResolutionForResult(),
-                            // and check the result in onActivityResult().
-                            status.startResolutionForResult(CardsActivity.this, REQUEST_CHECK_SETTINGS);
-
-                        } catch (IntentSender.SendIntentException e) {
-                            // Ignore the error.
-                        }
-                        break;
-                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-                        break;
-                }
-            }
-        });
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Utility.freeMemory();
-        Utility.deleteCache(getApplicationContext());
-
-        try {
-
-            final LocationSettingsStates states = LocationSettingsStates.fromIntent(data);
-            switch (requestCode) {
-                case REQUEST_CHECK_SETTINGS:
-                    switch (resultCode) {
-                        case Activity.RESULT_OK:
-                            // All required changes were successfully made
-                            getLocation();
-                            break;
-                        case Activity.RESULT_CANCELED:
-                            // The user was asked to change settings, but chose not to
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-            }
-        }catch (Exception e){}
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Utility.freeMemory();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
         if (opr.isDone()) {
             // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
@@ -684,39 +650,16 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                     .requestEmail()
                     .build();
 
-            session = new LoginSession(getApplicationContext());
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-            final ActionBar actionBar = getSupportActionBar();
-            getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-            getSupportActionBar().setCustomView(R.layout.custom_actionbar);
-            getSupportActionBar().setShowHideAnimationEnabled(false);
-            textView = (TextView) findViewById(R.id.mytext);
-            txtNotificationCountAction = (TextView) findViewById(R.id.txtNotificationCountAction);
-            txtNotificationCountAction.setVisibility(View.GONE);
-            // cardCount = db.getActiveNFCCount();
-            SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+             // cardCount = db.getActiveNFCCount();
 
-            // textView.setText("Cards 256");
-            // Set up the ViewPager with the sections adapter.
-            mViewPager = (CustomViewPager) findViewById(R.id.container);
-            mViewPager.setOffscreenPageLimit(4);
-            imgDrawer = (ImageView) findViewById(R.id.drawer);
-            imgLogo = (ImageView) findViewById(R.id.imgLogo);
-            mViewPager.setAdapter(mSectionsPagerAdapter);
-            mViewPager.setPagingEnabled(false);
             //  mViewPager.setPageTransformer(false, new ZoomOutPageTransformer());
-            tabLayout = (TabLayout) findViewById(R.id.tabs);
-            tabLayout.setupWithViewPager(mViewPager);
-            tabLayout.setSelectedTabIndicatorColor(getResources().getColor(android.R.color.white));
             HashMap<String, String> user = session.getUserDetails();
 
 
             UserId = user.get(LoginSession.KEY_USERID);      // name
             profileId = user.get(LoginSession.KEY_PROFILEID);
             User_name = user.get(LoginSession.KEY_NAME);
-            String email = user.get(LoginSession.KEY_EMAIL);    // email
-            String image = user.get(LoginSession.KEY_IMAGE);
-            String gender = user.get(LoginSession.KEY_GENDER);
             Connection_Limit = user.get(LoginSession.KEY_CONNECTION_LIMIT);
             Connection_Left = user.get(LoginSession.KEY_CONNECTION_LEFT);
 //        Toast.makeText(getApplicationContext(), name + " " + email + " " + image + " " + gender, Toast.LENGTH_LONG).show();
@@ -1267,26 +1210,6 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void setupTabIcons() {
-        int[] tabIcons = {
-                R.drawable.tab1,
-                R.drawable.tab2,
-                R.drawable.tab3,
-                R.drawable.tab4
-                // R.drawable.ic_tab_contacts
-        };
-
-        /*View view = getLayoutInflater().inflate(R.layout.tab_view, null);
-        for (int i = 0; i < 3; i++) {
-            view.findViewById(R.id.icon).setBackgroundResource(tabIcons[i]);
-            tabLayout.addTab(tabLayout.newTab().setCustomView(view));
-        }
-*/
-       /* tabLayout.getTabAt(0).setIcon(tabIcons[0]);
-        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
-        tabLayout.getTabAt(2).setIcon(tabIcons[2]);
-        tabLayout.getTabAt(3).setIcon(tabIcons[3]);*/
-
-
         View view1 = getLayoutInflater().inflate(R.layout.tab_view, null);
         // view1.findViewById(R.id.icon).set(R.drawable.ic_icon1);
         ImageView imageView = (ImageView) view1.findViewById(R.id.icon);
@@ -1295,7 +1218,6 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         textView.setText("Cards");
         textView.setTextColor(getResources().getColor(R.color.colorPrimary));
         // tabLayout.addTab(tabLayout.newTab().setCustomView(view1));
-
 
         View view2 = getLayoutInflater().inflate(R.layout.tab_view, null);
         //view2.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_icon2);
@@ -1326,38 +1248,6 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         tabLayout.getTabAt(2).setCustomView(view3);
         tabLayout.getTabAt(3).setCustomView(view4);
     }
-
-   /* class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFrag(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-
-            // return null to display only the icon
-            return null;
-        }
-    }*/
-
 
     private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
 
@@ -1412,6 +1302,8 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onResume() {
         super.onResume();
+
+
 
         checkPlayServices();
 
@@ -1504,6 +1396,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 String ProfileId = "", card_code = "";
 
                 if (netCheck == false) {
+                    netCheck = Utility.isNetworkAvailable(getApplicationContext());
                     Utility.freeMemory();
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
                 } else {
@@ -1747,6 +1640,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         String ProfileId = "", card_code = "";
 
         if (netCheck == false){
+            netCheck = Utility.isNetworkAvailable(getApplicationContext());
             Utility.freeMemory();
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
         }

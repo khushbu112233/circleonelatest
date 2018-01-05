@@ -198,7 +198,7 @@ public class LoginActivity extends AppCompatActivity implements
     String Q_ID = "";
     String UserID = "";
     Boolean netCheck= false;
-   public static ActivityLoginBinding activityLoginBinding;
+    public static ActivityLoginBinding activityLoginBinding;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -224,6 +224,7 @@ public class LoginActivity extends AppCompatActivity implements
 
         netCheck = Utility.isNetworkAvailable(getApplicationContext());
         if (netCheck == false){
+            netCheck = Utility.isNetworkAvailable(getApplicationContext());
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
         }
         // Toast.makeText(getApplicationContext(), netCheck.toString(), Toast.LENGTH_LONG).show();
@@ -262,6 +263,7 @@ public class LoginActivity extends AppCompatActivity implements
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
                 if (netCheck == false){
+                    netCheck = Utility.isNetworkAvailable(getApplicationContext());
                     Utility.freeMemory();
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
                 }
@@ -444,6 +446,7 @@ public class LoginActivity extends AppCompatActivity implements
                 userPassword = activityLoginBinding.etLoginPass.getText().toString();
 
                 if (netCheck == false){
+                    netCheck = Utility.isNetworkAvailable(getApplicationContext());
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
                 }else {
                     if (!validateLogin(LoginActivity.this,userName, userPassword)) {
@@ -486,6 +489,7 @@ public class LoginActivity extends AppCompatActivity implements
                 progressDialog.show();*/
 
                 if (netCheck == false){
+                    netCheck = Utility.isNetworkAvailable(getApplicationContext());
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
                 }
                 else {
@@ -1020,6 +1024,7 @@ public class LoginActivity extends AppCompatActivity implements
                     String profileid = "", FirstName = "", LastName = "", UserPhoto = "";
 
                     if (success.equals("1")) {
+                        dismissProgress();
                         //  Toast.makeText(getBaseContext(), "LoggedIn Successfully..", Toast.LENGTH_LONG).show();
                         //   fingerPrintSession.createLoginSession(UserID, "", userName, "", "");
 

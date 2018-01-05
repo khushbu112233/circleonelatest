@@ -28,17 +28,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.circle8.circleOne.Activity.CardDetail;
 import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.Activity.SortAndFilterOption;
 import com.circle8.circleOne.Adapter.List4Adapter;
-import com.circle8.circleOne.ApplicationUtils.MyApplication;
 import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.FriendConnection;
@@ -59,7 +52,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
@@ -169,7 +161,7 @@ public class List4Fragment extends Fragment
         gridAdapter = new List4Adapter(getActivity(), R.layout.grid_list4_layout, nfcModel1);
         listView.setAdapter(gridAdapter);
 
-        callFirst();
+      //  callFirst();
 
         /*List<NFCModel> allTags = db.getActiveNFC();
         for (NFCModel tag : allTags) {
@@ -404,6 +396,13 @@ public class List4Fragment extends Fragment
 
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        callFirst();
+
     }
 
     public static void CustomProgressDialog(final String loading)

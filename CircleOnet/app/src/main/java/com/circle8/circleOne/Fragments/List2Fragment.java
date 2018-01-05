@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -148,7 +147,7 @@ public class List2Fragment extends Fragment
         gridAdapter = new GridViewAdapter(getActivity(), R.layout.grid_list2_layout, nfcModel);
         gridView.setAdapter(gridAdapter);
 
-        callFirst();
+      //  callFirst();
 
         /*GestureDetector.OnGestureListener gestureListener = new MyOnGestureListener();
         GestureDetector.OnDoubleTapListener doubleTapListener = new MyOnDoubleTapListener();
@@ -344,6 +343,13 @@ public class List2Fragment extends Fragment
         fragmentList2Binding.includeProgress.imgConnecting1.startAnimation(anim);
         Animation anim1 = AnimationUtils.loadAnimation(mContext,R.anim.clockwise);
         fragmentList2Binding.includeProgress.imgConnecting2.startAnimation(anim1);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        callFirst();
+
     }
 
     @Override

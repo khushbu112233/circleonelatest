@@ -139,14 +139,14 @@ public class EventsFragment extends Fragment
 
             }
         }));
-        if (EventsSelectOption.searchOpt.equals("AllEvents"))
+        /*if (EventsSelectOption.searchOpt.equals("AllEvents"))
         {
             callFirst();
         }
         else
         {
             new HttpAsyncTaskSearchEvent().execute(Utility.BASE_URL+"Events/Search");
-        }
+        }*/
 
 
 //        callFirst();
@@ -326,6 +326,19 @@ public class EventsFragment extends Fragment
 
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (EventsSelectOption.searchOpt.equals("AllEvents"))
+        {
+            callFirst();
+        }
+        else
+        {
+            new HttpAsyncTaskSearchEvent().execute(Utility.BASE_URL+"Events/Search");
+        }
     }
 
     @Override
