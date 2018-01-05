@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
@@ -36,6 +37,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.Adapter.CustomAdapter;
 import com.circle8.circleOne.Adapter.EditGroupAdapter;
@@ -1780,13 +1784,23 @@ public class CardDetail extends NfcActivity implements DialogsManager.ManagingDi
                     }
 
                     if (userImg.equalsIgnoreCase("")) {
+                        mBinding.includeLayoutViepager.progressBar1.setVisibility(View.GONE);
                         mBinding.includeLayoutViepager.imgProfileCard.setImageResource(R.drawable.usr_white1);
                         displayProfile = "";
                     } else {
-                        Picasso.with(CardDetail.this).load(Utility.BASE_IMAGE_URL+"UserProfile/" + userImg)
-                                .resize(300, 300)
-                                .onlyScaleDown()
-                                .skipMemoryCache().into(mBinding.includeLayoutViepager.imgProfileCard);
+                        mBinding.includeLayoutViepager.progressBar1.setVisibility(View.VISIBLE);
+
+                        Glide.with(CardDetail.this).load(Utility.BASE_IMAGE_URL+"UserProfile/" + userImg)
+                                .asBitmap()
+                                .into(new BitmapImageViewTarget(mBinding.includeLayoutViepager.imgProfileCard) {
+                                    @Override
+                                    public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                                        super.onResourceReady(drawable, anim);
+                                        mBinding.includeLayoutViepager.progressBar1.setVisibility(View.GONE);
+                                        mBinding.includeLayoutViepager.imgProfileCard.setImageBitmap(drawable);
+                                    }
+                                });
+
                         displayProfile = userImg;
                     }
 

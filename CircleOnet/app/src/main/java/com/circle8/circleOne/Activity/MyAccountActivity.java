@@ -1148,7 +1148,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            dismissProgress();
+           Utility.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try
             {

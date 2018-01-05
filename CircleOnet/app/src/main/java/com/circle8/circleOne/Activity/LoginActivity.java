@@ -1106,34 +1106,15 @@ public class LoginActivity extends AppCompatActivity implements
                                                         @Override
                                                         public void onError(QBResponseException e) {
                                                             ProgressDialogFragment.hide(getSupportFragmentManager());
-                                                            // Toast.makeText(getApplicationContext(), "not done", Toast.LENGTH_LONG).show();
 
-                                    /*ErrorUtils.showSnackbar(userListView, R.string.login_chat_login_error, e,
-                                            R.string.dlg_retry, new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    login(user);
-                                                }
-                                            });*/
                                                         }
                                                     });
 
-                                                    // DataHolder.getInstance().setSignInQbUser(qbUser);
-                                                    // Toaster.longToast(R.string.user_successfully_sign_in);
-
-                                                    //finish();
                                                 }
 
                                                 @Override
                                                 public void onError(QBResponseException errors) {
-//                                    progressDialog.dismiss();
-                                                    // Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
-                                    /*showSnackbarError(rootLayout, R.string.errors, errors, new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            signIn();
-                                        }
-                                    });*/
+
                                                 }
                                             });
                                         }
@@ -1141,11 +1122,7 @@ public class LoginActivity extends AppCompatActivity implements
                                 }catch (Exception e) {
 
                                     //Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
-                                }
-
-
-
-                            }else {
+                                }}else {
 
                                 QBUser qbUser = new QBUser(UserName, "circle@123");
                                 QBUsers.signIn(qbUser).performAsync(new QBEntityCallback<QBUser>() {
@@ -1171,34 +1148,14 @@ public class LoginActivity extends AppCompatActivity implements
                                             @Override
                                             public void onError(QBResponseException e) {
                                                 ProgressDialogFragment.hide(getSupportFragmentManager());
-                                                // Toast.makeText(getApplicationContext(), "not done", Toast.LENGTH_LONG).show();
 
-                                    /*ErrorUtils.showSnackbar(userListView, R.string.login_chat_login_error, e,
-                                            R.string.dlg_retry, new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    login(user);
-                                                }
-                                            });*/
                                             }
                                         });
-
-                                        // DataHolder.getInstance().setSignInQbUser(qbUser);
-                                        // Toaster.longToast(R.string.user_successfully_sign_in);
-
-                                        //finish();
                                     }
 
                                     @Override
                                     public void onError(QBResponseException errors) {
-//                                    progressDialog.dismiss();
-                                        //   Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
-                                    /*showSnackbarError(rootLayout, R.string.errors, errors, new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            signIn();
-                                        }
-                                    });*/
+
                                     }
                                 });
                             }

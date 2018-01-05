@@ -40,7 +40,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.Activity.AttachmentDisplay;
+import com.circle8.circleOne.Activity.CardDetail;
 import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.Activity.EditProfileActivity;
 import com.circle8.circleOne.Activity.ImageZoom;
@@ -742,12 +746,22 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
                                     if (allTags.get(i).getUserPhoto().equals(""))
                                     {
+                                        fragmentProfileBinding.includeFrame2.progressBar1.setVisibility(View.GONE);
                                         fragmentProfileBinding.includeFrame2.imgProfile.setImageResource(R.drawable.usr_white1);
                                     }
                                     else {
-                                        Picasso.with(getContext()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+allTags.get(i).getUserPhoto())
-                                                .resize(300,300).onlyScaleDown()
-                                                .skipMemoryCache().into(fragmentProfileBinding.includeFrame2.imgProfile);
+                                        fragmentProfileBinding.includeFrame2.progressBar1.setVisibility(View.VISIBLE);
+                                        Glide.with(getActivity()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+allTags.get(i).getUserPhoto())
+                                                .asBitmap()
+                                                .into(new BitmapImageViewTarget(fragmentProfileBinding.includeFrame2.imgProfile) {
+                                                    @Override
+                                                    public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                                                        super.onResourceReady(drawable, anim);
+                                                        fragmentProfileBinding.includeFrame2.progressBar1.setVisibility(View.GONE);
+                                                        fragmentProfileBinding.includeFrame2.imgProfile.setImageBitmap(drawable);
+                                                    }
+                                                });
+
                                     }
 
                                     if (allTags.get(i).getCard_Front().equalsIgnoreCase("") && allTags.get(i).getCard_Back().equalsIgnoreCase("")) {
@@ -1559,17 +1573,25 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                     }
 
                     image = new ArrayList<>();
+
+
                     if (allTags.get(profileIndex).getUserPhoto().equals(""))
                     {
+                        fragmentProfileBinding.includeFrame2.progressBar1.setVisibility(View.GONE);
                         fragmentProfileBinding.includeFrame2.imgProfile.setImageResource(R.drawable.usr_white1);
                     }
                     else {
-                        try {
-                            Picasso.with(mContext).load(Utility.BASE_IMAGE_URL + "UserProfile/" + allTags.get(profileIndex).getUserPhoto())
-                                    .resize(300,300).onlyScaleDown()
-                                    .skipMemoryCache().into(fragmentProfileBinding.includeFrame2.imgProfile);
-                        }
-                        catch (Exception e){}
+                        fragmentProfileBinding.includeFrame2.progressBar1.setVisibility(View.VISIBLE);
+                        Glide.with(mContext).load(Utility.BASE_IMAGE_URL+"UserProfile/"+allTags.get(profileIndex).getUserPhoto())
+                                .asBitmap()
+                                .into(new BitmapImageViewTarget(fragmentProfileBinding.includeFrame2.imgProfile) {
+                                    @Override
+                                    public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                                        super.onResourceReady(drawable, anim);
+                                        fragmentProfileBinding.includeFrame2.progressBar1.setVisibility(View.GONE);
+                                        fragmentProfileBinding.includeFrame2.imgProfile.setImageBitmap(drawable);
+                                    }
+                                });
                     }
 
                     new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL+"Testimonial/Fetch");

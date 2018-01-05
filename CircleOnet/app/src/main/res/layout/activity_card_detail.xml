@@ -66,8 +66,9 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
-                        <include layout="@layout/include_layout_viewpager"
-                            android:id="@+id/include_layout_viepager"/>
+                        <include
+                            android:id="@+id/include_layout_viepager"
+                            layout="@layout/include_layout_viewpager" />
 
                         <include layout="@layout/include_layout_social"
                             android:id="@+id/include_layout_social"/>
