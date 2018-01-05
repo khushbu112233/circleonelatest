@@ -19,7 +19,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CancellationSignal;
-import android.os.Handler;
 import android.provider.Settings;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
@@ -36,16 +35,10 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -1019,8 +1012,6 @@ public class LoginActivity extends AppCompatActivity implements
         @Override
         protected void onPostExecute(String result) {
 //            dialog.dismiss();
-            dismissProgress();
-
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
@@ -1350,9 +1341,11 @@ public class LoginActivity extends AppCompatActivity implements
                         }
 
                     } else {
+                        dismissProgress();
                         Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
                     }
                 } else {
+                    dismissProgress();
                     Toast.makeText(getBaseContext(), "Incorrect username or password..", Toast.LENGTH_LONG).show();
                 }
 
@@ -1925,14 +1918,14 @@ public class LoginActivity extends AppCompatActivity implements
         }
         mProgressDialog.show();*/
         String loading = "Google login";
-        CustomProgressDialog(loading, LoginActivity.this);
+       // CustomProgressDialog(loading, LoginActivity.this);
     }
 
     private void hideProgressDialog() {
         /*if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.hide();
         }*/
-        dismissProgress();
+      //  dismissProgress();
     }
 
     private void updateUI(boolean isSignedIn) {

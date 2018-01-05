@@ -48,7 +48,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -99,7 +98,6 @@ import com.google.android.gms.plus.Plus;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.linkedin.platform.LISessionManager;
-import com.quickblox.chat.QBChatService;
 import com.quickblox.chat.QBIncomingMessagesManager;
 import com.quickblox.chat.QBSystemMessagesManager;
 import com.quickblox.chat.exception.QBChatException;
@@ -113,7 +111,6 @@ import com.quickblox.messages.services.SubscribeService;
 import com.quickblox.sample.core.gcm.GooglePlayServicesHelper;
 import com.quickblox.sample.core.utils.SharedPrefsHelper;
 import com.quickblox.sample.core.utils.constant.GcmConsts;
-import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
@@ -140,7 +137,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -238,19 +234,19 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         mAuth = FirebaseAuth.getInstance();
 
         Bundle extras = getIntent().getExtras();
-        permissionUtils = new PermissionUtils(CardsActivity.this);
-        permissionUtils.check_permission(permissions,"Need GPS permission for getting your location",1);
-
         if (extras != null) {
             position = extras.getInt("viewpager_position");
             nested_position = extras.getInt("nested_viewpager_position");
         }
         new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        dismissProgress();
+        permissionUtils = new PermissionUtils(CardsActivity.this);
+        permissionUtils.check_permission(permissions,"Need GPS permission for getting your location",1);
+
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
 
-        // create an intent with tag data and deliver to this activity
         mPendingIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
 
@@ -273,55 +269,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         });*/
         getSupportActionBar().setShowHideAnimationEnabled(false);
 //        new HttpAsyncTaskNotification().execute(Utility.BASE_URL+"CountNewNotification");
-        googlePlayServicesHelper = new GooglePlayServicesHelper();
-
-        pushBroadcastReceiver = new PushBroadcastReceiver();
-
-        allDialogsMessagesListener = new AllDialogsMessageListener();
-        systemMessagesListener = new SystemMessagesListener();
-
-        dialogsManager = new DialogsManager();
-
-        currentUser = ChatHelper.getCurrentUser();
-
-        List<String> tags = new ArrayList<>();
-        tags.add("jay.ample@gmail.com");
-        tags.add("jijo@amt.in");
         // tags.add(App.getSampleConfigs().getUsersTag());
-
-        QBUsers.getUsersByEmails(tags, null).performAsync(new QBEntityCallback<ArrayList<QBUser>>() {
-            @Override
-            public void onSuccess(ArrayList<QBUser> result, Bundle params) {
-                //  QBChatDialog dialog = (QBChatDialog) getIntent().getSerializableExtra(EXTRA_QB_DIALOG);
-                selectedUsers = result;
-            }
-
-            @Override
-            public void onError(QBResponseException e) {
-                      /*  showErrorSnackbar(R.string.select_users_get_users_error, e,
-                                new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        loadUsersFromQb();
-                                    }
-                                });
-                        progressBar.setVisibility(View.GONE);*/
-            }
-        });
-
-
-        incomingMessagesManager = QBChatService.getInstance().getIncomingMessagesManager();
-        systemMessagesManager = QBChatService.getInstance().getSystemMessagesManager();
-
-        if (incomingMessagesManager != null) {
-            incomingMessagesManager.addDialogMessageListener(allDialogsMessagesListener != null
-                    ? allDialogsMessagesListener : new AllDialogsMessageListener());
-        }
-
-        if (systemMessagesManager != null) {
-            systemMessagesManager.addSystemMessageListener(systemMessagesListener != null
-                    ? systemMessagesListener : new SystemMessagesListener());
-        }
 
         if (netCheck == false){
             Utility.freeMemory();
@@ -731,18 +679,6 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
 
         @Override
         protected void onPreExecute() {
-            db = new DatabaseHelper(getApplicationContext());
-           /* List<NFCModel> allTags = db.getAllNFC();
-            for (NFCModel tag : allTags) {
-                Log.d("StoreLocation Name", tag.getCard_front().toString());
-                // Toast.makeText(getApplicationContext(), tag.getName() + " " + tag.getCard_front().toString() + " " + tag.getActive(), Toast.LENGTH_LONG).show();
-
-            }*/
-
-            // db.getAllNFC();
-            //SQLiteDatabase sqLiteDatabase = db.getReadableDatabase();
-            //- db.onCreate(sqLiteDatabase);
-
 
             gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestEmail()
@@ -1114,7 +1050,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                             new ResultCallback<Status>() {
                                 @Override
                                 public void onResult(Status status) {
-                                    session.logoutUser();
+                                  //  session.logoutUser();
                                     // dialog.dismiss();
                                 }
                             });
@@ -1124,7 +1060,6 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                 try {
                     mAuth.signOut();
                     Twitter.logOut();
-                    session.logoutUser();
                 } catch (Exception e) {
                 }
 
@@ -1133,20 +1068,12 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                     PrefUtils.clearCurrentUser(CardsActivity.this);
                     // We can logout from facebook by calling following method
                     LoginManager.getInstance().logOut();
-                    session.logoutUser();
+                   // session.logoutUser();
                 } catch (Exception e) {
                 }
-                session.logoutUser();
-                LISessionManager.getInstance(getApplicationContext()).clearSession();
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
-                dialog.dismiss();
-                finish();
 
-                /*Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
-                dialog.dismiss();
-                finish();*/
+                LISessionManager.getInstance(getApplicationContext()).clearSession();
+
             }
         });
 
