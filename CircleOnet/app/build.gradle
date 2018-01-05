@@ -26,8 +26,8 @@ android {
         applicationId "com.circle8.circleOne"
         minSdkVersion 18
         targetSdkVersion 26
-        versionCode 7
-        versionName "1.0.6"
+        versionCode 8
+        versionName "1.0.7"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [onesignal_app_id               : "8cc4b927-da5f-4152-805d-bf3b40e53773",
@@ -108,7 +108,7 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:26.+'
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     implementation 'de.hdodenhof:circleimageview:2.1.0'
-   // implementation 'javax.annotation:jsr250-api:1.0'
+    // implementation 'javax.annotation:jsr250-api:1.0'
     implementation 'com.daimajia.swipelayout:library:1.2.0@aar'
     //implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.0'
     implementation 'com.daimajia.androidanimations:library:1.1.2@aar'
@@ -118,13 +118,13 @@ dependencies {
     //implementation 'com.google.code.gson:gson:2.7'
     implementation 'com.onesignal:OneSignal:3.+@aar'
     implementation 'com.google.android.gms:play-services:11.4.2'
-   /* implementation 'com.google.android.gms:play-services-maps:11.0.4'*/
+    /* implementation 'com.google.android.gms:play-services-maps:11.0.4'*/
     implementation 'com.github.dmytrodanylyk.shadow-layout:library:1.0.3'
     implementation 'me.dm7.barcodescanner:zxing:1.8.4'
-   // implementation 'com.google.zxing:core:3.2.1'
+    // implementation 'com.google.zxing:core:3.2.1'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.hbb20:ccp:2.0.2'
-   // implementation 'com.stripe:stripe-java:1.47.0'
+    // implementation 'com.stripe:stripe-java:1.47.0'
     implementation 'com.stripe:stripe-android:1.0.4'
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.5.+'
     implementation 'com.neovisionaries:nv-i18n:1.22'
