@@ -11,7 +11,6 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.util.JsonReader;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,15 +19,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.circle8.circleOne.Activity.CardsActivity;
-import com.circle8.circleOne.Activity.ContactsImportActivity;
+import com.circle8.circleOne.Activity.DashboardActivity;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.RxContacts.Contact;
 import com.circle8.circleOne.RxContacts.RxContacts;
 import com.circle8.circleOne.Utils.Utility;
 import com.l4digital.fastscroll.FastScrollRecyclerView;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
-
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -39,10 +36,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -55,7 +49,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 public class MultiContactPickerActivity extends AppCompatActivity implements MaterialSearchView.OnQueryTextListener {
@@ -158,7 +151,7 @@ public class MultiContactPickerActivity extends AppCompatActivity implements Mat
         tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MultiContactPickerActivity.this, CardsActivity.class));
+                startActivity(new Intent(MultiContactPickerActivity.this, DashboardActivity.class));
                 finish();
             }
         });
@@ -200,7 +193,7 @@ public class MultiContactPickerActivity extends AppCompatActivity implements Mat
                     if (success.equals("1"))
                     {
                         Toast.makeText(getBaseContext(), getString(R.string.successful_request_sent), Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(MultiContactPickerActivity.this, CardsActivity.class));
+                        startActivity(new Intent(MultiContactPickerActivity.this, DashboardActivity.class));
                         finish();
                     }
                     else
@@ -437,7 +430,7 @@ public class MultiContactPickerActivity extends AppCompatActivity implements Mat
         if (searchView.isSearchOpen()) {
             searchView.closeSearch();
         } else {
-            startActivity(new Intent(MultiContactPickerActivity.this, CardsActivity.class));
+            startActivity(new Intent(MultiContactPickerActivity.this, DashboardActivity.class));
             finish();
         }
     }

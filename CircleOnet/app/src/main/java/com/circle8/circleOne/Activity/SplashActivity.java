@@ -2,12 +2,10 @@ package com.circle8.circleOne.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
 import com.circle8.circleOne.R;
@@ -52,8 +50,8 @@ public class SplashActivity extends AppCompatActivity
                     {
                         Utility.freeMemory();
 
-                        Intent userIntent = new Intent(SplashActivity.this, CardsActivity.class);
-                        userIntent.putExtra("viewpager_position", 0);
+                        Intent userIntent = new Intent(SplashActivity.this, DashboardActivity.class);
+                        //userIntent.putExtra("viewpager_position", 0);
                         startActivity(userIntent);
                         finish();
 

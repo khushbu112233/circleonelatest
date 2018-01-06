@@ -393,7 +393,7 @@ public class LoginActivity extends AppCompatActivity implements
 
         if (loginSession.isLoggedIn()) {
             Utility.freeMemory();
-            Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
+            Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
             startActivity(intent);
             finish();
         }
@@ -1212,8 +1212,8 @@ public class LoginActivity extends AppCompatActivity implements
 
                                     prefs.edit().putBoolean("firstrun", false).commit();
                                 } else {
-                                    Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
-                                    userIntent.putExtra("viewpager_position", 0);
+                                    Intent userIntent = new Intent(getApplicationContext(), DashboardActivity.class);
+                                   // userIntent.putExtra("viewpager_position", 0);
                                     startActivity(userIntent);
                                     finish();
                                 }
@@ -1316,7 +1316,7 @@ public class LoginActivity extends AppCompatActivity implements
                                     prefs.edit().putBoolean("firstrun", false).commit();
                                 } else {
                                     Pref.setValue(LoginActivity.this,"login_value","1");
-                                    Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                                    Intent userIntent = new Intent(getApplicationContext(), DashboardActivity.class);
                                     userIntent.putExtra("viewpager_position", 0);
                                     startActivity(userIntent);
                                     finish();
@@ -2349,7 +2349,7 @@ public class LoginActivity extends AppCompatActivity implements
 
                                     prefs.edit().putBoolean("firstrun", false).commit();
                                 } else {
-                                    Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                                    Intent userIntent = new Intent(getApplicationContext(), DashboardActivity.class);
                                     userIntent.putExtra("viewpager_position", 0);
                                     startActivity(userIntent);
                                     finish();
@@ -2452,7 +2452,7 @@ public class LoginActivity extends AppCompatActivity implements
 
                                     prefs.edit().putBoolean("firstrun", false).commit();
                                 } else {
-                                    Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                                    Intent userIntent = new Intent(getApplicationContext(), DashboardActivity.class);
                                     userIntent.putExtra("viewpager_position", 0);
                                     startActivity(userIntent);
                                     finish();

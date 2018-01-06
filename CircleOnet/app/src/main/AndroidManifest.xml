@@ -22,24 +22,27 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
     <uses-feature
         android:name="android.hardware.nfc"
         android:required="false" />
 
     <uses-permission android:name="android.permission.CAMERA" />
 
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
 
     <application
-        android:supportsRtl="true"
         android:name=".ApplicationUtils.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher"
-        android:theme="@style/AppTheme"
         android:largeHeap="true"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
         tools:replace="android:theme,android:allowBackup">
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -50,7 +53,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
 
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
@@ -64,13 +66,15 @@
             </intent-filter>
         </receiver>
 
-       <!-- <service
+        <!--
+        <service
             android:name=".gcm.GcmPushListenerService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
-        </service>-->
+        </service>
+        -->
         <service
             android:name="com.quickblox.messages.services.gcm.QBGcmPushInstanceIDService"
             android:exported="false">
@@ -88,7 +92,6 @@
         <meta-data
             android:name="com.quickblox.messages.QB_ENVIRONMENT"
             android:value="DEVELOPMENT" />
-
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="7aea78439bec41a9005c7488bb6751c5e33fe270" />
@@ -112,7 +115,6 @@
 
                 <data android:mimeType="application/com.circle8.circleOne" />
             </intent-filter>
-
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
 
@@ -193,9 +195,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.SplashActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionbarSplash"
-            android:configChanges="keyboardHidden|orientation|screenSize">
+            android:theme="@style/NoActionbarSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -216,11 +218,9 @@
             android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.EditProfileActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/NoActionbar"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout"
-
-            />
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionbar" />
         <activity
             android:name=".Activity.FingerPrintLogin"
             android:label="CircleOne"
@@ -332,33 +332,30 @@
         <activity
             android:name=".Activity.AttachmentDisplay"
             android:theme="@style/NoActionbarSplash" />
-        <activity android:name=".Activity.CardVerificationActivity"
+        <activity
+            android:name=".Activity.CardVerificationActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionbar" >
-        </activity>
+            android:theme="@style/NoActionbar"></activity>
         <activity
             android:name=".chat.DialogsActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".chat.ChatActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
         <activity
             android:name=".chat.ChatInfoActivity"
             android:label="@string/chat_info"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".chat.AttachmentImageActivity"
-            android:theme="@style/AppTheme.Dark"
-            android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".chat.AttachmentImageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Dark" />
         <activity
             android:name=".chat.SelectUsersActivity"
             android:screenOrientation="portrait" />
 
-        <receiver android:name=".widget.UILWidgetProvider" >
+        <receiver android:name=".widget.UILWidgetProvider">
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_provider" />
@@ -367,6 +364,10 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".Activity.DashboardActivity"
+            android:theme="@style/NoActionbar">
+        </activity>
     </application>
 
 </manifest>

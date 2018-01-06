@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:id="@+id/one" android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_my_acc"
+            android:icon="@drawable/ic_acc"
+            android:title="My Account" />
+    </group>
+
+    <group android:id="@+id/two" android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_sync_contact"
+            android:icon="@drawable/ic_sync_contact_white"
+            android:title="Sync Contacts" />
+    </group>
+
+    <group android:id="@+id/three" android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_manage_profile"
+            android:icon="@drawable/ic_manage_cards"
+            android:title="Manage My Profile" />
+    </group>
+
+    <group android:id="@+id/four" android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_card_request"
+            android:icon="@drawable/ic_new_card"
+            android:title="New Card Request" />
+    </group>
+
+    <group android:id="@+id/five" android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_connect"
+            android:icon="@drawable/ic_connect_blue"
+            android:title="Connect" />
+    </group>
+
+    <group android:id="@+id/six" android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_events"
+            android:icon="@drawable/ic_event_white"
+            android:title="Events" />
+    </group>
+
+    <group android:id="@+id/seven" android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_circle"
+            android:icon="@drawable/ic_group"
+            android:title="Circles" />
+    </group>
+
+    <group android:id="@+id/eight" android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_history"
+            android:icon="@drawable/ic_history"
+            android:title="History" />
+    </group>
+
+    <group android:id="@+id/nine" android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_subscription"
+            android:icon="@drawable/ic_subscribe"
+            android:title="Subscription" />
+    </group>
+
+    <group android:id="@+id/ten" android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_help"
+            android:icon="@drawable/ic_help"
+            android:title="Help" />
+    </group>
+
+    <group android:id="@+id/eleven" android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_contact_us"
+            android:icon="@drawable/ic_contact"
+            android:title="Contact Us" />
+    </group>
+
+    <group android:id="@+id/twelve" android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logout"
+            android:title="Logout" />
+    </group>
+
+
+</menu>

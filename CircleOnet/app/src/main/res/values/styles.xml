@@ -128,4 +128,11 @@
 
     </style>
 
+    <style name="NavigationDrawerStyle">
+        <item name="android:textSize">15sp</item><!-- text size in menu-->
+        <item name="android:listPreferredItemHeightSmall">30dp</item><!-- item size in menu-->
+        <item name="listPreferredItemHeightSmall">30dp</item><!-- item size in menu-->
+        <item name="android:listDivider">@android:color/transparent</item>
+    </style>
+
 </resources>
