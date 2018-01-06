@@ -1,15 +1,13 @@
 package com.circle8.circleOne.Fragments;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Switch;
 
-import com.circle8.circleOne.Activity.SplashActivity;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.databinding.FragmentDashboardLayoutBinding;
@@ -19,7 +17,7 @@ import com.circle8.circleOne.databinding.FragmentDashboardLayoutBinding;
  */
 
 public class DashboardFragment extends Fragment {
-    FragmentDashboardLayoutBinding  fragmentDashboardLayoutBinding;
+    FragmentDashboardLayoutBinding fragmentDashboardLayoutBinding;
     View view;
     Context context;
     int count=0;
@@ -59,42 +57,7 @@ public class DashboardFragment extends Fragment {
     }
 
     public void initClick() {
-        fragmentDashboardLayoutBinding.includefooter.imgCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fragmentDashboardLayoutBinding.includefooter.imgCard.setImageResource(R.drawable.ic_icon1b);
-                fragmentDashboardLayoutBinding.includefooter.imgDashboard.setImageResource(R.drawable.ic_dashboard3x);
-                fragmentDashboardLayoutBinding.includefooter.imgProfile.setImageResource(R.drawable.ic_icon4);
-                fragmentDashboardLayoutBinding.includefooter.tvCards.setTextColor(getResources().getColor(R.color.colorPrimary));
-                fragmentDashboardLayoutBinding.includefooter.tvDashboard.setTextColor(getResources().getColor(R.color.white));
-                fragmentDashboardLayoutBinding.includefooter.tvProfile.setTextColor(getResources().getColor(R.color.white));
 
-            }
-        });
-        fragmentDashboardLayoutBinding.includefooter.imgDashboard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fragmentDashboardLayoutBinding.includefooter.imgCard.setImageResource(R.drawable.ic_icon1b);
-                fragmentDashboardLayoutBinding.includefooter.imgDashboard.setImageResource(R.drawable.ic_dashboard_gray);
-                fragmentDashboardLayoutBinding.includefooter.imgProfile.setImageResource(R.drawable.ic_icon4b);
-                fragmentDashboardLayoutBinding.includefooter.tvCards.setTextColor(getResources().getColor(R.color.white));
-                fragmentDashboardLayoutBinding.includefooter.tvDashboard.setTextColor(getResources().getColor(R.color.colorPrimary));
-                fragmentDashboardLayoutBinding.includefooter.tvProfile.setTextColor(getResources().getColor(R.color.white));
-
-            }
-        });
-        fragmentDashboardLayoutBinding.includefooter.imgProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fragmentDashboardLayoutBinding.includefooter.imgCard.setImageResource(R.drawable.ic_icon1);
-                fragmentDashboardLayoutBinding.includefooter.imgDashboard.setImageResource(R.drawable.ic_dashboard3x);
-                fragmentDashboardLayoutBinding.includefooter.imgProfile.setImageResource(R.drawable.ic_icon4b);
-                fragmentDashboardLayoutBinding.includefooter.tvCards.setTextColor(getResources().getColor(R.color.white));
-                fragmentDashboardLayoutBinding.includefooter.tvDashboard.setTextColor(getResources().getColor(R.color.white));
-                fragmentDashboardLayoutBinding.includefooter.tvProfile.setTextColor(getResources().getColor(R.color.colorPrimary));
-
-            }
-        });
         fragmentDashboardLayoutBinding.includeNotiRewardShare.rlNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

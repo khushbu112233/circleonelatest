@@ -3,7 +3,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
         android:orientation="vertical">
         <RelativeLayout
             android:layout_marginBottom="5dp"
@@ -40,23 +39,29 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp" />
         </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/lnrDashboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lnrSearch"
+            android:layout_above="@+id/includeNotiRewardShare"
+            android:orientation="vertical">
         <include
             android:id="@+id/includeTapQr"
+            android:layout_gravity="center"
             layout="@layout/tap_qrcode_layout"
-            android:layout_below="@+id/lnrSearch"
             android:layout_width="match_parent"
-            android:layout_height="300dp"/>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />
+        </LinearLayout>
         <include
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="20dp"
             android:id="@+id/includeNotiRewardShare"
-            android:layout_above="@+id/includefooter"
             layout="@layout/reward_noti_share_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-        <include
-            android:id="@+id/includefooter"
-            layout="@layout/footer_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"/>
+
     </RelativeLayout>
 </layout>

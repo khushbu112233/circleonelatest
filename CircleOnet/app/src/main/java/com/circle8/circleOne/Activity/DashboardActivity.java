@@ -1,6 +1,7 @@
 package com.circle8.circleOne.Activity;
 
 import android.content.pm.ActivityInfo;
+import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -16,11 +17,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.circle8.circleOne.Fragments.CardsFragment;
 import com.circle8.circleOne.Fragments.ConnectFragment;
+import com.circle8.circleOne.Fragments.DashboardFragment;
 import com.circle8.circleOne.Fragments.EventsFragment;
+import com.circle8.circleOne.Fragments.ProfileFragment;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.databinding.ActivityDashboardBinding;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -28,12 +33,13 @@ public class DashboardActivity extends AppCompatActivity {
 
     private FragmentManager fragmentManager;
     private Fragment fragment = null;
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    
+    ActivityDashboardBinding activityDashboardBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard);
+
+        activityDashboardBinding = DataBindingUtil.setContentView(this,R.layout.activity_dashboard);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -47,8 +53,6 @@ public class DashboardActivity extends AppCompatActivity {
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 */
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -59,7 +63,7 @@ public class DashboardActivity extends AppCompatActivity {
       //  toggle.setHomeAsUpIndicator(R.id.icon);//add this for custom icon
         fragmentManager = getSupportFragmentManager();
         final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragment = new EventsFragment();
+        fragment = new DashboardFragment();
         fragmentTransaction.replace(R.id.main_container_wrapper, fragment);
         fragmentTransaction.commit();
 
@@ -67,6 +71,7 @@ public class DashboardActivity extends AppCompatActivity {
         /*View header = navigationView.inflateHeaderView(R.layout.nav_header_music);
         TextView profileName = (TextView) header.findViewById(R.id.profile_name);
         profileName.setText("Adele");*/
+
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -95,7 +100,64 @@ public class DashboardActivity extends AppCompatActivity {
                 return true;
             }
         });
+        initClick();
     }
+
+    private void initClick() {
+
+        activityDashboardBinding.includeCocrdinator.includefooter.imgCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activityDashboardBinding.includeCocrdinator.includefooter.imgCard.setImageResource(R.drawable.ic_icon1b);
+                activityDashboardBinding.includeCocrdinator.includefooter.imgDashboard.setImageResource(R.drawable.ic_dashboard_gray);
+                activityDashboardBinding.includeCocrdinator.includefooter.imgProfile.setImageResource(R.drawable.ic_icon4);
+                activityDashboardBinding.includeCocrdinator.includefooter.tvCards.setTextColor(getResources().getColor(R.color.colorPrimary));
+                activityDashboardBinding.includeCocrdinator.includefooter.tvDashboard.setTextColor(getResources().getColor(R.color.unselected));
+                activityDashboardBinding.includeCocrdinator.includefooter.tvProfile.setTextColor(getResources().getColor(R.color.unselected));
+
+                fragment = new CardsFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+                        .addToBackStack(null)
+                        .commit();
+
+            }
+        });
+        activityDashboardBinding.includeCocrdinator.includefooter.imgDashboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activityDashboardBinding.includeCocrdinator.includefooter.imgCard.setImageResource(R.drawable.ic_icon1);
+                activityDashboardBinding.includeCocrdinator.includefooter.imgDashboard.setImageResource(R.drawable.ic_dashboard3x);
+                activityDashboardBinding.includeCocrdinator.includefooter.imgProfile.setImageResource(R.drawable.ic_icon4);
+                activityDashboardBinding.includeCocrdinator.includefooter.tvCards.setTextColor(getResources().getColor(R.color.unselected));
+                activityDashboardBinding.includeCocrdinator.includefooter.tvDashboard.setTextColor(getResources().getColor(R.color.colorPrimary));
+                activityDashboardBinding.includeCocrdinator.includefooter.tvProfile.setTextColor(getResources().getColor(R.color.unselected));
+
+                fragment = new DashboardFragment();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.main_container_wrapper, fragment);
+                transaction.commit();
+            }
+        });
+        activityDashboardBinding.includeCocrdinator.includefooter.imgProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activityDashboardBinding.includeCocrdinator.includefooter.imgCard.setImageResource(R.drawable.ic_icon1);
+                activityDashboardBinding.includeCocrdinator.includefooter.imgDashboard.setImageResource(R.drawable.ic_dashboard_gray);
+                activityDashboardBinding.includeCocrdinator.includefooter.imgProfile.setImageResource(R.drawable.ic_icon4b);
+                activityDashboardBinding.includeCocrdinator.includefooter.tvCards.setTextColor(getResources().getColor(R.color.unselected));
+                activityDashboardBinding.includeCocrdinator.includefooter.tvDashboard.setTextColor(getResources().getColor(R.color.unselected));
+                activityDashboardBinding.includeCocrdinator.includefooter.tvProfile.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+                fragment = new ProfileFragment();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.main_container_wrapper, fragment);
+                transaction.commit();
+
+            }
+        });
+        
+    }
+
 
     @Override
     public void onBackPressed() {

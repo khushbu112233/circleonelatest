@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <RelativeLayout
+        android:gravity="center"
         android:id="@+id/rlMainDashboard"
         android:layout_width="match_parent"
         android:layout_height="300dp"
@@ -8,8 +9,7 @@
         <RelativeLayout
             android:id="@+id/rlTapCard"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp">
+            android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/imgTapCard"
                 android:src="@drawable/ic_nfc_white"

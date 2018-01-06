@@ -53,7 +53,7 @@ public class CardsFragment extends Fragment
         mViewPager = (CustomViewPager) view.findViewById(R.id.container1);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setPagingEnabled(false);
-        mViewPager.setOffscreenPageLimit(4);
+        mViewPager.setOffscreenPageLimit(2);
         tabLayout = (TabLayout) view.findViewById(R.id.tabs1);
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(android.R.color.white));
