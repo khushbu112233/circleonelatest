@@ -4,28 +4,30 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="2dp">
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginTop="25dp"
             android:background="@color/colorPrimary"/>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-25dp">
+            android:layout_height="wrap_content">
             <RelativeLayout
                 android:id="@+id/rlCards"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="35dp"
-                android:layout_marginTop="35dp"
+                android:layout_marginTop="25dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true">
                 <ImageView
                     android:id="@+id/imgCard"
-                    android:src="@drawable/ic_launcher"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"/>
+                    android:src="@drawable/ic_icon1"
+                    android:layout_marginTop="15dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerHorizontal="true"/>
                 <com.circle8.circleOne.Utils.cgTextView
                     android:id="@+id/tvCards"
                     android:layout_width="wrap_content"
@@ -34,7 +36,7 @@
                     android:layout_centerInParent="true"
                     android:textColor="@color/colorPrimary"
                     android:layout_below="@+id/imgCard"
-                    android:textSize="18sp" />
+                    android:textSize="15sp" />
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/rlDashboard"
@@ -44,9 +46,11 @@
                 android:layout_centerInParent="true">
                 <ImageView
                     android:id="@+id/imgDashboard"
-                    android:src="@drawable/ic_launcher"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"/>
+                    android:src="@drawable/ic_dashboard3x"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_centerHorizontal="true"/>
+
                 <com.circle8.circleOne.Utils.cgTextView
                     android:id="@+id/tvDashboard"
                     android:layout_width="wrap_content"
@@ -55,21 +59,23 @@
                     android:layout_centerInParent="true"
                     android:textColor="@color/colorPrimary"
                     android:layout_below="@+id/imgDashboard"
-                    android:textSize="18sp" />
+                    android:textSize="15sp" />
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/rlProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="35dp"
-                android:layout_marginTop="35dp"
+                android:layout_marginTop="25dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true">
                 <ImageView
                     android:id="@+id/imgProfile"
-                    android:src="@drawable/ic_launcher"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"/>
+                    android:src="@drawable/ic_icon4"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="15dp"/>
                 <com.circle8.circleOne.Utils.cgTextView
                     android:id="@+id/tvProfile"
                     android:layout_width="wrap_content"
@@ -78,7 +84,7 @@
                     android:layout_centerInParent="true"
                     android:textColor="@color/colorPrimary"
                     android:layout_below="@+id/imgProfile"
-                    android:textSize="18sp" />
+                    android:textSize="15sp" />
             </RelativeLayout>
         </RelativeLayout>
     </FrameLayout>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:id="@+id/rlRewards"
+            android:layout_marginLeft="35dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true">
+            <ImageView
+                android:id="@+id/imgRewards"
+                android:src="@drawable/ic_dashboard3x"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_centerHorizontal="true"/>
+
+            <com.circle8.circleOne.Utils.cgTextView
+                android:id="@+id/tvRewards"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rewards"
+                android:layout_centerInParent="true"
+                android:textColor="@color/colorPrimary"
+                android:layout_below="@+id/imgRewards"
+                android:textSize="15sp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rlNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerInParent="true">
+            <ImageView
+                android:id="@+id/imgNotification"
+                android:src="@drawable/ic_dashboard3x"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_centerHorizontal="true"/>
+
+            <com.circle8.circleOne.Utils.cgTextView
+                android:id="@+id/tvNotification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Notification"
+                android:layout_centerInParent="true"
+                android:textColor="@color/colorPrimary"
+                android:layout_below="@+id/imgNotification"
+                android:textSize="15sp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rlShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true">
+            <ImageView
+                android:id="@+id/imgShare"
+                android:src="@drawable/ic_dashboard3x"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_centerHorizontal="true"/>
+
+            <com.circle8.circleOne.Utils.cgTextView
+                android:id="@+id/tvShare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Share"
+                android:layout_centerInParent="true"
+                android:textColor="@color/colorPrimary"
+                android:layout_below="@+id/imgShare"
+                android:textSize="15sp" />
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>

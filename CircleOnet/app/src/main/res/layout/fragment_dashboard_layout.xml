@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/lnrSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <com.circle8.circleOne.Utils.MyRiadProAutoComplete
+                android:layout_centerVertical="true"
+                android:background="@drawable/txt_back"
+                android:paddingRight="10dp"
+                android:layout_toLeftOf="@+id/imgSearch"
+                android:paddingLeft="10dp"
+                android:hint="Search to my contacts"
+                android:id="@+id/searchView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:textColor="@color/black"
+                android:textColorHint="#9FA0A0"
+                android:textSize="12dp"
+                android:focusableInTouchMode="true"
+                android:imeOptions="actionSearch"
+                android:inputType="textAutoComplete|textAutoCorrect" />
+
+            <ImageView
+                android:layout_marginRight="10dp"
+                android:layout_centerVertical="true"
+                android:backgroundTint="@color/colorAccent"
+                android:src="@drawable/search"
+                android:id="@+id/imgSearch"
+                android:layout_alignParentRight="true"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+        </RelativeLayout>
+        <include
+            android:id="@+id/includeTapQr"
+            layout="@layout/tap_qrcode_layout"
+            android:layout_below="@+id/lnrSearch"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"/>
+        <include
+            android:id="@+id/includeNotiRewardShare"
+            android:layout_above="@+id/includefooter"
+            layout="@layout/reward_noti_share_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <include
+            android:id="@+id/includefooter"
+            layout="@layout/footer_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+</layout>

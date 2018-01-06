@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:id="@+id/rlMainDashboard"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@drawable/ic_bg_dashboard1">
+        <RelativeLayout
+            android:id="@+id/rlTapCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp">
+            <ImageView
+                android:id="@+id/imgTapCard"
+                android:src="@drawable/ic_nfc_white"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_centerHorizontal="true"/>
+
+            <com.circle8.circleOne.Utils.cgTextView
+                android:id="@+id/tvTapCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tap Card"
+                android:layout_centerInParent="true"
+                android:textColor="@color/white"
+                android:layout_below="@+id/imgTapCard"
+                android:textSize="15sp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rlorline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rlTapCard"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp">
+            <View
+                android:id="@+id/v1"
+                android:layout_width="150dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="25dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:background="@color/white"/>
+            <com.circle8.circleOne.Utils.cgTextView
+                android:id="@+id/tvOr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="or"
+                android:layout_centerInParent="true"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+            <View
+                android:id="@+id/v2"
+                android:layout_alignRight="@+id/tvOr"
+                android:layout_width="150dp"
+                android:layout_height="1dp"
+                android:layout_marginRight="25dp"
+                android:layout_centerInParent="true"
+                android:layout_alignParentRight="true"
+                android:background="@color/white"/>
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_below="@+id/rlorline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:id="@+id/rlScanQrCode"
+                android:layout_width="0dp"
+                android:layout_weight="0.50"
+                android:layout_height="wrap_content"
+                >
+                <ImageView
+                    android:id="@+id/imgScanQrCode"
+                    android:src="@drawable/ic_scan_qr_white"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_centerHorizontal="true"/>
+
+                <com.circle8.circleOne.Utils.cgTextView
+                    android:id="@+id/tvScanQrCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Scan Qr Code"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/white"
+                    android:layout_below="@+id/imgScanQrCode"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rlMyQrCode"
+                android:layout_width="0dp"
+                android:layout_weight="0.50"
+                android:layout_height="wrap_content"
+                >
+                <ImageView
+                    android:id="@+id/imgMyQrCode"
+                    android:src="@drawable/ic_qr_white"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_centerHorizontal="true"/>
+
+                <com.circle8.circleOne.Utils.cgTextView
+                    android:id="@+id/tvMyQrCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="My Qr Code"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/white"
+                    android:layout_below="@+id/imgMyQrCode"
+                    android:textSize="15sp" />
+            </RelativeLayout></LinearLayout>
+    </RelativeLayout>
+</layout>
