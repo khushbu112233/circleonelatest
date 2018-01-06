@@ -51,7 +51,7 @@ public class SplashActivity extends AppCompatActivity
                     if( Pref.getValue(SplashActivity.this,"login_value","").equalsIgnoreCase("1"))
                     {
                         Utility.freeMemory();
-
+                        Pref.setValue(SplashActivity.this,"appopen","1");
                         Intent userIntent = new Intent(SplashActivity.this, CardsActivity.class);
                         userIntent.putExtra("viewpager_position", 0);
                         startActivity(userIntent);
