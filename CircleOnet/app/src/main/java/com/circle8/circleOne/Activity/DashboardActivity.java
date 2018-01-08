@@ -169,14 +169,12 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                     Intent intent = new Intent(DashboardActivity.this, NewCardRequestActivity.class);
                     startActivity(intent);
                 }else if (id == R.id.nav_connect) {
-                    fragment = new ConnectFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
-                            .addToBackStack(null).commit();
+                    Intent intent = new Intent(DashboardActivity.this, ConnectFragment.class);
+                    startActivity(intent);
                 }else if(id == R.id.nav_events)
                 {
-                    fragment = new EventsFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
-                            .addToBackStack(null).commit();
+                    Intent intent = new Intent(DashboardActivity.this, EventsActivity.class);
+                    startActivity(intent);
                 }else if(id == R.id.nav_circle)
                 {
                     Intent intent = new Intent(DashboardActivity.this, GroupsActivity.class);

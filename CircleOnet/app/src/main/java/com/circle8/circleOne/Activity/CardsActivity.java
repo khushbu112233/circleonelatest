@@ -1176,7 +1176,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             } else if (position == 1) {
                 //  getSupportActionBar().show();
                 // setActionBarTitle("Cards");
-                return new ConnectFragment();
+                return new CardsFragment();
             } else if (position == 2) {
                 // getSupportActionBar().show();
                 //setActionBarTitle("Connect");

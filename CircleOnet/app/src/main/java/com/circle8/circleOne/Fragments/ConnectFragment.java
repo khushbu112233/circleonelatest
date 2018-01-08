@@ -6,10 +6,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.CustomViewPager;
@@ -18,10 +20,11 @@ import com.circle8.circleOne.Utils.Utility;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConnectFragment extends Fragment
+public class ConnectFragment extends AppCompatActivity
 {
     public static CustomViewPager mViewPager;
     TabLayout tabLayout;
+    private TextView actionText;
 
     public ConnectFragment() {
         // Required empty public constructor
@@ -31,32 +34,25 @@ public class ConnectFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_connect, container, false);
-
-     //   SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity().getSupportFragmentManager());
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
-        // Set up the ViewPager with the sections adapter.
-
-       // mViewPager.setAdapter(mSectionsPagerAdapter);
-
-        SectionsPagerAdapter mSectionsPagerAdapter = new ConnectFragment.SectionsPagerAdapter(getActivity().getSupportFragmentManager());
-        mViewPager = (CustomViewPager) view.findViewById(R.id.container2);
+        setContentView(R.layout.fragment_connect);
+        SectionsPagerAdapter mSectionsPagerAdapter = new ConnectFragment.SectionsPagerAdapter(getSupportFragmentManager());
+        mViewPager = (CustomViewPager) findViewById(R.id.container2);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setPagingEnabled(true);
 
         setupViewPager(mViewPager);
-        tabLayout = (TabLayout) view.findViewById(R.id.tabs2);
+        tabLayout = (TabLayout) findViewById(R.id.tabs2);
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(android.R.color.white));
 
-        return view;
+        final ActionBar actionBar = getSupportActionBar();
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.custom_actionbar);
+
+        actionText = (TextView) findViewById(R.id.mytext);
+        actionText.setText("Connect");
+
+
     }
 
     @Override
@@ -66,7 +62,7 @@ public class ConnectFragment extends Fragment
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
       /*  adapter.addFrag(new ConnectListFragment(), "by Name");
         adapter.addFrag(new ConnectListFragment(), "by Company Name");
         adapter.addFrag(new ConnectListFragment(), "by Title");
