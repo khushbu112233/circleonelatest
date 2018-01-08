@@ -3,31 +3,63 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-<android.support.v4.widget.DrawerLayout
-    android:id="@+id/drawer_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:openDrawer="start">
-
-    <include
-        android:id="@+id/include_cocrdinator"
-        layout="@layout/app_bar_music"
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <android.support.design.widget.NavigationView
-        android:paddingTop="20dp"
-        app:theme="@style/NavigationDrawerStyle"
-        app:itemTextColor="@color/white"
-        app:itemIconTint="@color/white"
-        android:background="@color/colorPrimary"
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:menu="@menu/activity_music_drawer" />
+        tools:openDrawer="start">
 
-</android.support.v4.widget.DrawerLayout>
+        <RelativeLayout
+            android:id="@+id/coordinator_music"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/appbarnew"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/AppTheme.AppBarOverlay"
+                app:elevation="0dp">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/colorPrimary"
+                    app:popupTheme="@style/AppTheme.AppBarOverlay" />
+
+            </android.support.design.widget.AppBarLayout>
+
+            <FrameLayout
+                android:layout_below="@+id/appbarnew"
+                android:id="@+id/main_container_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/includefooter"
+                tools:showIn="@layout/app_bar_music" />
+
+            <include
+                android:id="@+id/includefooter"
+                layout="@layout/footer_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true" />
+
+        </RelativeLayout>
+
+        <android.support.design.widget.NavigationView
+            android:paddingTop="20dp"
+            app:theme="@style/NavigationDrawerStyle"
+            app:itemTextColor="@color/white"
+            app:itemIconTint="@color/white"
+            android:background="@color/colorPrimary"
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            app:menu="@menu/activity_music_drawer" />
+
+    </android.support.v4.widget.DrawerLayout>
 </layout>

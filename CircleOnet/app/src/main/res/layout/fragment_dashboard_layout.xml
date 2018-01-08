@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="1">
         <RelativeLayout
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
             android:id="@+id/lnrSearch"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.05"
             android:orientation="horizontal">
             <com.circle8.circleOne.Utils.MyRiadProAutoComplete
                 android:layout_centerVertical="true"
@@ -42,26 +44,25 @@
         <LinearLayout
             android:id="@+id/lnrDashboard"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lnrSearch"
-            android:layout_above="@+id/includeNotiRewardShare"
-            android:orientation="vertical">
-        <include
-            android:id="@+id/includeTapQr"
-            android:layout_gravity="center"
-            layout="@layout/tap_qrcode_layout"
-            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            />
+            android:layout_weight="0.75"
+            android:orientation="vertical"
+            android:weightSum="1">
+            <include
+                android:id="@+id/includeTapQr"
+                android:layout_gravity="center"
+                layout="@layout/tap_qrcode_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
         </LinearLayout>
         <include
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="20dp"
             android:id="@+id/includeNotiRewardShare"
             layout="@layout/reward_noti_share_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_marginTop="5dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.2"/>
 
-    </RelativeLayout>
+    </LinearLayout>
 </layout>

@@ -129,7 +129,11 @@
     </style>
 
     <style name="NavigationDrawerStyle">
-        <item name="android:textSize">15sp</item><!-- text size in menu-->
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:fontFamily">@font/century_gothic_1361531616</item>
+        <item name="android:textColor">@color/white</item>
+        <!-- text size in menu-->
         <item name="android:listPreferredItemHeightSmall">30dp</item><!-- item size in menu-->
         <item name="listPreferredItemHeightSmall">30dp</item><!-- item size in menu-->
         <item name="android:listDivider">@android:color/transparent</item>

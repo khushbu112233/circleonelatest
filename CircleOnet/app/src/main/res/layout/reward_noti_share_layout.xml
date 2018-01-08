@@ -12,7 +12,7 @@
             android:layout_centerInParent="true">
             <ImageView
                 android:id="@+id/imgRewards"
-                android:src="@drawable/ic_dashboard3x"
+                android:src="@drawable/ic_rewards_blue"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_centerHorizontal="true"/>
@@ -35,7 +35,7 @@
             android:layout_centerInParent="true">
             <ImageView
                 android:id="@+id/imgNotification"
-                android:src="@drawable/ic_dashboard3x"
+                android:src="@drawable/ic_notification_blue"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_centerHorizontal="true"/>
@@ -59,7 +59,7 @@
             android:layout_centerInParent="true">
             <ImageView
                 android:id="@+id/imgShare"
-                android:src="@drawable/ic_dashboard3x"
+                android:src="@drawable/ic_share_blue"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_centerHorizontal="true"/>
