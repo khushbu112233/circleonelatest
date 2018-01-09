@@ -179,6 +179,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                 inflater, R.layout.fragment_profile, container, false);
         view = fragmentProfileBinding.getRoot();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
 
         mContext = ProfileFragment.this.getActivity();
 

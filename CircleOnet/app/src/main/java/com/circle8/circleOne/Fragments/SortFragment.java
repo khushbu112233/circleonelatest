@@ -1,4 +1,5 @@
-package com.circle8.circleOne.Activity;
+package com.circle8.circleOne.Fragments;
+
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -7,25 +8,22 @@ import android.databinding.DataBindingUtil;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.circle8.circleOne.Activity.CardsActivity;
+import com.circle8.circleOne.Activity.DashboardActivity;
 import com.circle8.circleOne.Adapter.SortAndFilterAdapter;
 import com.circle8.circleOne.Adapter.SortAndFilterProfileAdapter;
-import com.circle8.circleOne.Fragments.List1Fragment;
-import com.circle8.circleOne.Fragments.List2Fragment;
-import com.circle8.circleOne.Fragments.List3Fragment;
-import com.circle8.circleOne.Fragments.List4Fragment;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.GroupModel;
 import com.circle8.circleOne.Model.ProfileModel;
@@ -48,9 +46,10 @@ import java.util.HashMap;
 
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
-
-public class SortAndFilterOption extends AppCompatActivity
-{
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class SortFragment extends Fragment {
 
     private int actionBarHeight;
     public static String SortType = "desc";
@@ -67,23 +66,27 @@ public class SortAndFilterOption extends AppCompatActivity
     SortAndFilterAdapter sortAndFilterAdapter ;
     SortAndFilterProfileAdapter sortAndFilterProfileAdapter ;
     ActivitySortAndFilterOptionBinding activitySortAndFilterOptionBinding;
-    ImageView imgDrawer,imgLogo;
-    TextView actionText;
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        activitySortAndFilterOptionBinding= DataBindingUtil.setContentView(this,R.layout.activity_sort_and_filter_option);
+    View view;
 
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        final ActionBar actionBar = getSupportActionBar();
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.custom_actionbar);
-        actionText = (TextView) findViewById(R.id.mytext);
-        imgLogo = (ImageView) findViewById(R.id.imgLogo);
-        imgDrawer = (ImageView) findViewById(R.id.drawer);
-        imgLogo.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
-        session = new LoginSession(getApplicationContext());
+    public SortFragment() {
+        // Required empty public constructor
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        activitySortAndFilterOptionBinding = DataBindingUtil.inflate(inflater, R.layout.activity_sort_and_filter_option, container, false);
+
+
+        //activitySortAndFilterOptionBinding = DataBindingUtil.inflate(inflater, R.layout.activity_sort_and_filter_option, container, false);
+        view = activitySortAndFilterOptionBinding.getRoot();
+
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        DashboardActivity.setActionBarTitle("Sort & Filter");
+        DashboardActivity.setDrawerVisibility(true);
+        session = new LoginSession(getContext());
         HashMap<String, String> user = session.getUserDetails();
         user_id = user.get(LoginSession.KEY_USERID);
         profile_id = user.get(LoginSession.KEY_PROFILEID);
@@ -112,7 +115,7 @@ public class SortAndFilterOption extends AppCompatActivity
 
                 }
 
-                
+
                 try {
                     List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.nfcModel.clear();
@@ -134,18 +137,20 @@ public class SortAndFilterOption extends AppCompatActivity
 
                     List1Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List1Fragment.GetData(getApplicationContext());
+                    List1Fragment.GetData(getContext());
                 } catch (Exception e) {
 
                 }
                /* Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
                 userIntent.putExtra("viewpager_position", 0);
                 startActivity(userIntent);*/
-                finish();
+                //getActivity().finish();
+                
+                getActivity().getSupportFragmentManager().popBackStackImmediate();
                 // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                /* Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
                 startActivity(intent);
-                finish();
+                getActivity().finish();
                 overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);*/
             }
         });
@@ -216,6 +221,7 @@ public class SortAndFilterOption extends AppCompatActivity
                 } catch (Exception e) {
 
                 }*/
+
                 try {
                    /* List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.allTags = db.getActiveNFC();
@@ -243,11 +249,11 @@ public class SortAndFilterOption extends AppCompatActivity
                /* Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
                 userIntent.putExtra("viewpager_position", 0);
                 startActivity(userIntent);*/
-                finish();
+                getActivity().finish();
                 // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                /* Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
                 startActivity(intent);
-                finish();
+                getActivity().finish();
                 overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);*/
             }
         });
@@ -296,11 +302,11 @@ public class SortAndFilterOption extends AppCompatActivity
                /* Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
                 userIntent.putExtra("viewpager_position", 0);
                 startActivity(userIntent);*/
-                finish();
+                getActivity().finish();
                 // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                 /*Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
                 startActivity(intent);
-                finish();
+                getActivity().finish();
                 overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);*/
             }
         });
@@ -349,29 +355,29 @@ public class SortAndFilterOption extends AppCompatActivity
               /*  Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
                 userIntent.putExtra("viewpager_position", 0);
                 startActivity(userIntent);*/
-                finish();
+                getActivity().finish();
                 //  overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                 /*Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
                 startActivity(intent);
-                finish();
+                getActivity().finish();
                 overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);*/
             }
         });
 
-        imgDrawer.setOnClickListener(new View.OnClickListener() {
+        /*imgDrawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                finish();
-                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                getActivity().finish();
+                getActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
             }
-        });
+        });*/
 
         activitySortAndFilterOptionBinding.imgCards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CardsActivity.mViewPager.setCurrentItem(0);
-                finish();
+                getActivity().finish();
             }
         });
 
@@ -379,7 +385,7 @@ public class SortAndFilterOption extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 CardsActivity.mViewPager.setCurrentItem(1);
-                finish();
+                getActivity().finish();
             }
         });
 
@@ -387,7 +393,7 @@ public class SortAndFilterOption extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 CardsActivity.mViewPager.setCurrentItem(2);
-                finish();
+                getActivity().finish();
             }
         });
 
@@ -395,7 +401,7 @@ public class SortAndFilterOption extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 CardsActivity.mViewPager.setCurrentItem(3);
-                finish();
+                getActivity().finish();
             }
         });
 
@@ -438,8 +444,8 @@ public class SortAndFilterOption extends AppCompatActivity
 
                 }
 
-                finish();
-               // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                getActivity().finish();
+                // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
 
 
             }
@@ -450,7 +456,7 @@ public class SortAndFilterOption extends AppCompatActivity
             public void onClick(View v) {
 
                 if (activitySortAndFilterOptionBinding.searchView.getText().toString().equalsIgnoreCase("")){
-                    Toast.makeText(getApplicationContext(), "Please type some keyword", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Please type some keyword", Toast.LENGTH_LONG).show();
                 }else {
                     CardListApi = "SearchConnect";
                     FindBY = "COMPANY";
@@ -490,12 +496,12 @@ public class SortAndFilterOption extends AppCompatActivity
 
                         List1Fragment.nfcModel.clear();
                         //  nfcModelList.clear();
-                        List1Fragment.GetData(getApplicationContext());
+                        List1Fragment.GetData(getContext());
                     } catch (Exception e) {
 
                     }
-                    finish();
-                   // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                    getActivity().finish();
+                    // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                 }
             }
         });
@@ -505,7 +511,7 @@ public class SortAndFilterOption extends AppCompatActivity
             public void onClick(View v) {
 
                 if (activitySortAndFilterOptionBinding.searchView.getText().toString().equalsIgnoreCase("")){
-                    Toast.makeText(getApplicationContext(), "Please type some keyword", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Please type some keyword", Toast.LENGTH_LONG).show();
                 }else {
                     CardListApi = "SearchConnect";
                     FindBY = "JOB_ROLE";
@@ -544,11 +550,11 @@ public class SortAndFilterOption extends AppCompatActivity
 
                         List1Fragment.nfcModel.clear();
                         //  nfcModelList.clear();
-                        List1Fragment.GetData(getApplicationContext());
+                        List1Fragment.GetData(getContext());
                     } catch (Exception e) {
 
                     }
-                    finish();
+                    getActivity().finish();
                     //overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                 }
             }
@@ -559,7 +565,7 @@ public class SortAndFilterOption extends AppCompatActivity
             public void onClick(View v) {
 
                 if (activitySortAndFilterOptionBinding.searchView.getText().toString().equalsIgnoreCase("")){
-                    Toast.makeText(getApplicationContext(), "Please type some keyword", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Please type some keyword", Toast.LENGTH_LONG).show();
                 }else {
                     CardListApi = "SearchConnect";
                     FindBY = "ASSOCIATION";
@@ -598,11 +604,11 @@ public class SortAndFilterOption extends AppCompatActivity
 
                         List1Fragment.nfcModel.clear();
                         //  nfcModelList.clear();
-                        List1Fragment.GetData(getApplicationContext());
+                        List1Fragment.GetData(getContext());
                     } catch (Exception e) {
 
                     }
-                    finish();
+                    getActivity().finish();
                     //overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                 }
             }
@@ -614,7 +620,7 @@ public class SortAndFilterOption extends AppCompatActivity
             public void onClick(View v) {
 
                 if (activitySortAndFilterOptionBinding.searchView.getText().toString().equalsIgnoreCase("")){
-                    Toast.makeText(getApplicationContext(), "Please type some keyword", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Please type some keyword", Toast.LENGTH_LONG).show();
                 }else {
                     CardListApi = "SearchConnect";
                     FindBY = "INDUSTRY";
@@ -653,12 +659,12 @@ public class SortAndFilterOption extends AppCompatActivity
 
                         List1Fragment.nfcModel.clear();
                         //  nfcModelList.clear();
-                        List1Fragment.GetData(getApplicationContext());
+                        List1Fragment.GetData(getActivity());
                     } catch (Exception e) {
 
                     }
-                    finish();
-                  //  overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                    getActivity().finish();
+                    //  overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                 }
             }
         });
@@ -706,42 +712,26 @@ public class SortAndFilterOption extends AppCompatActivity
 
                     List1Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List1Fragment.GetData(getApplicationContext());
+                    List1Fragment.GetData(getActivity());
                 } catch (Exception e) {
 
                 }
-                finish();
-               // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                getActivity().finish();
+                // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
             }
         });
 
-        imgLogo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //Toast.makeText(getApplicationContext(), "Hello", Toast.LENGTH_LONG).show();
-
-                /*TypedValue tv = new TypedValue();
-                if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
-                    actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
-                }
-
-                showDialog(SortAndFilterOption.this, 0, actionBarHeight);*/
-                finish();
-            }
-        });
-
-        actionText.setText("Sort & Filter");
+        return view;
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         Utility.freeMemory();
         super.onPause();
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         Utility.freeMemory();
     }
@@ -911,7 +901,7 @@ public class SortAndFilterOption extends AppCompatActivity
                         }*/
                     }
 
-                    sortAndFilterAdapter = new SortAndFilterAdapter(SortAndFilterOption.this, groupModelArrayList);
+                    sortAndFilterAdapter = new SortAndFilterAdapter(getContext(), groupModelArrayList);
                     activitySortAndFilterOptionBinding.listViewEx1.setAdapter(sortAndFilterAdapter);
                     activitySortAndFilterOptionBinding.listViewEx1.setExpanded(true);
                     sortAndFilterAdapter.notifyDataSetChanged();
@@ -920,7 +910,7 @@ public class SortAndFilterOption extends AppCompatActivity
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
                 }
             }
             catch (JSONException e)
@@ -988,7 +978,7 @@ public class SortAndFilterOption extends AppCompatActivity
                         profileModelArrayList.add(nfcModelTag);
                     }
 
-                    sortAndFilterProfileAdapter = new SortAndFilterProfileAdapter(SortAndFilterOption.this, profileModelArrayList);
+                    sortAndFilterProfileAdapter = new SortAndFilterProfileAdapter(getContext(), profileModelArrayList);
                     activitySortAndFilterOptionBinding.listViewEx2.setAdapter(sortAndFilterProfileAdapter);
                     activitySortAndFilterOptionBinding.listViewEx2.setExpanded(true);
                     sortAndFilterProfileAdapter.notifyDataSetChanged();
@@ -996,7 +986,7 @@ public class SortAndFilterOption extends AppCompatActivity
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
                 }
             }
             catch (JSONException e)
@@ -1123,3 +1113,5 @@ public class SortAndFilterOption extends AppCompatActivity
 
 
 }
+
+

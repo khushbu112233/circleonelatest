@@ -33,6 +33,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Fragments.CardsFragment;
@@ -41,6 +43,7 @@ import com.circle8.circleOne.Fragments.DashboardFragment;
 import com.circle8.circleOne.Fragments.EventsFragment;
 import com.circle8.circleOne.Fragments.List1Fragment;
 import com.circle8.circleOne.Fragments.ProfileFragment;
+import com.circle8.circleOne.Fragments.SortFragment;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.LocationUtil.PermissionUtils;
 import com.circle8.circleOne.MultiContactPicker;
@@ -76,6 +79,7 @@ import com.quickblox.sample.core.utils.SharedPrefsHelper;
 import com.twitter.sdk.android.Twitter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 
@@ -101,7 +105,8 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
     public static boolean isPermissionGranted;
     private final static int REQUEST_CHECK_SETTINGS = 2000;
     public static Location mLastLocation;
-
+    static TextView textView;
+    static ImageView imgDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,13 +126,16 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 */
+        textView = (TextView) findViewById(R.id.mytext);
+        imgDrawer = (ImageView) findViewById(R.id.drawer);
+        imgDrawer.setVisibility(View.GONE);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.mipmap.ic_launcher);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_logo_white);
         //  toggle.setHomeAsUpIndicator(R.id.icon);//add this for custom icon
         fragment = new DashboardFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
@@ -139,6 +147,11 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
         profileName.setText("Adele");*/
 
         session = new LoginSession(getApplicationContext());
+        textView.setText("Dashboard");
+
+        HashMap<String, String> user = session.getUserDetails();
+
+        CardsActivity.Connection_Limit = user.get(LoginSession.KEY_CONNECTION_LIMIT);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -270,6 +283,63 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
             // Building the GoogleApi client
             buildGoogleApiClient();
         }
+
+        imgDrawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (getCurrentFragment() instanceof CardsFragment){
+                    /*Intent intent = new Intent(getApplicationContext(), SortAndFilterOption.class);
+                    startActivity(intent);*/
+
+                    fragment = new SortFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+                            .addToBackStack(null)
+                            .commit();
+                    overridePendingTransition(R.anim.slide_in_down, R.anim.slide_out_down);
+                   // setActionBarTitle("Sort & Filter");
+
+                }
+                /*else if (getCurrentFragment() instanceof SortAndFilterOption){
+                    *//*Intent intent = new Intent(getApplicationContext(), SortAndFilterOption.class);
+                    startActivity(intent);*//*
+
+                    fragment = new CardsFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+                            .addToBackStack(null).commit();
+                    overridePendingTransition(R.anim.slide_in_down, R.anim.slide_out_down);
+
+                }*/
+            }
+        });
+
+
+       /* if (getCurrentFragment() instanceof SortAndFilterOption){
+                    *//*Intent intent = new Intent(getApplicationContext(), SortAndFilterOption.class);
+                    startActivity(intent);*//*
+
+            setActionBarTitle("Sort & Filter");
+
+        }*/
+    }
+
+    public static void setActionBarTitle(String title) {
+        textView.setText(title);
+    }
+
+    public static void setDrawerVisibility(Boolean visibility) {
+        if (visibility == true){
+            imgDrawer.setVisibility(View.VISIBLE);
+        }else {
+            imgDrawer.setVisibility(View.GONE);
+
+        }
+    }
+
+    public Fragment getCurrentFragment() {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.main_container_wrapper);
+        //    Log.e("currentFragment",""+currentFragment);
+        return currentFragment;
+
     }
 
     @Override

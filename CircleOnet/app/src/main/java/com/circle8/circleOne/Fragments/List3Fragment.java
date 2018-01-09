@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.circle8.circleOne.Activity.CardDetail;
 import com.circle8.circleOne.Activity.CardsActivity;
+import com.circle8.circleOne.Activity.DashboardActivity;
 import com.circle8.circleOne.Activity.SortAndFilterOption;
 import com.circle8.circleOne.Adapter.List3Adapter;
 import com.circle8.circleOne.Helper.DatabaseHelper;
@@ -60,9 +61,9 @@ import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class List3Fragment extends Fragment implements AbsListView.OnScrollListener
+public class List3Fragment extends Fragment
 {
-    private static ListView listView;
+   /* private static ListView listView;
     public static List3Adapter gridAdapter;
     ArrayList<byte[]> imgf;
     ArrayList<String> name;
@@ -174,16 +175,16 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
 
         listView.setOnScrollListener(this);
 
-      /*  GestureDetector.OnGestureListener gestureListener = new MyOnGestureListener();
+      *//*  GestureDetector.OnGestureListener gestureListener = new MyOnGestureListener();
         GestureDetector.OnDoubleTapListener doubleTapListener = new MyOnDoubleTapListener();
         this.gestureDetector1= new GestureDetector(getContext(), gestureListener);
-        this.gestureDetector1.setOnDoubleTapListener(doubleTapListener);*/
+        this.gestureDetector1.setOnDoubleTapListener(doubleTapListener);*//*
 
-        /*lnrSearch.setVisibility(View.GONE);
+        *//*lnrSearch.setVisibility(View.GONE);
         line.setVisibility(View.GONE);
-        CardsFragment.tabLayout.setVisibility(View.GONE);*/
+        CardsFragment.tabLayout.setVisibility(View.GONE);*//*
 
-        /*allTags = db.getActiveNFC();
+        *//*allTags = db.getActiveNFC();
         for (NFCModel tag : allTags) {
             id.add(tag.getId());
             imgf.add(tag.getCard_front());
@@ -192,24 +193,24 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
             designation.add(tag.getDesignation());
         }
         gridAdapter = new List3Adapter(getContext(), R.layout.grid_list3_layout, imgf, desc, name, designation, id);
-        listView.setAdapter(gridAdapter);*/
+        listView.setAdapter(gridAdapter);*//*
 
-        /*listView.setOnTouchListener(new View.OnTouchListener() {
+        *//*listView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return gestureDetector.onTouchEvent(event);
             }
-        });*/
+        });*//*
 
-      /*  listView.setOnTouchListener(new View.OnTouchListener() {
+      *//*  listView.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent me) {
                 return gestureDetector1.onTouchEvent(me);
             }
-        });*/
+        });*//*
 
 
 
-       /* listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+       *//* listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ((SwipeLayout)(listView.getChildAt(position - listView.getFirstVisiblePosition()))).open(true);
@@ -221,20 +222,20 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                 Log.e("ListView", "OnTouch");
                 return false;
             }
-        });*/
+        });*//*
 
         //retrive data
 //        GetData(getContext());
 
-       /* listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+       *//* listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
               //  Toast.makeText(getContext(), "OnItemLongClickListener", Toast.LENGTH_SHORT).show();
                 return true;
             }
-        });*/
+        });*//*
 
-       /* listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+       *//* listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 Log.e("ListView", "onScrollStateChanged");
@@ -242,9 +243,9 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
             }
-        });*/
+        });*//*
 
-       /* listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+       *//* listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.e("ListView", "onItemSelected:" + position);
@@ -254,7 +255,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
             public void onNothingSelected(AdapterView<?> parent) {
                 Log.e("ListView", "onNothingSelected:");
             }
-        });*/
+        });*//*
 
         searchText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -266,7 +267,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
-                /*if(s.length() <= 0)
+                *//*if(s.length() <= 0)
                 {
                     nfcModel1.clear();
                     GetData(getContext());
@@ -275,7 +276,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                 {
                     String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
                     gridAdapter.Filter(text);
-                }*/
+                }*//*
                 Utility.deleteCache(getContext());
 
                 Utility.freeMemory();
@@ -296,7 +297,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
 //                        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
 //                    GetData(getContext());
                     }
-                    /*else if (s.length() > 0)
+                    *//*else if (s.length() > 0)
                     {
                         String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
 
@@ -311,7 +312,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                             e.printStackTrace();
                         }
                         new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
-                    }*/
+                    }*//*
                 }
                 catch (Exception e)
                 {
@@ -507,11 +508,11 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            /*dialog = new ProgressDialog(getActivity());
+            *//*dialog = new ProgressDialog(getActivity());
             dialog.setMessage("Searching Records...");
             //dialog.setTitle("Saving Reminder");
           //  dialog.show();
-            dialog.setCancelable(false);*/
+            dialog.setCancelable(false);*//*
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
 
@@ -596,9 +597,9 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
 
                             allTaggs.add(connectModel);
 
-                           /* gridAdapter = new List3Adapter(getContext(), R.layout.grid_list3_layout, allTaggs);
+                           *//* gridAdapter = new List3Adapter(getContext(), R.layout.grid_list3_layout, allTaggs);
                             listView.setAdapter(gridAdapter);
-                            gridAdapter.notifyDataSetChanged();*/
+                            gridAdapter.notifyDataSetChanged();*//*
                             GetData(getContext());
                         }
                     }
@@ -622,7 +623,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
     public static void webCall()
     {
         Utility.freeMemory();
-       /* nfcModel1.clear();
+       *//* nfcModel1.clear();
         allTaggs.clear();
         try
         {
@@ -632,7 +633,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
         {
             e.printStackTrace();
         }
-        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");*/
+        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");*//*
 
         pageno = 1;
 
@@ -694,7 +695,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
             dialog.setMessage("Fetching cards...");
             //dialog.setTitle("Saving Reminder");
             dialog.setCancelable(false);
-            /*if(comeAtTime.equalsIgnoreCase("FIRST"))
+            *//*if(comeAtTime.equalsIgnoreCase("FIRST"))
             {
                 dialog.show();
                 comeAtTime = "SECOND";
@@ -702,7 +703,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
             else
             {
                 dialog.dismiss();
-            }*/
+            }*//*
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
 
@@ -731,8 +732,8 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
 
             }
 
-            /*String loading = "Fetching Cards" ;
-            CustomProgressDialog(loading);*/
+            *//*String loading = "Fetching Cards" ;
+            CustomProgressDialog(loading);*//*
         }
 
         @Override
@@ -805,9 +806,9 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
                         nfcModelTag.setLongitude(object.getString("Longitude"));
                         allTaggs.add(nfcModelTag);
 
-                       /* gridAdapter = new List3Adapter(mContext, R.layout.grid_list3_layout, allTaggs);
+                       *//* gridAdapter = new List3Adapter(mContext, R.layout.grid_list3_layout, allTaggs);
                         listView.setAdapter(gridAdapter);
-                        gridAdapter.notifyDataSetChanged();*/
+                        gridAdapter.notifyDataSetChanged();*//*
 
 
                     }
@@ -961,7 +962,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
     {
         nfcModel1.clear();
         //newly added
-       /* for(NFCModel reTag : allTags)
+       *//* for(NFCModel reTag : allTags)
         {
             NFCModel nfcModelTag = new NFCModel();
             nfcModelTag.setId(reTag.getId());
@@ -975,7 +976,7 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
             nfcModelTag.setNfc_tag(reTag.getNfc_tag());
 
             nfcModel.add(nfcModelTag);
-        }*/
+        }*//*
 
         for(FriendConnection reTag : allTaggs)
         {
@@ -1021,31 +1022,27 @@ public class List3Fragment extends Fragment implements AbsListView.OnScrollListe
 
 
         if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
-            if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + counts + "/" + CardsActivity.Connection_Limit);
-            }
+                DashboardActivity.setActionBarTitle("Cards - " + counts + "/" + CardsActivity.Connection_Limit);
+
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
-            if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + counts);
-            }
+
+                DashboardActivity.setActionBarTitle("Cards - " + counts);
+
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
-            if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + counts);
-            }
+                DashboardActivity.setActionBarTitle("Cards - " + counts);
+
         }
         else{
-            if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + counts);
-            }
+                DashboardActivity.setActionBarTitle("Cards - " + counts);
         }
 
         //  CardsActivity.setActionBarTitle("Cards - "+nfcModel1.size() + "/"+ CardsActivity.Connection_Limit);
         gridAdapter.setMode(Attributes.Mode.Single);
 
 //        Toast.makeText(mContext,"ListView size: "+nfcModel1.size(),Toast.LENGTH_SHORT).show();
-    }
+    }*/
 
    /* GestureDetector.SimpleOnGestureListener simpleOnGestureListener
             = new GestureDetector.SimpleOnGestureListener()

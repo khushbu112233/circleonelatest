@@ -447,13 +447,13 @@ public class List4Adapter extends BaseSwipeAdapter
                     {
                         List1Fragment.progressStatus = "DELETE";
                         List2Fragment.progressStatus = "DELETE";
-                        List3Fragment.progressStatus = "DELETE";
+                      //  List3Fragment.progressStatus = "DELETE";
                         List4Fragment.progressStatus = "DELETE";
 
                         Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_LONG).show();
                         List1Fragment.webCall();
                         List2Fragment.webCall();
-                        List3Fragment.webCall();
+                      //  List3Fragment.webCall();
                         List4Fragment.webCall();
                     }
                     else

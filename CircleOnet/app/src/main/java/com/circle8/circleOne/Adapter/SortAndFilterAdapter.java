@@ -31,7 +31,7 @@ public class SortAndFilterAdapter extends BaseAdapter
 
     ArrayList<GroupModel> groupModelsList ;
 
-    public SortAndFilterAdapter(SortAndFilterOption sortAndFilterOption, ArrayList<GroupModel> groupModelArrayList)
+    public SortAndFilterAdapter(Context sortAndFilterOption, ArrayList<GroupModel> groupModelArrayList)
     {
         this.context = sortAndFilterOption ;
         this.groupModelsList = groupModelArrayList ;

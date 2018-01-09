@@ -55,7 +55,6 @@
     <ScrollView
         android:layout_marginBottom="8dp"
         android:layout_marginTop="20dp"
-        android:layout_above="@+id/view1"
         android:layout_below="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -541,6 +540,7 @@
 
     </ScrollView>
     <View
+        android:visibility="gone"
         android:layout_above="@+id/lnrBottomTab"
         android:id="@+id/view1"
         android:layout_width="match_parent"
@@ -548,6 +548,7 @@
         android:background="@color/colorPrimary"></View>
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/lnrBottomTab"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"

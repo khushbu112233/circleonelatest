@@ -15,12 +15,13 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.circle8.circleOne.Activity.CardsActivity;
+import com.circle8.circleOne.Activity.DashboardActivity;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.CustomViewPager;
 import com.circle8.circleOne.Utils.Utility;
 
 import static com.circle8.circleOne.Activity.CardsActivity.Connection_Limit;
-import static com.circle8.circleOne.Activity.CardsActivity.setActionBarTitle;
+import static com.circle8.circleOne.Activity.DashboardActivity.setActionBarTitle;
 
 public class CardsFragment extends Fragment
 {
@@ -49,16 +50,19 @@ public class CardsFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_cards, container, false);
         SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager());
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+        setActionBarTitle("Cards - " + List1Fragment.count + "/" + Connection_Limit);
+
         // Set up the ViewPager with the sections adapter.
         mViewPager = (CustomViewPager) view.findViewById(R.id.container1);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setPagingEnabled(false);
-        mViewPager.setOffscreenPageLimit(2);
+        mViewPager.setOffscreenPageLimit(1);
         tabLayout = (TabLayout) view.findViewById(R.id.tabs1);
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(android.R.color.white));
         setupTabIcons();
-        mViewPager.setCurrentItem(CardsActivity.nested_position);
+        //mViewPager.setCurrentItem(CardsActivity.nested_position);
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -70,9 +74,6 @@ public class CardsFragment extends Fragment
                     setActionBarTitle("Cards - " + List2Fragment.counts + "/" + Connection_Limit);
                 }
                 else if (tab.getPosition() == 2) {
-                    setActionBarTitle("Cards - " + List3Fragment.counts + "/" + Connection_Limit);
-                }
-                else if (tab.getPosition() == 3) {
                     setActionBarTitle("Cards - " + List4Fragment.counts + "/" + Connection_Limit);
                 }
                 InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -89,6 +90,8 @@ public class CardsFragment extends Fragment
 
             }
         });
+
+        DashboardActivity.setDrawerVisibility(true);
 
         return view;
     }
@@ -130,18 +133,9 @@ public class CardsFragment extends Fragment
                 getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                 InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(getActivity().getWindow().getDecorView().getWindowToken(), 0);
-                List3Fragment tab1 = new List3Fragment();
-                return tab1;
-                //return new List3Fragment();
-            }
-            else if (position == 3)
-            {
-                getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-                InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(getActivity().getWindow().getDecorView().getWindowToken(), 0);
                 List4Fragment tab1 = new List4Fragment();
                 return tab1;
-               // return new List4Fragment();
+                //return new List3Fragment();
             }
             else
             {
@@ -155,7 +149,7 @@ public class CardsFragment extends Fragment
 
         @Override
         public int getCount() {
-            return 4;
+            return 3;
         }
 
         @Override
@@ -174,15 +168,13 @@ public class CardsFragment extends Fragment
         int[] tabIcons = {
                 R.drawable.icon3,
                 R.drawable.icon1,
-                R.drawable.icon2,
-                R.drawable.icon4
+                R.drawable.icon2
                 // R.drawable.ic_tab_contacts
         };
 
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
         tabLayout.getTabAt(2).setIcon(tabIcons[2]);
-        tabLayout.getTabAt(3).setIcon(tabIcons[3]);
     }
 
 

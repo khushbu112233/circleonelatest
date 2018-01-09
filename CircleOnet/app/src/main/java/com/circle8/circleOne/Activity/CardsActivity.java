@@ -1910,7 +1910,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
                         // onStart();
                         List1Fragment.webCall();
                         List2Fragment.webCall();
-                        List3Fragment.webCall();
+                       // List3Fragment.webCall();
                         List4Fragment.webCall();
                     } else {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();

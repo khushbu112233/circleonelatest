@@ -31,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Activity.CardsActivity;
+import com.circle8.circleOne.Activity.DashboardActivity;
 import com.circle8.circleOne.Activity.SortAndFilterOption;
 import com.circle8.circleOne.Adapter.GridViewAdapter;
 import com.circle8.circleOne.Helper.DatabaseHelper;
@@ -1123,25 +1124,17 @@ public class List2Fragment extends Fragment
          gridAdapter.notifyDataSetChanged();
 
         if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
-            if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + counts + "/" + CardsActivity.Connection_Limit);
-            }
+                DashboardActivity.setActionBarTitle("Cards - " + counts + "/" + CardsActivity.Connection_Limit);
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
-            if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + counts);
-            }
+                DashboardActivity.setActionBarTitle("Cards - " + counts);
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
-            if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + counts);
-            }
+                DashboardActivity.setActionBarTitle("Cards - " + counts);
         }
         else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("SearchConnect"))
         {
-            if (CardsActivity.mViewPager.getCurrentItem() == 0) {
-                CardsActivity.setActionBarTitle("Cards - " + counts);
-            }
+                DashboardActivity.setActionBarTitle("Cards - " + counts);
         }
 
         gridAdapter.setMode(Attributes.Mode.Single);

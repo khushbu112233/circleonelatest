@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.circle8.circleOne.Activity.Connect;
 import com.circle8.circleOne.Activity.SortAndFilterOption;
 import com.circle8.circleOne.Model.GroupModel;
 import com.circle8.circleOne.Model.ProfileModel;
@@ -27,7 +28,7 @@ public class SortAndFilterProfileAdapter extends BaseAdapter
     Context context ;
     ArrayList<ProfileModel> profileModelArrayList ;
 
-    public SortAndFilterProfileAdapter(SortAndFilterOption sortAndFilterOption, ArrayList<ProfileModel> profileModelArrayList)
+    public SortAndFilterProfileAdapter(Context sortAndFilterOption, ArrayList<ProfileModel> profileModelArrayList)
     {
         this.context = sortAndFilterOption ;
         this.profileModelArrayList = profileModelArrayList ;

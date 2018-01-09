@@ -4,10 +4,12 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.circle8.circleOne.Activity.DashboardActivity;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.databinding.FragmentDashboardLayoutBinding;
@@ -28,6 +30,9 @@ public class DashboardFragment extends Fragment {
                 inflater, R.layout.fragment_dashboard_layout, container, false);
         view = fragmentDashboardLayoutBinding.getRoot();
         context =getActivity();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+        DashboardActivity.setActionBarTitle("Dashboard");
+        DashboardActivity.setDrawerVisibility(false);
         initClick();
 
         return view;
@@ -36,6 +41,7 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        count = Pref.getValue(context,"count",0);
         count++;
         if(Pref.getValue(context,"appopen","").equalsIgnoreCase("1"))
         {
@@ -44,14 +50,23 @@ public class DashboardFragment extends Fragment {
         }else
         {
             if(count==1) {
+                Pref.setValue(context,"count",count);
                 fragmentDashboardLayoutBinding.includeTapQr.rlMainDashboard.setBackgroundResource(R.drawable.ic_bg_dashboard1);
             }else if(count==2) {
+                Pref.setValue(context,"count",count);
                 fragmentDashboardLayoutBinding.includeTapQr.rlMainDashboard.setBackgroundResource(R.drawable.ic_bg_dashboard2);
             }else if(count==3) {
+                Pref.setValue(context,"count",count);
                 fragmentDashboardLayoutBinding.includeTapQr.rlMainDashboard.setBackgroundResource(R.drawable.ic_bg_dashboard3);
             }else if(count==4) {
+                Pref.setValue(context,"count",count);
                 fragmentDashboardLayoutBinding.includeTapQr.rlMainDashboard.setBackgroundResource(R.drawable.ic_bg_dashboard4);
-                count=0;
+            }
+            else if (count == 5){
+                count = 1;
+                Pref.setValue(context,"count",count);
+                fragmentDashboardLayoutBinding.includeTapQr.rlMainDashboard.setBackgroundResource(R.drawable.ic_bg_dashboard1);
+
             }
         }
     }

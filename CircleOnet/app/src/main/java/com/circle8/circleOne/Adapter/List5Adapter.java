@@ -128,15 +128,6 @@ public class List5Adapter extends BaseSwipeAdapter
                 }
 
                 try {
-                    List3Fragment.gridAdapter.notifyDataSetChanged();
-                    List3Fragment.allTags = db.getActiveNFC();
-                    List3Fragment.nfcModel.clear();
-                    //  nfcModelList.clear();
-//                    List3Fragment.GetData(context);
-                } catch (Exception e){
-
-                }
-                try {
                     List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.allTags = db.getActiveNFC();
                     List4Fragment.nfcModel.clear();
