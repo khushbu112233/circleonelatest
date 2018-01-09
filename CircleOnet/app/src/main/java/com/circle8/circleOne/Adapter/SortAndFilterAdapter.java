@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.circle8.circleOne.Activity.SortAndFilterOption;
 import com.circle8.circleOne.Model.GroupModel;
 import com.circle8.circleOne.Model.ProfileModel;
 import com.circle8.circleOne.R;

@@ -32,7 +32,7 @@ import android.widget.Toast;
 import com.circle8.circleOne.Activity.CardDetail;
 import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.Activity.DashboardActivity;
-import com.circle8.circleOne.Activity.SortAndFilterOption;
+
 import com.circle8.circleOne.Adapter.List3Adapter;
 import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;

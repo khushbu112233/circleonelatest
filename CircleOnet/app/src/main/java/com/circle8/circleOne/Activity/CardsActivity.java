@@ -542,9 +542,9 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
 
                 int pos = mViewPager.getCurrentItem();
                 if (pos == 0) {
-                    Intent intent = new Intent(getApplicationContext(), SortAndFilterOption.class);
+                    /*Intent intent = new Intent(getApplicationContext(), SortAndFilterOption.class);
                     startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in_down, R.anim.slide_out_down);
+                    overridePendingTransition(R.anim.slide_in_down, R.anim.slide_out_down);*/
                 } else if (pos == 2) {
                     Intent intent = new Intent(getApplicationContext(), EventsSelectOption.class);
                     startActivity(intent);

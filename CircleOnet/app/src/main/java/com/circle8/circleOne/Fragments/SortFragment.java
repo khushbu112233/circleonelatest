@@ -67,6 +67,7 @@ public class SortFragment extends Fragment {
     SortAndFilterProfileAdapter sortAndFilterProfileAdapter ;
     ActivitySortAndFilterOptionBinding activitySortAndFilterOptionBinding;
     View view;
+    private Fragment fragment;
 
     public SortFragment() {
         // Required empty public constructor
@@ -145,7 +146,7 @@ public class SortFragment extends Fragment {
                 userIntent.putExtra("viewpager_position", 0);
                 startActivity(userIntent);*/
                 //getActivity().finish();
-                
+
                 getActivity().getSupportFragmentManager().popBackStackImmediate();
                 // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                /* Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
@@ -249,7 +250,7 @@ public class SortFragment extends Fragment {
                /* Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
                 userIntent.putExtra("viewpager_position", 0);
                 startActivity(userIntent);*/
-                getActivity().finish();
+                getActivity().getSupportFragmentManager().popBackStackImmediate();
                 // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                /* Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
                 startActivity(intent);
@@ -302,12 +303,18 @@ public class SortFragment extends Fragment {
                /* Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
                 userIntent.putExtra("viewpager_position", 0);
                 startActivity(userIntent);*/
-                getActivity().finish();
+            //    getActivity().getSupportFragmentManager().popBackStackImmediate();
                 // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                 /*Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
                 startActivity(intent);
                 getActivity().finish();
                 overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);*/
+
+                fragment = new CardsFragment();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+                        .addToBackStack(null).commit();
+
+
             }
         });
 
@@ -355,7 +362,7 @@ public class SortFragment extends Fragment {
               /*  Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
                 userIntent.putExtra("viewpager_position", 0);
                 startActivity(userIntent);*/
-                getActivity().finish();
+                getActivity().getSupportFragmentManager().popBackStackImmediate();
                 //  overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                 /*Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
                 startActivity(intent);
@@ -372,38 +379,6 @@ public class SortFragment extends Fragment {
                 getActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
             }
         });*/
-
-        activitySortAndFilterOptionBinding.imgCards.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CardsActivity.mViewPager.setCurrentItem(0);
-                getActivity().finish();
-            }
-        });
-
-        activitySortAndFilterOptionBinding.imgConnect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CardsActivity.mViewPager.setCurrentItem(1);
-                getActivity().finish();
-            }
-        });
-
-        activitySortAndFilterOptionBinding.imgEvents.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CardsActivity.mViewPager.setCurrentItem(2);
-                getActivity().finish();
-            }
-        });
-
-        activitySortAndFilterOptionBinding.imgProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CardsActivity.mViewPager.setCurrentItem(3);
-                getActivity().finish();
-            }
-        });
 
         activitySortAndFilterOptionBinding.listViewEx2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -444,7 +419,7 @@ public class SortFragment extends Fragment {
 
                 }
 
-                getActivity().finish();
+                getActivity().getSupportFragmentManager().popBackStackImmediate();
                 // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
 
 
@@ -500,7 +475,7 @@ public class SortFragment extends Fragment {
                     } catch (Exception e) {
 
                     }
-                    getActivity().finish();
+                    getActivity().getSupportFragmentManager().popBackStackImmediate();
                     // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                 }
             }
@@ -554,7 +529,7 @@ public class SortFragment extends Fragment {
                     } catch (Exception e) {
 
                     }
-                    getActivity().finish();
+                    getActivity().getSupportFragmentManager().popBackStackImmediate();
                     //overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                 }
             }
@@ -608,7 +583,7 @@ public class SortFragment extends Fragment {
                     } catch (Exception e) {
 
                     }
-                    getActivity().finish();
+                    getActivity().getSupportFragmentManager().popBackStackImmediate();
                     //overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                 }
             }
@@ -663,7 +638,7 @@ public class SortFragment extends Fragment {
                     } catch (Exception e) {
 
                     }
-                    getActivity().finish();
+                    getActivity().getSupportFragmentManager().popBackStackImmediate();
                     //  overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                 }
             }
@@ -716,7 +691,7 @@ public class SortFragment extends Fragment {
                 } catch (Exception e) {
 
                 }
-                getActivity().finish();
+                getActivity().getSupportFragmentManager().popBackStackImmediate();
                 // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
             }
         });

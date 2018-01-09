@@ -34,7 +34,6 @@ import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
 import com.azoft.carousellayoutmanager.CenterScrollListener;
 import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.Activity.DashboardActivity;
-import com.circle8.circleOne.Activity.SortAndFilterOption;
 import com.circle8.circleOne.Adapter.GalleryAdapter;
 import com.circle8.circleOne.Adapter.GalleryAdapter1;
 import com.circle8.circleOne.Helper.LoginSession;
@@ -516,7 +515,7 @@ public class List1Fragment extends Fragment
         // tvNoCard.setVisibility(View.GONE);
         nfcModel.clear();
         pageno = 1;
-        new HttpAsyncTask().execute(Utility.BASE_URL+SortAndFilterOption.CardListApi);
+        new HttpAsyncTask().execute(Utility.BASE_URL+SortFragment.CardListApi);
     }
 
     @Override
@@ -616,35 +615,35 @@ public class List1Fragment extends Fragment
         protected String doInBackground(String... urls) {
             JSONObject jsonObject = new JSONObject();
             try {
-                if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
+                if (SortFragment.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
 
-                    jsonObject.accumulate("Type", SortAndFilterOption.SortType);
+                    jsonObject.accumulate("Type", SortFragment.SortType);
 
-                    jsonObject.accumulate("numofrecords", "100");
+                    jsonObject.accumulate("numofrecords", "1000");
 //            jsonObject.accumulate("pageno", pageno);
                     jsonObject.accumulate("pageno", "1");
                     jsonObject.accumulate("userid", UserId);
                 }
-                else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
-                    jsonObject.accumulate("ProfileID", SortAndFilterOption.ProfileArrayId);
-                    jsonObject.accumulate("Type", SortAndFilterOption.SortType);
-                    jsonObject.accumulate("numofrecords", "100");
+                else if (SortFragment.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
+                    jsonObject.accumulate("ProfileID", SortFragment.ProfileArrayId);
+                    jsonObject.accumulate("Type", SortFragment.SortType);
+                    jsonObject.accumulate("numofrecords", "1000");
 //            jsonObject.accumulate("pageno", pageno);
                     jsonObject.accumulate("pageno", "1");
                 }
-                else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
-                    jsonObject.accumulate("group_ID", SortAndFilterOption.groupId);
-                    jsonObject.accumulate("profileId", SortAndFilterOption.ProfileArrayId);
-                    jsonObject.accumulate("numofrecords", "100");
+                else if (SortFragment.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
+                    jsonObject.accumulate("group_ID", SortFragment.groupId);
+                    jsonObject.accumulate("profileId", SortFragment.ProfileArrayId);
+                    jsonObject.accumulate("numofrecords", "1000");
 //            jsonObject.accumulate("pageno", pageno);
                     jsonObject.accumulate("pageno", "1");
                 }
-                else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("SearchConnect")) {
-                    jsonObject.accumulate("FindBy", SortAndFilterOption.FindBY );
-                    jsonObject.accumulate("Search", SortAndFilterOption.Search );
+                else if (SortFragment.CardListApi.equalsIgnoreCase("SearchConnect")) {
+                    jsonObject.accumulate("FindBy", SortFragment.FindBY );
+                    jsonObject.accumulate("Search", SortFragment.Search );
                     jsonObject.accumulate("SearchType", "Local" );
                     jsonObject.accumulate("UserID", UserId );
-                    jsonObject.accumulate("numofrecords", "100" );
+                    jsonObject.accumulate("numofrecords", "1000" );
                     jsonObject.accumulate("pageno", "1" );
 
                 }
@@ -663,6 +662,7 @@ public class List1Fragment extends Fragment
             String loading = "Fetching Cards..." ;
             CustomProgressBar(loading, status);*/
 //            dialog.dismiss();
+
             fragmentList1Binding.rlProgressDialog.setVisibility(View.GONE);
             Utility.freeMemory();
             try
@@ -694,7 +694,7 @@ public class List1Fragment extends Fragment
                         e.printStackTrace();
                     }
                     JSONArray jsonArray;
-                    if (SortAndFilterOption.CardListApi.equalsIgnoreCase("SearchConnect")){
+                    if (SortFragment.CardListApi.equalsIgnoreCase("SearchConnect")){
                         jsonArray = jsonObject.getJSONArray("connect");
                     }else {
                         jsonArray = jsonObject.getJSONArray("connection");
@@ -732,7 +732,7 @@ public class List1Fragment extends Fragment
                     GetData(mContext);
                     if (allTags.size() == 0)
                     {
-                        if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection"))
+                        if (SortFragment.CardListApi.equalsIgnoreCase("Group/FetchConnection"))
                         {
                             fragmentList1Binding.txtNoCard1.setText("No members have been added to the circle");
                             fragmentList1Binding.txtNoCard1.setVisibility(View.VISIBLE);
@@ -1294,21 +1294,21 @@ public class List1Fragment extends Fragment
             fragmentList1Binding.txtNoCard1.setVisibility(View.GONE);
         }
 
-        if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetFriendConnection"))
+        if (SortFragment.CardListApi.equalsIgnoreCase("GetFriendConnection"))
         {
                 DashboardActivity.setActionBarTitle("Cards - " + count + "/" + CardsActivity.Connection_Limit);
 
         }
-        else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetProfileConnection"))
+        else if (SortFragment.CardListApi.equalsIgnoreCase("GetProfileConnection"))
         {
                 DashboardActivity.setActionBarTitle("Cards - " + count);
         }
-        else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection"))
+        else if (SortFragment.CardListApi.equalsIgnoreCase("Group/FetchConnection"))
         {
 
                 DashboardActivity.setActionBarTitle("Cards - " + count);
         }
-        else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("SearchConnect"))
+        else if (SortFragment.CardListApi.equalsIgnoreCase("SearchConnect"))
         {
                 DashboardActivity.setActionBarTitle("Cards - " + count);
 

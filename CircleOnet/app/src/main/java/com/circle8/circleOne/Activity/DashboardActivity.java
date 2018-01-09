@@ -299,16 +299,14 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                    // setActionBarTitle("Sort & Filter");
 
                 }
-                /*else if (getCurrentFragment() instanceof SortAndFilterOption){
-                    *//*Intent intent = new Intent(getApplicationContext(), SortAndFilterOption.class);
-                    startActivity(intent);*//*
+                else if (getCurrentFragment() instanceof SortFragment){
 
                     fragment = new CardsFragment();
                     getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
                             .addToBackStack(null).commit();
                     overridePendingTransition(R.anim.slide_in_down, R.anim.slide_out_down);
 
-                }*/
+                }
             }
         });
 

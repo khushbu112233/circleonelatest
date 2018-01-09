@@ -1,3 +1,4 @@
+/*
 package com.circle8.circleOne.Activity;
 
 import android.app.Dialog;
@@ -112,18 +113,20 @@ public class SortAndFilterOption extends AppCompatActivity
 
                 }
 
-                
+
                 try {
                     List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
                     List4Fragment.callFirst();
+*/
 /*
                     List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.allTags = db.getActiveNFC();
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List4Fragment.GetData(getApplicationContext());*/
+                    List4Fragment.GetData(getApplicationContext());*//*
+
                 } catch (Exception e) {
 
                 }
@@ -138,15 +141,19 @@ public class SortAndFilterOption extends AppCompatActivity
                 } catch (Exception e) {
 
                 }
-               /* Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+               */
+/* Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
                 userIntent.putExtra("viewpager_position", 0);
-                startActivity(userIntent);*/
+                startActivity(userIntent);*//*
+
                 finish();
                 // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-               /* Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
+               */
+/* Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
                 startActivity(intent);
                 finish();
-                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);*/
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);*//*
+
             }
         });
 
@@ -207,7 +214,8 @@ public class SortAndFilterOption extends AppCompatActivity
 
                 }
 
-            /*    try {
+            */
+/*    try {
                     List3Fragment.gridAdapter.notifyDataSetChanged();
                     List3Fragment.allTags = db.getActiveNFC();
                     List3Fragment.nfcModel.clear();
@@ -215,13 +223,16 @@ public class SortAndFilterOption extends AppCompatActivity
                     List3Fragment.GetData(getApplicationContext());
                 } catch (Exception e) {
 
-                }*/
+                }*//*
+
                 try {
-                   /* List4Fragment.gridAdapter.notifyDataSetChanged();
+                   */
+/* List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.allTags = db.getActiveNFC();
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List4Fragment.GetData(getApplicationContext());*/
+                    List4Fragment.GetData(getApplicationContext());*//*
+
                     List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
@@ -230,7 +241,8 @@ public class SortAndFilterOption extends AppCompatActivity
 
                 }
 
-                /*try {
+                */
+/*try {
                     //List1Fragment.myPager.notifyDataSetChanged();
                    // List1Fragment.allTags = db.getActiveNFC();
 
@@ -239,16 +251,21 @@ public class SortAndFilterOption extends AppCompatActivity
                     List1Fragment.GetData(getApplicationContext());
                 } catch (Exception e) {
 
-                }*/
-               /* Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                }*//*
+
+               */
+/* Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
                 userIntent.putExtra("viewpager_position", 0);
-                startActivity(userIntent);*/
+                startActivity(userIntent);*//*
+
                 finish();
                 // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-               /* Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
+               */
+/* Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
                 startActivity(intent);
                 finish();
-                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);*/
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);*//*
+
             }
         });
 
@@ -270,11 +287,13 @@ public class SortAndFilterOption extends AppCompatActivity
                 }
 
                 try {
-                 /*   List4Fragment.gridAdapter.notifyDataSetChanged();
+                 */
+/*   List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.allTags = db.getActiveNFC();
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List4Fragment.GetData(getApplicationContext());*/
+                    List4Fragment.GetData(getApplicationContext());*//*
+
                     List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
@@ -283,7 +302,8 @@ public class SortAndFilterOption extends AppCompatActivity
 
                 }
 
-                /*try {
+                */
+/*try {
                     //List1Fragment.myPager.notifyDataSetChanged();
                    // List1Fragment.allTags = db.getActiveNFC();
 
@@ -292,16 +312,21 @@ public class SortAndFilterOption extends AppCompatActivity
                     List1Fragment.GetData(getApplicationContext());
                 } catch (Exception e) {
 
-                }*/
-               /* Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                }*//*
+
+               */
+/* Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
                 userIntent.putExtra("viewpager_position", 0);
-                startActivity(userIntent);*/
+                startActivity(userIntent);*//*
+
                 finish();
                 // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-                /*Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
+                */
+/*Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
                 startActivity(intent);
                 finish();
-                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);*/
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);*//*
+
             }
         });
 
@@ -323,11 +348,13 @@ public class SortAndFilterOption extends AppCompatActivity
                 }
 
                 try {
-                   /* List4Fragment.gridAdapter.notifyDataSetChanged();
+                   */
+/* List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.allTags = db.getActiveNFC();
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List4Fragment.GetData(getApplicationContext());*/
+                    List4Fragment.GetData(getApplicationContext());*//*
+
                     List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
@@ -336,7 +363,8 @@ public class SortAndFilterOption extends AppCompatActivity
 
                 }
 
-              /*  try {
+              */
+/*  try {
                     //List1Fragment.myPager.notifyDataSetChanged();
                  //   List1Fragment.allTags = db.getActiveNFC();
 
@@ -345,16 +373,21 @@ public class SortAndFilterOption extends AppCompatActivity
                     List1Fragment.GetData(getApplicationContext());
                 } catch (Exception e) {
 
-                }*/
-              /*  Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                }*//*
+
+              */
+/*  Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
                 userIntent.putExtra("viewpager_position", 0);
-                startActivity(userIntent);*/
+                startActivity(userIntent);*//*
+
                 finish();
                 //  overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-                /*Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
+                */
+/*Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
                 startActivity(intent);
                 finish();
-                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);*/
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);*//*
+
             }
         });
 
@@ -428,12 +461,14 @@ public class SortAndFilterOption extends AppCompatActivity
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
                     List4Fragment.callFirst();
+*/
 /*
                     List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.allTags = db.getActiveNFC();
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List4Fragment.GetData(getApplicationContext());*/
+                    List4Fragment.GetData(getApplicationContext());*//*
+
                 } catch (Exception e) {
 
                 }
@@ -474,12 +509,14 @@ public class SortAndFilterOption extends AppCompatActivity
                         List4Fragment.nfcModel.clear();
                         //  nfcModelList.clear();
                         List4Fragment.callFirst();
+*/
 /*
                     List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.allTags = db.getActiveNFC();
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List4Fragment.GetData(getApplicationContext());*/
+                    List4Fragment.GetData(getApplicationContext());*//*
+
                     } catch (Exception e) {
 
                     }
@@ -528,12 +565,14 @@ public class SortAndFilterOption extends AppCompatActivity
                         List4Fragment.nfcModel.clear();
                         //  nfcModelList.clear();
                         List4Fragment.callFirst();
+*/
 /*
                     List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.allTags = db.getActiveNFC();
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List4Fragment.GetData(getApplicationContext());*/
+                    List4Fragment.GetData(getApplicationContext());*//*
+
                     } catch (Exception e) {
 
                     }
@@ -582,12 +621,14 @@ public class SortAndFilterOption extends AppCompatActivity
                         List4Fragment.nfcModel.clear();
                         //  nfcModelList.clear();
                         List4Fragment.callFirst();
+*/
 /*
                     List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.allTags = db.getActiveNFC();
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List4Fragment.GetData(getApplicationContext());*/
+                    List4Fragment.GetData(getApplicationContext());*//*
+
                     } catch (Exception e) {
 
                     }
@@ -637,12 +678,14 @@ public class SortAndFilterOption extends AppCompatActivity
                         List4Fragment.nfcModel.clear();
                         //  nfcModelList.clear();
                         List4Fragment.callFirst();
+*/
 /*
                     List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.allTags = db.getActiveNFC();
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List4Fragment.GetData(getApplicationContext());*/
+                    List4Fragment.GetData(getApplicationContext());*//*
+
                     } catch (Exception e) {
 
                     }
@@ -690,12 +733,14 @@ public class SortAndFilterOption extends AppCompatActivity
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
                     List4Fragment.callFirst();
+*/
 /*
                     List4Fragment.gridAdapter.notifyDataSetChanged();
                     List4Fragment.allTags = db.getActiveNFC();
                     List4Fragment.nfcModel.clear();
                     //  nfcModelList.clear();
-                    List4Fragment.GetData(getApplicationContext());*/
+                    List4Fragment.GetData(getApplicationContext());*//*
+
                 } catch (Exception e) {
 
                 }
@@ -721,12 +766,14 @@ public class SortAndFilterOption extends AppCompatActivity
 
                 //Toast.makeText(getApplicationContext(), "Hello", Toast.LENGTH_LONG).show();
 
-                /*TypedValue tv = new TypedValue();
+                */
+/*TypedValue tv = new TypedValue();
                 if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
                     actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
                 }
 
-                showDialog(SortAndFilterOption.this, 0, actionBarHeight);*/
+                showDialog(SortAndFilterOption.this, 0, actionBarHeight);*//*
+
                 finish();
             }
         });
@@ -756,14 +803,16 @@ public class SortAndFilterOption extends AppCompatActivity
         dialog.setCanceledOnTouchOutside(true);
 
         LinearLayout lnrMyAcc = (LinearLayout) dialog.findViewById(R.id.lnrMyAcc);
-       /* lnrMyAcc.setOnClickListener(new View.OnClickListener() {
+       */
+/* lnrMyAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Profile.class);
                 startActivity(intent);
                 dialog.dismiss();
             }
-        });*/
+        });*//*
+
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());
@@ -783,11 +832,13 @@ public class SortAndFilterOption extends AppCompatActivity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-           /* dialog = new ProgressDialog(SortAndFilterOption.this);
+           */
+/* dialog = new ProgressDialog(SortAndFilterOption.this);
             dialog.setMessage("Fetching Groups...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);*/
+            dialog.setCancelable(false);*//*
+
         }
 
         @Override
@@ -833,7 +884,8 @@ public class SortAndFilterOption extends AppCompatActivity
 
                         groupModelArrayList.add(nfcModelTag);
 
-                       /* JSONArray memberArray = object.getJSONArray("Members");
+                       */
+/* JSONArray memberArray = object.getJSONArray("Members");
 
                         if (memberArray.length() == 3)
                         {
@@ -908,7 +960,8 @@ public class SortAndFilterOption extends AppCompatActivity
                         else
                         {
 
-                        }*/
+                        }*//*
+
                     }
 
                     sortAndFilterAdapter = new SortAndFilterAdapter(SortAndFilterOption.this, groupModelArrayList);
@@ -937,11 +990,13 @@ public class SortAndFilterOption extends AppCompatActivity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-           /* dialog = new ProgressDialog(SortAndFilterOption.this);
+           */
+/* dialog = new ProgressDialog(SortAndFilterOption.this);
             dialog.setMessage("Fetching Groups...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
-            dialog.setCancelable(false);*/
+            dialog.setCancelable(false);*//*
+
         }
 
         @Override
@@ -1123,3 +1178,4 @@ public class SortAndFilterOption extends AppCompatActivity
 
 
 }
+*/

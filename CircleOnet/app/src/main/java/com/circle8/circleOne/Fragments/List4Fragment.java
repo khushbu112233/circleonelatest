@@ -31,7 +31,6 @@ import android.widget.Toast;
 import com.circle8.circleOne.Activity.CardDetail;
 import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.Activity.DashboardActivity;
-import com.circle8.circleOne.Activity.SortAndFilterOption;
 import com.circle8.circleOne.Adapter.List4Adapter;
 import com.circle8.circleOne.Helper.DatabaseHelper;
 import com.circle8.circleOne.Helper.LoginSession;
@@ -620,7 +619,7 @@ public class List4Fragment extends Fragment
         pageno = 1;
         allTaggs.clear();
         Utility.freeMemory();
-        new HttpAsyncTask().execute(Utility.BASE_URL+SortAndFilterOption.CardListApi);
+        new HttpAsyncTask().execute(Utility.BASE_URL+SortFragment.CardListApi);
     }
 
     public static void webCall()
@@ -646,7 +645,7 @@ public class List4Fragment extends Fragment
             gridAdapter.notifyDataSetChanged();
         } catch (Exception e) {
         }
-        new HttpAsyncTask().execute(Utility.BASE_URL+SortAndFilterOption.CardListApi);
+        new HttpAsyncTask().execute(Utility.BASE_URL+SortFragment.CardListApi);
     }
 
 
@@ -730,7 +729,7 @@ public class List4Fragment extends Fragment
                     }
 
                     JSONArray jsonArray;
-                    if (SortAndFilterOption.CardListApi.equalsIgnoreCase("SearchConnect")){
+                    if (SortFragment.CardListApi.equalsIgnoreCase("SearchConnect")){
                         jsonArray = jsonObject.getJSONArray("connect");
                     }else {
                         jsonArray = jsonObject.getJSONArray("connection");
@@ -790,7 +789,7 @@ public class List4Fragment extends Fragment
                                     {
                                         //  rlLoadMore.setVisibility(View.VISIBLE);
                                         // Execute LoadMoreDataTask AsyncTask
-                                        new HttpAsyncTask().execute(Utility.BASE_URL+SortAndFilterOption.CardListApi);
+                                        new HttpAsyncTask().execute(Utility.BASE_URL+SortFragment.CardListApi);
                                     }
                                 } else {
 
@@ -829,29 +828,29 @@ public class List4Fragment extends Fragment
 
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
-                jsonObject.accumulate("Type", SortAndFilterOption.SortType);
+            if (SortFragment.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
+                jsonObject.accumulate("Type", SortFragment.SortType);
                 jsonObject.accumulate("numofrecords", "10");
                 jsonObject.accumulate("pageno", pageno);
                 jsonObject.accumulate("userid", UserId);
             }
-            else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
-                jsonObject.accumulate("ProfileID", SortAndFilterOption.ProfileArrayId);
-                jsonObject.accumulate("Type", SortAndFilterOption.SortType);
+            else if (SortFragment.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
+                jsonObject.accumulate("ProfileID", SortFragment.ProfileArrayId);
+                jsonObject.accumulate("Type", SortFragment.SortType);
                 jsonObject.accumulate("numofrecords", "10");
 //            jsonObject.accumulate("pageno", pageno);
                 jsonObject.accumulate("pageno", pageno);
             }
-            else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
-                jsonObject.accumulate("group_ID", SortAndFilterOption.groupId);
-                jsonObject.accumulate("profileId", SortAndFilterOption.ProfileArrayId);
+            else if (SortFragment.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
+                jsonObject.accumulate("group_ID", SortFragment.groupId);
+                jsonObject.accumulate("profileId", SortFragment.ProfileArrayId);
                 jsonObject.accumulate("numofrecords", "10");
 //            jsonObject.accumulate("pageno", pageno);
                 jsonObject.accumulate("pageno", pageno);
             }
-            else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("SearchConnect")) {
-                jsonObject.accumulate("FindBy", SortAndFilterOption.FindBY );
-                jsonObject.accumulate("Search", SortAndFilterOption.Search );
+            else if (SortFragment.CardListApi.equalsIgnoreCase("SearchConnect")) {
+                jsonObject.accumulate("FindBy", SortFragment.FindBY );
+                jsonObject.accumulate("Search", SortFragment.Search );
                 jsonObject.accumulate("SearchType", "Local" );
                 jsonObject.accumulate("UserID", UserId );
                 jsonObject.accumulate("numofrecords", "100" );
@@ -1116,14 +1115,14 @@ public class List4Fragment extends Fragment
 
         gridAdapter.notifyDataSetChanged();
 
-        if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
+        if (SortFragment.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
                 DashboardActivity.setActionBarTitle("Cards - " + counts + "/" + CardsActivity.Connection_Limit);
         }
-        else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
+        else if (SortFragment.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
                 DashboardActivity.setActionBarTitle("Cards - " + counts);
 
         }
-        else if (SortAndFilterOption.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
+        else if (SortFragment.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
                 DashboardActivity.setActionBarTitle("Cards - " + counts);
 
         }
