@@ -42,14 +42,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cards - 0"
-            android:layout_marginLeft="85dp"
-            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
             android:textColor="#ffffff"
             android:id="@+id/mytext"
             android:textSize="18sp" />
 
         <ImageView
-            android:layout_marginRight="20dp"
             android:padding="3dp"
             android:id="@+id/drawer"
             android:backgroundTint="@color/white"

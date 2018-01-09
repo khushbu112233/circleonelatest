@@ -724,58 +724,6 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
             }
         }
 
-        activityConnect5Binding.imgCards.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utility.freeMemory();
-                CardsActivity.mViewPager.setCurrentItem(0);
-                ConnectActivity.kill();
-                Connect3Activity.kill();
-                Connect4Activity.kill();
-
-                finish();
-            }
-        });
-
-        activityConnect5Binding.imgConnect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utility.freeMemory();
-                CardsActivity.mViewPager.setCurrentItem(1);
-                ConnectActivity.kill();
-                Connect3Activity.kill();
-                Connect4Activity.kill();
-
-                finish();
-            }
-        });
-
-        activityConnect5Binding.imgEvents.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utility.freeMemory();
-                CardsActivity.mViewPager.setCurrentItem(2);
-                ConnectActivity.kill();
-                Connect3Activity.kill();
-                Connect4Activity.kill();
-
-                finish();
-            }
-        });
-
-        activityConnect5Binding.imgProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utility.freeMemory();
-                CardsActivity.mViewPager.setCurrentItem(3);
-                ConnectActivity.kill();
-                Connect3Activity.kill();
-                Connect4Activity.kill();
-
-                finish();
-            }
-        });
-
         activityConnect5Binding.ivProfile1.setOnClickListener(this);
         activityConnect5Binding.ivProfile2.setOnClickListener(this);
         activityConnect5Binding. ivProfile3.setOnClickListener(this);

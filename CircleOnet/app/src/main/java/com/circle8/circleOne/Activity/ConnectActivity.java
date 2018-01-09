@@ -463,42 +463,6 @@ public class ConnectActivity extends AppCompatActivity
 //            }
 //        });
 
-        activityConnect2Binding.imgCards.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utility.freeMemory();
-                CardsActivity.mViewPager.setCurrentItem(0);
-                finish();
-            }
-        });
-
-        activityConnect2Binding.imgConnect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utility.freeMemory();
-                CardsActivity.mViewPager.setCurrentItem(1);
-                finish();
-            }
-        });
-
-        activityConnect2Binding.imgEvents.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utility.freeMemory();
-                CardsActivity.mViewPager.setCurrentItem(2);
-                finish();
-            }
-        });
-
-        activityConnect2Binding.imgProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utility.freeMemory();
-                CardsActivity.mViewPager.setCurrentItem(3);
-                finish();
-            }
-        });
-
         activityConnect2Binding.imgAddGroupFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)

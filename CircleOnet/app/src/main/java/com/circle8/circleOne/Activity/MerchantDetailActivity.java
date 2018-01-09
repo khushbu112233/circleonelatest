@@ -3,14 +3,17 @@ package com.circle8.circleOne.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,6 +28,8 @@ import com.circle8.circleOne.Model.MerchantProductModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.ExpandableHeightListView;
 import com.circle8.circleOne.Utils.Utility;
+import com.circle8.circleOne.databinding.ActivityMerchantDetailBinding;
+import com.circle8.circleOne.databinding.FragmentProfileBinding;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -53,7 +58,7 @@ import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
-public class MerchantDetailActivity extends FragmentActivity implements OnMapReadyCallback
+public class MerchantDetailActivity extends Fragment implements OnMapReadyCallback
 {
     CircleImageView tvMerchantImg;
     TextView tvMerchantName, tvMerchantDesc, tvMoreInfo ;
@@ -70,39 +75,35 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
     ArrayList<MerchantProductModel> merchantProductModelArrayList = new ArrayList<>();
     GoogleMap googleMaps ;
     String storeAddress = "" ;
-
     LoginSession loginSession ;
-    String userId = "", merchantId = "";
-
+    public static String userId = "", merchantId = "";
     private TextView tvProductListInfo, tvLocationListInfo ;
     private String websiteURL = "";
-
+    View view;
+    ActivityMerchantDetailBinding fragmentProfileBinding;
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_merchant_detail);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        fragmentProfileBinding = DataBindingUtil.inflate(
+                inflater, R.layout.activity_merchant_detail, container, false);
+        view = fragmentProfileBinding.getRoot();
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
-        loginSession = new LoginSession(getApplicationContext());
+        loginSession = new LoginSession(getActivity());
         HashMap<String, String> user = loginSession.getUserDetails();
         userId = user.get(LoginSession.KEY_USERID);
 
-        Intent iGet = getIntent();
-        merchantId = iGet.getStringExtra("MerchantID");
+        listView1 = (ExpandableHeightListView)view.findViewById(R.id.listView1);
+        listView2 = (ExpandableHeightListView)view.findViewById(R.id.listView2);
 
-        listView1 = (ExpandableHeightListView)findViewById(R.id.listView1);
-        listView2 = (ExpandableHeightListView)findViewById(R.id.listView2);
+        tvMoreInfo = (TextView)view.findViewById(R.id.tvMoreInfo);
+        tvMerchantName = (TextView)view.findViewById(R.id.tvMerchantName);
+        tvMerchantDesc = (TextView)view.findViewById(R.id.tvMerchantDesc);
+        tvMerchantImg = (CircleImageView)view.findViewById(R.id.tvMerchantImg);
+        imgBack = (ImageView)view.findViewById(R.id.imgBack);
 
-        tvMoreInfo = (TextView)findViewById(R.id.tvMoreInfo);
-        tvMerchantName = (TextView)findViewById(R.id.tvMerchantName);
-        tvMerchantDesc = (TextView)findViewById(R.id.tvMerchantDesc);
-        tvMerchantImg = (CircleImageView)findViewById(R.id.tvMerchantImg);
-        imgBack = (ImageView)findViewById(R.id.imgBack);
-
-        tvProductListInfo = (TextView)findViewById(R.id.tvProductListInfo);
-        tvLocationListInfo = (TextView)findViewById(R.id.tvLocationListInfo);
+        tvProductListInfo = (TextView)view.findViewById(R.id.tvProductListInfo);
+        tvLocationListInfo = (TextView)view.findViewById(R.id.tvLocationListInfo);
 
         // for ads images
        /* adImages.add(R.drawable.cold_coco);
@@ -138,7 +139,8 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
         listView2.setAdapter(merchantAddressAdapter);
         merchantAddressAdapter.notifyDataSetChanged();*/
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+       // SupportMapFragment mapFragment = (SupportMapFragment)getActivity().ge().findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map));
         mapFragment.getMapAsync(this);
 
         new HttpAsyncGetDetails().execute(Utility.BASE_URL+"Merchant/GetDetails");                               // post
@@ -158,8 +160,7 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
             @Override
             public void onClick(View v)
             {
-                startActivity(new Intent(MerchantDetailActivity.this, RewardsPointsActivity.class));
-                finish();
+                getActivity().getSupportFragmentManager().popBackStackImmediate();
             }
         });
 
@@ -168,14 +169,14 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
             public void onClick(View view)
             {
                 AlertDialog.Builder builder;
-                builder = new AlertDialog.Builder(MerchantDetailActivity.this, R.style.Blue_AlertDialog);
+                builder = new AlertDialog.Builder(getActivity(), R.style.Blue_AlertDialog);
 
                 builder.setTitle("CircleOne")
                         .setMessage("Are you sure you want to exit to "+websiteURL)
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which)
                             {
-                                Intent intent = new Intent(getApplicationContext(), AttachmentDisplay.class);
+                                Intent intent = new Intent(getActivity(), AttachmentDisplay.class);
                                 intent.putExtra("url", websiteURL);
                                 startActivity(intent);
                             }
@@ -190,25 +191,10 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
                         .show();
             }
         });
+        return view;
     }
 
-    @Override
-    protected void onPause() {
-        Utility.freeMemory();
-        super.onPause();
-    }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Utility.freeMemory();
-    }
-
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(MerchantDetailActivity.this, RewardsPointsActivity.class));
-        finish();
-    }
 
     private class GeocoderHandler extends Handler
     {
@@ -230,14 +216,14 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
                     {
                         Double Latitude = bundle.getDouble("latitude");
                         Double Longitude = bundle.getDouble("longitude");
-                        boolean result = Utility.checkLocationPermission(MerchantDetailActivity.this);
+                        boolean result = Utility.checkLocationPermission(getActivity());
                         if(result) {
                             createMarker(Latitude, Longitude);
                         }
                     }
                     else
                     {
-                        Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(),msg,Toast.LENGTH_LONG).show();
                     }
 
                     break;
@@ -261,7 +247,7 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
                 .fillColor(Color.BLUE));*/
 
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(20);
-        boolean result = Utility.checkLocationPermission(MerchantDetailActivity.this);
+        boolean result = Utility.checkLocationPermission(getActivity());
         if(result) {
             googleMaps.setMyLocationEnabled(true);
             googleMaps.animateCamera(zoom);
@@ -311,8 +297,8 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
         LatLng location = new LatLng(Lat,Lang);
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(15);
 
-            googleMaps.addMarker(new MarkerOptions().position(location).title(storeAddress));
-            googleMaps.moveCamera(CameraUpdateFactory.newLatLng(location));
+        googleMaps.addMarker(new MarkerOptions().position(location).title(storeAddress));
+        googleMaps.moveCamera(CameraUpdateFactory.newLatLng(location));
 
 //        googleMaps.animateCamera(zoom);
     }
@@ -331,7 +317,7 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
             dialog.setCancelable(false);*/
 
             String loading = "Get merchant detail" ;
-            CustomProgressDialog(loading, MerchantDetailActivity.this);
+            CustomProgressDialog(loading, getActivity());
         }
 
         @Override
@@ -375,7 +361,7 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
                     }
                     else
                     {
-                        Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"Merchant/"+merchant_image).resize(300,300).onlyScaleDown().skipMemoryCache().into(tvMerchantImg);
+                        Picasso.with(getActivity()).load(Utility.BASE_IMAGE_URL+"Merchant/"+merchant_image).resize(300,300).onlyScaleDown().skipMemoryCache().into(tvMerchantImg);
                     }
 
                     if (merchant_name.equalsIgnoreCase("null") || merchant_name.equalsIgnoreCase(""))
@@ -433,7 +419,7 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
                                 merchantProductModel.setMerchantDesc(Merchant_Desc);
                                 merchantProductModelArrayList.add(merchantProductModel);
 
-                                merchantProductAdapter = new MerchantProductAdapter(MerchantDetailActivity.this, merchantProductModelArrayList);
+                                merchantProductAdapter = new MerchantProductAdapter(getActivity(), merchantProductModelArrayList);
                                 listView1.setAdapter(merchantProductAdapter);
                                 merchantProductAdapter.notifyDataSetChanged();
                             }
@@ -441,7 +427,7 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
                         else
                         {
                             tvProductListInfo.setVisibility(View.VISIBLE);
-    //                        Toast.makeText(getApplicationContext(), "No Product_List Avail", Toast.LENGTH_LONG).show();
+                            //                        Toast.makeText(getApplicationContext(), "No Product_List Avail", Toast.LENGTH_LONG).show();
                         }
                     }
                     catch (JSONException e)
@@ -530,7 +516,7 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
                                 merchantLocationModel.setFullAddress(fullAddress);
                                 merchantLocationModelArrayList.add(merchantLocationModel);
 
-                                merchantAddressAdapter = new MerchantAddressAdapter(MerchantDetailActivity.this, merchantLocationModelArrayList);
+                                merchantAddressAdapter = new MerchantAddressAdapter(getActivity(), merchantLocationModelArrayList);
                                 listView2.setAdapter(merchantAddressAdapter);
                                 merchantAddressAdapter.notifyDataSetChanged();
 
@@ -541,7 +527,7 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
                                 {
                                     lat = Double.valueOf(Latitude);
                                     lang = Double.valueOf(Longitude);
-                                    boolean result1 = Utility.checkLocationPermission(MerchantDetailActivity.this);
+                                    boolean result1 = Utility.checkLocationPermission(getActivity());
                                     if(result1) {
                                         createMarker(lat, lang);
                                     }
@@ -554,7 +540,7 @@ public class MerchantDetailActivity extends FragmentActivity implements OnMapRea
                         else
                         {
                             tvLocationListInfo.setVisibility(View.VISIBLE);
-    //                        Toast.makeText(getApplicationContext(), "No Locations Avail", Toast.LENGTH_LONG).show();
+                            //                        Toast.makeText(getApplicationContext(), "No Locations Avail", Toast.LENGTH_LONG).show();
                         }
                     }
                     catch (JSONException e)

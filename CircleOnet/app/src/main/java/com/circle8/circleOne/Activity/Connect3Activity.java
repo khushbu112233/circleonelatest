@@ -153,45 +153,6 @@ public class Connect3Activity extends AppCompatActivity
             new HttpAsyncTask().execute(Utility.BASE_URL+"Connection7Level");
         }
 
-        activityConnect3Binding.imgCards.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CardsActivity.mViewPager.setCurrentItem(0);
-                ConnectActivity.kill();
-                finish();
-                Utility.freeMemory();
-            }
-        });
-
-        activityConnect3Binding.imgConnect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CardsActivity.mViewPager.setCurrentItem(1);
-                ConnectActivity.kill();
-                finish();
-                Utility.freeMemory();
-            }
-        });
-
-        activityConnect3Binding.imgEvents.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CardsActivity.mViewPager.setCurrentItem(2);
-                ConnectActivity.kill();
-                finish();
-                Utility.freeMemory();
-            }
-        });
-
-        activityConnect3Binding.imgProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CardsActivity.mViewPager.setCurrentItem(3);
-                ConnectActivity.kill();
-                finish();
-                Utility.freeMemory();
-            }
-        });
     }
 
     public static void kill(){

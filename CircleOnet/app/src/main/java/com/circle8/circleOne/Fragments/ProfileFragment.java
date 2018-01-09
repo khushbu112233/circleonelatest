@@ -15,6 +15,8 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +30,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Base64;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,6 +49,7 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.Activity.AttachmentDisplay;
 import com.circle8.circleOne.Activity.CardDetail;
 import com.circle8.circleOne.Activity.CardsActivity;
+import com.circle8.circleOne.Activity.DashboardActivity;
 import com.circle8.circleOne.Activity.EditProfileActivity;
 import com.circle8.circleOne.Activity.ImageZoom;
 import com.circle8.circleOne.Activity.SearchGroupMembers;
@@ -101,6 +105,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import static com.circle8.circleOne.Adapter.TestimonialRequestAdapter.context;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 /**
@@ -1978,6 +1983,35 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
         return result;
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+                            FragmentManager fragmentManager=((FragmentActivity)context).getSupportFragmentManager();
+
+                            for(int i=0;i<fragmentManager.getBackStackEntryCount();i++){
+                                fragmentManager.popBackStack();
+                            }
+
+                            DashboardFragment fragment = new DashboardFragment();
+                            ((FragmentActivity)context).getSupportFragmentManager().beginTransaction().add(R.id.main_container_wrapper, fragment).commit();
+                            //getActivity().getSupportFragmentManager().popBackStack();
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+    }
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String>
     {

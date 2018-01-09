@@ -106,7 +106,7 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
     private final static int REQUEST_CHECK_SETTINGS = 2000;
     public static Location mLastLocation;
     static TextView textView;
-    static ImageView imgDrawer;
+    static ImageView imgDrawer, imgLogo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +128,7 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
 */
         textView = (TextView) findViewById(R.id.mytext);
         imgDrawer = (ImageView) findViewById(R.id.drawer);
+        imgLogo = (ImageView) findViewById(R.id.imgLogo);
         imgDrawer.setVisibility(View.GONE);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -331,6 +332,19 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
             imgDrawer.setVisibility(View.GONE);
 
         }
+    }
+
+    public static void setLogoVisibility(Boolean visibility) {
+        if (visibility == true){
+            imgLogo.setVisibility(View.VISIBLE);
+        }else {
+            imgLogo.setVisibility(View.GONE);
+
+        }
+    }
+
+    public static void changeLogo(int icon) {
+        imgLogo.setImageResource(icon);
     }
 
     public Fragment getCurrentFragment() {

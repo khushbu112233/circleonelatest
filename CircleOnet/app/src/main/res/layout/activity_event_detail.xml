@@ -67,7 +67,6 @@
     </FrameLayout>
 
     <ScrollView
-        android:layout_above="@+id/lnrBottomTab"
         android:layout_below="@+id/android_custom_gridview_layout"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -224,6 +223,7 @@ Monday - April 3, 2017 - 9:30am - 5:00pm"/>
 
     </ScrollView>
     <LinearLayout
+        android:visibility="gone"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
         android:id="@+id/lnrBottomTab"

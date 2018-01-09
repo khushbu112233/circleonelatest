@@ -76,6 +76,7 @@ public class EventsActivity extends AppCompatActivity
     private static TextView tvProgressing ;
     private static ImageView ivConnecting1;
     private static ImageView ivConnecting2;
+    private ImageView imgDrawer, imgLogo;
 
 
     @Override
@@ -87,12 +88,32 @@ public class EventsActivity extends AppCompatActivity
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         final ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.custom_actionbar);
+        getSupportActionBar().setCustomView(R.layout.custom_actionbar_2);
 
         actionText = (TextView) findViewById(R.id.mytext);
         actionText.setText("Events");
+        imgDrawer = findViewById(R.id.drawer);
+        imgLogo = findViewById(R.id.imgLogo);
 
+        imgDrawer.setVisibility(View.VISIBLE);
+        imgLogo.setVisibility(View.VISIBLE);
+        imgLogo.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
 
+        imgLogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        imgDrawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), EventsSelectOption.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_down, R.anim.slide_out_down);
+            }
+        });
 
         mContext = EventsActivity.this ;
 

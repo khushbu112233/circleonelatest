@@ -11,8 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.circle8.circleOne.Activity.DashboardActivity;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.CustomViewPager;
 import com.circle8.circleOne.Utils.Utility;
@@ -25,11 +27,7 @@ public class ConnectFragment extends AppCompatActivity
     public static CustomViewPager mViewPager;
     TabLayout tabLayout;
     private TextView actionText;
-
-    public ConnectFragment() {
-        // Required empty public constructor
-    }
-
+    ImageView imgDrawer, imgLogo;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,11 +45,23 @@ public class ConnectFragment extends AppCompatActivity
 
         final ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.custom_actionbar);
+        getSupportActionBar().setCustomView(R.layout.custom_actionbar_2);
 
         actionText = (TextView) findViewById(R.id.mytext);
         actionText.setText("Connect");
+        imgDrawer = findViewById(R.id.drawer);
+        imgLogo = findViewById(R.id.imgLogo);
 
+        imgDrawer.setVisibility(View.GONE);
+        imgLogo.setVisibility(View.VISIBLE);
+        imgLogo.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
+
+        imgLogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
     }
 

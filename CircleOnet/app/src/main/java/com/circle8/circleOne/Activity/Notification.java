@@ -6,11 +6,14 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
@@ -44,14 +47,13 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Notification extends AppCompatActivity
+public class Notification extends Fragment
 {
     static ListView listNotification;
     LoginSession loginSession;
     static String UserId = "";
     static ArrayList<NotificationModel> allTags = new ArrayList<>();
     static NotificationAdapter notificationAdapter;
-    private static TextView textView;
     ImageView imgLogo;
     public static Context mContext ;
     static ArrayList<NotificationModel> allTagsList = new ArrayList<>();
@@ -61,30 +63,24 @@ public class Notification extends AppCompatActivity
     public static String progressStatus = "FIRST";
     public static String comeFirst = "Yes" ;
     public static ActivityNotificationBinding activityNotificationBinding;
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        activityNotificationBinding = DataBindingUtil.setContentView(this,R.layout.activity_notification);
+    View view;
 
-        mContext = Notification.this ;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        activityNotificationBinding = DataBindingUtil.inflate(
+                inflater, R.layout.activity_notification, container, false);
+        view = activityNotificationBinding.getRoot();
+
+        mContext = getContext() ;
         pageno = 1;
 
-        final ActionBar actionBar = getSupportActionBar();
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.custom_actionbar);
-        getSupportActionBar().setShowHideAnimationEnabled(false);
-        textView = (TextView) findViewById(R.id.mytext);
-        imgLogo = (ImageView) findViewById(R.id.imgLogo);
-        ImageView drawer = (ImageView) findViewById(R.id.drawer);
-        drawer.setVisibility(View.GONE);
-        imgLogo.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
+        DashboardActivity.setActionBarTitle("Notifications - 0");
+        DashboardActivity.setDrawerVisibility(false);
 
-        textView.setText("Notifications - 0");
+        listNotification = (ListView) view.findViewById(R.id.listNotification);
 
-        listNotification = (ListView) findViewById(R.id.listNotification);
-
-        loginSession = new LoginSession(getApplicationContext());
+        loginSession = new LoginSession(getContext());
         HashMap<String, String> user = loginSession.getUserDetails();
         UserId = user.get(LoginSession.KEY_USERID);
 //        Toast.makeText(getApplicationContext(),UserId,Toast.LENGTH_SHORT).show();
@@ -92,7 +88,7 @@ public class Notification extends AppCompatActivity
 
         callFirst();
 
-        imgLogo.setOnClickListener(new View.OnClickListener() {
+        /*imgLogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 allTagsList.clear();
@@ -100,17 +96,18 @@ public class Notification extends AppCompatActivity
                 pageno = 1;
                 finish();
             }
-        });
+        });*/
+        return view;
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         Utility.freeMemory();
         super.onPause();
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         Utility.freeMemory();
     }
@@ -246,7 +243,7 @@ public class Notification extends AppCompatActivity
 
                     if (pageno == 2)
                     {
-                        textView.setText("Notifications - "+jsonObject.getString("Count"));
+                        DashboardActivity.setActionBarTitle("Notifications - "+jsonObject.getString("Count"));
                     }
 
                     if (counts.equals("0") || counts == null)

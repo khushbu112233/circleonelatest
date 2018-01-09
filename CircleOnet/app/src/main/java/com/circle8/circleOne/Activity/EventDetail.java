@@ -54,13 +54,16 @@ public class EventDetail extends AppCompatActivity implements View.OnClickListen
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.custom_actionbar);
+        getSupportActionBar().setCustomView(R.layout.custom_actionbar_2);
         imgDrawer = (ImageView) findViewById(R.id.drawer);
         imgBack = (ImageView) findViewById(R.id.imgLogo);
         actionText = (TextView) findViewById(R.id.mytext);
         actionText.setText("Events");
         imgBack.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
+
         imgDrawer.setVisibility(View.GONE);
+        imgBack.setVisibility(View.VISIBLE);
+        imgBack.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
 
        // Intent i = getIntent();
        // event_ID = i.getStringExtra("Event_ID");
@@ -86,23 +89,15 @@ public class EventDetail extends AppCompatActivity implements View.OnClickListen
                 finish();
             }
         });
-        activityEventDetailBinding.imgCards.setOnClickListener(this);
         activityEventDetailBinding.txtRegister.setOnClickListener(this);
         activityEventDetailBinding.txtBook.setOnClickListener(this);
-        activityEventDetailBinding.imgConnect.setOnClickListener(this);
-        activityEventDetailBinding.imgEvents.setOnClickListener(this);
-        activityEventDetailBinding.imgProfile.setOnClickListener(this);
+
     }
     @Override
     public void onClick(View v) {
         int id = v.getId();
 
         switch (id) {
-            case R.id.imgCards:
-                Utility.freeMemory();
-                CardsActivity.mViewPager.setCurrentItem(0);
-                finish();
-                break;
             case R.id.txtRegister:
                 Utility.freeMemory();
                 AlertDialog.Builder builder;
@@ -148,22 +143,6 @@ public class EventDetail extends AppCompatActivity implements View.OnClickListen
                         })
                         .setIcon(android.R.drawable.ic_menu_set_as)
                         .show();
-                break;
-            case R.id.imgConnect:
-                Utility.freeMemory();
-                CardsActivity.mViewPager.setCurrentItem(1);
-                finish();
-                break;
-
-            case R.id.imgEvents:
-                Utility.freeMemory();
-                CardsActivity.mViewPager.setCurrentItem(2);
-                finish();
-                break;
-            case R.id.imgProfile:
-                Utility.freeMemory();
-                CardsActivity.mViewPager.setCurrentItem(0);
-                finish();
                 break;
         }
     }

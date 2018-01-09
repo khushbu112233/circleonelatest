@@ -34,7 +34,7 @@ public class CustomDate extends AppCompatActivity
     CustomCalendarView calendarView;
     private TextView actionText, dateSelect;
     private Button btnSearch ;
-    private ImageView imgDrawer, imgCards, imgConnect, imgEvents, imgProfile, imgLogo;
+    private ImageView imgDrawer, imgLogo;
     private int actionBarHeight;
     Date date1, date2;
     int i =0;
@@ -52,23 +52,21 @@ public class CustomDate extends AppCompatActivity
 
         final ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.custom_actionbar);
+        getSupportActionBar().setCustomView(R.layout.custom_actionbar_2);
 
         actionText = (TextView) findViewById(R.id.mytext);
         imgDrawer = (ImageView) findViewById(R.id.drawer);
-        imgCards = (ImageView) findViewById(R.id.imgCards);
-        imgConnect = (ImageView) findViewById(R.id.imgConnect);
-        imgEvents = (ImageView) findViewById(R.id.imgEvents);
-        imgProfile = (ImageView) findViewById(R.id.imgProfile);
+
         imgLogo = (ImageView) findViewById(R.id.imgLogo);
         dateSelect = (TextView) findViewById(R.id.dateSelect);
         actionText.setText("Events");
-
+        imgLogo.setVisibility(View.VISIBLE);
         imgLogo.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
         calendarView = (CustomCalendarView) findViewById(R.id.calendar_view);
         btnSearch = (Button) findViewById(R.id.btnSearch);
 
         imgDrawer.setVisibility(View.GONE);
+
         //Initialize calendar with date
         Calendar currentCalendar = Calendar.getInstance(Locale.getDefault());
 
@@ -152,67 +150,6 @@ public class CustomDate extends AppCompatActivity
             }
         });
 
-        imgCards.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 0);
-
-                startActivity(go);
-                finish();
-                Utility.freeMemory();
-            }
-        });
-
-        imgConnect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 1);
-
-                startActivity(go);
-                finish();
-            }
-        });
-
-        imgEvents.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 2);
-
-                startActivity(go);
-                finish();
-            }
-        });
-
-        imgProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent go = new Intent(getApplicationContext(),CardsActivity.class);
-
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
-                go.putExtra("viewpager_position", 3);
-
-                startActivity(go);
-                finish();
-            }
-        });
-
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -228,10 +165,8 @@ public class CustomDate extends AppCompatActivity
 
 //                    EventsFragment.searchEvent();
 
-                    Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
-                    userIntent.putExtra("viewpager_position", 2);
-                    overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-                    startActivity(userIntent);
+                    new EventsActivity.HttpAsyncTaskSearchEvent().execute(Utility.BASE_URL+"Events/Search");
+                    EventsSelectOption.kill();
                     finish();
 //                    overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                 }

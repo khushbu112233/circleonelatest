@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +43,36 @@ public class CardsFragment extends Fragment
     public void onPause() {
         Utility.freeMemory();
         super.onPause();
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+                        FragmentManager fragmentManager=((FragmentActivity)getContext()).getSupportFragmentManager();
+
+                        for(int i=0;i<fragmentManager.getBackStackEntryCount();i++){
+                            fragmentManager.popBackStack();
+                        }
+
+                        DashboardFragment fragment = new DashboardFragment();
+                        ((FragmentActivity)getContext()).getSupportFragmentManager().beginTransaction().add(R.id.main_container_wrapper, fragment).commit();
+                        //getActivity().getSupportFragmentManager().popBackStack();
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     @Override

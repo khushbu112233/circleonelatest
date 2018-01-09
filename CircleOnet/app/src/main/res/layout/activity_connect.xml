@@ -51,7 +51,6 @@
         android:background="@color/colorPrimary"></View>
 
     <ScrollView
-        android:layout_above="@+id/view1"
         android:layout_below="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
@@ -218,6 +217,7 @@
         android:background="@color/colorPrimary"></View>
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/lnrBottomTab"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"

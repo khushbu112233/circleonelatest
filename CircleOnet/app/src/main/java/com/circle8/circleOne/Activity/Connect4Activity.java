@@ -335,53 +335,6 @@ public class Connect4Activity extends AppCompatActivity {
                 finish();
             }
         });
-
-        activityConnect4Binding.imgCards.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utility.freeMemory();
-                CardsActivity.mViewPager.setCurrentItem(0);
-                ConnectActivity.kill();
-                Connect3Activity.kill();
-                finish();
-            }
-        });
-
-        activityConnect4Binding.imgConnect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utility.freeMemory();
-                CardsActivity.mViewPager.setCurrentItem(1);
-                ConnectActivity.kill();
-                Connect3Activity.kill();
-
-                finish();
-            }
-        });
-
-        activityConnect4Binding.imgEvents.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utility.freeMemory();
-                CardsActivity.mViewPager.setCurrentItem(2);
-                ConnectActivity.kill();
-                Connect3Activity.kill();
-
-                finish();
-            }
-        });
-
-        activityConnect4Binding.imgProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utility.freeMemory();
-                CardsActivity.mViewPager.setCurrentItem(3);
-                ConnectActivity.kill();
-                Connect3Activity.kill();
-
-                finish();
-            }
-        });
     }
 
     public static void kill() {
