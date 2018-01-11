@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,6 +24,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.Adapter.EventDetailAdapter;
 import com.circle8.circleOne.Model.EventModel;
 import com.circle8.circleOne.R;
@@ -324,11 +328,24 @@ public class EventDetail extends AppCompatActivity implements View.OnClickListen
                     if(eventDetail.getString("Event_Image").equals("")
                             || eventDetail.getString("Event_Image").equals(null))
                     {
+                        activityEventDetailBinding.progressBar1.setVisibility(View.GONE);
                         activityEventDetailBinding.imgEvent.setImageResource(R.drawable.ic_event_default);
                     }
                     else
                     {
-                        Picasso.with(getApplicationContext()).load(Utility.BASE_IMAGE_URL+"Events/"+eventDetail.getString("Event_Image")).resize(400,280).onlyScaleDown().into(activityEventDetailBinding.imgEvent);
+                        activityEventDetailBinding.progressBar1.setVisibility(View.VISIBLE);
+
+                        Glide.with(EventDetail.this).load(Utility.BASE_IMAGE_URL+"Events/"+eventDetail.getString("Event_Image"))
+                                .asBitmap()
+                                .into(new BitmapImageViewTarget(activityEventDetailBinding.imgEvent) {
+                                    @Override
+                                    public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                                        super.onResourceReady(drawable, anim);
+                                        activityEventDetailBinding.progressBar1.setVisibility(View.GONE);
+                                        activityEventDetailBinding.imgEvent.setImageBitmap(drawable);
+                                    }
+                                });
+
                     }
 
                     activityEventDetailBinding.tvEventDate.setText(eventDetail.getString("Event_StartDate")

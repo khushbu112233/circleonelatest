@@ -1,11 +1,14 @@
 package com.circle8.circleOne.Adapter;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -88,6 +91,7 @@ public class GridViewAdapter extends BaseSwipeAdapter
 
     ArrayList<FriendConnection> nfcModelList1 = new ArrayList<>();
     ArrayList<FriendConnection> nfcModelListFilter1 = new ArrayList<>();
+    private Fragment fragment;
     /*public GridViewAdapter(Context context, int layoutResourceId, ArrayList data) {
         this.layoutResourceId = layoutResourceId;
         this.context = context;
@@ -344,13 +348,16 @@ public class GridViewAdapter extends BaseSwipeAdapter
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, CardDetail.class);
-                intent.putExtra("tag_id", nfcModelList1.get(position).getNfc_tag());
-                intent.putExtra("profile_id", nfcModelList1.get(position).getProfile_id());
-                intent.putExtra("DateInitiated", nfcModelList1.get(position).getDateInitiated());
-                intent.putExtra("lat", nfcModelList1.get(position).getLatitude());
-                intent.putExtra("long", nfcModelList1.get(position).getLongitude());
-                context.startActivity(intent);
+
+                CardDetail.profile_id = nfcModelList1.get(position).getProfile_id();
+                CardDetail.DateInitiated = nfcModelList1.get(position).getDateInitiated();
+                CardDetail.lat = nfcModelList1.get(position).getLatitude();
+                CardDetail.lon = nfcModelList1.get(position).getLongitude();
+                fragment = new CardDetail();
+                ((FragmentActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+                        .addToBackStack(null)
+                        .commit();
+               // finish();
             }
         });
 
@@ -358,13 +365,15 @@ public class GridViewAdapter extends BaseSwipeAdapter
         holder.defaultCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, CardDetail.class);
-                intent.putExtra("tag_id", nfcModelList1.get(position).getNfc_tag());
-                intent.putExtra("profile_id", nfcModelList1.get(position).getProfile_id());
-                intent.putExtra("DateInitiated", nfcModelList1.get(position).getDateInitiated());
-                intent.putExtra("lat", nfcModelList1.get(position).getLatitude());
-                intent.putExtra("long", nfcModelList1.get(position).getLongitude());
-                context.startActivity(intent);
+                CardDetail.profile_id = nfcModelList1.get(position).getProfile_id();
+                CardDetail.DateInitiated = nfcModelList1.get(position).getDateInitiated();
+                CardDetail.lat = nfcModelList1.get(position).getLatitude();
+                CardDetail.lon = nfcModelList1.get(position).getLongitude();
+                fragment = new CardDetail();
+                ((FragmentActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+                        .addToBackStack(null)
+                        .commit();
+               // finish();
             }
         });
     }

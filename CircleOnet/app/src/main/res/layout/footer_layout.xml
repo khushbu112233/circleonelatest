@@ -11,36 +11,35 @@
             android:layout_height="1dp"
             android:layout_marginTop="15dp"
             android:background="@color/colorPrimary"/>
-        <RelativeLayout
+        <LinearLayout
+            android:weightSum="3"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <RelativeLayout
+            <LinearLayout
+                android:layout_weight="1"
+                android:orientation="vertical"
                 android:id="@+id/rlCards"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="35dp"
-                android:layout_marginTop="20dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true">
+                android:layout_marginTop="20dp">
                 <ImageView
                     android:id="@+id/imgCard"
                     android:src="@drawable/ic_icon1"
-                    android:layout_marginTop="15dp"
-                    android:layout_width="45dp"
-                    android:layout_height="30dp"
-                    android:layout_centerHorizontal="true"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp" />
                 <com.circle8.circleOne.Utils.cgTextView
+                    android:layout_gravity="center"
                     android:id="@+id/tvCards"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Card"
-                    android:layout_centerInParent="true"
-                    android:layout_marginTop="5dp"
                     android:textColor="@color/unselected"
                     android:layout_below="@+id/imgCard"
                     android:textSize="12sp" />
-            </RelativeLayout>
+            </LinearLayout>
             <RelativeLayout
+                android:layout_weight="1"
                 android:id="@+id/rlDashboard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -48,13 +47,43 @@
                 android:layout_centerInParent="true">
                 <ImageView
                     android:id="@+id/imgDashboard"
-                    android:src="@drawable/ic_dashboard3x"
-                    android:layout_width="60dp"
-                    android:layout_height="50dp"
+                    android:src="@drawable/dashboard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
                     android:layout_centerHorizontal="true"/>
 
+                <com.circle8.circleOne.Utils.CircularTextView
+                    android:layout_marginLeft="83dp"
+                    android:layout_marginTop="35dp"
+                    android:visibility="gone"
+                    android:id="@+id/txtNotificationCountAction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:gravity="center"
+                    android:padding="1dp"
+                    android:textSize="8sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white" />
+
+               <!-- <com.circle8.circleOne.Utils.CircularTextView
+                    android:visibility="visible"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/imgLogo"
+                    android:layout_marginLeft="-5dp"
+                    android:id="@+id/txtNotificationCountAction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:padding="1dp"
+                    android:textSize="8sp"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/white" />
+-->
+
                 <com.circle8.circleOne.Utils.cgTextView
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="-9dp"
                     android:id="@+id/tvDashboard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -64,32 +93,29 @@
                     android:layout_below="@+id/imgDashboard"
                     android:textSize="12sp" />
             </RelativeLayout>
-            <RelativeLayout
+            <LinearLayout
+                android:layout_weight="1"
+                android:orientation="vertical"
                 android:id="@+id/rlProfile"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="35dp"
-                android:layout_marginTop="20dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true">
+                android:layout_height="wrap_content">
                 <ImageView
                     android:id="@+id/imgProfile"
                     android:src="@drawable/ic_icon4"
-                    android:layout_width="45dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="30dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="15dp"/>
+                    android:layout_marginTop="20dp"/>
                 <com.circle8.circleOne.Utils.cgTextView
                     android:id="@+id/tvProfile"
-                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Profile"
-                    android:layout_marginTop="5dp"
                     android:layout_centerInParent="true"
                     android:textColor="@color/unselected"
                     android:layout_below="@+id/imgProfile"
                     android:textSize="12sp" />
-            </RelativeLayout>
-        </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
     </FrameLayout>
 </layout>

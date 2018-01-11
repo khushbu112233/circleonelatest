@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.EmbossMaskFilter;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -54,7 +56,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
 
     private OnItemClickListener listener;
     private DisplayImageOptions options;
-
+    private Fragment fragment;
 
 
     public void setOnItemClickListener(OnItemClickListener listener){
@@ -118,12 +120,17 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
         public void onClick(View v)
         {
             int position = getAdapterPosition();
-            Intent intent = new Intent(mContext, CardDetail.class);
-            intent.putExtra("profile_id", nfcModelList.get(position).getProfile_id());
-            intent.putExtra("DateInitiated",nfcModelList.get(position).getDateInitiated());
-            intent.putExtra("lat", nfcModelList.get(position).getLatitude());
-            intent.putExtra("long", nfcModelList.get(position).getLongitude());
-            mContext.startActivity(intent);
+
+
+            CardDetail.profile_id = nfcModelList.get(position).getProfile_id();
+            CardDetail.DateInitiated = nfcModelList.get(position).getDateInitiated();
+            CardDetail.lat = nfcModelList.get(position).getLatitude();
+            CardDetail.lon = nfcModelList.get(position).getLongitude();
+
+            fragment = new CardDetail();
+            ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+                    .addToBackStack(null)
+                    .commit();
         }
     }
 
@@ -258,12 +265,15 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             public void onClick(View v) {
                 Utility.CustomProgressDialog("Loading",mContext);
 
-                Intent intent = new Intent(mContext, CardDetail.class);
-                intent.putExtra("profile_id", nfcModelList.get(position).getProfile_id());
-                intent.putExtra("DateInitiated",nfcModelList.get(position).getDateInitiated());
-                intent.putExtra("lat", nfcModelList.get(position).getLatitude());
-                intent.putExtra("long", nfcModelList.get(position).getLongitude());
-                mContext.startActivity(intent);
+                CardDetail.profile_id = nfcModelList.get(position).getProfile_id();
+                CardDetail.DateInitiated = nfcModelList.get(position).getDateInitiated();
+                CardDetail.lat = nfcModelList.get(position).getLatitude();
+                CardDetail.lon = nfcModelList.get(position).getLongitude();
+
+                fragment = new CardDetail();
+                ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 
@@ -274,12 +284,15 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             public void onClick(View view) {
                 Utility.CustomProgressDialog("Loading",mContext);
 
-                Intent intent = new Intent(mContext, CardDetail.class);
-                intent.putExtra("profile_id", nfcModelList.get(position).getProfile_id());
-                intent.putExtra("DateInitiated",nfcModelList.get(position).getDateInitiated());
-                intent.putExtra("lat", nfcModelList.get(position).getLatitude());
-                intent.putExtra("long", nfcModelList.get(position).getLongitude());
-                mContext.startActivity(intent);
+                CardDetail.profile_id = nfcModelList.get(position).getProfile_id();
+                CardDetail.DateInitiated = nfcModelList.get(position).getDateInitiated();
+                CardDetail.lat = nfcModelList.get(position).getLatitude();
+                CardDetail.lon = nfcModelList.get(position).getLongitude();
+
+                fragment = new CardDetail();
+                ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 

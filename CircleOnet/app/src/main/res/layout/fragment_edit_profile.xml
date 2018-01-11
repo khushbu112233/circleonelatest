@@ -1585,6 +1585,22 @@
                                             android:hint="Add Image"
                                             android:textSize="12sp" />
 
+                                        <com.circle8.circleOne.Utils.orkebyBoldTextView
+                                            android:id="@+id/txtfrontDelete"
+                                            android:layout_width="wrap_content"
+                                            android:gravity="left|center_vertical"
+                                            android:padding="2dp"
+                                            android:layout_alignParentBottom="true"
+                                            android:layout_height="match_parent"
+                                            android:fontFamily="monospace"
+                                            android:layout_marginLeft="5dp"
+                                            android:layout_marginRight="5dp"
+                                            android:layout_toRightOf="@+id/txtCardFront"
+                                            android:text="X"
+                                            android:textColor="@color/colorPrimary"
+                                            android:textSize="18sp"
+                                            android:textStyle="bold" />
+
                                         <com.circle8.circleOne.Utils.cgTextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
@@ -1639,6 +1655,22 @@
                                             android:padding="10dp"
                                             android:hint="Add Image"
                                             android:textSize="12sp" />
+
+                                        <com.circle8.circleOne.Utils.orkebyBoldTextView
+                                            android:id="@+id/txtbackDelete"
+                                            android:layout_width="wrap_content"
+                                            android:gravity="left|center_vertical"
+                                            android:padding="2dp"
+                                            android:layout_alignParentBottom="true"
+                                            android:layout_height="match_parent"
+                                            android:fontFamily="monospace"
+                                            android:layout_marginLeft="5dp"
+                                            android:layout_marginRight="5dp"
+                                            android:layout_toRightOf="@+id/txtCardBack"
+                                            android:text="X"
+                                            android:textColor="@color/colorPrimary"
+                                            android:textSize="18sp"
+                                            android:textStyle="bold" />
 
                                         <com.circle8.circleOne.Utils.cgTextView
                                             android:layout_width="wrap_content"

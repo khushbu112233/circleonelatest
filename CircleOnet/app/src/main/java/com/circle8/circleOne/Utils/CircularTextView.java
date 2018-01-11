@@ -12,6 +12,8 @@ import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+import com.circle8.circleOne.R;
+
 public class CircularTextView extends AppCompatTextView
 {
     private float strokeWidth;
@@ -34,11 +36,11 @@ public class CircularTextView extends AppCompatTextView
     public void draw(Canvas canvas) {
 
         Paint circlePaint = new Paint();
-        circlePaint.setColor(getResources().getColor(android.R.color.white));
+        circlePaint.setColor(getResources().getColor(R.color.colorPrimary));
         circlePaint.setFlags(Paint.ANTI_ALIAS_FLAG);
 
         Paint strokePaint = new Paint();
-        strokePaint.setColor(getResources().getColor(android.R.color.white));
+        strokePaint.setColor(getResources().getColor(R.color.colorPrimary));
         strokePaint.setFlags(Paint.ANTI_ALIAS_FLAG);
 
         int  h = this.getHeight();

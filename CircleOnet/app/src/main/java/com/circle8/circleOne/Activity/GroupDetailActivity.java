@@ -235,10 +235,11 @@ public class GroupDetailActivity extends AppCompatActivity
             {
                 view.setSelected(true);
                 String profileID = groupDetailModelArrayList.get(position).getProfileid() ;
-                Intent iPut = new Intent(GroupDetailActivity.this, CardDetail.class);
-                iPut.putExtra("profile_id", profileID);
+                CardDetailActivity.profile_id = profileID;
+                Intent iPut = new Intent(GroupDetailActivity.this, CardDetailActivity.class);
+                //iPut.putExtra("profile_id", profileID);
                 startActivity(iPut);
-                finish();
+               // finish();
             }
         });
 

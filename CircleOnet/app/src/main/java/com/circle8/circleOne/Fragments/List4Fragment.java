@@ -37,6 +37,7 @@ import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.FriendConnection;
 import com.circle8.circleOne.Model.NFCModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.Utility;
 
 import org.apache.http.HttpResponse;
@@ -53,6 +54,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.circle8.circleOne.Activity.CardsActivity.Connection_Limit;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 
@@ -96,6 +98,7 @@ public class List4Fragment extends Fragment
     private static TextView tvProgressing ;
     private static ImageView ivConnecting1;
     private static ImageView ivConnecting2;
+    private Fragment fragment;
 
     public List4Fragment() {
         // Required empty public constructor
@@ -194,15 +197,17 @@ public class List4Fragment extends Fragment
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                Intent intent = new Intent(getContext(), CardDetail.class);
-                intent.putExtra("tag_id", nfcModel1.get(position).getNfc_tag());
-                intent.putExtra("profile_id", nfcModel1.get(position).getProfile_id());
-                intent.putExtra("DateInitiated",nfcModel1.get(position).getDateInitiated());
-                intent.putExtra("lat", nfcModel1.get(position).getLatitude());
-                intent.putExtra("long", nfcModel1.get(position).getLongitude());
-                getContext().startActivity(intent);
+
                 Utility.freeMemory();
                 Utility.deleteCache(getContext());
+                CardDetail.profile_id = nfcModel1.get(position).getProfile_id();
+                CardDetail.DateInitiated = nfcModel1.get(position).getDateInitiated();
+                CardDetail.lat = nfcModel1.get(position).getLatitude();
+                CardDetail.lon = nfcModel1.get(position).getLongitude();
+                fragment = new CardDetail();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+                        .addToBackStack(null)
+                        .commit();
 
             }
         });
@@ -1116,18 +1121,40 @@ public class List4Fragment extends Fragment
         gridAdapter.notifyDataSetChanged();
 
         if (SortFragment.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
-                DashboardActivity.setActionBarTitle("Cards - " + counts + "/" + CardsActivity.Connection_Limit);
+
+
+            try {
+                if (Connection_Limit.equalsIgnoreCase("100000")) {
+                    if (Pref.getValue(context, "current_frag", "").equalsIgnoreCase("1")) {
+                        DashboardActivity.setActionBarTitle("Cards - " + counts + "/", true);
+                    }
+                }
+                else {
+                    if (Pref.getValue(context, "current_frag", "").equalsIgnoreCase("1")) {
+                        DashboardActivity.setActionBarTitle("Cards - " + counts + "/" + CardsActivity.Connection_Limit, false);
+                    }
+
+                }
+            }catch (Exception e){
+
+            }
         }
         else if (SortFragment.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
-                DashboardActivity.setActionBarTitle("Cards - " + counts);
+            if (Pref.getValue(context, "current_frag", "").equalsIgnoreCase("1")) {
+                DashboardActivity.setActionBarTitle("Cards - " + counts, false);
+            }
 
         }
         else if (SortFragment.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
-                DashboardActivity.setActionBarTitle("Cards - " + counts);
+            if (Pref.getValue(context, "current_frag", "").equalsIgnoreCase("1")) {
+                DashboardActivity.setActionBarTitle("Cards - " + counts, false);
+            }
 
         }
         else  {
-                DashboardActivity.setActionBarTitle("Cards - " + counts);
+            if (Pref.getValue(context, "current_frag", "").equalsIgnoreCase("1")) {
+                DashboardActivity.setActionBarTitle("Cards - " + counts, false);
+            }
         }
 
         // CardsActivity.setActionBarTitle("Cards - " + nfcModel1.size() + "/"+ CardsActivity.Connection_Limit);

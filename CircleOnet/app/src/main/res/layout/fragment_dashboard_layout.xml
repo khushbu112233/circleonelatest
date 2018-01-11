@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:weightSum="1">
+        android:orientation="vertical">
         <RelativeLayout
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
             android:id="@+id/lnrSearch"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.05"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
             <com.circle8.circleOne.Utils.MyRiadProAutoComplete
                 android:layout_centerVertical="true"
@@ -42,12 +40,12 @@
                 android:layout_height="20dp" />
         </RelativeLayout>
         <LinearLayout
+            android:layout_above="@+id/includeNotiRewardShare"
+            android:layout_below="@+id/lnrSearch"
             android:id="@+id/lnrDashboard"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.75"
-            android:orientation="vertical"
-            android:weightSum="1">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
             <include
                 android:id="@+id/includeTapQr"
                 android:layout_gravity="center"
@@ -57,12 +55,11 @@
                 />
         </LinearLayout>
         <include
+            android:layout_alignParentBottom="true"
             android:id="@+id/includeNotiRewardShare"
             layout="@layout/reward_noti_share_layout"
-            android:layout_width="match_parent"
-            android:layout_marginTop="5dp"
-            android:layout_height="0dp"
-            android:layout_weight="0.2"/>
+            android:layout_height="130dp"
+            android:layout_width="match_parent" />
 
-    </LinearLayout>
+    </RelativeLayout>
 </layout>

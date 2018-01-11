@@ -12,6 +12,7 @@
     <color name="default_color">#ffffff</color>
     <color name="QRCodeWhiteColor">#ffffff</color>
     <color name="QRCodeBlackColor">#000000</color>
+    <color name="qrColor">#333333</color>
 
     <color name="gray_text">#6b6c6e</color>
 

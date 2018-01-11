@@ -482,10 +482,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         if (v == activityRegisterBinding.imgProfileCard) {
             // selectImage();
             Utility.freeMemory();
-            CropImage.activity(null)
-                    .setCropShape(CropImageView.CropShape.OVAL)
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .start(RegisterActivity.this);
+            boolean result=Utility.checkPermission(RegisterActivity.this);
+            boolean result1=Utility.checkCameraPermission(RegisterActivity.this);
+
+            if (result && result1) {
+                CropImage.activity(null)
+                        .setCropShape(CropImageView.CropShape.OVAL)
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .start(RegisterActivity.this);
+            }
         }
     }
 

@@ -39,6 +39,7 @@ import com.circle8.circleOne.Adapter.GalleryAdapter1;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.FriendConnection;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.FragmentList1Binding;
 
@@ -56,6 +57,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.circle8.circleOne.Activity.CardsActivity.Connection_Limit;
+import static com.circle8.circleOne.Activity.DashboardActivity.setActionBarTitle;
 import static com.circle8.circleOne.Utils.Utility.POST2;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
@@ -98,6 +101,7 @@ public class List1Fragment extends Fragment
     static String customProgressBarStatus = "";
     public static String count = "";
     static FragmentList1Binding fragmentList1Binding;
+    public static String SearchFromDashboard = "";
     public List1Fragment() {
         // Required empty public constructor
     }
@@ -521,7 +525,12 @@ public class List1Fragment extends Fragment
     @Override
     public void onStart() {
         super.onStart();
-        callFirst();
+        if (!SearchFromDashboard.equals("")){
+            new HttpAsyncTaskSearch().execute(Utility.BASE_URL+"SearchConnect");
+        }
+        else {
+            callFirst();
+        }
     }
 
     public static void webCall()
@@ -739,7 +748,7 @@ public class List1Fragment extends Fragment
                         }
                         else
                         {
-                            fragmentList1Binding.txtNoCard1.setText("No such information found,\nplease try again");
+                            fragmentList1Binding.txtNoCard1.setText(mContext.getResources().getString(R.string.no_friend_connection));
                             fragmentList1Binding.txtNoCard1.setVisibility(View.VISIBLE);
                         }
                     }
@@ -1066,7 +1075,7 @@ public class List1Fragment extends Fragment
 
     }
 
-    private class HttpAsyncTaskSearch extends AsyncTask<String, Void, String> {
+    public static class HttpAsyncTaskSearch extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
 
         @Override
@@ -1101,7 +1110,7 @@ public class List1Fragment extends Fragment
             {
                 if (result == "")
                 {
-                    Toast.makeText(getContext(), "Slow Internet Connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "Slow Internet Connection", Toast.LENGTH_LONG).show();
                 }
                 else
                 {
@@ -1183,7 +1192,7 @@ public class List1Fragment extends Fragment
         }
     }
 
-    public String POSTSearch(String url)
+    public static String POSTSearch(String url)
     {
         InputStream inputStream = null;
         String result = "";
@@ -1199,7 +1208,12 @@ public class List1Fragment extends Fragment
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("FindBy", "NAME");
-            jsonObject.accumulate("Search", fragmentList1Binding.searchView.getText().toString());
+            if (!SearchFromDashboard.equals("")){
+                jsonObject.accumulate("Search", SearchFromDashboard);
+            }
+            else {
+                jsonObject.accumulate("Search", fragmentList1Binding.searchView.getText().toString());
+            }
             jsonObject.accumulate("SearchType", "Local" );
             jsonObject.accumulate("UserID", UserId);
             jsonObject.accumulate("numofrecords", "30");
@@ -1296,21 +1310,40 @@ public class List1Fragment extends Fragment
 
         if (SortFragment.CardListApi.equalsIgnoreCase("GetFriendConnection"))
         {
-                DashboardActivity.setActionBarTitle("Cards - " + count + "/" + CardsActivity.Connection_Limit);
+            try {
+                if (Connection_Limit.equalsIgnoreCase("100000")) {
+                    if (Pref.getValue(context, "current_frag", "").equalsIgnoreCase("1")) {
+                        DashboardActivity.setActionBarTitle("Cards - " + count + "/", true);
+                    }
+                }
+                else {
+                    if (Pref.getValue(context, "current_frag", "").equalsIgnoreCase("1")) {
+                        DashboardActivity.setActionBarTitle("Cards - " + count + "/" + CardsActivity.Connection_Limit, false);
+                    }
+
+                }
+            }catch (Exception e){
+
+            }
 
         }
         else if (SortFragment.CardListApi.equalsIgnoreCase("GetProfileConnection"))
         {
-                DashboardActivity.setActionBarTitle("Cards - " + count);
+            if (Pref.getValue(context, "current_frag", "").equalsIgnoreCase("1")) {
+                DashboardActivity.setActionBarTitle("Cards - " + count, false);
+            }
         }
         else if (SortFragment.CardListApi.equalsIgnoreCase("Group/FetchConnection"))
         {
-
-                DashboardActivity.setActionBarTitle("Cards - " + count);
+            if (Pref.getValue(context, "current_frag", "").equalsIgnoreCase("1")) {
+                DashboardActivity.setActionBarTitle("Cards - " + count, false);
+            }
         }
         else if (SortFragment.CardListApi.equalsIgnoreCase("SearchConnect"))
         {
-                DashboardActivity.setActionBarTitle("Cards - " + count);
+            if (Pref.getValue(context, "current_frag", "").equalsIgnoreCase("1")) {
+                DashboardActivity.setActionBarTitle("Cards - " + count, false);
+            }
 
         }
 

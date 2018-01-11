@@ -860,8 +860,13 @@ public class ConnectActivity extends AppCompatActivity
                         // tvConnectLine1.setTextColor(getResources().getColor(R.color.unselected));
                         tvConnectLine1.setBackground(getResources().getDrawable(R.drawable.dotted_gray));
                         activityConnect2Binding.rlAdd.setEnabled(false);
+                        CardDetailActivity.profile_id = friendProfile_id;
+                        CardDetailActivity.DateInitiated = "";
+                        CardDetailActivity.lat = "";
+                        CardDetailActivity.lon = "";
 
-                        Intent intent = new Intent(getApplicationContext(), CardDetail.class);
+
+                        Intent intent = new Intent(getApplicationContext(), CardDetailActivity.class);
                         intent.putExtra("tag_id", "");
                         intent.putExtra("profile_id", friendProfile_id);
                         intent.putExtra("DateInitiated","");

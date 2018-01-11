@@ -35,6 +35,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.circle8.circleOne.ApplicationUtils.MyApplication;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Helper.ReferralCodeSession;
 import com.circle8.circleOne.R;
@@ -439,6 +440,35 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         editStatus = "None";
     }
 
+    private void selectImageToCrop() {
+        final CharSequence[] items = { "Upload Picture", "Remove Picture",
+                "Cancel" };
+        AlertDialog.Builder builder = new AlertDialog.Builder(MyAccountActivity.this);
+        builder.setTitle("Select to Upload Picture");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                boolean result=Utility.checkPermission(MyAccountActivity.this);
+                boolean result1=Utility.checkCameraPermission(MyAccountActivity.this);
+
+                if (items[item].equals("Upload Picture")) {
+                    if (result && result1) {
+                        CropImage.activity(null)
+                                .setCropShape(CropImageView.CropShape.OVAL)
+                                .setGuidelines(CropImageView.Guidelines.ON)
+                                .start(MyAccountActivity.this);
+                    }
+                } else if (items[item].equals("Remove Picture")) {
+                    user_img = "";
+                    myAccountBinding.imgProfile.setImageResource(R.drawable.usr_white1);
+                } else if (items[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onClick(View v)
@@ -448,10 +478,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
 
             if (profilePicPress)
             {
-                CropImage.activity(null)
-                        .setCropShape(CropImageView.CropShape.OVAL)
-                        .setGuidelines(CropImageView.Guidelines.ON)
-                        .start(MyAccountActivity.this);
+                selectImageToCrop();
                 return;
             }
 

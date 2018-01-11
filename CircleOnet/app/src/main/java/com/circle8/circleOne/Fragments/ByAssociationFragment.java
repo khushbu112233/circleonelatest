@@ -334,9 +334,7 @@ public class ByAssociationFragment  extends Fragment implements View.OnClickList
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("te", "Error: " + error.getMessage());
-                Toast.makeText(context,
-                        error.getMessage(), Toast.LENGTH_SHORT).show();
-                // hide the progress dialog
+
                 dismissProgress();
             }
         }){

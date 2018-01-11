@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <RelativeLayout
+        android:layout_marginBottom="50dp"
+        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="150dp">
         <RelativeLayout
             android:id="@+id/rlRewards"
             android:layout_marginLeft="35dp"
@@ -33,12 +35,32 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_centerInParent="true">
+
+            <FrameLayout
+                android:layout_centerHorizontal="true"
+                android:id="@+id/frameNoti"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content">
+            <com.circle8.circleOne.Utils.CircularTextView
+                android:layout_gravity="right"
+                android:visibility="visible"
+                android:id="@+id/txtNotificationCountAction1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:gravity="center"
+                android:padding="1dp"
+                android:textSize="8sp"
+                android:textStyle="bold"
+                android:textColor="@color/white" />
+
             <ImageView
                 android:id="@+id/imgNotification"
                 android:src="@drawable/ic_notification_blue"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_centerHorizontal="true"/>
+            </FrameLayout>
 
             <com.circle8.circleOne.Utils.cgTextView
                 android:id="@+id/tvNotification"
@@ -47,7 +69,7 @@
                 android:text="Notification"
                 android:layout_centerInParent="true"
                 android:textColor="@color/colorPrimary"
-                android:layout_below="@+id/imgNotification"
+                android:layout_below="@+id/frameNoti"
                 android:textSize="15sp" />
         </RelativeLayout>
         <RelativeLayout
@@ -68,7 +90,7 @@
                 android:id="@+id/tvShare"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Share"
+                android:text="Invite"
                 android:layout_centerInParent="true"
                 android:textColor="@color/colorPrimary"
                 android:layout_below="@+id/imgShare"

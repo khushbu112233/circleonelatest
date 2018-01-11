@@ -7,7 +7,7 @@
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:openDrawer="start">
+        tools:openDrawer="end">
 
         <RelativeLayout
             android:background="@color/white"
@@ -21,16 +21,50 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:theme="@style/AppTheme.AppBarOverlay"
-                app:elevation="0dp">
+                >
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
+                    android:layout_height="45dp"
                     android:background="@color/colorPrimary"
-                    app:popupTheme="@style/AppTheme.AppBarOverlay" />
+                    android:elevation="10dp"
+                    app:popupTheme="@style/AppTheme.AppBarOverlay">
+
+                    <ImageView
+                        android:visibility="visible"
+                        android:id="@+id/imgLogo"
+                        android:tint="@color/white"
+                        android:src="@drawable/login_logo"
+                        android:layout_width="35dp"
+                        android:layout_height="30dp" />
+
+                    <com.circle8.circleOne.Utils.cgTextView
+                        android:textSize="16dp"
+                        android:textColor="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/toolbar_title" />
+
+                    <ImageView
+                        android:layout_marginRight="10dp"
+                        android:layout_gravity="end"
+                        android:padding="3dp"
+                        android:id="@+id/drawer"
+                        android:backgroundTint="@color/white"
+                        android:src="@drawable/ic_drawer"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp" />
+                </android.support.v7.widget.Toolbar>
 
             </android.support.design.widget.AppBarLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@+id/appbarnew"
+                android:background="@drawable/toolbar_dropshadow" />
 
             <FrameLayout
                 android:layout_below="@+id/appbarnew"

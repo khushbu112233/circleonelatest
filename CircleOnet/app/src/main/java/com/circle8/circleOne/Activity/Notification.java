@@ -75,7 +75,7 @@ public class Notification extends Fragment
         mContext = getContext() ;
         pageno = 1;
 
-        DashboardActivity.setActionBarTitle("Notifications - 0");
+        DashboardActivity.setActionBarTitle("Notifications - 0", false);
         DashboardActivity.setDrawerVisibility(false);
 
         listNotification = (ListView) view.findViewById(R.id.listNotification);
@@ -243,7 +243,7 @@ public class Notification extends Fragment
 
                     if (pageno == 2)
                     {
-                        DashboardActivity.setActionBarTitle("Notifications - "+jsonObject.getString("Count"));
+                        DashboardActivity.setActionBarTitle("Notifications - "+jsonObject.getString("Count"), false);
                     }
 
                     if (counts.equals("0") || counts == null)

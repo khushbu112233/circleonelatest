@@ -17,7 +17,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -34,7 +33,6 @@ import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -52,7 +50,6 @@ import com.circle8.circleOne.Model.GroupModel;
 import com.circle8.circleOne.Model.TestimonialModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.GeocodingLocation;
-import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.chat.ChatActivity;
 import com.circle8.circleOne.chat.ChatHelper;
@@ -107,7 +104,7 @@ import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.POST2;
 import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 
-public class CardDetail extends Fragment implements DialogsManager.ManagingDialogsCallbacks, View.OnClickListener, OnMapReadyCallback {
+public class CardDetailActivity extends AppCompatActivity implements DialogsManager.ManagingDialogsCallbacks, View.OnClickListener, OnMapReadyCallback {
 
     private ArrayList<String> image = new ArrayList<>();
     private CardSwipe myPager;
@@ -154,28 +151,28 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
     public static String profile_id="",DateInitiated="",lat="",lon="";
     View view;
     ActivityCardDetailBinding activityCardDetailBinding;
+    CardDetailActivity cardsActivity;
     String currentLocation;
 
     @Override
-    public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-        activityCardDetailBinding = DataBindingUtil.inflate(
-                inflater, R.layout.activity_card_detail, container, false);
-        view = activityCardDetailBinding.getRoot();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        activityCardDetailBinding =DataBindingUtil.setContentView(this,R.layout.activity_card_detail);
         Utility.freeMemory();
-        Utility.deleteCache(getActivity());
+        cardsActivity = CardDetailActivity.this;
+        Utility.deleteCache(cardsActivity);
         Log.e("act","click");
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
-        referralCodeSession = new ReferralCodeSession(getActivity());
-        loginSession = new LoginSession(getActivity());
+        referralCodeSession = new ReferralCodeSession(cardsActivity);
+        loginSession = new LoginSession(cardsActivity);
         HashMap<String, String> user = loginSession.getUserDetails();
         user_id = user.get(LoginSession.KEY_USERID);
         currentUser_ProfileId = user.get(LoginSession.KEY_PROFILEID);
         CurrentQ_ID = user.get(LoginSession.KEY_QID);
         CurrentUserEmail = user.get(LoginSession.KEY_EMAIL);
-        db = new DatabaseHelper(getActivity());
+        db = new DatabaseHelper(cardsActivity);
         list = new ArrayList<CharSequence>();
         listGroupId = new ArrayList<String>();
-        netCheck = Utility.isNetworkAvailable(getActivity());
+        netCheck = Utility.isNetworkAvailable(cardsActivity);
         final HashMap<String, String> referral = referralCodeSession.getReferralDetails();
         refer = referral.get(ReferralCodeSession.KEY_REFERRAL);
         dialogsManager = new DialogsManager();
@@ -193,7 +190,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
             }
         };
         ss.setSpan(clickableSpan, 91, 100, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        Pref.setValue(getContext(),"toCardDetail","");
+
         // TextView textView = (TextView) findViewById(R.id.hello);
         activityCardDetailBinding.includeLayoutDetails.txtTestimonial.setText(ss);
         activityCardDetailBinding.includeLayoutDetails.txtTestimonial.setMovementMethod(LinkMovementMethod.getInstance());
@@ -203,7 +200,6 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
             if ((lat.equals("") || lat.equals("null") || lat == null || lat.isEmpty()) && (lon.equals("") || lon.equals("null") || lon == null || lon.isEmpty())) {
                 activityCardDetailBinding.includeLayoutDetails.lnrNfcLocation.setVisibility(View.GONE);
                 activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.GONE);
-
             } else {
                 activityCardDetailBinding.includeLayoutDetails.lnrNfcLocation.setVisibility(View.VISIBLE);
                 Latitude = Double.parseDouble(lat);
@@ -224,8 +220,8 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
 
         if (netCheck == false) {
             Utility.freeMemory();
-            Utility.deleteCache(getActivity());
-            Toast.makeText(getActivity(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
+            Utility.deleteCache(cardsActivity);
+            Toast.makeText(cardsActivity, getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
         } else {
 
             //googlePlayServicesHelper = new GooglePlayServicesHelper();
@@ -251,7 +247,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
             dismissProgress();
             // new HttpAsyncTaskGroup().execute(Utility.BASE_URL+"Group/Fetch");
             if (profile_id.equals("")) {
-                Toast.makeText(getActivity(), "Having no profile ID", Toast.LENGTH_LONG).show();
+                Toast.makeText(cardsActivity, "Having no profile ID", Toast.LENGTH_LONG).show();
             } else {
                 new HttpAsyncTask().execute(Utility.BASE_URL + "GetUserProfile");
             }
@@ -263,7 +259,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
             new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL + "Testimonial/Fetch");
         }
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         // registerQbChatListeners();
         activityCardDetailBinding.viewPager1.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -294,7 +290,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
         activityCardDetailBinding.includeLayoutViepager.imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().getSupportFragmentManager().popBackStackImmediate();
+               finish();
             }
         });
 
@@ -305,7 +301,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
         activityCardDetailBinding.includeLayoutDetails.txtAttachment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent1 = new Intent(getActivity(), AttachmentDisplay.class);
+                Intent intent1 = new Intent(cardsActivity, AttachmentDisplay.class);
                 intent1.putExtra("url", Utility.BASE_IMAGE_URL + "Other_doc/" + activityCardDetailBinding.includeLayoutDetails.txtAttachment.getText().toString());
                 startActivity(intent1);
             }
@@ -322,9 +318,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
         activityCardDetailBinding.includeLayoutSocial.imgCall.setOnClickListener(this);
 
 
-        return view;
     }
-
 
 
     @Override
@@ -334,20 +328,20 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
 
         switch (id) {
             case R.id.txtMore:
-                Intent intent = new Intent(getActivity(), TestimonialCardDetail.class);
+                Intent intent = new Intent(cardsActivity, TestimonialCardDetail.class);
                 intent.putExtra("ProfileId", profile_id);
                 startActivity(intent);
                 break;
 
             case R.id.imgProfileCard:
-                final Dialog dialog = new Dialog(getActivity());
+                final Dialog dialog = new Dialog(cardsActivity);
                 dialog.setContentView(R.layout.imageview_popup);
 
                 ImageView ivViewImage = (ImageView) dialog.findViewById(R.id.ivViewImage);
                 if (displayProfile.equals("")) {
                     ivViewImage.setImageResource(R.drawable.usr_1);
                 } else {
-                    Picasso.with(getActivity()).load(Utility.BASE_IMAGE_URL + "UserProfile/" + displayProfile).skipMemoryCache().placeholder(R.drawable.usr_1)
+                    Picasso.with(cardsActivity).load(Utility.BASE_IMAGE_URL + "UserProfile/" + displayProfile).skipMemoryCache().placeholder(R.drawable.usr_1)
                             .resize(500, 500)
                             .onlyScaleDown()
                             .into(ivViewImage);
@@ -358,7 +352,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
-                        Intent intent = new Intent(getActivity(), ImageZoom.class);
+                        Intent intent = new Intent(cardsActivity, ImageZoom.class);
                         intent.putExtra("displayProfile", Utility.BASE_IMAGE_URL + "UserProfile/" + displayProfile);
                         startActivity(intent);
                     }
@@ -371,8 +365,8 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                 break;
             case R.id.imgAddGroupFriend:
                 final CharSequence[] dialogList = list.toArray(new CharSequence[list.size()]);
-                final AlertDialog.Builder builderDialog = new AlertDialog.Builder(getActivity());
-                LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final AlertDialog.Builder builderDialog = new AlertDialog.Builder(cardsActivity);
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 binding =DataBindingUtil.inflate(inflater, R.layout.edit_groups_popup, null, false);
 // get the root view
                 View dialogView = binding.getRoot();
@@ -388,8 +382,8 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                     ArrayList<GroupModel> groupModelArrayList1 = new ArrayList<GroupModel>();
                     groupModelArrayList1 = groupModelArrayList;
 
-//                EditGroupAdapter editGroupAdapter = new EditGroupAdapter(getActivity(), groupModelArrayList1);
-                    EditGroupAdapter editGroupAdapter = new EditGroupAdapter(getActivity(), groupName, groupPhoto, listGroupId);
+//                EditGroupAdapter editGroupAdapter = new EditGroupAdapter(cardsActivity, groupModelArrayList1);
+                    EditGroupAdapter editGroupAdapter = new EditGroupAdapter(cardsActivity, groupName, groupPhoto, listGroupId);
                     binding.listView.setAdapter(editGroupAdapter);
                     editGroupAdapter.notifyDataSetChanged();
                 }
@@ -406,9 +400,9 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                     public void onClick(View v) {
                         alertDialog.cancel();
                         // make selected item in the comma seprated string
-                        //  Toast.makeText(getActivity(), selectedStrings.toString(), Toast.LENGTH_LONG).show();
+                        //  Toast.makeText(cardsActivity, selectedStrings.toString(), Toast.LENGTH_LONG).show();
                         if (selectedStrings.length() == 0){
-                            Toast.makeText(getActivity(), "Please select any circle", Toast.LENGTH_LONG).show();
+                            Toast.makeText(cardsActivity, "Please select any circle", Toast.LENGTH_LONG).show();
                         }else {
                             new HttpAsyncTaskGroupAddFriend().execute(Utility.BASE_URL + "AddMemberToGroups");
                         }
@@ -427,13 +421,13 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                 break;
             case R.id.imgProfileShare:
                 AlertDialog.Builder builderps;
-                builderps = new AlertDialog.Builder(getActivity(), R.style.Blue_AlertDialog);
+                builderps = new AlertDialog.Builder(cardsActivity, R.style.Blue_AlertDialog);
                 builderps.setTitle("Share to " + activityCardDetailBinding.includeLayoutViepager.txtName.getText().toString())
                         .setMessage("Are you sure you want to share profile ?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // continue with delete
-                                Intent intent_share = new Intent(getActivity(), SearchGroupMembers.class);
+                                Intent intent_share = new Intent(cardsActivity, SearchGroupMembers.class);
                                 intent_share.putExtra("from", "cardDetail");
                                 intent_share.putExtra("ProfileId", profile_id);
                                 startActivity(intent_share);
@@ -486,7 +480,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
 
                 } else {
                     AlertDialog.Builder builder0;
-                    builder0 = new AlertDialog.Builder(getActivity(), R.style.Blue_AlertDialog);
+                    builder0 = new AlertDialog.Builder(cardsActivity, R.style.Blue_AlertDialog);
                     builder0.setTitle("Mail to " + activityCardDetailBinding.includeLayoutViepager.txtName.getText().toString())
                             .setMessage("Are you sure you want to drop Mail ?")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -498,7 +492,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                                         intent.putExtra(Intent.EXTRA_TEXT, "");
                                         startActivity(intent);
                                     } catch (Exception e) {
-                                        Toast.makeText(getActivity(), "Sorry...you don't have any mail app", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(cardsActivity, "Sorry...you don't have any mail app", Toast.LENGTH_SHORT).show();
                                         e.printStackTrace();
                                     }
                                 }
@@ -515,16 +509,16 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                 break;
             case R.id.imgSMS:
                 AlertDialog.Builder builder;
-                builder = new AlertDialog.Builder(getActivity(), R.style.Blue_AlertDialog);
+                builder = new AlertDialog.Builder(cardsActivity, R.style.Blue_AlertDialog);
                 builder.setTitle("SMS to " + activityCardDetailBinding.includeLayoutViepager.txtName.getText().toString())
                         .setMessage("Are you sure you want to Send SMS ?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // continue with delete
-                                boolean result = Utility.checkSMSPermission(getActivity());
+                                boolean result = Utility.checkSMSPermission(cardsActivity);
                                 if (result) {
                                     if (activityCardDetailBinding.includeLayoutDetails.txtMob.getText().toString().equals("")) {
-                                        Toast.makeText(getActivity(), "You are not having contact to SMS..", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(cardsActivity, "You are not having contact to SMS..", Toast.LENGTH_LONG).show();
                                     } else {
                                         Uri uri = Uri.parse("smsto:" + activityCardDetailBinding.includeLayoutDetails.txtMob.getText().toString());
                                         Intent it = new Intent(Intent.ACTION_SENDTO, uri);
@@ -552,7 +546,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
             case R.id.imgCall:
                 if (!activityCardDetailBinding.includeLayoutDetails.txtMob.getText().toString().equals("")) {
                     AlertDialog.Builder builder1;
-                    builder1 = new AlertDialog.Builder(getActivity(), R.style.Blue_AlertDialog);
+                    builder1 = new AlertDialog.Builder(cardsActivity, R.style.Blue_AlertDialog);
 
                     builder1.setTitle("Call to " + activityCardDetailBinding.includeLayoutViepager.txtName.getText().toString())
                             .setMessage("Are you sure you want to make a Call ?")
@@ -574,7 +568,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                             .show();
                 } else if (!activityCardDetailBinding.includeLayoutDetails.txtWork.getText().toString().equals("")) {
                     AlertDialog.Builder builder2;
-                    builder2 = new AlertDialog.Builder(getActivity(), R.style.Blue_AlertDialog);
+                    builder2 = new AlertDialog.Builder(cardsActivity, R.style.Blue_AlertDialog);
 
                     builder2.setTitle("Call to " + activityCardDetailBinding.includeLayoutViepager.txtName.getText().toString())
                             .setMessage("Are you sure you want to make a Call ?")
@@ -596,7 +590,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                             .show();
                 } else if (!activityCardDetailBinding.includeLayoutDetails.txtPH.getText().toString().equals("")) {
                     AlertDialog.Builder builder3;
-                    builder3 = new AlertDialog.Builder(getActivity(), R.style.Blue_AlertDialog);
+                    builder3 = new AlertDialog.Builder(cardsActivity, R.style.Blue_AlertDialog);
 
                     builder3.setTitle("Call to " + activityCardDetailBinding.includeLayoutViepager.txtName.getText().toString())
                             .setMessage("Are you sure you want to make a Call ?")
@@ -637,7 +631,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                     QBUser currentUser = getUserFromSession();
                     //loginToChat(currentUser);
                     Boolean aBoolean = SharedPrefsHelper.getInstance().hasQbUser();
-                    // Toast.makeText(getActivity(), aBoolean.toString(), Toast.LENGTH_LONG).show();
+                    // Toast.makeText(cardsActivity, aBoolean.toString(), Toast.LENGTH_LONG).show();
                     ChatHelper.getInstance().loginToChat(currentUser, new QBEntityCallback<Void>() {
                         @Override
                         public void onSuccess(Void result, Bundle bundle) {
@@ -651,9 +645,9 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                             QBRestChatService.createChatDialog(dialog).performAsync(new QBEntityCallback<QBChatDialog>() {
                                 @Override
                                 public void onSuccess(QBChatDialog result, Bundle params) {
-                                    //ChatActivity.startForResult(getActivity(), 165, result);
+                                    //ChatActivity.startForResult(cardsActivity, 165, result);
                                     ChatHelper.getInstance();
-                                    Intent intent = new Intent(getActivity(), ChatActivity.class);
+                                    Intent intent = new Intent(cardsActivity, ChatActivity.class);
                                     intent.putExtra(ChatActivity.EXTRA_DIALOG_ID, result);
                                     startActivity(intent);
                                 }
@@ -680,7 +674,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
             case R.id.ivMap:
 
                 AlertDialog.Builder builderm;
-                builderm = new AlertDialog.Builder(getActivity(), R.style.Blue_AlertDialog);
+                builderm = new AlertDialog.Builder(cardsActivity, R.style.Blue_AlertDialog);
 
                 builderm.setTitle("Google Map")
                         .setMessage("Are you sure you want to redirect to Google Map ?")
@@ -708,7 +702,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
         googleMaps = googleMap;
 
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(20);
-        boolean result = Utility.checkLocationPermission(getActivity());
+        boolean result = Utility.checkLocationPermission(cardsActivity);
         if(result)
         {
 
@@ -758,7 +752,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
     {
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(15);
 
-        LatLng address = getLocationFromAddress(getActivity(), fullAddress);
+        LatLng address = getLocationFromAddress(cardsActivity, fullAddress);
 
         if(address!=null) {
             googleMaps.addMarker(new MarkerOptions().position(address).title(""));
@@ -786,7 +780,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                     public void onSuccess(QBChatDialog dialog, Bundle args) {
                         //isProcessingResultInProgress = false;
                         // dialogsManager.sendSystemMessageAboutCreatingDialog(systemMessagesManager, dialog);
-                        //  ChatActivity.startForResult(getActivity(), 165, dialog);
+                        //  ChatActivity.startForResult(cardsActivity, 165, dialog);
                         // finish();
                         //   ProgressDialogFragment.hide(getSupportFragmentManager());
                     }
@@ -863,7 +857,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
     public void onDestroy() {
         super.onDestroy();
         Utility.freeMemory();
-        Utility.deleteCache(getActivity());
+        Utility.deleteCache(cardsActivity);
 
     }
 
@@ -871,7 +865,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
     public void openWebPage(View v)
     {
         AlertDialog.Builder builder;
-        builder = new AlertDialog.Builder(getActivity(), R.style.Blue_AlertDialog);
+        builder = new AlertDialog.Builder(cardsActivity, R.style.Blue_AlertDialog);
 
         builder.setTitle("Redirect to Web Browser")
                 .setMessage("Are you sure you want to redirect to Web Browser ?")
@@ -903,7 +897,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
 
         } else {
             AlertDialog.Builder builder;
-            builder = new AlertDialog.Builder(getActivity(), R.style.Blue_AlertDialog);
+            builder = new AlertDialog.Builder(cardsActivity, R.style.Blue_AlertDialog);
             builder.setTitle("Mail to " + activityCardDetailBinding.includeLayoutViepager.txtName.getText().toString())
                     .setMessage("Are you sure you want to drop Mail ?")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -915,7 +909,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                                 intent.putExtra(Intent.EXTRA_TEXT, "");
                                 startActivity(intent);
                             } catch (Exception e) {
-                                Toast.makeText(getActivity(), "Sorry...you don't have any mail app", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(cardsActivity, "Sorry...you don't have any mail app", Toast.LENGTH_SHORT).show();
                                 e.printStackTrace();
                             }
                         }
@@ -934,7 +928,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
     public void openTele(View v)
     {
         AlertDialog.Builder builder;
-        builder = new AlertDialog.Builder(getActivity(), R.style.Blue_AlertDialog);
+        builder = new AlertDialog.Builder(cardsActivity, R.style.Blue_AlertDialog);
 
         builder.setTitle("Call to " + activityCardDetailBinding.includeLayoutViepager.txtName.getText().toString())
                 .setMessage("Are you sure you want to make a Call ?")
@@ -959,7 +953,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
     public void openMobile(View v)
     {
         AlertDialog.Builder builder;
-        builder = new AlertDialog.Builder(getActivity(), R.style.Blue_AlertDialog);
+        builder = new AlertDialog.Builder(cardsActivity, R.style.Blue_AlertDialog);
 
         builder.setTitle("Call to " + activityCardDetailBinding.includeLayoutViepager.txtName.getText().toString())
                 .setMessage("Are you sure you want to make a Call ?")
@@ -985,7 +979,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
     {
         Geocoder geocoder;
         List<Address> addresses;
-        geocoder = new Geocoder(getActivity(), Locale.getDefault());
+        geocoder = new Geocoder(cardsActivity, Locale.getDefault());
 
         try {
             addresses = geocoder.getFromLocation(latitude,longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
@@ -997,6 +991,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                 catch (Exception e){
                     activityCardDetailBinding.includeLayoutDetails.lnrNfcLocation.setVisibility(View.GONE);
                     activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.GONE);
+
                 }
             }
             else {
@@ -1056,7 +1051,8 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                 activityCardDetailBinding.includeLayoutDetails.txtRemark.setText(currentLocation);
                 activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
                 GeocodingLocation locationAddress1 = new GeocodingLocation();
-                locationAddress1.getAddressFromLocation(currentLocation, getActivity(), new GeocoderHandler());
+                locationAddress1.getAddressFromLocation(currentLocation, getApplicationContext(), new GeocoderHandler());
+
 
             }
         }
@@ -1064,6 +1060,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
             activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.GONE);
 
         }
+
     }
 
     /*public String POST2(String url)
@@ -1146,7 +1143,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
         protected void onPreExecute()
         {
             super.onPreExecute();
-            dialog = new ProgressDialog(getActivity());
+            dialog = new ProgressDialog(cardsActivity);
             dialog.setMessage("Fetching testimonials...");
             //dialog.setTitle("Saving Reminder");
             // dialog.show();
@@ -1221,13 +1218,13 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                             allTaggs.add(nfcModelTag);
                         }
                     }
-                    customAdapter = new CustomAdapter(getActivity(), allTaggs);
+                    customAdapter = new CustomAdapter(cardsActivity, allTaggs);
                     activityCardDetailBinding.includeLayoutDetails.lstTestimonial.setAdapter(customAdapter);
                     activityCardDetailBinding.includeLayoutDetails.lstTestimonial.setExpanded(true);
                 }
                 else
                 {
-                    Toast.makeText(getActivity(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(cardsActivity, "Not able to load Cards..", Toast.LENGTH_LONG).show();
                 }
             }
             catch (JSONException e) {
@@ -1367,7 +1364,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
         protected void onPreExecute()
         {
             super.onPreExecute();
-            dialog = new ProgressDialog(getActivity());
+            dialog = new ProgressDialog(cardsActivity);
             dialog.setMessage("Fetching circles...");
             //dialog.show();
             dialog.setCancelable(false);
@@ -1428,11 +1425,11 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                         groupName.add(object.getString("group_Name"));
                         groupPhoto.add(object.getString("group_photo"));
                     }
-                    // new ArrayAdapter<>(getActivity(),R.layout.mytextview, array)
+                    // new ArrayAdapter<>(cardsActivity,R.layout.mytextview, array)
                 }
                 else
                 {
-                    Toast.makeText(getActivity(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(cardsActivity, "Not able to load Cards..", Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -1446,7 +1443,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(getActivity());
+            dialog = new ProgressDialog(cardsActivity);
             dialog.setMessage("Adding Friend...");
             //dialog.setTitle("Saving Reminder");
             //dialog.show();
@@ -1454,7 +1451,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
             //  nfcModel = new ArrayList<>();
             //   allTags = new ArrayList<>();
             String loading = "Adding friend" ;
-            CustomProgressDialog(loading,getActivity());
+            CustomProgressDialog(loading,cardsActivity);
         }
 
         @Override
@@ -1484,13 +1481,13 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                     String Success = jsonObject.getString("Success");
                     String Message = jsonObject.getString("Message");
                     if (Success.equals("1")) {
-                        Toast.makeText(getActivity(), "Member added into circle successfully", Toast.LENGTH_LONG).show();
+                        Toast.makeText(cardsActivity, "Member added into circle successfully", Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(getActivity(), "Member not added", Toast.LENGTH_LONG).show();
+                        Toast.makeText(cardsActivity, "Member not added", Toast.LENGTH_LONG).show();
                     }
-                    // new ArrayAdapter<>(getActivity(),R.layout.mytextview, array)
+                    // new ArrayAdapter<>(cardsActivity,R.layout.mytextview, array)
                 } else {
-                    Toast.makeText(getActivity(), "Not able to add friend in circle", Toast.LENGTH_LONG).show();
+                    Toast.makeText(cardsActivity, "Not able to add friend in circle", Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -1505,7 +1502,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-           /* dialog = new ProgressDialog(getActivity());
+           /* dialog = new ProgressDialog(cardsActivity);
             dialog.setMessage("Fetching Cards...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
@@ -1514,7 +1511,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
             //   allTags = new ArrayList<>();
 
             String loading = "Fetching profile" ;
-            CustomProgressDialog(loading,getActivity());
+            CustomProgressDialog(loading,cardsActivity);
         }
 
         @Override
@@ -1580,8 +1577,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                     }
                     else {
 //                        imgChat.setVisibility(View.VISIBLE);
-                       // activityCardDetailBinding.tvSendMessage.setVisibility(View.VISIBLE);
-
+                        //activityCardDetailBinding.tvSendMessage.setVisibility(View.VISIBLE);
                         activityCardDetailBinding.tvSendMessage.setVisibility(View.GONE);
                         occupant_id = Integer.parseInt(Q_ID);
 
@@ -1786,7 +1782,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                     } else {
                         activityCardDetailBinding.includeLayoutViepager.progressBar1.setVisibility(View.VISIBLE);
 
-                        Glide.with(getActivity()).load(Utility.BASE_IMAGE_URL+"UserProfile/" + userImg)
+                        Glide.with(cardsActivity).load(Utility.BASE_IMAGE_URL+"UserProfile/" + userImg)
                                 .asBitmap()
                                 .into(new BitmapImageViewTarget(activityCardDetailBinding.includeLayoutViepager.imgProfileCard) {
                                     @Override
@@ -1820,7 +1816,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
 
                     image.add(recycle_image1);
                     image.add(recycle_image2);
-                    myPager = new CardSwipe(getActivity(), image);
+                    myPager = new CardSwipe(cardsActivity, image);
 
                     activityCardDetailBinding.viewPager.setClipChildren(false);
                     activityCardDetailBinding.viewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
@@ -1863,11 +1859,12 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                     if (personAddress.isEmpty() || personAddress.toString().length() == 0)
                     {
                         activityCardDetailBinding.includeLayoutDetails.llAddressBox.setVisibility(View.GONE);
-                       // activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.GONE);
+                        //activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.GONE);
                     }
                     else
                     {
                         activityCardDetailBinding.includeLayoutDetails.txtAddress.setText(personAddress);
+
 //                       createMarker1(personAddress,(add1+add2));
 
                     }
@@ -1889,7 +1886,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
 //                        GetData(getContext());
 
                 } else {
-                    Toast.makeText(getActivity(), "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(cardsActivity, "Not able to load Cards..", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
@@ -1920,13 +1917,13 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                         Double Longitude = bundle.getDouble("longitude");
 
                         createMarker(Latitude,Longitude);
-                     //   activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
+                       // activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
                     }
                     else {
-//                        Toast.makeText(getActivity(),msg,Toast.LENGTH_LONG).show();
+//                        Toast.makeText(cardsActivity,msg,Toast.LENGTH_LONG).show();
                         if (locationAddress.contains(",")) {
                             createMarker1(locationAddress.split(",")[1]);
-                           // activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
+                         //   activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
                         }else
                         {
                            // activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
@@ -2020,7 +2017,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-          /*  dialog = new ProgressDialog(getActivity());
+          /*  dialog = new ProgressDialog(cardsActivity);
             dialog.setMessage("Fetching My Account...");
             //dialog.setTitle("Saving Reminder");
             dialog.show();
@@ -2099,13 +2096,13 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                         {
                             activityCardDetailBinding.includeLayoutDetails.tvAddedGroupInfo.setVisibility(View.GONE);
                         }
-                            /*GroupsInCardDetailAdapter groupsInCardDetailAdapter = new GroupsInCardDetailAdapter(getActivity(), img,name,desc);
+                            /*GroupsInCardDetailAdapter groupsInCardDetailAdapter = new GroupsInCardDetailAdapter(cardsActivity, img,name,desc);
                             groupListView.setAdapter(groupsInCardDetailAdapter);
                             groupsInCardDetailAdapter.notifyDataSetChanged();*/
 
-                        GroupsRecyclerAdapter groupsRecyclerAdapter = new GroupsRecyclerAdapter(getActivity(), img, name, desc);
-                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-                        activityCardDetailBinding.includeLayoutDetails.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, true));
+                        GroupsRecyclerAdapter groupsRecyclerAdapter = new GroupsRecyclerAdapter(cardsActivity, img, name, desc);
+                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(cardsActivity);
+                        activityCardDetailBinding.includeLayoutDetails.recyclerView.setLayoutManager(new LinearLayoutManager(cardsActivity, LinearLayoutManager.HORIZONTAL, true));
 //                             recycler_view.setLayoutManager(mLayoutManager);
                         activityCardDetailBinding.includeLayoutDetails.recyclerView.setItemAnimator(new DefaultItemAnimator());
                         activityCardDetailBinding.includeLayoutDetails.recyclerView.setAdapter(groupsRecyclerAdapter);
@@ -2113,7 +2110,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                 }
                 else
                 {
-                    Toast.makeText(getActivity(), "Not able to fetch circles", Toast.LENGTH_LONG).show();
+                    Toast.makeText(cardsActivity, "Not able to fetch circles", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {

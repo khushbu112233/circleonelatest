@@ -215,6 +215,7 @@ public class EditProfileActivity extends AppCompatActivity implements
     private String refer;
     private ProgressDialog progress;
     public static FragmentEditProfileBinding fragmentEditProfileBinding;
+    boolean result, result1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -250,6 +251,8 @@ public class EditProfileActivity extends AppCompatActivity implements
             }
         };
         ss.setSpan(clickableSpan, 91, 100, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        result=Utility.checkPermission(EditProfileActivity.this);
+        result1=Utility.checkCameraPermission(EditProfileActivity.this);
 
         // TextView textView = (TextView) findViewById(R.id.hello);
         fragmentEditProfileBinding.txtTestimonial.setText(ss);
@@ -263,6 +266,19 @@ public class EditProfileActivity extends AppCompatActivity implements
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+        fragmentEditProfileBinding.txtbackDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fragmentEditProfileBinding.txtCardBack.setText("");
+            }
+        });
+
+        fragmentEditProfileBinding.txtfrontDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fragmentEditProfileBinding.txtCardFront.setText("");
             }
         });
         fragmentEditProfileBinding.imgLinkedin.setOnClickListener(this);
@@ -284,10 +300,7 @@ public class EditProfileActivity extends AppCompatActivity implements
             @Override
             public void onClick(View view) {
                 cropType = "profile";
-                CropImage.activity(null)
-                        .setCropShape(CropImageView.CropShape.OVAL)
-                        .setGuidelines(CropImageView.Guidelines.ON)
-                        .start(EditProfileActivity.this);
+                selectImageToCrop();
             }
         });
         fragmentEditProfileBinding.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -351,6 +364,35 @@ public class EditProfileActivity extends AppCompatActivity implements
             }
         });
 
+    }
+
+    private void selectImageToCrop() {
+        final CharSequence[] items = { "Upload Picture", "Remove Picture",
+                "Cancel" };
+        AlertDialog.Builder builder = new AlertDialog.Builder(EditProfileActivity.this);
+        builder.setTitle("Select to Upload Picture");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                boolean result=Utility.checkPermission(EditProfileActivity.this);
+                boolean result1=Utility.checkCameraPermission(EditProfileActivity.this);
+
+                if (items[item].equals("Upload Picture")) {
+                    if (result && result1) {
+                        CropImage.activity(null)
+                                .setCropShape(CropImageView.CropShape.OVAL)
+                                .setGuidelines(CropImageView.Guidelines.ON)
+                                .start(EditProfileActivity.this);
+                    }
+                } else if (items[item].equals("Remove Picture")) {
+                    UserPhoto = "";
+                    fragmentEditProfileBinding.includeTop.imgProfile.setImageResource(R.drawable.usr_white1);
+                } else if (items[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
     }
 
     @Override
@@ -643,16 +685,19 @@ public class EditProfileActivity extends AppCompatActivity implements
                 break;
             case R.id.ivAttachFrontImage:
                 cardType = "front";
-
-                CropImage.activity(null)
-                        .setGuidelines(CropImageView.Guidelines.ON)
-                        .start(EditProfileActivity.this);
+                if (result && result1) {
+                    CropImage.activity(null)
+                            .setGuidelines(CropImageView.Guidelines.ON)
+                            .start(EditProfileActivity.this);
+                }
                 break;
             case R.id.ivAttachBackImage:
                 cardType = "back";
-                CropImage.activity(null)
-                        .setGuidelines(CropImageView.Guidelines.ON)
-                        .start(EditProfileActivity.this);
+                if (result && result1) {
+                    CropImage.activity(null)
+                            .setGuidelines(CropImageView.Guidelines.ON)
+                            .start(EditProfileActivity.this);
+                }
                 break;
             case R.id.ivArrowImg:
                 if (arrowStatus.equalsIgnoreCase("RIGHT"))

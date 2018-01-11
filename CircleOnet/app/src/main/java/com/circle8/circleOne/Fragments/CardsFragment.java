@@ -22,6 +22,8 @@ import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.CustomViewPager;
 import com.circle8.circleOne.Utils.Utility;
 
+import java.text.DecimalFormatSymbols;
+
 import static com.circle8.circleOne.Activity.CardsActivity.Connection_Limit;
 import static com.circle8.circleOne.Activity.DashboardActivity.setActionBarTitle;
 
@@ -83,13 +85,24 @@ public class CardsFragment extends Fragment
         SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager());
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().show();
-        setActionBarTitle("Cards - " + List1Fragment.count + "/" + Connection_Limit);
+
+        try {
+            if (Connection_Limit.equalsIgnoreCase("100000")) {
+                setActionBarTitle("Cards - " + List1Fragment.count + "/", true);
+            }
+            else {
+                setActionBarTitle("Cards - " + List1Fragment.count + "/" + Connection_Limit, false);
+
+            }
+        }catch (Exception e){
+
+        }
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (CustomViewPager) view.findViewById(R.id.container1);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setPagingEnabled(false);
-        mViewPager.setOffscreenPageLimit(1);
+      //  mViewPager.setOffscreenPageLimit(2);
         tabLayout = (TabLayout) view.findViewById(R.id.tabs1);
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(android.R.color.white));
@@ -100,13 +113,47 @@ public class CardsFragment extends Fragment
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 0) {
-                    setActionBarTitle("Cards - " + List1Fragment.count + "/" + Connection_Limit);
+
+                    try {
+                        if (Connection_Limit.equalsIgnoreCase("100000")) {
+                            setActionBarTitle("Cards - " + List1Fragment.count + "/" , true);
+                        }
+                        else {
+                            setActionBarTitle("Cards - " + List1Fragment.count + "/" + Connection_Limit, false);
+
+                        }
+                    }catch (Exception e){
+
+                    }
+                //    setActionBarTitle("Cards - " + List1Fragment.count + "/" + Connection_Limit);
                 }
                 else if (tab.getPosition() == 1) {
-                    setActionBarTitle("Cards - " + List2Fragment.counts + "/" + Connection_Limit);
+
+                    try {
+                        if (Connection_Limit.equalsIgnoreCase("100000")) {
+                            setActionBarTitle("Cards - " + List2Fragment.counts + "/" , true);
+                        }
+                        else {
+                            setActionBarTitle("Cards - " + List2Fragment.counts + "/" + Connection_Limit, false);
+
+                        }
+                    }catch (Exception e){
+
+                    }
                 }
                 else if (tab.getPosition() == 2) {
-                    setActionBarTitle("Cards - " + List4Fragment.counts + "/" + Connection_Limit);
+
+                    try {
+                        if (Connection_Limit.equalsIgnoreCase("100000")) {
+                            setActionBarTitle("Cards - " + List4Fragment.counts + "/" , true);
+                        }
+                        else {
+                            setActionBarTitle("Cards - " + List4Fragment.counts + "/" + Connection_Limit, false);
+
+                        }
+                    }catch (Exception e){
+
+                    }
                 }
                 InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(tabLayout.getApplicationWindowToken(), 0);

@@ -27,7 +27,7 @@ public class GroupsInCardDetailAdapter extends BaseAdapter
     ArrayList<String> name = new ArrayList<>();
     ArrayList<String> desc = new ArrayList<>();
 
-    public GroupsInCardDetailAdapter(CardDetail cardDetail, ArrayList<String> img,
+    public GroupsInCardDetailAdapter(Context cardDetail, ArrayList<String> img,
                                      ArrayList<String> name, ArrayList<String> desc)
     {
         this.context = cardDetail ;

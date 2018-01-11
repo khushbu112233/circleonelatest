@@ -13,11 +13,12 @@
             <ImageView
                 android:id="@+id/imgTapCard"
                 android:src="@drawable/ic_nfc_white"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_centerHorizontal="true"/>
 
             <com.circle8.circleOne.Utils.cgTextView
+                android:layout_marginTop="10dp"
                 android:id="@+id/tvTapCard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -35,6 +36,8 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp">
             <View
+                android:layout_toLeftOf="@+id/tvOr"
+                android:layout_marginRight="10dp"
                 android:id="@+id/v1"
                 android:layout_width="150dp"
                 android:layout_height="1dp"
@@ -51,6 +54,8 @@
                 android:textColor="@color/white"
                 android:textSize="18sp" />
             <View
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/tvOr"
                 android:id="@+id/v2"
                 android:layout_alignRight="@+id/tvOr"
                 android:layout_width="150dp"
@@ -74,11 +79,12 @@
                 <ImageView
                     android:id="@+id/imgScanQrCode"
                     android:src="@drawable/ic_scan_qr_white"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_centerHorizontal="true"/>
 
                 <com.circle8.circleOne.Utils.cgTextView
+                    android:layout_marginTop="10dp"
                     android:id="@+id/tvScanQrCode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -97,11 +103,12 @@
                 <ImageView
                     android:id="@+id/imgMyQrCode"
                     android:src="@drawable/ic_qr_white"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_centerHorizontal="true"/>
 
                 <com.circle8.circleOne.Utils.cgTextView
+                    android:layout_marginTop="10dp"
                     android:id="@+id/tvMyQrCode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

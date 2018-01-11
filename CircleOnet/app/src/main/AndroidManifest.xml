@@ -168,7 +168,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbarSplash" />
         <activity
-            android:name=".Activity.CardDetail"
+            android:name=".Activity.CardDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbar" />
         <activity

@@ -115,7 +115,7 @@ public class ByNameFragment extends Fragment
             {
                 String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
                 listView.setVisibility(View.VISIBLE);
-                tvDataInfo.setVisibility(View.GONE);
+               // tvDataInfo.setVisibility(View.GONE);
                 if (v != null) {
                     InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
@@ -138,7 +138,7 @@ public class ByNameFragment extends Fragment
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
                 listView.setVisibility(View.VISIBLE);
-                tvDataInfo.setVisibility(View.GONE);
+               // tvDataInfo.setVisibility(View.GONE);
                 if (v != null) {
                     InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);

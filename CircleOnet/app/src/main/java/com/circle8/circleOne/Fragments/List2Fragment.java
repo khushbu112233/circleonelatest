@@ -39,6 +39,7 @@ import com.circle8.circleOne.Model.FriendConnection;
 import com.circle8.circleOne.Model.ImageItem;
 import com.circle8.circleOne.Model.NFCModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.FragmentList2Binding;
 import com.daimajia.swipe.util.Attributes;
@@ -59,6 +60,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.circle8.circleOne.Activity.CardsActivity.Connection_Limit;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 /**
@@ -1123,17 +1125,38 @@ public class List2Fragment extends Fragment
          gridAdapter.notifyDataSetChanged();
 
         if (SortFragment.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
-                DashboardActivity.setActionBarTitle("Cards - " + counts + "/" + CardsActivity.Connection_Limit);
+
+            try {
+                if (Connection_Limit.equalsIgnoreCase("100000")) {
+                    if (Pref.getValue(context, "current_frag", "").equalsIgnoreCase("1")) {
+                        DashboardActivity.setActionBarTitle("Cards - " + counts + "/", true);
+                    }
+                }
+                else {
+                    if (Pref.getValue(context, "current_frag", "").equalsIgnoreCase("1")) {
+                        DashboardActivity.setActionBarTitle("Cards - " + counts + "/" + CardsActivity.Connection_Limit, false);
+                    }
+
+                }
+            }catch (Exception e){
+
+            }
         }
         else if (SortFragment.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
-                DashboardActivity.setActionBarTitle("Cards - " + counts);
+            if (Pref.getValue(context, "current_frag", "").equalsIgnoreCase("1")) {
+                DashboardActivity.setActionBarTitle("Cards - " + counts, false);
+            }
         }
         else if (SortFragment.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
-                DashboardActivity.setActionBarTitle("Cards - " + counts);
+            if (Pref.getValue(context, "current_frag", "").equalsIgnoreCase("1")) {
+                DashboardActivity.setActionBarTitle("Cards - " + counts, false);
+            }
         }
         else if (SortFragment.CardListApi.equalsIgnoreCase("SearchConnect"))
         {
-                DashboardActivity.setActionBarTitle("Cards - " + counts);
+            if (Pref.getValue(context, "current_frag", "").equalsIgnoreCase("1")) {
+                DashboardActivity.setActionBarTitle("Cards - " + counts, false);
+            }
         }
 
         gridAdapter.setMode(Attributes.Mode.Single);

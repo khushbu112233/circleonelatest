@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -30,6 +31,8 @@ import com.circle8.circleOne.Model.ProfileModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.ActivitySortAndFilterOptionBinding;
+import com.labo.kaji.fragmentanimations.CubeAnimation;
+import com.labo.kaji.fragmentanimations.MoveAnimation;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -85,7 +88,7 @@ public class SortFragment extends Fragment {
         view = activitySortAndFilterOptionBinding.getRoot();
 
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        DashboardActivity.setActionBarTitle("Sort & Filter");
+        DashboardActivity.setActionBarTitle("Sort & Filter", false);
         DashboardActivity.setDrawerVisibility(true);
         session = new LoginSession(getContext());
         HashMap<String, String> user = session.getUserDetails();
@@ -698,6 +701,15 @@ public class SortFragment extends Fragment {
 
         return view;
     }
+
+   /* @Override
+    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+        if (enter) {
+            return MoveAnimation.create(MoveAnimation.UP, enter, 2000);
+        } else {
+            return MoveAnimation.create(MoveAnimation.DOWN, enter, 2000);
+        }
+    }*/
 
     @Override
     public void onPause() {

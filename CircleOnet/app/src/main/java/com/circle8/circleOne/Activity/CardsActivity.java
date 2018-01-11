@@ -1773,14 +1773,14 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             }
         }*/
     }
-    public String decrypt(String value, String key)
+    public static String decrypt(String value, String key)
             throws GeneralSecurityException, IOException {
         byte[] value_bytes = Base64.decode(value, 0);
         byte[] key_bytes = getKeyBytes(key);
         return new String(decrypt(value_bytes, key_bytes, key_bytes), "UTF-8");
     }
 
-    public byte[] decrypt(byte[] ArrayOfByte1, byte[] ArrayOfByte2, byte[] ArrayOfByte3)
+    public static byte[] decrypt(byte[] ArrayOfByte1, byte[] ArrayOfByte2, byte[] ArrayOfByte3)
             throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
         // setup AES cipher in CBC mode with PKCS #5 padding
         Cipher localCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
@@ -1790,7 +1790,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
         return localCipher.doFinal(ArrayOfByte1);
     }
 
-    private byte[] getKeyBytes(String paramString)
+    private static byte[] getKeyBytes(String paramString)
             throws UnsupportedEncodingException {
         byte[] arrayOfByte1 = new byte[16];
         byte[] arrayOfByte2 = paramString.getBytes("UTF-8");

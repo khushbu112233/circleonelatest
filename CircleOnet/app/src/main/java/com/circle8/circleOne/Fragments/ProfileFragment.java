@@ -3,10 +3,14 @@ package com.circle8.circleOne.Fragments;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -17,6 +21,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -74,9 +79,11 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.squareup.picasso.Picasso;
 
@@ -97,6 +104,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -105,6 +113,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import static android.graphics.Color.WHITE;
 import static com.circle8.circleOne.Adapter.TestimonialRequestAdapter.context;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
@@ -116,7 +125,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
     // private ProgressBar firstBar = null;
 
     public final static int QRcodeWidth = 500 ;
-    static Bitmap bitmap ;
+    static Bitmap bitmap , bitmapQR;
     static ProgressDialog progressDialog ;
     static ArrayList<String> profile_array, NameArray, DesignationArray, profileImage_array;
     private static LoginSession session;
@@ -160,6 +169,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
     private static TextView tvProgressing ;
     private static ImageView ivConnecting1;
     private static ImageView ivConnecting2;
+    static Bitmap overlay;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -372,6 +382,26 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
         }
     }
 
+    public static Bitmap mergeBitmaps(Bitmap overlay, Bitmap bitmap) {
+
+        int height = bitmap.getHeight();
+        int width = bitmap.getWidth();
+
+        Bitmap combined = Bitmap.createBitmap(width, height, bitmap.getConfig());
+        Canvas canvas = new Canvas(combined);
+        int canvasWidth = canvas.getWidth();
+        int canvasHeight = canvas.getHeight();
+
+        canvas.drawBitmap(bitmap, new Matrix(), null);
+
+        int centreX = (canvasWidth  - overlay.getWidth()) /2;
+        int centreY = (canvasHeight - overlay.getHeight()) /2 ;
+        canvas.drawBitmap(overlay, centreX, centreY, null);
+
+        return combined;
+    }
+
+
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -526,7 +556,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                 // alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
                 tvBarName.setText(fragmentProfileBinding.includeFrame2.tvPersonName.getText().toString());
 //                    bitmap = TextToImageEncode(barName);
-                ivBarImage.setImageBitmap(bitmap);
+                //ivBarImage.setImageBitmap(bitmap);
+                ivBarImage.setImageBitmap(mergeBitmaps(overlay,bitmapQR));
 
                 fl_QRFrame.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -904,26 +935,54 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                                     fragmentProfileBinding.viewPager1.setOffscreenPageLimit(2);
                                     // viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
                                     fragmentProfileBinding.viewPager1.setAdapter(myPager);
-                                    try
-                                    {
-                                        barName = encrypt(TestimonialProfileId, secretKey);
-                                        bitmap = TextToImageEncode(barName);
-                                    }
-                                    catch (UnsupportedEncodingException e) {
-                                        e.printStackTrace();
-                                    } catch (InvalidKeyException e) {
-                                        e.printStackTrace();
-                                    } catch (NoSuchAlgorithmException e) {
-                                        e.printStackTrace();
-                                    } catch (NoSuchPaddingException e) {
-                                        e.printStackTrace();
-                                    } catch (InvalidAlgorithmParameterException e) {
-                                        e.printStackTrace();
-                                    } catch (IllegalBlockSizeException e) {
-                                        e.printStackTrace();
-                                    } catch (BadPaddingException e) {
-                                        e.printStackTrace();
-                                    }
+
+
+                                    final Handler handler = new Handler();
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            //Do something after 100ms
+
+                                            try
+                                            {
+                                                barName = encrypt(TestimonialProfileId, secretKey);
+                                                //  bitmap = TextToImageEncode(barName);
+                                            }
+                                            catch (UnsupportedEncodingException e) {
+                                                e.printStackTrace();
+                                            } catch (InvalidKeyException e) {
+                                                e.printStackTrace();
+                                            } catch (NoSuchAlgorithmException e) {
+                                                e.printStackTrace();
+                                            } catch (NoSuchPaddingException e) {
+                                                e.printStackTrace();
+                                            } catch (InvalidAlgorithmParameterException e) {
+                                                e.printStackTrace();
+                                            } catch (IllegalBlockSizeException e) {
+                                                e.printStackTrace();
+                                            } catch (BadPaddingException e) {
+                                                e.printStackTrace();
+                                            }
+
+
+                                            try {
+                                                //setting size of qr code
+                                                int width =600;
+                                                int height = 600;
+                                                int smallestDimension = width < height ? width : height;
+
+                                                String qrCodeData = barName;
+                                                //setting parameters for qr code
+                                                String charset = "UTF-8";
+                                                Map<EncodeHintType, ErrorCorrectionLevel> hintMap =new HashMap<EncodeHintType, ErrorCorrectionLevel>();
+                                                hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+                                                CreateQRCode(getContext(), qrCodeData, charset, hintMap, smallestDimension, smallestDimension);
+
+                                            } catch (Exception ex) {
+                                                Log.e("QrGenerate",ex.getMessage());
+                                            }
+                                        }
+                                    }, 5000);
                                 }
                             }
                         }
@@ -954,6 +1013,42 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
         }
 
     }
+
+    public static void CreateQRCode(Context context, String qrCodeData, String charset, Map hintMap, int qrCodeheight, int qrCodewidth){
+
+
+        try {
+            //generating qr code in bitmatrix type
+            BitMatrix matrix = new MultiFormatWriter().encode(new String(qrCodeData.getBytes(charset), charset),
+                    BarcodeFormat.QR_CODE, qrCodewidth, qrCodeheight, hintMap);
+            //converting bitmatrix to bitmap
+
+            int width = matrix.getWidth();
+            int height = matrix.getHeight();
+            int[] pixels = new int[width * height];
+            // All are 0, or black, by default
+            for (int y = 0; y < height; y++) {
+                int offset = y * width;
+                for (int x = 0; x < width; x++) {
+                    //pixels[offset + x] = matrix.get(x, y) ? BLACK : WHITE;
+                    pixels[offset + x] = matrix.get(x, y) ?
+                            ResourcesCompat.getColor(context.getResources(),R.color.qrColor,null) :WHITE;
+                }
+            }
+
+            bitmapQR = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            bitmapQR.setPixels(pixels, 0, width, 0, 0, width, height);
+            //setting bitmap to image view
+
+            overlay = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
+
+
+        }catch (Exception er){
+            Log.e("QrGenerate",er.getMessage());
+        }
+    }
+
+
     public static void callMyProfile()
     {
         new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
@@ -1684,27 +1779,53 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                     //   viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
                     fragmentProfileBinding.viewPager1.setAdapter(myPager);
 
+
+
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            //Do something after 100ms
+                            try
+                            {
+                                barName = encrypt(TestimonialProfileId, secretKey);
+                                // bitmap = TextToImageEncode(barName);
+                            }
+                            catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            } catch (InvalidKeyException e) {
+                                e.printStackTrace();
+                            } catch (NoSuchAlgorithmException e) {
+                                e.printStackTrace();
+                            } catch (NoSuchPaddingException e) {
+                                e.printStackTrace();
+                            } catch (InvalidAlgorithmParameterException e) {
+                                e.printStackTrace();
+                            } catch (IllegalBlockSizeException e) {
+                                e.printStackTrace();
+                            } catch (BadPaddingException e) {
+                                e.printStackTrace();
+                            }
+                            try {
+                                //setting size of qr code
+                                int width =600;
+                                int height = 600;
+                                int smallestDimension = width < height ? width : height;
+
+                                String qrCodeData = barName;
+                                //setting parameters for qr code
+                                String charset = "UTF-8";
+                                Map<EncodeHintType, ErrorCorrectionLevel> hintMap =new HashMap<EncodeHintType, ErrorCorrectionLevel>();
+                                hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+                                CreateQRCode(mContext, qrCodeData, charset, hintMap, smallestDimension, smallestDimension);
+
+                            } catch (Exception ex) {
+                                Log.e("QrGenerate",ex.getMessage());
+                            }
+                        }
+                    }, 5000);
                     // for bar code generating
-                    try
-                    {
-                        barName = encrypt(TestimonialProfileId, secretKey);
-                        bitmap = TextToImageEncode(barName);
-                    }
-                    catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    } catch (InvalidKeyException e) {
-                        e.printStackTrace();
-                    } catch (NoSuchAlgorithmException e) {
-                        e.printStackTrace();
-                    } catch (NoSuchPaddingException e) {
-                        e.printStackTrace();
-                    } catch (InvalidAlgorithmParameterException e) {
-                        e.printStackTrace();
-                    } catch (IllegalBlockSizeException e) {
-                        e.printStackTrace();
-                    } catch (BadPaddingException e) {
-                        e.printStackTrace();
-                    }
+
                 }
                 else
                 {
@@ -1983,7 +2104,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
         return result;
     }
 
-    @Override
+   /* @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
@@ -1996,15 +2117,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
                     if (keyCode == KeyEvent.KEYCODE_BACK) {
 
-                            FragmentManager fragmentManager=((FragmentActivity)context).getSupportFragmentManager();
+                           *//* FragmentManager fragmentManager=((FragmentActivity)mContext).getSupportFragmentManager();
 
-                            for(int i=0;i<fragmentManager.getBackStackEntryCount();i++){
+                           // for(int i=0;i<fragmentManager.getBackStackEntryCount();i++){
                                 fragmentManager.popBackStack();
-                            }
+                            //}
 
                             DashboardFragment fragment = new DashboardFragment();
-                            ((FragmentActivity)context).getSupportFragmentManager().beginTransaction().add(R.id.main_container_wrapper, fragment).commit();
-                            //getActivity().getSupportFragmentManager().popBackStack();
+                            ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().add(R.id.main_container_wrapper, fragment).commit();
+                           *//* getActivity().getSupportFragmentManager().popBackStack();
                         return true;
                     }
                 }
@@ -2012,7 +2133,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
             }
         });
     }
-
+*/
     private class HttpAsyncTask extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;

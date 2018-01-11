@@ -13,12 +13,26 @@
         android:alpha="0.5"></FrameLayout>
 
     <RelativeLayout
+        android:background="@color/white"
         android:layout_centerInParent="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp">
+        >
+
+        <com.circle8.circleOne.Utils.cgBoldTextView
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="22dp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:text="My QR Code"
+            android:id="@+id/qr"
+            android:layout_centerHorizontal="true" />
 
         <ImageView
+            android:layout_below="@+id/qr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/ivBarImage"
@@ -28,7 +42,7 @@
             android:id="@+id/tvBarName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="#6D6E71"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/ivBarImage"
             android:layout_marginTop="10dp"

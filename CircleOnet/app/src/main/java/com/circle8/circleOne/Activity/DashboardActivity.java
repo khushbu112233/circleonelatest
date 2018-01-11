@@ -3,16 +3,27 @@ package com.circle8.circleOne.Activity;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.PendingIntent;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.location.Location;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
+import android.nfc.NfcAdapter;
+import android.nfc.NfcManager;
+import android.nfc.Tag;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -30,6 +41,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,12 +54,15 @@ import com.circle8.circleOne.Fragments.ConnectFragment;
 import com.circle8.circleOne.Fragments.DashboardFragment;
 import com.circle8.circleOne.Fragments.EventsFragment;
 import com.circle8.circleOne.Fragments.List1Fragment;
+import com.circle8.circleOne.Fragments.List2Fragment;
+import com.circle8.circleOne.Fragments.List4Fragment;
 import com.circle8.circleOne.Fragments.ProfileFragment;
 import com.circle8.circleOne.Fragments.SortFragment;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.LocationUtil.PermissionUtils;
 import com.circle8.circleOne.MultiContactPicker;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.PrefUtils;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.chat.ChatHelper;
@@ -78,10 +93,30 @@ import com.quickblox.messages.services.SubscribeService;
 import com.quickblox.sample.core.utils.SharedPrefsHelper;
 import com.twitter.sdk.android.Twitter;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.GeneralSecurityException;
+import java.text.DecimalFormatSymbols;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 
+import static com.circle8.circleOne.Activity.CardsActivity.Connection_Limit;
+import static com.circle8.circleOne.Activity.CardsActivity.MIME_TEXT;
+import static com.circle8.circleOne.Activity.CardsActivity.decrypt;
+import static com.circle8.circleOne.Fragments.DashboardFragment.secretKey;
 import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
+import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 public class DashboardActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks,
     ActivityCompat.OnRequestPermissionsResultCallback,
@@ -107,6 +142,17 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
     public static Location mLastLocation;
     static TextView textView;
     static ImageView imgDrawer, imgLogo;
+    public static String NotificationCount, UserId= "";
+    private boolean netCheck = false;
+    private NfcAdapter mNfcAdapter;
+    public static final byte[] MIME_TEXT1 = "application/com.amplearch.circleone".getBytes();
+    boolean done = false;
+    ArrayList<String> arrayNFC  = new ArrayList<>();
+    String profileId = "", nfcProfileId = "";
+    public double latitude;
+    public double longitude;
+    String lat = "", lng = "";
+    String CardCode = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,26 +172,32 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 */
-        textView = (TextView) findViewById(R.id.mytext);
+        textView = (TextView) toolbar.findViewById(R.id.toolbar_title);
         imgDrawer = (ImageView) findViewById(R.id.drawer);
         imgLogo = (ImageView) findViewById(R.id.imgLogo);
-        imgDrawer.setVisibility(View.GONE);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        imgDrawer.setVisibility(View.INVISIBLE);
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_logo_white);
+        getSupportActionBar().setHomeButtonEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+      //  getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_logo_white);
+        getSupportActionBar().setHomeAsUpIndicator(null);
+
         //  toggle.setHomeAsUpIndicator(R.id.icon);//add this for custom icon
         fragment = new DashboardFragment();
+        Pref.setValue(DashboardActivity.this, "current_frag", "1");
+
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
                 .addToBackStack(null).commit();
+        netCheck = Utility.isNetworkAvailable(getApplicationContext());
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         /*View header = navigationView.inflateHeaderView(R.layout.nav_header_music);
         TextView profileName = (TextView) header.findViewById(R.id.profile_name);
         profileName.setText("Adele");*/
+        mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
         session = new LoginSession(getApplicationContext());
         textView.setText("Dashboard");
@@ -153,6 +205,24 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
         HashMap<String, String> user = session.getUserDetails();
 
         CardsActivity.Connection_Limit = user.get(LoginSession.KEY_CONNECTION_LIMIT);
+        profileId = user.get(LoginSession.KEY_PROFILEID);
+
+        try {
+            if (CardsActivity.Connection_Limit.equalsIgnoreCase("100000")) {
+                //CardsActivity.Connection_Limit = DecimalFormatSymbols.getInstance().getInfinity();
+            }
+        }catch (Exception e){
+
+        }
+
+        UserId = user.get(LoginSession.KEY_USERID);      // name
+
+        imgLogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawer.openDrawer(Gravity.START);
+            }
+        });
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -291,26 +361,47 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                 if (getCurrentFragment() instanceof CardsFragment){
                     /*Intent intent = new Intent(getApplicationContext(), SortAndFilterOption.class);
                     startActivity(intent);*/
+                    Pref.setValue(DashboardActivity.this, "current_frag", "4");
 
                     fragment = new SortFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.setCustomAnimations(R.anim.slide_in_down, R.anim.slide_out_down);
+                    transaction.replace(R.id.main_container_wrapper, fragment).addToBackStack(null).commit();
+                    /*getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
                             .addToBackStack(null)
                             .commit();
-                    overridePendingTransition(R.anim.slide_in_down, R.anim.slide_out_down);
-                   // setActionBarTitle("Sort & Filter");
+                    overridePendingTransition(R.anim.slide_in_down, R.anim.slide_out_down);*/
+                    setActionBarTitle("Sort & Filter", false);
 
                 }
                 else if (getCurrentFragment() instanceof SortFragment){
+                    Pref.setValue(DashboardActivity.this, "current_frag", "1");
 
                     fragment = new CardsFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
-                            .addToBackStack(null).commit();
-                    overridePendingTransition(R.anim.slide_in_down, R.anim.slide_out_down);
+
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.setCustomAnimations(R.anim.slide_out_down, R.anim.slide_out_down);
+                    transaction.replace(R.id.main_container_wrapper, fragment).addToBackStack(null).commit();
+                    /*getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+                            .addToBackStack(null)
+                            .commit();
+                    overridePendingTransition(R.anim.slide_in_down, R.anim.slide_out_down);*/
+                    //setActionBarTitle("Sort & Filter", false);
 
                 }
             }
         });
 
+        if (netCheck == false){
+            netCheck = Utility.isNetworkAvailable(getApplicationContext());
+            Utility.freeMemory();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            new HttpAsyncTaskNotification().execute(Utility.BASE_URL + "CountNewNotification");
+        }
 
        /* if (getCurrentFragment() instanceof SortAndFilterOption){
                     *//*Intent intent = new Intent(getApplicationContext(), SortAndFilterOption.class);
@@ -319,17 +410,39 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
             setActionBarTitle("Sort & Filter");
 
         }*/
+
+
+        if (getCurrentFragment() instanceof DashboardFragment){
+             setActionBarTitle("Dashboard", false);
+        }
+        else if (getCurrentFragment() instanceof Notification){
+            setActionBarTitle("Notification - 0", false);
+        }
+        else if (getCurrentFragment() instanceof CardsFragment){
+            setActionBarTitle("Cards - 0 / " + Connection_Limit, false);
+        }
+        else if (getCurrentFragment() instanceof SortFragment){
+            setActionBarTitle("Sort & Filter", false);
+        }
     }
 
-    public static void setActionBarTitle(String title) {
+    public static void setActionBarTitle(String title, Boolean infinity) {
         textView.setText(title);
+
+        if (infinity == true){
+            textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_infinity, 0);
+        }
+        else {
+            textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+
+        }
     }
 
     public static void setDrawerVisibility(Boolean visibility) {
         if (visibility == true){
             imgDrawer.setVisibility(View.VISIBLE);
         }else {
-            imgDrawer.setVisibility(View.GONE);
+            imgDrawer.setVisibility(View.INVISIBLE);
 
         }
     }
@@ -338,7 +451,7 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
         if (visibility == true){
             imgLogo.setVisibility(View.VISIBLE);
         }else {
-            imgLogo.setVisibility(View.GONE);
+            imgLogo.setVisibility(View.INVISIBLE);
 
         }
     }
@@ -531,6 +644,429 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
 
     }
 
+    @Override
+    public void onPause() {
+        Utility.freeMemory();
+        super.onPause();
+
+        if (mNfcAdapter != null)
+            mNfcAdapter.disableForegroundDispatch(this);
+    }
+
+    @Override
+    public void onNewIntent(final Intent paramIntent) {
+        super.onNewIntent(paramIntent);
+
+        String action = paramIntent.getAction();
+        Tag tag = paramIntent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+
+        String s = "";
+
+        // parse through all NDEF messages and their records and pick text type only
+        Parcelable[] data = paramIntent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+
+        if (data != null) {
+            try {
+                arrayNFC = new ArrayList<>();
+                for (int i = 0; i < data.length; i++) {
+                    NdefRecord[] recs = ((NdefMessage)data[i]).getRecords();
+                    for (int j = 0; j < recs.length; j++) {
+                        if (recs[j].getTnf() == NdefRecord.TNF_MIME_MEDIA && Arrays.equals(recs[j].getType(), MIME_TEXT)) {
+
+                            byte[] payload = recs[j].getPayload();
+                            String textEncoding = ((payload[0] & 0200) == 0) ? "UTF-8" : "UTF-16";
+                            int langCodeLen = payload[0] & 0077;
+
+                            s += ("\n" +
+                                    new String(payload, langCodeLen + 1,
+                                            payload.length - langCodeLen - 1, textEncoding) );
+                            String s1 = new String(payload, langCodeLen + 1,
+                                    payload.length - langCodeLen - 1, textEncoding);
+                            String decryptstr = decrypt(s1, secretKey);
+                            arrayNFC.add(decryptstr);
+                        }
+                        else if (recs[j].getTnf() == NdefRecord.TNF_MIME_MEDIA && Arrays.equals(recs[j].getType(), MIME_TEXT1)) {
+
+                            byte[] payload = recs[j].getPayload();
+                            String textEncoding = ((payload[0] & 0200) == 0) ? "UTF-8" : "UTF-16";
+                            int langCodeLen = payload[0] & 0077;
+
+                            s += ("\n" +
+                                    new String(payload, langCodeLen + 1,
+                                            payload.length - langCodeLen - 1, textEncoding) );
+                            String s1 = new String(payload, langCodeLen + 1,
+                                    payload.length - langCodeLen - 1, textEncoding);
+                            String decryptstr = decrypt(s1, secretKey);
+                            arrayNFC.add(decryptstr);
+                        }
+                        else {
+                            try {
+
+
+                                NdefMessage[] msgs = null;
+                                msgs = new NdefMessage[data.length];
+                                for (int i1 = 0; i1 < data.length; i1++) {
+                                    msgs[i1] = (NdefMessage) data[i1];
+                                }
+
+                                byte[] payload = msgs[0].getRecords()[0].getPayload();
+
+                                String message = new String(payload);
+
+                                // mEtMessage.setText(new String(payload));
+
+                                message = message.substring(1, message.length());
+
+                                String decryptstr = decrypt(message, secretKey);
+                                arrayNFC.add(decryptstr);
+
+                            } catch (GeneralSecurityException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                Log.e("TagDispatch", e.toString());
+            }
+
+        }
+        String ProfileId = "", card_code = "";
+
+        if (netCheck == false){
+            netCheck = Utility.isNetworkAvailable(getApplicationContext());
+            Utility.freeMemory();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
+        }
+        else {
+
+            //Toast.makeText(getApplicationContext(), arrayNFC.toString(), Toast.LENGTH_LONG).show();
+            if (arrayNFC.size() == 1) {
+                nfcProfileId = arrayNFC.get(0).toString();
+
+
+                if (mLastLocation != null) {
+                    latitude = mLastLocation.getLatitude();
+                    longitude = mLastLocation.getLongitude();
+                } else {
+                    lat = "";
+                    lng = "";
+                    getLocation();
+                  //  Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
+                }
+                //  Toast.makeText(getApplicationContext(), String.valueOf(latitude + " " + longitude), Toast.LENGTH_LONG).show();
+
+                try {
+                    new HttpAsyncTask().execute(Utility.BASE_URL + "FriendConnection_Operation");
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                }
+
+
+                //  txtNoGroup.setText("Your Card is already verified..");
+                //  ivAddCard.setVisibility(View.GONE);
+            } else if (arrayNFC.size() == 2) {
+                nfcProfileId = arrayNFC.get(0).toString();
+                CardCode = arrayNFC.get(1).toString();
+
+
+                if (mLastLocation != null) {
+                    latitude = mLastLocation.getLatitude();
+                    longitude = mLastLocation.getLongitude();
+                } else {
+                    lat = "";
+                    lng = "";
+                    getLocation();
+                   // Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
+                }
+                //  Toast.makeText(getApplicationContext(), String.valueOf(latitude + " " + longitude), Toast.LENGTH_LONG).show();
+
+                try {
+                    new HttpAsyncTask().execute(Utility.BASE_URL + "FriendConnection_Operation");
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                }
+                // Toast.makeText(getApplicationContext(), ProfileId + " " + CardCode, Toast.LENGTH_LONG).show();
+                // new HttpAsyncActivateNFC().execute(Utility.BASE_URL+"NFCSecurity/ActivateNFC");
+            } else {
+                nfcProfileId = "";
+                Toast.makeText(getApplicationContext(), "Please use only CircleOne NFC-Card for unlock", Toast.LENGTH_LONG).show();
+                //txtNoGroup.setText("Your Card is already verified..");
+                //ivAddCard.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (!done) {
+            NdefMessage[] msgs = null;
+
+            if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
+                Parcelable[] rawMsgs = getIntent().getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+
+                if (rawMsgs != null) {
+                    try {
+                        arrayNFC = new ArrayList<>();
+                        for (int i = 0; i < rawMsgs.length; i++) {
+                            NdefRecord[] recs = ((NdefMessage) rawMsgs[i]).getRecords();
+                            for (int j = 0; j < recs.length; j++) {
+                                if (recs[j].getTnf() == NdefRecord.TNF_MIME_MEDIA &&
+                                        Arrays.equals(recs[j].getType(), MIME_TEXT)) {
+
+                                    byte[] payload = recs[j].getPayload();
+                                    String textEncoding = ((payload[0] & 0200) == 0) ? "UTF-8" : "UTF-16";
+                                    int langCodeLen = payload[0] & 0077;
+
+                                    /*s += ("\n" +
+                                            new String(payload, langCodeLen + 1,
+                                                    payload.length - langCodeLen - 1, textEncoding) );
+*/
+                                    String s1 = new String(payload, langCodeLen + 1,
+                                            payload.length - langCodeLen - 1, textEncoding);
+                                    String decryptstr = decrypt(s1, secretKey);
+                                    arrayNFC.add(decryptstr);
+                                } else if (recs[j].getTnf() == NdefRecord.TNF_MIME_MEDIA && Arrays.equals(recs[j].getType(), MIME_TEXT1)) {
+
+                                    byte[] payload = recs[j].getPayload();
+                                    String textEncoding = ((payload[0] & 0200) == 0) ? "UTF-8" : "UTF-16";
+                                    int langCodeLen = payload[0] & 0077;
+
+                                   /* s += ("\n" +
+                                            new String(payload, langCodeLen + 1,
+                                                    payload.length - langCodeLen - 1, textEncoding) );*/
+                                    String s1 = new String(payload, langCodeLen + 1,
+                                            payload.length - langCodeLen - 1, textEncoding);
+                                    String decryptstr = decrypt(s1, secretKey);
+                                    arrayNFC.add(decryptstr);
+                                } else {
+                                    try {
+                                        msgs = new NdefMessage[rawMsgs.length];
+                                        for (int i1 = 0; i1 < rawMsgs.length; i1++) {
+                                            msgs[i1] = (NdefMessage) rawMsgs[i1];
+                                        }
+
+                                        byte[] payload = msgs[0].getRecords()[0].getPayload();
+
+                                        String message = new String(payload);
+                /* 把tag的資訊放到textview裡面 */
+                                        // mEtMessage.setText(new String(payload));
+
+                                        message = message.substring(1, message.length());
+
+                                        String decryptstr = decrypt(message, secretKey);
+                                        arrayNFC.add(decryptstr);
+
+                                    } catch (GeneralSecurityException e) {
+                                        e.printStackTrace();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                        }
+                    } catch (Exception e) {
+                        Log.e("TagDispatch", e.toString());
+                    }
+
+                }
+                String ProfileId = "", card_code = "";
+
+                if (netCheck == false) {
+                    netCheck = Utility.isNetworkAvailable(getApplicationContext());
+                    Utility.freeMemory();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.net_check), Toast.LENGTH_LONG).show();
+                } else {
+                    //Toast.makeText(getApplicationContext(), arrayNFC.toString(), Toast.LENGTH_LONG).show();
+                    if (arrayNFC.size() == 1) {
+                        nfcProfileId = arrayNFC.get(0).toString();
+                        //  txtNoGroup.setText("Your Card is already verified..");
+                        //  ivAddCard.setVisibility(View.GONE);
+                        if (mLastLocation != null) {
+                            latitude = mLastLocation.getLatitude();
+                            longitude = mLastLocation.getLongitude();
+                        } else {
+                            lat = "";
+                            lng = "";
+                            getLocation();
+                          //  Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
+                        }
+
+
+                        try {
+                            new HttpAsyncTask().execute(Utility.BASE_URL + "FriendConnection_Operation");
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                        }
+                    } else if (arrayNFC.size() == 2) {
+                        nfcProfileId = arrayNFC.get(0).toString();
+                        CardCode = arrayNFC.get(1).toString();
+
+                        if (mLastLocation != null) {
+                            latitude = mLastLocation.getLatitude();
+                            longitude = mLastLocation.getLongitude();
+                        } else {
+                            lat = "";
+                            lng = "";
+                            getLocation();
+                           // Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
+                        }
+
+
+                        try {
+                            new HttpAsyncTask().execute(Utility.BASE_URL + "FriendConnection_Operation");
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                        }
+                        // Toast.makeText(getApplicationContext(), ProfileId + " " + CardCode, Toast.LENGTH_LONG).show();
+                        // new HttpAsyncActivateNFC().execute(Utility.BASE_URL+"NFCSecurity/ActivateNFC");
+                    } else {
+                        nfcProfileId = "";
+                        Toast.makeText(getApplicationContext(), "Please use only CircleOne NFC-Card for unlock", Toast.LENGTH_LONG).show();
+                        //txtNoGroup.setText("Your Card is already verified..");
+                        //ivAddCard.setVisibility(View.GONE);
+                    }
+                }
+            }
+
+            IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
+            IntentFilter ndefDetected = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
+            IntentFilter techDetected = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
+            IntentFilter[] nfcIntentFilter = new IntentFilter[]{techDetected, tagDetected, ndefDetected};
+
+            PendingIntent pendingIntent = PendingIntent.getActivity(
+                    this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+            if (mNfcAdapter != null)
+                mNfcAdapter.enableForegroundDispatch(this, pendingIntent, nfcIntentFilter, null);
+        }
+    }
+
+    public String POST(String url) {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            Calendar c = Calendar.getInstance();
+            System.out.println("Current time =&gt; "+c.getTime());
+
+            SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+            String formattedDate = df.format(c.getTime());
+            // Toast.makeText(getApplicationContext(), formattedDate, Toast.LENGTH_LONG).show();
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("Latitude", lat);
+            jsonObject.accumulate("Location", "");
+            jsonObject.accumulate("Longitude", lng);
+            jsonObject.accumulate("Operation", "Request");
+            jsonObject.accumulate("RequestType", "NFC");
+            jsonObject.accumulate("connection_date", formattedDate);
+            jsonObject.accumulate("friendProfileId", nfcProfileId);
+            jsonObject.accumulate("myProfileId", profileId);
+            if (!CardCode.equals("")){
+                jsonObject.accumulate("card_code", CardCode);
+            }
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+
+    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(DashboardActivity.this);
+            dialog.setMessage("Adding records...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return POST(urls[0]);
+        }
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+            dialog.dismiss();
+            Utility.freeMemory();
+            //  Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            try {
+                if (result == "") {
+                    Toast.makeText(getApplicationContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
+                } else {
+                    JSONObject response = new JSONObject(result);
+                    String message = response.getString("message");
+                    String success = response.getString("success");
+
+                    if (success.equals("1")) {
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.successful_request_sent), Toast.LENGTH_LONG).show();
+                        fragment = new CardsFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+                                .addToBackStack(null)
+                                .commit();
+                    } else {
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                    }
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
     public void handleSignInResult(GoogleSignInResult result) {
         //   Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
@@ -555,7 +1091,7 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
 
     private void initClick() {
 
-        activityDashboardBinding.includefooter.imgCard.setOnClickListener(new View.OnClickListener() {
+        activityDashboardBinding.includefooter.rlCards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 activityDashboardBinding.includefooter.imgCard.setImageResource(R.drawable.ic_icon1b);
@@ -564,30 +1100,38 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                 activityDashboardBinding.includefooter.tvCards.setTextColor(getResources().getColor(R.color.colorPrimary));
                 activityDashboardBinding.includefooter.tvDashboard.setTextColor(getResources().getColor(R.color.unselected));
                 activityDashboardBinding.includefooter.tvProfile.setTextColor(getResources().getColor(R.color.unselected));
-
+                if (activityDashboardBinding.includefooter.txtNotificationCountAction.getText().toString().equals("")){
+                    activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
+                }else {
+                    activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.VISIBLE);
+                }
                 fragment = new CardsFragment();
+                Pref.setValue(DashboardActivity.this, "current_frag", "1");
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
                         .addToBackStack(null)
                         .commit();
 
             }
         });
-        activityDashboardBinding.includefooter.imgDashboard.setOnClickListener(new View.OnClickListener() {
+        activityDashboardBinding.includefooter.rlDashboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 activityDashboardBinding.includefooter.imgCard.setImageResource(R.drawable.ic_icon1);
-                activityDashboardBinding.includefooter.imgDashboard.setImageResource(R.drawable.ic_dashboard3x);
+                activityDashboardBinding.includefooter.imgDashboard.setImageResource(R.drawable.dashboard);
                 activityDashboardBinding.includefooter.imgProfile.setImageResource(R.drawable.ic_icon4);
                 activityDashboardBinding.includefooter.tvCards.setTextColor(getResources().getColor(R.color.unselected));
                 activityDashboardBinding.includefooter.tvDashboard.setTextColor(getResources().getColor(R.color.colorPrimary));
                 activityDashboardBinding.includefooter.tvProfile.setTextColor(getResources().getColor(R.color.unselected));
+                activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
+                Pref.setValue(DashboardActivity.this, "current_frag", "2");
 
                 fragment = new DashboardFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
                         .addToBackStack(null).commit();
+                setActionBarTitle("Dashboard", false);
             }
         });
-        activityDashboardBinding.includefooter.imgProfile.setOnClickListener(new View.OnClickListener() {
+        activityDashboardBinding.includefooter.rlProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 activityDashboardBinding.includefooter.imgCard.setImageResource(R.drawable.ic_icon1);
@@ -596,7 +1140,12 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                 activityDashboardBinding.includefooter.tvCards.setTextColor(getResources().getColor(R.color.unselected));
                 activityDashboardBinding.includefooter.tvDashboard.setTextColor(getResources().getColor(R.color.unselected));
                 activityDashboardBinding.includefooter.tvProfile.setTextColor(getResources().getColor(R.color.colorPrimary));
-
+                if (activityDashboardBinding.includefooter.txtNotificationCountAction.getText().toString().equals("")){
+                    activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
+                }else {
+                    activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.VISIBLE);
+                }
+                Pref.setValue(DashboardActivity.this, "current_frag", "3");
                 fragment = new ProfileFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
                         .addToBackStack(null).commit();
@@ -604,6 +1153,127 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
             }
         });
 
+    }
+
+    public String POST1(String url) {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("userid", UserId);
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+
+    private class HttpAsyncTaskNotification extends AsyncTask<String, Void, String> {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(DashboardActivity.this);
+            dialog.setMessage("Adding records...");
+            //dialog.setTitle("Saving Reminder");
+            //   dialog.show();
+            dialog.setCancelable(false);
+            //  nfcModel = new ArrayList<>();
+            //   allTags = new ArrayList<>();
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return POST1(urls[0]);
+        }
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+            //  dialog.dismiss();
+            try
+            {
+                if (result == "")
+                {
+                    Toast.makeText(getApplicationContext(), "Check Internet Connection", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    JSONObject response = new JSONObject(result);
+                    String message = response.getString("message");
+                    String success = response.getString("success");
+                    String Count = response.getString("Count");
+
+                    if (success.equals("1"))
+                    {
+                        NotificationCount = Count;
+                        DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.VISIBLE);
+                        DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setText(NotificationCount);
+                        /*if (NotificationCount.equals("0"))
+                        {
+                            activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
+                        }
+                        else
+                        {
+                            activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.VISIBLE);
+                        }*/
+                        activityDashboardBinding.includefooter.txtNotificationCountAction.setText(NotificationCount);
+                    }
+                    else
+                    {
+                        activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
+                        NotificationCount = "0";
+                        activityDashboardBinding.includefooter.txtNotificationCountAction.setText(NotificationCount);
+                        DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
