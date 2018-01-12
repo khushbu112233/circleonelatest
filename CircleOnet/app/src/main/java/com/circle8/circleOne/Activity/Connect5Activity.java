@@ -792,77 +792,77 @@ public class Connect5Activity extends AppCompatActivity implements View.OnClickL
         if ( v == activityConnect5Binding.ivProfile1)
         {
             Utility.freeMemory();
-            Intent in = new Intent(Connect5Activity.this, CardDetail.class);
-            in.putExtra("profile_id", userProfileId1);
-            in.putExtra("DateInitiated", "");
-            in.putExtra("lat", "");
-            in.putExtra("long", "");
+            CardDetailActivity.profile_id = userProfileId1;
+            CardDetailActivity.DateInitiated = "";
+            CardDetailActivity.lat = "";
+            CardDetailActivity.lon = "";
+            Intent in = new Intent(Connect5Activity.this, CardDetailActivity.class);
             startActivity(in);
             finish();
         }
         if ( v == activityConnect5Binding.ivProfile2)
         {
             Utility.freeMemory();
-            Intent in = new Intent(Connect5Activity.this, CardDetail.class);
-            in.putExtra("profile_id", userProfileId2);
-            in.putExtra("DateInitiated", "");
-            in.putExtra("lat", "");
-            in.putExtra("long", "");
+            CardDetailActivity.profile_id = userProfileId2;
+            CardDetailActivity.DateInitiated = "";
+            CardDetailActivity.lat = "";
+            CardDetailActivity.lon = "";
+            Intent in = new Intent(Connect5Activity.this, CardDetailActivity.class);
             startActivity(in);
             finish();
         }
         if ( v == activityConnect5Binding.ivProfile3)
         {
             Utility.freeMemory();
-            Intent in = new Intent(Connect5Activity.this, CardDetail.class);
-            in.putExtra("profile_id", userProfileId3);
-            in.putExtra("DateInitiated", "");
-            in.putExtra("lat", "");
-            in.putExtra("long", "");
+            CardDetailActivity.profile_id = userProfileId3;
+            CardDetailActivity.DateInitiated = "";
+            CardDetailActivity.lat = "";
+            CardDetailActivity.lon = "";
+            Intent in = new Intent(Connect5Activity.this, CardDetailActivity.class);
             startActivity(in);
             finish();
         }
         if ( v == activityConnect5Binding.ivProfile4)
         {
             Utility.freeMemory();
-            Intent in = new Intent(Connect5Activity.this, CardDetail.class);
-            in.putExtra("profile_id", userProfileId4);
-            in.putExtra("DateInitiated", "");
-            in.putExtra("lat", "");
-            in.putExtra("long", "");
+            CardDetailActivity.profile_id = userProfileId4;
+            CardDetailActivity.DateInitiated = "";
+            CardDetailActivity.lat = "";
+            CardDetailActivity.lon = "";
+            Intent in = new Intent(Connect5Activity.this, CardDetailActivity.class);
             startActivity(in);
             finish();
         }
         if ( v == activityConnect5Binding.ivProfile5)
         {
             Utility.freeMemory();
-            Intent in = new Intent(Connect5Activity.this, CardDetail.class);
-            in.putExtra("profile_id", userProfileId5);
-            in.putExtra("DateInitiated", "");
-            in.putExtra("lat", "");
-            in.putExtra("long", "");
+            CardDetailActivity.profile_id = userProfileId5;
+            CardDetailActivity.DateInitiated = "";
+            CardDetailActivity.lat = "";
+            CardDetailActivity.lon = "";
+            Intent in = new Intent(Connect5Activity.this, CardDetailActivity.class);
             startActivity(in);
             finish();
         }
         if ( v == activityConnect5Binding.ivProfile6)
         {
             Utility.freeMemory();
-            Intent in = new Intent(Connect5Activity.this, CardDetail.class);
-            in.putExtra("profile_id", userProfileId6);
-            in.putExtra("DateInitiated", "");
-            in.putExtra("lat", "");
-            in.putExtra("long", "");
+            CardDetailActivity.profile_id = userProfileId6;
+            CardDetailActivity.DateInitiated = "";
+            CardDetailActivity.lat = "";
+            CardDetailActivity.lon = "";
+            Intent in = new Intent(Connect5Activity.this, CardDetailActivity.class);
             startActivity(in);
             finish();
         }
         if ( v == activityConnect5Binding.ivProfile7)
         {
             Utility.freeMemory();
-            Intent in = new Intent(Connect5Activity.this, CardDetail.class);
-            in.putExtra("profile_id", userProfileId7);
-            in.putExtra("DateInitiated", "");
-            in.putExtra("lat", "");
-            in.putExtra("long", "");
+            CardDetailActivity.profile_id = userProfileId7;
+            CardDetailActivity.DateInitiated = "";
+            CardDetailActivity.lat = "";
+            CardDetailActivity.lon = "";
+            Intent in = new Intent(Connect5Activity.this, CardDetailActivity.class);
             startActivity(in);
             finish();
         }

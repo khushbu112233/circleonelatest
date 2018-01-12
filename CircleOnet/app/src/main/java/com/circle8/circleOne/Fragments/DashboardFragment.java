@@ -28,6 +28,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -425,7 +426,7 @@ public class DashboardFragment extends Fragment {
         fragmentDashboardLayoutBinding.includeTapQr.rlMyQrCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                QR_AlertDialog = new AlertDialog.Builder(getActivity()).create();
+                QR_AlertDialog = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Light).create();
                 LayoutInflater inflater = getActivity().getLayoutInflater();
                 final View dialogView = inflater.inflate(R.layout.person_qrcode, null);
                 FrameLayout fl_QRFrame = (FrameLayout)dialogView.findViewById(R.id.fl_QrFrame);
@@ -437,6 +438,7 @@ public class DashboardFragment extends Fragment {
                 ColorDrawable dialogColor = new ColorDrawable(getResources().getColor(R.color.colorPrimary));
                 dialogColor.setAlpha(70);
                 QR_AlertDialog.getWindow().setBackgroundDrawable(dialogColor);
+                QR_AlertDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
                 // alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
                 tvBarName.setText(User_name);
 //                    bitmap = TextToImageEncode(barName);

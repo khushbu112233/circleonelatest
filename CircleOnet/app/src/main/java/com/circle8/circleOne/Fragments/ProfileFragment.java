@@ -309,9 +309,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
             @Override
             public void onPageScrolled(final int position, final float positionOffset, final int positionOffsetPixels) {
-                Utility.freeMemory();
+               /* Utility.freeMemory();
                 Utility.deleteCache(getContext());
-
+*/
                 if (mScrollState == ViewPager.SCROLL_STATE_IDLE) {
                     return;
                 }
@@ -325,9 +325,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
             @Override
             public void onPageScrollStateChanged(final int state) {
-                Utility.freeMemory();
+                /*Utility.freeMemory();
                 Utility.deleteCache(getContext());
-
+*/
                 mScrollState = state;
                 if (state == ViewPager.SCROLL_STATE_IDLE) {
                     fragmentProfileBinding.viewPager.setCurrentItem(fragmentProfileBinding.viewPager1.getCurrentItem(), false);

@@ -66,7 +66,7 @@ public class TestimonialActivity extends AppCompatActivity
 
         final ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.custom_actionbar);
+        getSupportActionBar().setCustomView(R.layout.custom_action3);
         getSupportActionBar().setShowHideAnimationEnabled(false);
         textView = (TextView) findViewById(R.id.mytext);
         imgLogo = (ImageView) findViewById(R.id.imgLogo);
@@ -78,6 +78,8 @@ public class TestimonialActivity extends AppCompatActivity
         ivConnecting3 = (ImageView)findViewById(R.id.imgConnecting3) ;
         txtTestimonial = (TextView) findViewById(R.id.txtTestimonial);
         imgDrawer.setVisibility(View.GONE);
+       // imgLogo.setVisibility(View.VISIBLE);
+
         textView.setText("Testimonial");
         imgLogo.setImageResource(R.drawable.ic_keyboard_arrow_left_black_24dp);
 
