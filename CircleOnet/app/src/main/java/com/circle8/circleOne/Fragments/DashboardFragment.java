@@ -430,7 +430,7 @@ public class DashboardFragment extends Fragment {
 
                 }
                 else{
-                    Toast.makeText(getContext(), "Your device does not support NFC. ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Your device does not support NFC. You will still be able to add contacts with the QR scan feature if your device isn't NFC capable.", Toast.LENGTH_LONG).show();
                     //Your device doesn't support NFC
                 }
             }
