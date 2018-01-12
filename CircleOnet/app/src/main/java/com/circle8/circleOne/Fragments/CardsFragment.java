@@ -20,6 +20,7 @@ import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.Activity.DashboardActivity;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.CustomViewPager;
+import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.Utility;
 
 import java.text.DecimalFormatSymbols;
@@ -47,7 +48,7 @@ public class CardsFragment extends Fragment
         super.onPause();
     }
 
-    @Override
+   /* @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
@@ -76,7 +77,7 @@ public class CardsFragment extends Fragment
             }
         });
     }
-
+*/
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -86,18 +87,18 @@ public class CardsFragment extends Fragment
         ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().show();
 
-        try {
-            if (Connection_Limit.equalsIgnoreCase("100000")) {
-                setActionBarTitle("Cards - " + List1Fragment.count + "/", true);
-            }
-            else {
-                setActionBarTitle("Cards - " + List1Fragment.count + "/" + Connection_Limit, false);
+        if (Pref.getValue(getContext(), "current_frag", "").equalsIgnoreCase("1")) {
+            try {
+                if (Connection_Limit.equalsIgnoreCase("100000")) {
+                    setActionBarTitle("Cards - " + List1Fragment.count + "/", true);
+                } else {
+                    setActionBarTitle("Cards - " + List1Fragment.count + "/" + Connection_Limit, false);
+
+                }
+            } catch (Exception e) {
 
             }
-        }catch (Exception e){
-
         }
-
         // Set up the ViewPager with the sections adapter.
         mViewPager = (CustomViewPager) view.findViewById(R.id.container1);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -118,6 +119,7 @@ public class CardsFragment extends Fragment
                         if (Connection_Limit.equalsIgnoreCase("100000")) {
                             setActionBarTitle("Cards - " + List1Fragment.count + "/" , true);
                         }
+
                         else {
                             setActionBarTitle("Cards - " + List1Fragment.count + "/" + Connection_Limit, false);
 
