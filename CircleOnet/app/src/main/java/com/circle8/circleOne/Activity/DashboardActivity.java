@@ -414,17 +414,61 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
         }*/
 
 
-        if (getCurrentFragment() instanceof DashboardFragment){
-             setActionBarTitle("Dashboard", false);
-        }
-        else if (getCurrentFragment() instanceof Notification){
+        if (getCurrentFragment() instanceof Notification){
             setActionBarTitle("Notification - 0", false);
+
+            activityDashboardBinding.includefooter.imgCard.setImageResource(R.drawable.ic_icon1);
+            activityDashboardBinding.includefooter.imgDashboard.setImageResource(R.drawable.dashboard);
+            activityDashboardBinding.includefooter.imgProfile.setImageResource(R.drawable.ic_icon4);
+            activityDashboardBinding.includefooter.tvCards.setTextColor(getResources().getColor(R.color.unselected));
+            activityDashboardBinding.includefooter.tvDashboard.setTextColor(getResources().getColor(R.color.colorPrimary));
+            activityDashboardBinding.includefooter.tvProfile.setTextColor(getResources().getColor(R.color.unselected));
+            if (activityDashboardBinding.includefooter.txtNotificationCountAction.getText().toString().equals("0")){
+                activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
+                DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.GONE);
+            }else {
+                activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.VISIBLE);
+                DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.VISIBLE);
+
+            }
         }
         else if (getCurrentFragment() instanceof CardsFragment){
             setActionBarTitle("Cards - 0 / " + Connection_Limit, false);
+
+            activityDashboardBinding.includefooter.imgCard.setImageResource(R.drawable.ic_icon1);
+            activityDashboardBinding.includefooter.imgDashboard.setImageResource(R.drawable.dashboard);
+            activityDashboardBinding.includefooter.imgProfile.setImageResource(R.drawable.ic_icon4);
+            activityDashboardBinding.includefooter.tvCards.setTextColor(getResources().getColor(R.color.unselected));
+            activityDashboardBinding.includefooter.tvDashboard.setTextColor(getResources().getColor(R.color.colorPrimary));
+            activityDashboardBinding.includefooter.tvProfile.setTextColor(getResources().getColor(R.color.unselected));
+            if (activityDashboardBinding.includefooter.txtNotificationCountAction.getText().toString().equals("0")){
+                activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
+                DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.GONE);
+            }else {
+                activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.VISIBLE);
+                DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.VISIBLE);
+
+            }
+
         }
         else if (getCurrentFragment() instanceof SortFragment){
             setActionBarTitle("Sort & Filter", false);
+
+            activityDashboardBinding.includefooter.imgCard.setImageResource(R.drawable.ic_icon1b);
+            activityDashboardBinding.includefooter.imgDashboard.setImageResource(R.drawable.ic_dashboard_gray);
+            activityDashboardBinding.includefooter.imgProfile.setImageResource(R.drawable.ic_icon4);
+            activityDashboardBinding.includefooter.tvCards.setTextColor(getResources().getColor(R.color.colorPrimary));
+            activityDashboardBinding.includefooter.tvDashboard.setTextColor(getResources().getColor(R.color.unselected));
+            activityDashboardBinding.includefooter.tvProfile.setTextColor(getResources().getColor(R.color.unselected));
+            if (activityDashboardBinding.includefooter.txtNotificationCountAction.getText().toString().equals("0")){
+                activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
+                DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.GONE);
+            }else {
+                activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.VISIBLE);
+                DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.VISIBLE);
+
+            }
+
         }
     }
 
@@ -1139,7 +1183,10 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                     activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.VISIBLE);
                     DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.VISIBLE);
 
-                }                Pref.setValue(DashboardActivity.this, "current_frag", "2");
+                }
+                activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
+
+                Pref.setValue(DashboardActivity.this, "current_frag", "2");
 
                 fragment = new DashboardFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
@@ -1267,7 +1314,8 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                     if (success.equals("1"))
                     {
                         NotificationCount = Count;
-                        Toast.makeText(getApplicationContext(), NotificationCount, Toast.LENGTH_LONG).show();
+                        //NotificationCount = "2";
+                       // Toast.makeText(getApplicationContext(), NotificationCount, Toast.LENGTH_LONG).show();
                         if (NotificationCount.equals("0")) {
                             DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.GONE);
                             activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
@@ -1278,6 +1326,10 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                             DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setText(DashboardActivity.NotificationCount);
                             activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.VISIBLE);
                             activityDashboardBinding.includefooter.txtNotificationCountAction.setText(NotificationCount);
+                            if (getCurrentFragment() instanceof DashboardFragment){
+                                activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
+
+                            }
 
                         }
                         activityDashboardBinding.includefooter.txtNotificationCountAction.setText(NotificationCount);
@@ -1341,6 +1393,23 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                     overridePendingTransition(R.anim.slide_in_down, R.anim.slide_out_down);*/
             setActionBarTitle("Dashboard", false);
 
+            activityDashboardBinding.includefooter.imgCard.setImageResource(R.drawable.ic_icon1);
+            activityDashboardBinding.includefooter.imgDashboard.setImageResource(R.drawable.dashboard);
+            activityDashboardBinding.includefooter.imgProfile.setImageResource(R.drawable.ic_icon4);
+            activityDashboardBinding.includefooter.tvCards.setTextColor(getResources().getColor(R.color.unselected));
+            activityDashboardBinding.includefooter.tvDashboard.setTextColor(getResources().getColor(R.color.colorPrimary));
+            activityDashboardBinding.includefooter.tvProfile.setTextColor(getResources().getColor(R.color.unselected));
+            if (activityDashboardBinding.includefooter.txtNotificationCountAction.getText().toString().equals("0")){
+                activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
+                DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.GONE);
+            }else {
+                activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.VISIBLE);
+                DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.VISIBLE);
+
+            }
+            activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
+
+
         }
         else if (getCurrentFragment() instanceof SortFragment){
             Pref.setValue(DashboardActivity.this, "current_frag", "1");
@@ -1349,6 +1418,23 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.main_container_wrapper, fragment).addToBackStack(null).commit();
+
+
+            activityDashboardBinding.includefooter.imgCard.setImageResource(R.drawable.ic_icon1b);
+            activityDashboardBinding.includefooter.imgDashboard.setImageResource(R.drawable.ic_dashboard_gray);
+            activityDashboardBinding.includefooter.imgProfile.setImageResource(R.drawable.ic_icon4);
+            activityDashboardBinding.includefooter.tvCards.setTextColor(getResources().getColor(R.color.colorPrimary));
+            activityDashboardBinding.includefooter.tvDashboard.setTextColor(getResources().getColor(R.color.unselected));
+            activityDashboardBinding.includefooter.tvProfile.setTextColor(getResources().getColor(R.color.unselected));
+            if (activityDashboardBinding.includefooter.txtNotificationCountAction.getText().toString().equals("0")){
+                activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
+                DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.GONE);
+            }else {
+                activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.VISIBLE);
+                DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.VISIBLE);
+
+            }
+
                     /*getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
                             .addToBackStack(null)
                             .commit();
@@ -1368,6 +1454,22 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                             .commit();
                     overridePendingTransition(R.anim.slide_in_down, R.anim.slide_out_down);*/
               setActionBarTitle("Dashboard", false);
+
+            activityDashboardBinding.includefooter.imgCard.setImageResource(R.drawable.ic_icon1);
+            activityDashboardBinding.includefooter.imgDashboard.setImageResource(R.drawable.dashboard);
+            activityDashboardBinding.includefooter.imgProfile.setImageResource(R.drawable.ic_icon4);
+            activityDashboardBinding.includefooter.tvCards.setTextColor(getResources().getColor(R.color.unselected));
+            activityDashboardBinding.includefooter.tvDashboard.setTextColor(getResources().getColor(R.color.colorPrimary));
+            activityDashboardBinding.includefooter.tvProfile.setTextColor(getResources().getColor(R.color.unselected));
+            if (activityDashboardBinding.includefooter.txtNotificationCountAction.getText().toString().equals("0")){
+                activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
+                DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.GONE);
+            }else {
+                activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.VISIBLE);
+                DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.VISIBLE);
+
+            }
+            activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
 
         }
     }
