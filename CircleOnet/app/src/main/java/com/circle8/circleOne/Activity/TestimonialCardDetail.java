@@ -71,7 +71,7 @@ public class TestimonialCardDetail extends AppCompatActivity
 
         final ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.custom_actionbar);
+        getSupportActionBar().setCustomView(R.layout.custom_action3);
         getSupportActionBar().setShowHideAnimationEnabled(false);
         textView = (TextView) findViewById(R.id.mytext);
         imgLogo = (ImageView) findViewById(R.id.imgLogo);

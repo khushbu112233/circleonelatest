@@ -31,8 +31,6 @@ import com.circle8.circleOne.Model.ProfileModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.ActivitySortAndFilterOptionBinding;
-import com.labo.kaji.fragmentanimations.CubeAnimation;
-import com.labo.kaji.fragmentanimations.MoveAnimation;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;

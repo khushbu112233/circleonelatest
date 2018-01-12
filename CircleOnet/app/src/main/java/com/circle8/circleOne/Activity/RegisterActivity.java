@@ -210,7 +210,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         activityRegisterBinding.ivMale.setOnClickListener(this);
         activityRegisterBinding.ivFemale.setOnClickListener(this);
         activityRegisterBinding.ivConnectImg.setOnClickListener(this);
-        activityRegisterBinding.lnrRegister.setOnClickListener(this);
+        activityRegisterBinding.lnrBottomReg.setOnClickListener(this);
         activityRegisterBinding.imgProfileCard.setOnClickListener(this);
 
         activityRegisterBinding.ivConnectImg.setOnClickListener(new View.OnClickListener() {
@@ -428,7 +428,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             activityRegisterBinding.txtGender.setText("Female");
 
         }
-        if (v == activityRegisterBinding.lnrRegister) {
+        if (v == activityRegisterBinding.lnrBottomReg) {
             Utility.freeMemory();
             company_name = "Ample Arch";
             refferelCode = activityRegisterBinding.etReferrelCode.getText().toString();
@@ -482,15 +482,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         if (v == activityRegisterBinding.imgProfileCard) {
             // selectImage();
             Utility.freeMemory();
-            boolean result=Utility.checkPermission(RegisterActivity.this);
-            boolean result1=Utility.checkCameraPermission(RegisterActivity.this);
-
-            if (result && result1) {
-                CropImage.activity(null)
-                        .setCropShape(CropImageView.CropShape.OVAL)
-                        .setGuidelines(CropImageView.Guidelines.ON)
-                        .start(RegisterActivity.this);
-            }
+            CropImage.activity(null)
+                    .setCropShape(CropImageView.CropShape.OVAL)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .start(RegisterActivity.this);
         }
     }
 
@@ -1294,11 +1289,67 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                 @Override
                                 public void onError(QBResponseException errors) {
                                     Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
+                                    new Handler().postDelayed(new Runnable()
+                                    {
+                                        @Override
+                                        public void run()
+                                        {
+                                            final Dialog dialog = new Dialog(RegisterActivity.this);
+                                            dialog.setContentView(R.layout.register_custom_popup);
+
+                                            dialog.show();
+
+                                            if (Status.equalsIgnoreCase("Verified")) {
+                                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                                startActivity(intent);
+                                                finish();
+                                            } else {
+                                                new HttpAsyncTaskVerify().execute(Utility.BASE_URL+"AccVerification/" + UserID);
+                                            }
+
+                                            new Handler().postDelayed(new Runnable() {
+                                                @Override
+                                                public void run()
+                                                {
+                                                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                                    finish();
+                                                }
+                                            },2500);
+                                        }
+                                    }, 2500);
                                 }
                             });
                         }catch (Exception e) {
 
                             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                            new Handler().postDelayed(new Runnable()
+                            {
+                                @Override
+                                public void run()
+                                {
+                                    final Dialog dialog = new Dialog(RegisterActivity.this);
+                                    dialog.setContentView(R.layout.register_custom_popup);
+
+                                    dialog.show();
+
+                                    if (Status.equalsIgnoreCase("Verified")) {
+                                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    } else {
+                                        new HttpAsyncTaskVerify().execute(Utility.BASE_URL+"AccVerification/" + UserID);
+                                    }
+
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run()
+                                        {
+                                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                            finish();
+                                        }
+                                    },2500);
+                                }
+                            }, 2500);
                         }
                     } else {
                         Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();

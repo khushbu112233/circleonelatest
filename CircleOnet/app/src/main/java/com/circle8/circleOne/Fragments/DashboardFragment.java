@@ -112,8 +112,6 @@ public class DashboardFragment extends Fragment {
         DashboardActivity.setActionBarTitle("Dashboard", false);
         DashboardActivity.setDrawerVisibility(false);
 
-        fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setText(DashboardActivity.NotificationCount);
-
         return view;
     }
 
@@ -129,6 +127,16 @@ public class DashboardFragment extends Fragment {
         referralCodeSession = new ReferralCodeSession(context);
         HashMap<String, String> referral = referralCodeSession.getReferralDetails();
         refer = referral.get(ReferralCodeSession.KEY_REFERRAL);
+
+
+        if (DashboardActivity.NotificationCount.equals("0")) {
+            fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.GONE);
+        }
+        else {
+            fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.VISIBLE);
+            fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setText(DashboardActivity.NotificationCount);
+
+        }
 
         searchView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -271,21 +279,25 @@ public class DashboardFragment extends Fragment {
 
     public static Bitmap mergeBitmaps(Bitmap overlay, Bitmap bitmap) {
 
-        int height = bitmap.getHeight();
-        int width = bitmap.getWidth();
+        try {
+            int height = bitmap.getHeight();
+            int width = bitmap.getWidth();
 
-        Bitmap combined = Bitmap.createBitmap(width, height, bitmap.getConfig());
-        Canvas canvas = new Canvas(combined);
-        int canvasWidth = canvas.getWidth();
-        int canvasHeight = canvas.getHeight();
+            Bitmap combined = Bitmap.createBitmap(width, height, bitmap.getConfig());
+            Canvas canvas = new Canvas(combined);
+            int canvasWidth = canvas.getWidth();
+            int canvasHeight = canvas.getHeight();
 
-        canvas.drawBitmap(bitmap, new Matrix(), null);
+            canvas.drawBitmap(bitmap, new Matrix(), null);
 
-        int centreX = (canvasWidth  - overlay.getWidth()) /2;
-        int centreY = (canvasHeight - overlay.getHeight()) /2 ;
-        canvas.drawBitmap(overlay, centreX, centreY, null);
+            int centreX = (canvasWidth - overlay.getWidth()) / 2;
+            int centreY = (canvasHeight - overlay.getHeight()) / 2;
+            canvas.drawBitmap(overlay, centreX, centreY, null);
+            return combined;
 
-        return combined;
+        }catch (Exception e){
+            return null;
+        }
     }
 
     @Override
@@ -418,7 +430,7 @@ public class DashboardFragment extends Fragment {
 
                 }
                 else{
-                    Toast.makeText(getContext(), "Your device does not support NFC", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Your device does not support NFC. ", Toast.LENGTH_LONG).show();
                     //Your device doesn't support NFC
                 }
             }
@@ -426,34 +438,36 @@ public class DashboardFragment extends Fragment {
         fragmentDashboardLayoutBinding.includeTapQr.rlMyQrCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                QR_AlertDialog = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Light).create();
-                LayoutInflater inflater = getActivity().getLayoutInflater();
-                final View dialogView = inflater.inflate(R.layout.person_qrcode, null);
-                FrameLayout fl_QRFrame = (FrameLayout)dialogView.findViewById(R.id.fl_QrFrame);
-                TextView tvBarName = (TextView)dialogView.findViewById(R.id.tvBarName);
-                ivBarImage = (ImageView)dialogView.findViewById(R.id.ivBarImage);
+
+                if (mergeBitmaps(overlay,bitmap) != null) {
+                    QR_AlertDialog = new AlertDialog.Builder(getActivity(), R.style.AppTheme).create();
+                    LayoutInflater inflater = getActivity().getLayoutInflater();
+                    final View dialogView = inflater.inflate(R.layout.person_qrcode, null);
+                    FrameLayout fl_QRFrame = (FrameLayout) dialogView.findViewById(R.id.fl_QrFrame);
+                    TextView tvBarName = (TextView) dialogView.findViewById(R.id.tvBarName);
+                    ivBarImage = (ImageView) dialogView.findViewById(R.id.ivBarImage);
 //                tvBarName.setText(barName);
-                //  alertDialog.setFeatureDrawableAlpha(R.color.colorPrimary, 8);
+                    //  alertDialog.setFeatureDrawableAlpha(R.color.colorPrimary, 8);
 
-                ColorDrawable dialogColor = new ColorDrawable(getResources().getColor(R.color.colorPrimary));
-                dialogColor.setAlpha(70);
-                QR_AlertDialog.getWindow().setBackgroundDrawable(dialogColor);
-                QR_AlertDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-                // alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
-                tvBarName.setText(User_name);
+                    ColorDrawable dialogColor = new ColorDrawable(getResources().getColor(R.color.colorPrimary));
+                    dialogColor.setAlpha(70);
+                    QR_AlertDialog.getWindow().setBackgroundDrawable(dialogColor);
+                    QR_AlertDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+                    // alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
+                    tvBarName.setText(User_name);
 //                    bitmap = TextToImageEncode(barName);
-                ivBarImage.setImageBitmap(mergeBitmaps(overlay,bitmap));
+                    ivBarImage.setImageBitmap(mergeBitmaps(overlay, bitmap));
 
-                fl_QRFrame.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view)
-                    {
-                        QR_AlertDialog.dismiss();
-                    }
-                });
+                    fl_QRFrame.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            QR_AlertDialog.dismiss();
+                        }
+                    });
 
-                QR_AlertDialog.setView(dialogView);
-                QR_AlertDialog.show();
+                    QR_AlertDialog.setView(dialogView);
+                    QR_AlertDialog.show();
+                }
             }
         });
         fragmentDashboardLayoutBinding.includeTapQr.rlScanQrCode.setOnClickListener(new View.OnClickListener() {

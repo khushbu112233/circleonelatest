@@ -541,7 +541,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
                 //                    barName = encrypt(TestimonialProfileId, secretKey);
 
-                QR_AlertDialog = new AlertDialog.Builder(getActivity()).create();
+                QR_AlertDialog = new AlertDialog.Builder(getActivity(), R.style.AppTheme).create();
                 LayoutInflater inflater = getActivity().getLayoutInflater();
                 final View dialogView = inflater.inflate(R.layout.person_qrcode, null);
                 FrameLayout fl_QRFrame = (FrameLayout)dialogView.findViewById(R.id.fl_QrFrame);
