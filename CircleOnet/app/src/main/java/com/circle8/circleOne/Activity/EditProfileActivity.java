@@ -3608,6 +3608,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         {
 //            dialog.dismiss();
            // dismissProgress();
+            Log.e("result",""+result);
             fragmentEditProfileBinding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             try {

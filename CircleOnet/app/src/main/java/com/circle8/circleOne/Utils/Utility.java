@@ -27,6 +27,8 @@ import android.widget.TextView;
 import com.circle8.circleOne.Activity.Connect;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.RxContacts.Contact;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -57,6 +59,8 @@ public class Utility
     public static final int MY_PERMISSIONS_REQUEST_CAMERA = 121;
     public static final int MY_PERMISSIONS_REQUEST_READ_CONTACT = 122;
     public static final int MY_PERMISSIONS_REQUEST_SMS = 124;
+    private static final String TAG = "Utility";
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 001;
     private static List<String> questionsList=new ArrayList<>();
     private static List<String> answersList=new ArrayList<>();
     private static Map<String, String> collectionList=new LinkedHashMap<>();
@@ -146,6 +150,22 @@ public class Utility
         } else {
             return true;
         }
+    }
+
+    public static boolean checkPlayServices(Context context) {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(context);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog((Activity)context, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
+                        .show();
+            } else {
+                Log.i(TAG, "This device is not supported.");
+                ((Activity)context).finish();
+            }
+            return false;
+        }
+        return true;
     }
 
     public static boolean checkLocationPermission(final Context context)
