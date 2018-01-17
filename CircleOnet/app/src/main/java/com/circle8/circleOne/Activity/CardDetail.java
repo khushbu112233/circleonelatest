@@ -154,7 +154,6 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
     public static String profile_id="",DateInitiated="",lat="",lon="";
     View view;
     ActivityCardDetailBinding activityCardDetailBinding;
-    String currentLocation;
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
@@ -202,7 +201,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
         try {
             if ((lat.equals("") || lat.equals("null") || lat == null || lat.isEmpty()) && (lon.equals("") || lon.equals("null") || lon == null || lon.isEmpty())) {
                 activityCardDetailBinding.includeLayoutDetails.lnrNfcLocation.setVisibility(View.GONE);
-                activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.GONE);
+                //activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.GONE);
 
             } else {
                 activityCardDetailBinding.includeLayoutDetails.lnrNfcLocation.setVisibility(View.VISIBLE);
@@ -991,17 +990,17 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
             addresses = geocoder.getFromLocation(latitude,longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
             if (addresses != null) {
                 try {
-                    activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
+                   // activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
                     return addresses.get(0);
                 }
                 catch (Exception e){
                     activityCardDetailBinding.includeLayoutDetails.lnrNfcLocation.setVisibility(View.GONE);
-                    activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.GONE);
+                   // activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.GONE);
                 }
             }
             else {
                 activityCardDetailBinding.includeLayoutDetails.lnrNfcLocation.setVisibility(View.GONE);
-                activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.GONE);
+               // activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.GONE);
 
             }
 
@@ -1026,6 +1025,7 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
             String state = locationAddress.getAdminArea();
             String country = locationAddress.getCountryName();
             String postalCode = locationAddress.getPostalCode();
+            String currentLocation;
 
             if(!TextUtils.isEmpty(address))
             {
@@ -1054,14 +1054,11 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                     currentLocation+=" "+country;
 
                 activityCardDetailBinding.includeLayoutDetails.txtRemark.setText(currentLocation);
-                activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
-                GeocodingLocation locationAddress1 = new GeocodingLocation();
-                locationAddress1.getAddressFromLocation(currentLocation, getActivity(), new GeocoderHandler());
 
             }
         }
         else {
-            activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.GONE);
+          //  activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.GONE);
 
         }
     }
@@ -1863,13 +1860,16 @@ public class CardDetail extends Fragment implements DialogsManager.ManagingDialo
                     if (personAddress.isEmpty() || personAddress.toString().length() == 0)
                     {
                         activityCardDetailBinding.includeLayoutDetails.llAddressBox.setVisibility(View.GONE);
-                       // activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.GONE);
+                        activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.GONE);
                     }
                     else
                     {
                         activityCardDetailBinding.includeLayoutDetails.txtAddress.setText(personAddress);
 //                       createMarker1(personAddress,(add1+add2));
 
+                        activityCardDetailBinding.includeLayoutDetails.llMapView.setVisibility(View.VISIBLE);
+                        GeocodingLocation locationAddress1 = new GeocodingLocation();
+                        locationAddress1.getAddressFromLocation(personAddress, getActivity(), new GeocoderHandler());
                     }
 
                         /*FriendConnection nfcModelTag = new FriendConnection();
