@@ -646,6 +646,7 @@ public class List4Fragment extends Fragment
         try
         {
             nfcModel1.clear();
+            nfcModel.clear();
             allTaggs.clear();
             gridAdapter.notifyDataSetChanged();
         } catch (Exception e) {
@@ -725,6 +726,7 @@ public class List4Fragment extends Fragment
                     count = jsonObject.getString("count");
 
                     if (pageno == 2) {
+                        allTaggs.clear();
                         counts = jsonObject.getString("count");
                     }
                     if (count.equals("") || count.equals("null")) {
@@ -735,6 +737,8 @@ public class List4Fragment extends Fragment
 
                     JSONArray jsonArray;
                     if (SortFragment.CardListApi.equalsIgnoreCase("SearchConnect")){
+                        allTaggs.clear();
+                        nfcModel1.clear();
                         jsonArray = jsonObject.getJSONArray("connect");
                     }else {
                         jsonArray = jsonObject.getJSONArray("connection");
@@ -905,14 +909,19 @@ public class List4Fragment extends Fragment
 
 
 
-  /*  @Override
+    @Override
     public void onResume()
     {
         super.onResume();
-        callFirst();
+
+        nfcModel.clear();
+        nfcModel1.clear();
+        allTaggs.clear();
+
+      //  callFirst();
 //        nfcModel.clear();
 //        GetData(getContext());
-    }*/
+    }
 
    /* class MyOnGestureListener implements GestureDetector.OnGestureListener  {
 
@@ -1151,9 +1160,15 @@ public class List4Fragment extends Fragment
             }
 
         }
-        else  {
+        else  if (SortFragment.CardListApi.equalsIgnoreCase("SearchConnect")){
             if (Pref.getValue(context, "current_frag", "").equalsIgnoreCase("1")) {
-                DashboardActivity.setActionBarTitle("Cards - " + counts, false);
+                //DashboardActivity.setActionBarTitle("Cards - " + counts, false);
+                if (Connection_Limit.equalsIgnoreCase("100000")) {
+                        DashboardActivity.setActionBarTitle("Cards - " + counts + "/", true);
+                }
+                else {
+                        DashboardActivity.setActionBarTitle("Cards - " + counts + "/" + CardsActivity.Connection_Limit, false);
+                }
             }
         }
 

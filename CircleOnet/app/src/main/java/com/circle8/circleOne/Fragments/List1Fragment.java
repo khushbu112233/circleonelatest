@@ -1308,43 +1308,40 @@ public class List1Fragment extends Fragment
             fragmentList1Binding.txtNoCard1.setVisibility(View.GONE);
         }
 
-        if (SortFragment.CardListApi.equalsIgnoreCase("GetFriendConnection"))
-        {
-            try {
-                if (Connection_Limit.equalsIgnoreCase("100000")) {
-                    if (Pref.getValue(context, "current_frag", "").equalsIgnoreCase("1")) {
+        if (Pref.getValue(context, "current_frag", "").equalsIgnoreCase("1")) {
+
+            if (SortFragment.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
+                try {
+                    if (Connection_Limit.equalsIgnoreCase("100000")) {
                         DashboardActivity.setActionBarTitle("Cards - " + count + "/", true);
-                    }
-                }
-                else {
-                    if (Pref.getValue(context, "current_frag", "").equalsIgnoreCase("1")) {
+
+                    } else {
                         DashboardActivity.setActionBarTitle("Cards - " + count + "/" + CardsActivity.Connection_Limit, false);
+
+
                     }
+                } catch (Exception e) {
 
                 }
-            }catch (Exception e){
+
+            } else if (SortFragment.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
+                DashboardActivity.setActionBarTitle("Cards - " + count, false);
+
+            } else if (SortFragment.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
+                DashboardActivity.setActionBarTitle("Cards - " + count, false);
+
+            } else if (SortFragment.CardListApi.equalsIgnoreCase("SearchConnect")) {
+               // DashboardActivity.setActionBarTitle("Cards - " + count + "/", true);
+                if (Connection_Limit.equalsIgnoreCase("100000")) {
+                    DashboardActivity.setActionBarTitle("Cards - " + count + "/", true);
+
+                } else {
+                    DashboardActivity.setActionBarTitle("Cards - " + count + "/" + CardsActivity.Connection_Limit, false);
+
+                }
+
 
             }
-
-        }
-        else if (SortFragment.CardListApi.equalsIgnoreCase("GetProfileConnection"))
-        {
-            if (Pref.getValue(context, "current_frag", "").equalsIgnoreCase("1")) {
-                DashboardActivity.setActionBarTitle("Cards - " + count, false);
-            }
-        }
-        else if (SortFragment.CardListApi.equalsIgnoreCase("Group/FetchConnection"))
-        {
-            if (Pref.getValue(context, "current_frag", "").equalsIgnoreCase("1")) {
-                DashboardActivity.setActionBarTitle("Cards - " + count, false);
-            }
-        }
-        else if (SortFragment.CardListApi.equalsIgnoreCase("SearchConnect"))
-        {
-            if (Pref.getValue(context, "current_frag", "").equalsIgnoreCase("1")) {
-                DashboardActivity.setActionBarTitle("Cards - " + count, false);
-            }
-
         }
 
 //        CardsActivity.setActionBarTitle("Cards - "+number_cards);

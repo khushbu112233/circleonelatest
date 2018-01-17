@@ -475,6 +475,7 @@ public class List2Fragment extends Fragment
     {
         pageno = 1;
         allTaggs.clear();
+        nfcModel.clear();
         Utility.freeMemory();
         new HttpAsyncTask().execute(Utility.BASE_URL+SortFragment.CardListApi);
     }
@@ -1155,7 +1156,15 @@ public class List2Fragment extends Fragment
         else if (SortFragment.CardListApi.equalsIgnoreCase("SearchConnect"))
         {
             if (Pref.getValue(context, "current_frag", "").equalsIgnoreCase("1")) {
-                DashboardActivity.setActionBarTitle("Cards - " + counts, false);
+                //DashboardActivity.setActionBarTitle("Cards - " + counts, false);
+
+                if (Connection_Limit.equalsIgnoreCase("100000")) {
+                        DashboardActivity.setActionBarTitle("Cards - " + counts + "/", true);
+                }
+                else {
+                        DashboardActivity.setActionBarTitle("Cards - " + counts + "/" + CardsActivity.Connection_Limit, false);
+                }
+
             }
         }
 

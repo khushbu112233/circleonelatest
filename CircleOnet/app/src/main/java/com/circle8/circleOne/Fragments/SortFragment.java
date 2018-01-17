@@ -29,6 +29,7 @@ import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.GroupModel;
 import com.circle8.circleOne.Model.ProfileModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.ActivitySortAndFilterOptionBinding;
 
@@ -148,7 +149,12 @@ public class SortFragment extends Fragment {
                 startActivity(userIntent);*/
                 //getActivity().finish();
 
-                getActivity().getSupportFragmentManager().popBackStackImmediate();
+              //  getActivity().getSupportFragmentManager().popBackStackImmediate();
+                Pref.setValue(getActivity(), "current_frag", "1");
+                fragment = new CardsFragment();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+                        .addToBackStack(null)
+                        .commit();
                 // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                /* Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
                 startActivity(intent);
@@ -251,8 +257,11 @@ public class SortFragment extends Fragment {
                /* Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
                 userIntent.putExtra("viewpager_position", 0);
                 startActivity(userIntent);*/
-                getActivity().getSupportFragmentManager().popBackStackImmediate();
-                // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                Pref.setValue(getActivity(), "current_frag", "1");
+                fragment = new CardsFragment();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+                        .addToBackStack(null)
+                        .commit();                // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                /* Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
                 startActivity(intent);
                 getActivity().finish();
@@ -311,9 +320,11 @@ public class SortFragment extends Fragment {
                 getActivity().finish();
                 overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);*/
 
+                Pref.setValue(getActivity(), "current_frag", "1");
                 fragment = new CardsFragment();
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
-                        .addToBackStack(null).commit();
+                        .addToBackStack(null)
+                        .commit();
 
 
             }
@@ -363,8 +374,11 @@ public class SortFragment extends Fragment {
               /*  Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
                 userIntent.putExtra("viewpager_position", 0);
                 startActivity(userIntent);*/
-                getActivity().getSupportFragmentManager().popBackStackImmediate();
-                //  overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                Pref.setValue(getActivity(), "current_frag", "1");
+                fragment = new CardsFragment();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+                        .addToBackStack(null)
+                        .commit();                //  overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                 /*Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
                 startActivity(intent);
                 getActivity().finish();
@@ -420,8 +434,11 @@ public class SortFragment extends Fragment {
 
                 }
 
-                getActivity().getSupportFragmentManager().popBackStackImmediate();
-                // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                Pref.setValue(getActivity(), "current_frag", "1");
+                fragment = new CardsFragment();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+                        .addToBackStack(null)
+                        .commit();                // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
 
 
             }
@@ -476,8 +493,11 @@ public class SortFragment extends Fragment {
                     } catch (Exception e) {
 
                     }
-                    getActivity().getSupportFragmentManager().popBackStackImmediate();
-                    // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                    Pref.setValue(getActivity(), "current_frag", "1");
+                    fragment = new CardsFragment();
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+                            .addToBackStack(null)
+                            .commit();                    // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                 }
             }
         });
@@ -530,8 +550,11 @@ public class SortFragment extends Fragment {
                     } catch (Exception e) {
 
                     }
-                    getActivity().getSupportFragmentManager().popBackStackImmediate();
-                    //overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                    Pref.setValue(getActivity(), "current_frag", "1");
+                    fragment = new CardsFragment();
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+                            .addToBackStack(null)
+                            .commit();                    //overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                 }
             }
         });
@@ -584,7 +607,11 @@ public class SortFragment extends Fragment {
                     } catch (Exception e) {
 
                     }
-                    getActivity().getSupportFragmentManager().popBackStackImmediate();
+                    Pref.setValue(getActivity(), "current_frag", "1");
+                    fragment = new CardsFragment();
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+                            .addToBackStack(null)
+                            .commit();
                     //overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                 }
             }
@@ -639,7 +666,11 @@ public class SortFragment extends Fragment {
                     } catch (Exception e) {
 
                     }
-                    getActivity().getSupportFragmentManager().popBackStackImmediate();
+                    Pref.setValue(getActivity(), "current_frag", "1");
+                    fragment = new CardsFragment();
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+                            .addToBackStack(null)
+                            .commit();
                     //  overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                 }
             }
@@ -692,7 +723,11 @@ public class SortFragment extends Fragment {
                 } catch (Exception e) {
 
                 }
-                getActivity().getSupportFragmentManager().popBackStackImmediate();
+                Pref.setValue(getActivity(), "current_frag", "1");
+                fragment = new CardsFragment();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+                        .addToBackStack(null)
+                        .commit();
                 // overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
             }
         });
