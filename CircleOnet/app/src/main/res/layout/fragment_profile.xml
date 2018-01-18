@@ -142,13 +142,14 @@
                                     android:layout_height="wrap_content">
 
                                     <ImageView
+                                        android:tint="@color/colorPrimary"
                                         android:layout_alignParentRight="true"
                                         android:layout_gravity="right"
                                         android:id="@+id/imgQR"
                                         android:layout_marginLeft="8dp"
-                                        android:layout_width="20dp"
-                                        android:layout_height="20dp"
-                                        android:src="@drawable/barcode_scanner1"/>
+                                        android:layout_width="25dp"
+                                        android:layout_height="25dp"
+                                        android:src="@drawable/ic_qr_white"/>
                                 </RelativeLayout>
                             </LinearLayout>
 
