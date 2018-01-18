@@ -264,7 +264,7 @@ public class EditProfileActivity extends AppCompatActivity implements
         fragmentEditProfileBinding.imgGoogle.setOnClickListener(this);
         fragmentEditProfileBinding.txtAttachDelete.setOnClickListener(this);
         fragmentEditProfileBinding.imgFb.setOnClickListener(this);
-        fragmentEditProfileBinding.includeTop.imgBack.setOnClickListener(new View.OnClickListener() {
+        fragmentEditProfileBinding.imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();

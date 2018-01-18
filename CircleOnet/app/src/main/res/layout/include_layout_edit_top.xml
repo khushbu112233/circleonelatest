@@ -9,7 +9,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="245dp"
+            android:layout_height="225dp"
             android:alpha="0.8"
             android:background="@color/colorAccent">
 
@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
+                <!--<ImageView
                     android:id="@+id/imgBack"
                     android:layout_width="28dp"
                     android:layout_height="28dp"
@@ -62,7 +62,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="5dp"
                     android:src="@drawable/ic_dehaze_black_24dp" />
-
+-->
                 <LinearLayout
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentBottom="true"
@@ -126,7 +126,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
+            android:layout_marginTop="30dp"
             android:gravity="center"
             android:orientation="vertical">
 
