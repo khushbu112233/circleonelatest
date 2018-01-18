@@ -29,9 +29,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
+import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Base64;
@@ -321,6 +323,75 @@ public class EditProfileActivity extends AppCompatActivity implements
                 } else if (addEventList.size() == 0) {
                     fragmentEditProfileBinding.tvEventInfo.setVisibility(View.VISIBLE);
                 }
+            }
+        });
+
+        fragmentEditProfileBinding.autoCompleteDesignation.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                fragmentEditProfileBinding.includeTop.tvDesignation.setText(fragmentEditProfileBinding.autoCompleteDesignation.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
+        fragmentEditProfileBinding.edtFirstName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                fragmentEditProfileBinding.includeTop.tvPersonName.setText(fragmentEditProfileBinding.edtFirstName.getText().toString() + " " + fragmentEditProfileBinding.edtLastName.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        fragmentEditProfileBinding.edtLastName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                fragmentEditProfileBinding.includeTop.tvPersonName.setText(fragmentEditProfileBinding.edtFirstName.getText().toString() + " " + fragmentEditProfileBinding.edtLastName.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        fragmentEditProfileBinding.autoCompleteCompany.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                fragmentEditProfileBinding.includeTop.tvCompany.setText(fragmentEditProfileBinding.autoCompleteCompany.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
 
