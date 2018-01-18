@@ -1563,6 +1563,22 @@ public class CardDetailActivity extends AppCompatActivity implements DialogsMana
                     backCardImg = jsonObject.getString("Card_Back");
                     Q_ID = jsonObject.getString("Q_ID");
 
+                    if(CompanyProfile.equalsIgnoreCase("")||CompanyProfile==null)
+                    {
+                        activityCardDetailBinding.includeLayoutDetails.llCompany.setVisibility(View.GONE);
+                    }else
+                    {
+                        activityCardDetailBinding.includeLayoutDetails.llCompany.setVisibility(View.VISIBLE);
+                        activityCardDetailBinding.includeLayoutDetails.txtCompanyProDetails.setText(CompanyProfile);
+                    }
+                    if (ProfileDesc.equalsIgnoreCase("")||ProfileDesc==null) {
+                        activityCardDetailBinding.includeLayoutDetails.llPersonal.setVisibility(View.GONE);
+                    }else {
+                        activityCardDetailBinding.includeLayoutDetails.llPersonal.setVisibility(View.VISIBLE);
+                        activityCardDetailBinding.includeLayoutDetails.txtpersonalprodetails.setText(ProfileDesc);
+                    }
+
+
                     if (Q_ID.equals("") || Q_ID == null || Q_ID.equals("")){
 //                        imgChat.setVisibility(View.GONE);
                         activityCardDetailBinding.tvSendMessage.setVisibility(View.GONE);

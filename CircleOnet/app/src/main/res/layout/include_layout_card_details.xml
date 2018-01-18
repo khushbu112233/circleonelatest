@@ -349,6 +349,64 @@
                 android:textSize="13sp" />
         </LinearLayout>
 
+
+        <LinearLayout
+            android:id="@+id/llPersonal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <com.circle8.circleOne.Utils.orkebyTextView
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="13sp"
+                android:text="Personal Profile"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <com.circle8.circleOne.Utils.orkebyTextView
+                android:id="@+id/txtpersonalprodetails"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:textColor="@android:color/black"
+                android:textSize="13sp"
+                android:text="Personal Profile Details"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginBottom="10dp"
+            android:id="@+id/llCompany"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <com.circle8.circleOne.Utils.orkebyTextView
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="13sp"
+                android:text="Company Profile"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <com.circle8.circleOne.Utils.orkebyTextView
+                android:id="@+id/txtCompanyProDetails"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:textColor="@android:color/black"
+                android:textSize="13sp"
+                android:text="Company Profile Details"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/llMapView"
             android:layout_width="match_parent"
