@@ -84,6 +84,7 @@
         </RelativeLayout>
 
         <android.support.design.widget.NavigationView
+            android:scrollbarSize="0dp"
             android:paddingTop="20dp"
             app:theme="@style/NavigationDrawerStyle"
             app:itemTextColor="@color/white"
