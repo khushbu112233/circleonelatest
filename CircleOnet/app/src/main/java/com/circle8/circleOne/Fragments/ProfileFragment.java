@@ -35,15 +35,21 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,6 +67,7 @@ import com.circle8.circleOne.Activity.SearchGroupMembers;
 import com.circle8.circleOne.Activity.TestimonialActivity;
 import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.Adapter.CustomAdapter;
+import com.circle8.circleOne.Adapter.PopupMenuAdapter;
 import com.circle8.circleOne.Adapter.TextRecyclerAdapter;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Helper.ProfileSession;
@@ -68,6 +75,7 @@ import com.circle8.circleOne.Helper.ReferralCodeSession;
 import com.circle8.circleOne.Model.ProfileModel;
 import com.circle8.circleOne.Model.TestimonialModel;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.IconizedMenu;
 import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.FragmentProfileBinding;
@@ -170,6 +178,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
     private static ImageView ivConnecting1;
     private static ImageView ivConnecting2;
     static Bitmap overlay;
+    private PopupWindow popupWindow;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -582,17 +591,23 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
                 lastClickTime = SystemClock.elapsedRealtime();
 
-                ContextThemeWrapper ctw = new ContextThemeWrapper(getContext(), R.style.CustomPopupTheme);
-                PopupMenu popup = new PopupMenu(ctw, fragmentProfileBinding.includeFrame1.imgProfileMenu);
+
+                popupWindow = popupWindowsort();
+                popupWindow.showAtLocation(v, Gravity.TOP | Gravity.RIGHT, 0, 0);
+
+
+
+               /* ContextThemeWrapper ctw = new ContextThemeWrapper(getContext(), R.style.CustomPopupTheme);
+                IconizedMenu popup = new IconizedMenu(getContext(), fragmentProfileBinding.includeFrame1.imgProfileMenu, Gravity.TOP);
                 //Inflating the Popup using xml file
                 popup.getMenuInflater().inflate(R.menu.profile_popup_menu, popup.getMenu());
                 for (String s : profile_array) {
-                    popup.getMenu().add(s);
+                    popup.getMenu().add(s).setIcon(R.drawable.amex_blue);
                 }
-                popup.getMenu().add("Add New Profile");
-                popup.getMenu().add("Close");
+                popup.getMenu().add("Add New Profile").setIcon(R.drawable.ic_add_new_profile);
+                popup.getMenu().add("").setIcon(R.drawable.amex_blue).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
                 //registering popup with OnMenuItemClickListener
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+                popup.setOnMenuItemClickListener(new IconizedMenu.OnMenuItemClickListener()
                 {
                     public boolean onMenuItemClick(MenuItem item)
                     {
@@ -622,6 +637,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 //                                    Toast.makeText(getContext(), profile_array.get(i).toString(), Toast.LENGTH_LONG).show();
 
                                     fragmentProfileBinding.includeFrame2.tvPersonName.setText(allTags.get(i).getFirstName() + " "+ allTags.get(i).getLastName());
+                                    //DashboardFragment.User_name = allTags.get(i).getFirstName() + " "+ allTags.get(i).getLastName();
                                     fragmentProfileBinding.includeFrame2.tvDesignation.setText(allTags.get(i).getDesignation());
                                     fragmentProfileBinding.includeFrame2.tvCompany.setText(allTags.get(i).getCompanyName());
                                     fragmentProfileBinding.tvName.setText(allTags.get(i).getFirstName() + " "+ allTags.get(i).getLastName());
@@ -712,7 +728,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                                     String Connection_Limit = user.get(LoginSession.KEY_CONNECTION_LIMIT);
                                     String Connection_Left = user.get(LoginSession.KEY_CONNECTION_LEFT);
 
-                                    session.createLoginSession(Q_ID, allTags.get(i).getProfileID(), user_id, first_name + " " + last_name, email_id, user_img, gender, user_pass, date_DOB, phone_no, Connection_Limit, Connection_Left);
+                                    session.createLoginSession(Q_ID, allTags.get(i).getProfileID(), user_id, allTags.get(i).getFirstName() + " "+ allTags.get(i).getLastName(), email_id, user_img, gender, user_pass, date_DOB, phone_no, Connection_Limit, Connection_Left);
 
                                     try {
                                         JSONObject object = jsonArray.getJSONObject(i);
@@ -990,7 +1006,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                     }
                 });
 
-                popup.show();//showing popup menu
+                popup.show();//showing popup menu*/
                 break;
             case R.id.ivEditProfile:
                 //Toast.makeText(getContext(),"Edit Profile",Toast.LENGTH_SHORT).show();
@@ -1012,6 +1028,404 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                 break;
         }
 
+    }
+
+
+    private PopupWindow popupWindowsort() {
+
+        // initialize a pop up window type
+        popupWindow = new PopupWindow(getContext());
+
+        LayoutInflater inflator = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+       // setContentView(inflator.inflate(layoutResID, null));
+
+        View view1 = inflator.inflate(R.layout.custom_dialog, null);
+        popupWindow.setContentView(view1);
+        popupWindow.setOutsideTouchable(true);
+
+        PopupMenuAdapter adapter = new PopupMenuAdapter((Activity)getContext(), profile_array, profileImage_array);
+        // the drop down list is a list view
+        ListView listViewSort = view1.findViewById(R.id.ListPopupMenu);
+        ImageView imgDismiss = view1.findViewById(R.id.imgMenu);
+
+        // set our adapter and pass our pop up window contents
+        listViewSort.setAdapter(adapter);
+
+        imgDismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindow.dismiss();
+            }
+        });
+
+
+        // set on item selected
+        listViewSort.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (profile_array.get(i).toString().equals("Add New Profile")) {
+                    // new HttpAsyncTaskAddProfile().execute("http://circle8.asia:8999/Onet.svc/AddProfile");
+                    Intent intent = new Intent(getContext(), EditProfileActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    intent.putExtra("profile_id", TestimonialProfileId);
+                    intent.putExtra("type", "add");
+                    intent.putExtra("activity", "profile");
+                    startActivity(intent);
+                    popupWindow.dismiss();
+                   // getActivity().overridePendingTransition(0, 0);
+                } else {
+                    profileSession.createProfileSession(String.valueOf(i));
+                    profileIndex = i;
+//                                    Toast.makeText(getContext(), profile_array.get(i).toString(), Toast.LENGTH_LONG).show();
+
+                    fragmentProfileBinding.includeFrame2.tvPersonName.setText(allTags.get(i).getFirstName() + " " + allTags.get(i).getLastName());
+                    //DashboardFragment.User_name = allTags.get(i).getFirstName() + " "+ allTags.get(i).getLastName();
+                    fragmentProfileBinding.includeFrame2.tvDesignation.setText(allTags.get(i).getDesignation());
+                    fragmentProfileBinding.includeFrame2.tvCompany.setText(allTags.get(i).getCompanyName());
+                    fragmentProfileBinding.tvName.setText(allTags.get(i).getFirstName() + " " + allTags.get(i).getLastName());
+                    fragmentProfileBinding.tvCompanyName.setText(allTags.get(i).getCompanyName());
+                    fragmentProfileBinding.tvDesi.setText(allTags.get(i).getDesignation());
+                    fragmentProfileBinding.tvMob.setText(allTags.get(i).getMobile1());
+                    fragmentProfileBinding.tvWork.setText(allTags.get(i).getPhone1());
+                    fragmentProfileBinding.tvProfileName.setText(allTags.get(i).getProfile());
+
+                    if (allTags.get(i).getIndustry().equalsIgnoreCase("")
+                            || allTags.get(i).getIndustry().equalsIgnoreCase("null")) {
+                        fragmentProfileBinding.llIndustryBox.setVisibility(View.GONE);
+                    } else {
+                        fragmentProfileBinding.textIndustry.setText(allTags.get(i).getIndustry());
+                    }
+
+                    if (allTags.get(i).getAttachment_FileName().toString().equals("") || allTags.get(i).getAttachment_FileName().toString() == null ||
+                            allTags.get(i).getAttachment_FileName().toString().equals("null")) {
+
+                        fragmentProfileBinding.txtAttachment.setVisibility(View.GONE);
+                        fragmentProfileBinding.lblAttachment.setVisibility(View.GONE);
+                    } else {
+                        fragmentProfileBinding.txtAttachment.setVisibility(View.VISIBLE);
+                        fragmentProfileBinding.lblAttachment.setVisibility(View.VISIBLE);
+
+                        fragmentProfileBinding.txtAttachment.setText(allTags.get(i).getAttachment_FileName());
+                    }
+
+                    String add = allTags.get(i).getAddress1() + " ";
+
+                    if (allTags.get(i).getAddress2().toString().equals("") ||
+                            allTags.get(i).getAddress2().toString().equals("null") ||
+                            allTags.get(i).getAddress2().toString().equals(null)) {
+                        add += allTags.get(i).getAddress2().toString() + "\n";
+                    }
+                    add += allTags.get(i).getAddress3() + " ";
+
+                    if (allTags.get(i).getAddress4().toString().equals("") ||
+                            allTags.get(i).getAddress4().toString().equals("null") ||
+                            allTags.get(i).getAddress4().toString().equals(null)) {
+                        add += allTags.get(i).getAddress4().toString() + "\n";
+                    }
+                    add += allTags.get(i).getCity() + " ";
+
+                    if (allTags.get(i).getState().toString().equals("") ||
+                            allTags.get(i).getState().toString().equals("null") ||
+                            allTags.get(i).getState().toString().equals(null)) {
+                        add += allTags.get(i).getState().toString() + "\n";
+                    }
+                    add += allTags.get(i).getCountry() + " "
+                            + allTags.get(i).getPostalcode();
+                    fragmentProfileBinding.tvAddress.setText(
+                            add);
+
+
+                    if (allTags.get(i).getWebsite().equalsIgnoreCase("")
+                            || allTags.get(i).getWebsite().equalsIgnoreCase("null")
+                            || allTags.get(i).getWebsite().equalsIgnoreCase(null)) {
+                        fragmentProfileBinding.lnrWebsite.setVisibility(View.GONE);
+                    } else {
+                        fragmentProfileBinding.tvWebsite.setText(allTags.get(i).getWebsite());
+                    }
+                    displayProfile = allTags.get(i).getUserPhoto();
+                    TestimonialProfileId = allTags.get(i).getProfileID();
+
+                    HashMap<String, String> user = session.getUserDetails();
+                    String user_id = user.get(LoginSession.KEY_USERID);
+                    String email_id = user.get(LoginSession.KEY_EMAIL);
+                    String user_img = user.get(LoginSession.KEY_IMAGE);
+                    String user_pass = user.get(LoginSession.KEY_PASSWORD);
+                    String name = user.get(LoginSession.KEY_NAME);
+                    String kept1 = name.substring(0, name.indexOf(" "));
+                    String remainder1 = name.substring(name.indexOf(" ") + 1, name.length());
+
+                    String first_name = kept1;
+                    String last_name = remainder1;
+
+                    String gender = user.get(LoginSession.KEY_GENDER);
+                    String date_DOB = user.get(LoginSession.KEY_DOB);
+                    String phone_no = user.get(LoginSession.KEY_PHONE);
+                    String Connection_Limit = user.get(LoginSession.KEY_CONNECTION_LIMIT);
+                    String Connection_Left = user.get(LoginSession.KEY_CONNECTION_LEFT);
+
+                    session.createLoginSession(Q_ID, allTags.get(i).getProfileID(), user_id, allTags.get(i).getFirstName() + " " + allTags.get(i).getLastName(), email_id, user_img, gender, user_pass, date_DOB, phone_no, Connection_Limit, Connection_Left);
+
+                    try {
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        try {
+                            array = object.getJSONArray("Association_Name");
+                            associationString = "";
+                            listAssociation = new ArrayList<String>();
+                            for (int i1 = 0; i1 < array.length(); i1++) {
+
+                                String name1 = array.getString(i1).toString();
+                                String kept = name1.substring(0, name1.indexOf(":"));
+                                String remainder = name1.substring(name1.indexOf(":") + 1, name1.length());
+
+
+                                listAssociation.add(remainder);
+
+                                if (i1 == array.length() - 1) {
+                                    associationString += remainder;
+                                } else {
+                                    associationString += remainder + " / ";
+                                }
+
+
+                                // associationString += remainder + " / ";
+                            }
+                            fragmentProfileBinding.txtAssociationList.setText(associationString);
+                            int countAssociation;
+                            if (array.length() >= 5) {
+                                countAssociation = 5;
+                            } else {
+                                countAssociation = array.length();
+                            }
+                            GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), countAssociation, GridLayoutManager.HORIZONTAL, false);
+                            fragmentProfileBinding.recyclerAssociation.setAdapter(new TextRecyclerAdapter(listAssociation));
+                            fragmentProfileBinding.recyclerAssociation.setLayoutManager(gridLayoutManager);
+
+                            if (listAssociation.size() == 0) {
+                                fragmentProfileBinding.txtAssociationList.setVisibility(View.GONE);
+                                //  recyclerAssociation.setVisibility(View.GONE);
+                                fragmentProfileBinding.txtNoAssociation.setVisibility(View.VISIBLE);
+                            } else {
+                                fragmentProfileBinding.txtAssociationList.setVisibility(View.VISIBLE);
+                                // recyclerAssociation.setVisibility(View.VISIBLE);
+                                fragmentProfileBinding.txtNoAssociation.setVisibility(View.GONE);
+                            }
+                        } catch (Exception e) {
+                        }
+
+                        try {
+                            arrayEvents = object.getJSONArray("Event_Cat_Name");
+
+                            listEvents = new ArrayList<String>();
+                            eventString = "";
+                            for (int i1 = 0; i1 < arrayEvents.length(); i1++) {
+
+                                listEvents.add(arrayEvents.getString(i1));
+                                String remainder = "";
+                                String name1 = arrayEvents.getString(i1);
+                                if (name1.contains(":")) {
+                                    //String kept = name.substring(0, name.indexOf(":"));
+                                    remainder = name1.substring(name1.indexOf(":") + 1, name1.length());
+                                } else {
+                                    remainder = name1;
+                                }
+                                if (i1 == arrayEvents.length() - 1) {
+                                    eventString += remainder;
+                                } else {
+                                    eventString += remainder + " / ";
+                                }
+
+
+                            }
+                            fragmentProfileBinding.txtEventsListfinal.setText(eventString);
+                            int countEvents;
+                            if (arrayEvents.length() >= 5) {
+                                countEvents = 5;
+                            } else {
+                                countEvents = arrayEvents.length();
+                            }
+
+                            GridLayoutManager gridLayoutManager1 = new GridLayoutManager(getContext(), countEvents, GridLayoutManager.HORIZONTAL, false);
+                            fragmentProfileBinding.recyclerEvents.setAdapter(new TextRecyclerAdapter(listEvents));
+                            fragmentProfileBinding.recyclerEvents.setLayoutManager(gridLayoutManager1);
+
+
+                            if (listEvents.size() == 0) {
+                                fragmentProfileBinding.txtEventsListfinal.setVisibility(View.GONE);
+                                // recyclerEvents.setVisibility(View.GONE);
+                                fragmentProfileBinding.txtNoEvent.setVisibility(View.VISIBLE);
+                            } else {
+                                fragmentProfileBinding.txtEventsListfinal.setVisibility(View.VISIBLE);
+                                // recyclerEvents.setVisibility(View.VISIBLE);
+                                fragmentProfileBinding.txtNoEvent.setVisibility(View.GONE);
+                            }
+
+                        } catch (Exception e) {
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    if (allTags.get(i).getUserPhoto().equals("")) {
+                        fragmentProfileBinding.includeFrame2.progressBar1.setVisibility(View.GONE);
+                        fragmentProfileBinding.includeFrame2.imgProfile.setImageResource(R.drawable.usr_white1);
+                    } else {
+                        fragmentProfileBinding.includeFrame2.progressBar1.setVisibility(View.VISIBLE);
+                        Glide.with(getActivity()).load(Utility.BASE_IMAGE_URL + "UserProfile/" + allTags.get(i).getUserPhoto())
+                                .asBitmap()
+                                .into(new BitmapImageViewTarget(fragmentProfileBinding.includeFrame2.imgProfile) {
+                                    @Override
+                                    public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                                        super.onResourceReady(drawable, anim);
+                                        fragmentProfileBinding.includeFrame2.progressBar1.setVisibility(View.GONE);
+                                        fragmentProfileBinding.includeFrame2.imgProfile.setImageBitmap(drawable);
+                                    }
+                                });
+
+                    }
+
+                    if (allTags.get(i).getCard_Front().equalsIgnoreCase("") && allTags.get(i).getCard_Back().equalsIgnoreCase("")) {
+                        appbar.setVisibility(View.GONE);
+                    } else {
+                        appbar.setVisibility(View.VISIBLE);
+                    }
+
+                    if (allTags.get(i).getFacebook().equals("") || allTags.get(i).getFacebook().equals(null)) {
+                        fragmentProfileBinding.fbUrl.setImageResource(R.drawable.ic_fb_gray);
+                        fragmentProfileBinding.fbUrl.setEnabled(false);
+                    } else {
+                        fragmentProfileBinding.fbUrl.setImageResource(R.drawable.icon_fb);
+                        fragmentProfileBinding.fbUrl.setEnabled(true);
+                        strfbUrl = allTags.get(i).getFacebook().toString();
+                    }
+
+                    if (allTags.get(i).getGoogle().equals("") || allTags.get(i).getGoogle().equals(null)) {
+                        fragmentProfileBinding.googleUrl.setImageResource(R.drawable.ic_google_gray);
+                        fragmentProfileBinding.googleUrl.setEnabled(false);
+                    } else {
+                        fragmentProfileBinding.googleUrl.setImageResource(R.drawable.icon_google);
+                        fragmentProfileBinding.googleUrl.setEnabled(true);
+                        strgoogleUrl = allTags.get(i).getGoogle().toString();
+                    }
+
+                    if (allTags.get(i).getTwitter().equals("") || allTags.get(i).getTwitter().equals(null)) {
+                        fragmentProfileBinding.twitterUrl.setImageResource(R.drawable.icon_twitter_gray);
+                        fragmentProfileBinding.twitterUrl.setEnabled(false);
+                    } else {
+                        fragmentProfileBinding.twitterUrl.setImageResource(R.drawable.icon_twitter);
+                        fragmentProfileBinding.twitterUrl.setEnabled(true);
+                        strtwitterUrl = allTags.get(i).getTwitter().toString();
+                    }
+
+                    if (allTags.get(i).getLinkedin().equals("") || allTags.get(i).getLinkedin().equals(null)) {
+                        fragmentProfileBinding.linkedInUrl.setImageResource(R.drawable.icon_linkedin_gray);
+                        fragmentProfileBinding.linkedInUrl.setEnabled(false);
+                    } else {
+                        fragmentProfileBinding.linkedInUrl.setImageResource(R.drawable.icon_linkedin);
+                        fragmentProfileBinding.linkedInUrl.setEnabled(true);
+                        strlinkedInUrl = allTags.get(i).getLinkedin().toString();
+                    }
+
+                    new HttpAsyncTaskTestimonial().execute(Utility.BASE_URL + "Testimonial/Fetch");
+
+                    try {
+                        if (allTags.get(i).getCard_Front().equals("")) {
+                            recycle_image1 = "";
+                        } else {
+                            recycle_image1 = Utility.BASE_IMAGE_URL + "Cards/" + allTags.get(i).getCard_Front();
+                        }
+                    } catch (Exception e) {
+                        recycle_image1 = "";
+                    }
+
+                    try {
+                        if (allTags.get(i).getCard_Back().equals("")) {
+                            recycle_image2 = "";
+                        } else {
+                            recycle_image2 = Utility.BASE_IMAGE_URL + "Cards/" + allTags.get(i).getCard_Back();
+                        }
+                    } catch (Exception e) {
+                        recycle_image2 = "";
+                    }
+
+                    image = new ArrayList<>();
+                    image.add(recycle_image1);
+                    image.add(recycle_image2);
+                    myPager = new CardSwipe(getContext(), image);
+
+                    fragmentProfileBinding.viewPager.setClipChildren(false);
+                    fragmentProfileBinding.viewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+                    fragmentProfileBinding.viewPager.setOffscreenPageLimit(2);
+                    //  mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
+                    fragmentProfileBinding.viewPager.setAdapter(myPager);
+
+                    fragmentProfileBinding.viewPager1.setClipChildren(false);
+                    fragmentProfileBinding.viewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
+                    fragmentProfileBinding.viewPager1.setOffscreenPageLimit(2);
+                    // viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
+                    fragmentProfileBinding.viewPager1.setAdapter(myPager);
+
+
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            //Do something after 100ms
+
+                            try {
+                                barName = encrypt(TestimonialProfileId, secretKey);
+                                //  bitmap = TextToImageEncode(barName);
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            } catch (InvalidKeyException e) {
+                                e.printStackTrace();
+                            } catch (NoSuchAlgorithmException e) {
+                                e.printStackTrace();
+                            } catch (NoSuchPaddingException e) {
+                                e.printStackTrace();
+                            } catch (InvalidAlgorithmParameterException e) {
+                                e.printStackTrace();
+                            } catch (IllegalBlockSizeException e) {
+                                e.printStackTrace();
+                            } catch (BadPaddingException e) {
+                                e.printStackTrace();
+                            }
+
+
+                            try {
+                                //setting size of qr code
+                                int width = 600;
+                                int height = 600;
+                                int smallestDimension = width < height ? width : height;
+
+                                String qrCodeData = barName;
+                                //setting parameters for qr code
+                                String charset = "UTF-8";
+                                Map<EncodeHintType, ErrorCorrectionLevel> hintMap = new HashMap<EncodeHintType, ErrorCorrectionLevel>();
+                                hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+                                CreateQRCode(getContext(), qrCodeData, charset, hintMap, smallestDimension, smallestDimension);
+
+                            } catch (Exception ex) {
+                                Log.e("QrGenerate", ex.getMessage());
+                            }
+                        }
+                    }, 5000);
+                }
+            }
+        });
+
+        // some other visual settings for popup window
+        popupWindow.setFocusable(true);
+        popupWindow.setWidth(460);
+        // popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.white));
+        popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+
+        // set the listview as popup content
+
+        return popupWindow;
     }
 
     public static void CreateQRCode(Context context, String qrCodeData, String charset, Map hintMap, int qrCodeheight, int qrCodewidth){
@@ -1348,6 +1762,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                             profile_array.add(object.getString("ProfileName"));
                         }
 
+                        profileImage_array.add(object.getString("UserPhoto"));
+
                         NameArray.add(object.getString("FirstName") + " " + object.getString("LastName"));
                         DesignationArray.add(object.getString("Designation"));
 
@@ -1399,6 +1815,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                         //  GetData(getContext());
 
                     }
+
+                    profile_array.add("Add New Profile");
+                    profileImage_array.add("");
 
                     try {
                         displayProfile = allTags.get(profileIndex).getUserPhoto();
