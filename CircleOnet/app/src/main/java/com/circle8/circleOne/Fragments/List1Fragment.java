@@ -42,6 +42,7 @@ import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.FragmentList1Binding;
+import com.twitter.sdk.android.core.models.Search;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -153,6 +154,11 @@ public class List1Fragment extends Fragment
 
 //        fragmentList1Binding.includeCarousel1.listHorizontal1.addOnScrollListener(scrollListener);
 //        fragmentList1Binding.includeCarousel2.listHorizontal2.addOnScrollListener(scrollListener);
+
+        if (SortFragment.CardListApi.equalsIgnoreCase("SearchConnect")) {
+            fragmentList1Binding.searchView.setText(SortFragment.Search );
+
+        }
 
         ViewTreeObserver vto = fragmentList1Binding.lnrList.getViewTreeObserver();
 

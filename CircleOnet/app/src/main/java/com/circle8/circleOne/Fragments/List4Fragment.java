@@ -164,6 +164,11 @@ public class List4Fragment extends Fragment
         gridAdapter = new List4Adapter(getActivity(), R.layout.grid_list4_layout, nfcModel1);
         listView.setAdapter(gridAdapter);
 
+        if (SortFragment.CardListApi.equalsIgnoreCase("SearchConnect")) {
+            searchText.setText(SortFragment.Search );
+
+        }
+
       //  callFirst();
 
         /*List<NFCModel> allTags = db.getActiveNFC();

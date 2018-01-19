@@ -181,6 +181,11 @@ public class List2Fragment extends Fragment
             }
         });*/
 
+        if (SortFragment.CardListApi.equalsIgnoreCase("SearchConnect")) {
+            fragmentList2Binding.searchView.setText(SortFragment.Search );
+
+        }
+
         searchText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
