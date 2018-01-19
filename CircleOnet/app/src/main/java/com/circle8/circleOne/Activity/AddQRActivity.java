@@ -17,6 +17,7 @@ import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
@@ -27,8 +28,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Fragments.CardsFragment;
+import com.circle8.circleOne.Fragments.DashboardFragment;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.R;
+import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.ActivityAddQrBinding;
 import com.google.zxing.Result;
@@ -78,6 +81,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
     String lat = "", lng = "";
     private boolean netCheck;
     ActivityAddQrBinding mBinding;
+    private Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -219,7 +223,7 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
                             lng = "";
                             new HttpAsyncTask().execute(Utility.BASE_URL + "FriendConnection_Operation");
                             CardsActivity.getLocation();
-                            Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getApplicationContext(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
                         }
                     }
 
@@ -380,11 +384,26 @@ public class AddQRActivity extends AppCompatActivity implements ZXingScannerView
                     if (success.equals("1")) {
                         Utility.freeMemory();
                         Toast.makeText(getApplicationContext(), getResources().getString(R.string.successful_request_sent), Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getApplicationContext(), CardsActivity.class);
-                        intent.putExtra("viewpager_position", CardsActivity.mViewPager.getCurrentItem());
-                        intent.putExtra("nested_viewpager_position", CardsFragment.mViewPager.getCurrentItem());
-                        startActivity(intent);
-                        finish();
+                        Pref.setValue(AddQRActivity.this, "current_frag", "1");
+                        fragment = new CardsFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_container_wrapper, fragment)
+                                .addToBackStack(null)
+                                .commit();
+
+                        DashboardActivity.activityDashboardBinding.includefooter.imgCard.setImageResource(R.drawable.ic_icon1b);
+                        DashboardActivity.activityDashboardBinding.includefooter.imgDashboard.setImageResource(R.drawable.ic_dashboard_gray);
+                        DashboardActivity.activityDashboardBinding.includefooter.imgProfile.setImageResource(R.drawable.ic_icon4);
+                        DashboardActivity.activityDashboardBinding.includefooter.tvCards.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        DashboardActivity.activityDashboardBinding.includefooter.tvDashboard.setTextColor(getResources().getColor(R.color.unselected));
+                        DashboardActivity.activityDashboardBinding.includefooter.tvProfile.setTextColor(getResources().getColor(R.color.unselected));
+                        if (DashboardActivity.activityDashboardBinding.includefooter.txtNotificationCountAction.getText().toString().equals("0")){
+                            DashboardActivity.activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.GONE);
+                            DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.GONE);
+                        }else {
+                            DashboardActivity.activityDashboardBinding.includefooter.txtNotificationCountAction.setVisibility(View.VISIBLE);
+                            DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.VISIBLE);
+
+                        }
                         /*CardsFragment.mViewPager.getCurrentItem();
                         List1Fragment.webCall();
                         List2Fragment.webCall();
