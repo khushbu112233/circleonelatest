@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -38,6 +39,8 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -48,13 +51,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.circle8.circleOne.Adapter.AddEventAdapter;
 import com.circle8.circleOne.Adapter.CardSwipe;
 import com.circle8.circleOne.Adapter.CardViewDataAdapter;
 import com.circle8.circleOne.Adapter.CustomAdapter;
+import com.circle8.circleOne.Adapter.PopupMenuAdapter;
+import com.circle8.circleOne.Adapter.TextRecyclerAdapter;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Helper.ProfileSession;
 import com.circle8.circleOne.Helper.ReferralCodeSession;
@@ -90,6 +101,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.TwitterAuthProvider;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.linkedin.platform.APIHelper;
 import com.linkedin.platform.LISessionManager;
 import com.linkedin.platform.errors.LIApiError;
@@ -125,6 +138,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -132,7 +147,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 import static junit.framework.Assert.assertEquals;
@@ -166,8 +186,12 @@ public class EditProfileActivity extends AppCompatActivity implements
     private int REQUEST_CAMERA = 0, REQUEST_GALLERY = 1, REQUEST_DOCUMENT = 2, REQUEST_AUDIO = 3;
     private int camera_permission;
     private String addEventString;
-    private String arrowStatus = "DOWN";
-    private String arrowStatus1 = "DOWN";
+    private String arrowStatus = "RIGHT";
+    private String arrowStatus1 = "RIGHT";
+    private String arrowBasic = "DOWN";
+    private String arrowCards = "RIGHT";
+    private String arrowProfile = "RIGHT";
+    private String arrowTestimonial = "RIGHT";
     private LoginSession session;
     private int SELECT_GALLERY_CARD = 500;
     private int REQUEST_CAMERA_CARD = 501;
@@ -218,6 +242,8 @@ public class EditProfileActivity extends AppCompatActivity implements
     private ProgressDialog progress;
     public static FragmentEditProfileBinding fragmentEditProfileBinding;
     boolean result, result1;
+    private PopupWindow popupWindow;
+    TextView tvSave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -270,6 +296,15 @@ public class EditProfileActivity extends AppCompatActivity implements
                 finish();
             }
         });
+
+        fragmentEditProfileBinding.imgProfileMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindow = popupWindowsort();
+                popupWindow.showAtLocation(view, Gravity.TOP | Gravity.RIGHT, 0, 0);
+
+            }
+        });
         fragmentEditProfileBinding.txtbackDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -298,6 +333,231 @@ public class EditProfileActivity extends AppCompatActivity implements
         fragmentEditProfileBinding.txtMore.setOnClickListener(this);
         fragmentEditProfileBinding.imgYoutube.setOnClickListener(this);
         fragmentEditProfileBinding.imgTwitter.setOnClickListener(this);
+
+        fragmentEditProfileBinding.lnrBusinessImages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (arrowCards.equalsIgnoreCase("RIGHT"))
+                {
+                    fragmentEditProfileBinding.ivArrowImgCards.setImageResource(R.drawable.ic_down_arrow_blue);
+                    fragmentEditProfileBinding.lnrCardsDetail.setVisibility(View.VISIBLE);
+                    arrowCards = "DOWN";
+                }
+                else if (arrowCards.equalsIgnoreCase("DOWN"))
+                {
+                    fragmentEditProfileBinding.ivArrowImgCards.setImageResource(R.drawable.ic_right_arrow_blue);
+                    fragmentEditProfileBinding.lnrCardsDetail.setVisibility(View.GONE);
+                    arrowCards = "RIGHT";
+                }
+            }
+        });
+
+        fragmentEditProfileBinding.lnrBasicInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (arrowBasic.equalsIgnoreCase("RIGHT"))
+                {
+                    fragmentEditProfileBinding.ivArrowImgBasic.setImageResource(R.drawable.ic_down_arrow_blue);
+                    fragmentEditProfileBinding.lnrBasicDetail.setVisibility(View.VISIBLE);
+                    arrowBasic = "DOWN";
+                }
+                else if (arrowBasic.equalsIgnoreCase("DOWN"))
+                {
+                    fragmentEditProfileBinding.ivArrowImgBasic.setImageResource(R.drawable.ic_right_arrow_blue);
+                    fragmentEditProfileBinding.lnrBasicDetail.setVisibility(View.GONE);
+                    arrowBasic = "RIGHT";
+                }
+            }
+        });
+
+        fragmentEditProfileBinding.rltTestimonial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (arrowTestimonial.equalsIgnoreCase("RIGHT"))
+                {
+                    fragmentEditProfileBinding.ivArrowImgTestimonial.setImageResource(R.drawable.ic_down_arrow_blue);
+                    fragmentEditProfileBinding.lstTestimonial.setVisibility(View.VISIBLE);
+                    arrowTestimonial = "DOWN";
+                }
+                else if (arrowTestimonial.equalsIgnoreCase("DOWN"))
+                {
+                    fragmentEditProfileBinding.ivArrowImgTestimonial.setImageResource(R.drawable.ic_right_arrow_blue);
+                    fragmentEditProfileBinding.lstTestimonial.setVisibility(View.GONE);
+                    arrowTestimonial = "RIGHT";
+                }
+            }
+        });
+
+        fragmentEditProfileBinding.lnrProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (arrowProfile.equalsIgnoreCase("RIGHT"))
+                {
+                    fragmentEditProfileBinding.ivArrowImgProfile.setImageResource(R.drawable.ic_down_arrow_blue);
+                    fragmentEditProfileBinding.lnrProfileDetail.setVisibility(View.VISIBLE);
+                    arrowProfile = "DOWN";
+                }
+                else if (arrowProfile.equalsIgnoreCase("DOWN"))
+                {
+                    fragmentEditProfileBinding.ivArrowImgProfile.setImageResource(R.drawable.ic_right_arrow_blue);
+                    fragmentEditProfileBinding.lnrProfileDetail.setVisibility(View.GONE);
+                    arrowProfile = "RIGHT";
+                }
+            }
+        });
+
+        fragmentEditProfileBinding.tvSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                arrayAssociation = new JSONArray();
+                String data = "";
+                List<AssociationModel> stList = ((CardViewDataAdapter) mAdapter)
+                        .getStudentist();
+                Utility.freeMemory();
+                for (int i = 0; i < stList.size(); i++)
+                {
+                    AssociationModel singleStudent = stList.get(i);
+                    if (singleStudent.isSelected() == true)
+                    {
+                        data = data + "\n" + singleStudent.getId().toString();
+                        arrayAssociation.put(Integer.parseInt(singleStudent.getId().toString()));
+                          /*
+                           * Toast.makeText( CardViewActivity.this, " " +
+                           * singleStudent.getName() + " " +
+                           * singleStudent.getEmailId() + " " +
+                           * singleStudent.isSelected(),
+                           * Toast.LENGTH_SHORT).show();
+                           */
+                    }
+                }
+
+                arrayEvents = new JSONArray();
+                String data1 = "";
+                List<AssociationModel> stList1 = ((CardViewDataAdapter) mAdapter1).getStudentist();
+
+                for (int i = 0; i < stList1.size(); i++)
+                {
+                    AssociationModel singleStudent = stList1.get(i);
+                    if (singleStudent.isSelected() == true)
+                    {
+                        data1 = data1 + "\n" + singleStudent.getId().toString();
+                        arrayEvents.put(Integer.parseInt(singleStudent.getId().toString()));
+                          /*
+                           * Toast.makeText( CardViewActivity.this, " " +
+                           * singleStudent.getName() + " " +
+                           * singleStudent.getEmailId() + " " +
+                           * singleStudent.isSelected(),
+                           * Toast.LENGTH_SHORT).show();
+                           */
+                    }
+                }
+
+               /* Toast.makeText(EditProfileActivity.this,
+                     "Selected Students: \n" + arrayEvents, Toast.LENGTH_LONG)
+                        .show();*/
+
+                if (!fragmentEditProfileBinding.edtWork.getText().toString().equals("")) {
+                    try {
+                        if (fragmentEditProfileBinding.ccp1.getSelectedCountryCodeWithPlus() != null) {
+                            Phone1 = fragmentEditProfileBinding.ccp1.getSelectedCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtWork.getText().toString();
+                        }
+                    } catch (Exception e) {
+                        Phone1 = fragmentEditProfileBinding.ccp1.getDefaultCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtWork.getText().toString();
+                    }
+                }
+
+                if (!fragmentEditProfileBinding.edtWork2.getText().toString().equals("")) {
+                    try {
+                        if (fragmentEditProfileBinding.ccp2.getSelectedCountryCodeWithPlus() != null) {
+                            Phone2 = fragmentEditProfileBinding.ccp2.getSelectedCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtWork2.getText().toString();
+                        }
+                    } catch (Exception e) {
+                        Phone2 = fragmentEditProfileBinding.ccp2.getDefaultCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtWork2.getText().toString();
+                    }
+                }
+
+                if (!fragmentEditProfileBinding.edtPrimary.getText().toString().equals("")) {
+                    try {
+                        if (fragmentEditProfileBinding.ccp3.getSelectedCountryCodeWithPlus() != null) {
+                            Mobile1 = fragmentEditProfileBinding.ccp3.getSelectedCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtPrimary.getText().toString();
+                        }
+                    } catch (Exception e) {
+                        Mobile1 = fragmentEditProfileBinding.ccp3.getDefaultCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtPrimary.getText().toString();
+                    }
+                }
+
+                if (!fragmentEditProfileBinding.edtPrimary2.getText().toString().equals("")) {
+                    try {
+                        if (fragmentEditProfileBinding.ccp4.getSelectedCountryCodeWithPlus() != null) {
+                            Mobile2 = fragmentEditProfileBinding.ccp4.getSelectedCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtPrimary2.getText().toString();
+                        }
+                    } catch (Exception e) {
+                        Mobile2 = fragmentEditProfileBinding.ccp4.getDefaultCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtPrimary2.getText().toString();
+                    }
+                }
+
+                if (!fragmentEditProfileBinding.edtFax1.getText().toString().equals(""))
+                {
+                    try
+                    {
+                        if (fragmentEditProfileBinding.ccp5.getSelectedCountryCodeWithPlus() != null)
+                        {
+                            Fax1 = fragmentEditProfileBinding.ccp5.getSelectedCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtFax1.getText().toString();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Fax1 = fragmentEditProfileBinding.ccp5.getDefaultCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtFax1.getText().toString();
+                    }
+                }
+
+                if (!fragmentEditProfileBinding.edtFax2.getText().toString().equals("")) {
+                    try {
+                        if (fragmentEditProfileBinding.ccp6.getSelectedCountryCodeWithPlus() != null) {
+                            Fax2 = fragmentEditProfileBinding.ccp6.getSelectedCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtFax2.getText().toString();
+                        }
+                    } catch (Exception e) {
+                        Fax2 = fragmentEditProfileBinding.ccp6.getDefaultCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtFax2.getText().toString();
+                    }
+                }
+
+                try
+                {
+                    associationID = AssoIdList.get(fragmentEditProfileBinding.spnAssociation.getSelectedItemPosition()).toString();
+                }
+                catch (Exception e){}
+
+                if (fragmentEditProfileBinding.edtProfileName.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Please enter profile name", Toast.LENGTH_LONG).show();
+                }
+                else if (fragmentEditProfileBinding.edtFirstName.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Please enter first name", Toast.LENGTH_LONG).show();
+                }
+                else if (fragmentEditProfileBinding.edtLastName.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Please enter last name", Toast.LENGTH_LONG).show();
+                }
+                else if (fragmentEditProfileBinding.autoCompleteDesignation.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Please enter title", Toast.LENGTH_LONG).show();
+                }
+                else if (fragmentEditProfileBinding.autoCompleteCompany.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Please enter company name", Toast.LENGTH_LONG).show();
+                }
+                else if (fragmentEditProfileBinding.edtEmail.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Please enter valid email id", Toast.LENGTH_LONG).show();
+                }
+                else if (fragmentEditProfileBinding.edtPrimary.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Please enter your mobile number.", Toast.LENGTH_LONG).show();
+                }
+                else {
+
+                    if (type.equals("add")) {
+                        new HttpAsyncTaskAddProfile().execute(Utility.BASE_URL + "AddProfile");
+                    } else if (type.equals("edit")) {
+                        new HttpAsyncTask().execute(Utility.BASE_URL + "UpdateProfile");
+                    }
+                }
+            }
+        });
         fragmentEditProfileBinding.includeTop.imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -436,6 +696,226 @@ public class EditProfileActivity extends AppCompatActivity implements
         });
 
     }
+
+    private PopupWindow popupWindowsort() {
+
+        // initialize a pop up window type
+        popupWindow = new PopupWindow(EditProfileActivity.this);
+
+        LayoutInflater inflator = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        // setContentView(inflator.inflate(layoutResID, null));
+
+        View view1 = inflator.inflate(R.layout.layout_edit_profile_menu, null);
+        popupWindow.setContentView(view1);
+        popupWindow.setOutsideTouchable(true);
+
+        RelativeLayout rltSave = view1.findViewById(R.id.rltSave);
+        RelativeLayout rltDelete = view1.findViewById(R.id.rltdelete);
+
+        ImageView imgDismiss = view1.findViewById(R.id.imgMenu);
+
+        // set our adapter and pass our pop up window contents
+
+        imgDismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindow.dismiss();
+            }
+        });
+
+        rltSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                arrayAssociation = new JSONArray();
+                String data = "";
+                List<AssociationModel> stList = ((CardViewDataAdapter) mAdapter)
+                        .getStudentist();
+                Utility.freeMemory();
+                for (int i = 0; i < stList.size(); i++)
+                {
+                    AssociationModel singleStudent = stList.get(i);
+                    if (singleStudent.isSelected() == true)
+                    {
+                        data = data + "\n" + singleStudent.getId().toString();
+                        arrayAssociation.put(Integer.parseInt(singleStudent.getId().toString()));
+                          /*
+                           * Toast.makeText( CardViewActivity.this, " " +
+                           * singleStudent.getName() + " " +
+                           * singleStudent.getEmailId() + " " +
+                           * singleStudent.isSelected(),
+                           * Toast.LENGTH_SHORT).show();
+                           */
+                    }
+                }
+
+                arrayEvents = new JSONArray();
+                String data1 = "";
+                List<AssociationModel> stList1 = ((CardViewDataAdapter) mAdapter1).getStudentist();
+
+                for (int i = 0; i < stList1.size(); i++)
+                {
+                    AssociationModel singleStudent = stList1.get(i);
+                    if (singleStudent.isSelected() == true)
+                    {
+                        data1 = data1 + "\n" + singleStudent.getId().toString();
+                        arrayEvents.put(Integer.parseInt(singleStudent.getId().toString()));
+                          /*
+                           * Toast.makeText( CardViewActivity.this, " " +
+                           * singleStudent.getName() + " " +
+                           * singleStudent.getEmailId() + " " +
+                           * singleStudent.isSelected(),
+                           * Toast.LENGTH_SHORT).show();
+                           */
+                    }
+                }
+
+               /* Toast.makeText(EditProfileActivity.this,
+                     "Selected Students: \n" + arrayEvents, Toast.LENGTH_LONG)
+                        .show();*/
+
+                if (!fragmentEditProfileBinding.edtWork.getText().toString().equals("")) {
+                    try {
+                        if (fragmentEditProfileBinding.ccp1.getSelectedCountryCodeWithPlus() != null) {
+                            Phone1 = fragmentEditProfileBinding.ccp1.getSelectedCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtWork.getText().toString();
+                        }
+                    } catch (Exception e) {
+                        Phone1 = fragmentEditProfileBinding.ccp1.getDefaultCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtWork.getText().toString();
+                    }
+                }
+
+                if (!fragmentEditProfileBinding.edtWork2.getText().toString().equals("")) {
+                    try {
+                        if (fragmentEditProfileBinding.ccp2.getSelectedCountryCodeWithPlus() != null) {
+                            Phone2 = fragmentEditProfileBinding.ccp2.getSelectedCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtWork2.getText().toString();
+                        }
+                    } catch (Exception e) {
+                        Phone2 = fragmentEditProfileBinding.ccp2.getDefaultCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtWork2.getText().toString();
+                    }
+                }
+
+                if (!fragmentEditProfileBinding.edtPrimary.getText().toString().equals("")) {
+                    try {
+                        if (fragmentEditProfileBinding.ccp3.getSelectedCountryCodeWithPlus() != null) {
+                            Mobile1 = fragmentEditProfileBinding.ccp3.getSelectedCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtPrimary.getText().toString();
+                        }
+                    } catch (Exception e) {
+                        Mobile1 = fragmentEditProfileBinding.ccp3.getDefaultCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtPrimary.getText().toString();
+                    }
+                }
+
+                if (!fragmentEditProfileBinding.edtPrimary2.getText().toString().equals("")) {
+                    try {
+                        if (fragmentEditProfileBinding.ccp4.getSelectedCountryCodeWithPlus() != null) {
+                            Mobile2 = fragmentEditProfileBinding.ccp4.getSelectedCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtPrimary2.getText().toString();
+                        }
+                    } catch (Exception e) {
+                        Mobile2 = fragmentEditProfileBinding.ccp4.getDefaultCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtPrimary2.getText().toString();
+                    }
+                }
+
+                if (!fragmentEditProfileBinding.edtFax1.getText().toString().equals(""))
+                {
+                    try
+                    {
+                        if (fragmentEditProfileBinding.ccp5.getSelectedCountryCodeWithPlus() != null)
+                        {
+                            Fax1 = fragmentEditProfileBinding.ccp5.getSelectedCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtFax1.getText().toString();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Fax1 = fragmentEditProfileBinding.ccp5.getDefaultCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtFax1.getText().toString();
+                    }
+                }
+
+                if (!fragmentEditProfileBinding.edtFax2.getText().toString().equals("")) {
+                    try {
+                        if (fragmentEditProfileBinding.ccp6.getSelectedCountryCodeWithPlus() != null) {
+                            Fax2 = fragmentEditProfileBinding.ccp6.getSelectedCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtFax2.getText().toString();
+                        }
+                    } catch (Exception e) {
+                        Fax2 = fragmentEditProfileBinding.ccp6.getDefaultCountryCodeWithPlus() + " " + fragmentEditProfileBinding.edtFax2.getText().toString();
+                    }
+                }
+
+                try
+                {
+                    associationID = AssoIdList.get(fragmentEditProfileBinding.spnAssociation.getSelectedItemPosition()).toString();
+                }
+                catch (Exception e){}
+
+                if (fragmentEditProfileBinding.edtProfileName.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Please enter profile name", Toast.LENGTH_LONG).show();
+                }
+                else if (fragmentEditProfileBinding.edtFirstName.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Please enter first name", Toast.LENGTH_LONG).show();
+                }
+                else if (fragmentEditProfileBinding.edtLastName.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Please enter last name", Toast.LENGTH_LONG).show();
+                }
+                else if (fragmentEditProfileBinding.autoCompleteDesignation.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Please enter title", Toast.LENGTH_LONG).show();
+                }
+                else if (fragmentEditProfileBinding.autoCompleteCompany.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Please enter company name", Toast.LENGTH_LONG).show();
+                }
+                else if (fragmentEditProfileBinding.edtEmail.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Please enter valid email id", Toast.LENGTH_LONG).show();
+                }
+                else if (fragmentEditProfileBinding.edtPrimary.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Please enter your mobile number.", Toast.LENGTH_LONG).show();
+                }
+                else {
+
+                    if (type.equals("add")) {
+                        new HttpAsyncTaskAddProfile().execute(Utility.BASE_URL + "AddProfile");
+                    } else if (type.equals("edit")) {
+                        new HttpAsyncTask().execute(Utility.BASE_URL + "UpdateProfile");
+                    }
+                }
+            }
+        });
+
+        rltDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utility.freeMemory();
+                AlertDialog.Builder alert = new AlertDialog.Builder(EditProfileActivity.this, R.style.Blue_AlertDialog);
+                alert.setMessage("Are you sure want to delete profile?");
+                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //do your work here
+                        dialog.dismiss();
+                        new HttpAsyncTaskProfileDelete().execute(Utility.BASE_URL+"DeleteProfile");
+                    }
+                });
+                alert.setNegativeButton("No", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                alert.show();
+            }
+        });
+
+        // set on item selected
+
+        // some other visual settings for popup window
+        popupWindow.setFocusable(true);
+        popupWindow.setWidth(460);
+        // popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.white));
+        popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+
+        // set the listview as popup content
+
+        return popupWindow;
+    }
+
+
 
     private void selectImageToCrop() {
         final CharSequence[] items = { "Upload Picture", "Remove Picture",
@@ -3051,7 +3531,7 @@ public class EditProfileActivity extends AppCompatActivity implements
                         fragmentEditProfileBinding.txtMore.setVisibility(View.GONE);
                         fragmentEditProfileBinding.txtTestimonial.setVisibility(View.VISIBLE);
                     } else {
-                        fragmentEditProfileBinding.lstTestimonial.setVisibility(View.VISIBLE);
+                      //  fragmentEditProfileBinding.lstTestimonial.setVisibility(View.VISIBLE);
                         fragmentEditProfileBinding.txtMore.setVisibility(View.VISIBLE);
                         fragmentEditProfileBinding.txtTestimonial.setVisibility(View.GONE);
                     }
