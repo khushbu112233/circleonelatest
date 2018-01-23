@@ -8,11 +8,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
-import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -24,9 +25,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.circle8.circleOne.Activity.Connect;
 import com.circle8.circleOne.R;
-import com.circle8.circleOne.RxContacts.Contact;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
@@ -49,8 +48,6 @@ import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import de.measite.minidns.record.A;
 
 public class Utility
 {
@@ -464,7 +461,19 @@ public class Utility
         // 11. return result
         return result;
     }
-
+    public static Bitmap mergeBitmaps(Bitmap overlay, Bitmap bitmap) {
+        int height = bitmap.getHeight();
+        int width = bitmap.getWidth();
+        Bitmap combined = Bitmap.createBitmap(width, height, bitmap.getConfig());
+        Canvas canvas = new Canvas(combined);
+        int canvasWidth = canvas.getWidth();
+        int canvasHeight = canvas.getHeight();
+        canvas.drawBitmap(bitmap, new Matrix(), null);
+        int centreX = (canvasWidth  - overlay.getWidth()) /2;
+        int centreY = (canvasHeight - overlay.getHeight()) /2 ;
+        canvas.drawBitmap(overlay, centreX, centreY, null);
+        return combined;
+    }
 
     /**
      * for help screen static value

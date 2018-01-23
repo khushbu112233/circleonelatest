@@ -1,25 +1,19 @@
 package com.circle8.circleOne.Fragments;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -31,14 +25,12 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.circle8.circleOne.Activity.AddQRActivity;
-import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.Activity.DashboardActivity;
 import com.circle8.circleOne.Activity.Notification;
 import com.circle8.circleOne.Activity.RewardsPointsActivity;
@@ -46,17 +38,12 @@ import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Helper.ReferralCodeSession;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Pref;
-import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.FragmentDashboardLayoutBinding;
-import com.google.android.gms.maps.model.Dash;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
@@ -70,8 +57,8 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
 import static android.graphics.Color.WHITE;
-import static com.circle8.circleOne.Fragments.ProfileFragment.TextToImageEncode;
 import static com.circle8.circleOne.Fragments.ProfileFragment.encrypt;
+import static com.circle8.circleOne.Utils.Utility.mergeBitmaps;
 
 /**
  * Created by Ample-Arch on 06-01-2018.
@@ -317,29 +304,6 @@ public class DashboardFragment extends Fragment {
 
         }catch (Exception er){
             Log.e("QrGenerate",er.getMessage());
-        }
-    }
-
-    public static Bitmap mergeBitmaps(Bitmap overlay, Bitmap bitmap) {
-
-        try {
-            int height = bitmap.getHeight();
-            int width = bitmap.getWidth();
-
-            Bitmap combined = Bitmap.createBitmap(width, height, bitmap.getConfig());
-            Canvas canvas = new Canvas(combined);
-            int canvasWidth = canvas.getWidth();
-            int canvasHeight = canvas.getHeight();
-
-            canvas.drawBitmap(bitmap, new Matrix(), null);
-
-            int centreX = (canvasWidth - overlay.getWidth()) / 2;
-            int centreY = (canvasHeight - overlay.getHeight()) / 2;
-            canvas.drawBitmap(overlay, centreX, centreY, null);
-            return combined;
-
-        }catch (Exception e){
-            return null;
         }
     }
 
