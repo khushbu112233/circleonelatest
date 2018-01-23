@@ -494,7 +494,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
 
                 getSupportActionBar().setShowHideAnimationEnabled(false);
                 if (position == 0) {
-                    CardsFragment.mViewPager.setCurrentItem(nested_position);
+                    CardsFragment.fragmentCardsBinding.container1.setCurrentItem(nested_position);
                     getSupportActionBar().show();
                     setActionBarTitle("Cards - " + List1Fragment.count + "/"+ Connection_Limit);
                     setActionBarRightImage(R.drawable.ic_drawer);
@@ -709,7 +709,7 @@ public class CardsActivity extends AppCompatActivity implements GoogleApiClient.
             }
             mViewPager.setCurrentItem(position, false);
             if (nested_position != 0) {
-                CardsFragment.mViewPager.setCurrentItem(nested_position);
+                CardsFragment.fragmentCardsBinding.container1.setCurrentItem(nested_position);
             }
         }
     }

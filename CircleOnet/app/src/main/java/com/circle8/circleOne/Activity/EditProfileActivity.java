@@ -376,13 +376,13 @@ public class EditProfileActivity extends AppCompatActivity implements
                 if (arrowTestimonial.equalsIgnoreCase("RIGHT"))
                 {
                     fragmentEditProfileBinding.ivArrowImgTestimonial.setImageResource(R.drawable.ic_down_arrow_blue);
-                    fragmentEditProfileBinding.lstTestimonial.setVisibility(View.VISIBLE);
+                    fragmentEditProfileBinding.rltTestimonialDetail.setVisibility(View.VISIBLE);
                     arrowTestimonial = "DOWN";
                 }
                 else if (arrowTestimonial.equalsIgnoreCase("DOWN"))
                 {
                     fragmentEditProfileBinding.ivArrowImgTestimonial.setImageResource(R.drawable.ic_right_arrow_blue);
-                    fragmentEditProfileBinding.lstTestimonial.setVisibility(View.GONE);
+                    fragmentEditProfileBinding.rltTestimonialDetail.setVisibility(View.GONE);
                     arrowTestimonial = "RIGHT";
                 }
             }
@@ -906,7 +906,7 @@ public class EditProfileActivity extends AppCompatActivity implements
 
         // some other visual settings for popup window
         popupWindow.setFocusable(true);
-        popupWindow.setWidth(460);
+        popupWindow.setWidth(250);
         // popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.white));
         popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
 

@@ -146,9 +146,7 @@
         <activity
             android:name=".Fragments.ConnectFragment"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".Activity.SortAndFilterOption"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".Activity.EventsSelectOption"
             android:screenOrientation="portrait" />

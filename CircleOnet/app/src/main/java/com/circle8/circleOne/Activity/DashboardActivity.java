@@ -1361,7 +1361,7 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
                         NotificationCount = "0";
                         activityDashboardBinding.includefooter.txtNotificationCountAction.setText(NotificationCount);
                         DashboardFragment.fragmentDashboardLayoutBinding.includeNotiRewardShare.txtNotificationCountAction1.setVisibility(View.GONE);
-                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                      //  Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     }
                 }
             }

@@ -1,17 +1,23 @@
 package com.circle8.circleOne.Activity;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Typeface;
+import android.hardware.fingerprint.FingerprintManager;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -20,6 +26,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -36,14 +45,29 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.circle8.circleOne.ApplicationUtils.MyApplication;
+import com.circle8.circleOne.Helper.CustomSharedPreference;
+import com.circle8.circleOne.Helper.LoginSession;
+import com.circle8.circleOne.Helper.ProfileSession;
+import com.circle8.circleOne.Helper.ReferralCodeSession;
+import com.circle8.circleOne.Model.UserObject;
+import com.circle8.circleOne.MultiContactPicker;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.AsyncRequest;
+import com.circle8.circleOne.Utils.Pref;
+import com.circle8.circleOne.Utils.PrefUtils;
 import com.circle8.circleOne.Utils.Utility;
+import com.circle8.circleOne.chat.ChatHelper;
 import com.circle8.circleOne.databinding.ActivityRegisterBinding;
+import com.facebook.login.LoginManager;
+import com.google.gson.Gson;
 import com.hbb20.CountryCodePicker;
+import com.linkedin.platform.LISessionManager;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.QBResponseException;
 import com.quickblox.core.helper.StringifyArrayList;
+import com.quickblox.sample.core.ui.dialog.ProgressDialogFragment;
+import com.quickblox.sample.core.utils.SharedPrefsHelper;
 import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -92,9 +116,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
+import javax.crypto.Cipher;
+
+import static com.circle8.circleOne.Activity.LoginActivity.pushToken;
+import static com.circle8.circleOne.Utils.Utility.CustomProgressDialog;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
+import static com.circle8.circleOne.Utils.Utility.dismissProgress;
 import static com.circle8.circleOne.Utils.Validation.validate;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, AsyncRequest.OnAsyncRequestComplete
@@ -122,6 +152,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     View viewCenter;
     String Q_ID = "";
     public static ActivityRegisterBinding activityRegisterBinding;
+    ReferralCodeSession referralCodeSession;
+    LoginSession loginSession;
+    private static final int CONTACT_PICKER_REQUEST = 991;
+    private static final int PERMISSION_REQUEST_CONTACT = 111;
+    ProfileSession profileSession;
+    SharedPreferences prefs = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -141,7 +178,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         UserName = intent.getStringExtra("UserName");
         Email = intent.getStringExtra("Email");
         Image = intent.getStringExtra("Image");
-
+        referralCodeSession = new ReferralCodeSession(getApplicationContext());
+        loginSession = new LoginSession(getApplicationContext());
+        profileSession = new ProfileSession(getApplicationContext());
+        prefs = getSharedPreferences("com.circle8.circleOne", MODE_PRIVATE);
         Typeface font = Typeface.createFromAsset(getAssets(), "century-gothic-1361531616.ttf");
         activityRegisterBinding.txtprofile.setTypeface(font);
         activityRegisterBinding.etEmail.setText(Email);
@@ -291,6 +331,38 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         // motionLength = lineWidth+roundWidth;
 
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == PERMISSION_REQUEST_CONTACT){
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+                new MultiContactPicker.Builder(RegisterActivity.this) //Activity/fragment context
+                        .theme(R.style.MyCustomPickerTheme) //Optional - default: MultiContactPicker.Azure
+                        .hideScrollbar(false) //Optional - default: false
+                        .showTrack(true) //Optional - default: true
+                        .searchIconColor(Color.WHITE) //Option - default: White
+                        .handleColor(ContextCompat.getColor(RegisterActivity.this, R.color.colorPrimary)) //Optional - default: Azure Blue
+                        .bubbleColor(ContextCompat.getColor(RegisterActivity.this, R.color.colorPrimary)) //Optional - default: Azure Blue
+                        .bubbleTextColor(Color.WHITE) //Optional - default: White
+                        .showPickerForResult(CONTACT_PICKER_REQUEST);
+                // permission was granted, yay! Do the
+                // contacts-related task you need to do.
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(), "No permission for contacts", Toast.LENGTH_LONG).show();
+                // permission denied, boo! Disable the
+                // functionality that depends on this permission.
+            }
+            return;
+        }
+        else {
+          //  activityLoginBinding.imgFinger.setVisibility(View.GONE);
+            //  Toast.makeText(this, getString(R.string.Unknown_permission_request), Toast.LENGTH_LONG).show();
+        }
+    }
+
 
     @Override
     protected void onPause() {
@@ -467,9 +539,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             else if (etDOB.getText().toString().equals("")) {
                 Toast.makeText(getApplicationContext(), "Enter DOB", Toast.LENGTH_SHORT).show();
             }*/
-            else if (gender.equals("")) {
+           /* else if (gender.equals("")) {
                 Toast.makeText(getApplicationContext(), "Select gender", Toast.LENGTH_SHORT).show();
-            }
+            }*/
             else {
                 if (final_ImgBase64.equals("")) {
                     new HttpAsyncTask().execute(Utility.BASE_URL+"Registration");
@@ -1045,7 +1117,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             jsonObject.accumulate("Photo_String", register_img);
             jsonObject.accumulate("Platform", "Android");
             jsonObject.accumulate("ReferralCode", refferelCode);
-            jsonObject.accumulate("Token", LoginActivity.pushToken);
+            jsonObject.accumulate("Token", pushToken);
             jsonObject.accumulate("Twitter", Twitter);
             jsonObject.accumulate("UserName", email);
             jsonObject.accumulate("dob", date_DOB);
@@ -1196,6 +1268,485 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         return result;
     }
 
+    public String POSTLogin(String url) {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("Password", password);
+            jsonObject.accumulate("Platform", "Android");
+            jsonObject.accumulate("Token", pushToken);
+            jsonObject.accumulate("UserName", email);
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+
+            // 10. convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        return result;
+    }
+
+
+    private class HttpAsyncLoginTask extends AsyncTask<String, Void, String> {
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+           /* dialog = new ProgressDialog(LoginActivity.this);
+            dialog.setMessage("Logging In...");
+            //dialog.setTitle("Saving Reminder");
+            dialog.show();
+            dialog.setCancelable(false);*/
+
+            String loading = "Logging in";
+            CustomProgressDialog(loading);
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            return POSTLogin(urls[0]);
+        }
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+//            dialog.dismiss();
+            try {
+                if (result != null) {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String success = jsonObject.getString("success").toString();
+                    String message = jsonObject.getString("message").toString();
+                    String profileid = "", FirstName = "", LastName = "", UserPhoto = "";
+
+                    if (success.equals("1")) {
+                        dismissProgress();
+                        //  Toast.makeText(getBaseContext(), "LoggedIn Successfully..", Toast.LENGTH_LONG).show();
+                        //   fingerPrintSession.createLoginSession(UserID, "", userName, "", "");
+
+                        JSONObject jsonArray = jsonObject.getJSONObject("profile");
+                        //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
+                        UserID = jsonArray.getString("userid");
+                        profileid = jsonArray.getString("profileid");
+                        FirstName = jsonArray.getString("FirstName");
+                        LastName = jsonArray.getString("LastName");
+                        UserPhoto = jsonArray.getString("UserPhoto");
+                        String Status = jsonArray.getString("Status");
+                        String Gender = jsonArray.getString("Gender");
+                        String Phone = jsonArray.getString("Phone");
+                        final String UserName = jsonArray.getString("UserName");
+                        String dob = jsonArray.getString("dob");
+                        String Connection_Limit = jsonArray.getString("Connection_Limit");
+                        String Connection_Left = jsonArray.getString("Connection_Left");
+                        Q_ID = jsonArray.getString("Q_ID");
+
+
+                        try {
+                            referralCodeSession.createReferral(jsonArray.getString("ReferrenceCode"));
+                        } catch (Exception e) {
+                        }
+
+                        if (Status.equalsIgnoreCase("Verified")) {
+
+                            if (Q_ID.equals("")){
+
+                                final QBUser user = new QBUser(UserName, "circle@123");
+                                user.setExternalId("");
+                                user.setEmail(UserName);
+                                user.setFullName(FirstName + " " + LastName);
+                                StringifyArrayList<String> tags = new StringifyArrayList<String>();
+                                tags.add("dev");
+                                user.setTags(tags);
+
+                                try {
+                                    QBUsers.signUp(user).performAsync(new QBEntityCallback<QBUser>() {
+                                        @Override
+                                        public void onSuccess(final QBUser user, Bundle args) {
+                                            Q_ID = String.valueOf(user.getId());
+                                            user.setPassword("circle@123");
+                                            new HttpAsyncTaskUpdateQ_ID().execute(Utility.BASE_URL+"User/Update_QID");
+                                            SharedPrefsHelper.getInstance().saveQbUser(user);
+                                        }
+
+                                        @Override
+                                        public void onError(QBResponseException errors) {
+                                            // Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
+                                            QBUser qbUser = new QBUser(UserName, "circle@123");
+                                            QBUsers.signIn(qbUser).performAsync(new QBEntityCallback<QBUser>() {
+                                                @Override
+                                                public void onSuccess(final QBUser qbUser, Bundle bundle) {
+                                                    // progressDialog.dismiss();
+                                                    // Toaster.longToast("success");
+                                                    Q_ID = String.valueOf(qbUser.getId());
+                                                    new HttpAsyncTaskUpdateQ_ID().execute(Utility.BASE_URL+"User/Update_QID");
+
+                                                    // setResult(RESULT_OK);
+                                                    // SharedPrefsHelper.getInstance().saveQbUser(qbUser);
+                                                    //  Toast.makeText(getApplicationContext(), "fgbgfb", Toast.LENGTH_LONG).show();
+                                                    qbUser.setPassword("circle@123");
+                                                    ChatHelper.getInstance().login(qbUser, new QBEntityCallback<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void result, Bundle bundle) {
+                                                            SharedPrefsHelper.getInstance().saveQbUser(qbUser);
+                                                            //  Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
+                                                            // DialogsActivity.start(LoginActivity.this);
+                                                            // finish();
+
+                                                            //ProgressDialogFragment.hide(getSupportFragmentManager());
+                                                        }
+
+                                                        @Override
+                                                        public void onError(QBResponseException e) {
+                                                            ProgressDialogFragment.hide(getSupportFragmentManager());
+
+                                                        }
+                                                    });
+
+                                                }
+
+                                                @Override
+                                                public void onError(QBResponseException errors) {
+
+                                                }
+                                            });
+                                        }
+                                    });
+                                }catch (Exception e) {
+
+                                    //Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                                }}else {
+
+                                QBUser qbUser = new QBUser(UserName, "circle@123");
+                                QBUsers.signIn(qbUser).performAsync(new QBEntityCallback<QBUser>() {
+                                    @Override
+                                    public void onSuccess(final QBUser qbUser, Bundle bundle) {
+                                        // progressDialog.dismiss();
+                                        //  Toaster.longToast("success");
+                                        // setResult(RESULT_OK);
+                                        // SharedPrefsHelper.getInstance().saveQbUser(qbUser);
+                                        //  Toast.makeText(getApplicationContext(), "fgbgfb", Toast.LENGTH_LONG).show();
+                                        qbUser.setPassword("circle@123");
+                                        ChatHelper.getInstance().login(qbUser, new QBEntityCallback<Void>() {
+                                            @Override
+                                            public void onSuccess(Void result, Bundle bundle) {
+                                                SharedPrefsHelper.getInstance().saveQbUser(qbUser);
+                                                // Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
+                                                // DialogsActivity.start(LoginActivity.this);
+                                                // finish();
+
+                                                //ProgressDialogFragment.hide(getSupportFragmentManager());
+                                            }
+
+                                            @Override
+                                            public void onError(QBResponseException e) {
+                                                ProgressDialogFragment.hide(getSupportFragmentManager());
+
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onError(QBResponseException errors) {
+
+                                    }
+                                });
+                            }
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                Gson gson = ((MyApplication) getApplication()).getGsonObject();
+
+                                HashMap<String, String> user = loginSession.getUserDetails();
+                                try {
+                                    if ((user.get(LoginSession.KEY_EMAIL).equalsIgnoreCase(UserName)) && (user.get(LoginSession.KEY_PASSWORD).equalsIgnoreCase(password))) {
+                                        UserObject userData = new UserObject(Q_ID, user.get(LoginSession.KEY_PROFILEID), user.get(LoginSession.KEY_NAME), user.get(LoginSession.KEY_EMAIL), user.get(LoginSession.KEY_PASSWORD), UserID, Gender, UserPhoto, dob, Phone, Connection_Limit, Connection_Left, false);
+                                        String userDataString = gson.toJson(userData);
+                                        CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
+                                        pref.setUserData(userDataString);
+
+                                        loginSession.createLoginSession(Q_ID, user.get(LoginSession.KEY_PROFILEID), UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, password, dob, Phone, Connection_Limit, Connection_Left );
+                                        HashMap<String, String> profile = profileSession.getProfileDetails();
+                                        profileSession.createProfileSession(profile.get(ProfileSession.KEY_PROFILE_INDEX));
+                                    } else {
+                                        UserObject userData = new UserObject(Q_ID, profileid, FirstName + " " + LastName, UserName, password, UserID, Gender, UserPhoto, dob, Phone, Connection_Limit, Connection_Left, false);
+                                        String userDataString = gson.toJson(userData);
+                                        CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
+                                        pref.setUserData(userDataString);
+
+                                        loginSession.createLoginSession(Q_ID, profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, password, dob, Phone, Connection_Limit, Connection_Left);
+                                        profileSession.createProfileSession("0");
+                                    }
+                                }
+                                catch (Exception e){
+                                    UserObject userData = new UserObject(Q_ID, profileid, FirstName + " " + LastName, UserName, password, UserID, Gender, UserPhoto, dob, Phone, Connection_Limit, Connection_Left, false);
+                                    String userDataString = gson.toJson(userData);
+                                    CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
+                                    pref.setUserData(userDataString);
+
+                                    loginSession.createLoginSession(Q_ID, profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, password, dob, Phone, Connection_Limit, Connection_Left);
+                                    profileSession.createProfileSession("0");
+                                }
+                                if (prefs.getBoolean("firstrun", true)) {
+                                    // Do first run stuff here then set 'firstrun' as false
+                                    // using the following line to edit/commit prefs
+                                   /* Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                                    startActivity(intent);*/
+
+
+                                    if (ContextCompat.checkSelfPermission(RegisterActivity.this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+                                        new MultiContactPicker.Builder(RegisterActivity.this) //Activity/fragment context
+                                                .theme(R.style.MyCustomPickerTheme) //Optional - default: MultiContactPicker.Azure
+                                                .hideScrollbar(false) //Optional - default: false
+                                                .showTrack(true) //Optional - default: true
+                                                .searchIconColor(Color.WHITE) //Option - default: White
+                                                .handleColor(ContextCompat.getColor(RegisterActivity.this, R.color.colorPrimary)) //Optional - default: Azure Blue
+                                                .bubbleColor(ContextCompat.getColor(RegisterActivity.this, R.color.colorPrimary)) //Optional - default: Azure Blue
+                                                .bubbleTextColor(Color.WHITE) //Optional - default: White
+                                                .showPickerForResult(CONTACT_PICKER_REQUEST);
+                                    }else{
+                                        askForContactPermission();
+                                    }
+
+                                    prefs.edit().putBoolean("firstrun", false).commit();
+                                } else {
+                                    Intent userIntent = new Intent(getApplicationContext(), DashboardActivity.class);
+                                    // userIntent.putExtra("viewpager_position", 0);
+                                    startActivity(userIntent);
+                                    finish();
+                                }
+
+                                // imgFinger.setVisibility(View.VISIBLE);
+                               /* if (imgFinger.getVisibility() == View.VISIBLE)
+                                {
+                                    Gson gson = ((MyApplication) getApplication()).getGsonObject();
+                                    UserObject userData = new UserObject(profileid, FirstName + " " + LastName, userName, userPassword, UserID, "", UserPhoto, false);
+                                    String userDataString = gson.toJson(userData);
+                                    CustomSharedPreference pref = ((MyApplication) getApplication()).getShared();
+                                    pref.setUserData(userDataString);
+
+                                    Intent intent = new Intent(getApplicationContext(), FingerPrintLogin.class);
+                                    //intent.putExtra("viewpager_position", 0);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                else
+                                {
+                                    // Either gone or invisible
+                                    loginSession.createLoginSession(profileid, UserID, "", userName, "", "",userPassword);
+                                    if (prefs.getBoolean("firstrun", true))
+                                    {
+                                        // Do first run stuff here then set 'firstrun' as false
+                                        // using the following line to edit/commit prefs
+                                        Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                                        startActivity(intent);
+                                        prefs.edit().putBoolean("firstrun", false).commit();
+                                    }
+                                    else
+                                    {
+                                        Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                                        userIntent.putExtra("viewpager_position", 0);
+                                        startActivity(userIntent);
+                                        finish();
+                                    }
+                                }*/
+
+                              /*  loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, userName, UserPhoto, "");
+                                // Toast.makeText(getApplicationContext(), getString(R.string.auth_successful), Toast.LENGTH_LONG).show();
+
+                                // login with only fingerprint
+                                if (prefs.getBoolean("firstrun", true)) {
+                                    // Do first run stuff here then set 'firstrun' as false
+                                    // using the following line to edit/commit prefs
+                                    Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+                                    startActivity(intent);
+                                    prefs.edit().putBoolean("firstrun", false).commit();
+                                } else {
+                                    Intent userIntent = new Intent(getApplicationContext(), CardsActivity.class);
+                                    userIntent.putExtra("viewpager_position", 0);
+                                    startActivity(userIntent);
+                                    finish();
+                                }*/
+                            } else {
+                                // imgFinger.setVisibility(View.GONE);
+//                                loginSession.createLoginSession(profileid, UserID, FirstName + " " + LastName, final_email, UserPhoto, "");
+
+                                HashMap<String, String> user = loginSession.getUserDetails();
+                                try {
+                                    if ((user.get(LoginSession.KEY_EMAIL).equalsIgnoreCase(UserName)) && (user.get(LoginSession.KEY_PASSWORD).equalsIgnoreCase(password))) {
+
+                                        loginSession.createLoginSession(Q_ID, user.get(LoginSession.KEY_PROFILEID), UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, password, dob, Phone, Connection_Limit, Connection_Left);
+                                        HashMap<String, String> profile = profileSession.getProfileDetails();
+                                        profileSession.createProfileSession(profile.get(ProfileSession.KEY_PROFILE_INDEX));
+
+                                    } else {
+                                        loginSession.createLoginSession(Q_ID, profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, password, dob, Phone, Connection_Limit, Connection_Left);
+                                        // HashMap<String, String> profile = profileSession.getProfileDetails();
+                                        profileSession.createProfileSession("0");
+
+                                    }
+                                }catch (Exception e){
+                                    loginSession.createLoginSession(Q_ID, profileid, UserID, FirstName + " " + LastName, UserName, UserPhoto, Gender, password, dob, Phone, Connection_Limit, Connection_Left);
+                                    // HashMap<String, String> profile = profileSession.getProfileDetails();
+                                    profileSession.createProfileSession("0");
+                                }
+                                if (prefs.getBoolean("firstrun", true)) {
+                                    // Do first run stuff here then set 'firstrun' as false
+                                    // using the following line to edit/commit prefs
+//                                    Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
+//                                    startActivity(intent);
+
+                                    if (ContextCompat.checkSelfPermission(RegisterActivity.this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+                                        new MultiContactPicker.Builder(RegisterActivity.this) //Activity/fragment context
+                                                .theme(R.style.MyCustomPickerTheme) //Optional - default: MultiContactPicker.Azure
+                                                .hideScrollbar(false) //Optional - default: false
+                                                .showTrack(true) //Optional - default: true
+                                                .searchIconColor(Color.WHITE) //Option - default: White
+                                                .handleColor(ContextCompat.getColor(RegisterActivity.this, R.color.colorPrimary)) //Optional - default: Azure Blue
+                                                .bubbleColor(ContextCompat.getColor(RegisterActivity.this, R.color.colorPrimary)) //Optional - default: Azure Blue
+                                                .bubbleTextColor(Color.WHITE) //Optional - default: White
+                                                .showPickerForResult(CONTACT_PICKER_REQUEST);
+                                    }else{
+                                        askForContactPermission();
+                                    }
+
+
+                                    prefs.edit().putBoolean("firstrun", false).commit();
+                                } else {
+                                    Pref.setValue(RegisterActivity.this,"login_value","1");
+                                    Intent userIntent = new Intent(getApplicationContext(), DashboardActivity.class);
+                                    userIntent.putExtra("viewpager_position", 0);
+                                    startActivity(userIntent);
+                                    finish();
+                                }
+                            }
+                        }
+                        else {
+                            Toast.makeText(getBaseContext(), "You need to verify your account first.", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+
+                    } else {
+                        dismissProgress();
+                        Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    dismissProgress();
+                    Toast.makeText(getBaseContext(), "Incorrect username or password..", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (JSONException e) {
+                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+            }
+            //Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void askForContactPermission()
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+        {
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED)
+            {
+                // Should we show an explanation?
+                if (ActivityCompat.shouldShowRequestPermissionRationale(RegisterActivity.this,
+                        Manifest.permission.READ_CONTACTS))
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                    builder.setTitle("Contacts access needed");
+                    builder.setPositiveButton(android.R.string.ok, null);
+                    builder.setMessage("please confirm Contacts access");//TODO put real question
+                    builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @TargetApi(Build.VERSION_CODES.M)
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            requestPermissions(
+                                    new String[]
+                                            {Manifest.permission.READ_CONTACTS}
+                                    , PERMISSION_REQUEST_CONTACT);
+                        }
+                    });
+                    builder.show();
+                    // Show an expanation to the user *asynchronously* -- don't block
+                    // this thread waiting for the user's response! After the user
+                    // sees the explanation, try again to request the permission.
+
+                }
+                else
+                {
+                    // No explanation needed, we can request the permission.
+                    ActivityCompat.requestPermissions(RegisterActivity.this,
+                            new String[]{Manifest.permission.READ_CONTACTS}, PERMISSION_REQUEST_CONTACT);
+
+                    // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                    // app-defined int constant. The callback method gets the
+                    // result of the request.
+                }
+            }
+            else
+            {
+                new MultiContactPicker.Builder(RegisterActivity.this) //Activity/fragment context
+                        .theme(R.style.MyCustomPickerTheme) //Optional - default: MultiContactPicker.Azure
+                        .hideScrollbar(false) //Optional - default: false
+                        .showTrack(true) //Optional - default: true
+                        .searchIconColor(Color.WHITE) //Option - default: White
+                        .handleColor(ContextCompat.getColor(RegisterActivity.this, R.color.colorPrimary)) //Optional - default: Azure Blue
+                        .bubbleColor(ContextCompat.getColor(RegisterActivity.this, R.color.colorPrimary)) //Optional - default: Azure Blue
+                        .bubbleTextColor(Color.WHITE) //Optional - default: White
+                        .showPickerForResult(CONTACT_PICKER_REQUEST);
+            }
+        }
+        else
+        {
+            new MultiContactPicker.Builder(RegisterActivity.this) //Activity/fragment context
+                    .theme(R.style.MyCustomPickerTheme) //Optional - default: MultiContactPicker.Azure
+                    .hideScrollbar(false) //Optional - default: false
+                    .showTrack(true) //Optional - default: true
+                    .searchIconColor(Color.WHITE) //Option - default: White
+                    .handleColor(ContextCompat.getColor(RegisterActivity.this, R.color.colorPrimary)) //Optional - default: Azure Blue
+                    .bubbleColor(ContextCompat.getColor(RegisterActivity.this, R.color.colorPrimary)) //Optional - default: Azure Blue
+                    .bubbleTextColor(Color.WHITE) //Optional - default: White
+                    .showPickerForResult(CONTACT_PICKER_REQUEST);
+        }
+    }
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
         ProgressDialog dialog;
@@ -1235,7 +1786,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     UserID = jsonObject.getString("userId").toString();
                     if (success.equals("1") && message.equalsIgnoreCase("Successfully Registered.")) {
                         // Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
-
                         final QBUser user = new QBUser(email, "circle@123");
                         user.setExternalId("");
                         user.setEmail(email);
@@ -1248,108 +1798,41 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             QBUsers.signUp(user).performAsync(new QBEntityCallback<QBUser>() {
                                 @Override
                                 public void onSuccess(final QBUser user, Bundle args) {
-                                    new Handler().postDelayed(new Runnable()
-                                    {
-                                        @Override
-                                        public void run()
-                                        {
 
-                                            Q_ID = String.valueOf(user.getId());
-                                            new HttpAsyncTaskUpdateQ_ID().execute(Utility.BASE_URL+"User/Update_QID");
+                                    Q_ID = String.valueOf(user.getId());
+                                    new HttpAsyncTaskUpdateQ_ID().execute(Utility.BASE_URL+"User/Update_QID");
+                                    if (Status.equalsIgnoreCase("Verified")) {
+                                        new HttpAsyncLoginTask().execute(Utility.BASE_URL + "UserLogin");
 
-                                            final Dialog dialog = new Dialog(RegisterActivity.this);
-                                            dialog.setContentView(R.layout.register_custom_popup);
-
-                                            dialog.show();
-
-                                            if (Status.equalsIgnoreCase("Verified")) {
-                                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                                startActivity(intent);
-                                                finish();
-                                            } else {
-                                                new HttpAsyncTaskVerify().execute(Utility.BASE_URL+"AccVerification/" + UserID);
-                                            }
-
-                                            new Handler().postDelayed(new Runnable() {
-                                                @Override
-                                                public void run()
-                                                {
-                                                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                                                    finish();
-                                                }
-                                            },2500);
-
-//                Animation anim = AnimationUtils.loadAnimation(SplashActivity.this, R.anim.img_anim);
-//                imageView1.startAnimation(anim);
-                                        }
-                                    }, 2500);
-
+                                    } else {
+                                        new HttpAsyncTaskVerify().execute(Utility.BASE_URL+"AccVerification/" + UserID);
+                                    }
                                 }
 
                                 @Override
                                 public void onError(QBResponseException errors) {
                                     Toast.makeText(getApplicationContext(), errors.toString(), Toast.LENGTH_LONG).show();
-                                    new Handler().postDelayed(new Runnable()
-                                    {
-                                        @Override
-                                        public void run()
-                                        {
-                                            final Dialog dialog = new Dialog(RegisterActivity.this);
-                                            dialog.setContentView(R.layout.register_custom_popup);
+                                  //  Q_ID = String.valueOf(user.getId());
+                                   // new HttpAsyncTaskUpdateQ_ID().execute(Utility.BASE_URL+"User/Update_QID");
+                                    if (Status.equalsIgnoreCase("Verified")) {
+                                        new HttpAsyncLoginTask().execute(Utility.BASE_URL + "UserLogin");
 
-                                            dialog.show();
-
-                                            if (Status.equalsIgnoreCase("Verified")) {
-                                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                                startActivity(intent);
-                                                finish();
-                                            } else {
-                                                new HttpAsyncTaskVerify().execute(Utility.BASE_URL+"AccVerification/" + UserID);
-                                            }
-
-                                            new Handler().postDelayed(new Runnable() {
-                                                @Override
-                                                public void run()
-                                                {
-                                                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                                                    finish();
-                                                }
-                                            },2500);
-                                        }
-                                    }, 2500);
+                                    } else {
+                                        new HttpAsyncTaskVerify().execute(Utility.BASE_URL+"AccVerification/" + UserID);
+                                    }
                                 }
                             });
                         }catch (Exception e) {
 
                             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
-                            new Handler().postDelayed(new Runnable()
-                            {
-                                @Override
-                                public void run()
-                                {
-                                    final Dialog dialog = new Dialog(RegisterActivity.this);
-                                    dialog.setContentView(R.layout.register_custom_popup);
+                           // Q_ID = String.valueOf(user.getId());
+                            //new HttpAsyncTaskUpdateQ_ID().execute(Utility.BASE_URL+"User/Update_QID");
+                            if (Status.equalsIgnoreCase("Verified")) {
+                                new HttpAsyncLoginTask().execute(Utility.BASE_URL + "UserLogin");
 
-                                    dialog.show();
-
-                                    if (Status.equalsIgnoreCase("Verified")) {
-                                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                        startActivity(intent);
-                                        finish();
-                                    } else {
-                                        new HttpAsyncTaskVerify().execute(Utility.BASE_URL+"AccVerification/" + UserID);
-                                    }
-
-                                    new Handler().postDelayed(new Runnable() {
-                                        @Override
-                                        public void run()
-                                        {
-                                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                                            finish();
-                                        }
-                                    },2500);
-                                }
-                            }, 2500);
+                            } else {
+                                new HttpAsyncTaskVerify().execute(Utility.BASE_URL+"AccVerification/" + UserID);
+                            }
                         }
                     } else {
                         Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
@@ -1393,6 +1876,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             startActivity(intent);
             finish();*/
             // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            new HttpAsyncLoginTask().execute(Utility.BASE_URL + "UserLogin");
+
         }
     }
 

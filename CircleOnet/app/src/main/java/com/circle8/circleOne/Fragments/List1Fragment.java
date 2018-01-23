@@ -6,29 +6,30 @@ import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.azoft.carousellayoutmanager.CarouselLayoutManager;
 import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
 import com.azoft.carousellayoutmanager.CenterScrollListener;
@@ -36,13 +37,13 @@ import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.Activity.DashboardActivity;
 import com.circle8.circleOne.Adapter.GalleryAdapter;
 import com.circle8.circleOne.Adapter.GalleryAdapter1;
+import com.circle8.circleOne.ApplicationUtils.MyApplication;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.FriendConnection;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.Utility;
 import com.circle8.circleOne.databinding.FragmentList1Binding;
-import com.twitter.sdk.android.core.models.Search;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -59,107 +60,45 @@ import java.util.HashMap;
 import java.util.List;
 
 import static com.circle8.circleOne.Activity.CardsActivity.Connection_Limit;
-import static com.circle8.circleOne.Activity.DashboardActivity.setActionBarTitle;
 import static com.circle8.circleOne.Utils.Utility.POST2;
 import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 public class List1Fragment extends Fragment
 {
-    // private ArrayList<Integer> imageFront = new ArrayList<>();
-    // private ArrayList<Integer> imageBack = new ArrayList<>();
-    // public static MyPager myPager ;
-    private GestureDetector gestureDetector1;
-    /*ArrayList<byte[]> imgf;
-    ArrayList<byte[]> imgb;
-    ArrayList<String> tag_id;*/
     public static RelativeLayout lnrSearch;
     public static View line;
-    private String DEBUG_TAG = "gesture";
-    //  private GestureDetector gestureDetector;
-    //  private View.OnTouchListener gestureListener;
     public static List<FriendConnection> allTags;
-    //new asign value
     public static ArrayList<FriendConnection> nfcModel;
-    ViewConfiguration vc;
-    private int mTouchSlop;
     public static int pageno = 1;
     View view;
-    private String TAG = CardsActivity.class.getSimpleName();
     public static ArrayList<Integer> images;
     public static ArrayList<Integer> images1;
     public static GalleryAdapter mAdapter;
     public static GalleryAdapter1 mAdapter1;
     public static CarouselLayoutManager manager1, manager2;
     private int draggingView = -1;
-    RelativeLayout rlt;
     LoginSession session;
     static String UserId = "";
     public static Context mContext;
     public static String progressStatus = "FIRST";
     static int number_cards = 0;
     static int numberCount, recycleSize;
-    static AlertDialog customProgressBar ;
-    static String customProgressBarStatus = "";
     public static String count = "";
     static FragmentList1Binding fragmentList1Binding;
     public static String SearchFromDashboard = "";
     public List1Fragment() {
         // Required empty public constructor
     }
+    public static List1Fragment newInstance() {
+        return new List1Fragment();
 
-
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
         fragmentList1Binding = DataBindingUtil.inflate(inflater, R.layout.fragment_list1, container, false);
         view = fragmentList1Binding.getRoot();
-
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
-        mContext = getContext();
-        pageno = 1;
-        session = new LoginSession(getContext());
-        HashMap<String, String> user = session.getUserDetails();
-        // name
-        UserId = user.get(LoginSession.KEY_USERID);
-        //viewPager = (ViewPager)view.findViewById(R.id.viewPager);
-        // lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
-        line = view.findViewById(R.id.view);
-
-        initRecyclerView1(fragmentList1Binding.includeCarousel1.listHorizontal1, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter);
-        initRecyclerView2(fragmentList1Binding.includeCarousel2.listHorizontal2, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter1);
-
-        InputMethodManager keyboard = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        keyboard.hideSoftInputFromWindow(fragmentList1Binding.searchView.getWindowToken(), 0);
-
-        line.setVisibility(View.VISIBLE);
-        CardsFragment.tabLayout.setVisibility(View.VISIBLE);
-
-       /* GestureDetector.OnGestureListener gestureListener = new MyOnGestureListener();
-        GestureDetector.OnDoubleTapListener doubleTapListener = new MyOnDoubleTapListener();
-        gestureDetector1= new GestureDetector(getContext(), gestureListener);
-        gestureDetector1.setOnDoubleTapListener(doubleTapListener);*/
-
-        nfcModel = new ArrayList<>();
-        allTags = new ArrayList<>();
-
-        // new LoadDataForActivity().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-//        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
-
-        pageno = 1;
-        allTags.clear();
-        nfcModel.clear();
-//        callFirst();
-
-//        fragmentList1Binding.includeCarousel1.listHorizontal1.addOnScrollListener(scrollListener);
-//        fragmentList1Binding.includeCarousel2.listHorizontal2.addOnScrollListener(scrollListener);
-
-        if (SortFragment.CardListApi.equalsIgnoreCase("SearchConnect")) {
-            fragmentList1Binding.searchView.setText(SortFragment.Search );
-
-        }
-
         ViewTreeObserver vto = fragmentList1Binding.lnrList.getViewTreeObserver();
 
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -184,142 +123,38 @@ public class List1Fragment extends Fragment
                 view_instance1.setLayoutParams(params1);
             }
         });
+        return view;
+    }
 
-       /* frame.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent me) {
-                gestureDetector1.onTouchEvent(me);
-                recyclerView1.requestFocus();
-                recyclerView1.dispatchTouchEvent(me); // don't cause scrolling
-                //recyclerView1.dispatchTouchEvent(me); // don't cause scrolling? Alternative solutoin?
+    @Override
+    public void onViewCreated(View view,Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
+        mContext = getContext();
+        pageno = 1;
+        session = new LoginSession(getContext());
+        HashMap<String, String> user = session.getUserDetails();
+        UserId = user.get(LoginSession.KEY_USERID);
+        line = view.findViewById(R.id.view);
 
-                // fragmentList1Binding.includeCarousel2.listHorizontal2.requestFocus();
-                // fragmentList1Binding.includeCarousel2.listHorizontal2.dispatchTouchEvent(mBackupTouchDownEvent); // don't cause scrolling
-                //fragmentList1Binding.includeCarousel2.listHorizontal2.dispatchTouchEvent(me);
-                return true;
-            }
-        });*/
+        initRecyclerView1(fragmentList1Binding.includeCarousel1.listHorizontal1, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter);
+        initRecyclerView2(fragmentList1Binding.includeCarousel2.listHorizontal2, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter1);
 
-       /* frame1.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent me) {
-                gestureDetector1.onTouchEvent(me);
-                fragmentList1Binding.includeCarousel2.listHorizontal2.requestFocus();
-                fragmentList1Binding.includeCarousel2.listHorizontal2.dispatchTouchEvent(me); // don't cause scrolling
-                //fragmentList1Binding.includeCarousel1.listHorizontal1.dispatchTouchEvent(me); // don't cause scrolling? Alternative solutoin?
-                //fragmentList1Binding.includeCarousel2.listHorizontal2.requestFocus();
-                // fragmentList1Binding.includeCarousel2.listHorizontal2.dispatchTouchEvent(mBackupTouchDownEvent); // don't cause scrolling
-                //fragmentList1Binding.includeCarousel2.listHorizontal2.dispatchTouchEvent(me);
-                return true;
-            }
-        });*/
+        InputMethodManager keyboard = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        keyboard.hideSoftInputFromWindow(fragmentList1Binding.searchView.getWindowToken(), 0);
 
+        line.setVisibility(View.VISIBLE);
+        CardsFragment.fragmentCardsBinding.tabs1.setVisibility(View.VISIBLE);
 
-        /*frame.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                fragmentList1Binding.includeCarousel1.listHorizontal1.addOnScrollListener(scrollListener);
-                fragmentList1Binding.includeCarousel2.listHorizontal2.addOnScrollListener(scrollListener);
-            }
-        });*/
-       /* fragmentList1Binding.includeCarousel1.listHorizontal1.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return gestureDetector1.onTouchEvent(event);
-            }
-        });*/
-        /*fragmentList1Binding.includeCarousel1.listHorizontal1.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-            @Override
-            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-                return gestureDetector1.onTouchEvent(e);
-            }
-
-            @Override
-            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
-            }
-
-            @Override
-            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-            }
-
-        });*/
-
-
-        /*fragmentList1Binding.includeCarousel2.listHorizontal2.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-            @Override
-            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-                return gestureDetector1.onTouchEvent(e);
-            }
-
-            @Override
-            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
-            }
-
-            @Override
-            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-            }
-
-        });
-*/
-        /*view.setVisibility(View.VISIBLE);
-        view.setAlpha(0.0f);
-
-// Start the animation
-        view.animate()
-                .translationY(view.getHeight())
-                .alpha(1.0f);
-
-        view.animate()
-                .translationY(0)
-                .alpha(0.0f)
-                .setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        super.onAnimationEnd(animation);
-                        view.setVisibility(View.GONE);
-                    }
-                });*/
-
-        /*viewPager.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                return gestureDetector.onTouchEvent(event);
-
-            }
-        });*/
-
-       /* imgf = new ArrayList<byte[]>();
-        imgb = new ArrayList<byte[]>();
-        tag_id = new ArrayList<String>();*/
-
-        //myPager = new MyPager(getContext(), imgf, imgb, tag_id);
-        //viewPager.setAdapter(myPager);
+        nfcModel = new ArrayList<>();
+        allTags = new ArrayList<>();
+        allTags.clear();
+        nfcModel.clear();
 
         fragmentList1Binding.searchView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-               /* if(s.length() == 0)
-                {
-                    // allTags = db.getActiveNFC();
-//                    GetData(getContext());
-                    nfcModel.clear();
-                    pageno = 1;
-                    allTags.clear();
-                    try
-                    {
-                        mAdapter.notifyDataSetChanged();
-                    }
-                    catch (Exception e){}
-                    try
-                    {
-                        mAdapter1.notifyDataSetChanged();
-                    }
-                    catch (Exception e){}
-                    callFirst();
-                }*/
             }
 
             @Override
@@ -346,23 +181,6 @@ public class List1Fragment extends Fragment
                         callFirst();
                         fragmentList1Binding.tvFriendInfo.setVisibility(View.GONE);
                     }
-              /*  else if (s.length() > 0)
-                {
-                    String text = fragmentList1Binding.searchView.getText().toString().toLowerCase(Locale.getDefault());
-
-                    nfcModel.clear();
-                    allTags.clear();
-                    try
-                    {
-                        mAdapter.notifyDataSetChanged();
-                    } catch (Exception e) {
-                    }
-                    try {
-                        mAdapter1.notifyDataSetChanged();
-                    } catch (Exception e) {
-                    }
-                    new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
-                }*/
                     else {
 
                     }
@@ -372,7 +190,6 @@ public class List1Fragment extends Fragment
                     e.printStackTrace();
                 }
             }
-
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() == 0)
@@ -508,53 +325,207 @@ public class List1Fragment extends Fragment
         fragmentList1Binding.includeCarousel1.listHorizontal1.addOnScrollListener(scrollListeners[0]);
         fragmentList1Binding.includeCarousel2.listHorizontal2.addOnScrollListener(scrollListeners[1]);
 
-        return view;
-    }
-
-    @Override
-    public void onPause() {
-        Utility.freeMemory();
-        Utility.deleteCache(getContext());
-
-        super.onPause();
     }
 
     public static void callFirst()
     {
-        Utility.freeMemory();
-        // tvNoCard.setVisibility(View.GONE);
+
         nfcModel.clear();
         pageno = 1;
-        new HttpAsyncTask().execute(Utility.BASE_URL+SortFragment.CardListApi);
+         new HttpAsyncTask().execute(Utility.BASE_URL+SortFragment.CardListApi);
+       // CallApi();
+    }
+
+    public static void CallApi() {
+        if (progressStatus.equalsIgnoreCase("FIRST"))
+        {
+            String loading = "Fetching cards" ;
+            CustomProgressDialog(loading);
+
+            progressStatus = "SECOND";
+        }
+        else if (progressStatus.equalsIgnoreCase("SECOND"))
+        {
+            String loading = "Fetching cards" ;
+            CustomProgressDialog(loading);
+        }
+        else if (progressStatus.equalsIgnoreCase("DELETE"))
+        {
+            String loading = "Refreshing cards" ;
+            CustomProgressDialog(loading);
+        }
+        else if (progressStatus.equalsIgnoreCase("FILTER"))
+        {
+            String loading = "Fetching cards" ;
+            CustomProgressDialog(loading);
+        }
+        else
+        {
+
+        }
+        JSONObject jsonObject = new JSONObject();
+        try {
+            if (SortFragment.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
+
+                jsonObject.accumulate("Type", SortFragment.SortType);
+                jsonObject.accumulate("numofrecords", "1000");
+//            jsonObject.accumulate("pageno", pageno);
+                jsonObject.accumulate("pageno", "1");
+                jsonObject.accumulate("userid", UserId);
+            }
+            else if (SortFragment.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
+                jsonObject.accumulate("ProfileID", SortFragment.ProfileArrayId);
+                jsonObject.accumulate("Type", SortFragment.SortType);
+                jsonObject.accumulate("numofrecords", "1000");
+//            jsonObject.accumulate("pageno", pageno);
+                jsonObject.accumulate("pageno", "1");
+            }
+            else if (SortFragment.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
+                jsonObject.accumulate("group_ID", SortFragment.groupId);
+                jsonObject.accumulate("profileId", SortFragment.ProfileArrayId);
+                jsonObject.accumulate("numofrecords", "1000");
+//            jsonObject.accumulate("pageno", pageno);
+                jsonObject.accumulate("pageno", "1");
+            }
+            else if (SortFragment.CardListApi.equalsIgnoreCase("SearchConnect")) {
+                jsonObject.accumulate("FindBy", SortFragment.FindBY );
+                jsonObject.accumulate("Search", SortFragment.Search );
+                jsonObject.accumulate("SearchType", "Local" );
+                jsonObject.accumulate("UserID", UserId );
+                jsonObject.accumulate("numofrecords", "1000" );
+                jsonObject.accumulate("pageno", "1" );
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                Utility.BASE_URL+SortFragment.CardListApi, jsonObject,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("11", response.toString());
+                        String result = response.toString();
+                        try
+                        {
+                            if (result != null)
+                            {
+                                JSONObject jsonObject = new JSONObject(result);
+                                //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
+                                count = jsonObject.getString("count");
+
+                                if (count.equals("") || count.equals("null"))
+                                {
+                                    numberCount = 0;
+                                }
+                                else
+                                {
+                                    numberCount = Integer.parseInt(count);
+                                }
+
+//                    nfcModel.clear();
+                                allTags.clear();
+                                try
+                                {
+                                    mAdapter.notifyDataSetChanged();
+                                    mAdapter1.notifyDataSetChanged();
+                                }
+                                catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                JSONArray jsonArray;
+                                if (SortFragment.CardListApi.equalsIgnoreCase("SearchConnect")){
+                                    jsonArray = jsonObject.getJSONArray("connect");
+                                }else {
+                                    jsonArray = jsonObject.getJSONArray("connection");
+                                }
+                                number_cards = jsonArray.length();
+                                fragmentList1Binding.includeCarousel1.rlLoadMore1.setVisibility(View.GONE);
+                                fragmentList1Binding.includeCarousel2.rlLoadMore2.setVisibility(View.GONE);
+
+                                for (int i = 0; i < jsonArray.length(); i++)
+                                {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    FriendConnection nfcModelTag = new FriendConnection();
+                                    nfcModelTag.setName(object.getString("FirstName") + " " + object.getString("LastName"));
+                                    nfcModelTag.setCompany(object.getString("CompanyName"));
+                                    nfcModelTag.setEmail(object.getString("UserName"));
+                                    nfcModelTag.setWebsite(object.getString("Website"));
+                                    nfcModelTag.setPh_no(object.getString("Phone"));
+                                    nfcModelTag.setDesignation(object.getString("Designation"));
+                                    nfcModelTag.setCard_front(object.getString("Card_Front"));
+                                    nfcModelTag.setCard_back(object.getString("Card_Back"));
+                                    nfcModelTag.setUser_image(object.getString("UserPhoto"));
+                                    nfcModelTag.setProfile_id(object.getString("ProfileId"));
+                                    nfcModelTag.setDateInitiated(object.getString("DateInitiated"));
+                                    nfcModelTag.setAddress(object.getString("Address1") + " " + object.getString("Address2")
+                                            + " " + object.getString("Address3") + " " + object.getString("Address4"));
+//                        Toast.makeText(getActivity(),"Profile_id"+object.getString("ProfileId"),Toast.LENGTH_SHORT).show();
+                                    nfcModelTag.setNfc_tag("en000000001");
+                                    nfcModelTag.setLatitude(object.getString("Latitude"));
+                                    nfcModelTag.setLongitude(object.getString("Longitude"));
+                                    allTags.add(nfcModelTag);
+
+                                }
+                                GetData(mContext);
+                                if (allTags.size() == 0)
+                                {
+                                    if (SortFragment.CardListApi.equalsIgnoreCase("Group/FetchConnection"))
+                                    {
+                                        fragmentList1Binding.txtNoCard1.setText("No members have been added to the circle");
+                                        fragmentList1Binding.txtNoCard1.setVisibility(View.VISIBLE);
+                                    }
+                                    else
+                                    {
+                                        fragmentList1Binding.txtNoCard1.setText(mContext.getResources().getString(R.string.no_friend_connection));
+                                        fragmentList1Binding.txtNoCard1.setVisibility(View.VISIBLE);
+                                    }
+                                }
+                                else
+                                {
+                                    fragmentList1Binding.txtNoCard1.setVisibility(View.GONE);
+                                }
+
+                                recycleSize = allTags.size();
+
+                            }
+                            else
+                            {
+                                Toast.makeText(mContext, "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                            }
+                            fragmentList1Binding.rlProgressDialog.setVisibility(View.GONE);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                fragmentList1Binding.rlProgressDialog.setVisibility(View.GONE);
+            }
+        });
+
+// Adding request to request queue
+        MyApplication.getInstance().addToRequestQueue(jsonObjReq, "");
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        if (!SearchFromDashboard.equals("")){
-            new HttpAsyncTaskSearch().execute(Utility.BASE_URL+"SearchConnect");
-        }
-        else {
+
+        if (!SearchFromDashboard.equals("")) {
+            new HttpAsyncTaskSearch().execute(Utility.BASE_URL + "SearchConnect");
+        } else {
             callFirst();
         }
     }
 
     public static void webCall()
     {
-       /* nfcModel.clear();
-        allTags.clear();
-        try
-        {
-            mAdapter.notifyDataSetChanged();
-            mAdapter1.notifyDataSetChanged();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");*/
-
-
         pageno = 1;
         try
         {
@@ -575,34 +546,11 @@ public class List1Fragment extends Fragment
         protected void onPreExecute()
         {
             super.onPreExecute();
-           /* dialog = new ProgressDialog(mContext);
-            dialog.setMessage("Fetching Cards...");
-            //dialog.setTitle("Saving Reminder");
-            dialog.setCancelable(false);
-            dialog.show();*/
-           /* if(comeAtTime.equalsIgnoreCase("FIRST"))
-            {
-                dialog.show();
-                comeAtTime = "SECOND";
-            }
-            else
-            {
-                dialog.dismiss();
-            }*/
-            //  nfcModel = new ArrayList<>();
-            //   allTags = new ArrayList<>();
 
-//            customProgressBarStatus = "run";
-           /* String status = "true" ;
-            String loading = "Fetching Cards..." ;
-            CustomProgressBar(loading, status);*/
-
-//            rlProgressDialog.setVisibility(View.VISIBLE);
             if (progressStatus.equalsIgnoreCase("FIRST"))
             {
                 String loading = "Fetching cards" ;
                 CustomProgressDialog(loading);
-
                 progressStatus = "SECOND";
             }
             else if (progressStatus.equalsIgnoreCase("SECOND"))
@@ -620,10 +568,7 @@ public class List1Fragment extends Fragment
                 String loading = "Fetching cards" ;
                 CustomProgressDialog(loading);
             }
-            else
-            {
 
-            }
         }
 
         @Override
@@ -805,37 +750,6 @@ public class List1Fragment extends Fragment
         }
     }
 
-    private class LoadDataForActivity extends AsyncTask<Void, Void, Void> {
-
-        ProgressDialog progressBar;
-
-        @Override
-        protected void onPreExecute() {
-
-            progressBar = new ProgressDialog(getContext());
-            progressBar.setMessage("Loading data..");
-            progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressBar.setIndeterminate(true);
-            progressBar.setCancelable(false);
-            progressBar.show();
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            // allTags = db.getActiveNFC();
-
-            images = new ArrayList<>();
-            images1 = new ArrayList<>();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            GetData(getContext());
-            progressBar.dismiss();
-        }
-
-    }
 
     public static void initRecyclerView1(final RecyclerView recyclerView, final CarouselLayoutManager layoutManager, GalleryAdapter mAdapter) {
         // enable zoom effect. this line can be customized
@@ -860,122 +774,6 @@ public class List1Fragment extends Fragment
 
     }
 
-   /* class MyOnGestureListener implements GestureDetector.OnGestureListener  {
-
-        private static final int SWIPE_THRESHOLD = 100;
-        private static final int SWIPE_VELOCITY_THRESHOLD = 1000;
-
-        @Override
-        public boolean onDown(MotionEvent e) {
-            //  Toast.makeText(getContext(), "onDown", Toast.LENGTH_LONG).show();
-            //textEvt2.setText(e.getX()+":"+ e.getY());
-            // Log.e(TAG, "onDown");
-            return true;
-        }
-
-        @Override
-        public void onShowPress(MotionEvent e) {
-            // Toast.makeText(context, "onShowPress", Toast.LENGTH_LONG).show();
-            //textEvt2.setText(e.getX()+":"+ e.getY());
-            // Log.e(TAG, "onShowPress");
-        }
-
-        @Override
-        public boolean onSingleTapUp(MotionEvent e) {
-            // Toast.makeText(getContext(), "onSingleTap", Toast.LENGTH_LONG).show();
-            // textEvt2.setText(e.getX()+":"+ e.getY());
-            //   Log.e(TAG, "onSingleTapUp");
-
-            // final_position = List1Fragment.viewPager.getCurrentItem();
-           *//* Intent intent = new Intent(getContext(), CardDetail.class);
-            intent.putExtra("tag_id", GalleryAdapter.nfcModelList.get(GalleryAdapter.posi).getNfc_tag());
-            getContext().startActivity(intent);
-*//*            return true;
-        }
-
-        @Override
-        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            // Toast.makeText(getContext(), "onScroll", Toast.LENGTH_LONG).show();
-            // textEvt2.setText(e1.getX()+":"+ e1.getY() +"  "+ e2.getX()+":"+ e2.getY());
-            //Log.e(TAG, "onScroll");
-            return true;
-        }
-
-        @Override
-        public void onLongPress(MotionEvent e) {
-            // Toast.makeText(context, "onLongPress", Toast.LENGTH_LONG).show();
-            // textEvt2.setText(e.getX()+":"+ e.getY());
-            //  Log.e(TAG, "onLongPress");
-        }
-
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            // Toast.makeText(getContext(), "onFling", Toast.LENGTH_LONG).show();
-            //textEvt2.setText(e1.getX() + ":" + e1.getY() + "  " + e2.getX() + ":" + e2.getY());
-            boolean result = true;
-            try {
-                float diffY = e2.getY() - e1.getY();
-                float diffX = e2.getX() - e1.getX();
-                if (Math.abs(diffX) > Math.abs(diffY)) {
-                    if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                        if (diffX > 0) {
-                            // onSwipeRight();
-                        } else {
-                            // onSwipeLeft();
-                        }
-                       *//* fragmentList1Binding.includeCarousel1.listHorizontal1.addOnScrollListener(scrollListener);
-                        recyclerView2.addOnScrollListener(scrollListener);*//*
-                    }
-                } else {
-                    if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
-                        if (diffY > 0) {
-                            //Toast.makeText(getContext(), "Down", Toast.LENGTH_LONG).show();
-                            List1Fragment.lnrSearch.setVisibility(View.VISIBLE);
-                            List1Fragment.line.setVisibility(View.VISIBLE);
-                            CardsFragment.tabLayout.setVisibility(View.VISIBLE);
-                        } else {
-                            //  Toast.makeText(getContext(), "Up", Toast.LENGTH_LONG).show();
-                            lnrSearch.setVisibility(View.VISIBLE);
-                            line.setVisibility(View.VISIBLE);
-                            CardsFragment.tabLayout.setVisibility(View.VISIBLE);
-                        }
-                    }
-                }
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
-            return result;
-        }
-
-
-    }
-*/
-   /* class MyOnDoubleTapListener implements GestureDetector.OnDoubleTapListener {
-
-        @Override
-        public boolean onSingleTapConfirmed(MotionEvent e) {
-            //  Toast.makeText(getContext(), "onSingleTapConfirmed", Toast.LENGTH_LONG).show();
-            //textEvt2.setText(e.getX()+":"+ e.getY());
-            //  Log.e(TAG, "onSingleTapConfirmed");
-            return true;
-        }
-
-        @Override
-        public boolean onDoubleTap(MotionEvent e) {
-            //  Toast.makeText(context, "onDoubleTap", Toast.LENGTH_LONG).show();
-            //textEvt2.setText(e.getX()+":"+ e.getY());
-            // Log.e(TAG, "onDoubleTap");
-            return true;
-        }
-
-        @Override
-        public boolean onDoubleTapEvent(MotionEvent e) {
-            //  Toast.makeText(context, "onDoubleTapEvent", Toast.LENGTH_LONG).show();
-            // textEvt2.setText(e.getX() + ":" + e.getY());
-            //  Log.e(TAG, "onDoubleTapEvent");
-            return true;
-        }
-    }*/
 
     private RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener()
     {
@@ -1014,52 +812,6 @@ public class List1Fragment extends Fragment
             }
         }
     };
-
-   /* GestureDetector.SimpleOnGestureListener simpleOnGestureListener
-            = new GestureDetector.SimpleOnGestureListener()
-    {
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-                               float velocityY) {
-            String swipe = "";
-            float sensitvity = 50;
-
-            // TODO Auto-generated method stub
-            try {
-                // TODO Auto-generated method stub
-                if ((e1.getX() - e2.getX()) > sensitvity) {
-                    swipe += "Swipe Left\n";
-                } else if ((e2.getX() - e1.getX()) > sensitvity) {
-                    swipe += "Swipe Right\n";
-                } else {
-                    swipe += "\n";
-                }
-
-                if ((e1.getY() - e2.getY()) > sensitvity) {
-                    swipe += "Swipe Up\n";
-                    lnrSearch.setVisibility(View.INVISIBLE);
-                    line.setVisibility(View.GONE);
-                    CardsFragment.tabLayout.setVisibility(View.GONE);
-                } else if ((e2.getY() - e1.getY()) > sensitvity) {
-                    swipe += "Swipe Down\n";
-                    lnrSearch.setVisibility(View.VISIBLE);
-                    line.setVisibility(View.VISIBLE);
-                    CardsFragment.tabLayout.setVisibility(View.VISIBLE);
-                } else {
-                    swipe += "\n";
-                }
-
-                //  Toast.makeText(getContext(), swipe, Toast.LENGTH_LONG).show();
-
-                return super.onFling(e1, e2, velocityX, velocityY);
-            }
-            catch (Exception e ){
-                return true;
-            }
-        }
-    };*/
-
-    /*GestureDetector gestureDetector = new GestureDetector(simpleOnGestureListener);*/
 
     @Override
     public void onResume() {
@@ -1227,12 +979,6 @@ public class List1Fragment extends Fragment
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
             StringEntity se = new StringEntity(json);
 
             // 6. set httpPost Entity
@@ -1323,13 +1069,10 @@ public class List1Fragment extends Fragment
 
                     } else {
                         DashboardActivity.setActionBarTitle("Cards - " + count + "/" + CardsActivity.Connection_Limit, false);
-
-
                     }
                 } catch (Exception e) {
 
                 }
-
             } else if (SortFragment.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
                 DashboardActivity.setActionBarTitle("Cards - " + count, false);
 
@@ -1337,7 +1080,7 @@ public class List1Fragment extends Fragment
                 DashboardActivity.setActionBarTitle("Cards - " + count, false);
 
             } else if (SortFragment.CardListApi.equalsIgnoreCase("SearchConnect")) {
-               // DashboardActivity.setActionBarTitle("Cards - " + count + "/", true);
+                // DashboardActivity.setActionBarTitle("Cards - " + count + "/", true);
                 if (Connection_Limit.equalsIgnoreCase("100000")) {
                     DashboardActivity.setActionBarTitle("Cards - " + count + "/", true);
 
@@ -1345,49 +1088,11 @@ public class List1Fragment extends Fragment
                     DashboardActivity.setActionBarTitle("Cards - " + count + "/" + CardsActivity.Connection_Limit, false);
 
                 }
-
-
             }
         }
-
 //        CardsActivity.setActionBarTitle("Cards - "+number_cards);
         initRecyclerView1(fragmentList1Binding.includeCarousel1.listHorizontal1, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter);
         initRecyclerView2(fragmentList1Binding.includeCarousel2.listHorizontal2, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), mAdapter1);
-
-        // myPager = new MyPager(context, R.layout.cardview_list, nfcModel);
-        //viewPager.setAdapter(myPager);
-        //  myPager.notifyDataSetChanged();
-
-        //gridAdapter.setMode(Attributes.Mode.Single);
-    }
-
-    public static void CustomProgressBar(String loading, String status)
-    {
-        final AlertDialog dialog = new AlertDialog.Builder(mContext).create();
-        LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View dialogView = inflater.inflate(R.layout.custom_progress_bar, null);
-        ImageView imgConnecting = (ImageView)dialogView.findViewById(R.id.imgConnecting);
-        ImageView imgConnecting1 = (ImageView)dialogView.findViewById(R.id.imgConnecting1);
-        TextView tvProgressing = (TextView)dialogView.findViewById(R.id.txtProgressing);
-        Animation anim = AnimationUtils.loadAnimation(mContext,R.anim.anticlockwise);
-        imgConnecting.startAnimation(anim);
-        Animation anim1 = AnimationUtils.loadAnimation(mContext,R.anim.clockwise);
-        imgConnecting1.startAnimation(anim1);
-        tvProgressing.setText(loading);
-
-        if (status.equals("true"))
-        {
-            dialog.setView(dialogView);
-            dialog.show();
-        }
-        else if (status.equals("false"))
-        {
-            dialog.cancel();
-        }
-        else
-        {
-
-        }
     }
 
 }

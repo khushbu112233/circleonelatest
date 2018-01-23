@@ -77,9 +77,12 @@ public class Validation
         if(contactNo.isEmpty()  )
         {
 //            RegisterActivity.etPhone.setError("10 Characters Required");
-            ((RegisterActivity)context).activityRegisterBinding.tvPhoneInfo.setText("Enter Contact Number");
+          /*  ((RegisterActivity)context).activityRegisterBinding.tvPhoneInfo.setText("Enter Contact Number");
             ((RegisterActivity)context).activityRegisterBinding.tvPhoneInfo.setVisibility(View.VISIBLE);
-            valid = false ;
+            valid = false ;*/
+
+            ((RegisterActivity)context).activityRegisterBinding.tvPhoneInfo.setVisibility(View.GONE);
+
         }
         else
         {
@@ -155,9 +158,12 @@ public class Validation
         if(contactNo.isEmpty() )
         {
 //            RegisterActivity.etPhone.setError("10 Characters Required");
-            ((MyAccountActivity)context).myAccountBinding.tvPhoneInfo.setText("Enter Phone Number");
+          /*  ((MyAccountActivity)context).myAccountBinding.tvPhoneInfo.setText("Enter Phone Number");
             ((MyAccountActivity)context).myAccountBinding.tvPhoneInfo.setVisibility(View.VISIBLE);
-            valid = false ;
+            valid = false ;*/
+
+            ((MyAccountActivity)context).myAccountBinding.tvPhoneInfo.setVisibility(View.GONE);
+
         }
         else
         {

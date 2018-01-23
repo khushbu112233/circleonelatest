@@ -1851,9 +1851,26 @@
                                         android:src="@drawable/ic_right_arrow_blue" />
                                 </RelativeLayout>
 
+
+                                <RelativeLayout
+                                    android:visibility="gone"
+                                    android:id="@+id/rltTestimonialDetail"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+                                <com.circle8.circleOne.Utils.cgTextView
+                                    android:visibility="gone"
+                                    android:id="@+id/txtTestimonial"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginRight="20dp"
+                                    android:layout_centerVertical="true"
+                                    android:textSize="12sp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent" />
+
                                 <com.circle8.circleOne.Utils.ExpandableHeightListView
                                     android:id="@+id/lstTestimonial"
-                                    android:visibility="gone"
+                                    android:visibility="visible"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
@@ -1864,7 +1881,7 @@
                                     tools:listitem="@layout/testimonial_row">
 
                                 </com.circle8.circleOne.Utils.ExpandableHeightListView>
-
+                                </RelativeLayout>
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -1922,17 +1939,6 @@
                                     android:layout_marginRight="10dp"
                                     android:layout_marginLeft="20dp"
                                     android:visibility="gone"/>
-
-                                <com.circle8.circleOne.Utils.cgTextView
-                                    android:visibility="gone"
-                                    android:id="@+id/txtTestimonial"
-                                    android:layout_marginTop="5dp"
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="20dp"
-                                    android:layout_centerVertical="true"
-                                    android:textSize="12sp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent" />
 
                                 <RelativeLayout
                                     android:layout_width="match_parent"

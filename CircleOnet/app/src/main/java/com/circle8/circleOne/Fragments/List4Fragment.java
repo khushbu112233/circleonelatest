@@ -2,15 +2,14 @@ package com.circle8.circleOne.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,24 +20,27 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.AutoCompleteTextView;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.circle8.circleOne.Activity.CardDetail;
 import com.circle8.circleOne.Activity.CardsActivity;
 import com.circle8.circleOne.Activity.DashboardActivity;
 import com.circle8.circleOne.Adapter.List4Adapter;
-import com.circle8.circleOne.Helper.DatabaseHelper;
+import com.circle8.circleOne.ApplicationUtils.MyApplication;
 import com.circle8.circleOne.Helper.LoginSession;
 import com.circle8.circleOne.Model.FriendConnection;
 import com.circle8.circleOne.Model.NFCModel;
 import com.circle8.circleOne.R;
 import com.circle8.circleOne.Utils.Pref;
 import com.circle8.circleOne.Utils.Utility;
+import com.circle8.circleOne.databinding.FragmentList4Binding;
+
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -60,145 +62,71 @@ import static com.circle8.circleOne.Utils.Utility.convertInputStreamToString;
 
 public class List4Fragment extends Fragment
 {
-    public static ListView listView;
     public static List4Adapter gridAdapter;
     ArrayList<byte[]> imgf;
     ArrayList<String> name;
     ArrayList<String> desc;
     ArrayList<String> designation;
-    DatabaseHelper db;
-    RelativeLayout lnrSearch;
     View line;
     public static String parent = "";
-
-    private GestureDetector gestureDetector1;
-
     public static List<NFCModel> allTags;
     public static ArrayList<FriendConnection> allTaggs;
-
-    //new asign value
-    AutoCompleteTextView searchText ;
-    ImageView imgSearch ;
-    public static TextView tvFriendInfo, txtNoCard1 ;
     public static ArrayList<NFCModel> nfcModel ;
     public static ArrayList<FriendConnection> nfcModel1 ;
     LoginSession session ;
     static String UserId = "" ;
-
     public static Context mContext ;
     public static int pageno = 1 ;
-
     static RelativeLayout rlLoadMore ;
-
     public static String progressStatus = "FIRST";
-
     static int numberCount, listSize;
     public static String count, counts;
-    private static RelativeLayout rlProgressDialog ;
-    private static TextView tvProgressing ;
-    private static ImageView ivConnecting1;
-    private static ImageView ivConnecting2;
     private Fragment fragment;
-
+    View view;
+    static FragmentList4Binding fragmentList4Binding;
     public List4Fragment() {
         // Required empty public constructor
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Utility.freeMemory();
-        Utility.deleteCache(getContext());
-
+    public static List4Fragment newInstance() {
+        return new List4Fragment();
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.fragment_list4, container, false);
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        Utility.freeMemory();
-        Utility.deleteCache(getContext());
+        fragmentList4Binding = DataBindingUtil.inflate(
+                inflater, R.layout.fragment_list4, container, false);
+        view = fragmentList4Binding.getRoot();
 
-        mContext = List4Fragment.this.getContext();
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        mContext = getActivity();
         pageno = 1;
-        db = new DatabaseHelper(getContext());
         imgf = new ArrayList<byte[]>();
         name = new ArrayList<>();
         desc = new ArrayList<>();
         designation = new ArrayList<>();
-
-        /*GestureDetector.OnGestureListener gestureListener = new MyOnGestureListener();
-        GestureDetector.OnDoubleTapListener doubleTapListener = new MyOnDoubleTapListener();
-        this.gestureDetector1= new GestureDetector(getContext(), gestureListener);
-        this.gestureDetector1.setOnDoubleTapListener(doubleTapListener);*/
-
-        lnrSearch = (RelativeLayout) view.findViewById(R.id.lnrSearch);
-        imgSearch = (ImageView)view.findViewById(R.id.imgSearch);
-        tvFriendInfo = (TextView)view.findViewById(R.id.tvFriendInfo);
-        txtNoCard1 = (TextView) view.findViewById(R.id.txtNoCard1);
-        rlProgressDialog = (RelativeLayout)view.findViewById(R.id.rlProgressDialog);
-        tvProgressing = (TextView)view.findViewById(R.id.txtProgressing);
-        ivConnecting1 = (ImageView)view.findViewById(R.id.imgConnecting1) ;
-        ivConnecting2 = (ImageView)view.findViewById(R.id.imgConnecting2) ;
         line = view.findViewById(R.id.view);
-        /*lnrSearch.setVisibility(View.GONE);
-        line.setVisibility(View.GONE);
-        CardsFragment.tabLayout.setVisibility(View.GONE); */
-
-        listView = (ListView) view.findViewById(R.id.listViewType4);
-        rlLoadMore = (RelativeLayout) view.findViewById(R.id.rlLoadMore);
-
-        //considering from Database
-//        allTags = db.getActiveNFC();
         allTags = new ArrayList<>();
         allTaggs = new ArrayList<>();
-
-        session = new LoginSession(getContext());
+        session = new LoginSession(mContext);
         HashMap<String, String> user = session.getUserDetails();
         UserId = user.get(LoginSession.KEY_USERID);
-
-        searchText = (AutoCompleteTextView) view.findViewById(R.id.searchView);
         nfcModel = new ArrayList<>();
         nfcModel1 = new ArrayList<>();
         gridAdapter = new List4Adapter(getActivity(), R.layout.grid_list4_layout, nfcModel1);
-        listView.setAdapter(gridAdapter);
+        fragmentList4Binding.listViewType4.setAdapter(gridAdapter);
 
         if (SortFragment.CardListApi.equalsIgnoreCase("SearchConnect")) {
-            searchText.setText(SortFragment.Search );
-
+            fragmentList4Binding.searchView.setText(SortFragment.Search );
         }
-
-      //  callFirst();
-
-        /*List<NFCModel> allTags = db.getActiveNFC();
-        for (NFCModel tag : allTags) {
-            imgf.add(tag.getUser_image());
-            name.add(tag.getName());
-            desc.add(tag.getCompany() + "\n" + tag.getEmail() + "\n" + tag.getWebsite() + "\n" + tag.getMob_no());
-            designation.add(tag.getDesignation());
-        }
-
-
-        listView = (ListView) view.findViewById(R.id.listViewType4);
-        gridAdapter = new List4Adapter(getContext(), R.layout.grid_list4_layout, imgf, desc, name, designation);
-        listView.setAdapter(gridAdapter);*/
-        /*listView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                return gestureDetector.onTouchEvent(event);
-
-            }
-        });*/
-
-      /*  listView.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent me) {
-                return gestureDetector1.onTouchEvent(me);
-            }
-        });*/
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        fragmentList4Binding.listViewType4.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
@@ -217,61 +145,13 @@ public class List4Fragment extends Fragment
             }
         });
 
-//        GetData(getContext());
-
-
-       /* listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(getContext(), "OnItemLongClickListener", Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        });*/
-
-       /* listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                Log.e("ListView", "onScrollStateChanged");
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
-            }
-        });*/
-
-       /* listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("ListView", "onItemSelected:" + position);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                Log.e("ListView", "onNothingSelected:");
-            }
-        });*/
-
-        searchText.addTextChangedListener(new TextWatcher() {
+        fragmentList4Binding.searchView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-               /* if(s.length() <= 0)
-                {
-                    nfcModel1.clear();
-                    GetData(getContext());
-                }
-                else
-                {
-                    String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
-                    gridAdapter.Filter(text);
-                }*/
-                Utility.freeMemory();
-                Utility.deleteCache(getContext());
 
                 try
                 {
@@ -286,39 +166,22 @@ public class List4Fragment extends Fragment
                         } catch (Exception e) {
                         }
                         callFirst();
-                        tvFriendInfo.setVisibility(View.GONE);
+                        fragmentList4Binding.tvFriendInfo.setVisibility(View.GONE);
 //                    GetData(getContext());
                     }
-                  /* else if (s.length() > 0)
-                   {
-                       String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
-
-                       nfcModel1.clear();
-                       allTaggs.clear();
-                       try
-                       {
-                           gridAdapter.notifyDataSetChanged();
-                       }
-                       catch (Exception e)
-                       {
-                            e.printStackTrace();
-                       }
-                       new HttpAsyncTaskSearch().execute("http://circle8.asia:8999/Onet.svc/SearchConnect");
-                   }*/
                 }
                 catch (Exception e)
                 {
                     e.printStackTrace();
                 }
             }
-
             @Override
             public void afterTextChanged(Editable s) {
 
             }
         });
 
-        imgSearch.setOnClickListener(new View.OnClickListener() {
+        fragmentList4Binding.imgSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -326,10 +189,7 @@ public class List4Fragment extends Fragment
                     InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 }
-                Utility.freeMemory();
-                Utility.deleteCache(getContext());
-
-                if (searchText.getText().toString().length() == 0)
+                if (fragmentList4Binding.searchView.getText().toString().length() == 0)
                 {
                     pageno = 1;
                     nfcModel1.clear();
@@ -340,10 +200,10 @@ public class List4Fragment extends Fragment
                     } catch (Exception e) {
                     }
                     callFirst();
-                    tvFriendInfo.setVisibility(View.GONE);
+                    fragmentList4Binding.tvFriendInfo.setVisibility(View.GONE);
                 }
 
-                if (searchText.getText().toString().length() > 0 )
+                if (fragmentList4Binding.searchView.getText().toString().length() > 0 )
                 {
                     nfcModel1.clear();
                     allTaggs.clear();
@@ -360,7 +220,7 @@ public class List4Fragment extends Fragment
             }
         });
 
-        searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        fragmentList4Binding.searchView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
@@ -370,8 +230,7 @@ public class List4Fragment extends Fragment
                 }
                 Utility.freeMemory();
                 Utility.deleteCache(getContext());
-
-                if (searchText.getText().toString().length() == 0)
+                if (fragmentList4Binding.searchView.getText().toString().length() == 0)
                 {
                     pageno = 1;
                     nfcModel1.clear();
@@ -382,10 +241,10 @@ public class List4Fragment extends Fragment
                     } catch (Exception e) {
                     }
                     callFirst();
-                    tvFriendInfo.setVisibility(View.GONE);
+                    fragmentList4Binding.tvFriendInfo.setVisibility(View.GONE);
                 }
 
-                if (searchText.getText().toString().length() > 0 )
+                if (fragmentList4Binding.searchView.getText().toString().length() > 0 )
                 {
                     nfcModel1.clear();
                     allTaggs.clear();
@@ -399,97 +258,45 @@ public class List4Fragment extends Fragment
                     }
                     new HttpAsyncTaskSearch().execute(Utility.BASE_URL+"SearchConnect");
                 }
-
                 return true;
             }
         });
-
-
-        return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
         callFirst();
-
     }
-
     public static void CustomProgressDialog(final String loading)
     {
-        rlProgressDialog.setVisibility(View.VISIBLE);
-        tvProgressing.setText(loading);
+        fragmentList4Binding.rlProgressDialog.setVisibility(View.VISIBLE);
+        fragmentList4Binding.txtProgressing.setText(loading+"...");
 
         Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.anticlockwise);
-        ivConnecting1.startAnimation(anim);
+        fragmentList4Binding.imgConnecting1.startAnimation(anim);
         Animation anim1 = AnimationUtils.loadAnimation(mContext,R.anim.clockwise);
-        ivConnecting2.startAnimation(anim1);
+        fragmentList4Binding.imgConnecting2.startAnimation(anim1);
 
-        int SPLASHTIME = 1000*60 ;  //since 1000=1sec so 1000*60 = 60000 or 60sec or 1 min.
-        for (int i = 350; i <= SPLASHTIME; i = i + 350)
-        {
-            final int j = i;
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run()
-                {
-                    if (j / 350 == 1 || j / 350 == 4 || j / 350 == 7 || j / 350 == 10)
-                    {
-                        tvProgressing.setText(loading+"...");
-                    }
-                    else if (j / 350 == 2 || j / 350 == 5 || j / 350 == 8)
-                    {
-                        tvProgressing.setText(loading+"...");
-                    }
-                    else if (j / 350 == 3 || j / 350 == 6 || j / 350 == 9)
-                    {
-                        tvProgressing.setText(loading+"...");
-                    }
-
-                }
-            }, i);
-        }
-    }
-
-    @Override
-    public void onPause() {
-        Utility.freeMemory();
-        Utility.deleteCache(getContext());
-
-        super.onPause();
     }
 
     public String POSTSearch(String url) {
         InputStream inputStream = null;
         String result = "";
         try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
 
-            // 2. make POST request to the given URL
+            HttpClient httpclient = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(url);
             String json = "";
-
-            // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("FindBy", "NAME");
-            jsonObject.accumulate("Search", searchText.getText().toString());
+            jsonObject.accumulate("Search", fragmentList4Binding.searchView.getText().toString());
             jsonObject.accumulate("SearchType", "Local" );
             jsonObject.accumulate("UserID", UserId);
             jsonObject.accumulate("numofrecords", "30");
             jsonObject.accumulate("pageno", "1");
-
-            // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
             StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
             httpPost.setEntity(se);
 
             // 7. Set some headers to inform server about the type of the content
@@ -523,13 +330,6 @@ public class List4Fragment extends Fragment
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            /*dialog = new ProgressDialog(getActivity());
-            dialog.setMessage("Searching Records...");
-            //dialog.setTitle("Saving Reminder");
-            //  dialog.show();
-            dialog.setCancelable(false);*/
-            //  nfcModel = new ArrayList<>();
-            //   allTags = new ArrayList<>();
 
             String loading = "Searching" ;
             CustomProgressDialog(loading);
@@ -545,7 +345,7 @@ public class List4Fragment extends Fragment
         protected void onPostExecute(String result)
         {
             //   dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            fragmentList4Binding.rlProgressDialog.setVisibility(View.GONE);
 //            Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
             Utility.freeMemory();
             try
@@ -576,7 +376,7 @@ public class List4Fragment extends Fragment
 
                     if (connect.length() == 0)
                     {
-                        tvFriendInfo.setVisibility(View.VISIBLE);
+                        fragmentList4Binding.tvFriendInfo.setVisibility(View.VISIBLE);
                         allTaggs.clear();
                         try
                         {
@@ -585,7 +385,7 @@ public class List4Fragment extends Fragment
                     }
                     else
                     {
-                        tvFriendInfo.setVisibility(View.GONE);
+                        fragmentList4Binding.tvFriendInfo.setVisibility(View.GONE);
 
                         for (int i = 0; i <= connect.length(); i++)
                         {
@@ -611,9 +411,6 @@ public class List4Fragment extends Fragment
                             connectModel.setLongitude(iCon.getString("Longitude"));
                             allTaggs.add(connectModel);
 
-                          /*  gridAdapter = new List4Adapter(getContext(), R.layout.grid_list4_layout, allTaggs);
-                            listView.setAdapter(gridAdapter);
-                            gridAdapter.notifyDataSetChanged();*/
                             GetData(getContext());
                         }
                     }
@@ -623,28 +420,199 @@ public class List4Fragment extends Fragment
             }
         }
     }
+    public static void CallApi() {
+        if (progressStatus.equalsIgnoreCase("FIRST"))
+        {
+            String loading = "Fetching cards" ;
+            CustomProgressDialog(loading);
+
+            progressStatus = "SECOND";
+        }
+        else if (progressStatus.equalsIgnoreCase("SECOND"))
+        {
+
+        }
+        else if (progressStatus.equalsIgnoreCase("LOAD MORE"))
+        {
+
+        }
+        else if (progressStatus.equalsIgnoreCase("DELETE"))
+        {
+            String loading = "Refreshing cards" ;
+            CustomProgressDialog(loading);
+        }
+        JSONObject jsonObject = new JSONObject();
+        try {
+            if (SortFragment.CardListApi.equalsIgnoreCase("GetFriendConnection")) {
+                jsonObject.accumulate("Type", SortFragment.SortType);
+                jsonObject.accumulate("numofrecords", "10");
+                jsonObject.accumulate("pageno", pageno);
+                jsonObject.accumulate("userid", UserId);
+            }
+            else if (SortFragment.CardListApi.equalsIgnoreCase("GetProfileConnection")) {
+                jsonObject.accumulate("ProfileID", SortFragment.ProfileArrayId);
+                jsonObject.accumulate("Type", SortFragment.SortType);
+                jsonObject.accumulate("numofrecords", "10");
+//            jsonObject.accumulate("pageno", pageno);
+                jsonObject.accumulate("pageno", pageno);
+            }
+            else if (SortFragment.CardListApi.equalsIgnoreCase("Group/FetchConnection")) {
+                jsonObject.accumulate("group_ID", SortFragment.groupId);
+                jsonObject.accumulate("profileId", SortFragment.ProfileArrayId);
+                jsonObject.accumulate("numofrecords", "10");
+//            jsonObject.accumulate("pageno", pageno);
+                jsonObject.accumulate("pageno", pageno);
+            }
+            else if (SortFragment.CardListApi.equalsIgnoreCase("SearchConnect")) {
+                jsonObject.accumulate("FindBy", SortFragment.FindBY );
+                jsonObject.accumulate("Search", SortFragment.Search );
+                jsonObject.accumulate("SearchType", "Local" );
+                jsonObject.accumulate("UserID", UserId );
+                jsonObject.accumulate("numofrecords", "100" );
+                jsonObject.accumulate("pageno", "1" );
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                Utility.BASE_URL+SortFragment.CardListApi, jsonObject,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("11", response.toString());
+                        String result = response.toString();
+                        try
+                        {
+                            if (result != null) {
+                                JSONObject jsonObject = new JSONObject(result);
+//                    numberCount = Integer.parseInt(jsonObject.getString("count")) ;
+                                count = jsonObject.getString("count");
+
+                                if (pageno == 2) {
+                                    allTaggs.clear();
+                                    counts = jsonObject.getString("count");
+                                }
+                                if (count.equals("") || count.equals("null")) {
+                                    numberCount = 0;
+                                } else {
+                                    numberCount = Integer.parseInt(count);
+                                }
+
+                                JSONArray jsonArray;
+                                if (SortFragment.CardListApi.equalsIgnoreCase("SearchConnect")){
+                                    allTaggs.clear();
+                                    nfcModel1.clear();
+                                    jsonArray = jsonObject.getJSONArray("connect");
+                                }else {
+                                    jsonArray = jsonObject.getJSONArray("connection");
+                                }
+                                //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
+//                    numberCount = jsonArray.length();
+                                fragmentList4Binding.rlLoadMore.setVisibility(View.GONE);
+
+                                for (int i = 0; i < jsonArray.length(); i++)
+                                {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+                                    //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
+
+                                    FriendConnection nfcModelTag = new FriendConnection();
+                                    nfcModelTag.setName(object.getString("FirstName") + " " + object.getString("LastName"));
+                                    nfcModelTag.setCompany(object.getString("CompanyName"));
+                                    nfcModelTag.setEmail(object.getString("UserName"));
+                                    nfcModelTag.setWebsite("");
+                                    nfcModelTag.setMob_no(object.getString("Phone"));
+                                    nfcModelTag.setDesignation(object.getString("Designation"));
+                                    nfcModelTag.setCard_front(object.getString("Card_Front"));
+                                    nfcModelTag.setCard_back(object.getString("Card_Back"));
+                                    nfcModelTag.setUser_image(object.getString("UserPhoto"));
+                                    nfcModelTag.setProfile_id(object.getString("ProfileId"));
+                                    nfcModelTag.setNfc_tag("en000000001");
+                                    nfcModelTag.setAddress(object.getString("Address1") + " " + object.getString("Address2") + " "
+                                            + object.getString("Address3") + object.getString("Address4"));
+                                    nfcModelTag.setDateInitiated(object.getString("DateInitiated"));
+                                    nfcModelTag.setLatitude(object.getString("Latitude"));
+                                    nfcModelTag.setLongitude(object.getString("Longitude"));
+                                    allTaggs.add(nfcModelTag);
+                                    nfcModel1.add(nfcModelTag);
+                                }
+                                Log.e("allTaggs",""+allTaggs.size());
+
+                                // GetData(mContext);
+
+                                listSize = allTaggs.size();
+
+                                fragmentList4Binding.listViewType4.setOnScrollListener(new AbsListView.OnScrollListener()
+                                {
+                                    @Override
+                                    public void onScrollStateChanged(AbsListView view, int scrollState)
+                                    {
+                                        // TODO Auto-generated method stub
+
+                                        progressStatus = "LOAD MORE";
+
+                                        int threshold = 1;
+                                        int count = fragmentList4Binding.listViewType4.getCount();
+
+                                        if (scrollState == SCROLL_STATE_IDLE)
+                                        {
+                                            if (listSize <= numberCount)
+                                            {
+                                                if (fragmentList4Binding.listViewType4.getLastVisiblePosition() >= count - threshold)
+                                                {
+                                                    //  rlLoadMore.setVisibility(View.VISIBLE);
+                                                    // Execute LoadMoreDataTask AsyncTask
+                                                   // CallApi();
+                                                     new HttpAsyncTask().execute(Utility.BASE_URL+SortFragment.CardListApi);
+                                                }
+                                            } else {
+
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onScroll(AbsListView view, int firstVisibleItem,
+                                                         int visibleItemCount, int totalItemCount) {
+                                        // TODO Auto-generated method stub
+
+                                    }
+                                });
+
+                            } else {
+                                Toast.makeText(mContext, "Not able to load Cards..", Toast.LENGTH_LONG).show();
+                            }
+                            fragmentList4Binding.rlProgressDialog.setVisibility(View.GONE);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                fragmentList4Binding.rlProgressDialog.setVisibility(View.GONE);
+            }
+        });
+
+// Adding request to request queue
+        MyApplication.getInstance().addToRequestQueue(jsonObjReq, "");
+    }
+
 
     public static void callFirst()
     {
         pageno = 1;
         allTaggs.clear();
         Utility.freeMemory();
-        new HttpAsyncTask().execute(Utility.BASE_URL+SortFragment.CardListApi);
+        //CallApi();
+           new HttpAsyncTask().execute(Utility.BASE_URL+SortFragment.CardListApi);
     }
 
     public static void webCall()
     {
-        /*try
-        {
-            nfcModel1.clear();
-            allTaggs.clear();
-            gridAdapter.notifyDataSetChanged();
-            new HttpAsyncTask().execute("http://circle8.asia:8999/Onet.svc/GetFriendConnection");
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }*/
 
         pageno = 1;
         Utility.freeMemory();
@@ -656,7 +624,8 @@ public class List4Fragment extends Fragment
             gridAdapter.notifyDataSetChanged();
         } catch (Exception e) {
         }
-        new HttpAsyncTask().execute(Utility.BASE_URL+SortFragment.CardListApi);
+        //CallApi();
+         new HttpAsyncTask().execute(Utility.BASE_URL+SortFragment.CardListApi);
     }
 
 
@@ -668,19 +637,7 @@ public class List4Fragment extends Fragment
         protected void onPreExecute()
         {
             super.onPreExecute();
-            /*dialog = new ProgressDialog(mContext);
-            dialog.setMessage("Fetching Cards...");
-            //dialog.setTitle("Saving Reminder");
-            dialog.setCancelable(false);*/
-           /* if (comeAtTime.equalsIgnoreCase("FIRST")) {
-                dialog.show();
-                comeAtTime = "SECOND";
-            } else {
-                dialog.dismiss();
-            }*/
 
-            //  nfcModel = new ArrayList<>();
-            //   allTags = new ArrayList<>();
 
             if (progressStatus.equalsIgnoreCase("FIRST"))
             {
@@ -707,8 +664,9 @@ public class List4Fragment extends Fragment
 
             }
 
-          /*  String loading = "Fetching Cards" ;
-            CustomProgressDialog(loading);*/
+  String loading = "Fetching Cards" ;
+            CustomProgressDialog(loading);
+
         }
 
         @Override
@@ -721,7 +679,7 @@ public class List4Fragment extends Fragment
         protected void onPostExecute(String result)
         {
 //            dialog.dismiss();
-            rlProgressDialog.setVisibility(View.GONE);
+            fragmentList4Binding.rlProgressDialog.setVisibility(View.GONE);
             Utility.freeMemory();
             try
             {
@@ -750,7 +708,7 @@ public class List4Fragment extends Fragment
                     }
                     //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
 //                    numberCount = jsonArray.length();
-                    rlLoadMore.setVisibility(View.GONE);
+                    fragmentList4Binding.rlLoadMore.setVisibility(View.GONE);
 
                     for (int i = 0; i < jsonArray.length(); i++)
                     {
@@ -783,7 +741,7 @@ public class List4Fragment extends Fragment
 
                     listSize = allTaggs.size();
 
-                    listView.setOnScrollListener(new AbsListView.OnScrollListener()
+                    fragmentList4Binding.listViewType4.setOnScrollListener(new AbsListView.OnScrollListener()
                     {
                         @Override
                         public void onScrollStateChanged(AbsListView view, int scrollState)
@@ -793,17 +751,18 @@ public class List4Fragment extends Fragment
                             progressStatus = "LOAD MORE";
 
                             int threshold = 1;
-                            int count = listView.getCount();
+                            int count = fragmentList4Binding.listViewType4.getCount();
 
                             if (scrollState == SCROLL_STATE_IDLE)
                             {
                                 if (listSize <= numberCount)
                                 {
-                                    if (listView.getLastVisiblePosition() >= count - threshold)
+                                    if (fragmentList4Binding.listViewType4.getLastVisiblePosition() >= count - threshold)
                                     {
                                         //  rlLoadMore.setVisibility(View.VISIBLE);
                                         // Execute LoadMoreDataTask AsyncTask
-                                        new HttpAsyncTask().execute(Utility.BASE_URL+SortFragment.CardListApi);
+                                        //CallApi();
+                                           new HttpAsyncTask().execute(Utility.BASE_URL+SortFragment.CardListApi);
                                     }
                                 } else {
 
@@ -923,186 +882,15 @@ public class List4Fragment extends Fragment
         nfcModel1.clear();
         allTaggs.clear();
 
-      //  callFirst();
+        //  callFirst();
 //        nfcModel.clear();
 //        GetData(getContext());
     }
 
-   /* class MyOnGestureListener implements GestureDetector.OnGestureListener  {
-
-        private static final int SWIPE_THRESHOLD = 100;
-        private static final int SWIPE_VELOCITY_THRESHOLD = 100;
-
-        @Override
-        public boolean onDown(MotionEvent e) {
-            //  Toast.makeText(getContext(), "onDown", Toast.LENGTH_LONG).show();
-            //textEvt2.setText(e.getX()+":"+ e.getY());
-            // Log.e(TAG, "onDown");
-            return true;
-        }
-
-        @Override
-        public void onShowPress(MotionEvent e) {
-           // Toast.makeText(getContext(), "onShowPress", Toast.LENGTH_LONG).show();
-            //textEvt2.setText(e.getX()+":"+ e.getY());
-            // Log.e(TAG, "onShowPress");
-        }
-
-        @Override
-        public boolean onSingleTapUp(MotionEvent e) {
-            // Toast.makeText(getContext(), "onSingleTap", Toast.LENGTH_LONG).show();
-            // textEvt2.setText(e.getX()+":"+ e.getY());
-            //   Log.e(TAG, "onSingleTapUp");
-            return true;
-        }
-
-        @Override
-        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            // Toast.makeText(getContext(), "onScroll", Toast.LENGTH_LONG).show();
-            // textEvt2.setText(e1.getX()+":"+ e1.getY() +"  "+ e2.getX()+":"+ e2.getY());
-            //Log.e(TAG, "onScroll");
-            return true;
-        }
-
-        @Override
-        public void onLongPress(MotionEvent e) {
-           // Toast.makeText(getContext(), "onLongPress", Toast.LENGTH_LONG).show();
-            // textEvt2.setText(e.getX()+":"+ e.getY());
-            //  Log.e(TAG, "onLongPress");
-        }
-
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            // Toast.makeText(getContext(), "onFling", Toast.LENGTH_LONG).show();
-            //textEvt2.setText(e1.getX() + ":" + e1.getY() + "  " + e2.getX() + ":" + e2.getY());
-            boolean result = false;
-            try {
-                float diffY = e2.getY() - e1.getY();
-                float diffX = e2.getX() - e1.getX();
-                if (Math.abs(diffX) > Math.abs(diffY)) {
-                    if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                        if (diffX > 0) {
-                            // onSwipeRight();
-                        } else {
-                            // onSwipeLeft();
-                        }
-                    }
-                } else {
-                    if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
-                        if (diffY > 0) {
-                            //Toast.makeText(getContext(), "Down", Toast.LENGTH_LONG).show();
-                            lnrSearch.setVisibility(View.VISIBLE);
-                            line.setVisibility(View.VISIBLE);
-                            CardsFragment.tabLayout.setVisibility(View.VISIBLE);
-                        } else {
-                            //  Toast.makeText(getContext(), "Up", Toast.LENGTH_LONG).show();
-                            lnrSearch.setVisibility(View.VISIBLE);
-                            line.setVisibility(View.VISIBLE);
-                            CardsFragment.tabLayout.setVisibility(View.VISIBLE);
-                        }
-                    }
-                }
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
-            return result;
-        }
-
-
-    }*/
-
-   /* class MyOnDoubleTapListener implements GestureDetector.OnDoubleTapListener {
-
-        @Override
-        public boolean onSingleTapConfirmed(MotionEvent e) {
-            //  Toast.makeText(getContext(), "onSingleTapConfirmed", Toast.LENGTH_LONG).show();
-            //textEvt2.setText(e.getX()+":"+ e.getY());
-            //  Log.e(TAG, "onSingleTapConfirmed");
-            return true;
-        }
-
-        @Override
-        public boolean onDoubleTap(MotionEvent e) {
-           // Toast.makeText(getContext(), "onDoubleTap", Toast.LENGTH_LONG).show();
-            //textEvt2.setText(e.getX()+":"+ e.getY());
-            // Log.e(TAG, "onDoubleTap");
-            return true;
-        }
-
-        @Override
-        public boolean onDoubleTapEvent(MotionEvent e) {
-          //  Toast.makeText(getContext(), "onDoubleTapEvent", Toast.LENGTH_LONG).show();
-            // textEvt2.setText(e.getX() + ":" + e.getY());
-            //  Log.e(TAG, "onDoubleTapEvent");
-            return true;
-        }
-    }*/
-
-
-   /* GestureDetector.SimpleOnGestureListener simpleOnGestureListener
-            = new GestureDetector.SimpleOnGestureListener(){
-
-
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-                               float velocityY) {
-            String swipe = "";
-            float sensitvity = 50;
-
-            try {
-                // TODO Auto-generated method stub
-                if ((e1.getX() - e2.getX()) > sensitvity) {
-                    swipe += "Swipe Left\n";
-                } else if ((e2.getX() - e1.getX()) > sensitvity) {
-                    swipe += "Swipe Right\n";
-                } else {
-                    swipe += "\n";
-                }
-
-                if ((e1.getY() - e2.getY()) > sensitvity) {
-                    swipe += "Swipe Up\n";
-                    *//*lnrSearch.setVisibility(View.GONE);
-                    line.setVisibility(View.GONE);
-                    CardsFragment.tabLayout.setVisibility(View.GONE);*//*
-                } else if ((e2.getY() - e1.getY()) > sensitvity) {
-                    swipe += "Swipe Down\n";
-                    *//*lnrSearch.setVisibility(View.VISIBLE);
-                    line.setVisibility(View.VISIBLE);
-                    CardsFragment.tabLayout.setVisibility(View.VISIBLE);*//*
-                } else {
-                    swipe += "\n";
-                }
-
-                //  Toast.makeText(getContext(), swipe, Toast.LENGTH_LONG).show();
-
-                return super.onFling(e1, e2, velocityX, velocityY);
-            }
-            catch (Exception e ){
-                return true;
-            }
-        }
-    };*/
-
-//    GestureDetector gestureDetector = new GestureDetector(simpleOnGestureListener);
 
     public static void GetData(Context context)
     {
         nfcModel1.clear();
-        /*for(NFCModel reTag : allTags)
-        {
-            NFCModel nfcModelTag = new NFCModel();
-            nfcModelTag.setId(reTag.getId());
-            nfcModelTag.setName(reTag.getName());
-            nfcModelTag.setCompany(reTag.getCompany());
-            nfcModelTag.setEmail(reTag.getEmail());
-            nfcModelTag.setWebsite(reTag.getWebsite());
-            nfcModelTag.setMob_no(reTag.getMob_no());
-            nfcModelTag.setDesignation(reTag.getDesignation());
-            nfcModelTag.setUser_image(reTag.getUser_image());
-            nfcModelTag.setNfc_tag(reTag.getNfc_tag());
-
-            nfcModel.add(nfcModelTag);
-        }*/
 
         for (FriendConnection reTag : allTaggs)
         {
@@ -1125,9 +913,9 @@ public class List4Fragment extends Fragment
         }
 
         if (nfcModel1.size() == 0) {
-            txtNoCard1.setVisibility(View.VISIBLE);
+            fragmentList4Binding.txtNoCard1.setVisibility(View.VISIBLE);
         } else {
-            txtNoCard1.setVisibility(View.GONE);
+            fragmentList4Binding.txtNoCard1.setVisibility(View.GONE);
         }
 
 //        rlLoadMore.setVisibility(View.GONE);
@@ -1163,20 +951,17 @@ public class List4Fragment extends Fragment
             if (Pref.getValue(context, "current_frag", "").equalsIgnoreCase("1")) {
                 DashboardActivity.setActionBarTitle("Cards - " + counts, false);
             }
-
         }
         else  if (SortFragment.CardListApi.equalsIgnoreCase("SearchConnect")){
             if (Pref.getValue(context, "current_frag", "").equalsIgnoreCase("1")) {
                 //DashboardActivity.setActionBarTitle("Cards - " + counts, false);
                 if (Connection_Limit.equalsIgnoreCase("100000")) {
-                        DashboardActivity.setActionBarTitle("Cards - " + counts + "/", true);
+                    DashboardActivity.setActionBarTitle("Cards - " + counts + "/", true);
                 }
                 else {
-                        DashboardActivity.setActionBarTitle("Cards - " + counts + "/" + CardsActivity.Connection_Limit, false);
+                    DashboardActivity.setActionBarTitle("Cards - " + counts + "/" + CardsActivity.Connection_Limit, false);
                 }
             }
         }
-
-        // CardsActivity.setActionBarTitle("Cards - " + nfcModel1.size() + "/"+ CardsActivity.Connection_Limit);
     }
 }
