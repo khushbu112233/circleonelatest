@@ -476,7 +476,7 @@ public class DashboardActivity extends AppCompatActivity implements GoogleApiCli
         textView.setText(title);
 
         if (infinity == true){
-            textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_infinity, 0);
+            textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_infinity_sv, 0);
         }
         else {
             textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
