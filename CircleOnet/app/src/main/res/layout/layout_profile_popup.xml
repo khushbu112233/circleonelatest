@@ -3,41 +3,47 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp">
+
+        <RelativeLayout
+            android:id="@+id/rl1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:visibility="visible"
+                android:tint="@color/colorPrimary"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/usr"
+                android:id="@+id/imgGroup"
+                app:civ_border_width="1dp"
+                app:civ_border_color="@color/colorPrimary"
+                />
 
         <ProgressBar
             android:id="@+id/progress"
             android:layout_gravity="center_horizontal"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="17dp"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_marginLeft="12dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
-                app:civ_border_width="1dp"
-                app:civ_border_color="@color/colorPrimary"
-                android:src="@drawable/usr"
-                android:id="@+id/imgGroup"
-                />
-
+        </RelativeLayout>
         <com.circle8.circleOne.Utils.orkebyTextView
             android:id="@+id/tvGroupName"
-            android:textSize="15dp"
+            android:textSize="14dp"
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,8 +51,8 @@
             android:textStyle=""
             android:layout_centerVertical="true"
             android:textColor="@color/colorPrimary"
-            android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@+id/imgGroup"/>
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/rl1"/>
 
     </RelativeLayout>
 

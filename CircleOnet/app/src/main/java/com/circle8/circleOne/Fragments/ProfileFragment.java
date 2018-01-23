@@ -1419,7 +1419,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
         // some other visual settings for popup window
         popupWindow.setFocusable(true);
-        popupWindow.setWidth(460);
+        popupWindow.setWidth(520);
         // popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.white));
         popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
 
