@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <!--<item
-            android:id="@+id/one"
-            android:title="Change Profile"/>
-
         <item
+            android:id="@+id/one"
+            android:title=""
+            android:icon="@drawable/ic_notification_blue"/>
+
+       <!-- <item
             android:id="@+id/two"
             android:title="Add New Profile"/>
 
         <item
             android:id="@+id/three"
-            android:title="Close"/>-->
+            android:title="Close"/>&ndash;&gt;-->
 </menu>
