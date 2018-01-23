@@ -125,7 +125,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
     public static int profileIndex;
     public static ProfileSession profileSession;
     static ReferralCodeSession referralCodeSession;
-    static String secretKey = "1234567890234561",Q_ID = "", profileId = "",TestimonialProfileId = "",UserID = "",associationString = "", eventString = "";
+    public static String secretKey = "1234567890234561",Q_ID = "", profileId = "",TestimonialProfileId = "",UserID = "",associationString = "", eventString = "";
     AlertDialog QR_AlertDialog ;
     private long lastClickTime = 0;
     public static Activity mContext ;
@@ -141,8 +141,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
     {
         Utility.freeMemory();
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getContext());
-        Utility.deleteCache(getContext());
+        //   FacebookSdk.sdkInitialize(getContext());
 
     }
 
@@ -205,14 +204,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
             @Override
             public void onClick(View view) {
                 Intent go = new Intent(getContext(),CardsActivity.class);
-
-                // you pass the position you want the viewpager to show in the extra,
-                // please don't forget to define and initialize the position variable
-                // properly
                 go.putExtra("viewpager_position", 0);
                 startActivity(go);
                 getActivity().finish();
-                Utility.freeMemory();
             }
         });
         fragmentProfileBinding.includeFrame1.imgProfileShare.setOnClickListener(this);
@@ -234,7 +228,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
             @Override
             public void onPageSelected(final int position) {
-                // mViewPager.setCurrentItem(position, true);
             }
 
             @Override
@@ -248,13 +241,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        callMyProfile();
-
-    }
-
     public static void CustomProgressDialog(final String loading)
     {
         fragmentProfileBinding.rlProgressDialog.setVisibility(View.VISIBLE);
@@ -265,190 +251,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
         fragmentProfileBinding.imgConnecting2.startAnimation(anim1);
     }
 
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-
-        switch (id) {
-            case R.id.fbUrl:
-                Utility.freeMemory();
-                Utility.deleteCache(getContext());
-
-                if (strfbUrl!=null) {
-                    if (!strfbUrl.startsWith("http://") && !strfbUrl.startsWith("https://"))
-                        strfbUrl = "http://" + strfbUrl;
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(strfbUrl));
-                    startActivity(browserIntent);
-                }
-                break;
-            case R.id.googleUrl:
-                Utility.freeMemory();
-                Utility.deleteCache(getContext());
-
-                if (strgoogleUrl!=null) {
-                    if (!strgoogleUrl.startsWith("http://") && !strgoogleUrl.startsWith("https://"))
-                        strgoogleUrl = "http://" + strgoogleUrl;
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(strgoogleUrl));
-                    startActivity(browserIntent);
-                }
-                break;
-            case R.id.youtubeUrl:
-                Utility.freeMemory();
-                Utility.deleteCache(getContext());
-
-                if (stryoutubeUrl!=null) {
-                    if (!stryoutubeUrl.startsWith("http://") && !stryoutubeUrl.startsWith("https://"))
-                        stryoutubeUrl = "http://" + stryoutubeUrl;
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(stryoutubeUrl));
-                    startActivity(browserIntent);
-                }
-                break;
-            case R.id.twitterUrl:
-                Utility.freeMemory();
-                Utility.deleteCache(getContext());
-
-                if (strtwitterUrl!=null) {
-                    if (!strtwitterUrl.startsWith("http://") && !strtwitterUrl.startsWith("https://"))
-                        strtwitterUrl = "http://" + strtwitterUrl;
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(strtwitterUrl));
-                    startActivity(browserIntent);
-                }
-                break;
-            case R.id.linkedInUrl:
-                if (strlinkedInUrl!=null) {
-                    if (!strlinkedInUrl.startsWith("http://") && !strlinkedInUrl.startsWith("https://"))
-                        strlinkedInUrl = "http://" + strlinkedInUrl;
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(strlinkedInUrl));
-                    startActivity(browserIntent);
-                }
-                break;
-            case R.id.txtAttachment:
-                Utility.freeMemory();
-                Utility.deleteCache(getContext());
-                Intent intent = new Intent(getContext(), AttachmentDisplay.class);
-                intent.putExtra("url", Utility.BASE_IMAGE_URL+"Other_doc/"+fragmentProfileBinding.txtAttachment.getText().toString());
-                startActivity(intent);
-                break ;
-            case R.id.txtMore:
-                Utility.freeMemory();
-                Utility.deleteCache(getContext());
-
-                Intent intent1 = new Intent(getContext(), TestimonialActivity.class);
-                intent1.putExtra("ProfileId", TestimonialProfileId);
-                intent1.putExtra("from", "profile");
-                startActivity(intent1);
-                break;
-            case R.id.imgProfile:
-                final Dialog dialog = new Dialog(getActivity());
-                dialog.setContentView(R.layout.imageview_popup);
-                Utility.freeMemory();
-                Utility.deleteCache(getContext());
-
-                ImageView ivViewImage = (ImageView)dialog.findViewById(R.id.ivViewImage);
-                if (displayProfile.equals(""))
-                {
-                    ivViewImage.setImageResource(R.drawable.usr_white1);
-                }
-                else
-                {
-                    Picasso.with(getActivity()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+displayProfile).placeholder(R.drawable.usr_1)
-                            .resize(300,300).onlyScaleDown().skipMemoryCache().into(ivViewImage);
-                }
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                ivViewImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                        Intent intent = new Intent(getContext(), ImageZoom.class);
-                        intent.putExtra("displayProfile", Utility.BASE_IMAGE_URL+"UserProfile/"+displayProfile);
-                        startActivity(intent);
-                    }
-                });
-
-                dialog.show();
-                break;
-            case R.id.imgAdd:
-                Utility.freeMemory();
-                Utility.deleteCache(getContext());
-
-                Intent intent_search = new Intent(getContext(), SearchGroupMembers.class);
-                intent_search.putExtra("from", "profile");
-                intent_search.putExtra("ProfileId", TestimonialProfileId);
-                startActivity(intent_search);
-
-                break;
-
-            case R.id.imgProfileShare:
-                Pref.setValue(mContext,"share","1");
-                String shareBody = "I’m ready to connect with you and share our growing network on the CircleOne app. I’m currently a user with CircleOne and would like to invite you to join the Circle so we’ll both be able to take our professional networks a step further. Use the code '" + refer +
-                        "' for a quick and simple registration! https://circle8.asia/mobileApp.html";
-                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                sharingIntent.setType("text/plain");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, fragmentProfileBinding.includeFrame2.tvPersonName.getText().toString());
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-                startActivity(Intent.createChooser(sharingIntent, "Share Profile Via"));
-
-                break ;
-            case  R.id.imgQR:
-
-                QR_AlertDialog = new AlertDialog.Builder(getActivity(), R.style.AppTheme).create();
-                LayoutInflater inflater = getActivity().getLayoutInflater();
-                final View dialogView = inflater.inflate(R.layout.person_qrcode, null);
-                FrameLayout fl_QRFrame = (FrameLayout)dialogView.findViewById(R.id.fl_QrFrame);
-                TextView tvBarName = (TextView)dialogView.findViewById(R.id.tvBarName);
-                ImageView ivBarImage = (ImageView)dialogView.findViewById(R.id.ivBarImage);
-                ColorDrawable dialogColor = new ColorDrawable(getResources().getColor(R.color.colorPrimary));
-                dialogColor.setAlpha(70);
-                QR_AlertDialog.getWindow().setBackgroundDrawable(dialogColor);
-                // alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
-                tvBarName.setText(fragmentProfileBinding.includeFrame2.tvPersonName.getText().toString());
-//                    bitmap = TextToImageEncode(barName);
-                //ivBarImage.setImageBitmap(bitmap);
-                ivBarImage.setImageBitmap(mergeBitmaps(overlay,bitmapQR));
-
-                fl_QRFrame.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view)
-                    {
-                        QR_AlertDialog.dismiss();
-                    }
-                });
-
-                QR_AlertDialog.setView(dialogView);
-                QR_AlertDialog.show();
-                break;
-            case R.id.imgProfileMenu:
-
-                Utility.freeMemory();
-                Utility.deleteCache(getContext());
-
-
-                if (SystemClock.elapsedRealtime() - lastClickTime < 1000){
-                    return;
-                }
-
-                lastClickTime = SystemClock.elapsedRealtime();
-
-
-                popupWindow = popupWindowsort();
-                popupWindow.showAtLocation(v, Gravity.TOP | Gravity.RIGHT, 0, 0);
-
-                break;
-            case R.id.ivEditProfile:
-                fragmentProfileBinding.includeFrame1.ivEditProfile.setBackground(getResources().getDrawable(R.drawable.ic_edit_gray));
-                Intent intent_edit = new Intent(mContext, EditProfileActivity.class);
-                intent_edit.putExtra("type", "edit");
-                intent_edit.putExtra("profile_id", TestimonialProfileId);
-                intent_edit.putExtra("activity", "profile");
-                startActivity(intent_edit);
-                getActivity().overridePendingTransition (0, 0);
-                Log.e("fr","fr");
-
-
-                break;
-        }
-    }
 
     private PopupWindow popupWindowsort() {
 
@@ -462,13 +264,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
         popupWindow.setOutsideTouchable(true);
 
         PopupMenuAdapter adapter = new PopupMenuAdapter((Activity)getContext(), profile_array, profileImage_array);
-        // the drop down list is a list view
         ListView listViewSort = view1.findViewById(R.id.ListPopupMenu);
         ImageView imgDismiss = view1.findViewById(R.id.imgMenu);
-
-        // set our adapter and pass our pop up window contents
         listViewSort.setAdapter(adapter);
-
         imgDismiss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -481,7 +279,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (profile_array.get(i).toString().equals("Add New Profile")) {
-                    // new HttpAsyncTaskAddProfile().execute("http://circle8.asia:8999/Onet.svc/AddProfile");
                     Intent intent = new Intent(getContext(), EditProfileActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -491,14 +288,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                     intent.putExtra("activity", "profile");
                     startActivity(intent);
                     popupWindow.dismiss();
-                    // getActivity().overridePendingTransition(0, 0);
                 } else {
                     profileSession.createProfileSession(String.valueOf(i));
                     profileIndex = i;
-//                                    Toast.makeText(getContext(), profile_array.get(i).toString(), Toast.LENGTH_LONG).show();
-
                     fragmentProfileBinding.includeFrame2.tvPersonName.setText(allTags.get(i).getFirstName() + " " + allTags.get(i).getLastName());
-                    //DashboardFragment.User_name = allTags.get(i).getFirstName() + " "+ allTags.get(i).getLastName();
                     fragmentProfileBinding.includeFrame2.tvDesignation.setText(allTags.get(i).getDesignation());
                     fragmentProfileBinding.includeFrame2.tvCompany.setText(allTags.get(i).getCompanyName());
                     fragmentProfileBinding.tvName.setText(allTags.get(i).getFirstName() + " " + allTags.get(i).getLastName());
@@ -583,7 +376,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                     String Connection_Left = user.get(LoginSession.KEY_CONNECTION_LEFT);
 
                     session.createLoginSession(Q_ID, allTags.get(i).getProfileID(), user_id, allTags.get(i).getFirstName() + " " + allTags.get(i).getLastName(), email_id, user_img, gender, user_pass, date_DOB, phone_no, Connection_Limit, Connection_Left);
-
                     try {
                         JSONObject object = jsonArray.getJSONObject(i);
                         try {
@@ -596,7 +388,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                                 String kept = name1.substring(0, name1.indexOf(":"));
                                 String remainder = name1.substring(name1.indexOf(":") + 1, name1.length());
 
-
                                 listAssociation.add(remainder);
 
                                 if (i1 == array.length() - 1) {
@@ -604,9 +395,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                                 } else {
                                     associationString += remainder + " / ";
                                 }
-
-
-                                // associationString += remainder + " / ";
                             }
                             fragmentProfileBinding.txtAssociationList.setText(associationString);
                             int countAssociation;
@@ -652,8 +440,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                                 } else {
                                     eventString += remainder + " / ";
                                 }
-
-
                             }
                             fragmentProfileBinding.txtEventsListfinal.setText(eventString);
                             int countEvents;
@@ -667,14 +453,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                             fragmentProfileBinding.recyclerEvents.setAdapter(new TextRecyclerAdapter(listEvents));
                             fragmentProfileBinding.recyclerEvents.setLayoutManager(gridLayoutManager1);
 
-
                             if (listEvents.size() == 0) {
                                 fragmentProfileBinding.txtEventsListfinal.setVisibility(View.GONE);
-                                // recyclerEvents.setVisibility(View.GONE);
                                 fragmentProfileBinding.txtNoEvent.setVisibility(View.VISIBLE);
                             } else {
                                 fragmentProfileBinding.txtEventsListfinal.setVisibility(View.VISIBLE);
-                                // recyclerEvents.setVisibility(View.VISIBLE);
                                 fragmentProfileBinding.txtNoEvent.setVisibility(View.GONE);
                             }
 
@@ -683,7 +466,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
 
                     if (allTags.get(i).getUserPhoto().equals("")) {
                         fragmentProfileBinding.includeFrame2.progressBar1.setVisibility(View.GONE);
@@ -774,26 +556,18 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
                     fragmentProfileBinding.viewPager.setClipChildren(false);
                     fragmentProfileBinding.viewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
-                    fragmentProfileBinding.viewPager.setOffscreenPageLimit(2);
-                    //  mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
                     fragmentProfileBinding.viewPager.setAdapter(myPager);
 
                     fragmentProfileBinding.viewPager1.setClipChildren(false);
                     fragmentProfileBinding.viewPager1.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
-                    fragmentProfileBinding.viewPager1.setOffscreenPageLimit(2);
-                    // viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
                     fragmentProfileBinding.viewPager1.setAdapter(myPager);
-
 
                     final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            //Do something after 100ms
-
                             try {
                                 barName = encrypt(TestimonialProfileId, secretKey);
-                                //  bitmap = TextToImageEncode(barName);
                             } catch (UnsupportedEncodingException e) {
                                 e.printStackTrace();
                             } catch (InvalidKeyException e) {
@@ -809,7 +583,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                             } catch (BadPaddingException e) {
                                 e.printStackTrace();
                             }
-
 
                             try {
                                 //setting size of qr code
@@ -836,10 +609,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
         // some other visual settings for popup window
         popupWindow.setFocusable(true);
         popupWindow.setWidth(460);
-        // popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.white));
         popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-
-        // set the listview as popup content
 
         return popupWindow;
     }
@@ -848,19 +618,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
 
         try {
-            //generating qr code in bitmatrix type
             BitMatrix matrix = new MultiFormatWriter().encode(new String(qrCodeData.getBytes(charset), charset),
                     BarcodeFormat.QR_CODE, qrCodewidth, qrCodeheight, hintMap);
-            //converting bitmatrix to bitmap
 
             int width = matrix.getWidth();
             int height = matrix.getHeight();
             int[] pixels = new int[width * height];
-            // All are 0, or black, by default
             for (int y = 0; y < height; y++) {
                 int offset = y * width;
                 for (int x = 0; x < width; x++) {
-                    //pixels[offset + x] = matrix.get(x, y) ? BLACK : WHITE;
                     pixels[offset + x] = matrix.get(x, y) ?
                             ResourcesCompat.getColor(context.getResources(),R.color.qrColor,null) :WHITE;
                 }
@@ -868,16 +634,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
             bitmapQR = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
             bitmapQR.setPixels(pixels, 0, width, 0, 0, width, height);
-            //setting bitmap to image view
-
             overlay = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
-
 
         }catch (Exception er){
             Log.e("QrGenerate",er.getMessage());
         }
     }
-
 
     public static void callMyProfile()
     {
@@ -888,11 +650,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
     public void onResume()
     {
         super.onResume();
-       /* HashMap<String, String> profile = profileSession.getProfileDetails();
-        profileIndex = Integer.parseInt(profile.get(ProfileSession.KEY_PROFILE_INDEX));
-        callMyProfile();*/
-
         if(!Pref.getValue(mContext,"share","").equalsIgnoreCase("1")) {
+
             HashMap<String, String> user = session.getUserDetails();
             UserID = user.get(LoginSession.KEY_USERID);
 
@@ -903,17 +662,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
         }else
         {
             Pref.setValue(mContext,"share","");
-        }
-//        new HttpAsyncTaskProfiles().execute(Utility.BASE_URL+"MyProfiles");
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser)
-        {
-            Utility.freeMemory();
-            Utility.deleteCache(getContext());
         }
     }
 
@@ -945,110 +693,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
         return arrayOfByte1;
     }
 
-    private FacebookCallback<LoginResult> mCallBack = new FacebookCallback<LoginResult>() {
-        @Override
-        public void onSuccess(LoginResult loginResult) {
-
-            progressDialog.dismiss();
-
-            // App code
-            GraphRequest request = GraphRequest.newMeRequest(
-                    loginResult.getAccessToken(),
-                    new GraphRequest.GraphJSONObjectCallback() {
-                        @Override
-                        public void onCompleted(
-                                JSONObject object,
-                                GraphResponse response) {
-
-                            Log.e("response: ", response + "");
-                            // Toast.makeText(AccountActivity.this, response.toString(), Toast.LENGTH_LONG).show();
-                            try {
-                                String Facebook_url = "https://www.facebook.com/profile.php?id="+object.getString("id").toString();
-                                Toast.makeText(getContext(), Facebook_url, Toast.LENGTH_LONG).show();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-
-                    });
-
-            Bundle parameters = new Bundle();
-            parameters.putString("fields", "id,name,email,gender, birthday");
-            request.setParameters(parameters);
-            request.executeAsync();
-        }
-
-        @Override
-        public void onCancel() {
-            progressDialog.dismiss();
-        }
-
-        @Override
-        public void onError(FacebookException e) {
-            progressDialog.dismiss();
-        }
-    };
-
-    public static String POST5(String url)
-    {
-        InputStream inputStream = null;
-        String result = "";
-        try
-        {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
-
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("numofrecords", "10" );
-            jsonObject.accumulate("pageno", "1" );
-            jsonObject.accumulate("userid", UserID);
-
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
-
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-
-
-            // 10. convert inputstream to string
-            if(inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
-        }
-
-        // 11. return result
-        return result;
-    }
-
-
-
     public static class HttpAsyncTaskProfiles extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -1077,8 +721,17 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
             UserID = user.get(LoginSession.KEY_USERID);
             profileId = user.get(LoginSession.KEY_PROFILEID);
             Q_ID = user.get(LoginSession.KEY_QID);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("numofrecords", "10" );
+                jsonObject.accumulate("pageno", "1" );
+                jsonObject.accumulate("userid", UserID);
 
-            return POST5(urls[0]);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return POST2(Utility.BASE_URL+"MyProfiles",jsonObject);
         }
         @Override
         protected void onPostExecute(String result)
@@ -1363,7 +1016,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                         fragmentProfileBinding.includeFrame2.tvCompany.setText(allTags.get(profileIndex).getCompanyName());
                         fragmentProfileBinding.tvCompanyName.setText(allTags.get(profileIndex).getCompanyName());
                     }
-//                    tvMob.setText(allTags.get(0).getPhone());
                     if(allTags.get(profileIndex).getMobile1().equalsIgnoreCase("")
                             || allTags.get(profileIndex).getMobile1().equalsIgnoreCase("null"))
                     {
@@ -1373,7 +1025,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                     {
                         fragmentProfileBinding.tvMob.setText(allTags.get(profileIndex).getMobile1()+"   "+allTags.get(profileIndex).getMobile2());
                     }
-//                    tvWebsite.setText(allTags.get(0).getWebsite());
                     if(allTags.get(profileIndex).getWebsite().equalsIgnoreCase("")
                             || allTags.get(profileIndex).getWebsite().equalsIgnoreCase("null"))
                     {
@@ -1514,17 +1165,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
                     fragmentProfileBinding.viewPager.setClipChildren(false);
                     fragmentProfileBinding.viewPager.setPageMargin(mContext.getResources().getDimensionPixelOffset(R.dimen.pager_margin));
-                    fragmentProfileBinding.viewPager.setOffscreenPageLimit(1);
                     //   mViewPager.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
                     fragmentProfileBinding.viewPager.setAdapter(myPager);
 
                     fragmentProfileBinding.viewPager1.setClipChildren(false);
                     fragmentProfileBinding.viewPager1.setPageMargin(mContext.getResources().getDimensionPixelOffset(R.dimen.pager_margin));
-                    fragmentProfileBinding.viewPager1.setOffscreenPageLimit(1);
                     //   viewPager1.setPageTransformer(false, new CarouselEffectTransformer(getContext())); // Set transformer
                     fragmentProfileBinding.viewPager1.setAdapter(myPager);
-
-
 
                     final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
@@ -1534,7 +1181,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                             try
                             {
                                 barName = encrypt(TestimonialProfileId, secretKey);
-                                // bitmap = TextToImageEncode(barName);
                             }
                             catch (UnsupportedEncodingException e) {
                                 e.printStackTrace();
@@ -1570,7 +1216,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                         }
                     }, 5000);
                     // for bar code generating
-
                 }
                 else
                 {
@@ -1582,8 +1227,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
             }
         }
     }
-
-
     private static class HttpAsyncTaskTestimonial extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
@@ -1592,9 +1235,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
         protected void onPreExecute()
         {
             super.onPreExecute();
-
         }
-
         @Override
         protected String doInBackground(String... urls)
         {
@@ -1609,7 +1250,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
 
             return POST2(Utility.BASE_URL + "Testimonial/Fetch",jsonObject);
         }
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result)
         {
@@ -1618,7 +1258,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
                     JSONArray jsonArray = jsonObject.getJSONArray("Testimonials");
-                    //Toast.makeText(getContext(), jsonArray.toString(), Toast.LENGTH_LONG).show();
 
                     if (jsonArray.length() == 0)
                     {
@@ -1635,12 +1274,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                     allTaggs.clear();
                     for (int i = 0; i < jsonArray.length(); i++)
                     {
-
                         if (i < 3)
                         {
                             JSONObject object = jsonArray.getJSONObject(i);
-                            //  Toast.makeText(getContext(), object.getString("Card_Back"), Toast.LENGTH_LONG).show();
-
                             TestimonialModel nfcModelTag = new TestimonialModel();
                             nfcModelTag.setCompanyName(object.getString("CompanyName"));
                             nfcModelTag.setDesignation(object.getString("Designation"));
@@ -1654,7 +1290,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
                             nfcModelTag.setTestimonial_ID(object.getString("Testimonial_ID"));
                             title_array.add(object.getString("Testimonial_Text").toString());
                             notice_array.add(String.valueOf(i));
-//                        Toast.makeText(getContext(), object.getString("Testimonial_Text"), Toast.LENGTH_LONG).show();
                             allTaggs.add(nfcModelTag);
                         }
                     }
@@ -1672,58 +1307,158 @@ public class ProfileFragment extends Fragment implements View.OnClickListener
             }
         }
     }
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
 
-    public  String POST(String url)
-    {
-        InputStream inputStream = null;
-        String result = "";
-        try
-        {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
+        switch (id) {
+            case R.id.fbUrl:
 
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
-            String json = "";
+                if (strfbUrl!=null) {
+                    if (!strfbUrl.startsWith("http://") && !strfbUrl.startsWith("https://"))
+                        strfbUrl = "http://" + strfbUrl;
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(strfbUrl));
+                    startActivity(browserIntent);
+                }
+                break;
+            case R.id.googleUrl:
 
-            // 3. build jsonObject
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("profileid", TestimonialProfileId );
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
+                if (strgoogleUrl!=null) {
+                    if (!strgoogleUrl.startsWith("http://") && !strgoogleUrl.startsWith("https://"))
+                        strgoogleUrl = "http://" + strgoogleUrl;
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(strgoogleUrl));
+                    startActivity(browserIntent);
+                }
+                break;
+            case R.id.youtubeUrl:
 
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
+                if (stryoutubeUrl!=null) {
+                    if (!stryoutubeUrl.startsWith("http://") && !stryoutubeUrl.startsWith("https://"))
+                        stryoutubeUrl = "http://" + stryoutubeUrl;
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(stryoutubeUrl));
+                    startActivity(browserIntent);
+                }
+                break;
+            case R.id.twitterUrl:
+                if (strtwitterUrl!=null) {
+                    if (!strtwitterUrl.startsWith("http://") && !strtwitterUrl.startsWith("https://"))
+                        strtwitterUrl = "http://" + strtwitterUrl;
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(strtwitterUrl));
+                    startActivity(browserIntent);
+                }
+                break;
+            case R.id.linkedInUrl:
+                if (strlinkedInUrl!=null) {
+                    if (!strlinkedInUrl.startsWith("http://") && !strlinkedInUrl.startsWith("https://"))
+                        strlinkedInUrl = "http://" + strlinkedInUrl;
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(strlinkedInUrl));
+                    startActivity(browserIntent);
+                }
+                break;
+            case R.id.txtAttachment:
+                Intent intent = new Intent(getContext(), AttachmentDisplay.class);
+                intent.putExtra("url", Utility.BASE_IMAGE_URL+"Other_doc/"+fragmentProfileBinding.txtAttachment.getText().toString());
+                startActivity(intent);
+                break ;
+            case R.id.txtMore:
 
-            // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
+                Intent intent1 = new Intent(getContext(), TestimonialActivity.class);
+                intent1.putExtra("ProfileId", TestimonialProfileId);
+                intent1.putExtra("from", "profile");
+                startActivity(intent1);
+                break;
+            case R.id.imgProfile:
+                final Dialog dialog = new Dialog(getActivity());
+                dialog.setContentView(R.layout.imageview_popup);
 
-            // 6. set httpPost Entity
-            httpPost.setEntity(se);
+                ImageView ivViewImage = (ImageView)dialog.findViewById(R.id.ivViewImage);
+                if (displayProfile.equals(""))
+                {
+                    ivViewImage.setImageResource(R.drawable.usr_white1);
+                }
+                else
+                {
+                    Picasso.with(getActivity()).load(Utility.BASE_IMAGE_URL+"UserProfile/"+displayProfile).placeholder(R.drawable.usr_1)
+                            .resize(300,300).onlyScaleDown().skipMemoryCache().into(ivViewImage);
+                }
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
+                ivViewImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(getContext(), ImageZoom.class);
+                        intent.putExtra("displayProfile", Utility.BASE_IMAGE_URL+"UserProfile/"+displayProfile);
+                        startActivity(intent);
+                    }
+                });
 
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
+                dialog.show();
+                break;
+            case R.id.imgAdd:
 
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
+                Intent intent_search = new Intent(getContext(), SearchGroupMembers.class);
+                intent_search.putExtra("from", "profile");
+                intent_search.putExtra("ProfileId", TestimonialProfileId);
+                startActivity(intent_search);
 
+                break;
 
-            // 10. convert inputstream to string
-            if(inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
+            case R.id.imgProfileShare:
+                Pref.setValue(mContext,"share","1");
+                String shareBody = "I’m ready to connect with you and share our growing network on the CircleOne app. I’m currently a user with CircleOne and would like to invite you to join the Circle so we’ll both be able to take our professional networks a step further. Use the code '" + refer +
+                        "' for a quick and simple registration! https://circle8.asia/mobileApp.html";
+                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, fragmentProfileBinding.includeFrame2.tvPersonName.getText().toString());
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(sharingIntent, "Share Profile Via"));
 
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
+                break ;
+            case  R.id.imgQR:
+
+                QR_AlertDialog = new AlertDialog.Builder(getActivity(), R.style.AppTheme).create();
+                LayoutInflater inflater = getActivity().getLayoutInflater();
+                final View dialogView = inflater.inflate(R.layout.person_qrcode, null);
+                FrameLayout fl_QRFrame = (FrameLayout)dialogView.findViewById(R.id.fl_QrFrame);
+                TextView tvBarName = (TextView)dialogView.findViewById(R.id.tvBarName);
+                ImageView ivBarImage = (ImageView)dialogView.findViewById(R.id.ivBarImage);
+                ColorDrawable dialogColor = new ColorDrawable(getResources().getColor(R.color.colorPrimary));
+                dialogColor.setAlpha(70);
+                QR_AlertDialog.getWindow().setBackgroundDrawable(dialogColor);
+                tvBarName.setText(fragmentProfileBinding.includeFrame2.tvPersonName.getText().toString());
+                ivBarImage.setImageBitmap(mergeBitmaps(overlay,bitmapQR));
+
+                fl_QRFrame.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view)
+                    {
+                        QR_AlertDialog.dismiss();
+                    }
+                });
+
+                QR_AlertDialog.setView(dialogView);
+                QR_AlertDialog.show();
+                break;
+            case R.id.imgProfileMenu:
+
+                if (SystemClock.elapsedRealtime() - lastClickTime < 1000){
+                    return;
+                }
+                lastClickTime = SystemClock.elapsedRealtime();
+                popupWindow = popupWindowsort();
+                popupWindow.showAtLocation(v, Gravity.TOP | Gravity.RIGHT, 0, 0);
+
+                break;
+            case R.id.ivEditProfile:
+                fragmentProfileBinding.includeFrame1.ivEditProfile.setBackground(getResources().getDrawable(R.drawable.ic_edit_gray));
+                Intent intent_edit = new Intent(mContext, EditProfileActivity.class);
+                intent_edit.putExtra("type", "edit");
+                intent_edit.putExtra("profile_id", TestimonialProfileId);
+                intent_edit.putExtra("activity", "profile");
+                startActivity(intent_edit);
+                getActivity().overridePendingTransition (0, 0);
+                break;
         }
-
-        // 11. return result
-        return result;
     }
 }
