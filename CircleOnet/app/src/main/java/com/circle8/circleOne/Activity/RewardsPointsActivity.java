@@ -344,7 +344,7 @@ public class RewardsPointsActivity extends Fragment implements View.OnClickListe
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
         int width = dm.widthPixels;
 
-        activityRewardsPointsBinding.icdMerchantLayout.laptopList.setIndicatorBounds(width - getDipsFromPixel(30), width - getDipsFromPixel(5));
+        activityRewardsPointsBinding.icdMerchantLayout.laptopList.setIndicatorBounds(width - getDipsFromPixel(38), width - getDipsFromPixel(5));
 //        activityRewardsPointsBinding.icdMerchantLayout.laptopList.setGroupIndicator(getResources().getDrawable(R.drawable.ic_down_arrow));
     }
 
@@ -354,8 +354,9 @@ public class RewardsPointsActivity extends Fragment implements View.OnClickListe
         // Get the screen's density scale
         final float scale = getResources().getDisplayMetrics().density;
         // Convert the dps to pixels, based on density scale
-        return (int) (pixels * scale + 0.5f);
+        return (int) (pixels * scale + 1.0f);
     }
+
     private class HttpAsyncGetAll extends AsyncTask<String, Void, String>
     {
         ProgressDialog dialog;
